@@ -46,7 +46,7 @@ namespace Sign_Up_Scripts
             {
                 yield return null;
             }
-
+            //Debug.LogError(www.downloadHandler.text);
             if (www.isHttpError || www.isNetworkError)
             {
                 Debug.Log("Network Error");
@@ -89,11 +89,6 @@ namespace Sign_Up_Scripts
                 //print((int)errorCode);
                 errorMessage = _errorMessageList.Find(x => x.ErrorCode == errorCode);
                 if (string.IsNullOrEmpty(errorMessage.EnglishMessage) && string.IsNullOrEmpty(errorMessage.JapaneseMessage))
-                {
-                    errorMessage.EnglishMessage = errorCode;
-                    errorMessage.JapaneseMessage = errorCode;
-                }
-                else
                 {
                     errorMessage.EnglishMessage = errorCode;
                     errorMessage.JapaneseMessage = errorCode;

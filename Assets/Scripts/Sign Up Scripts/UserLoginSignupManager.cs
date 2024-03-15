@@ -54,6 +54,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject enterNamePanel;
     public AdvancedInputField userNameField;
     public Image selectedPresetImage;
+    public RawImage aiPresetImage;
     public Button nameScreenNextButton;
     public GameObject nameScreenLoader;
 
@@ -129,6 +130,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public void ShowWelcomeScreen()
     {
         signUpOrloginSelectionPanel.SetActive(true);
+        ClearInputFieldsData();
     }
 
     public void OnClickSignUpSelection()
@@ -137,6 +139,7 @@ public class UserLoginSignupManager : MonoBehaviour
         emailOrWalletLoginPanel.SetActive(false);
         emailLoginPanel.SetActive(false);
         signUpPanel.SetActive(true);
+        ClearInputFieldsData();
     }
 
     public void BackFromSignUpSelection()
@@ -149,6 +152,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         signUpPanel.SetActive(false);
         signUpWithEmailPanel.SetActive(true);
+        ClearInputFieldsData();
     }
 
     public void BackFromSignUpEmail()
@@ -163,6 +167,7 @@ public class UserLoginSignupManager : MonoBehaviour
         signUpOrloginSelectionPanel.SetActive(false);
         signUpPanel.SetActive(false);
         signUpWithEmailPanel.SetActive(false);
+        ClearInputFieldsData();
     }
 
     public void BackFromLoginSelection()
@@ -175,12 +180,21 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         emailOrWalletLoginPanel.SetActive(false);
         emailLoginPanel.SetActive(true);
+        ClearInputFieldsData();
     }
 
     public void BackFromLoginWithEmail()
     {
         emailOrWalletLoginPanel.SetActive(true);
         emailLoginPanel.SetActive(false);
+    }
+
+    public void BackFromOTPPanel()
+    {
+        verficationCodePanel.SetActive(false);
+        signUpWithEmailPanel.SetActive(true);
+        otpnextButton.interactable = true;
+        otpLoader.SetActive(false);
     }
 
     public void ClickOnWalletSign()
@@ -194,6 +208,23 @@ public class UserLoginSignupManager : MonoBehaviour
     public void OpenUserNamePanel()
     {
         enterNamePanel.SetActive(true);
+        userNameField.Clear();
+    }
+    public void BackFromUserNamePanel()
+    {
+        enterNamePanel.SetActive(false);
+        userNameField.Clear();
+        MainSceneEventHandler.OpenPresetPanel?.Invoke();
+    }
+
+
+    private void ClearInputFieldsData()
+    {
+        emailField.Clear();
+        emailFieldLogin.Clear();
+        passwordField.Clear();
+        passwordFieldLogin.Clear();
+        repeatPasswordField.Clear();
         userNameField.Clear();
     }
 
@@ -384,7 +415,9 @@ public class UserLoginSignupManager : MonoBehaviour
         _email = _email.Trim();
         _email = _email.ToLower();
 
-        bool ValidEmail = EmailValidation(_email);
+        bool ValidEmail = EmailValidation(_email,false);
+        if (!ValidEmail)
+            return;
         bool validPassword = PasswordValidation(passwordField.Text, repeatPasswordField.Text);
         if (ValidEmail && validPassword)
         {
@@ -401,7 +434,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
-    bool EmailValidation(string emailText)
+    bool EmailValidation(string emailText,bool checkForLogin)
     {
         string L_LoginEmail = emailText;
         if (L_LoginEmail == "")
@@ -420,16 +453,33 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         if (IsValidEmail(L_LoginEmail))
         {
+            Debug.LogError("tryue");
             return true;
         }
-        else if (!L_LoginEmail.Contains("+") && L_LoginEmail.Any(char.IsLetter))
+        else if(checkForLogin && IsPhoneNbr(L_LoginEmail))
+        {
+            return true;
+        }
+        else
         {
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextMsg);
             return false;
         }
+    }
 
+
+    bool PasswordValidationOnLogin(string password)
+    {
+        if (string.IsNullOrEmpty(password))
+        {
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.gameObject.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextMsg);
+            return false;
+        }
         return true;
     }
 
@@ -467,6 +517,7 @@ public class UserLoginSignupManager : MonoBehaviour
             }
 
         }
+
         if (!allCharactersInStringAreDigits)
         {
             validationPopupPanel.SetActive(true);
@@ -493,6 +544,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
     bool IsValidEmail(string email)
     {
+        bool validEmail=Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
+        if (!validEmail)
+            return false;
         try
         {
             var addr = new System.Net.Mail.MailAddress(email);
@@ -606,6 +660,8 @@ public class UserLoginSignupManager : MonoBehaviour
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextMsg);
+            otpLoader.SetActive(false);
+            otpnextButton.interactable = true;
             return;
         }
         string url = ConstantsGod.API_BASEURL + ConstantsGod.VerifyEmailOTP;
@@ -698,6 +754,8 @@ public class UserLoginSignupManager : MonoBehaviour
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextMsg);
+            nameScreenLoader.SetActive(false);
+            nameScreenNextButton.interactable = true;
             return;
         }
         else if (Localusername.StartsWith(" "))
@@ -705,6 +763,8 @@ public class UserLoginSignupManager : MonoBehaviour
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextMsg);
+            nameScreenLoader.SetActive(false);
+            nameScreenNextButton.interactable = true;
             return;
         }
 
@@ -865,7 +925,7 @@ public class UserLoginSignupManager : MonoBehaviour
         _loginPassword = _loginPassword.Trim();
         _LoginEmail = _LoginEmail.ToLower();
 
-        if (EmailValidation(_LoginEmail) && PasswordValidation(_loginPassword, _loginPassword))
+        if (EmailValidation(_LoginEmail,true) && PasswordValidationOnLogin(_loginPassword))
         {
 
             string bodyJson;
@@ -905,7 +965,6 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         ClassWithToken myObject1 = new ClassWithToken();
         myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        Debug.LogError(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (myObject1.success)
@@ -1012,7 +1071,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         string l_DeivceID = UniqueID();
         MyClassForSettingDeviceToken myObject = new MyClassForSettingDeviceToken();
-        string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedDeviceToken(l_DeivceID)); ;
+        string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedDeviceToken(l_DeivceID));
         StartCoroutine(HitSetDeviceTokenAPI(ConstantsGod.API_BASEURL + ConstantsGod.SetDeviceTokenAPI, bodyJson, l_DeivceID));
     }
 
@@ -1240,12 +1299,14 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         string deviceToken = UniqueID();
         if (!string.IsNullOrEmpty(deviceToken))
+        {
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
                 if (onSucess)
                     StartCoroutine(OnSucessLogout());
             }
             ));
+        }
     }
 
     //Account Delete functions 
@@ -1273,8 +1334,10 @@ public class UserLoginSignupManager : MonoBehaviour
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
     {
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(true);
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+        MyClassForSettingDeviceToken myObject = new MyClassForSettingDeviceToken();
+        string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedDeviceToken(Jsondata));
+        var request =new UnityWebRequest(url,"POST");
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJson);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");

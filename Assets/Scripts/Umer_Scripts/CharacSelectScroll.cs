@@ -82,7 +82,7 @@ public class CharacSelectScroll : MonoBehaviour
             //UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            Debug.LogError("selected obj name :- "+SelectedOBJ.name);
+            //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
