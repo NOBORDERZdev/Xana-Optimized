@@ -151,7 +151,8 @@ public class UGCManager : MonoBehaviour
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form);
+        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
+        //UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
         www.SetRequestHeader("Accept", "application/json");
         // Start the request
         AsyncOperation operation = www.SendWebRequest();
@@ -235,9 +236,9 @@ public class UGCManager : MonoBehaviour
 
     public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
     {
-        StoreManager.instance.itemData.gender = ugcItems.gender;
+        StoreManager.instance.itemData.gender = ugcItems.gender.ToLower();
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
-        StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
+        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
         StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
         StoreManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)

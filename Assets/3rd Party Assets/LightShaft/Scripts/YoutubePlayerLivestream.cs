@@ -203,7 +203,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
 
             if (envType.Equals(EnvType.JJWorld))
                 JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
-            else if (envType.Equals(EnvType.Other))
+            else if (envType.Equals(EnvType.Other) && nftMAnager!=null)
                 nftMAnager.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
