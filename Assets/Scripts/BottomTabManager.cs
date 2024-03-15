@@ -680,6 +680,16 @@ public class BottomTabManager : MonoBehaviour
             {
                 FeedUIController.Instance.feedUiScreen.SetActive(false);
             }
+
+            if (ProfileUIHandler.instance)
+            {
+                // Reset Scroller position 
+                Transform contantObj = ProfileUIHandler.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
+                Vector2 tempPos = contantObj.position;
+                tempPos.y = 0f;
+                contantObj.position = tempPos;
+            }
+
             GameManager.Instance.defaultSelection = 4;
             GlobalVeriableClass.callingScreen = "Profile";
             GameManager.Instance.ActorManager._cinemaCam.SetActive(true);
