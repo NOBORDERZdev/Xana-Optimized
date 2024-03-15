@@ -6,9 +6,9 @@ using Photon.Pun;
 using System;
 using System.IO;
 
-public class CharcterBodyParts : MonoBehaviour
+public class CharacterBodyParts : MonoBehaviour
 {
-    public static CharcterBodyParts instance;
+    //public static CharacterBodyParts instance;
     [Tooltip("Default Texture for pent and shirt")]
     public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_Texture, TattooDefaultTexture;
     // For Eye Color Slider Require Some new Textures
@@ -49,6 +49,7 @@ public class CharcterBodyParts : MonoBehaviour
     [HideInInspector]
     public float scaleEyeX, EyeScaleY, MouthX, MouthY, NoseX, NoseY, ForeHeadX, ForeHeadY, ForeheadZ, JBoneX, JBoneY, JBoneZ, Lipscalex;
 
+    public List<GameObject> _scaleBodyParts;
     [Header("skinToon Color List")]
     public List<Color> skinColor;
     public List<Color> lipColor;
@@ -57,7 +58,6 @@ public class CharcterBodyParts : MonoBehaviour
     public List<Color> eyeBrowsColor;
     public List<Color> eyeColor;
     public List<Color> lipColorPalette;
-    public List<GameObject> _scaleBodyParts;
 
 
     //[Header("Testing")]
@@ -66,15 +66,11 @@ public class CharcterBodyParts : MonoBehaviour
     //[HideInInspector]
     public List<BoneDataContainer> BonesData = new List<BoneDataContainer>();
 
-    public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
-    [Tooltip("Default Texture for New Character")]
-    public Texture2D defaultMakeupv2, defaultEyelashesv2, defaultEyebrowv2, Eye_Texturev2;
-    public Sprite defaultPngForSkinIcon;
     public static Action<Color> OnSkinColorApply;
     public float defaultSssValue;
     public Color PresetGredientColor;
     //public List<BoneDataContainer> DefaultBones = new List<BoneDataContainer>();
-
+    public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
     private Material characterHeadMat, characterBodyMat;
 
 
@@ -106,7 +102,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        //instance = this;
         shirt_TextureName = "_Shirt_Mask";
         Pent_TextureName = "_Pant_Mask";
         Shoes_TextureName = "_Shoes_Mask";
@@ -149,7 +145,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     private void Start()
     {
-        blend = BlendShapeImporter.Instance;
+        blend = GameManager.Instance.BlendShapeImporter;
         //avatarController = GetComponent<AvatarController>();
         head = maleAvatarMeshes.avatar_head;
         body = maleAvatarMeshes.avatar_body;
@@ -780,13 +776,13 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void ApplyGredientColor(Color gredientColor, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(GredientColorName, gredientColor);
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(GredientColorName, gredientColor);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(GredientColorName, gredientColor);
+        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(GredientColorName, gredientColor);
     }
     public void ApplyGredientDefault(GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(GredientColorName, DefaultGredientColor);
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(GredientColorName, DefaultGredientColor);
+        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
     }
 
 
@@ -1022,22 +1018,22 @@ public class CharcterBodyParts : MonoBehaviour
         yield return new WaitForSeconds(0f);
         if (new Vector3(SkinColor.r, SkinColor.b, SkinColor.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         }
 
         if (new Vector3(LipColor.r, LipColor.b, LipColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
         }
 
     }
@@ -1047,49 +1043,49 @@ public class CharcterBodyParts : MonoBehaviour
         yield return new WaitForSeconds(0f);
         if (new Vector3(SkinColor.r, SkinColor.b, SkinColor.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         }
 
         if (new Vector3(LipColor.r, LipColor.b, LipColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
         }
 
         // Hair
         if (new Vector3(HairColor.r, HairColor.b, HairColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            if (applyOn.GetComponent<CharcterBodyParts>().avatarController.wornHair != null)
-                applyOn.GetComponent<CharcterBodyParts>().avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, HairColor);
+            if (applyOn.GetComponent<CharacterBodyParts>().avatarController.wornHair != null)
+                applyOn.GetComponent<CharacterBodyParts>().avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, HairColor);
         }
 
         // EyeBrow
         if (new Vector3(EyebrowColor.r, EyebrowColor.b, EyebrowColor.g) != new Vector3(0.00f, 0.00f, 0.00f) && EyebrowColor != Color.white)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, EyebrowColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, EyebrowColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
         }
 
         // Eyes
         if (new Vector3(EyeColor.r, EyeColor.b, EyeColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, EyeColor);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, EyeColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+            applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
         }
     }
 
@@ -1103,13 +1099,13 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.Skin:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
-                    applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
+                    applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-                    applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+                    applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
                 }
                 break;
 
@@ -1148,33 +1144,33 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.EyeBrowColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) && _color != Color.white)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, _color);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
                 }
                 break;
 
             case SliderType.EyesColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
                 }
                 break;
 
             case SliderType.LipsColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, _color);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+                    applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
                 }
                 break;
 
@@ -1308,21 +1304,21 @@ public class CharcterBodyParts : MonoBehaviour
     {
         if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForShirt(texture);
+            applyOn.GetComponent<CharacterBodyParts>().TextureForShirt(texture);
 
             //CharcterBodyParts.instance.TextureForShirt(texture);
         }
         else if (type.Contains("Legs") || type.Contains("pant") || type.Contains("Pants"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForPant(texture);
+            applyOn.GetComponent<CharacterBodyParts>().TextureForPant(texture);
         }
         else if (type.Contains("Feet") || type.Contains("Shose", System.StringComparison.CurrentCultureIgnoreCase) || type.Contains("Plain_mask", System.StringComparison.CurrentCultureIgnoreCase))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForShoes(texture);
+            applyOn.GetComponent<CharacterBodyParts>().TextureForShoes(texture);
         }
         else if (type.Contains("Glove"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForGlove(texture);
+            applyOn.GetComponent<CharacterBodyParts>().TextureForGlove(texture);
         }
     }
 
@@ -1345,7 +1341,7 @@ public class CharcterBodyParts : MonoBehaviour
     public void ApplyEyeLenTexture(Texture texture, GameObject applyOn)
     {
 
-        Material mainMaterial = applyOn.GetComponent<CharcterBodyParts>().head.materials[0];
+        Material mainMaterial = applyOn.GetComponent<CharacterBodyParts>().head.materials[0];
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
@@ -1371,7 +1367,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ApplyEyeBrowTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
         if (BlendShapeController.instance != null)
             BlendShapeController.instance.ResetEyeBrowBlendValues();
     }
@@ -1518,7 +1514,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void DefaultBlendShapes(GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().head;
+        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharacterBodyParts>().head;
         //blend shapes
 
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount; i++)
@@ -1528,7 +1524,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void LoadBlendShapes(SavingCharacterDataClass data, GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().head;
+        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharacterBodyParts>().head;
         //blend shapes
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
@@ -1620,12 +1616,12 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ApplyEyeLashes(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[3].SetTexture(eyeLashes_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[3].SetTexture(eyeLashes_TextureName, texture);
     }
 
     public void ApplyMakeup(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetTexture(Makeup_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetTexture(Makeup_TextureName, texture);
     }
 
 
@@ -1636,9 +1632,9 @@ public class CharcterBodyParts : MonoBehaviour
     /// <param name="applyOn"> player gameobject on which apply value</param>
     public void SetSssIntensity(float value, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetFloat(SssIntensity, value);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetFloat(SssIntensity, value);
         //print("HEAD shader SSs for gmaeplay is " + applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].GetFloat(SssIntensity));
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetFloat(SssIntensity, value);
+        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetFloat(SssIntensity, value);
         //print("BODY shader SSs for gmaeplay is " + applyOn.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().materials[0].GetFloat(SssIntensity));
 
     }
@@ -1736,26 +1732,26 @@ public class CharcterBodyParts : MonoBehaviour
             case CurrentTextureType.ArmTattoo:
                 break;
             case CurrentTextureType.Mustache:
-                applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().RemoveMustacheTexture(null, applyOn);
                 break;
             case CurrentTextureType.EyeLid:
                 break;
             case CurrentTextureType.EyeLense:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharacterBodyParts>().Eye_Texture, applyOn);
                 break;
             case CurrentTextureType.EyeLashes:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharacterBodyParts>().defaultEyelashes, applyOn);
                 break;
             case CurrentTextureType.EyeBrows:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharacterBodyParts>().defaultEyebrow, applyOn);
                 break;
             case CurrentTextureType.Skin:
                 break;
             case CurrentTextureType.Lip:
-                applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(null, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().RemoveEyeLidTexture(null, applyOn);
                 break;
             case CurrentTextureType.Makeup:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharacterBodyParts>().defaultMakeup, applyOn);
                 break;
             default:
                 break;

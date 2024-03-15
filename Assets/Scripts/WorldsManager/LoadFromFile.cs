@@ -654,7 +654,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
-            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
+            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharacterBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
 
             //Post Process enable for Builder Scene

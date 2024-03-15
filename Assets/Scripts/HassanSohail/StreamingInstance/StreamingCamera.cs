@@ -75,7 +75,7 @@ public class StreamingCamera : MonoBehaviour
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
                    // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                    if (avatar.GetComponent<CharcterBodyParts>().body.isVisible)
+                    if (avatar.GetComponent<CharacterBodyParts>().body.isVisible)
                     {
                        // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
                         visibleCount++;
@@ -89,7 +89,7 @@ public class StreamingCamera : MonoBehaviour
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
       // LoadingHandler.Instance.HideLoading();
        ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-       ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+       ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
        LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
     }

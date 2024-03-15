@@ -137,7 +137,24 @@ public class UIManager : MonoBehaviour
         ShowFooter(!_state);
         if(UserRegisterationManager.instance)
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
+        if (!_state)
+        {
+            SplashMemoryFree();
+        }
     }
+
+    public void SplashMemoryFree(){ 
+        StartCoroutine(ReleaseSplashFromMemory());
+    }
+
+    IEnumerator ReleaseSplashFromMemory()
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(_SplashScreen);
+        Resources.UnloadUnusedAssets();
+    }
+
+
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {

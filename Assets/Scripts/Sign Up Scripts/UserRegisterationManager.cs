@@ -901,7 +901,7 @@ public class UserRegisterationManager : MonoBehaviour
        // LoggedInAsGuest = true;
         if (GameManager.Instance.mainCharacter)
         {
-            GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
+            GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().DefaultTexture();
         }
         //if (GameManager.Instance != null && GameManager.Instance.mainCharacter)
         //{

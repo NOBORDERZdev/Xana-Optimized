@@ -141,13 +141,13 @@ public class ProfileUIHandler : MonoBehaviour
         if (AvatarRef)
         {
                 _tempAvatarData = _userAvatarData;
-                AvatarRef.GetComponent<FriendAvatarController>().IntializeAvatar(_userAvatarData);
+                AvatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,AvatarRef);
         }
     }
 
     public void SetUserAvatarDefaultClothing()
     {
-        AvatarRef.GetComponent<FriendAvatarController>().SetAvatarClothDefault(AvatarRef, "Male");
+        AvatarRef.GetComponent<AvatarController>().SetAvatarClothDefault(AvatarRef, "Male");
     }
 
     public void SetMainScrolRefs()

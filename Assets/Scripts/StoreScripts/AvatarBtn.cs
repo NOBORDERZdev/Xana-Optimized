@@ -26,11 +26,13 @@ public class AvatarBtn : MonoBehaviour
     //bool isAddedInUndoRedo = false;       
     SavingCharacterDataClass _CharacterData;
     AddressableDownloader downloader;
+    BlendShapeImporter shapeImporter;
     private void Awake()
     {
         if (instance == null)
             instance = this;
         downloader = AddressableDownloader.Instance;
+        shapeImporter = GameManager.Instance.BlendShapeImporter;
     }
 
     private void OnEnable()
@@ -616,11 +618,11 @@ public class AvatarBtn : MonoBehaviour
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
 
-                        //BlendShapeImporter.Instance.MorphTypeSelected("Head");
-                        BlendShapeImporter.Instance.MorphTypeSelected("FaceMorph");
+                        //shapeImporter.MorphTypeSelected("Head");
+                        shapeImporter.MorphTypeSelected("FaceMorph");
 
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Face");
-                        BlendShapeImporter.Instance.TurnOnPoints("FaceMorph");
+                        shapeImporter.TurnOnPoints("FaceMorph");
                         break;
                     }
                 case "EyeBrowMorph":
@@ -629,9 +631,9 @@ public class AvatarBtn : MonoBehaviour
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("EyeBrow");
+                        shapeImporter.MorphTypeSelected("EyeBrow");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyebrow");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyeBrowMorph");
+                        shapeImporter.TurnOnPoints("EyeBrowMorph");
                         break;
                     }
                 case "EyesMorph":
@@ -642,9 +644,9 @@ public class AvatarBtn : MonoBehaviour
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("eye");
+                        shapeImporter.MorphTypeSelected("eye");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyes");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyesMorph");
+                        shapeImporter.TurnOnPoints("EyesMorph");
                         break;
                     }
                 case "NoseMorph":
@@ -653,9 +655,9 @@ public class AvatarBtn : MonoBehaviour
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Nose");
+                        shapeImporter.MorphTypeSelected("Nose");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Nose");
-                        BlendShapeImporter.Instance.TurnOnPoints("NoseMorph");
+                        shapeImporter.TurnOnPoints("NoseMorph");
                         break;
                     }
                 case "LipsMorph":
@@ -664,9 +666,9 @@ public class AvatarBtn : MonoBehaviour
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Lips");
+                        shapeImporter.MorphTypeSelected("Lips");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Lips");
-                        BlendShapeImporter.Instance.TurnOnPoints("LipsMorph");
+                        shapeImporter.TurnOnPoints("LipsMorph");
                         break;
                     }
                 case "HeadMorph":
@@ -675,9 +677,9 @@ public class AvatarBtn : MonoBehaviour
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Head");
+                        shapeImporter.MorphTypeSelected("Head");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Head");
-                        BlendShapeImporter.Instance.TurnOnPoints("HeadMorph");
+                        shapeImporter.TurnOnPoints("HeadMorph");
                     }
                     break;
             }

@@ -52,6 +52,13 @@ public class ItemDetail : MonoBehaviour
     int saveIndex = -1;
     //bool isAdded = true;
     private AddressableDownloader downloader;
+    CharacterBodyParts characterBodyParts;
+    StoreManager store;
+    private void Awake()
+    {
+        store = StoreManager.instance;
+        characterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+    }
 
     public void StartRun()
     {
@@ -155,40 +162,40 @@ public class ItemDetail : MonoBehaviour
         }
         if (CategoriesEnumVar == EnumClass.CategoryEnum.SkinToneAvatar)
         {
-            _iconImg.sprite = CharcterBodyParts.instance.defaultPngForSkinIcon;
-            _iconImg.color = CharcterBodyParts.instance.skinColor[MyIndex];
+            _iconImg.sprite = store.defaultPngForSkinIcon;
+            _iconImg.color = characterBodyParts.skinColor[MyIndex];
             loadingSpriteImage.SetActive(false);
             completedCoroutine = true;
             enableUpdate = false;
         }
         else if (CategoriesEnumVar == EnumClass.CategoryEnum.HairAvatarColor)
         {
-            _iconImg.sprite = CharcterBodyParts.instance.defaultPngForSkinIcon;
-            _iconImg.color = CharcterBodyParts.instance.hairColor[MyIndex];
+            _iconImg.sprite = store.defaultPngForSkinIcon;
+            _iconImg.color = characterBodyParts.hairColor[MyIndex];
             loadingSpriteImage.SetActive(false);
             completedCoroutine = true;
             enableUpdate = false;
         }
         else if (CategoriesEnumVar == EnumClass.CategoryEnum.EyeBrowAvatarColor)
         {
-            _iconImg.sprite = CharcterBodyParts.instance.defaultPngForSkinIcon;
-            _iconImg.color = CharcterBodyParts.instance.eyeBrowsColor[MyIndex];
+            _iconImg.sprite = store.defaultPngForSkinIcon;
+            _iconImg.color = characterBodyParts.eyeBrowsColor[MyIndex];
             loadingSpriteImage.SetActive(false);
             completedCoroutine = true;
             enableUpdate = false;
         }
         else if (CategoriesEnumVar == EnumClass.CategoryEnum.EyesAvatarColor)
         {
-            _iconImg.sprite = CharcterBodyParts.instance.defaultPngForSkinIcon;
-            _iconImg.color = CharcterBodyParts.instance.eyeColor[MyIndex];
+            _iconImg.sprite = store.defaultPngForSkinIcon;
+            _iconImg.color = characterBodyParts.eyeColor[MyIndex];
             loadingSpriteImage.SetActive(false);
             completedCoroutine = true;
             enableUpdate = false;
         }
         else if (CategoriesEnumVar == EnumClass.CategoryEnum.LipsAvatarColor)
         {
-            _iconImg.sprite = CharcterBodyParts.instance.defaultPngForSkinIcon;
-            _iconImg.color = CharcterBodyParts.instance.lipColorPalette[MyIndex];
+            _iconImg.sprite = store.defaultPngForSkinIcon;
+            _iconImg.color = characterBodyParts.lipColorPalette[MyIndex];
             loadingSpriteImage.SetActive(false);
             completedCoroutine = true;
             enableUpdate = false;
@@ -1055,22 +1062,22 @@ public class ItemDetail : MonoBehaviour
             }
             else if (CategoriesEnumVar.ToString() == "HairAvatarColor")
             {
-                CharcterBodyParts.instance.ChangeHairColor(MyIndex);
+                characterBodyParts.ChangeHairColor(MyIndex);
                 SavaCharacterProperties.instance.characterController.hairColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "EyeBrowAvatarColor")
             {
-                CharcterBodyParts.instance.ChangeEyebrowColor(MyIndex);
+                characterBodyParts.ChangeEyebrowColor(MyIndex);
                 SavaCharacterProperties.instance.characterController.eyeBrowColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "EyesAvatarColor")
             {
-                CharcterBodyParts.instance.ChangeEyeColor(MyIndex);
+                characterBodyParts.ChangeEyeColor(MyIndex);
                 SavaCharacterProperties.instance.characterController.eyesColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "LipsAvatarColor")
             {
-                CharcterBodyParts.instance.ChangeLipColorForPalette(MyIndex);
+                characterBodyParts.ChangeLipColorForPalette(MyIndex);
                 SavaCharacterProperties.instance.characterController.lipsColorPaletteId = int.Parse(id);
             }
             else if (!File.Exists(Application.persistentDataPath + "/" + name))
@@ -1149,7 +1156,7 @@ public class ItemDetail : MonoBehaviour
         {
             case "Lip":
 
-                CharcterBodyParts.instance.ChangeLipColor(MyIndex);
+                characterBodyParts.ChangeLipColor(MyIndex);
                 SavaCharacterProperties.instance.characterController.lipsColorId = int.Parse(id);
 
                 if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
@@ -1167,9 +1174,9 @@ public class ItemDetail : MonoBehaviour
 
             case "Skin":
                 // Waqas Ahmad
-                CharcterBodyParts.instance.ChangeSkinColor(MyIndex);
+                characterBodyParts.ChangeSkinColor(MyIndex);
                 //Debug.Log("Skin color slider");
-                CharcterBodyParts.instance.ChangeSkinColorSlider(MyIndex);
+                characterBodyParts.ChangeSkinColorSlider(MyIndex);
                 SavaCharacterProperties.instance.characterController.skinId = MyIndex;
 
                 if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")

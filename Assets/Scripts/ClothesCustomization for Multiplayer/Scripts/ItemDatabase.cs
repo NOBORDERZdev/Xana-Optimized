@@ -24,11 +24,11 @@ public class ItemDatabase : MonoBehaviour
     public AvatarDefaultClothes femaleAvatarDefaultCostume;
 
     AddressableDownloader downloader;
-    public void itemlistresettodefault()
-    {
-        Awake();
-    }
-    private void Awake()
+    //public void itemlistresettodefault()
+    //{
+    //    Awake();
+    //}
+    void Awake()
     {
         if (instance == null)
         {

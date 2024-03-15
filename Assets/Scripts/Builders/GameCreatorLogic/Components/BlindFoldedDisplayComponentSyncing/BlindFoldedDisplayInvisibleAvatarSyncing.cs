@@ -46,7 +46,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
             AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
 
             if (ac.wornHair)

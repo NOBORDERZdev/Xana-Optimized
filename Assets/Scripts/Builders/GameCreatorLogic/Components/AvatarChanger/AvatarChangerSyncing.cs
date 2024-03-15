@@ -67,7 +67,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         if (playerObj != null)
         {
             AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornPant)

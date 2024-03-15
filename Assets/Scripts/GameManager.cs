@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject ShadowPlane;
     public SavaCharacterProperties SaveCharacterProperties;
     public EquipUI EquipUiObj;
-    public BlendShapeImporter BlendShapeObj;
+    public BlendShapeImporter BlendShapeImporter;
     public bool UserStatus_;   //if its true user is logged in else its as a guest
     public static string currentLanguage = "";
     public bool isStoreAssetDownloading = false;
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
     public AdditiveScenesManager additiveScenesManager;
-    public Transform HomeCamera;
+    public HomeCameraController HomeCamera;
 
     internal string selectedPresetData="";
     private void Awake()

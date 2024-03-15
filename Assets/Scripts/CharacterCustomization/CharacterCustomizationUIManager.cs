@@ -175,7 +175,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //Comment because file is rewriting the vale here again...(Abdullah)
         //SavaCharacterProperties.instance.AssignCustomSlidersData();
         StoreManager.instance.ResetMorphBooleanValues();
-        BlendShapeImporter.Instance.TurnOffAllObjects();
+        GameManager.Instance.BlendShapeImporter.TurnOffAllObjects();
 
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         if (!EyesBlinking.instance.isCoroutineRunning)

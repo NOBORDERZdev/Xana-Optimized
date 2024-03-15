@@ -35,7 +35,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
         {
             yield return new WaitForSeconds(0.5f);
             AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();

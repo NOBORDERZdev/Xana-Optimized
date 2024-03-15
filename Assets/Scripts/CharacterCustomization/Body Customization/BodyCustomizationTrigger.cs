@@ -22,10 +22,10 @@ public class BodyCustomizationTrigger : MonoBehaviour
     public float m_BlendTime;
     public AnimationCurve m_AnimCurve;
 
-    CharcterBodyParts charBodyParts;
+    CharacterBodyParts charBodyParts;
     private void Start()
     {
-        charBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        charBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
 
 
