@@ -3514,6 +3514,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 6cb3eb7dce42719479222dd7464950c2, type: 2}
     - target: {fileID: -2641048227607596833, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: f99ccf49f253b5642a5a34b53ff3b731, type: 2}
+    - target: {fileID: -2641048227607596833, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_BlendShapeWeights.Array.size
       value: 85
       objectReference: {fileID: 0}
@@ -3527,7 +3531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -592765626997318814, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 455256945981099688, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_IsActive
@@ -3545,6 +3549,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: c696ecf611cfa4b4684deabab122a2af, type: 2}
+    - target: {fileID: 8358487956882838381, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: edffa92a9daa50744b5f0b0d70a453f1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
 --- !u!4 &426326449 stripped
@@ -4236,23 +4244,223 @@ MonoBehaviour:
     avatar_parent: {fileID: 426326452}
     avatar_body: {fileID: 426326451}
     avatar_head: {fileID: 426326450}
-    Shirt_Texture: {fileID: 0}
-    Pent_Texture: {fileID: 0}
+    Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
     Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 0}
+    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: f2ff702bbc9a048448e3946b295bb063, type: 3}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 426326455}
     avatar_body: {fileID: 426326454}
     avatar_head: {fileID: 426326453}
-    Shirt_Texture: {fileID: 0}
-    Pent_Texture: {fileID: 0}
+    Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
+    Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
     Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 0}
+    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    Face_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: c859e0833b251544883fc068cecec0d8, type: 3}
   boxerBody: {fileID: 1325592266}
   boxerHead: {fileID: 1325592241}
   body: {fileID: 0}
   head: {fileID: 0}
-  randomPresetData: []
+  randomPresetData:
+  - Name: Preset 1
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V001
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V001
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_005
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_45
+      ObjectType: Feet
+  - Name: Preset 2
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V002
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V002
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_014
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_381
+      ObjectType: Feet
+  - Name: Preset 3
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V003
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V003
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_028
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_378
+      ObjectType: Feet
+  - Name: Preset 4
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V005
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V005
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_029
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_332
+      ObjectType: Feet
+  - Name: Preset 5
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V004
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V004
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_029
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_068
+      ObjectType: Feet
+  - Name: Preset 6
+    GenderType: Male
+    PantPresetData:
+      ObjectName: Boy_Pant_V006
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V006
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_023
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_325
+      ObjectType: Feet
+  - Name: Preset 7
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Boy_Pant_V007
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Boy_Shirt_V007
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Boy_H_022
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_366
+      ObjectType: Feet
+  - Name: Preset 8
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V001
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V001
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_010
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 9
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V009
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V009
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_020
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 10
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V008
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V008
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_022
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 11
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V007
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V007
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_029
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 12
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V006
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V006
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_025
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 13
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V003
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V003
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_011
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
+  - Name: Preset 14
+    GenderType: Female
+    PantPresetData:
+      ObjectName: Girl_Pant_V002
+      ObjectType: Legs
+    ShirtPresetData:
+      ObjectName: Girl_Shirt_V002
+      ObjectType: Chest
+    HairPresetData:
+      ObjectName: Girl_H_015
+      ObjectType: Hair
+    ShoesPresetData:
+      ObjectName: Shoes_478
+      ObjectType: Feet
   pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &426326460
 MonoBehaviour:
@@ -4337,8 +4545,9 @@ MonoBehaviour:
     gender: 
     avatarType: 0
     myItemObj: []
+    ai_gender: 
     hair_color: {r: 0, g: 0, b: 0, a: 0}
-    skin_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
     lip_color: {r: 0, g: 0, b: 0, a: 0}
     faceItemData: 0
     lipItemData: 0
@@ -10249,11 +10458,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!23 &1353268956 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 8597682783124986321, guid: deca5c34dcced0447b4cf15a0db85668, type: 3}
-  m_PrefabInstance: {fileID: 3128131950797163910}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1357829508
 GameObject:
   m_ObjectHideFlags: 0
@@ -10936,12 +11140,10 @@ MonoBehaviour:
   holdTime: 0
   isRecording: 0
   holdTimeForPhoto: 0.3
-  isUGCFaceScene: 1
   UGCCharacter: {fileID: 426326461}
   videoPlayer: {fileID: 229192383}
   characterRT: {fileID: 8400000, guid: 9c2b1af7995adaa4e9a10e7bb576d0a8, type: 2}
-  characterCam: {fileID: 1753961683}
-  videoRT: {fileID: 8400000, guid: 407b0b6e3d4f8a245ae4c640df60039c, type: 2}
+  characterRenderCamera: {fileID: 1753961683}
   screenUI:
   - {fileID: 1649023948}
   - {fileID: 1936607497}
@@ -10953,8 +11155,6 @@ MonoBehaviour:
   loadingScreen: {fileID: 760315686}
   recordButton: {fileID: 563978687}
   photoButton: {fileID: 538772429}
-  BG: {fileID: 1353268956}
-  texture: {fileID: 0}
   videoRecordingTimerText: {fileID: 1366870509}
   ugcRecordVideoBehaviour: {fileID: 619344220}
 --- !u!1 &1513097388
@@ -11790,7 +11990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1753961681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12094,7 +12294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1854916073
 RectTransform:
   m_ObjectHideFlags: 0

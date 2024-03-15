@@ -15,7 +15,7 @@ public class CharcterBodyParts : MonoBehaviour
     public Texture Eye_Mask_Texture, Eye_Color_Texture;
     private string shirt_TextureName, Pent_TextureName, Shoes_TextureName, Glove_TextureName,
         Skin_ColorName, Hair_ColorName, Lip_ColorName, Eyebrow_ColorName, Eye_ColorName, // Using For Color Modification through Slider
-        eyeLen_TextureName, eyeLashes_TextureName, Makeup_TextureName, GredientColorName, SssIntensity, EyeBrrow_TextureName;
+        eyeLen_TextureName, eyeLashes_TextureName, Makeup_TextureName, GredientColorName, SssIntensity, EyeBrrow_TextureName, Skin_TextureName;
 
 
     //Mask Texture Name in shader
@@ -96,7 +96,7 @@ public class CharcterBodyParts : MonoBehaviour
         public GameObject avatar_parent;
         public SkinnedMeshRenderer avatar_body;
         public SkinnedMeshRenderer avatar_head;
-        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture,Eye_texture;
+        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_texture, Face_Texture, Skin_Texture;
     }
 
     public RandomPreset[] randomPresetData;
@@ -122,6 +122,7 @@ public class CharcterBodyParts : MonoBehaviour
         GredientColorName = "_Color";
         SssIntensity = "_SSS_Intensity";
         EyeBrrow_TextureName = "_BaseMap";
+        Skin_TextureName = "_Base_Texture";
 
         //tattoo mask and color property names
         faceTattoo_MaskPropertyName = "_Face_Tattoo_Mask";
@@ -161,7 +162,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void SetAvatarByGender(string _gender)
     {
-        
+
         if (_gender == AvatarGender.Male.ToString())
         {
             avatarController.avatarGender = AvatarGender.Male;
@@ -230,7 +231,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
     // Set Default Texture for player
-    public void DefaultTexture(bool ApplyClothMask = true, string _gender="")
+    public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
         if (XanaConstants.xanaConstants.isNFTEquiped)
@@ -301,9 +302,9 @@ public class CharcterBodyParts : MonoBehaviour
             Body.materials[0].SetTexture(Shoes_TextureName, null);
             if (ApplyClothMask)
             {
-                if(femaleAvatarMeshes.Pent_Texture != null)
+                if (femaleAvatarMeshes.Pent_Texture != null)
                     Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
-                if(femaleAvatarMeshes.Shirt_Texture != null)
+                if (femaleAvatarMeshes.Shirt_Texture != null)
                     Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
                 if (femaleAvatarMeshes.Shoe_Texture != null)
                     Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
@@ -316,16 +317,16 @@ public class CharcterBodyParts : MonoBehaviour
             Body.materials[0].SetTexture(Shoes_TextureName, null);
             if (ApplyClothMask)
             {
-                if(maleAvatarMeshes.Pent_Texture != null)
+                if (maleAvatarMeshes.Pent_Texture != null)
                     Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
-                if(maleAvatarMeshes.Shirt_Texture != null)
+                if (maleAvatarMeshes.Shirt_Texture != null)
                     Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
-                if(maleAvatarMeshes.Shoe_Texture != null)
+                if (maleAvatarMeshes.Shoe_Texture != null)
                     Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
             }
         }
         //}
-        
+
         //Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         //Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
         //Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
@@ -1115,29 +1116,29 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.HairColor:
                 //if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 //{
-                    AvatarController ac = applyOn.GetComponent<AvatarController>();
-                    if (ac.wornHair != null)
+                AvatarController ac = applyOn.GetComponent<AvatarController>();
+                if (ac.wornHair != null)
+                {
+                    //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
                     {
-                        //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
-                        {
-                            // For Band using Eye Shader so variable name is Changed 
-                            // Variable is equal to eyename
-                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
-                        }
-                        else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-                        {
-                            if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-                               ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
-                            else
-                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                        }
+                        // For Band using Eye Shader so variable name is Changed 
+                        // Variable is equal to eyename
+                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
+                    }
+                    else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
+                    {
+                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
+                           ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
+                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
                         else
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                     }
+                    else
+                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                }
 
-               // }
+                // }
                 //else if(hairColorai)
                 //{
                 //    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
@@ -1348,7 +1349,8 @@ public class CharcterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstants.xanaConstants.isNFTEquiped) {
+        if (XanaConstants.xanaConstants.isNFTEquiped)
+        {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
             // Update Mask Texture As well & reset Its Color
@@ -1364,7 +1366,7 @@ public class CharcterBodyParts : MonoBehaviour
             }
         }
         else
-        mainMaterial.SetTexture("_BaseMap", texture);
+            mainMaterial.SetTexture("_BaseMap", texture);
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }
@@ -1379,7 +1381,14 @@ public class CharcterBodyParts : MonoBehaviour
     {
         head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
     }
-
+    public void ApplyBodyTexture(Texture texture, GameObject applyOn)
+    {
+        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
+    }
+    public void ApplyFaceTexture(Texture texture, GameObject applyOn)
+    {
+        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
+    }
     public void ApplyTattoo(Texture texture, GameObject applyOn, CurrentTextureType nFTOjectType)
     {
         characterHeadMat = head.materials[2];
@@ -1749,6 +1758,16 @@ public class CharcterBodyParts : MonoBehaviour
                 applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
                 break;
             case CurrentTextureType.Skin:
+                if (avatarController.avatarGender == AvatarGender.Male)
+                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
+                else
+                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
+                break;
+            case CurrentTextureType.Face:
+                if (avatarController.avatarGender == AvatarGender.Male)
+                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
+                else
+                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(null, applyOn);

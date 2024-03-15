@@ -4861,9 +4861,9 @@ public class StoreManager : MonoBehaviour
     public void ApplyUGCValueOnCharacter(string _gender)
     {
         CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
+       // _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
         _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
-        _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
+       // _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
         for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
         {
             _charcterBodyParts.head.SetBlendShapeWeight(i, 0);
@@ -4878,12 +4878,25 @@ public class StoreManager : MonoBehaviour
             _charcterBodyParts.head.SetBlendShapeWeight(itemData.lipItemData, 100);
         if (itemData._hairItemData != null)
         {
-            if(!itemData._hairItemData.Contains("No Hair"))
+            if(!itemData._hairItemData.Contains("No hair"))
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
         }
         if (itemData._eyeItemData != null)
         {
             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
+        }
+        if (itemData.skin_color != null)
+        {
+            if (itemData.gender == "male")
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+            }
+            else
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+            }
         }
     }
     public void ApplyDefaultValueOnCharacter(string _gender)
@@ -4891,16 +4904,16 @@ public class StoreManager : MonoBehaviour
         CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
         if (_gender == AvatarGender.Male.ToString())
         {
-            _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.default_male_skin_color);
+            _charcterBodyParts.head.materials[2].SetTexture("_Base_Texture", itemData.default_male_face_color);
             _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_male_lips_color);
-            _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.default_male_skin_color);
+            _charcterBodyParts.body.materials[0].SetTexture("_Base_Texture", itemData.default_male_body_color);
             _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.maleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
         }
         else
         {
-            _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.default_female_skin_color);
+            _charcterBodyParts.head.materials[2].SetTexture("_Base_Texture", itemData.default_female_face_color);
             _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_female_lips_color);
-            _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.default_female_skin_color);
+            _charcterBodyParts.body.materials[0].SetTexture("_Base_Texture", itemData.default_female_body_color);
             _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.femaleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
         }
         for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
