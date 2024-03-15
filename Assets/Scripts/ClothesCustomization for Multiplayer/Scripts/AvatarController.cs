@@ -543,7 +543,7 @@ public class AvatarController : MonoBehaviour
                     }
                     if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                     {
-                        ApplyAIData(_CharacterData);
+                        ApplyAIData(_CharacterData,this.gameObject);
                     }
 
                 }
@@ -755,7 +755,7 @@ public class AvatarController : MonoBehaviour
                     }
                     if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
                     {
-                        ApplyAIData(_CharacterData);
+                        ApplyAIData(_CharacterData,this.gameObject);
                     }
                     #region Xana Avatar 1.0 //--> remove for xana avatar2.0
                     //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
@@ -1920,26 +1920,33 @@ public class AvatarController : MonoBehaviour
     /// Set avatar according to the AI 
     /// </summary>
     /// <param name="_CharacterData"> AI Character data</param>
-    void ApplyAIData(SavingCharacterDataClass _CharacterData)
+    void ApplyAIData(SavingCharacterDataClass _CharacterData, GameObject applyOn)
     {
+        string pathPath = "Assets/Store Items Addressables/";
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        //CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
-        //CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
-        //CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
-        if (_CharacterData.skin_color != null)
-        {
-            StartCoroutine(characterBodyParts.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
-        }
+        string gender=_CharacterData.gender != null ? _CharacterData.gender : "Male";
         if (_CharacterData.lip_color != null)
         {
-            StartCoroutine(characterBodyParts.ImplementColors(_CharacterData.lip_color, SliderType.LipsColor, this.gameObject));
+            characterBodyParts.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
-
             StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
+        }
+        if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
+        {
+            if (_CharacterData.ai_gender == "male")
+            {
+                StartCoroutine(addressableDownloader.DownloadAddressableTextureByName(pathPath+"1k_Boy_Face_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(addressableDownloader.DownloadAddressableTextureByName(pathPath+"1k_Boy_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
+            else
+            {
+                StartCoroutine(addressableDownloader.DownloadAddressableTextureByName(pathPath+"1k_Girl_Face_Textures", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Face));
+                StartCoroutine(addressableDownloader.DownloadAddressableTextureByName(pathPath+"1k_Girl_Body_Texture", _CharacterData.skin_color, this.gameObject, CurrentTextureType.Skin));
+            }
         }
         if (_CharacterData.hairItemData != null)
         {
@@ -1949,7 +1956,7 @@ public class AvatarController : MonoBehaviour
                     UnStichItem("Hair");
             }
             else
-                StartCoroutine(addressableDownloader.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
+                StartCoroutine(addressableDownloader.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", gender, applyOn.GetComponent<AvatarController>(), _CharacterData.hair_color, true));
         }
     }
 
@@ -2100,7 +2107,7 @@ public class AvatarController : MonoBehaviour
             }
             if (_CharacterData.charactertypeAi == true)
             {
-                ApplyAIData(_CharacterData);
+                ApplyAIData(_CharacterData,applyOn);
             }
             else 
             {
@@ -2235,136 +2242,7 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
         characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
-        
 
-    public Color GetColorCode(string colorCode)
-    {
-        for (int i = 0; i < _nftAvatarColorCodes.colorCodes.Count; i++)
-        {
-            if (colorCode.ToLower() == _nftAvatarColorCodes.colorCodes[i].colorName.ToLower())
-            {
-                return _nftAvatarColorCodes.colorCodes[i].updatedColor;
-            }
-        }
-        return Color.black;
-    }
-
-    public LightPresetNFT GetLightPresetValue(Color colorCode)
-    {
-        for (int i = 0; i < _nftAvatarColorCodes.colorCodes.Count; i++)
-        {
-            if (colorCode == _nftAvatarColorCodes.colorCodes[i].updatedColor)
-            {
-                return _nftAvatarColorCodes.colorCodes[i].LightPresetNFT;
-            }
-        }
-        return LightPresetNFT.DefaultSkin;
-    }
-    void OnBecameInvisible()
-    {
-        isVisibleOnCam = false;
-    }
-
-    void OnBecameVisible()
-    {
-        isVisibleOnCam = true;
-    }
-    void ApplyAIData(SavingCharacterDataClass _CharacterData)
-    {
-        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
-        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
-        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
-        //CharcterBodyParts.instance.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
-        //CharcterBodyParts.instance.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
-        //CharcterBodyParts.instance.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);
-        //if (_CharacterData.skin_color != null)
-        //{
-        //    StartCoroutine(characterBodyParts.ImplementColors(_CharacterData.skin_color, SliderType.Skin, this.gameObject));
-        //}
-        if (_CharacterData.lip_color != null)
-        {
-            characterBodyParts.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
-        }
-        if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
-        {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
-        if (_CharacterData.myItemObj.Count > 0)
-        {
-            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
-            {
-                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
-                {
-                    if (_CharacterData.myItemObj[i].ItemType.Contains("Legs") || _CharacterData.myItemObj[i].ItemType.Contains("Chest") || _CharacterData.myItemObj[i].ItemType.Contains("Feet") || _CharacterData.myItemObj[i].ItemType.Contains("Hair") || _CharacterData.myItemObj[i].ItemType.Contains("EyeWearable") || _CharacterData.myItemObj[i].ItemType.Contains("Glove") || _CharacterData.myItemObj[i].ItemType.Contains("Chain"))
-                    {
-                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
-                        {
-                            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
-                        }
-                        else
-                        {
-                            if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
-                            {
-                                if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
-                                {
-                                    if (wornShirt)
-                                    {
-                                        UnStichItem("Chest");
-                                        characterBodyParts.TextureForShirt(null);
-                                    }
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Hair"))
-                                {
-                                    if (wornHair)
-                                        UnStichItem("Hair");
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Legs"))
-                                {
-                                    if (wornPant)
-                                    {
-                                        UnStichItem("Legs");
-                                        characterBodyParts.TextureForPant(null);
-                                    }
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Feet"))
-                                {
-                                    if (wornShoes)
-                                    {
-                                        UnStichItem("Feet");
-                                        characterBodyParts.TextureForShoes(null);
-                                    }
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("EyeWearable"))
-                                {
-                                    if (wornEyeWearable)
-                                        UnStichItem("EyeWearable");
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Glove"))
-                                {
-                                    if (wornGloves)
-                                    {
-                                        UnStichItem("Glove");
-                                        characterBodyParts.TextureForGlove(null);
-                                    }
-                                }
-                                else if (_CharacterData.myItemObj[i].ItemType.Contains("Chain"))
-                                {
-                                    if (wornChain)
-                                        UnStichItem("Chain");
-                                }
-                            }
-                            else
-                            {
-                                WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        WearDefaultItem(_CharacterData.myItemObj[i].ItemType, this.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
-                    }
-                }
-            }
-        }
     }
     
     /// <summary>
@@ -2432,7 +2310,7 @@ public class AvatarController : MonoBehaviour
     //{
     //    isVisibleOnCam = true;
     //}
-     //public void ApplyPreset(SavingCharacterDataClass _CharacterData)
+    //public void ApplyPreset(SavingCharacterDataClass _CharacterData)
     //{
     //    presetHairColor = _CharacterData.HairColor;
     //    if (_CharacterData.myItemObj.Count > 0)
@@ -2537,26 +2415,26 @@ public class AvatarController : MonoBehaviour
     //    //EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     //    #endregion
     //}
-  //private void SetItemIdsFromFile(SavingCharacterDataClass _CharacterData)
-  //{
-  //    presetValue = _CharacterData.PresetValue;
-  //    hairColorPaletteId = _CharacterData.HairColorPaletteValue;
-  //    skinId = _CharacterData.SkinId;
-  //    faceId = _CharacterData.FaceValue;
-  //    eyeBrowId = _CharacterData.EyeBrowValue;
-  //    eyeBrowColorPaletteId = _CharacterData.EyeBrowColorPaletteValue;
-  //    eyesId = _CharacterData.EyeValue;
-  //    eyesColorId = _CharacterData.EyesColorValue;
-  //    eyesColorPaletteId = _CharacterData.EyesColorPaletteValue;
-  //    noseId = _CharacterData.NoseValue;
-  //    lipsId = _CharacterData.LipsValue;
-  //    lipsColorId = _CharacterData.LipsColorValue;
-  //    lipsColorPaletteId = _CharacterData.LipsColorPaletteValue;
-  //    bodyFat = _CharacterData.BodyFat;
-  //    eyeLashesId = _CharacterData.EyeLashesValue;
-  //    makeupId = _CharacterData.MakeupValue;
-  //}
-  
+    //private void SetItemIdsFromFile(SavingCharacterDataClass _CharacterData)
+    //{
+    //    presetValue = _CharacterData.PresetValue;
+    //    hairColorPaletteId = _CharacterData.HairColorPaletteValue;
+    //    skinId = _CharacterData.SkinId;
+    //    faceId = _CharacterData.FaceValue;
+    //    eyeBrowId = _CharacterData.EyeBrowValue;
+    //    eyeBrowColorPaletteId = _CharacterData.EyeBrowColorPaletteValue;
+    //    eyesId = _CharacterData.EyeValue;
+    //    eyesColorId = _CharacterData.EyesColorValue;
+    //    eyesColorPaletteId = _CharacterData.EyesColorPaletteValue;
+    //    noseId = _CharacterData.NoseValue;
+    //    lipsId = _CharacterData.LipsValue;
+    //    lipsColorId = _CharacterData.LipsColorValue;
+    //    lipsColorPaletteId = _CharacterData.LipsColorPaletteValue;
+    //    bodyFat = _CharacterData.BodyFat;
+    //    eyeLashesId = _CharacterData.EyeLashesValue;
+    //    makeupId = _CharacterData.MakeupValue;
+    //}
+
     //public void ResetForLastSaved()
     //{
     //    //body fats

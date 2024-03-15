@@ -9413,6 +9413,22 @@ MonoBehaviour:
   JBoneY: 0
   JBoneZ: 0
   Lipscalex: 0
+  _scaleBodyParts:
+  - {fileID: 4957070493463332683}
+  - {fileID: 4053834382968438146}
+  - {fileID: 476521748252496786}
+  - {fileID: 6009445455164666465}
+  - {fileID: 1427258235822931171}
+  - {fileID: 1093323246710384493}
+  - {fileID: 1424388851358299721}
+  - {fileID: 8733953693097589993}
+  - {fileID: 53403511407339746}
+  - {fileID: 8441561779425750641}
+  - {fileID: 2197490783866425027}
+  - {fileID: 4777161437979696707}
+  - {fileID: 3425428326760735782}
+  - {fileID: 8983840790442678165}
+  - {fileID: 653577013105799223}
   skinColor:
   - {r: 1, g: 0.9764706, b: 0.9647059, a: 1}
   - {r: 1, g: 0.95686275, b: 0.9372549, a: 1}
@@ -9553,33 +9569,12 @@ MonoBehaviour:
   eyeBrowsColor: []
   eyeColor: []
   lipColorPalette: []
-  _scaleBodyParts:
-  - {fileID: 4957070493463332683}
-  - {fileID: 4053834382968438146}
-  - {fileID: 476521748252496786}
-  - {fileID: 6009445455164666465}
-  - {fileID: 1427258235822931171}
-  - {fileID: 1093323246710384493}
-  - {fileID: 1424388851358299721}
-  - {fileID: 8733953693097589993}
-  - {fileID: 53403511407339746}
-  - {fileID: 8441561779425750641}
-  - {fileID: 2197490783866425027}
-  - {fileID: 4777161437979696707}
-  - {fileID: 3425428326760735782}
-  - {fileID: 8983840790442678165}
-  - {fileID: 653577013105799223}
   BonesData: []
+  defaultSssValue: 2.52
+  PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 1}
   defaultMakeup: {fileID: 2800000, guid: debcfd3efb58eac47a3661c64709eeca, type: 3}
   defaultEyelashes: {fileID: 2800000, guid: 75c3178072dcf594d8b77c388805d825, type: 3}
   defaultEyebrow: {fileID: 2800000, guid: 6567fa19e33f8324eb307f5c86ad308b, type: 3}
-  defaultMakeupv2: {fileID: 0}
-  defaultEyelashesv2: {fileID: 0}
-  defaultEyebrowv2: {fileID: 0}
-  Eye_Texturev2: {fileID: 0}
-  defaultPngForSkinIcon: {fileID: 21300000, guid: 798e5c914621dd347bdc9c980d2a54c7, type: 3}
-  defaultSssValue: 2.52
-  PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 1}
   avatarController: {fileID: 1756241672296322622}
   maleAvatarMeshes:
     avatar_parent: {fileID: 1927032664030780078}
@@ -9590,7 +9585,7 @@ MonoBehaviour:
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
     Face_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
-    Skin_Texture: {fileID: 2800000, guid: f2ff702bbc9a048448e3946b295bb063, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
   femaleAvatarMeshes:
     avatar_parent: {fileID: 7312622536844020264}
     avatar_body: {fileID: 3012711319047648032}
@@ -9600,7 +9595,7 @@ MonoBehaviour:
     Shoe_Texture: {fileID: 0}
     Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
     Face_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
-    Skin_Texture: {fileID: 2800000, guid: c859e0833b251544883fc068cecec0d8, type: 3}
+    Skin_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 0}
@@ -10107,48 +10102,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFrndAvatar: 0
+  IsInit: 0
   staticPlayer: 0
+  isWearOrNot: 0
+  isClothLoaded: 0
   isLoadStaticClothFromJson: 0
   staticClothJson: 
   clothJson: 
+  presetValue: 
+  avatarGender: 0
   wornHair: {fileID: 0}
   wornPant: {fileID: 0}
   wornShirt: {fileID: 0}
-  wornShose: {fileID: 0}
-  wornEyewearable: {fileID: 0}
+  wornShoes: {fileID: 0}
+  wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
-  wornHairId: 0
-  hairColorPaletteId: 0
-  wornPantId: 0
-  wornShirtId: 0
-  wornShoesId: 0
-  wornEyewearableId: 0
-  skinId: 0
-  faceId: 0
-  eyeBrowId: 0
-  eyeBrowColorPaletteId: 0
-  eyesId: 0
-  eyesColorId: 0
-  eyesColorPaletteId: 0
-  noseId: 0
-  lipsId: 0
-  lipsColorId: 0
-  lipsColorPaletteId: 0
-  bodyFat: 0
-  makeupId: 0
-  eyeLashesId: 0
-  wornGlovesId: 0
-  wornChainId: 0
-  presetValue: 
-  avatarGender: 0
-  masks: []
-  IsInit: 0
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
-  isVisibleOnCam: 0
   characterBodyParts: {fileID: 4834376472678329915}
-  isWearOrNot: 0
-  isClothLoaded: 0
   _PCharacterData:
     id: 
     name: 
@@ -10215,6 +10187,30 @@ MonoBehaviour:
     special_move: 0
     punch: 0
     kick: 0
+  ArAnimator: {fileID: 0}
+  wornHairId: 0
+  hairColorPaletteId: 0
+  wornPantId: 0
+  wornShirtId: 0
+  wornShoesId: 0
+  wornEyewearableId: 0
+  skinId: 0
+  faceId: 0
+  eyeBrowId: 0
+  eyeBrowColorPaletteId: 0
+  eyesId: 0
+  eyesColorId: 0
+  eyesColorPaletteId: 0
+  noseId: 0
+  lipsId: 0
+  lipsColorId: 0
+  lipsColorPaletteId: 0
+  bodyFat: 0
+  makeupId: 0
+  eyeLashesId: 0
+  wornGlovesId: 0
+  wornChainId: 0
+  masks: []
 --- !u!114 &1582677740331861179
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1380,11 +1380,11 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void ApplyBodyTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
     }
     public void ApplyFaceTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
     }
     public void ApplyTattoo(Texture texture, GameObject applyOn, CurrentTextureType nFTOjectType)
     {
@@ -1756,15 +1756,15 @@ public class CharacterBodyParts : MonoBehaviour
                 break;
             case CurrentTextureType.Skin:
                 if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
+                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
                 else
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
+                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
                 break;
             case CurrentTextureType.Face:
                 if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
+                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
                 else
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
+                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharacterBodyParts>().RemoveEyeLidTexture(null, applyOn);

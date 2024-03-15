@@ -388,7 +388,7 @@ public class AddressableDownloader : MonoBehaviour
 
             if (loadOp.Status == AsyncOperationStatus.Failed)
             {
-                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(nFTOjectType, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().SetTextureDefault(nFTOjectType, applyOn);
                 yield break;
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
@@ -397,10 +397,10 @@ public class AddressableDownloader : MonoBehaviour
                 switch (nFTOjectType)
                 {
                     case CurrentTextureType.Skin:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(loadOp.Result as Texture, applyOn);
+                        applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.Face:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(loadOp.Result as Texture, applyOn);
+                        applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(loadOp.Result as Texture, applyOn);
                         break;
                     default:
                         break;

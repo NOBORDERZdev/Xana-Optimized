@@ -4862,7 +4862,7 @@ public class StoreManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter(string _gender)
     {
-        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        CharacterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
        // _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
         _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
        // _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
