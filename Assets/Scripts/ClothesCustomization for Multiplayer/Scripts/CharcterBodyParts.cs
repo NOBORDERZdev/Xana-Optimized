@@ -1366,7 +1366,10 @@ public class CharcterBodyParts : MonoBehaviour
             }
         }
         else
+        {
             mainMaterial.SetTexture("_BaseMap", texture);
+            mainMaterial.SetTexture("_EmissionMap", texture);
+        }
         // After EyeShader update need to pass this texture to another property
         //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }
