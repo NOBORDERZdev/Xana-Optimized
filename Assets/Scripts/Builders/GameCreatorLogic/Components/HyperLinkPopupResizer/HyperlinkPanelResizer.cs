@@ -14,7 +14,6 @@ public class HyperlinkPanelResizer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     private int rightPosition = 23;
     private int bottomPosition = -9;
-    public bool isJP = false;
 
     private void OnEnable()
     {
@@ -29,12 +28,10 @@ public class HyperlinkPanelResizer : MonoBehaviour
             case false:
                 viewportRectT.offsetMin = new Vector2(0, 0);
                 viewportRectT.offsetMax = new Vector2(0, 0);
-                isJP = false;
                 break;
             case true:
                 viewportRectT.offsetMin = new Vector2(viewportRectT.offsetMin.x, bottomPosition);
                 viewportRectT.offsetMax = new Vector2(-rightPosition, viewportRectT.offsetMax.y);
-                isJP = true;
                 break;
         }
         StopCoroutine(CheckJapaneseRoutine());
