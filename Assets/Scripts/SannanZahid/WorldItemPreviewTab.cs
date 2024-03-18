@@ -264,6 +264,9 @@ public class WorldItemPreviewTab : MonoBehaviour
     public TextMeshProUGUI wrongCodeText;
     public void PMY_CodeEnter()
     {
+        if(Application.isEditor && XanaConstants.xanaConstants.pmy_isTesting)
+            WorldManager.instance.PlayWorld();
+
         // Check Enter code is Ok or Not
         if (IsClassCodeValid((classCodeInputField_text.text)))
         {

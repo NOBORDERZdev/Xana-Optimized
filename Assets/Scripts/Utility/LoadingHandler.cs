@@ -239,7 +239,6 @@ public class LoadingHandler : MonoBehaviour
         //    loadingPanel.SetActive(true);
         //}
 
-
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
@@ -524,7 +523,8 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+            if ((XanaConstants.xanaConstants.isBackFromPMY || XanaConstants.xanaConstants.isFromXanaLobby 
+                || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                 teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
@@ -558,8 +558,9 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy || XanaConstants.xanaConstants.isFromPMYLobby)
+                if ((XanaConstants.xanaConstants.isFromPMYLobby || XanaConstants.xanaConstants.isFromXanaLobby 
+                    || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                    teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
