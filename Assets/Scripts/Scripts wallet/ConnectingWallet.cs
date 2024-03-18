@@ -737,10 +737,8 @@ public class ConnectingWallet : MonoBehaviour
         {
             yield return null;
         }
-        Debug.LogError(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
-            Debug.LogError("here1");
             AppID = uniqueID();
             GetXanaliaNounce(sign, walletAddress, nonce);
             yield return new WaitForSeconds(0.5f);
@@ -770,7 +768,7 @@ public class ConnectingWallet : MonoBehaviour
         while (!request.isDone)
             yield return null;
         ConnectServerDataExtraction.NounceMsgXanalia NounceReadObjXanalia = JsonUtility.FromJson<ConnectServerDataExtraction.NounceMsgXanalia>(request.downloadHandler.text);
-        Debug.LogError(request.downloadHandler.text);
+        //Debug.LogError(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (NounceReadObjXanalia.success)
@@ -803,29 +801,34 @@ public class ConnectingWallet : MonoBehaviour
         form.AddField("nonce", nonce);
         request = UnityWebRequest.Post(url, form);
         request.SendWebRequest();
-        Debug.LogError("request has sent already");
+        //Debug.LogError("request has sent already");
         while (!request.isDone)
         {
             yield return null;
         }
         ConnectServerDataExtraction.ClassWithToken VerifySignatureReadObj = new ConnectServerDataExtraction.ClassWithToken();
         VerifySignatureReadObj = ConnectServerDataExtraction.ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        Debug.LogError(request.downloadHandler.text);
+        //Debug.LogError(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (VerifySignatureReadObj.success)
-            {
-                //PlayerPrefs.SetInt("WalletLogin", 1);
+            { 
+                PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 XanaConstants.xanaToken = VerifySignatureReadObj.data.token;
+                XanaConstants.loggedIn = true;
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
 
+                UserLoginSignupManager.instance.LoginWithWallet();
+                PlayerPrefs.Save();
+                SetNameInServer();
+                GetNFTList();
 
                 ConnectServerDataExtraction.VerifySignedMsgClass VerifySignatureObj = new ConnectServerDataExtraction.VerifySignedMsgClass();
                 VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
                 var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
-                Debug.LogError(sign + "--" + ServerNounceXanalia);
+                //Debug.LogError(sign + "--" + ServerNounceXanalia);
                 StartCoroutine(HitChainSafeVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.VerifySignedXanaliaURL, sign, ServerNounceXanalia));
             }
         }
@@ -867,7 +870,6 @@ public class ConnectingWallet : MonoBehaviour
         }
         ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia VerifySignatureReadObj = new ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia();
         VerifySignatureReadObj = JsonUtility.FromJson<ConnectServerDataExtraction.VerifyReadSignedMsgFromServerXanalia>(request.downloadHandler.text);
-        Debug.LogError("---"+request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
@@ -925,26 +927,28 @@ public class ConnectingWallet : MonoBehaviour
         }
         else
         {
-            if (request.result == UnityWebRequest.Result.ConnectionError)
-            {
-                UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
-                UserLoginSignupManager.instance.ShowWelcomeScreen();
-                DisconnectRequestToServer();
-                Debug.Log("Network error in Verify signature of xanalia");
-            }
-            else
-            {
-                if (request.error != null)
-                {
-                    if (!VerifySignatureReadObj.success)
-                    {
-                        UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
-                        UserLoginSignupManager.instance.ShowWelcomeScreen();
-                        DisconnectRequestToServer();
-                        Debug.Log("Success false in  verify sig  of xanalia");
-                    }
-                }
-            }
+            //Api is not working from Xanalia side so commented for now to temp fix issue -18-03-2024
+
+            //if (request.result == UnityWebRequest.Result.ConnectionError)
+            //{
+            //    UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
+            //    UserLoginSignupManager.instance.ShowWelcomeScreen();
+            //    DisconnectRequestToServer();
+            //    Debug.Log("Network error in Verify signature of xanalia");
+            //}
+            //else
+            //{
+            //    if (request.error != null)
+            //    {
+            //        if (!VerifySignatureReadObj.success)
+            //        {
+            //            UserLoginSignupManagerInstance.ShowValidationPop(Sign_Up_Scripts.ErrorType.Could_not_verify_signature);
+            //            UserLoginSignupManager.instance.ShowWelcomeScreen();
+            //            DisconnectRequestToServer();
+            //            Debug.Log("Success false in  verify sig  of xanalia");
+            //        }
+            //    }
+            //}
         }
         request.Dispose();
     }

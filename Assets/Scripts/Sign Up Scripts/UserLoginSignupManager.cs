@@ -24,7 +24,6 @@ public class UserLoginSignupManager : MonoBehaviour
     [Header("User Login Section")]
     public GameObject emailOrWalletLoginPanel;
     public GameObject emailLoginPanel;
-    //public GameObject walletLoginPanel;
 
     [Space(10)]
     public GameObject signUpWithEmailPanel;
@@ -43,12 +42,6 @@ public class UserLoginSignupManager : MonoBehaviour
     public GameObject sendAgainTimer;
     public Button sendAgainButton;
     public Text[] otpTexts;
-
-    [Space(10)]
-    public GameObject avatarSelectionPanel;
-    public GameObject presetsScrollview;
-    public GameObject aiMagicSelfieButton;
-    public GameObject avatarSelectionNextButton;
 
     [Space(10)]
     public GameObject enterNamePanel;
@@ -401,6 +394,8 @@ public class UserLoginSignupManager : MonoBehaviour
         SubmitSetDeviceToken();
         GetUserClothData();
         GetOwnedNFTsFromAPI();
+        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (UIManager.Instance != null)//rik
         {
@@ -453,7 +448,6 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         if (IsValidEmail(L_LoginEmail))
         {
-            Debug.LogError("tryue");
             return true;
         }
         else if(checkForLogin && IsPhoneNbr(L_LoginEmail))
@@ -599,7 +593,6 @@ public class UserLoginSignupManager : MonoBehaviour
             yield return null;
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        Debug.LogError(request.downloadHandler.text);
         myObject1 = myObject1.Load(request.downloadHandler.text);
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
@@ -1624,5 +1617,16 @@ public class UserLoginSignupManager : MonoBehaviour
         public string msg;
     }
     #endregion
+
+    enum NftRolePriority
+    {
+        alpha_pass,
+        dj_event,
+        vip_pass,
+        premium,
+        free,
+        guest,
+        Astroboy
+    }
 }
 

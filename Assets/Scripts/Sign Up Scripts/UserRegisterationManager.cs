@@ -10,15 +10,13 @@ using System;
 using System.Text;
 using Newtonsoft.Json;
 using TMPro;
-//using Mopsicus.Plugins;
+
 using Sign_Up_Scripts;
 using UnityEngine.EventSystems;
 using System.IO;
-using UnityEngine.UI;
+
 using AdvancedInputFieldPlugin;
 using System.Linq;
-using UnityEngine.SceneManagement;
-//using MoralisUnity;
 using System.Threading.Tasks;
 
 
@@ -1162,7 +1160,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -1175,7 +1173,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //        //errorTextPassword.GetComponent<Text>().text = request.error.ToUpper();
                 //        errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                 //    }
-                  
+
                 //}
             }
             else
@@ -1194,9 +1192,9 @@ public class UserRegisterationManager : MonoBehaviour
                             //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                             errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
                         }
-                            // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
-                        }
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
+                }
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
             LoadingHandler.Instance.HideLoading();
@@ -1294,7 +1292,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
         SavaCharacterProperties.instance.LoadMorphsfromFile();
-    } 
+    }
 
     // Submit Logout
     public string GetDeviceToken()
@@ -1328,7 +1326,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
@@ -1451,7 +1449,7 @@ public class UserRegisterationManager : MonoBehaviour
                 yield return null;
             }
             ClassforUserDetails myObject1 = new ClassforUserDetails();
-            if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+            if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
             {
                 myObject1 = myObject1.CreateFromJSON(request.downloadHandler.text);
                 if (request.error == null)
@@ -1495,7 +1493,7 @@ public class UserRegisterationManager : MonoBehaviour
                                 //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                                 errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
                             }
-                         //   StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                            //   StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                         }
                     }
                 }
@@ -1532,12 +1530,12 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
@@ -1550,7 +1548,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -1577,7 +1575,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //  errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -1629,13 +1627,13 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
         myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -1652,7 +1650,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -1671,7 +1669,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextForgetAPI.GetComponent<TextMeshProUGUI>());
                 //    StartCoroutine(WaitUntilAnimationFinished(errorTextForgetAPI.GetComponent<Animator>()));
                 //}
-             }
+            }
             else
             {
                 if (_loader != null)
@@ -1780,7 +1778,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Authorization", ForgetPasswordTokenAfterVerifyling);
         yield return request.SendWebRequest();
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
@@ -1806,7 +1804,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -1843,7 +1841,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //     errorTextName.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         // }
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextName.GetComponent<TextMeshProUGUI>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextName.GetComponent<Animator>()));
                     }
                 }
             }
@@ -1957,10 +1955,10 @@ public class UserRegisterationManager : MonoBehaviour
             //
             errorHandler.ShowErrorMessage(ErrorType.Phone_number__empty.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
 
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
             return;
         }
-        
+
         if (PhoneFieldNew.Text.Length > 10)
         {
             validationMessagePopUP.SetActive(true);
@@ -2040,12 +2038,12 @@ public class UserRegisterationManager : MonoBehaviour
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", PlayerPrefs.GetString("LoginToken"));
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
@@ -2058,7 +2056,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -2086,7 +2084,7 @@ public class UserRegisterationManager : MonoBehaviour
                         //errorTextPassword.GetComponent<Text>().text = myObject1.msg.ToUpper();
                         //errorHandler.ShowErrorMessage(ErrorType.Wrong_Password, errorTextPassword.GetComponent<Text>());
                         errorHandler.ShowErrorMessage(myObject1.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2103,7 +2101,7 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
@@ -2118,7 +2116,7 @@ public class UserRegisterationManager : MonoBehaviour
         MyClassNewApi myObject1 = new MyClassNewApi();
         myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
 
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -2139,7 +2137,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -2169,7 +2167,7 @@ public class UserRegisterationManager : MonoBehaviour
                 //    errorHandler.ShowErrorMessage(ErrorType.Poor_Connection.ToString(), errorTextNumber.GetComponent<TextMeshProUGUI>());
                 //    // StartCoroutine(WaitUntilAnimationFinished(errorTextNumber.GetComponent<Animator>()));
                 //}
-             }
+            }
             else
             {
                 if (request.error != null)
@@ -2248,7 +2246,7 @@ public class UserRegisterationManager : MonoBehaviour
             errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Email_field__empty.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             return;
         }
         else
@@ -2293,7 +2291,7 @@ public class UserRegisterationManager : MonoBehaviour
                 errorTextEmail.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                 //  errorTextEmail.GetComponent<Animator>().SetBool("playAnim", true);
                 errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextEmail.GetComponent<TextMeshProUGUI>());
-             //   StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
+                //   StartCoroutine(WaitUntilAnimationFinished(errorTextEmail.GetComponent<Animator>()));
             }
         }
     }
@@ -2331,12 +2329,12 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (_loader != null)
             {
@@ -2361,7 +2359,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -2438,7 +2436,7 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextPIN.GetComponent<Text>().text = "OTP fields should not be empty";
             // }
             errorHandler.ShowErrorMessage(ErrorType.OTP_fields__empty.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+            //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
             return;
         }
         if (ForgetPasswordBool)
@@ -2529,7 +2527,7 @@ public class UserRegisterationManager : MonoBehaviour
             //errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Password_field__empty.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
         }
 
@@ -2543,7 +2541,7 @@ public class UserRegisterationManager : MonoBehaviour
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_cannot_less_than_eight_charcters.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            //  StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             return;
         }
 
@@ -2583,10 +2581,10 @@ public class UserRegisterationManager : MonoBehaviour
             validationMessagePopUP.SetActive(true);
             errorTextPassword.SetActive(true);
             errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            
+
             // errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
             errorHandler.ShowErrorMessage(ErrorType.Passwords_do_not_match.ToString(), errorTextPassword.GetComponent<TextMeshProUGUI>());
-             //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+            //StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
             //   print("Password not matched");
         }
     }
@@ -2601,13 +2599,13 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         ClassWithToken myObject = new ClassWithToken();
         TokenDataClass = myObject = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -2659,9 +2657,9 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            
+
             if (request.isNetworkError)
-             {
+            {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
                 //    validationMessagePopUP.SetActive(true);
@@ -2684,7 +2682,7 @@ public class UserRegisterationManager : MonoBehaviour
                         errorTextPassword.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
                         //   errorTextPassword.GetComponent<Animator>().SetBool("playAnim", true);
                         errorHandler.ShowErrorMessage(myObject.msg, errorTextPassword.GetComponent<TextMeshProUGUI>());
-                       // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
+                        // StartCoroutine(WaitUntilAnimationFinished(errorTextPassword.GetComponent<Animator>()));
                     }
                 }
             }
@@ -2801,7 +2799,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             return;
         }
-        PlayerPrefs.SetInt("IsProcessComplete", 1);  
+        PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
@@ -2855,7 +2853,7 @@ public class UserRegisterationManager : MonoBehaviour
             //     errorTextLogin.GetComponent<Text>().text = "Fields should not be empty";
             //  }
             errorHandler.ShowErrorMessage(ErrorType.Fields__empty.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
             return;
         }
         else if (L_LoginEmail.Contains(" "))
@@ -2863,7 +2861,7 @@ public class UserRegisterationManager : MonoBehaviour
             validationMessagePopUP.SetActive(true);
             errorTextLogin.GetComponent<TextMeshProUGUI>().color = new Color(0.44f, 0.44f, 0.44f, 1f);
             errorHandler.ShowErrorMessage(ErrorType.Please_enter_valid_email.ToString(), errorTextLogin.GetComponent<TextMeshProUGUI>());
-           // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
+            // StartCoroutine(WaitUntilAnimationFinished(errorTextLogin.GetComponent<Animator>()));
             return;
         }
         string url = ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL;
@@ -2945,14 +2943,14 @@ public class UserRegisterationManager : MonoBehaviour
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SendWebRequest();
-        while(!request.isDone)
+        while (!request.isDone)
         {
             yield return null;
         }
         MyClassNewApi obj_LogOut = new MyClassNewApi();
         obj_LogOut = obj_LogOut.Load(request.downloadHandler.text);
 
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -2965,7 +2963,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 ////Debug.Log("Network error in logout from other device");
             }
@@ -3013,7 +3011,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 yield return null;
             }
-            if (www.result!=UnityWebRequest.Result.ConnectionError)
+            if (www.result != UnityWebRequest.Result.ConnectionError)
             {
                 validationMessagePopUP.SetActive(true);
                 errorTextEmail.SetActive(true);
@@ -3072,7 +3070,7 @@ public class UserRegisterationManager : MonoBehaviour
             myObjectForOPT = CheckResponceJsonNewApi(request.downloadHandler.text);
         }
 
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -3140,7 +3138,7 @@ public class UserRegisterationManager : MonoBehaviour
                             //          errorTextPIN.GetComponent<Text>().text = myObjectofOTPForResetPassword.msg.ToUpper();
                             //   }
                             errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
-                          //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                            //  StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
                         }
                     }
                     else
@@ -3158,7 +3156,7 @@ public class UserRegisterationManager : MonoBehaviour
                             //          errorTextPIN.GetComponent<Text>().text = myObjectForOPT.msg.ToUpper();
                             //  }
                             errorHandler.ShowErrorMessage(ErrorType.Authentication_Code_is_Incorrect.ToString(), errorTextPIN.GetComponent<TextMeshProUGUI>());
-                           // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
+                            // StartCoroutine(WaitUntilAnimationFinished(errorTextPIN.GetComponent<Animator>()));
                         }
 
                     }
@@ -3203,7 +3201,7 @@ public class UserRegisterationManager : MonoBehaviour
                         SubmitSetDeviceToken();
                         LoggedInAsGuest = false;
                         PlayerPrefs.SetString("PlayerName", localUsername);
-                        
+
                         OpenUIPanal(16);
                         usernamePanal.SetActive(false);
                         currentSelectedNxtButton.interactable = true;
@@ -3216,7 +3214,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -3283,7 +3281,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         MyClassNewApi myObject1 = new MyClassNewApi();
 
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             myObject1 = CheckResponceJsonNewApi(request.downloadHandler.text);
             if (request.error == null)
@@ -3314,7 +3312,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -3404,7 +3402,7 @@ public class UserRegisterationManager : MonoBehaviour
         ClassWithToken myObject1 = new ClassWithToken();
         myObject1 = ClassWithToken.CreateFromJSON(request.downloadHandler.text);
 
-        if (request.result!=UnityWebRequest.Result.ConnectionError && request.result==UnityWebRequest.Result.Success)
+        if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (request.error == null)
             {
@@ -3538,7 +3536,7 @@ public class UserRegisterationManager : MonoBehaviour
         }
         else
         {
-            if (request.result==UnityWebRequest.Result.ConnectionError)
+            if (request.result == UnityWebRequest.Result.ConnectionError)
             {
                 //if (!ConnectionEstablished_popUp.activeInHierarchy)
                 //{
@@ -3745,7 +3743,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             if (request.result == UnityWebRequest.Result.ConnectionError)
             {
-                
+
             }
             else
             {
@@ -4035,17 +4033,19 @@ public class UserRegisterationManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         MyAnim.SetBool("playAnim", false);
     }
+
+    enum NftRolePriority
+    {
+        alpha_pass,
+        dj_event,
+        vip_pass,
+        premium,
+        free,
+        guest,
+        Astroboy
+    }
 }
 
-enum NftRolePriority
-{
-    alpha_pass,
-    dj_event,
-    vip_pass,
-    premium,
-    free,
-    guest,
-    Astroboy
-}
+
 
 #endregion
