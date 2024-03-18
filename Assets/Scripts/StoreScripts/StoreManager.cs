@@ -4892,15 +4892,17 @@ public class StoreManager : MonoBehaviour
         }
         if (itemData.skin_color != null)
         {
+            char[] charsToTrim = { '#' };
+            string cleanString = itemData.skin_color.TrimStart(charsToTrim);
             if (itemData.gender == "male")
-            {
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+            {//itemData.skin_color
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", cleanString, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", cleanString, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
             }
             else
             {
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", cleanString, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", cleanString, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
             }
         }
     }
