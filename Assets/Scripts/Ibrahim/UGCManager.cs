@@ -238,7 +238,9 @@ public class UGCManager : MonoBehaviour
     {
         StoreManager.instance.itemData.gender = ugcItems.gender.ToLower();
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
-        StoreManager.instance.itemData.skin_color = ugcItems.skin_color;
+        char[] charsToTrim = { '#' };
+        string cleanString = ugcItems.skin_color.TrimStart(charsToTrim);
+        StoreManager.instance.itemData.skin_color = cleanString;
         StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
         StoreManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)
