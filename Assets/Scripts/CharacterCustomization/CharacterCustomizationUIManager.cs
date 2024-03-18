@@ -38,8 +38,10 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
     public Camera m_MainCamera;
     public GameObject SlidersSaveButton;
+    GameManager gameManager;
     private void Awake()
     {
+        gameManager = gameManager?? GameManager.Instance;
         if (Instance == null)
             Instance = this;
     }
@@ -81,7 +83,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     {
         LoadPanel_BodyCustomization("My");
         ZoomInCamera();
-        GameManager.Instance.ChangeCharacterAnimationState(true);
+        gameManager.ChangeCharacterAnimationState(true);
         CharacterCustomizationManager.Instance.ResetCharacterRotation(180f); 
     }
 
@@ -90,20 +92,20 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         ZoomOutCamera();
 
         CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
-        GameManager.Instance.ChangeCharacterAnimationState(false);
+        gameManager.ChangeCharacterAnimationState(false);
     }
 
     public void LoadPanel_BodyCustomization(string panelName)
     {
         if (panelName == "Face")
         {
-            GameManager.Instance.ChangeCharacterAnimationState(true);
+            gameManager.ChangeCharacterAnimationState(true);
             ZoomInCamera();
         }
         else
         {
             ZoomInCamera();
-            GameManager.Instance.ChangeCharacterAnimationState(false);
+            gameManager.ChangeCharacterAnimationState(false);
         }
     }
 
@@ -125,21 +127,21 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     {
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = false;
 
-        GameManager.Instance.ChangeCharacterAnimationState(true);
+        gameManager.ChangeCharacterAnimationState(true);
         
         // Commented By WaqasAhmad
         //CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = false;
         //CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = false;
 
       StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        UIManager.Instance.faceMorphPanel.SetActive(true);
-        GameManager.Instance.faceMorphCam.SetActive(true);
+        gameManager.UiManager.faceMorphPanel.SetActive(true);
+        gameManager.faceMorphCam.SetActive(true);
     }
 
 
     public void CloseCustomBlendShapePanel()
     {
-        UIManager.Instance._footerCan.SetActive(true);
+        gameManager.UiManager._footerCan.SetActive(true);
         StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         // Commented By Ahsan
         //if (StoreManager.instance.ParentOfBtnsAvatarEyeBrows.gameObject.activeSelf)
@@ -150,19 +152,19 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //    }
         //    StoreManager.instance.SubmitAllItemswithSpecificSubCategory(StoreManager.instance.SubCategoriesList[XanaConstants.xanaConstants.currentButtonIndex + 8].id, true);
         //}
-        UIManager.Instance.faceMorphPanel.SetActive(false);
-        GameManager.Instance.faceMorphCam.SetActive(false);
+        gameManager.UiManager.faceMorphPanel.SetActive(false);
+        gameManager.faceMorphCam.SetActive(false);
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
 
         CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
         CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
         //---------------------------------
 
-        GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+        gameManager.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         CharacterCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
-        //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
-        //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
-        GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.6f, 6.41f);
+        //gameManager.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
+        //gameManager.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
+        gameManager.mainCharacter.transform.localPosition = new Vector3(0f, -1.6f, 6.41f);
 
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
         CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
@@ -175,7 +177,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //Comment because file is rewriting the vale here again...(Abdullah)
         //SavaCharacterProperties.instance.AssignCustomSlidersData();
         StoreManager.instance.ResetMorphBooleanValues();
-        GameManager.Instance.BlendShapeImporter.TurnOffAllObjects();
+        gameManager.BlendShapeImporter.TurnOffAllObjects();
 
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         if (!EyesBlinking.instance.isCoroutineRunning)
@@ -190,20 +192,20 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     // save morph to server 
     public void CloseCustomBlendShapePanelSave_Morphs()
     {
-        UIManager.Instance._footerCan.SetActive(true);
+        gameManager.UiManager._footerCan.SetActive(true);
         StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        UIManager.Instance.faceMorphPanel.SetActive(false);
-        GameManager.Instance.faceMorphCam.SetActive(false);
+        gameManager.UiManager.faceMorphPanel.SetActive(false);
+        gameManager.faceMorphCam.SetActive(false);
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
 
         CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
         CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
         //---------------------------------
 
-        GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
+        gameManager.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
         CharacterCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
-        //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
-        GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
+        //gameManager.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
+        gameManager.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
 
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
         CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
@@ -224,7 +226,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     public void LoadMyFaceCustomizationPanel()
     {
         CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
-        GameManager.Instance.ChangeCharacterAnimationState(true);
+        gameManager.ChangeCharacterAnimationState(true);
         ZoomInCamera();
     }
 
@@ -232,7 +234,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     {
         CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
-        GameManager.Instance.ChangeCharacterAnimationState(false);
+        gameManager.ChangeCharacterAnimationState(false);
         ZoomOutCamera();
     }
     #endregion

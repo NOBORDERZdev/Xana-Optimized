@@ -10,6 +10,9 @@ public class NFTBoxerEyeData : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+    void Start()
+    {
         bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
     /// <summary>

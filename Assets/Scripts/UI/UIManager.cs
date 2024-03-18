@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
@@ -38,7 +37,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
         Canvas.GetComponent<CanvasGroup>().interactable = false;

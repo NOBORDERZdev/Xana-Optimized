@@ -1168,7 +1168,7 @@ public class StoreManager : MonoBehaviour
                     StoreItemsPanel.SetActive(false);
                     ShowSignUpPanel.SetActive(false);
                     GameManager.Instance.BGPlane.SetActive(false);
-                    UIManager.Instance.HomePage.SetActive(true);
+                    GameManager.Instance.UiManager.HomePage.SetActive(true);
                     UserRegisterationManager.instance.OpenUIPanal(6);
                     break;
                 }
@@ -1177,7 +1177,7 @@ public class StoreManager : MonoBehaviour
                     StoreItemsPanel.SetActive(false);
                     ShowSignUpPanel.SetActive(false);
                     GameManager.Instance.BGPlane.SetActive(false);
-                    UIManager.Instance.HomePage.SetActive(true);
+                    GameManager.Instance.UiManager.HomePage.SetActive(true);
                     UserRegisterationManager.instance.OpenUIPanal(1);
                     break;
                 }
@@ -1337,7 +1337,7 @@ public class StoreManager : MonoBehaviour
 
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
-        UIManager.Instance.ShowFooter(true);
+        GameManager.Instance.UiManager.ShowFooter(true);
         if (saveStoreBtnButton.interactable == true)
             ReturnHomePopUp.SetActive(true);
         else

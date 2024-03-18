@@ -3110,9 +3110,9 @@ public class FeedUIController : MonoBehaviour
     }
 
     public void SetMainMenuFooter(){ 
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
+        GameManager.Instance.UiManager._footerCan.GetComponent<CanvasGroup>().alpha=1;
+        GameManager.Instance.UiManager._footerCan.GetComponent<CanvasGroup>().interactable=true;
+        GameManager.Instance.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
     }
 
     public void OnClickProfileFollowerButton() 

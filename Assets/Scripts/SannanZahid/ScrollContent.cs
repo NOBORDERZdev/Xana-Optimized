@@ -83,7 +83,7 @@ namespace DynamicScrollRect
             {
                 case 0:
                     {
-                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
+                        if (GameManager.Instance.UiManager.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
                         {
                             Debug.LogError("here locking");
                             DynamicScrollRect.RestrictFlag = true;
@@ -94,14 +94,14 @@ namespace DynamicScrollRect
                     }
                 case 1:
                     {
-                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 5))
+                        if (GameManager.Instance.UiManager.PreviousScreen == 0 && (Worlds.Count > 5))
                         {
                             DynamicScrollRect.RestrictFlag = false;
                             DynamicScrollRect.TopScroller.vertical = true;
                             RestrictState = 0;
                            
                         }
-                        else if (UIManager.Instance.PreviousScreen == 1)
+                        else if (GameManager.Instance.UiManager.PreviousScreen == 1)
                         {
                             DynamicScrollRect.RestrictFlag = false;
                             RestrictState = 0;

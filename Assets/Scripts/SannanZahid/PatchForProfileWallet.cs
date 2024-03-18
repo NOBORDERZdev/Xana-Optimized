@@ -5,12 +5,17 @@ using UnityEngine;
 public class PatchForProfileWallet : MonoBehaviour
 {
      public GameObject closeloader;
+    GameManager gameManager;
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
     private void OnDisable()
     {
-        if (UIManager.Instance != null)//rik
+        if (gameManager.UiManager != null)//rik
         {
-            // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+            // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
         }
     }
 

@@ -22,15 +22,15 @@ public class WorldItemPreview : MonoBehaviour
             m_WorldPlayPanel.transform.SetParent(WorldManager.instance.descriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = GameManager.Instance.UiManager.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = GameManager.Instance.UiManager.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_WorldPlayPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             m_WorldPlayPanel.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        GameManager.Instance.UiManager.HomePage.SetActive(true);
         this.GetComponent<WorldItemView>().m_FadeImage = this.GetComponent<WorldItemView>().worldIcon;
         this.GetComponent<WorldItemView>().UpdateWorldPanel();
             string EnvironmentName = this.GetComponent<WorldItemView>().m_EnvironmentName;
@@ -78,10 +78,10 @@ public class WorldItemPreview : MonoBehaviour
                 }
             }
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(GameManager.Instance.UiManager.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             m_MuseumIsClicked = false;
-        UIManager.Instance.ShowFooter(false);
+        GameManager.Instance.UiManager.ShowFooter(false);
 
         GameManager.Instance.WorldBool = true;
         m_WorldIsClicked = true;

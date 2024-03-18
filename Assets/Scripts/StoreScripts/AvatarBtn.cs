@@ -614,7 +614,7 @@ public class AvatarBtn : MonoBehaviour
                 case "FaceMorph":
                     {
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
 
@@ -628,7 +628,7 @@ public class AvatarBtn : MonoBehaviour
                 case "EyeBrowMorph":
                     {
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
                         shapeImporter.MorphTypeSelected("EyeBrow");
@@ -641,7 +641,7 @@ public class AvatarBtn : MonoBehaviour
                         EyesBlinking.instance.isBlinking = false;       // Added by Ali Hamza
 
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
                         shapeImporter.MorphTypeSelected("eye");
@@ -652,7 +652,7 @@ public class AvatarBtn : MonoBehaviour
                 case "NoseMorph":
                     {
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
                         shapeImporter.MorphTypeSelected("Nose");
@@ -663,7 +663,7 @@ public class AvatarBtn : MonoBehaviour
                 case "LipsMorph":
                     {
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
                         shapeImporter.MorphTypeSelected("Lips");
@@ -674,7 +674,7 @@ public class AvatarBtn : MonoBehaviour
                 case "HeadMorph":
                     {
                         CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        GameManager.Instance.UiManager._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
                         shapeImporter.MorphTypeSelected("Head");

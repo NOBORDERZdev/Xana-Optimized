@@ -37,7 +37,7 @@ public class Swipe_menu : MonoBehaviour
     private void OnEnable()
     {
         scroll_pos = 0;
-        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        if (GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
         }

@@ -18,6 +18,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject EventEndedPanel;
     public string mainScene = "Main";
     bool exitOnce = true;
+    GameManager gameManager;
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
     private void OnEnable()
     {
         mainScene = "Main";
@@ -121,12 +126,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            gameManager.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+            gameManager.UiManager.LoginRegisterScreen.SetActive(true);
         }
         else
         {
-            UIManager.Instance.IsWorldClicked();
+            gameManager.UiManager.IsWorldClicked();
         }
     }
     public void LeaveRoom()

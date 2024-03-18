@@ -66,8 +66,7 @@ public class AvatarController : MonoBehaviour
     {
         stitcher = new Stitcher();
         sceneName = SceneManager.GetActiveScene().name;
-        addressableDownloader = AddressableDownloader.Instance;
-        xanaConstants = XanaConstants.xanaConstants;
+       
         characterBodyParts = this.GetComponent<CharacterBodyParts>();
         itemDatabase = ItemDatabase.instance;
         if (sceneName.Equals("ARModuleActionScene") || sceneName.Equals("ARModuleRoomScene") || sceneName.Equals("ARModuleRealityScene") ) // Manually scalling object to match old XANA character 1.0
@@ -77,6 +76,11 @@ public class AvatarController : MonoBehaviour
 
         //if(this.GetComponent<FriendAvatarController>())
         //    friendController = this.GetComponent<FriendAvatarController>();
+    }
+    private void Start()
+    {
+        addressableDownloader = AddressableDownloader.Instance;
+        xanaConstants = XanaConstants.xanaConstants;
     }
     public void OnEnable()
     {
@@ -1585,6 +1589,10 @@ public class AvatarController : MonoBehaviour
         }
         else
         {
+            if (xanaConstants == null)
+            {
+                xanaConstants = XanaConstants.xanaConstants;
+            }
 
             if (xanaConstants.isNFTEquiped)
             {
@@ -1933,6 +1941,10 @@ public class AvatarController : MonoBehaviour
         }
         if (_CharacterData.eyeItemData != "" && _CharacterData.eyeItemData != null)
         {
+            if (addressableDownloader == null)
+            {
+                addressableDownloader = AddressableDownloader.Instance;
+            }
             StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeItemData, this.gameObject, CurrentTextureType.EyeLense));
         }
         if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)

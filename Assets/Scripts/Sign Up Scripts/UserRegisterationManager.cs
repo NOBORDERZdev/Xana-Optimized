@@ -597,10 +597,10 @@ public class UserRegisterationManager : MonoBehaviour
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
         //EventList.instance.GetWorldAPISNew();
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -646,8 +646,8 @@ public class UserRegisterationManager : MonoBehaviour
         //pinNew[2].gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(2); });
         //pinNew[3].gameObject.GetComponent<InputField>().onValueChanged.AddListener(delegate { ValueChangeCheck(3); });
         BackBool = false;
-        UIManager.Instance.LoginRegisterScreen = FirstPanal;
-        UIManager.Instance.SignUpScreen = SignUpPanal;
+        GameManager.Instance.UiManager.LoginRegisterScreen = FirstPanal;
+        GameManager.Instance.UiManager.SignUpScreen = SignUpPanal;
         CountryCodeText.text = "+81";
         mobile_number = false;
         //print("Alraeady Logged In " + PlayerPrefs.GetInt("IsLoggedIn"));
@@ -3347,7 +3347,7 @@ public class UserRegisterationManager : MonoBehaviour
                     //PlayerPrefs.SetInt("IsLoggedIn", 1);
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                     //   //print("token is " + PlayerPrefs.GetString("LoginToken"));
                     //     //print("User Registered succesfully from password");
                 }
@@ -4388,10 +4388,10 @@ public class UserRegisterationManager : MonoBehaviour
                                 usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
                             }
                         }
-                        if (UIManager.Instance != null)//rik
+                        if (GameManager.Instance.UiManager != null)//rik
                         {
-                           // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                           UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+                           // GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                           GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                         }
                         //if (EventList.instance.ListContent.transform.childCount == 0)
                         //{
@@ -4767,10 +4767,10 @@ public class UserRegisterationManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
 

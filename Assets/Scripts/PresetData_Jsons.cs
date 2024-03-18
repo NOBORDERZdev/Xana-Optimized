@@ -171,14 +171,14 @@ public class PresetData_Jsons : MonoBehaviour
                 /*Invoke("abcd", 5f);*/
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
                 StoreManager.instance.selfiePanel.SetActive(false);
-                if (!UIManager.Instance.isAvatarSelectionBtnClicked)
+                if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {
                     UserRegisterationManager.instance.UsernameFieldAdvance.Clear();
                     UserRegisterationManager.instance.usernamePanal.SetActive(true);
                 }
                 else
                 {
-                    UIManager.Instance.isAvatarSelectionBtnClicked = false;
+                    GameManager.Instance.UiManager.isAvatarSelectionBtnClicked = false;
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
                 }

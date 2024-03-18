@@ -1218,9 +1218,9 @@ public void GetNFTList()
                     PlayerPrefs.SetInt("FristPresetSet", 1);
                     ServerSIdeCharacterHandling.Instance.GetDataFromServer();  
                     PlayerPrefs.SetString("PlayerName", localUsername);
-                    if (UIManager.Instance != null)//rik  
+                    if (GameManager.Instance.UiManager != null)//rik  
                     {
-                        UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                        GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                     }
                  }
             }
