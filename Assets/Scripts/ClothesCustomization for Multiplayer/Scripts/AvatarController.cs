@@ -2254,7 +2254,96 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
         characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
+       if (_CharacterData.myItemObj.Count > 0)
+        {
+            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                {
+                    HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
 
+                    if (itemTypes.Any(item => _CharacterData.myItemObj[i].ItemType.Contains(item)))
+                    {
+                        if (!_CharacterData.myItemObj[i].ItemName.ToLowerInvariant().Contains("md"))
+                        {
+                            var item = _CharacterData.myItemObj[i];
+                            var gender = _CharacterData.gender ?? "Male";
+                            var avatarController = this.gameObject.GetComponent<AvatarController>();
+                            if (addressableDownloader== null)
+                            {
+                                addressableDownloader = AddressableDownloader.Instance;
+                            }
+                            StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, item.ItemType, gender, avatarController, Color.clear));
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.HasKey("Equiped") || xanaConstants.isNFTEquiped)
+                            {
+                                if (_CharacterData.myItemObj[i].ItemType.IndexOf("Chest", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornShirt)
+                                    {
+                                        UnStichItem("Chest");
+                                        characterBodyParts.TextureForShirt(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("Hair", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornHair)
+                                        UnStichItem("Hair");
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("Legs", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornPant)
+                                    {
+                                        UnStichItem("Legs");
+                                        characterBodyParts.TextureForPant(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("Feet", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornShoes)
+                                    {
+                                        UnStichItem("Feet");
+                                        characterBodyParts.TextureForShoes(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("EyeWearable", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornEyeWearable)
+                                        UnStichItem("EyeWearable");
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("Glove", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornGloves)
+                                    {
+                                        UnStichItem("Glove");
+                                        characterBodyParts.TextureForGlove(null);
+                                    }
+                                }
+                                else if (_CharacterData.myItemObj[i].ItemType.IndexOf("Chain", StringComparison.Ordinal) >= 0)
+                                {
+                                    if (wornChain)
+                                        UnStichItem("Chain");
+                                }
+                            }
+                            else
+                            {
+                                var item = _CharacterData.myItemObj[i];
+                                var gender = _CharacterData.gender ?? "Male";
+                                WearDefaultItem(item.ItemType, this.gameObject, gender);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var item = _CharacterData.myItemObj[i];
+                        var gender = _CharacterData.gender ?? "Male";
+                        WearDefaultItem(item.ItemType, this.gameObject, gender);
+                    }
+                }
+            }
+        }
     }
     
     /// <summary>
