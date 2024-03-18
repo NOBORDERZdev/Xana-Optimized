@@ -66,7 +66,6 @@ public class AvatarController : MonoBehaviour
     {
         stitcher = new Stitcher();
         sceneName = SceneManager.GetActiveScene().name;
-       
         characterBodyParts = this.GetComponent<CharacterBodyParts>();
         itemDatabase = ItemDatabase.instance;
         if (sceneName.Equals("ARModuleActionScene") || sceneName.Equals("ARModuleRoomScene") || sceneName.Equals("ARModuleRealityScene") ) // Manually scalling object to match old XANA character 1.0
@@ -81,6 +80,7 @@ public class AvatarController : MonoBehaviour
     {
         addressableDownloader = AddressableDownloader.Instance;
         xanaConstants = XanaConstants.xanaConstants;
+        
     }
     public void OnEnable()
     {
@@ -97,7 +97,10 @@ public class AvatarController : MonoBehaviour
                 StartCoroutine(SetAvatarDefaultClothDelay(this.gameObject, "Male"));
             }
         }
-
+        if (xanaConstants== null)
+        {
+            xanaConstants = XanaConstants.xanaConstants;
+        }
         if (xanaConstants != null)
         {
             if (!sceneName.Contains("Main")) // call for spaces only
@@ -416,6 +419,7 @@ public class AvatarController : MonoBehaviour
             clothJson = File.ReadAllText(folderPath);
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
+            sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
             if (sceneName.Equals("Main")) // for store/ main menu
             {
                 if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
