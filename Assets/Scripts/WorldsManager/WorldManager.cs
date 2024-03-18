@@ -419,7 +419,10 @@ public class WorldManager : MonoBehaviour
 
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
             }
-
+            if (_WorldInfo.data.rows[i].user != null)
+            {
+                _event.UserAvatarURL= _WorldInfo.data.rows[i].user.avatar;
+            }
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
                 _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
