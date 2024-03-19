@@ -70,7 +70,7 @@ public class GlobalConstants
             prefix = "L_"; environmentType = EnvironmentType.Live; 
         }
         eventName = prefix + eventName;
-        //Debug.Log("<color=red>" + eventName + "</color>");
+        Debug.Log("<color=red>FB_Event: " + eventName + "</color>");
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }
