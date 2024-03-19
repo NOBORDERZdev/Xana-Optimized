@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
             UIManager.Instance.IsWorldClicked();
         else
         {
@@ -167,8 +167,8 @@ public class GameManager : MonoBehaviour
     {
         UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
-        Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (UserRegisterationManager.instance.LoggedIn ||  (PlayerPrefs.GetInt("IsLoggedIn") ==  1)) 
+        //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        if (XanaConstants.loggedIn) 
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -176,9 +176,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            UserRegisterationManager.instance.checkbool_preser_start = true;
-             PlayerPrefs.SetInt("IsChanged", 0);  
-            UserRegisterationManager.instance.OpenUIPanal(17);
+            //UserRegisterationManager.instance.checkbool_preser_start = true;
+            //PlayerPrefs.SetInt("IsChanged", 0);  
+            //UserRegisterationManager.instance.OpenUIPanal(17);
+
+            UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);
@@ -189,7 +191,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
         BottomAvatarButtonBool = true;
-        if (UserRegisterationManager.instance.LoggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
+        if (XanaConstants.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
             UIManager.Instance.HomePage.SetActive(false);
             StoreManager.instance.SignUpAndLoginPanel(3);
@@ -197,8 +199,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("IsChanged", 0);
-            UserRegisterationManager.instance.OpenUIPanal(1);
+            //PlayerPrefs.SetInt("IsChanged", 0);
+            //UserRegisterationManager.instance.OpenUIPanal(1);
+
+            UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
         StoreManager.instance.AvatarSaved.SetActive(false);
         StoreManager.instance.AvatarSavedGuest.SetActive(false);

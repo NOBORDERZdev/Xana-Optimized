@@ -14,7 +14,6 @@ public class HyperlinkPanelResizer : MonoBehaviour
     [SerializeField] private TextMeshProUGUI text;
     private int rightPosition = 23;
     private int bottomPosition = -9;
-    public bool isJP = false;
 
     private void OnEnable()
     {
@@ -24,44 +23,20 @@ public class HyperlinkPanelResizer : MonoBehaviour
     private IEnumerator CheckJapaneseRoutine()
     {
         yield return new WaitForSeconds(1f); //Wait for the text to be set
-        switch (IsJapanese(text.text))
+        switch (CustomLocalization._instance.IsJapanese(text.text))
         {
             case false:
                 viewportRectT.offsetMin = new Vector2(0, 0);
                 viewportRectT.offsetMax = new Vector2(0, 0);
-                isJP = false;
                 break;
             case true:
                 viewportRectT.offsetMin = new Vector2(viewportRectT.offsetMin.x, bottomPosition);
                 viewportRectT.offsetMax = new Vector2(-rightPosition, viewportRectT.offsetMax.y);
-                isJP = true;
                 break;
         }
         StopCoroutine(CheckJapaneseRoutine());
     }
 
-    private bool IsJapanese(string text) //Detect Japanese characters
-    {
-        int count = 0;
-        foreach (char c in text)
-        {
-            // Check if the character is in the Japanese Hiragana, Katakana, or Kanji ranges
-            if ((c >= '\u3040' && c <= '\u309F') || // Hiragana
-                (c >= '\u30A0' && c <= '\u30FF') || // Katakana
-                (c >= '\u4E00' && c <= '\u9FAF'))   // Kanji
-            {
-                // If any Japanese character is found, return true
-                count++;
-                if (count >= 5)
-                {
-                    return true;
-                }
-            }
-        }
-
-        // If no Japanese characters are found, return false
-        return false;
-    }
     private void OnDisable()
     {
         cam = null;
