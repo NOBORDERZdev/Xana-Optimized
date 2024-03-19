@@ -33,7 +33,8 @@ public class NFTtypeClass : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        OnclickNFT.onClick.AddListener(TaskOnClick);
+        if (OnclickNFT.gameObject)
+            OnclickNFT.onClick.AddListener(TaskOnClick);
     }
     private void OnEnable()
     {
@@ -142,7 +143,7 @@ public class NFTtypeClass : MonoBehaviour
             IsNFTCollectionBreakingDown = true;
             PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 1);
         }
-       else if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "HIROKO KOSHINO")
+        else if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "HIROKO KOSHINO")
         {
             IsNFTCollectionBreakingDown = false;
             PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 2);
