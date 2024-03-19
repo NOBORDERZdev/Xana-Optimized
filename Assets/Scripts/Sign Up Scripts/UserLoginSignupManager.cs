@@ -99,7 +99,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
             LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"),(isSucess)=> 
+            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
             {
                 //write if you want something on sucessfull login
             }));
@@ -108,6 +108,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
             XanaConstants.xanaToken = PlayerPrefs.GetString("LoginToken");
+            XanaConstants.isWalletLogin = true;
             StoreManager.instance.WalletLoggedinCall();
             WalletAutoLogin(true);
             StartCoroutine(WalletLoggedInAccessGroup(true));
@@ -392,6 +393,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
         XanaConstants.loggedIn = true;
+        XanaConstants.isWalletLogin = true;
         SubmitSetDeviceToken();
         GetUserClothData();
         GetOwnedNFTsFromAPI();
@@ -411,7 +413,7 @@ public class UserLoginSignupManager : MonoBehaviour
         _email = _email.Trim();
         _email = _email.ToLower();
 
-        bool ValidEmail = EmailValidation(_email,false);
+        bool ValidEmail = EmailValidation(_email, false);
         if (!ValidEmail)
             return;
         bool validPassword = PasswordValidation(passwordField.Text, repeatPasswordField.Text);
@@ -430,7 +432,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
-    bool EmailValidation(string emailText,bool checkForLogin)
+    bool EmailValidation(string emailText, bool checkForLogin)
     {
         string L_LoginEmail = emailText;
         if (L_LoginEmail == "")
@@ -451,7 +453,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             return true;
         }
-        else if(checkForLogin && IsPhoneNbr(L_LoginEmail))
+        else if (checkForLogin && IsPhoneNbr(L_LoginEmail))
         {
             return true;
         }
@@ -539,7 +541,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     bool IsValidEmail(string email)
     {
-        bool validEmail=Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
+        bool validEmail = Regex.IsMatch(email, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.IgnoreCase);
         if (!validEmail)
             return false;
         try
@@ -773,15 +775,28 @@ public class UserLoginSignupManager : MonoBehaviour
         string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
-        StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername,(isSucess)=> 
+        if (XanaConstants.isWalletLogin)
         {
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
-        }));
+            StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername, (isSucess) =>
+            {
+                OpenUIPanel(16);
+                nameScreenLoader.SetActive(false);
+                nameScreenNextButton.interactable = true;
+            }));
+        }
+        else
+        {
+            StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, (isSucess) =>
+            {
+                nameScreenLoader.SetActive(false);
+                nameScreenNextButton.interactable = true;
+            }));
+        }
+
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
     }
-    IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser,Action<bool> CallBack)
+    IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
     {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
@@ -815,10 +830,24 @@ public class UserLoginSignupManager : MonoBehaviour
                 PlayerPrefs.SetString("UserName", myObject.data.user.id);
                 PlayerPrefs.Save();
 
-                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser,(isSucess)=> 
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser, (isSucess) =>
                 {
                     if (isSucess)
+                    {
+                        PlayerPrefs.SetInt("IsLoggedIn", 1);
+                        PlayerPrefs.SetInt("FristPresetSet", 1);
+                        PlayerPrefs.SetInt("FirstTime", 1);
+                        PlayerPrefs.SetInt("WalletLogin", 0);
+                        PlayerPrefs.SetString("PlayerName", NameofUser);
+                        XanaConstants.userName = NameofUser;
+                        XanaConstants.loggedIn = true;
+                        XanaConstants.isWalletLogin = false;
+                        OpenUIPanel(16);
+                        ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+                        DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
+                        MainSceneEventHandler.OnSucessFullLogin?.Invoke();
                         CallBack(true);
+                    }
                     else
                         CallBack(false);
                 }));
@@ -838,7 +867,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         request.Dispose();
     }
-    IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername,Action<bool> UserRegisteredCallBack)
+    IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername, Action<bool> UserRegisteredCallBack)
     {
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
@@ -867,18 +896,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 }
                 else
                 {
-                    PlayerPrefs.SetInt("IsLoggedIn", 1);
-                    PlayerPrefs.SetInt("FristPresetSet", 1);
-                    PlayerPrefs.SetInt("FirstTime", 1);
-                    PlayerPrefs.SetInt("WalletLogin", 0);
-                    PlayerPrefs.SetString("PlayerName", localUsername);
-                    XanaConstants.userName = localUsername;
-                    XanaConstants.loggedIn = true;
-                    OpenUIPanel(16);
-                    ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
-                    DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
-                    MainSceneEventHandler.OnSucessFullLogin?.Invoke();
-
                     UserRegisteredCallBack(true);
                 }
                 GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(localUsername);
@@ -898,7 +915,6 @@ public class UserLoginSignupManager : MonoBehaviour
                     errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
                 }
             }
-
             UserRegisteredCallBack(false);
         }
 
@@ -919,7 +935,7 @@ public class UserLoginSignupManager : MonoBehaviour
         _loginPassword = _loginPassword.Trim();
         _LoginEmail = _LoginEmail.ToLower();
 
-        if (EmailValidation(_LoginEmail,true) && PasswordValidationOnLogin(_loginPassword))
+        if (EmailValidation(_LoginEmail, true) && PasswordValidationOnLogin(_loginPassword))
         {
 
             string bodyJson;
@@ -931,7 +947,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 bodyJson = JsonUtility.ToJson(myObject.GetdataFromClass(_LoginEmail, "", _loginPassword, UniqueID()));
 
             string url = ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL;
-            StartCoroutine(LoginUser(url, bodyJson,(isSucess)=> 
+            StartCoroutine(LoginUser(url, bodyJson, (isSucess) =>
             {
                 loginLoader.SetActive(false);
                 loginButton.interactable = true;
@@ -945,7 +961,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     }
 
-    IEnumerator LoginUser(string url, string Jsondata,Action<bool> CallBack)
+    IEnumerator LoginUser(string url, string Jsondata, Action<bool> CallBack)
     {
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
@@ -972,6 +988,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 XanaConstants.userId = myObject1.data.user.id.ToString();
                 XanaConstants.userName = myObject1.data.user.name;
                 XanaConstants.loggedIn = true;
+                XanaConstants.isWalletLogin = false;
                 ConstantsGod.AUTH_TOKEN = myObject1.data.token;
 
 
@@ -1296,8 +1313,8 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             StartCoroutine(HitLogOutAPI(ConstantsGod.API_BASEURL + ConstantsGod.LogOutAPI, deviceToken, (onSucess) =>
             {
-                if (onSucess)
-                    StartCoroutine(OnSucessLogout());
+
+                StartCoroutine(OnSucessLogout());
             }
             ));
         }
@@ -1330,7 +1347,7 @@ public class UserLoginSignupManager : MonoBehaviour
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(true);
         MyClassForSettingDeviceToken myObject = new MyClassForSettingDeviceToken();
         string bodyJson = JsonUtility.ToJson(myObject.GetUpdatedDeviceToken(Jsondata));
-        var request =new UnityWebRequest(url,"POST");
+        var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(bodyJson);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -1355,22 +1372,23 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else
             {
-                if (!myObject1.success)
-                {
-                    validationPopupPanel.SetActive(true);
-                    errorTextMsg.gameObject.SetActive(true);
-                    if (errorTextMsg)
-                    {
-                        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextMsg);
-                    }
-                }
+                //on wallet logout we are getting internal server error so commented this lines 
+
+                //if (!myObject1.success)
+                //{
+                //    validationPopupPanel.SetActive(true);
+                //    errorTextMsg.gameObject.SetActive(true);
+                //    if (errorTextMsg)
+                //    {
+                //        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+                //        errorHandler.ShowErrorMessage(ErrorType.Default_Message.ToString(), errorTextMsg);
+                //    }
+                //}
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
             LoadingHandler.Instance.HideLoading();
-            
+            CallBack(false);
         }
-        CallBack(false);
         request.Dispose();
     }
 
@@ -1425,7 +1443,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
 
         PlayerPrefs.SetString("UserName", "");
-        
+
         int simultaneousConnectionsValue = PlayerPrefs.GetInt("ShowLiveUserCounter");
 
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
