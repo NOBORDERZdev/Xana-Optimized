@@ -266,9 +266,20 @@ public class StoreManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
     }
+
+    private void OnEnable()
+    {
+        MainSceneEventHandler.OnSucessFullLogin += CheckWhenUserLogin;    
+    }
+    private void OnDisable()
+    {
+        MainSceneEventHandler.OnSucessFullLogin -= CheckWhenUserLogin;
+    }
+
+
     public void skipAvatarSelection()
     {
-        UserRegisterationManager.instance.usernamePanal.SetActive(true);
+        UserLoginSignupManager.instance.enterNamePanel.SetActive(true);
         _CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
     }
 
@@ -418,13 +429,7 @@ public class StoreManager : MonoBehaviour
         //}
         // backbutton_preset.GetComponent<Button>().onClick.AddListener(BackTrackPreset);
     }
-    void BackTrackPreset()
-    {
-
-        if (PlayerPrefs.GetInt("IsProcessComplete") == 0)
-
-            UserRegisterationManager.instance.ShowWellComeCloseRetrack();
-    }
+    
     void Character_DefaultReset(bool clearData = true)
     {
         if (PlayerPrefs.GetInt("presetPanel") == 1)
@@ -816,7 +821,7 @@ public class StoreManager : MonoBehaviour
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        if (UserRegisterationManager.instance.LoggedIn)
+        if (XanaConstants.loggedIn)
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
@@ -1169,7 +1174,7 @@ public class StoreManager : MonoBehaviour
                     ShowSignUpPanel.SetActive(false);
                     GameManager.Instance.BGPlane.SetActive(false);
                     GameManager.Instance.UiManager.HomePage.SetActive(true);
-                    UserRegisterationManager.instance.OpenUIPanal(6);
+                    UserLoginSignupManager.instance.OpenUIPanel(6);
                     break;
                 }
             case 1:
@@ -1178,7 +1183,7 @@ public class StoreManager : MonoBehaviour
                     ShowSignUpPanel.SetActive(false);
                     GameManager.Instance.BGPlane.SetActive(false);
                     GameManager.Instance.UiManager.HomePage.SetActive(true);
-                    UserRegisterationManager.instance.OpenUIPanal(1);
+                    UserLoginSignupManager.instance.OpenUIPanel(1);
                     break;
                 }
             case 2:
@@ -2593,60 +2598,60 @@ public class StoreManager : MonoBehaviour
         request.Dispose();
     }
     // Submit GetUser Details        
-    IEnumerator HitGetUserDetails(string url, string Jsondata)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+    //IEnumerator HitGetUserDetails(string url, string Jsondata)
+    //{
+    //    using (UnityWebRequest request = UnityWebRequest.Get(url))
+    //    {
+    //        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-            request.SendWebRequest();
-            while (!request.isDone)
-            {
-                yield return null;
-            }
-            ClassforUserDetails myObjectOfUserDetail = new ClassforUserDetails();
-            myObjectOfUserDetail = myObjectOfUserDetail.CreateFromJSON(request.downloadHandler.text);
+    //        request.SendWebRequest();
+    //        while (!request.isDone)
+    //        {
+    //            yield return null;
+    //        }
+    //        ClassforUserDetails myObjectOfUserDetail = new ClassforUserDetails();
+    //        myObjectOfUserDetail = myObjectOfUserDetail.CreateFromJSON(request.downloadHandler.text);
 
-            if (!request.isHttpError && !request.isNetworkError)
-            {
-                if (request.error == null)
-                {
-                    if (PlayerPrefs.GetInt("IsChanged") == 0)
-                    {
-                        PlayerPrefs.SetInt("IsChanged", 1);
-                        UndoSelection();
-                        StartCoroutine(CharacterChange());
-                    }
+    //        if (!request.isHttpError && !request.isNetworkError)
+    //        {
+    //            if (request.error == null)
+    //            {
+    //                if (PlayerPrefs.GetInt("IsChanged") == 0)
+    //                {
+    //                    PlayerPrefs.SetInt("IsChanged", 1);
+    //                    UndoSelection();
+    //                    StartCoroutine(CharacterChange());
+    //                }
 
-                    if (myObjectOfUserDetail.success == true)
-                    {
-                        decimal CoinsInDecimal = decimal.Parse(myObjectOfUserDetail.data.coins);
-                        int Coinsint = (int)CoinsInDecimal;
-                        PlayerPrefs.SetInt("TotalCoins", Coinsint);
-                        //UpdateUserCoins();
-                    }
-                }
-            }
-            else
-            {
-                if (request.isNetworkError)
-                {
-                    print(request.error.ToUpper());
-                }
-                else
-                {
-                    if (request.error != null)
-                    {
-                        if (myObjectOfUserDetail.success == false)
-                        {
-                            print("Hey success false " + myObjectOfUserDetail.msg);
-                        }
-                    }
-                }
-            }
-            request.Dispose();
-        }
-    }
+    //                if (myObjectOfUserDetail.success == true)
+    //                {
+    //                    decimal CoinsInDecimal = decimal.Parse(myObjectOfUserDetail.data.coins);
+    //                    int Coinsint = (int)CoinsInDecimal;
+    //                    PlayerPrefs.SetInt("TotalCoins", Coinsint);
+    //                    //UpdateUserCoins();
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            if (request.isNetworkError)
+    //            {
+    //                print(request.error.ToUpper());
+    //            }
+    //            else
+    //            {
+    //                if (request.error != null)
+    //                {
+    //                    if (myObjectOfUserDetail.success == false)
+    //                    {
+    //                        print("Hey success false " + myObjectOfUserDetail.msg);
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        request.Dispose();
+    //    }
+    //}
 
     [System.Serializable]
     public class ClassforUserDetails

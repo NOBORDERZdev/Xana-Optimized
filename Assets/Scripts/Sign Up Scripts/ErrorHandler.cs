@@ -41,12 +41,12 @@ namespace Sign_Up_Scripts
         {
             UnityWebRequest www = UnityWebRequest.Get(SheetLink);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
             while (!www.isDone)
             {
                 yield return null;
             }
-
+            //Debug.LogError(www.downloadHandler.text);
             if (www.isHttpError || www.isNetworkError)
             {
                 Debug.Log("Network Error");
@@ -88,7 +88,7 @@ namespace Sign_Up_Scripts
             {
                 //print((int)errorCode);
                 errorMessage = _errorMessageList.Find(x => x.ErrorCode == errorCode);
-                if(string.IsNullOrEmpty(errorMessage.EnglishMessage) && string.IsNullOrEmpty(errorMessage.JapaneseMessage))
+                if (string.IsNullOrEmpty(errorMessage.EnglishMessage) && string.IsNullOrEmpty(errorMessage.JapaneseMessage))
                 {
                     errorMessage.EnglishMessage = errorCode;
                     errorMessage.JapaneseMessage = errorCode;
@@ -100,7 +100,6 @@ namespace Sign_Up_Scripts
                 errorMessage.JapaneseMessage = errorCode;
             }
             SetActiveText(errorMessage);
-            UserRegisterationManager.instance.NewLoadingScreen.SetActive(false);
         }
 
         //public void ShowErrorMessage(string errorCode, Text textToBeSet)
@@ -205,6 +204,7 @@ namespace Sign_Up_Scripts
         Passwords_cannot_less_than_eight_charcters,
         UserName_Has_Space,
         Special_chracater_not_included,
-        Password_must_Contain_Number
+        Password_must_Contain_Number,
+        Could_not_verify_signature
     }
 }

@@ -534,7 +534,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     }
 
 
-    
+
     private void NetworkingClient_EventReceived(EventData obj)
     {
         ////Debug.Log("call hua obj==" + obj.Code);
@@ -951,16 +951,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversionForAnimation);
         try
         {
-            if (UserRegisterationManager.instance.LoggedInAsGuest)
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
-            else
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
-
-
+            uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
         catch (Exception e1)
         {

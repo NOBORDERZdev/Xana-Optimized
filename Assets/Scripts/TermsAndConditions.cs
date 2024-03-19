@@ -91,11 +91,10 @@ public class TermsAndConditions : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
-        UserRegisterationManager.instance.welcomeScreen.SetActive(true);
-         if(gameManager.UiManager){ 
-                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha=1;
-                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
-                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().interactable= true;
+         if(gameManager.Instance){ 
+                gameManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
+                gameManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
+                gameManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable= true;
             }
         gameManager.UiManager.StartCoroutine(gameManager.UiManager.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");

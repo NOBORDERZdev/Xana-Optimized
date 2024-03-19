@@ -30,7 +30,7 @@ public class SNSSettingController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI personalInfoEmailText;
     [SerializeField] private TextMeshProUGUI personalInfoPhoneNumberText;
     [SerializeField] private TextMeshProUGUI personalInfoPublicaddressText;
- 
+
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
 
@@ -107,7 +107,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Personal Information Button Click.......
     public void OnClickPersonalInformationButton()
     {
-       Debug.Log("Personal information button click");
+        Debug.Log("Personal information button click");
 
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {
@@ -145,8 +145,8 @@ public class SNSSettingController : MonoBehaviour
         {
             personalInfoPhoneNumberObj.SetActive(false);
         }
-         // Public Address
-         if (!string.IsNullOrEmpty(PlayerPrefs.GetString("publicID")))
+        // Public Address
+        if (!string.IsNullOrEmpty(PlayerPrefs.GetString("publicID")))
         {
             personalInfoPublicaddressText.text = PlayerPrefs.GetString("publicID");
             personalInfoPublicIDObj.SetActive(true);
@@ -154,9 +154,9 @@ public class SNSSettingController : MonoBehaviour
         else
         {
             personalInfoPublicIDObj.SetActive(false);
-         }    
-    }  
-      
+        }
+    }
+
     //this method is used to setup data of personal information screen.......
     public void SetUpPersonalInformationScreen()
     {
@@ -168,22 +168,20 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to logout button click.......
     public void OnClickLogoutButton()
     {
-        if (UserRegisterationManager.instance != null)
-        {
-            UserRegisterationManager.instance.LogoutAccount();
-            //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
-            if(PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
-            {
-                SimultaneousConnectionButton();
-            }
-            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
-            //SimultaneousConnectionButton();
-            GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
-            PlayerPrefs.SetInt("shownWelcome", 0);
-            PlayerPrefs.SetString("UserNameAndPassword", "");
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
 
+        UserLoginSignupManager.instance.LogoutAccount();
+        UserLoginSignupManager.instance.ShowWelcomeScreen();
+        //PlayerPrefs.SetInt("ShowLiveUserCounter",0);
+        if (PlayerPrefs.GetInt("ShowLiveUserCounter") == 1)
+        {
+            SimultaneousConnectionButton();
         }
+        //SimultaneousConnectionButton();
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+        PlayerPrefs.SetInt("shownWelcome", 0);
+        PlayerPrefs.SetString("UserNameAndPassword", "");
+        GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+
         GlobalVeriableClass.callingScreen = "";
     }
 
@@ -191,17 +189,10 @@ public class SNSSettingController : MonoBehaviour
     public void LogoutSuccess()
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
-        Debug.Log("logout success calling from SNSSetting");
         XanaConstants.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-
-            if (UserRegisterationManager.instance != null)
-            {
-                UserRegisterationManager.instance.ResetDataAfterLogoutSuccess();
-                UserRegisterationManager.instance.nftlist = string.Empty;
-            }
             NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {
@@ -226,12 +217,12 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
-            if (GameManager.Instance.UiManager!=null)
+            if (UIManager.Instance != null)
             {
                 GameManager.Instance.UiManager._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
             }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
-            if (LoadPlayerAvatar.instance_loadplayer !=null)
+            if (LoadPlayerAvatar.instance_loadplayer != null)
             {
                 LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();
             }
@@ -258,13 +249,10 @@ public class SNSSettingController : MonoBehaviour
     }
     public void DeleteAccount()
     {
-        if (UserRegisterationManager.instance != null)
+        UserLoginSignupManager.instance.DeleteAccount(() =>
         {
-            UserRegisterationManager.instance.DeleteAccount(() => 
-            {
-                deleteAccountPopup.SetActive(false);
-            });
-        }
+            deleteAccountPopup.SetActive(false);
+        });
     }
     public void SimultaneousConnectionButton()
     {

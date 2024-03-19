@@ -416,10 +416,10 @@ public class UserAnalyticsHandler : MonoBehaviour
     /// </summary>
     /// <param name="isStart"> true on applicaiton start and false on application kill</param>
     IEnumerator SetSession( bool isStart){
-        while (XanaConstants.xanaConstants.userId == "") {
+        while (XanaConstants.userId == "") {
             yield return new WaitForSeconds(2f);
         }
-        string userId = XanaConstants.xanaConstants.userId;
+        string userId = XanaConstants.userId;
         string product ;
 #if !UNITY_EDITOR
     #if UNITY_ANDROID

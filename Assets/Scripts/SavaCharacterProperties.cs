@@ -319,7 +319,7 @@ public class SavaCharacterProperties : MonoBehaviour
     public void LoadMorphsfromFile()
     {
         Start();
-        StartLocal();
+        //StartLocal();  inside start we are alreay calling startlocal so commented this
     }
     //local file loading
     #region Local

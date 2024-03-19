@@ -112,7 +112,7 @@ public class UserPostFeature : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        string FinalUrl = PrepareApiURL("Receive") + XanaConstants.xanaConstants.userId;
+        string FinalUrl = PrepareApiURL("Receive") + XanaConstants.userId;
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
 

@@ -187,7 +187,7 @@ public class XanaChatSocket : MonoBehaviour
     void UserJoinRoom(string _worldId)
     {
         worldId = int.Parse(_worldId);
-        string userId = XanaConstants.xanaConstants.userId;
+        string userId = XanaConstants.userId;
         var data = new { username = userId, room = _worldId };
         //Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
 
@@ -208,7 +208,7 @@ public class XanaChatSocket : MonoBehaviour
             return;
         }
 
-        string userId = XanaConstants.xanaConstants.userId;
+        string userId = XanaConstants.userId;
         string event_Id = "1";
 
         // Checking For Event

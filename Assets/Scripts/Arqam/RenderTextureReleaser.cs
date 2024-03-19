@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RenderTextureReleaser : MonoBehaviour
 {
-    public RenderTexture renderTexture;
+    private RenderTexture renderTexture;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +21,7 @@ public class RenderTextureReleaser : MonoBehaviour
             renderTexture.filterMode = FilterMode.Trilinear;
 
             this.GetComponent<Camera>().targetTexture = renderTexture;   // my changes
-            UserRegisterationManager.instance.renderImage.texture = renderTexture;
+            UserLoginSignupManager.instance.aiPresetImage.texture = renderTexture;
         }
     }
 
