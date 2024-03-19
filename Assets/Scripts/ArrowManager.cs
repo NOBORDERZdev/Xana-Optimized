@@ -358,7 +358,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         if (gameObject.GetComponent<PhotonView>().ViewID == id)
         {
-            Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
+            //Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
             if (ToggleConstant == 0)
             {
                 Debug.Log("Onbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);

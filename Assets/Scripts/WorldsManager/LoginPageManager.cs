@@ -211,7 +211,7 @@ public class LoginPageManager : MonoBehaviour
 
     public void CheckWorldOnClick()
     {
-        if (m_WorldIsClicked || m_isSignUpPassed || UserRegisterationManager.instance.LoggedIn)
+        if (m_WorldIsClicked || m_isSignUpPassed || XanaConstants.loggedIn)
         {
             UIManager.Instance.LoginRegisterScreen.SetActive(false);
             UIManager.Instance.HomePage.SetActive(true);

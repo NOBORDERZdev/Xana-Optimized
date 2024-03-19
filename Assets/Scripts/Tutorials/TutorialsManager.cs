@@ -125,7 +125,7 @@ public class TutorialsManager : MonoBehaviour
         if (currentPanelIndex <= panels.Count - 1)
         {
             currentPanelIndex++;
-            if (currentPanelIndex == 3 && UserRegisterationManager.instance.LoggedInAsGuest)
+            if (currentPanelIndex == 3)
             {
                currentPanelIndex = 7;
             }

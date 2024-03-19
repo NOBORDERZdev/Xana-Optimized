@@ -605,7 +605,7 @@ public class WorldManager : MonoBehaviour
         
         
         _callSingleTime = true;
-        if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
@@ -626,7 +626,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {
@@ -639,9 +639,7 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
-                    print("NFT is in your OwnerShip Enjoy " + PlayerPrefs.GetInt("Equiped"));
-                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
-                    Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
+                    List<List> fighterNFTlist = UserLoginSignupManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
                     List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
                     if (list != null)
                     {
@@ -684,7 +682,7 @@ public class WorldManager : MonoBehaviour
     }
     public async void JoinBuilderWorld()
     {
-        if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
@@ -705,7 +703,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {
