@@ -23,6 +23,9 @@ public class HelpButtonComponentResizer : MonoBehaviour
     float singleLineHeight;
     bool isInfoTextWritten;
 
+    private RectTransform viewportRectT;
+    private int rightPosition = 23;
+    private int bottomPosition = -9;
     internal void Init()
     {
         isInfoTextWritten = true;
@@ -69,6 +72,29 @@ public class HelpButtonComponentResizer : MonoBehaviour
         }
         isInfoTextWritten = false;
         InfoPopupUILinesCount();
+    }
+
+    private void OnEnable()
+    {
+        viewportRectT = scrollView.viewport.GetComponent<RectTransform>();
+        StartCoroutine(CheckJapaneseRoutine());
+    }
+
+    private IEnumerator CheckJapaneseRoutine()
+    {
+        yield return new WaitForSeconds(1f); //Wait for the text to be set
+        switch (CustomLocalization._instance.IsJapanese(contentText.text))
+        {
+            case false:
+                viewportRectT.offsetMin = new Vector2(0, 0);
+                viewportRectT.offsetMax = new Vector2(0, 0);
+                break;
+            case true:
+                viewportRectT.offsetMin = new Vector2(viewportRectT.offsetMin.x, bottomPosition);
+                viewportRectT.offsetMax = new Vector2(-rightPosition, viewportRectT.offsetMax.y);
+                break;
+        }
+        StopCoroutine(CheckJapaneseRoutine());
     }
 
     public void DisplayDownText()

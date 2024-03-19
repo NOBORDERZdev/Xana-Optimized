@@ -146,6 +146,28 @@ public class CustomLocalization : MonoBehaviour
 
     #endregion
 
+    public bool IsJapanese(string text) //Detect Japanese characters //sohaib
+    {
+        int count = 0;
+        foreach (char c in text)
+        {
+            // Check if the character is in the Japanese Hiragana, Katakana, or Kanji ranges
+            if ((c >= '\u3040' && c <= '\u309F') || // Hiragana
+                (c >= '\u30A0' && c <= '\u30FF') || // Katakana
+                (c >= '\u4E00' && c <= '\u9FAF'))   // Kanji
+            {
+                // If any Japanese character is found, return true
+                count++;
+                if (count >= 5)
+                {
+                    return true;
+                }
+            }
+        }
+
+        // If no Japanese characters are found, return false
+        return false;
+    }
     public static string GetLanguage()
     {
 #if UNITY_EDITOR
