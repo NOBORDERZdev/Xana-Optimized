@@ -26,6 +26,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
     //Custome Variables
     public bool initializeCategoryRow = false;
+    public AllWorldManage allWorldManageRef;
     SpaceScrollRowHandler masterData;
     int instanChildCount = 0;
 
@@ -40,6 +41,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// </summary>
     void Start()
     {
+        allWorldManageRef = GetComponent<AllWorldManage>();
         // set the application frame rate.
         // this improves smoothness on some devices
         //Application.targetFrameRate = 60;
@@ -54,7 +56,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// <summary>
     /// Populates the data with a lot of records
     /// </summary>
-    public void AddRowToScroller(WorldItemDetail _singleWorldItem, int _dataCount)
+    public void AddRowToScroller(WorldItemDetail _singleWorldItem, int _dataCount, string _categTitle)
     {
         Debug.Log("Function called this much time: ");
         // set up some simple data. This will be a two-dimensional array,
@@ -70,6 +72,8 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
             masterData = new SpaceScrollRowHandler()
             {
                 normalizedScrollPosition = 0,
+                _allWorldManageRef = allWorldManageRef,
+                categoryTitle = _categTitle,
                 childData = new List<WorldItemDetail>()
             };
 
@@ -139,7 +143,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         // in this example, we just pass the data to our cell's view which will update its UI
         masterCellView.SetData(_data[dataIndex]);
-
+        //masterCellView.seeAllBtnRef.onClick.AddListener(() => allWorldManageRef.CategoryLoadMore(_data[dataIndex].categoryTitle));
         // return the cell to the scroller
         return masterCellView;
     }

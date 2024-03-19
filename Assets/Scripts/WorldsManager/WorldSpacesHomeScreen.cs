@@ -32,6 +32,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public static List<string> mostVisitedTagList = new List<string>();
 
     public SpaceScrollInitializer spaceCategoryScroller;
+    public bool ApiHolderContainsData = false;
     private void OnEnable()
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
@@ -50,10 +51,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         WorldManager.instance.changeFollowState = false;
         FeatureSpaceLoading();
-        HotSpaceLoading();
-        HotGamesLoading();
-        FollowingSpaceLoading();
-        MySpaceLoading();
+        //HotSpaceLoading();
+        //HotGamesLoading();
+        //FollowingSpaceLoading();
+        //MySpaceLoading();
         //GetAllTags();
         //GetUsersMostVisitedTags(() =>
         //{
@@ -83,9 +84,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotSpacesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo));
+                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo, "Featured Spaces"));
             }
-
+            HotSpaceLoading();
         }));
     }
 
@@ -102,9 +103,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotSpacesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo));
+                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo, "Hot Spaces"));
             }
-
+            HotGamesLoading();
         }));
     }
 
@@ -121,8 +122,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotGamesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotGamesContent, worldInfo));
+                StartCoroutine(SetContentItem(hotGamesContent, worldInfo, "Hot Games"));
             }
+            FollowingSpaceLoading();
         }));
     }
 
@@ -142,8 +144,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
                 FlexibleRect.OnAdjustSize?.Invoke(false);
 
-                StartCoroutine(SetContentItem(followingContent, worldInfo));
+                StartCoroutine(SetContentItem(followingContent, worldInfo, "Following Spaces"));
             }
+            MySpaceLoading();
         }));
     }
 
@@ -160,8 +163,17 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     mySpaceParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(mySpaceContent, worldInfo));
+                StartCoroutine(SetContentItem(mySpaceContent, worldInfo, "My Spaces"));
             }
+            GetUsersMostVisitedTags(() =>
+            {
+                //Reset page number because of getting null data 
+                WorldManager.instance.SearchTagPageNumb = 1;
+                for (int i = 0; i < mostVisitedTagList.Count; i++)
+                {
+                    CategoryLoading(i);
+                }
+            });
         }));
     }
 
@@ -201,10 +213,14 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     for (int i = 0; i < userTagInfo.data.Count; i++)
                     {
-                        if (mostVisitedTagList.Count < 12)
+                        //if (mostVisitedTagList.Count < 12)
+                        //{
                             mostVisitedTagList.Add(userTagInfo.data[i].tagName);
-                        else
-                            break;
+                        //}
+                        //else
+                        //{
+                        //    break;
+                        //}
                     }
                     CallBack();
                 }
@@ -215,8 +231,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     void CategoryLoading(int index)
     {
         worldManager.SearchKey = mostVisitedTagList[index];
-        categoryHeading[index].text = mostVisitedTagList[index];
-        categoryHeading[index].GetComponent<TextLocalization>().LocalizeTextText(categoryHeading[index].text);
+        //categoryHeading[index].text = mostVisitedTagList[index];
+        //categoryHeading[index].GetComponent<TextLocalization>().LocalizeTextText(categoryHeading[index].text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -227,22 +243,22 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     //category1Parent.SetActive(false);
                     //Debug.LogError("Index value :- " + index);
-                    CategoryParentVisibility(index, false);
-                    FlexibleRect.OnAdjustSize?.Invoke(false);
+                    //CategoryParentVisibility(index, false);
+                    //FlexibleRect.OnAdjustSize?.Invoke(false);
                     /*if (apiHitCountC1 < 5)
                         Invoke("Category1Loading", 1);*/
                 }
                 else
                 {
-                    CategoryParentVisibility(index, true);
-                    FlexibleRect.OnAdjustSize?.Invoke(false);
+                    //CategoryParentVisibility(index, true);
+                    //FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(categoryContent[index], worldInfo));
+                StartCoroutine(SetContentItem(gameObject, worldInfo, mostVisitedTagList[index]));
             }
             else
             {
-                CategoryParentVisibility(index, false);
-                FlexibleRect.OnAdjustSize?.Invoke(false);
+                //CategoryParentVisibility(index, false);
+                //FlexibleRect.OnAdjustSize?.Invoke(false);
                 //if (apiHitCountC1 < 5)
                 //    Invoke("Category1Loading", 1);
             }
@@ -380,19 +396,19 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     }
 
 
-    IEnumerator SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo)
+    IEnumerator SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo, string _categTitle = "No Title Yet")
     {
         //Hidden all child
-        foreach (Transform child in spaceContent.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
+        //foreach (Transform child in spaceContent.transform)
+        //{
+        //    child.gameObject.SetActive(false);
+        //}
         spaceCategoryScroller.initializeCategoryRow = true;
 
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
-            if (i > (spaceContent.transform.childCount - 1))
-                yield break;
+            //if (i > (spaceContent.transform.childCount - 1))
+            //    yield break;
             WorldItemDetail _event;
             _event = new WorldItemDetail();
             _event.IdOfWorld = _WorldInfo.data.rows[i].id;
@@ -476,11 +492,14 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
-
-            spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count);
-            spaceContent.transform.GetChild(i).gameObject.SetActive(true);
-            spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
+            if (!ApiHolderContainsData)
+            {
+                spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
+            }
+            //spaceContent.transform.GetChild(i).gameObject.SetActive(true);
+            //spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
         }
+        yield return null;
     }
 
     IEnumerator InstantiateUsersTag(GameObject userTagParent, UserTagInfo userTagInfo)
@@ -510,6 +529,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
+            ApiHolderContainsData = true;
             callback(true, apiResponseHolder.GetResponse(apiURL));
             yield break;
         }
@@ -526,6 +546,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
+                ApiHolderContainsData = false;
                 //_WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 //worldstr = www.downloadHandler.text;
                 if (!apiResponseHolder.CheckResponse(apiURL))

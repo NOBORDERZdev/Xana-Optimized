@@ -21,7 +21,7 @@ public class WorldManager : MonoBehaviour
     private string finalAPIURL;
     private string status = "Publish";
     [HideInInspector]
-    public int hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
+    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -227,7 +227,7 @@ public class WorldManager : MonoBehaviour
         switch (aPIURL)
         {
             case APIURL.FeaturedSpaces:
-                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotSpacePN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotFeatSpacePN + "/" + recordPerPage;
             case APIURL.HotSpaces:
                 return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
             case APIURL.HotGames:
@@ -252,6 +252,9 @@ public class WorldManager : MonoBehaviour
     {
         switch (aPIURL)
         {
+            case APIURL.FeaturedSpaces:
+                hotFeatSpacePN += 1;
+                return;
             case APIURL.HotSpaces:
                 hotSpacePN += 1;
                 return;

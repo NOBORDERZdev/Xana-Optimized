@@ -13,14 +13,19 @@ public class AllWorldManage : MonoBehaviour
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
 
+    public delegate void SeeAllBtndelegate(string _categType);
+    public SeeAllBtndelegate _seeAllBtnDelegate;
+
     private void OnEnable()
     {
         WorldSearchManager.OpenSearchPanel += SearchScreenLoad;
+        _seeAllBtnDelegate += CategoryLoadMore;
     }
 
     private void OnDisable()
     {
         WorldSearchManager.OpenSearchPanel -= SearchScreenLoad;
+        _seeAllBtnDelegate -= CategoryLoadMore;
     }
 
     public void ToggleLobbyOnHomeScreen(bool flag)
@@ -141,6 +146,41 @@ public class AllWorldManage : MonoBehaviour
     }
 
 
+    public void CategoryLoadMore(string _categType)
+    {
+        Debug.Log("Selected Category Type: " + _categType);
+        if (_categType.Contains("Featured Spaces"))
+        {
+            FeaturedSpacesLoadMore();
+        }else if (_categType.Contains("Hot Spaces"))
+        {
+            HotSpacesLoadMore();
+        }
+        else if (_categType.Contains("Hot Games"))
+        {
+            HotGamesLoadMore();
+        }
+        else if (_categType.Contains("Following Spaces"))
+        {
+            FollowingSpacesLoadMore();
+        }
+        else if (_categType.Contains("My Spaces"))
+        {
+            MySpacesLoadMore();
+        }
+        else
+        {
+            CategorySpacesLoadMore(_categType);
+        }
+    }
+
+    public void FeaturedSpacesLoadMore()
+    {
+        SearchScreenLoad();
+        WorldManager.instance.hotFeatSpacePN = 1;
+        WorldManager.instance.ChangeWorldTab(APIURL.FeaturedSpaces);
+    }
+
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
@@ -169,9 +209,9 @@ public class AllWorldManage : MonoBehaviour
         WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
     }
 
-    public void CategorySpacesLoadMore(int tag)
+    public void CategorySpacesLoadMore(string tag)
     {
-        WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
+        WorldManager.instance.SearchKey = tag;
         SearchScreenLoad();
         WorldManager.instance.SearchTagPageNumb = 1;
         WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);

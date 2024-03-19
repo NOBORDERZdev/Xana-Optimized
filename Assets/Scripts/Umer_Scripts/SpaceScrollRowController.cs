@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using EnhancedScrollerDemos.NestedScrollers;
 using EnhancedUI.EnhancedScroller;
+using UnityEngine.UI;
+using TMPro;
 
 public class SpaceScrollRowController : EnhancedScrollerCellView, IEnhancedScrollerDelegate
 {
@@ -23,6 +25,10 @@ public class SpaceScrollRowController : EnhancedScrollerCellView, IEnhancedScrol
     /// </summary>
     public EnhancedScrollerCellView detailCellViewPrefab;
 
+    //Custome Elements
+    public TextMeshProUGUI categoryTitle;
+    public Button seeAllBtnRef;
+
     /// <summary>
     /// Sets the detail scroller delegate and data
     /// </summary>
@@ -32,7 +38,7 @@ public class SpaceScrollRowController : EnhancedScrollerCellView, IEnhancedScrol
         // set up delegates and callbacks
         detailScroller.Delegate = this;
         detailScroller.scrollerScrolled = ScrollerScrolled;
-
+        categoryTitle.text = data.categoryTitle;
         // assign data and flag that the detail scroller needs to be reloaded.
         // we have to reload on the next frame through the update so that the 
         // main scroller has time to set up the master cell views first.
@@ -52,6 +58,11 @@ public class SpaceScrollRowController : EnhancedScrollerCellView, IEnhancedScrol
             reloadDataNextFrame = false;
             detailScroller.ReloadData(_data.normalizedScrollPosition);
         }
+    }
+
+    public void OnClickSeeAllButton()
+    {
+        _data._allWorldManageRef._seeAllBtnDelegate?.Invoke(_data.categoryTitle);
     }
 
     #region EnhancedScroller Handlers
