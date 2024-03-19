@@ -65,7 +65,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
 
                     loadprevious();
 
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
                 }
             }
         }

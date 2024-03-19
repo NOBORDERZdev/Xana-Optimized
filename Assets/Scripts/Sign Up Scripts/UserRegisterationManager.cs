@@ -447,7 +447,7 @@ public class UserRegisterationManager : MonoBehaviour
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
@@ -1290,7 +1290,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     void resetClothstoGuest()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
         SavaCharacterProperties.instance.LoadMorphsfromFile();
     }
 
