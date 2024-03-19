@@ -83,7 +83,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
     private IEnumerator CheckJapaneseRoutine()
     {
         yield return new WaitForSeconds(1f); //Wait for the text to be set
-        switch (IsJapanese(contentText.text))
+        switch (CustomLocalization._instance.IsJapanese(contentText.text))
         {
             case false:
                 viewportRectT.offsetMin = new Vector2(0, 0);
@@ -97,28 +97,6 @@ public class HelpButtonComponentResizer : MonoBehaviour
         StopCoroutine(CheckJapaneseRoutine());
     }
 
-    private bool IsJapanese(string text) //Detect Japanese characters
-    {
-        int count = 0;
-        foreach (char c in text)
-        {
-            // Check if the character is in the Japanese Hiragana, Katakana, or Kanji ranges
-            if ((c >= '\u3040' && c <= '\u309F') || // Hiragana
-                (c >= '\u30A0' && c <= '\u30FF') || // Katakana
-                (c >= '\u4E00' && c <= '\u9FAF'))   // Kanji
-            {
-                // If any Japanese character is found, return true
-                count++;
-                if (count >= 5)
-                {
-                    return true;
-                }
-            }
-        }
-
-        // If no Japanese characters are found, return false
-        return false;
-    }
     public void DisplayDownText()
     {
         if (scrollView.content.anchoredPosition.y + singleLineHeight * 4 <= infopopuptotalHeight)
