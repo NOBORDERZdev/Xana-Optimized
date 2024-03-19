@@ -7,7 +7,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static UGCItemsData;
 
 public class UGCManager : MonoBehaviour
 {
