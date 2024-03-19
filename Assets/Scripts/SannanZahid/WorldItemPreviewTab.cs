@@ -164,7 +164,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         }
         else if (!_isBuilderScene)
         {
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName))
+            if (PremiumUsersDetails.Instance && !PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName))
             {
                 return;
             }
