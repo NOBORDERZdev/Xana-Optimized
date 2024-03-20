@@ -169,7 +169,7 @@ public class MyProfileDataManager : MonoBehaviour
     private bool NFTShowingOnneBool;
 
     [Header("NFT Data Holder Scriptable Object")]
-    public static OwnedNFTContainer _OwnedNFTDataObj;
+    public OwnedNFTContainer _OwnedNFTDataObj;
 
     private void Awake()
     {

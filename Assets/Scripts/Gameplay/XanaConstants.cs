@@ -14,6 +14,7 @@ public class XanaConstants : MonoBehaviour
     public static bool isAdmin;
     public static bool isGuestLogin;
     public static bool loggedIn;
+    public static bool isWalletLogin;
     public static string xanaliaToken;
     public static string xanaToken;
     public static string userId;
