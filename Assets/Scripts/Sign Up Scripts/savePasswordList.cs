@@ -44,19 +44,19 @@ public class savePasswordList : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(PlayerPrefs.GetInt("firstTime") != 1)
-        {
-            PlayerPrefs.DeleteAll();
-            PlayerPrefs.SetInt("firstTime", 1);
-            PlayerPrefs.Save();
-        }   
-          //  print(mySaveUserObj.userName.Count);
-         mySaveUserObj = LoadSavedDataOfUserName();
-        mySavePasswordObj = LoadSavedDataofPassword();
-        UserRegisterationManager.instance.SavingBool = saveToggle.isOn;
-        saveToggle.onValueChanged.AddListener(value => UserRegisterationManager.instance.SavingBool = saveToggle.isOn
+        //if(PlayerPrefs.GetInt("FirstTime") != 1)
+        //{
+        //    PlayerPrefs.DeleteAll();
+        //    PlayerPrefs.SetInt("FirstTime", 1);
+        //    PlayerPrefs.Save();
+        //}   
+        //  //  print(mySaveUserObj.userName.Count);
+        // mySaveUserObj = LoadSavedDataOfUserName();
+        //mySavePasswordObj = LoadSavedDataofPassword();
+        //UserRegisterationManager.instance.SavingBool = saveToggle.isOn;
+        //saveToggle.onValueChanged.AddListener(value => UserRegisterationManager.instance.SavingBool = saveToggle.isOn
 
-        ); 
+        //); 
        }
  
     

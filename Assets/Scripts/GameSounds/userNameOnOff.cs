@@ -39,19 +39,19 @@ public class userNameOnOff : MonoBehaviour
 
     public void ClickUserName()
     {
-        Debug.Log("XanaValu:"+ XanaConstants.xanaConstants.userName);
-        if (XanaConstants.xanaConstants.userName == 1)
+        //Debug.Log("XanaValu:"+ XanaConstants.xanaConstants.userName);
+        if (XanaConstants.xanaConstants.userNameVisibilty == 1)
         {
 
             ArrowManager.OnInvokeUsername(0);
-           XanaConstants.xanaConstants.userName = 0;
+           XanaConstants.xanaConstants.userNameVisibilty = 0;
            ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(false);
         }
         else
         {
             ArrowManager.OnInvokeUsername(1);
            
-            XanaConstants.xanaConstants.userName = 1;
+            XanaConstants.xanaConstants.userNameVisibilty = 1;
             ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(true);
         }
         //OnEnable();
