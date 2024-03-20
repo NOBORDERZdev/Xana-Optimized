@@ -23,12 +23,12 @@ public class WorldItemView : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private bool justOnetime = false;
+    private static bool justOnetime = false;
+
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount = 0)
     {
         //Debug.LogError("Env: " + detail.EnvironmentName);
-        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY
-           ) //&& APIBaseUrlChange.instance.IsXanaLive
+        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY) //&& APIBaseUrlChange.instance.IsXanaLive
         {
             if (justOnetime) return;
             justOnetime = true;
@@ -55,8 +55,9 @@ public class WorldItemView : MonoBehaviour
             //Creator_Name = detail.Creator_Name;
             //CreatorAvatarURL = detail.CreatorAvatarURL;
             //CreatorDescription = detail.CreatorDescription;
+            Init(index, _loopcount);
         }
-        else
+        else if(XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.XANA)
         {
             if (PreviewLogo)
                 PreviewLogo.gameObject.SetActive(true);
@@ -79,8 +80,8 @@ public class WorldItemView : MonoBehaviour
             Creator_Name = detail.Creator_Name;
             CreatorAvatarURL = detail.CreatorAvatarURL;
             CreatorDescription = detail.CreatorDescription;
-        }
-        Init(index, _loopcount);
+            Init(index, _loopcount);
+        } 
     }
 
     public static string m_EnvName;
@@ -132,6 +133,7 @@ public class WorldItemView : MonoBehaviour
     }
     private void OnDisable()
     {
+        justOnetime = false;
         if (!m_EnvironmentName.Contains("XANA Lobby"))
         {
             AssetCache.Instance.RemoveFromMemoryDelayCoroutine(m_ThumbnailDownloadURL, true);
