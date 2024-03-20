@@ -40,11 +40,6 @@ public class PremiumUsersDetails : MonoBehaviour
             DestroyImmediate(this.gameObject);
             return;
         }
-
-        /*if(SNSComingSoonManager.Instance.snsComingSoonScreen!=null)
-        {
-            comingSoonPanel = SNSComingSoonManager.Instance.snsComingSoonScreen;
-        }*/
     }
 
     public void OpenComingSoonPopUp()
@@ -55,7 +50,7 @@ public class PremiumUsersDetails : MonoBehaviour
     public bool CheckSpecificItem(string getName, bool enablePopupHere = true)
     {
 
-        if (testing)
+        if (testing || XanaConstants.isAdmin)
             return true;
 
         getName = getName.Trim();
@@ -98,24 +93,9 @@ public class PremiumUsersDetails : MonoBehaviour
                 return false;
 
             }
-            //else if (ConstantsGod.UserPriorityRole == "alpha-pass")
-            //{
-            //    if (SNSNotificationManager.Instance != null && enablePopupHere)
-            //    {
-            //        SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");//this method is used to show Coming Soon notification.......                                            
-            //    }
-            //    return false;
-            //}
-            //else
-            //{
-            //    if (enablePopupHere)
-            //        ShowNotAvailablePanel(PremiumUserUI);
-            //    return false;
-            //}
-
-
         }
-        else {
+        else 
+        {
 
             //Debug.Log(" <color=red> String not exist </color>");
         }
@@ -304,17 +284,21 @@ public class PremiumUsersDetails : MonoBehaviour
     public IEnumerator HitGetGroupDetails(string url, string Jsondata, Action<MainClass> callback)
     {
         //    print(Jsondata);
-        var request = new UnityWebRequest(url, "POST");
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", AuthToken);
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while(!request.isDone)
+        {
+            yield return null;
+        }
         //Debug.Log("features response :-"+request.downloadHandler.text);
         MainClass mainClassObj = new MainClass();
         mainClassObj = JsonUtility.FromJson<MainClass>(request.downloadHandler.text);
-        if (!request.isHttpError && !request.isNetworkError)
+        if (request.result!=UnityWebRequest.Result.ConnectionError)
         {
             if (request.error == null)
             {
@@ -327,7 +311,7 @@ public class PremiumUsersDetails : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
+            if (request.result==UnityWebRequest.Result.ConnectionError)
             {
                 print("Error in getting Group Details");
             }
