@@ -1155,7 +1155,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
         else if (_IsGrounded)
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpMove") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") && !animator.GetCurrentAnimatorStateInfo(0).IsName("LandSoft"))
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpMove") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Jump") && !animator.GetCurrentAnimatorStateInfo(0).IsName("Falling") && !animator.GetCurrentAnimatorStateInfo(0).IsName("LandSoft") && !animator.IsInTransition(0))
                 IsJumpButtonPress = true;
         }
 
