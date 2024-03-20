@@ -42,17 +42,20 @@ public class StayTimeTracker : MonoBehaviour
         else if (worldName.Contains("PMYGallery"))
             worldName = FirebaseTrigger.StayTime_PMYGallery.ToString();
         else if (worldName.Contains("PMYRoomA"))
+            BuilderEventManager.AfterWorldOffcialWorldsInatantiated += UpdateWorldName;  
+    }
+
+    private void UpdateWorldName()
+    {
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= UpdateWorldName;
+        switch (PMY_Nft_Manager.Instance.PMY_RoomId)
         {
-            switch (PMY_Nft_Manager.Instance.PMY_RoomId)
-            {
-                case 8:
-                    worldName = FirebaseTrigger.StayTime_CRoom1.ToString();
-                    break;
-                case 9:
-                    worldName = FirebaseTrigger.StayTime_CRoom2.ToString();
-                    break;
-            }
-            
+            case 8:
+                worldName = FirebaseTrigger.StayTime_CRoom1.ToString();
+                break;
+            case 9:
+                worldName = FirebaseTrigger.StayTime_CRoom2.ToString();
+                break;
         }
     }
 

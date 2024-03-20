@@ -127,20 +127,20 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
             switch (eventName)
             {
                 case "PMY ACADEMY":
-                    eventName = FirebaseTrigger.URL_PMYLobby.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                    eventName = FirebaseTrigger.URL_PMYLobby.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
                     break;
                 case "PMYGallery":
-                    eventName = FirebaseTrigger.URL_Gallery.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                    eventName = FirebaseTrigger.URL_Gallery.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
                     break;
                 case "PMYRoomA":
                     {
                         switch (PMY_Nft_Manager.Instance.PMY_RoomId)
                         {
                             case 8:
-                                eventName = FirebaseTrigger.URL_CRoom1.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                eventName = FirebaseTrigger.URL_CRoom1.ToString() + "_" +(PMY_Nft_Manager.Instance.clickedNftInd + 1);
                                 break;
                             case 9:
-                                eventName = FirebaseTrigger.URL_CRoom2.ToString() + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
+                                eventName = FirebaseTrigger.URL_CRoom2.ToString() + "_" + (PMY_Nft_Manager.Instance.clickedNftInd + 1);
                                 break;
                         }
                         break;
