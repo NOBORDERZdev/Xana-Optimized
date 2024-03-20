@@ -90,7 +90,7 @@ public class UIManager : MonoBehaviour
     }
     public void IsWorldClicked()
     {
-        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
@@ -135,8 +135,6 @@ public class UIManager : MonoBehaviour
         if(Loadinghandler_CanvasRef != null)
             Loadinghandler_CanvasRef.alpha = 1.0f;
         ShowFooter(!_state);
-        if(UserRegisterationManager.instance)
-        UserRegisterationManager.instance.ShowWelcomeScreenessintial();
     }
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)

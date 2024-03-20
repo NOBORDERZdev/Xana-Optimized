@@ -10,6 +10,16 @@ public class XanaConstants : MonoBehaviour
 {
     public static XanaConstants xanaConstants;
 
+    //Login Info
+    public static bool isAdmin;
+    public static bool isGuestLogin;
+    public static bool loggedIn;
+    public static bool isWalletLogin;
+    public static string xanaliaToken;
+    public static string xanaToken;
+    public static string userId;
+    public static string userName;
+
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
@@ -21,9 +31,8 @@ public class XanaConstants : MonoBehaviour
 
     public int mic;
     public int minimap;
-    public int userName;
-    public string userId;
-    //public bool profileImageModifedByUser = false;
+    public int userNameVisibilty;
+    public bool profileImageModifedByUser = false;
     public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;

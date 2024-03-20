@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PatchForProfileWallet : MonoBehaviour
 {
-     public GameObject closeloader;
+    public GameObject closeloader;
     private void OnDisable()
     {
         if (UIManager.Instance != null)//rik
@@ -16,28 +16,21 @@ public class PatchForProfileWallet : MonoBehaviour
 
     private void Start()
     {
-        if (XanaConstants.xanaConstants.isWalletLoadingbool) { 
-        
-        Invoke("OpenCrossbtn", 8f);
+        if (XanaConstants.xanaConstants.isWalletLoadingbool)
+        {
+            Invoke("OpenCrossbtn", 8f);
         }
     }
     public void OpenCrossbtn()
     {
-       closeloader.SetActive(true);
-       
+        closeloader.SetActive(true);
+
     }
     public void CloseCrossbtn()
     {
-        if (UserRegisterationManager.instance._IsWalletSignUp)
-        {
-            UserRegisterationManager.instance.NewSignUp_Panal .SetActive(true);
-           
-        }else
-        {
-            UserRegisterationManager.instance.LoginScreenNew.SetActive(true);
-           
-        }
+        if (!XanaConstants.loggedIn)
+            UserLoginSignupManager.instance.ShowWelcomeScreen();
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
- }
-    
+    }
+
 }

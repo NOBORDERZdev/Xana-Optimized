@@ -28,10 +28,10 @@ public class FeedAnimationController : MonoBehaviour
         StartCoroutine(FindPlayerAvatar());
         yield return new WaitForSeconds(.5f);
         StartCoroutine(GetAllAnimations());
-////////////Added By Abdullah Rashid For eye Blinking in Create Scene
-       EyesBlinking.instance.StoreBlendShapeValues();
+        ////////////Added By Abdullah Rashid For eye Blinking in Create Scene
+        EyesBlinking.instance.StoreBlendShapeValues();
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine( EyesBlinking.instance.BlinkingStartRoutine());
+        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
     }
 
     IEnumerator FindPlayerAvatar()
@@ -58,14 +58,14 @@ public class FeedAnimationController : MonoBehaviour
                 for (int j = 0; j < ContentPanel.transform.childCount; j++)
                 {
                     string animName = ContentPanel.transform.GetChild(j).name;
-                    GameObject animObject= ContentPanel.transform.GetChild(j).gameObject;
+                    GameObject animObject = ContentPanel.transform.GetChild(j).gameObject;
                     if (groupName == "All")
                     {
                         animObject.SetActive(true);
                     }
-                    else if(groupName == "Dance")
+                    else if (groupName == "Dance")
                     {
-                        if(animName.Contains("Full")|| animName.Contains("Jazz") || animName.Contains("Foot"))
+                        if (animName.Contains("Full") || animName.Contains("Jazz") || animName.Contains("Foot"))
                             animObject.SetActive(true);
                         else
                             animObject.SetActive(false);
@@ -124,17 +124,10 @@ public class FeedAnimationController : MonoBehaviour
     IEnumerator GetAllAnimations()
     {
         //Debug.Log("All Anim");
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES+"/"+APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES + "/" + APIBaseUrlChange.instance.apiversion);
         try
         {
-            if (UserRegisterationManager.instance.LoggedInAsGuest)
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
-            else
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
+            uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
         catch (Exception e1)
         {
@@ -235,7 +228,7 @@ public class FeedAnimationController : MonoBehaviour
                 {
                     yield return null;
                 }
-               
+
                 Texture2D thumbnailTexture = DownloadHandlerTexture.GetContent(www);
                 thumbnailTexture.Compress(true);
                 if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -255,7 +248,7 @@ public class FeedAnimationController : MonoBehaviour
                     }
                 }
                 www.Dispose();
-            }            
+            }
         }
     }
 
@@ -275,7 +268,7 @@ public class FeedAnimationController : MonoBehaviour
 
             if (CheckForIsAssetBundleAvailable(bundlePath))
             {
-                StartCoroutine(LoadAssetBundleFromStorage(url,bundlePath, _gameObject));
+                StartCoroutine(LoadAssetBundleFromStorage(url, bundlePath, _gameObject));
             }
             else
             {
@@ -285,7 +278,7 @@ public class FeedAnimationController : MonoBehaviour
             SetAnimationHighlight(_gameObject);
             lastFeedAnimBtnClicked = _gameObject;
         }
-        
+
     }
 
     int counter = 0;
@@ -307,7 +300,7 @@ public class FeedAnimationController : MonoBehaviour
             //GC.Collect();
             counter = 0;
         }
-       Debug.Log("GetAssetBundleFromServerUrl:" + bundlePath);
+        Debug.Log("GetAssetBundleFromServerUrl:" + bundlePath);
         using (WWW www = new WWW(BundleURL))
         {
             currentButton.transform.GetChild(2).gameObject.SetActive(true);
@@ -342,7 +335,7 @@ public class FeedAnimationController : MonoBehaviour
                             //playerAvatar.GetComponent<Animator>().Play("Animation");
                         }
                     }
-                   Debug.Log("bundle success download save to storage");
+                    Debug.Log("bundle success download save to storage");
                     SaveAssetBundle(www.bytes, bundlePath);
                     assetBundle.Unload(false);
                 }
@@ -353,9 +346,9 @@ public class FeedAnimationController : MonoBehaviour
     }
 
     //load asset bundle from storage.......#Riken
-    public IEnumerator LoadAssetBundleFromStorage(string url,string bundlePath, GameObject currentButton)
+    public IEnumerator LoadAssetBundleFromStorage(string url, string bundlePath, GameObject currentButton)
     {
-        if (waitForStandUp && runtimeAnimatorGameObject!=null && (url.Contains("sit") || url.Contains("laydown")))
+        if (waitForStandUp && runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
         {
             if (counterForEtc != 0)
             {
@@ -364,16 +357,19 @@ public class FeedAnimationController : MonoBehaviour
                 counterForEtc = 0;
                 waitForStandUp = false;
             }
-        }else if(runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
+        }
+        else if (runtimeAnimatorGameObject != null && (url.Contains("sit") || url.Contains("laydown")))
         {
             if (counterForEtc != 0)
             {
                 playerAvatar.GetComponent<Animator>().runtimeAnimatorController = runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animator>().runtimeAnimatorController;
                 counterForEtc = 0;
                 yield return new WaitForSeconds(runtimeAnimatorGameObject.transform.GetChild(1).GetComponent<Animation>().clip.length);
-            }else
+            }
+            else
                 counterForEtc = 0;
-        }else if(runtimeAnimatorGameObject != null)
+        }
+        else if (runtimeAnimatorGameObject != null)
         {
             if (counterForEtc != 0)
             {
@@ -388,7 +384,7 @@ public class FeedAnimationController : MonoBehaviour
         {
             //AssetBundle.UnloadAllAssetBundles(true);
             //Resources.UnloadUnusedAssets();
-           Debug.Log("Clear Cache Before");
+            Debug.Log("Clear Cache Before");
             //Caching.ClearCache();
             Debug.Log("Clear Cache after");
             GC.Collect();
@@ -418,7 +414,7 @@ public class FeedAnimationController : MonoBehaviour
             }
             if (newRequest.isDone)
             {
-               Debug.Log("Success load bundle from storage");
+                Debug.Log("Success load bundle from storage");
                 var animation = newRequest.allAssets;
                 foreach (var anim in animation)
                 {
@@ -431,7 +427,7 @@ public class FeedAnimationController : MonoBehaviour
                     else
                     {
                         //playerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController;
-                        
+
                         //Instantiate(go);
                         if (counterForEtc > 0)
                         {
