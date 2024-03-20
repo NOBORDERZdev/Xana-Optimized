@@ -60,7 +60,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
     public void LoadCharacterCustomizationPanel()
     {
-        StoreManager.instance.gameObject.SetActive(true);
+        InventoryManager.instance.gameObject.SetActive(true);
         CharacterCustomizationManager.Instance.OnLoadCharacterCustomizationPanel();
         l_ZoomOutState = false;
         ZoomOutCamera();
@@ -68,7 +68,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
     public void CloseCharacterCustomizationPanel()
     {
-        StoreManager.instance.gameObject.SetActive(false);
+        InventoryManager.instance.gameObject.SetActive(false);
         CharacterCustomizationManager.Instance.OnCloseCharacterCustomizationPanel();
     }
 
@@ -131,7 +131,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = false;
         //CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = false;
 
-      StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+      InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         UIManager.Instance.faceMorphPanel.SetActive(true);
         GameManager.Instance.faceMorphCam.SetActive(true);
     }
@@ -140,15 +140,15 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     public void CloseCustomBlendShapePanel()
     {
         UIManager.Instance._footerCan.SetActive(true);
-        StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         // Commented By Ahsan
-        //if (StoreManager.instance.ParentOfBtnsAvatarEyeBrows.gameObject.activeSelf)
+        //if (InventoryManager.instance.ParentOfBtnsAvatarEyeBrows.gameObject.activeSelf)
         //{
-        //    for (int i = 0; i < StoreManager.instance.ParentOfBtnsAvatarEyeBrows.transform.childCount; i++)
+        //    for (int i = 0; i < InventoryManager.instance.ParentOfBtnsAvatarEyeBrows.transform.childCount; i++)
         //    {
-        //        StoreManager.instance.ParentOfBtnsAvatarEyeBrows.transform.GetChild(i).gameObject.SetActive(false);
+        //        InventoryManager.instance.ParentOfBtnsAvatarEyeBrows.transform.GetChild(i).gameObject.SetActive(false);
         //    }
-        //    StoreManager.instance.SubmitAllItemswithSpecificSubCategory(StoreManager.instance.SubCategoriesList[XanaConstants.xanaConstants.currentButtonIndex + 8].id, true);
+        //    InventoryManager.instance.SubmitAllItemswithSpecificSubCategory(InventoryManager.instance.SubCategoriesList[XanaConstants.xanaConstants.currentButtonIndex + 8].id, true);
         //}
         UIManager.Instance.faceMorphPanel.SetActive(false);
         GameManager.Instance.faceMorphCam.SetActive(false);
@@ -174,7 +174,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
         //Comment because file is rewriting the vale here again...(Abdullah)
         //SavaCharacterProperties.instance.AssignCustomSlidersData();
-        StoreManager.instance.ResetMorphBooleanValues();
+        InventoryManager.instance.ResetMorphBooleanValues();
         BlendShapeImporter.Instance.TurnOffAllObjects();
 
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
@@ -191,7 +191,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     public void CloseCustomBlendShapePanelSave_Morphs()
     {
         UIManager.Instance._footerCan.SetActive(true);
-        StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         UIManager.Instance.faceMorphPanel.SetActive(false);
         GameManager.Instance.faceMorphCam.SetActive(false);
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
@@ -214,7 +214,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         ChangeCameraForZoomFace.instance.ChangeCameraToProspective();
         // SavaCharacterProperties.instance.AssignCustomSlidersData();
 
-        StoreManager.instance.saveStoreBtnButton.onClick.Invoke();
+        InventoryManager.instance.saveStoreBtnButton.onClick.Invoke();
         Debug.Log("<color=red>CustomizationManager AssignLastClickedBtnHere</color>");
         XanaConstants.xanaConstants._lastClickedBtn = gameObject;
         //  SavaCharacterProperties.instance.AssignCustomsliderNewData();

@@ -44,7 +44,7 @@ public class BodyCustomizer : MonoBehaviour
 
         /*
         #region populating Body blend values from store manager script
-        StoreManager _sManager = FindObjectOfType<StoreManager>();    // Getting StoreManager Ref
+        InventoryManager _sManager = FindObjectOfType<InventoryManager>();    // Getting InventoryManager Ref
         // Setting blend Shape values for morphs
         m_FaceBlendShapeIndex = new int[_sManager.faceAvatarButton.Length];   // populate the length of blend as per no of buttons
         for (int i = 0; i < _sManager.faceAvatarButton.Length; i++)       // 
@@ -81,7 +81,7 @@ public class BodyCustomizer : MonoBehaviour
     public void BodyCustomCallFromStore()
     {  
         #region populating Body blend values from store manager script
-        StoreManager _sManager = FindObjectOfType<StoreManager>();    // Getting StoreManager Ref
+        InventoryManager _sManager = FindObjectOfType<InventoryManager>();    // Getting InventoryManager Ref
 
         // Setting blend Shape values for morphs
         m_FaceBlendShapeIndex = new int[_sManager.faceAvatarButton.Length];   // populate the length of blend as per no of buttons

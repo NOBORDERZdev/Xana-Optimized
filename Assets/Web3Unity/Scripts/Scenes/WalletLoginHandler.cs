@@ -7,12 +7,12 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class WalletLogin: MonoBehaviour
+public class WalletLoginHandler: MonoBehaviour
 {
     ProjectConfigScriptableObject projectConfigSO = null;
     //public Toggle rememberMe;
     //UserRegisterationManager registerationManager;
-    [SerializeField] ConnectingWallet connectingWallet;
+    [SerializeField] ConnectWallet ConnectWallet;
     //[SerializeField] GameObject SuccessfulPopUp;
     
     void Start() {
@@ -95,16 +95,16 @@ public class WalletLogin: MonoBehaviour
                     case WalletConnectCallType.NewRegistration:
                         //registerationManager.LoaderBool = false;
                         // PlayerPrefs.SetInt("WalletConnect", 1);
-                        connectingWallet.isWalletNewReg= true;
+                        ConnectWallet.isWalletNewReg= true;
                         // registerationManager.LoginWithWallet();
-                        connectingWallet.StartCoroutine(connectingWallet.SaveChainSafeNonce(signature,account,message));
+                        ConnectWallet.StartCoroutine(ConnectWallet.SaveChainSafeNonce(signature,account,message));
                         //Invoke(nameof(OpenNamePanel),1f);
                         // SetNameInServer();
 
                         break;
                     case WalletConnectCallType.Login:
-                        connectingWallet.isWalletNewReg= false;
-                        connectingWallet.StartCoroutine(connectingWallet.SaveChainSafeNonce(signature,account,message));
+                        ConnectWallet.isWalletNewReg= false;
+                        ConnectWallet.StartCoroutine(ConnectWallet.SaveChainSafeNonce(signature,account,message));
                         break;
                     default:
                         break;

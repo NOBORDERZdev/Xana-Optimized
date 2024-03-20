@@ -6,9 +6,9 @@ using UnityEngine.Networking;
 using System;
 using UnityEngine.SceneManagement;
 
-public class PremiumUsersDetails : MonoBehaviour
+public class UserPassManager : MonoBehaviour
 {
-    public static PremiumUsersDetails Instance;
+    public static UserPassManager Instance;
     public string getGroupDetailsAPI = ConstantsGod.GETSETS;
     //   public string getGroupDetailsAPITest = "https://api-test.xana.net" + ConstantsGod.GETSETS;
     public MainClass SetMainObj;

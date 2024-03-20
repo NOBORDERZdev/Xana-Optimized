@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static StoreManager;
+using static InventoryManager;
 
-public class AR_UndoRedo : MonoBehaviour
+public class StoreUndoRedo : MonoBehaviour
 {
-    public static AR_UndoRedo obj;
+    public static StoreUndoRedo obj;
     [Serializable]
     public class Data
     {
@@ -208,7 +208,7 @@ public class AR_UndoRedo : MonoBehaviour
         tempMethodName = method;
         tempParam = paramInt;
         tempColor = colorParam;
-        ActivePanelCallStack.obj.ResetValue();                 // AR Changes
+        StoreStackHandler.obj.ResetValue();                 // AR Changes
 
         if (!tempActionObject.activeInHierarchy)
         {
@@ -323,7 +323,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (InventoryManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> Hair Color Panel already enabled");
                             previousInd--;
@@ -357,7 +357,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>() != null)
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (InventoryManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> Lips Color Panel already enabled");
                             previousInd--;
@@ -400,7 +400,7 @@ public class AR_UndoRedo : MonoBehaviour
                     {
                         if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                         {
-                            if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                            if (InventoryManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                             {
                                 //Debug.Log("<color=blue> Eye Color Panel already enabled");
                                 previousInd--;
@@ -457,7 +457,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (InventoryManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> EyeBrow Color Panel already enabled");
                             previousInd--;
@@ -536,7 +536,7 @@ public class AR_UndoRedo : MonoBehaviour
                     {
                         case SliderType.HairColor:
                             {
-                                bool enableColorScreen = StoreManager.instance.CheckColorPanelEnabled(0) ? true : false;
+                                bool enableColorScreen = InventoryManager.instance.CheckColorPanelEnabled(0) ? true : false;
                                 avatar_Wearable_Btns[8].GetComponent<ButtonScript>().BtnClicked();
                                 addToList = false;
                                 if (enableColorScreen)
@@ -549,7 +549,7 @@ public class AR_UndoRedo : MonoBehaviour
                             break;
                         case SliderType.EyeBrowColor:
                             {
-                                bool enableColorScreen = StoreManager.instance.CheckColorPanelEnabled(2) ? true : false;
+                                bool enableColorScreen = InventoryManager.instance.CheckColorPanelEnabled(2) ? true : false;
                                 avatar_Wearable_Btns[16].GetComponent<ButtonScript>().BtnClicked();
                                 addToList = false;
                                 if (enableColorScreen)
@@ -562,7 +562,7 @@ public class AR_UndoRedo : MonoBehaviour
                             break;
                         case SliderType.EyesColor:
                             {
-                                bool enableColorScreen = StoreManager.instance.CheckColorPanelEnabled(3) ? true : false;
+                                bool enableColorScreen = InventoryManager.instance.CheckColorPanelEnabled(3) ? true : false;
                                 avatar_Wearable_Btns[12].GetComponent<ButtonScript>().BtnClicked();
                                 addToList = false;
                                 if (enableColorScreen)
@@ -575,7 +575,7 @@ public class AR_UndoRedo : MonoBehaviour
                             break;
                         case SliderType.LipsColor:
                             {
-                                bool enableColorScreen = StoreManager.instance.CheckColorPanelEnabled(5) ? true : false;
+                                bool enableColorScreen = InventoryManager.instance.CheckColorPanelEnabled(5) ? true : false;
                                 avatar_Wearable_Btns[10].GetComponent<ButtonScript>().BtnClicked();
                                 addToList = false;
                                 if (enableColorScreen)
@@ -609,7 +609,7 @@ public class AR_UndoRedo : MonoBehaviour
         if (panelType.Equals(PanelType.Wearable))
         {
             //Debug.Log("<color=red> Active Avatar Panel </color>");
-            StoreManager.instance.SelectPanel(1);
+            InventoryManager.instance.SelectPanel(1);
         }
     }
 
@@ -618,7 +618,7 @@ public class AR_UndoRedo : MonoBehaviour
         if (panelType.Equals(PanelType.Avatar))
         {
             //Debug.Log("<color=red> Active Wearable Panel </color>");
-            StoreManager.instance.SelectPanel(0);
+            InventoryManager.instance.SelectPanel(0);
         }
     }
 

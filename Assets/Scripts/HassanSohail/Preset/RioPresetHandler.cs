@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class RioPresetHandler : MonoBehaviour
+public class SpeicalPresetManager : MonoBehaviour
 {
     [SerializeField] List<GameObject> presetButtons;
     string presetGetApi = "/hot/items/get-admin/";

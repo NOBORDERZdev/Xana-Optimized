@@ -1433,7 +1433,7 @@ public class MyProfileDataManager : MonoBehaviour
     public void OnClickNFTTabButtonMain(int index)
     { 
         UserLoginSignupManager.instance.GetOwnedNFTsFromAPI();
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -1471,7 +1471,7 @@ public class MyProfileDataManager : MonoBehaviour
 
     public void OnClickNFTTabButtonSub(int index)
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("mynftbutton"))
         {
             print("Please Upgrade to Premium account");
             return;

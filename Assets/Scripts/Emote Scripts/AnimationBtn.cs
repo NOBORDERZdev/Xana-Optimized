@@ -61,9 +61,9 @@ public class AnimationBtn : MonoBehaviour
 
     private void OnAnimationClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("gesture button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("gesture button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }

@@ -47,9 +47,9 @@ public class ChracterPosition : MonoBehaviour
                 {
                     ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 }
-                if (!PremiumUsersDetails.Instance.CheckSpecificItem("idol_Villa", false))
+                if (!UserPassManager.Instance.CheckSpecificItem("idol_Villa", false))
                 {
-                    PremiumUsersDetails.Instance.vipPassUI.SetActive(true);
+                    UserPassManager.Instance.vipPassUI.SetActive(true);
                     CameraLook.instance.DisAllowControl();
                     return;
                 }

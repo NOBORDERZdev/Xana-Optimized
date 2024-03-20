@@ -72,7 +72,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
 
         www.Dispose();
 
-        if (loadAllAvatar != null && StoreManager.instance.MultipleSave)
+        if (loadAllAvatar != null && InventoryManager.instance.MultipleSave)
         {
             loadAllAvatar?.Invoke(1, 20);
         }
@@ -187,15 +187,15 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
             {
 
                 print("DataUpdated");
-                //if (StoreManager.instance.AvatarUpdated != null)
-                //StoreManager.instance.AvatarUpdated.SetActive(true);
-                if (StoreManager.instance.MultipleSave && LoadPlayerAvatar.instance_loadplayer != null)
+                //if (InventoryManager.instance.AvatarUpdated != null)
+                //InventoryManager.instance.AvatarUpdated.SetActive(true);
+                if (InventoryManager.instance.MultipleSave && LoadPlayerAvatar.instance_loadplayer != null)
                     LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 1);
-                /*if (StoreManager.instance.isSaveFromreturnHomePopUp)
+                /*if (InventoryManager.instance.isSaveFromreturnHomePopUp)
                 {
-                    StoreManager.instance.AvatarUpdated.SetActive(false);
-                    StoreManager.instance.isSaveFromreturnHomePopUp = false;
-                    StoreManager.instance.OnClickHomeButton();
+                    InventoryManager.instance.AvatarUpdated.SetActive(false);
+                    InventoryManager.instance.isSaveFromreturnHomePopUp = false;
+                    InventoryManager.instance.OnClickHomeButton();
                 }*/
                 //   GetResponseupdatedata getdata = new GetResponseupdatedata();
                 // getdata = JsonUtility.FromJson<GetResponseupdatedata>(www.downloadHandler.text);
@@ -277,8 +277,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
                 else
                 {
                     // write latest json data to file
-                    GameObject contentparent = StoreManager.instance.ClothsPanel[4].GetComponent<ScrollRect>().content.gameObject;
-                    GameObject contentStartUpPanel = StoreManager.instance.PresetArrayContent;
+                    GameObject contentparent = InventoryManager.instance.ClothsPanel[4].GetComponent<ScrollRect>().content.gameObject;
+                    GameObject contentStartUpPanel = InventoryManager.instance.PresetArrayContent;
 
                     for (int c = 0; c < getdata.data.count - 1; c++)
                     {

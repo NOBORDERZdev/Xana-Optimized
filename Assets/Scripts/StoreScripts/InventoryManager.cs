@@ -14,13 +14,13 @@ using DG.DemiLib;
 //using HSVPicker;
 
 
-public class StoreManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
     [Header("Holds Api response")]
     public ResponseHolder apiResponseHolder;
 
     //public DownloadandRigClothes _DownloadRigClothes;
-    public static StoreManager instance;
+    public static InventoryManager instance;
     [Header("Main Panels Store")]
     public GameObject StoreItemsPanel;
     //public GameObject CheckOutBuyItemPanel;
@@ -494,9 +494,9 @@ public class StoreManager : MonoBehaviour
         Default_LastSaved_PanelDisabler();
 
 
-        StoreManager.instance.GreyRibbonImage.SetActive(true);
-        StoreManager.instance.WhiteRibbonImage.SetActive(false);
-        StoreManager.instance.saveStoreBtnImage.color = Color.white;
+        InventoryManager.instance.GreyRibbonImage.SetActive(true);
+        InventoryManager.instance.WhiteRibbonImage.SetActive(false);
+        InventoryManager.instance.saveStoreBtnImage.color = Color.white;
         PresetData_Jsons test;
         if (FindObjectOfType<PresetData_Jsons>())
         {
@@ -703,7 +703,7 @@ public class StoreManager : MonoBehaviour
             PlayerPrefs.SetInt("Loaded", 1);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
             {
-                if (StoreManager.instance.MultipleSave)
+                if (InventoryManager.instance.MultipleSave)
                 {
                     AvatarSaved.SetActive(true);
                 }
@@ -1306,7 +1306,7 @@ public class StoreManager : MonoBehaviour
             StoreItemsPanel.SetActive(false);
             UndoSelection();
             //UndoRedo.undoRedo.undoRedoList.DestroyActionWithParameters(UndoRedo.undoRedo.undoRedoList);
-            AR_UndoRedo.obj.DestroyList();
+            StoreUndoRedo.obj.DestroyList();
             DeletePreviousItems();
 
         }
@@ -1389,7 +1389,7 @@ public class StoreManager : MonoBehaviour
         ////Debug.Log("<color=red> Panel Index:" + TakeIndex + "</color>");
         panelIndex = TakeIndex;
 
-        //  StoreManager.instance.DeletePreviousItems();
+        //  InventoryManager.instance.DeletePreviousItems();
         //Resources.UnloadUnusedAssets();
 
         if (TakeIndex == 0)
@@ -1430,9 +1430,9 @@ public class StoreManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
 
-            StoreManager.instance.GreyRibbonImage.SetActive(true);
-            StoreManager.instance.WhiteRibbonImage.SetActive(false);
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+            InventoryManager.instance.GreyRibbonImage.SetActive(true);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(false);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
 
             SavaCharacterProperties.instance.LoadMorphsfromFile();
         }
@@ -1637,7 +1637,7 @@ public class StoreManager : MonoBehaviour
         //Resources.UnloadUnusedAssets();
 
         ////Debug.Log("ColorBtn : " + index);
-        ActivePanelCallStack.obj.UpdatePanelStatus(index, false);    // AR changes
+        StoreStackHandler.obj.UpdatePanelStatus(index, false);    // AR changes
         textskin.enabled = false;
         colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
         colorBtn.GetComponent<Button>().onClick.AddListener(() => OnColorButtonClicked(index));
@@ -1761,7 +1761,7 @@ public class StoreManager : MonoBehaviour
 
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[2] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 2);
@@ -1781,7 +1781,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[3] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 3);
@@ -1801,7 +1801,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[0] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColor, 4);
@@ -1819,7 +1819,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[4] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.eyeColorPalette, 4);
@@ -1840,7 +1840,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[1] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.lipColor, 5);
@@ -1858,7 +1858,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.colorSelection[5] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.lipColorPalette, 5);
@@ -1879,7 +1879,7 @@ public class StoreManager : MonoBehaviour
                         {
                             childObject.GetComponent<Image>().enabled = true;
                             XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                            //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                            //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                             XanaConstants.xanaConstants.avatarStoreSelection[7] = childObject;
 
                             CheckForItemDetail(XanaConstants.xanaConstants.skinColor, 6);
@@ -3696,10 +3696,10 @@ public class StoreManager : MonoBehaviour
     //{
     //    //UndoSelection();
     //    //RedoBtn.GetComponent<Button>().interactable = true;
-    //    //StoreManager.instance.SaveStoreBtn.SetActive(true);
-    //    //StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-    //    //StoreManager.instance.GreyRibbonImage.SetActive(false);
-    //    //StoreManager.instance.WhiteRibbonImage.SetActive(true);
+    //    //InventoryManager.instance.SaveStoreBtn.SetActive(true);
+    //    //InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+    //    //InventoryManager.instance.GreyRibbonImage.SetActive(false);
+    //    //InventoryManager.instance.WhiteRibbonImage.SetActive(true);
 
     //    //if (CurrentIndex != 0)
     //    //{
@@ -3822,10 +3822,10 @@ public class StoreManager : MonoBehaviour
     //public void RedoFunc()
     //{
     //    //UndoSelection();
-    //    //StoreManager.instance.SaveStoreBtn.SetActive(true);
-    //    //StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-    //    //StoreManager.instance.GreyRibbonImage.SetActive(false);
-    //    //StoreManager.instance.WhiteRibbonImage.SetActive(true);
+    //    //InventoryManager.instance.SaveStoreBtn.SetActive(true);
+    //    //InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+    //    //InventoryManager.instance.GreyRibbonImage.SetActive(false);
+    //    //InventoryManager.instance.WhiteRibbonImage.SetActive(true);
 
     //    //if (CurrentIndex < UndoRedoList.Count - 1)
     //    //{
@@ -3958,7 +3958,7 @@ public class StoreManager : MonoBehaviour
             {
                 childObject.GetComponent<Image>().enabled = true;
                 XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                 XanaConstants.xanaConstants.avatarStoreSelection[0] = childObject;
 
                 CheckForItemDetail(XanaConstants.xanaConstants.hair, 3);
@@ -4002,7 +4002,7 @@ public class StoreManager : MonoBehaviour
                                 //  //Debug.Log("<color=blue>Enabled Selection</color>");
                                 childObject.GetComponent<Image>().enabled = true;
                                 XanaConstants.xanaConstants._lastClickedBtn = childObject;
-                                // //Debug.Log("<color=red>StoreManager AssignLastClickedBtnHere</color>");
+                                // //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
                                 XanaConstants.xanaConstants.avatarStoreSelection[0] = childObject;
 
                                 CheckForItemDetail(XanaConstants.xanaConstants.hair, 3);

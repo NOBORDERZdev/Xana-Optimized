@@ -90,9 +90,9 @@ public class AddressableDownloader : MonoBehaviour
                 string tempName = key.Replace("gambeson", "shirt");
                 key = tempName;
             }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+            if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
             {
-                StoreManager.instance.loaderForItems.SetActive(true);
+                InventoryManager.instance.loaderForItems.SetActive(true);
             }
             while (true)
             {
@@ -108,8 +108,8 @@ public class AddressableDownloader : MonoBehaviour
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                     Debug.Log("Fail To load");
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
+                    if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                        InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
                     DisableLoadingPanel();
@@ -194,8 +194,8 @@ public class AddressableDownloader : MonoBehaviour
         GameManager.Instance.isStoreAssetDownloading = false;
         DisableLoadingPanel();
 
-        if (StoreManager.instance.loaderForItems)
-            StoreManager.instance.loaderForItems.SetActive(false);
+        if (InventoryManager.instance.loaderForItems)
+            InventoryManager.instance.loaderForItems.SetActive(false);
         yield return null;
     }
     ///// <summary>
@@ -271,8 +271,8 @@ public class AddressableDownloader : MonoBehaviour
                 GameManager.Instance.isStoreAssetDownloading = false;
                 yield return null;
             }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                StoreManager.instance.loaderForItems.SetActive(true);
+            if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+                InventoryManager.instance.loaderForItems.SetActive(true);
             while (true)
             {
                 AsyncOperationHandle loadOp;
@@ -290,8 +290,8 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("presetPanel") != 1)
                     {
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                            StoreManager.instance.loaderForItems.SetActive(false);
+                        if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                            InventoryManager.instance.loaderForItems.SetActive(false);
 
                         GameManager.Instance.isStoreAssetDownloading = false;
                         DisableLoadingPanel();
@@ -359,8 +359,8 @@ public class AddressableDownloader : MonoBehaviour
                             default:
                                 break;
                         }
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                            StoreManager.instance.loaderForItems.SetActive(false);
+                        if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+                            InventoryManager.instance.loaderForItems.SetActive(false);
                         GameManager.Instance.isStoreAssetDownloading = false;
                         yield break;
                     }

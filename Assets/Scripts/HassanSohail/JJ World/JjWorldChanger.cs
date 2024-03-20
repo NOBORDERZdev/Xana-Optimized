@@ -152,7 +152,7 @@ public class JjWorldChanger : MonoBehaviour
 
     private bool checkWorldComingSoon(string worldName)
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(worldName, true))
+        if (!UserPassManager.Instance.CheckSpecificItem(worldName, true))
         {
 
             return false;

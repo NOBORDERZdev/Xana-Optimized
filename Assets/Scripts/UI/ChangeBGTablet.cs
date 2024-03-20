@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeBG : MonoBehaviour
+public class ChangeBGTablet : MonoBehaviour
 {
     public GameObject mobileBG;
     public GameObject tabBG;
@@ -19,11 +17,5 @@ public class ChangeBG : MonoBehaviour
             mobileBG.SetActive(true);
             tabBG.SetActive(false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

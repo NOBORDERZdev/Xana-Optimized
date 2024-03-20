@@ -101,7 +101,7 @@ public class ReactScreen : MonoBehaviour
         }
         else
         {
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem("chat_reaction"))
+            if (!UserPassManager.Instance.CheckSpecificItem("chat_reaction"))
             {
                 print("Please Upgrade to Premium account");
                 return;

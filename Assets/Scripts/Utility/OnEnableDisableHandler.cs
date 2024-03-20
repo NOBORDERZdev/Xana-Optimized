@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class OnEnableDisableHandler : MonoBehaviour
+public class OnEnableDisable : MonoBehaviour
 {
     public UnityEvent OnEnabled;
     public UnityEvent OnDisabled;

@@ -853,9 +853,9 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("gesture button"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("gesture button"))
         //{
-        //    //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+        //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
         //    print("Please Upgrade to Premium account");
         //    return;
         //}

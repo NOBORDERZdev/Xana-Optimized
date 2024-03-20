@@ -131,7 +131,7 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void OnSwitchCameraClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("fp_camera"))
+        if (!UserPassManager.Instance.CheckSpecificItem("fp_camera"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -207,7 +207,7 @@ public class CanvasButtonsHandler : MonoBehaviour
             if (ChangeOrientation_waqas._instance.joystickInitPosY == 0)
                 ChangeOrientation_waqas._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
         }
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("env_actions"))
+        if (!UserPassManager.Instance.CheckSpecificItem("env_actions"))
         {
             print("Please Upgrade to Premium account");
             return;
