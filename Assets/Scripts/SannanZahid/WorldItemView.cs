@@ -26,16 +26,19 @@ public class WorldItemView : MonoBehaviour
     private bool justOnetime = false;
     public void InitItem(int index, Vector2 gridPos, WorldItemDetail detail, int _loopcount = 0)
     {
-
+        //Debug.LogError("Env: " + detail.EnvironmentName);
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY
-           && APIBaseUrlChange.instance.IsXanaLive)
+           ) //&& APIBaseUrlChange.instance.IsXanaLive
         {
             if (justOnetime) return;
             justOnetime = true;
             creatorName = "JJ Creator";
             Index = 2;
             GridIndex = gridPos;
+            if(APIBaseUrlChange.instance.IsXanaLive)
             idOfObject = "3154";
+            else
+            idOfObject = "1188";
             m_EnvironmentName = "PMY ACADEMY";
             m_WorldDescription = "This space is an “inquiry learning” metaverse program that allows students to learn from a free perspective through initiatives from various companies that address SDG thinking and social issues.";
             //m_ThumbnailDownloadURL = detail.ThumbnailDownloadURL;
@@ -139,6 +142,7 @@ public class WorldItemView : MonoBehaviour
     }
     public void Init(int worlditemcount, int _loopcount)
     {
+        //Debug.Log("Env Name: " + m_EnvironmentName);
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
         {
             if (m_EnvironmentName == "PMY ACADEMY")
