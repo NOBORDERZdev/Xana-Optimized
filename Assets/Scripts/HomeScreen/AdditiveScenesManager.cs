@@ -21,7 +21,7 @@ public class AdditiveScenesManager : MonoBehaviour
             StartCoroutine(AddDelayStore(sceneDelay / 3));
             StartCoroutine(AddDelay(sceneDelay));
             StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
-            StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
+           // StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
         }
     }
     IEnumerator AddDelayStore(float delay)

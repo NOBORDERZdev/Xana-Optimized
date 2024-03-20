@@ -208,7 +208,7 @@ public class BottomTabManager : MonoBehaviour
                 if (additiveScenesManager != null)
                 {
                     additiveScenesManager.SNSmodule.SetActive(false);
-                    additiveScenesManager.SNSMessage.SetActive(false);
+                    //additiveScenesManager.SNSMessage.SetActive(false);
                 }
                 //  gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
                 gameManager.ActorManager._cinemaCam.SetActive(false);
@@ -261,7 +261,7 @@ public class BottomTabManager : MonoBehaviour
             if (additiveScenesManager != null)
             {
                 additiveScenesManager.SNSmodule.SetActive(false);
-                additiveScenesManager.SNSMessage.SetActive(false);
+               // additiveScenesManager.SNSMessage.SetActive(false);
             }
             ////---->>>Sannan   if (gameManager.UiManager != null)
             //   {
@@ -342,7 +342,7 @@ public class BottomTabManager : MonoBehaviour
             if (additiveScenesManager != null)
             {
                 additiveScenesManager.SNSmodule.SetActive(false);
-                additiveScenesManager.SNSMessage.SetActive(false);
+               // additiveScenesManager.SNSMessage.SetActive(false);
             }
             if (gameManager.UiManager != null)
             {
@@ -381,7 +381,7 @@ public class BottomTabManager : MonoBehaviour
                 {
                     MessageController.Instance.isChatDetailsScreenDeactive = true;
                 }
-                additiveScenesManager.SNSMessage.SetActive(true);
+               // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
                 MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
@@ -468,7 +468,7 @@ public class BottomTabManager : MonoBehaviour
             if (additiveScenesManager != null)
             {
                 additiveScenesManager.SNSmodule.SetActive(true);
-                additiveScenesManager.SNSMessage.SetActive(false);
+                //additiveScenesManager.SNSMessage.SetActive(false);
                 gameManager.defaultSelection = 3;
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
@@ -556,7 +556,7 @@ public class BottomTabManager : MonoBehaviour
             if (additiveScenesManager != null)
             {
                 additiveScenesManager.SNSmodule.SetActive(true);
-                additiveScenesManager.SNSMessage.SetActive(false);
+               // additiveScenesManager.SNSMessage.SetActive(false);
             }
             else
             {
@@ -677,7 +677,7 @@ public class BottomTabManager : MonoBehaviour
             if (additiveScenesManager != null)
             {
                 additiveScenesManager.SNSmodule.SetActive(true);
-                additiveScenesManager.SNSMessage.SetActive(false);
+               // additiveScenesManager.SNSMessage.SetActive(false);
                 gameManager.defaultSelection = 4;
                 FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
             }
@@ -744,7 +744,7 @@ public class BottomTabManager : MonoBehaviour
         if (additiveScenesManager != null)
         {
             additiveScenesManager.SNSmodule.SetActive(false);
-            additiveScenesManager.SNSMessage.SetActive(false);
+           // additiveScenesManager.SNSMessage.SetActive(false);
             // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().gameManager.defaultSelection = 4;
             //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
         }
