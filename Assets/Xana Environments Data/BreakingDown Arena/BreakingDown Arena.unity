@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientSkyColor: {r: 0.92156863, g: 0.92156863, b: 0.92156863, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.5
@@ -6367,6 +6367,7 @@ MonoBehaviour:
   _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 0
   shaderName: Legacy Shaders/Particles/Alpha Blended
+  isTerrain: 0
 --- !u!1001 &191510041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25501,6 +25502,7 @@ MonoBehaviour:
   _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 0
   shaderName: Legacy Shaders/Particles/Alpha Blended
+  isTerrain: 0
 --- !u!1001 &1390316859
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32729,6 +32731,7 @@ MonoBehaviour:
   _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 0
   shaderName: Legacy Shaders/Particles/Alpha Blended
+  isTerrain: 0
 --- !u!1 &1714964871
 GameObject:
   m_ObjectHideFlags: 0
@@ -39530,6 +39533,7 @@ MonoBehaviour:
   _shader: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 0
   shaderName: Legacy Shaders/Particles/Alpha Blended
+  isTerrain: 0
 --- !u!1 &2010760342
 GameObject:
   m_ObjectHideFlags: 0
@@ -41086,6 +41090,7 @@ MonoBehaviour:
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 1
   shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!114 &4294505633885410226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -41101,6 +41106,7 @@ MonoBehaviour:
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 1
   shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &4294505633885410227 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8084584351005901000, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
@@ -41121,6 +41127,7 @@ MonoBehaviour:
   _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
   isMeshRendrer: 1
   shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!4 &4510576992560763672 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 360833321582002358, guid: 1c1fd81608e042e4f800bbfc01e324b3, type: 3}
