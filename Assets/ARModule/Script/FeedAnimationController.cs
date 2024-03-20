@@ -190,7 +190,7 @@ public class FeedAnimationController : MonoBehaviour
                         if (animationGroup[i] == "Etc")
                             animationGroup[i] = "Sit & lying";
                         categoryObject.name = animationGroup[i];
-                        categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey(animationGroup[i]);
+                        categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey(animationGroup[i]);
                         categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
                         categoryObject.transform.GetChild(0).gameObject.SetActive(true);
                         int x = i + 1;

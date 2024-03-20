@@ -450,7 +450,7 @@ public class ChatDataScript : MonoBehaviour
             if (!string.IsNullOrEmpty(chatMessageText.text))
             {
                 Debug.LogError("Copy Message.......");
-                EasyUI.Toast.Toast.Show(TextLocalization.GetLocaliseTextByKey("Text copied!"), 1f);
+                EasyUI.Toast.Toast.Show(UITextLocalization.GetLocaliseTextByKey("Text copied!"), 1f);
                 GUIUtility.systemCopyBuffer = chatMessageText.text;
 
                 /*TextEditor textEditor = new TextEditor();

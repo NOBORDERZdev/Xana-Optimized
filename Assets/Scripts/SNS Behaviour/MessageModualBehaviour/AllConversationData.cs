@@ -237,11 +237,11 @@ public class AllConversationData : MonoBehaviour
             //Debug.LogError("LastMSG:" + lastMSG + " :DataLastMSG:" + allChatGetConversationDatum.lastMsg);
             if (lastMSG.Contains("Left"))
             {
-                textLastMessage.text = lastMSG.Replace("Left", TextLocalization.GetLocaliseTextByKey("Left"));
+                textLastMessage.text = lastMSG.Replace("Left", UITextLocalization.GetLocaliseTextByKey("Left"));
             }
             else if(lastMSG.Contains("attachments"))
             {
-                textLastMessage.text = lastMSG.Replace("attachments", TextLocalization.GetLocaliseTextByKey("attachments"));
+                textLastMessage.text = lastMSG.Replace("attachments", UITextLocalization.GetLocaliseTextByKey("attachments"));
             }
             else
             {
@@ -282,8 +282,8 @@ public class AllConversationData : MonoBehaviour
 
         if (timeDiff.TotalMinutes < 1)
         {
-            textTime.text = TextLocalization.GetLocaliseTextByKey("Just Now");
-            //textTime.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+            textTime.text = UITextLocalization.GetLocaliseTextByKey("Just Now");
+            //textTime.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
         }
         else if (timeDiff.TotalMinutes > 1 && timeDiff.TotalMinutes <= 60)
         {

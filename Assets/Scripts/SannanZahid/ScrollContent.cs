@@ -20,22 +20,22 @@ namespace DynamicScrollRect
                 return _dynamicScrollRect;
             }
         }
-        private WorldItemView _referenceItem;
-        private WorldItemView _ReferenceItem
+        private WorldItem _referenceItem;
+        private WorldItem _ReferenceItem
         {
             get
             {
                 if (_referenceItem == null)
                 {
-                    _referenceItem = GetComponentInChildren<WorldItemView>();
+                    _referenceItem = GetComponentInChildren<WorldItem>();
                 }
                 return _referenceItem;
             }
         }
         [SerializeField]
         List<WorldItemDetail> Worlds = new List<WorldItemDetail>();
-        private List<WorldItemView> _activatedItems = new List<WorldItemView>();
-        private List<WorldItemView> _deactivatedItems = new List<WorldItemView>();
+        private List<WorldItem> _activatedItems = new List<WorldItem>();
+        private List<WorldItem> _deactivatedItems = new List<WorldItem>();
         public float ItemWidth = 344f;
         public float ItemHeight = 344f;
         [SerializeField]
@@ -138,11 +138,11 @@ namespace DynamicScrollRect
         {
             return new Vector2Int(_fixedItemCount, 9);
         }
-        private WorldItemView ActivateItem(int itemIndex, int _loopcount=0)
+        private WorldItem ActivateItem(int itemIndex, int _loopcount=0)
         {
             Vector2 gridPos = GetGridPosition(itemIndex);
             Vector2 anchoredPos = GetAnchoredPosition(gridPos);
-            WorldItemView scrollItem = null;
+            WorldItem scrollItem = null;
             if (_deactivatedItems.Count == 0)
             {
                 scrollItem = CreateNewScrollItem();
@@ -181,17 +181,17 @@ namespace DynamicScrollRect
                 AlignSpace + (gridPosition.x * ItemWidth) + (gridPosition.x * Spacing.x),
                 (-gridPosition.y * ItemHeight) - (gridPosition.y * Spacing.y));
         }
-        private WorldItemView CreateNewScrollItem()
+        private WorldItem CreateNewScrollItem()
         {
             GameObject item = Instantiate(_ReferenceItem.gameObject, DynamicScrollRect.content);
-            WorldItemView scrollItem = item.GetComponent<WorldItemView>();
+            WorldItem scrollItem = item.GetComponent<WorldItem>();
             scrollItem.RectTransform.pivot = new Vector2(0, 1);
             return scrollItem;
         }
         public void ClearContent()
         {
-            List<WorldItemView> activatedItems = new List<WorldItemView>(_activatedItems);
-            foreach (WorldItemView item in activatedItems)
+            List<WorldItem> activatedItems = new List<WorldItem>(_activatedItems);
+            foreach (WorldItem item in activatedItems)
             {
                 DeactivateItem(item);
             }
@@ -262,8 +262,8 @@ namespace DynamicScrollRect
         }
         private void DeleteRow(int rowIndex)
         {
-            List<WorldItemView> items = _activatedItems.FindAll(i => (int) i.GridIndex.y == rowIndex);
-            foreach (WorldItemView item in items)
+            List<WorldItem> items = _activatedItems.FindAll(i => (int) i.GridIndex.y == rowIndex);
+            foreach (WorldItem item in items)
             {
                 DeactivateItem(item);
             }
@@ -309,7 +309,7 @@ namespace DynamicScrollRect
             }
             ActivateItem(itemIndex);
         }
-        private void DeactivateItem(WorldItemView item)
+        private void DeactivateItem(WorldItem item)
         {
             _activatedItems.Remove(item);
             _deactivatedItems.Add(item);

@@ -144,11 +144,11 @@ public class APIController : MonoBehaviour
         ////{
         ////    if (feedFollowingIdList.Count == 0)
         ////    {
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("no following feed available"));
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, UITextLocalization.GetLocaliseTextByKey("no following feed available"));
         ////    }
         ////    else
         ////    {
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, TextLocalization.GetLocaliseTextByKey(""));
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 1, UITextLocalization.GetLocaliseTextByKey(""));
         ////    }
         ////}
         // END OLD FEED UI
@@ -216,11 +216,11 @@ public class APIController : MonoBehaviour
         {
             /*if (feedForYouIdList.Count == 0)
             {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("no discover feed available"));
             }
             else
             {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
             }*/
         }
 
@@ -331,11 +331,11 @@ public class APIController : MonoBehaviour
             //if (feedHotIdList.Count == 0)
             if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
             {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
+                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, UITextLocalization.GetLocaliseTextByKey("no hot feed available"));
             }
             else
             {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
+                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, UITextLocalization.GetLocaliseTextByKey(""));
             }
         }
 
@@ -816,12 +816,12 @@ public class APIController : MonoBehaviour
         // MessageController.Instance.CreateNewMessageUserList.Clear();
         if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
         {
-            MessageController.Instance.StartAndWaitMessageTextActive(false, TextLocalization.GetLocaliseTextByKey(""));//start and wait message text show.......
+            MessageController.Instance.StartAndWaitMessageTextActive(false, UITextLocalization.GetLocaliseTextByKey(""));//start and wait message text show.......
         }
         if (MessageController.Instance.conversationPrefabParent.childCount <= 0)
         {
             MessageController.Instance.startConversationPopup.SetActive(true);
-            //MessageController.Instance.StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("start conversation"));//start and wait message text show.......
+            //MessageController.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("start conversation"));//start and wait message text show.......
         }
         else
         {
@@ -861,8 +861,8 @@ public class APIController : MonoBehaviour
                         GameObject leaveUserMsg = Instantiate(chatTimePrefab, MessageController.Instance.chatPrefabParent);
 
                         string newSTR = APIManager.DecodedString(APIManager.Instance.allChatMessagesRoot.data.rows[i].message.msg);
-                        newSTR = newSTR.Replace("Left", TextLocalization.GetLocaliseTextByKey("Left"));
-                        //newSTR = APIManager.Instance.allChatMessagesRoot.data.rows[i].message.msg.Replace("Left", TextLocalization.GetLocaliseTextByKey("Left"));
+                        newSTR = newSTR.Replace("Left", UITextLocalization.GetLocaliseTextByKey("Left"));
+                        //newSTR = APIManager.Instance.allChatMessagesRoot.data.rows[i].message.msg.Replace("Left", UITextLocalization.GetLocaliseTextByKey("Left"));
                         leaveUserMsg.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = newSTR;
                         if (pageNumber == 1 && APIManager.Instance.r_isCreateMessage)
                         {
@@ -1017,8 +1017,8 @@ public class APIController : MonoBehaviour
             {
                Debug.Log("TODAY");
                 chatTimeObject1 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
-                chatTimeObject1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("TODAY");
-                //chatTimeObject1.transform.GetChild(0).GetComponent<TextLocalization>().LocalizeTextText();
+                chatTimeObject1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey("TODAY");
+                //chatTimeObject1.transform.GetChild(0).GetComponent<UITextLocalization>().LocalizeTextText();
                 chatTimeList.Add("TODAY");
                 if (pageNumber == 1 && APIManager.Instance.r_isCreateMessage)
                 {
@@ -1050,8 +1050,8 @@ public class APIController : MonoBehaviour
                 {
                     //Debug.Log("YESTERDAY");
                     chatTimeObject2 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
-                    chatTimeObject2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("YESTERDAY");
-                    //chatTimeObject2.transform.GetChild(0).GetComponent<TextLocalization>().LocalizeTextText();
+                    chatTimeObject2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey("YESTERDAY");
+                    //chatTimeObject2.transform.GetChild(0).GetComponent<UITextLocalization>().LocalizeTextText();
                     chatTimeList.Add("YESTERDAY");
 
                     if (pageNumber == 1 && APIManager.Instance.r_isCreateMessage)
@@ -1075,7 +1075,7 @@ public class APIController : MonoBehaviour
             }
             else
             {
-                string msgDateStr = converTime.Date.ToString("dd/MM/yyyy") + " " + TextLocalization.GetLocaliseTextByKey(converTime.DayOfWeek.ToString());
+                string msgDateStr = converTime.Date.ToString("dd/MM/yyyy") + " " + UITextLocalization.GetLocaliseTextByKey(converTime.DayOfWeek.ToString());
                 if (!chatTimeList.Contains(msgDateStr))
                 {
                     //Debug.Log("DATE" + converTime.Date + "days" + converTime.DayOfWeek);

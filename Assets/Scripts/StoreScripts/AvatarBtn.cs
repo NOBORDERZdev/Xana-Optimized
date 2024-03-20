@@ -614,7 +614,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
 
                         //BlendShapeImporter.Instance.MorphTypeSelected("Head");
                         BlendShapeImporter.Instance.MorphTypeSelected("FaceMorph");
@@ -628,7 +628,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("EyeBrow");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyebrow");
                         BlendShapeImporter.Instance.TurnOnPoints("EyeBrowMorph");
@@ -641,7 +641,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("eye");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyes");
                         BlendShapeImporter.Instance.TurnOnPoints("EyesMorph");
@@ -652,7 +652,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Nose");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Nose");
                         BlendShapeImporter.Instance.TurnOnPoints("NoseMorph");
@@ -663,7 +663,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Lips");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Lips");
                         BlendShapeImporter.Instance.TurnOnPoints("LipsMorph");
@@ -674,7 +674,7 @@ public class AvatarBtn : MonoBehaviour
                         CharacterCustomizationManager.Instance.OnFrontSide();
                         UIManager.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-                        ChangeCameraForZoomFace.instance.ChangeCameraToIsometric();
+                        SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Head");
                         CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Head");
                         BlendShapeImporter.Instance.TurnOnPoints("HeadMorph");

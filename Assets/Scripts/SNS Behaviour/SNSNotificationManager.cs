@@ -31,7 +31,7 @@ public class SNSNotificationManager : MonoBehaviour
     public void ShowNotificationMsg(string msg)
     {
         notificationPanelOnb.gameObject.SetActive(true);
-        messageText.text = TextLocalization.GetLocaliseTextByKey(msg);
+        messageText.text = UITextLocalization.GetLocaliseTextByKey(msg);
         notificationPanelOnb.DOAnchorPosY(-40, 0.3f).SetEase(Ease.Linear);
         if (waitToCloseNotificationCo != null)
         {

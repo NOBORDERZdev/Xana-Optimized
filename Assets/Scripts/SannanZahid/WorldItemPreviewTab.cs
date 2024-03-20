@@ -98,10 +98,10 @@ public class WorldItemPreviewTab : MonoBehaviour
 
         scrollActivity.enabled = false;
         ScrollControllerRef.verticalNormalizedPosition = 1f;
-        WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
-        WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
+        WorldNameTxt.GetComponent<UITextLocalization>().LocalizeTextText(worldName);
+        WorldDescriptionTxt.GetComponent<UITextLocalization>().LocalizeTextText(worldDescription);
         CreatorNameTxt.text = creatorName;
-        CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creatorName);
+        CreatorNameTxt.GetComponent<UITextLocalization>().LocalizeTextText(creatorName);
         CreatedAtTxt.text = createdAt.Substring(0, 10);
         UpdatedAtTxt.text = updatedAt.Substring(0, 10);
 
@@ -144,8 +144,8 @@ public class WorldItemPreviewTab : MonoBehaviour
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
         {*/
             CreatorNameTxt.text = creator_Name;
-            CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
-            CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
+            CreatorNameTxt.GetComponent<UITextLocalization>().LocalizeTextText(creator_Name);
+            CreatorDescriptionTxt.GetComponent<UITextLocalization>().LocalizeTextText(creator_Description);
             AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
             if (string.IsNullOrEmpty(userAvatarURL))
             {
@@ -338,7 +338,7 @@ public class WorldItemPreviewTab : MonoBehaviour
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
-                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
+                    thumbnailPrefabRef.GetComponent<WorldItem>().isFavourite = true;
                 //Reloading following space
                 WorldManager.instance.changeFollowState = true;
                 WorldManager.ReloadFollowingSpace?.Invoke();
@@ -366,7 +366,7 @@ public class WorldItemPreviewTab : MonoBehaviour
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
                 {
-                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
+                    thumbnailPrefabRef.GetComponent<WorldItem>().isFavourite = false;
 
                 }
                 //Reloading following space

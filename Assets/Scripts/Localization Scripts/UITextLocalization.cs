@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TextLocalization : MonoBehaviour
+public class UITextLocalization : MonoBehaviour
 {
     public string key;
     public Text LocalizeText;

@@ -37,7 +37,7 @@ public class AskForJoining : MonoBehaviour
         XanaConstants.xanaConstants.isBackFromWorld = true;  
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
-        //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
+        //string a = UITextLocalization.GetLocaliseTextByKey("Going Back to Home");
         //LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         if (GameManager.currentLanguage == "ja")
         {

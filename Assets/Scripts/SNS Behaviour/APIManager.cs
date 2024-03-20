@@ -188,11 +188,11 @@ public class APIManager : MonoBehaviour
                 // OLD FEED UI
                 //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 // END OLD FEED UI
             }
@@ -250,7 +250,7 @@ public class APIManager : MonoBehaviour
                 // OLD FEED UI
                 //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 // END OLD FEED UI
             }
@@ -1270,7 +1270,7 @@ public class APIManager : MonoBehaviour
         scrollToTop = false;
         checkText = text.ToString();
         // fitertextDropdown.text = text;
-        FeedUIController.Instance.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
+        FeedUIController.Instance.commentFitertextDropdown.text = UITextLocalization.GetLocaliseTextByKey(text);
 
         if (checkText.Equals("Oldest"))
         {
@@ -1388,11 +1388,11 @@ public class APIManager : MonoBehaviour
         //Debug.Log("Comment Count:" + count);
         if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
         {
-            FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
+            FeedUIController.Instance.CommentCount.text = UITextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + UITextLocalization.GetLocaliseTextByKey("s");
         }
         else
         {
-            FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
+            FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + UITextLocalization.GetLocaliseTextByKey("Comments");
         }
     }
     //End comment.......
@@ -2468,7 +2468,7 @@ public class APIManager : MonoBehaviour
             {
                 if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
                 {
-                    MessageController.Instance.StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
+                    MessageController.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
                 }
                 Debug.Log(www.error);
             }

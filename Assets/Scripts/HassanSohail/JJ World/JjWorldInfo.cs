@@ -30,7 +30,7 @@ public class JjWorldInfo : MonoBehaviour
         {
             //OpenWorldInfo();
             //  PublishLog();
-            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            if (WorldItem.m_EnvName.Contains("XANA Lobby"))
                 OpenWorldInfo();
             tempTimer = 0;
         }

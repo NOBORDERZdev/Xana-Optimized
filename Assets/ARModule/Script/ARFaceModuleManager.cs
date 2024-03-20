@@ -889,8 +889,8 @@ public class ARFaceModuleManager : MonoBehaviour
     #region Notification msg reference.......
     public void ShowNotificationMsg(string msg)
     {
-        notificationText.text = TextLocalization.GetLocaliseTextByKey(msg);
-        //notificationText.GetComponent<TextLocalization>().LocalizeTextText();
+        notificationText.text = UITextLocalization.GetLocaliseTextByKey(msg);
+        //notificationText.GetComponent<UITextLocalization>().LocalizeTextText();
         notificationScreen.GetComponent<RectTransform>().DOAnchorPosY(-50, 0.3f).SetEase(Ease.Linear);
         Invoke("NotificationScreenClose", 1f);
     }

@@ -8,7 +8,7 @@ using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
 
-public class WorldItemView : MonoBehaviour
+public class WorldItem : MonoBehaviour
 {
     /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
     /*public int Index;
@@ -323,11 +323,11 @@ public class WorldItemView : MonoBehaviour
         if (m_EnvironmentName.Contains("Dubai"))
         {
             eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(eviroment_Name.text);
         }
         else
         {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
         if (!string.IsNullOrEmpty(worldVisitCount))
@@ -341,11 +341,11 @@ public class WorldItemView : MonoBehaviour
         if (m_EnvironmentName.Contains("Dubai"))
         {
             eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(eviroment_Name.text);
         }
         else
         {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;

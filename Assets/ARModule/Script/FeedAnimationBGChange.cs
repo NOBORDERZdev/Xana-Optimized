@@ -147,7 +147,7 @@ public class FeedAnimationBGChange : MonoBehaviour
                     categoryObject.transform.localScale = Vector3.one;
                     categoryObject.transform.localRotation = Quaternion.identity;
                     categoryObject.name = animationGroup[i];
-                    categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey(animationGroup[i]);
+                    categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey(animationGroup[i]);
                     categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
                     categoryObject.transform.GetChild(0).gameObject.SetActive(true);
                     int x = i + 1;

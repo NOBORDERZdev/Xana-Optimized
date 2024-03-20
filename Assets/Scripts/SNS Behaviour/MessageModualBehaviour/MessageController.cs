@@ -400,7 +400,7 @@ public class MessageController : MonoBehaviour
             MessageListScreen.SetActive(false);
         }
 
-        tottleFollowingText.text = TextLocalization.GetLocaliseTextByKey("Add participants");//default text
+        tottleFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Add participants");//default text
         SelectFriendScreen.SetActive(true);
         CreateNewMessageUserList.Clear();
         createNewMessageUserAvatarSPList.Clear();
@@ -415,7 +415,7 @@ public class MessageController : MonoBehaviour
         else
         {
             tottleFollowingText.gameObject.SetActive(true);
-            //tottleFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
+            //tottleFollowingText.GetComponent<UITextLocalization>().LocalizeTextText();
         }
 
         GetAllFollowingForSelectFriends();//request Get All Following api call.......
@@ -461,7 +461,7 @@ public class MessageController : MonoBehaviour
 
     public void OnClickMessageButton()
     {
-        StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("please wait"));//start and wait message text show.......
+        StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("please wait"));//start and wait message text show.......
         MessageListScreen.SetActive(true);
         APIManager.Instance.RequestChatGetConversation();
     }
@@ -592,17 +592,17 @@ public class MessageController : MonoBehaviour
         {
             if (GameManager.currentLanguage == "ja")
             {
-                tottleFollowingText.text = (tottleFollowing + " " + TextLocalization.GetLocaliseTextByKey("of") + " " + CreateNewMessageUserList.Count + " " + TextLocalization.GetLocaliseTextByKey("selected"));
+                tottleFollowingText.text = (tottleFollowing + " " + UITextLocalization.GetLocaliseTextByKey("of") + " " + CreateNewMessageUserList.Count + " " + UITextLocalization.GetLocaliseTextByKey("selected"));
             }
             else
             {
-                tottleFollowingText.text = (CreateNewMessageUserList.Count + " " + TextLocalization.GetLocaliseTextByKey("of") + " " + tottleFollowing + " " + TextLocalization.GetLocaliseTextByKey("selected"));
+                tottleFollowingText.text = (CreateNewMessageUserList.Count + " " + UITextLocalization.GetLocaliseTextByKey("of") + " " + tottleFollowing + " " + UITextLocalization.GetLocaliseTextByKey("selected"));
             }
         }
         else
         {
-            tottleFollowingText.text = TextLocalization.GetLocaliseTextByKey("Add participants");
-            //tottleFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
+            tottleFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Add participants");
+            //tottleFollowingText.GetComponent<UITextLocalization>().LocalizeTextText();
         }
     }
 
@@ -788,7 +788,7 @@ public class MessageController : MonoBehaviour
     {
         setGroupNameScreenIndex = 0;//setup Group User Name Screen.
 
-        setGroupNameParticipantsText.text = TextLocalization.GetLocaliseTextByKey("Participants:") + " " + CreateNewMessageUserList.Count;
+        setGroupNameParticipantsText.text = UITextLocalization.GetLocaliseTextByKey("Participants:") + " " + CreateNewMessageUserList.Count;
         //setGroupNameScreen.SetActive(true);
 
         SetGroupNameScreenSetup();//setup group name screen.
@@ -1005,12 +1005,12 @@ public class MessageController : MonoBehaviour
         if (setGroupNameScreenIndex == 0)
         {
             groupAvatarImage.sprite = defaultGroupAvatarSP;
-            setGroupNameTitleText.text = TextLocalization.GetLocaliseTextByKey("New Group");
-            setGroupNameSubTitleText.text = TextLocalization.GetLocaliseTextByKey("Add Subject");
-            setGroupNameNextOrDoneText.text = TextLocalization.GetLocaliseTextByKey("Create");
-            setGroupNameDescriptionText.text = TextLocalization.GetLocaliseTextByKey("Provide a group subject and optional group icon");
-            //setGroupNameTitleText.GetComponent<TextLocalization>().LocalizeTextText();
-            //setGroupNameSubTitleText.GetComponent<TextLocalization>().LocalizeTextText();
+            setGroupNameTitleText.text = UITextLocalization.GetLocaliseTextByKey("New Group");
+            setGroupNameSubTitleText.text = UITextLocalization.GetLocaliseTextByKey("Add Subject");
+            setGroupNameNextOrDoneText.text = UITextLocalization.GetLocaliseTextByKey("Create");
+            setGroupNameDescriptionText.text = UITextLocalization.GetLocaliseTextByKey("Provide a group subject and optional group icon");
+            //setGroupNameTitleText.GetComponent<UITextLocalization>().LocalizeTextText();
+            //setGroupNameSubTitleText.GetComponent<UITextLocalization>().LocalizeTextText();
             setGroupNameInputField.text = "";
             setGroupNameParticipantsText.transform.parent.gameObject.SetActive(true);
             setGroupNameMemberPanelObj.SetActive(true);
@@ -1025,13 +1025,13 @@ public class MessageController : MonoBehaviour
             {
                 groupAvatarImage.sprite = chatScreenTopUserImage.sprite;
             }
-            setGroupNameTitleText.text = TextLocalization.GetLocaliseTextByKey("Group1");
-            setGroupNameSubTitleText.text = TextLocalization.GetLocaliseTextByKey("Edit Group Name");
-            setGroupNameNextOrDoneText.text = TextLocalization.GetLocaliseTextByKey("Done");
-            setGroupNameDescriptionText.text = TextLocalization.GetLocaliseTextByKey("Please change the group name and icon image");
-            //setGroupNameSubTitleText.text = TextLocalization.GetLocaliseTextByKey("Update Subject");
-            //setGroupNameTitleText.GetComponent<TextLocalization>().LocalizeTextText();
-            //setGroupNameSubTitleText.GetComponent<TextLocalization>().LocalizeTextText();
+            setGroupNameTitleText.text = UITextLocalization.GetLocaliseTextByKey("Group1");
+            setGroupNameSubTitleText.text = UITextLocalization.GetLocaliseTextByKey("Edit Group Name");
+            setGroupNameNextOrDoneText.text = UITextLocalization.GetLocaliseTextByKey("Done");
+            setGroupNameDescriptionText.text = UITextLocalization.GetLocaliseTextByKey("Please change the group name and icon image");
+            //setGroupNameSubTitleText.text = UITextLocalization.GetLocaliseTextByKey("Update Subject");
+            //setGroupNameTitleText.GetComponent<UITextLocalization>().LocalizeTextText();
+            //setGroupNameSubTitleText.GetComponent<UITextLocalization>().LocalizeTextText();
             setGroupNameInputField.text = allChatGetConversationDatum.group.name;
             setGroupNameParticipantsText.transform.parent.gameObject.SetActive(false);
             setGroupNameMemberPanelObj.SetActive(false);
@@ -1875,8 +1875,8 @@ public class MessageController : MonoBehaviour
     //this method is used to Show and Setup delete confirmation screen.......
     public void ShowSetupDeleteConfirmationScreen(string titleText, string descriptionText)
     {
-        deleteConfirmationTitleText.text = TextLocalization.GetLocaliseTextByKey(titleText);
-        deleteConfirmationDescriptionText.text = TextLocalization.GetLocaliseTextByKey(descriptionText);
+        deleteConfirmationTitleText.text = UITextLocalization.GetLocaliseTextByKey(titleText);
+        deleteConfirmationDescriptionText.text = UITextLocalization.GetLocaliseTextByKey(descriptionText);
         deleteConfirmationScreen.SetActive(true);
     }
 

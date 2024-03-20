@@ -143,8 +143,8 @@ public class LoadingHandler : MonoBehaviour
     public void UpdateLoadingStatusText(string message)
     {
         loadingText.text = message;
-        loadingText.GetComponent<TextLocalization>().LocalizeTextText(message);
-        loadingText.GetComponent<TextLocalization>().LocalizeTextText();
+        loadingText.GetComponent<UITextLocalization>().LocalizeTextText(message);
+        loadingText.GetComponent<UITextLocalization>().LocalizeTextText();
     }
 
     public void UpdateLoadingSlider(float value, bool doLerp = false)

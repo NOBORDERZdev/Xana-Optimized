@@ -287,7 +287,7 @@ public class FeedUIController : MonoBehaviour
         // OLD FEED UI
         //for (int i = 0; i < allFeedMessageTextList.Count; i++)
         //{
-        //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
+        //    AllFeedScreenMessageTextActive(true, i, UITextLocalization.GetLocaliseTextByKey("please wait"));
         //}
         // END Old UI
         //Debug.Log("FeedUIController Start:" + Application.internetReachability);
@@ -922,27 +922,27 @@ public class FeedUIController : MonoBehaviour
 
         if (timeDiff.TotalMinutes < 1)
         {
-            timestr = TextLocalization.GetLocaliseTextByKey("Just Now");
+            timestr = UITextLocalization.GetLocaliseTextByKey("Just Now");
         }
         else if (timeDiff.TotalMinutes > 1 && timeDiff.TotalMinutes <= 60)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + TextLocalization.GetLocaliseTextByKey("minutes ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + UITextLocalization.GetLocaliseTextByKey("minutes ago");
         }
         else if (timeDiff.TotalMinutes > 60 && timeDiff.TotalMinutes <= 1440)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + TextLocalization.GetLocaliseTextByKey("hours ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + UITextLocalization.GetLocaliseTextByKey("hours ago");
         }
         else if (timeDiff.TotalDays > 1 && timeDiff.TotalDays <= 30)
         {
-            timestr = timeDiff.Days.ToString() + " " + TextLocalization.GetLocaliseTextByKey("days ago");
+            timestr = timeDiff.Days.ToString() + " " + UITextLocalization.GetLocaliseTextByKey("days ago");
         }
         else if (timeDiff.TotalDays > 30 && timeDiff.TotalDays <= 365)
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + TextLocalization.GetLocaliseTextByKey("months ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + UITextLocalization.GetLocaliseTextByKey("months ago");
         }
         else
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + TextLocalization.GetLocaliseTextByKey("years ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + UITextLocalization.GetLocaliseTextByKey("years ago");
         }
         return timestr;
     }
@@ -960,27 +960,27 @@ public class FeedUIController : MonoBehaviour
 
         if (timeDiff.TotalMinutes < 1)
         {
-            timestr = TextLocalization.GetLocaliseTextByKey("Just Now");
+            timestr = UITextLocalization.GetLocaliseTextByKey("Just Now");
         }
         else if (timeDiff.TotalMinutes > 1 && timeDiff.TotalMinutes <= 60)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + TextLocalization.GetLocaliseTextByKey("minutes ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + UITextLocalization.GetLocaliseTextByKey("minutes ago");
         }
         else if (timeDiff.TotalMinutes > 60 && timeDiff.TotalMinutes <= 1440)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + TextLocalization.GetLocaliseTextByKey("hours ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + UITextLocalization.GetLocaliseTextByKey("hours ago");
         }
         else if (timeDiff.TotalDays > 1 && timeDiff.TotalDays <= 30)
         {
-            timestr = timeDiff.Days.ToString() + " " + TextLocalization.GetLocaliseTextByKey("days ago");
+            timestr = timeDiff.Days.ToString() + " " + UITextLocalization.GetLocaliseTextByKey("days ago");
         }
         else if (timeDiff.TotalDays > 30 && timeDiff.TotalDays <= 365)
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + TextLocalization.GetLocaliseTextByKey("months ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + UITextLocalization.GetLocaliseTextByKey("months ago");
         }
         else
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + TextLocalization.GetLocaliseTextByKey("years ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + UITextLocalization.GetLocaliseTextByKey("years ago");
         }
         return timestr;
     }
@@ -1568,7 +1568,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to profile follower button click.......
     public void ProfileFollowerFollowingScreenSetup(int Tabindex, string userName)
     {
-        //string titleLocalize = TextLocalization.GetLocaliseTextByKey("s friends");
+        //string titleLocalize = UITextLocalization.GetLocaliseTextByKey("s friends");
         //if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
         //{
         //    titleLocalize = "'" + titleLocalize;
@@ -1864,11 +1864,11 @@ public class FeedUIController : MonoBehaviour
         }
         if (GameManager.currentLanguage == "ja")
         {
-            editDeleteFeedUserNameText.text = feedEditOrDeleteData.userData.Name + " " + TextLocalization.GetLocaliseTextByKey("Post by");
+            editDeleteFeedUserNameText.text = feedEditOrDeleteData.userData.Name + " " + UITextLocalization.GetLocaliseTextByKey("Post by");
         }
         else
         {
-            editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post by") + " " + feedEditOrDeleteData.userData.Name;
+            editDeleteFeedUserNameText.text = UITextLocalization.GetLocaliseTextByKey("Post by") + " " + feedEditOrDeleteData.userData.Name;
         }
         if (feedEditOrDeleteData.UpdatedAt != null)
         {
@@ -1904,7 +1904,7 @@ public class FeedUIController : MonoBehaviour
         editDeleteVideoDisplay.SetActive(false);
         //editDeleteMideaPlayer.gameObject.SetActive(false);
 
-        editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post") + " " + TextLocalization.GetLocaliseTextByKey("by");
+        editDeleteFeedUserNameText.text = UITextLocalization.GetLocaliseTextByKey("Post") + " " + UITextLocalization.GetLocaliseTextByKey("by");
         editDeleteFeedUserNameText.text = "";
         AssetCache.Instance.RemoveFromMemory(editDeleteCurrentFeedImage.sprite);
         editDeleteCurrentFeedImage.sprite = null;
@@ -2058,11 +2058,11 @@ public class FeedUIController : MonoBehaviour
         // OLD FEED UI
         //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
         //{
-        //    AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //}
         //else
         //{
-        //    AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
         //}
         // END OLD FEED UI
 

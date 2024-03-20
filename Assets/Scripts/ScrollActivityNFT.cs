@@ -108,7 +108,7 @@ public class ScrollActivityNFT : MonoBehaviour
             //print(PlayerPrefs.GetInt("Equiped"));
             //print("Equip Button Clicked");
             SubButtonText.text = "Unequip";
-            SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Unequip");
+            SubButtonText.text = UITextLocalization.GetLocaliseTextByKey("Unequip");
             subButtonTextToCheck = "Unequip";
             XanaConstants.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
@@ -117,14 +117,14 @@ public class ScrollActivityNFT : MonoBehaviour
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = " Equip Successfully !";
-            EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Equip Successfully");
+            EquipUIText.text = UITextLocalization.GetLocaliseTextByKey("Equip Successfully");
             EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else if (subButtonTextToCheck == "Unequip")
         {
             EquipUIText.text = "Unequiping...";
             SubButtonText.text = "Equip";
-            SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Equip");
+            SubButtonText.text = UITextLocalization.GetLocaliseTextByKey("Equip");
             subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
@@ -135,7 +135,7 @@ public class ScrollActivityNFT : MonoBehaviour
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";
-            EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
+            EquipUIText.text = UITextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
             EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else

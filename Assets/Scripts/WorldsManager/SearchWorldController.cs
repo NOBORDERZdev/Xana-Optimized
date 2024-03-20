@@ -187,7 +187,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
 
             // in this example, we just pass the data to our cell's view which will update its UI
             //cellView.SetData(_data[dataIndex]);
-            cellView.GetComponent<WorldItemView>().InitItem(_data[dataIndex]);
+            cellView.GetComponent<WorldItem>().InitItem(_data[dataIndex]);
 
             // return the cell to the scroller
             return cellView;

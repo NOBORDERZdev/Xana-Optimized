@@ -499,7 +499,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //LoadingManager.Instance.HideLoading();
         //LoadingHandler.Instance.HideLoading();
 
-        if (XanaConstants.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5"))
+        if (XanaConstants.xanaConstants.IsMuseum && WorldItem.m_EnvName.Contains("J & J WORLD_5"))
             go.SetActive(false);
         if (SoundManager.Instance)
         {

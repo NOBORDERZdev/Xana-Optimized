@@ -138,18 +138,18 @@ public class LoginPageManager : MonoBehaviour
                 world_name.text = _world_name[0];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
 
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("GekkoSan"):
                 CreaterName.text = _CreaterName[1];
                 museum_description.text = _description[1];
                 world_name.text = _world_name[1];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
 
                 break;
             case ("Hokusai"):
@@ -157,45 +157,45 @@ public class LoginPageManager : MonoBehaviour
                 museum_description.text = _description[2];
                 world_name.text = _world_name[2];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("Yukinori"):
                 CreaterName.text = _CreaterName[3];
                 museum_description.text = _description[3];
                 world_name.text = _world_name[3];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("Museum"):
                 CreaterName.text = _CreaterName[4];
                 museum_description.text = _description[4];
                 world_name.text = _world_name[4];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("GOZMuseum"):
                 CreaterName.text = _CreaterName[5];
                 museum_description.text = _description[5];
                 world_name.text = _world_name[5];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("NFTMuseum"):
                 CreaterName.text = _CreaterName[6];
                 museum_description.text = _description[6];
                 world_name.text = _world_name[6];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
         }
 

@@ -181,7 +181,7 @@ public class CharacterCustomizationManager : MonoBehaviour
         //Commented By WaqasAhmad
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
 
-        ChangeCameraForZoomFace.instance.ChangePosition(true);
+        SetCameraPosForFaceCustomization.instance.ChangePosition(true);
     }
     public void OnLeftSide()
     {
@@ -196,7 +196,7 @@ public class CharacterCustomizationManager : MonoBehaviour
        
         // Commented By WaqasAhmad
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0.14f, -1.34f, 4.83f);
-        ChangeCameraForZoomFace.instance.ChangePosition(false);
+        SetCameraPosForFaceCustomization.instance.ChangePosition(false);
     }
 
     public void UpdateChBodyShape(int value)

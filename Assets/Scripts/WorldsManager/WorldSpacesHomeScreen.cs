@@ -195,7 +195,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         worldManager.SearchKey = mostVisitedTagList[index];
         categoryHeading[index].text = mostVisitedTagList[index];
-        categoryHeading[index].GetComponent<TextLocalization>().LocalizeTextText(categoryHeading[index].text);
+        categoryHeading[index].GetComponent<UITextLocalization>().LocalizeTextText(categoryHeading[index].text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -233,7 +233,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC1++;
         worldManager.SearchKey = mostVisitedTagList[0];
         category1Heading.text = mostVisitedTagList[0];
-        category1Heading.GetComponent<TextLocalization>().LocalizeTextText(category1Heading.text);
+        category1Heading.GetComponent<UITextLocalization>().LocalizeTextText(category1Heading.text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -264,7 +264,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC2++;
         worldManager.SearchKey = mostVisitedTagList[1];
         category2Heading.text = mostVisitedTagList[1];
-        category2Heading.GetComponent<TextLocalization>().LocalizeTextText(category2Heading.text);
+        category2Heading.GetComponent<UITextLocalization>().LocalizeTextText(category2Heading.text);
 
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
@@ -296,7 +296,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC3++;
         worldManager.SearchKey = mostVisitedTagList[2];
         category3Heading.text = mostVisitedTagList[2];
-        category3Heading.GetComponent<TextLocalization>().LocalizeTextText(category3Heading.text);
+        category3Heading.GetComponent<UITextLocalization>().LocalizeTextText(category3Heading.text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -327,7 +327,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         //apiHitCountC4++;
         worldManager.SearchKey = mostVisitedTagList[3];
         category4Heading.text = mostVisitedTagList[3];
-        category4Heading.GetComponent<TextLocalization>().LocalizeTextText(category4Heading.text);
+        category4Heading.GetComponent<UITextLocalization>().LocalizeTextText(category4Heading.text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -455,7 +455,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
             spaceContent.transform.GetChild(i).gameObject.SetActive(true);
-            spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
+            spaceContent.transform.GetChild(i).GetComponent<WorldItem>().InitItem(_event);
         }
     }
 
@@ -469,7 +469,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             TagPrefabInfo tagScript = userTag.GetComponent<TagPrefabInfo>();
             tagScript.tagName.text = userTagInfo.data.rows[i].tagName;
             // Currently Not Use Localize Tag As its Search hot showing Any result
-            //tagScript.tagName.GetComponent<TextLocalization>().LocalizeTextText(userTagInfo.data.rows[i].tagName);
+            //tagScript.tagName.GetComponent<UITextLocalization>().LocalizeTextText(userTagInfo.data.rows[i].tagName);
 
             userTag.SetActive(true);
             yield return new WaitForEndOfFrame();
@@ -521,66 +521,66 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         for (int i = 0; i < hotSpacesContent.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(hotSpacesContent.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(hotSpacesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            hotSpacesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            hotSpacesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(hotSpacesContent.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(hotSpacesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            hotSpacesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            hotSpacesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < hotGamesContent.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(hotGamesContent.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(hotGamesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            hotGamesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            hotGamesContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(hotGamesContent.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(hotGamesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            hotGamesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            hotGamesContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < followingContent.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(followingContent.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(followingContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            followingContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            followingContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(followingContent.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(followingContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            followingContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            followingContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < mySpaceContent.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(mySpaceContent.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(mySpaceContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            mySpaceContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            mySpaceContent.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(mySpaceContent.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(mySpaceContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            mySpaceContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            mySpaceContent.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < category1.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category1.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(category1.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            category1.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            category1.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category1.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(category1.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            category1.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            category1.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < category2.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category2.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(category2.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            category2.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            category2.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category2.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(category2.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            category2.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            category2.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < category3.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category3.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(category3.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            category3.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            category3.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category3.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(category3.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            category3.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            category3.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         for (int i = 0; i < category4.transform.childCount; i++)
         {
-            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category4.transform.GetChild(i).GetComponent<WorldItemView>().m_ThumbnailDownloadURL, true);
-            //Destroy(category4.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite);
-            category4.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = null;
-            category4.transform.GetChild(i).GetComponent<WorldItemView>().worldIcon.sprite = defaultThumbnail;
+            AssetCache.Instance.RemoveFromMemoryDelayCoroutine(category4.transform.GetChild(i).GetComponent<WorldItem>().m_ThumbnailDownloadURL, true);
+            //Destroy(category4.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite);
+            category4.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = null;
+            category4.transform.GetChild(i).GetComponent<WorldItem>().worldIcon.sprite = defaultThumbnail;
         }
 
         GC.Collect();

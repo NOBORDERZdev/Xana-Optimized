@@ -59,7 +59,7 @@ public class WorldManager : MonoBehaviour
 
     /*public WorldItemManager WorldItemManager;*/
     public WorldsInfo _WorldInfo;
-    public AllWorldManage AllWorldTabReference;
+    public HomeWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
     public WorldItemPreviewTab worldItemPreviewTabRef;
     public WorldSearchManager worldSearchManager;
@@ -445,7 +445,7 @@ public class WorldManager : MonoBehaviour
             //{
             //    isLobbyActive = true;
             //    // if(EventPrefabLobby.activeInHierarchy)
-            //    EventPrefabLobby.GetComponent<WorldItemView>().InitItem(-1, Vector2.zero, _event);
+            //    EventPrefabLobby.GetComponent<WorldItem>().InitItem(-1, Vector2.zero, _event);
             //}
             //else
             //{
@@ -457,7 +457,7 @@ public class WorldManager : MonoBehaviour
             //{
             //    if (EventPrefabLobby.gameObject.activeInHierarchy)
             //    {
-            //        EventPrefabLobby.GetComponent<LobbyWorldViewFlagHandler>().ActivityFlag(false);
+            //        EventPrefabLobby.GetComponent<LobbyWorldItemFlagHandler>().ActivityFlag(false);
             //        EventPrefabLobby.SetActive(false);
             //        AllWorldTabReference.LobbyInactiveCallBack();
             //    }
@@ -518,16 +518,16 @@ public class WorldManager : MonoBehaviour
                 worldFoundText.text = "";
                 return;
             case APIURL.SearchWorld:
-                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
+                worldFoundText.text = UITextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
             case APIURL.SearchWorldByTag:
-                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search tag");
+                worldFoundText.text = UITextLocalization.GetLocaliseTextByKey("No space found with given search tag");
                 return;
             case APIURL.Temp:
                 worldFoundText.text = "";
                 return;
             default:
-                worldFoundText.text = TextLocalization.GetLocaliseTextByKey("No space found with given search key");
+                worldFoundText.text = UITextLocalization.GetLocaliseTextByKey("No space found with given search key");
                 return;
         }
     }
@@ -553,7 +553,7 @@ public class WorldManager : MonoBehaviour
     {
         WorldItemManager.ClearWorldScrollWorlds();
     }*/
-    private void CreateLightingAsset(WorldItemView _event)
+    private void CreateLightingAsset(WorldItem _event)
     {
         string path = "Assets/Resources/Environment Data/" + _event.m_EnvironmentName + "Data";
         if (!Directory.Exists(path))
@@ -582,7 +582,7 @@ public class WorldManager : MonoBehaviour
     {
         isCheckFightingModulePopUp = true;
         CloseFightingModulePopUp();
-        WorldItemView.m_EnvName = "BreakingDown Arena";
+        WorldItem.m_EnvName = "BreakingDown Arena";
         JoinEvent();
     }
     public void CloseFightingModulePopUp()
@@ -596,18 +596,18 @@ public class WorldManager : MonoBehaviour
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
-        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
+        if (WorldItem.m_EnvName == "D + Infinity Labo" || WorldItem.m_EnvName == "D +  Infinity Labo") 
         {
-            WorldItemView.m_EnvName = "D_Infinity_Labo";
-            Launcher.sceneName = WorldItemView.m_EnvName;
-            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            WorldItem.m_EnvName = "D_Infinity_Labo";
+            Launcher.sceneName = WorldItem.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
         }
         
         
         _callSingleTime = true;
         if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItem.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
                 UIManager.Instance.LoginRegisterScreen.SetActive(true);
@@ -649,7 +649,7 @@ public class WorldManager : MonoBehaviour
                     {
                         HaveFighterNFT = false;
                     }
-                    if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                    if (WorldItem.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
                     {
                         Debug.Log("Breaking down Arena World");
                         fightingModulePopUp.SetActive(true);
@@ -657,7 +657,7 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItem.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 if (!XanaConstants.xanaConstants.IsDeemoNFT)
                 {
@@ -668,7 +668,7 @@ public class WorldManager : MonoBehaviour
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
-            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -677,14 +677,14 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
-        if (WorldItemView.m_EnvName == "ZONE-X")
+        if (WorldItem.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
     public async void JoinBuilderWorld()
     {
         if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            if (WorldItem.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
                 UIManager.Instance.LoginRegisterScreen.SetActive(true);
@@ -718,7 +718,7 @@ public class WorldManager : MonoBehaviour
                 {
                     print("NFT is in your OwnerShip Enjoy");
                 }
-                if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+                if (WorldItem.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
                 {
                     if (!XanaConstants.xanaConstants.IsDeemoNFT)
                     {
@@ -727,7 +727,7 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -787,7 +787,7 @@ public class WorldManager : MonoBehaviour
             //{
             //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             //}
-            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -800,7 +800,7 @@ public class WorldManager : MonoBehaviour
             //{
             //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             //}
-            XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
@@ -830,7 +830,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             XanaConstants.xanaConstants.EnviornmentName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
-            WorldItemView.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
+            WorldItem.m_EnvName = XanaConstants.xanaConstants.JjWorldTeleportSceneName;
             if (XanaConstants.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
                 XanaConstants.xanaConstants.userLimit = "16";

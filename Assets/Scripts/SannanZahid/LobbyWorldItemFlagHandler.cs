@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyWorldViewFlagHandler : MonoBehaviour
+public class LobbyWorldItemFlagHandler : MonoBehaviour
 {
     bool ActiveFlag = true;
     public bool ActivityInApp()

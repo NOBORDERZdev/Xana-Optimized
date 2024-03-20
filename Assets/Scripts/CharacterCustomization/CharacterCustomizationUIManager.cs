@@ -170,7 +170,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
         //----------------------
-        ChangeCameraForZoomFace.instance.ChangeCameraToProspective();
+        SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
 
         //Comment because file is rewriting the vale here again...(Abdullah)
         //SavaCharacterProperties.instance.AssignCustomSlidersData();
@@ -211,7 +211,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
         CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
         //----------------------
-        ChangeCameraForZoomFace.instance.ChangeCameraToProspective();
+        SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
         // SavaCharacterProperties.instance.AssignCustomSlidersData();
 
         StoreManager.instance.saveStoreBtnButton.onClick.Invoke();

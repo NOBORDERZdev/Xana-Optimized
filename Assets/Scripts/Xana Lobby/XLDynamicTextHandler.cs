@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class XLDynamicText : MonoBehaviour
+public class XLDynamicTextHandler : MonoBehaviour
 {
     [Header("Xana Lobby Dynamic Text")]
     public TextMeshProUGUI XLDynamicTextBanner;

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class AllWorldManage : MonoBehaviour
+public class HomeWorldManage : MonoBehaviour
 {
     [Header("Home Page Scrollviews and Component")]
     public List<GameObject> HighlghterList = new List<GameObject>();
@@ -57,7 +57,7 @@ public class AllWorldManage : MonoBehaviour
         WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         if(UIManager.Instance.PreviousScreen==0)
         {
-            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldItemFlagHandler>().ActivityInApp());
         }
     }
 

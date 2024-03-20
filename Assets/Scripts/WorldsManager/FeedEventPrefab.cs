@@ -437,11 +437,11 @@ public class FeedEventPrefab : MonoBehaviour
         if (m_EnvironmentName.Contains("Dubai"))
         {
             eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(eviroment_Name.text);
         }
         else
         {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
         gameObject.GetComponent<Button>().interactable = true;
@@ -546,9 +546,9 @@ public class FeedEventPrefab : MonoBehaviour
             LoginPageManager.m_MuseumIsClicked = true;
 
 
-        m_WorldName.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
-        m_WorldNameTH.GetComponent<TextLocalization>().LocalizeTextText(m_EnvName);
-        m_WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(m_WorldDescription);
+        m_WorldName.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvironmentName);
+        m_WorldNameTH.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvName);
+        m_WorldDescriptionTxt.GetComponent<UITextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
             XanaConstants.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();

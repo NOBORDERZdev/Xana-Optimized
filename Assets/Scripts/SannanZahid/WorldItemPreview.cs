@@ -31,10 +31,10 @@ public class WorldItemPreview : MonoBehaviour
     public void CheckWorld()
     {
         UIManager.Instance.HomePage.SetActive(true);
-        this.GetComponent<WorldItemView>().m_FadeImage = this.GetComponent<WorldItemView>().worldIcon;
-        this.GetComponent<WorldItemView>().UpdateWorldPanel();
-            string EnvironmentName = this.GetComponent<WorldItemView>().m_EnvironmentName;
-            bool isBuilderScene = this.GetComponent<WorldItemView>().isBuilderScene;
+        this.GetComponent<WorldItem>().m_FadeImage = this.GetComponent<WorldItem>().worldIcon;
+        this.GetComponent<WorldItem>().UpdateWorldPanel();
+            string EnvironmentName = this.GetComponent<WorldItem>().m_EnvironmentName;
+            bool isBuilderScene = this.GetComponent<WorldItem>().isBuilderScene;
 
             if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
             {

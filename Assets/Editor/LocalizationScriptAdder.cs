@@ -42,10 +42,10 @@ public class LocalizationScriptAdder : EditorWindow
         }
         EditorGUILayout.Space(10f);
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Check Multiple TextLocalization in Scene\n This button will check and remove " +
-            "duplicate TextLocalization Component attached to gameobjects in Scene\n This will only work in Scene Mode", style);
+        EditorGUILayout.LabelField("Check Multiple UITextLocalization in Scene\n This button will check and remove " +
+            "duplicate UITextLocalization Component attached to gameobjects in Scene\n This will only work in Scene Mode", style);
         EditorGUILayout.EndHorizontal();
-        if (GUILayout.Button("Check Multiple TextLocalization in Scene"))
+        if (GUILayout.Button("Check Multiple UITextLocalization in Scene"))
         {
             ClearMultipleAttachedScripts();
         }
@@ -72,14 +72,14 @@ public class LocalizationScriptAdder : EditorWindow
         TextMeshProUGUI[] textspro = tmppro.ToArray();
         foreach (Text textl in texts)
         {
-            if (textl.gameObject.TryGetComponent(out TextLocalization textlocal))
+            if (textl.gameObject.TryGetComponent(out UITextLocalization textlocal))
             {
                 if (textlocal.LocalizeText == null)
                     textlocal.LocalizeText = textl.gameObject.GetComponent<Text>();
             }
             else
             {
-                var textlocals = textl.gameObject.AddComponent<TextLocalization>();
+                var textlocals = textl.gameObject.AddComponent<UITextLocalization>();
                 textlocals.LocalizeText = textl.gameObject.GetComponent<Text>();
             }
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(textl.gameObject);
@@ -88,14 +88,14 @@ public class LocalizationScriptAdder : EditorWindow
         }
         foreach (TextMeshProUGUI textl in textspro)
         {
-            if (textl.gameObject.TryGetComponent(out TextLocalization textlocal))
+            if (textl.gameObject.TryGetComponent(out UITextLocalization textlocal))
             {
                 if (textlocal.LocalizeText == null)
                     textlocal.LocalizeTextTMP = textl.gameObject.GetComponent<TextMeshProUGUI>();
             }
             else
             {
-                var textlocals = textl.gameObject.AddComponent<TextLocalization>();
+                var textlocals = textl.gameObject.AddComponent<UITextLocalization>();
                 textlocals.LocalizeTextTMP = textl.gameObject.GetComponent<TextMeshProUGUI>();
             }
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(textl.gameObject);
@@ -120,28 +120,28 @@ public class LocalizationScriptAdder : EditorWindow
         TextMeshProUGUI[] textspro = tmppro.ToArray();
         foreach (Text textl in texts)
         {
-            if (textl.gameObject.TryGetComponent(out TextLocalization textlocal))
+            if (textl.gameObject.TryGetComponent(out UITextLocalization textlocal))
             {
                 if (textlocal.LocalizeText == null)
                     textlocal.LocalizeText = textl.gameObject.GetComponent<Text>();
             }
             else
             {
-                var textlocals = textl.gameObject.AddComponent<TextLocalization>();
+                var textlocals = textl.gameObject.AddComponent<UITextLocalization>();
                 textlocals.LocalizeText = textl.gameObject.GetComponent<Text>();
             }
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(textl.gameObject);
         }
         foreach (TextMeshProUGUI textl in textspro)
         {
-            if (textl.gameObject.TryGetComponent(out TextLocalization textlocal))
+            if (textl.gameObject.TryGetComponent(out UITextLocalization textlocal))
             {
                 if (textlocal.LocalizeText == null)
                     textlocal.LocalizeTextTMP = textl.gameObject.GetComponent<TextMeshProUGUI>();
             }
             else
             {
-                var textlocals = textl.gameObject.AddComponent<TextLocalization>();
+                var textlocals = textl.gameObject.AddComponent<UITextLocalization>();
                 textlocals.LocalizeTextTMP = textl.gameObject.GetComponent<TextMeshProUGUI>();
             }
             GameObjectUtility.RemoveMonoBehavioursWithMissingScript(textl.gameObject);
@@ -173,12 +173,12 @@ public class LocalizationScriptAdder : EditorWindow
         TextMeshProUGUI[] textspro = tmppro.ToArray();
         foreach (Text textl in texts)
         {
-            TextLocalization[] localized = textl.GetComponents<TextLocalization>();
+            UITextLocalization[] localized = textl.GetComponents<UITextLocalization>();
             if (localized != null)
             { 
                 if (localized.Length == 1)
                 {
-                    // Only One TextLocalization component is attached. Proceed
+                    // Only One UITextLocalization component is attached. Proceed
                 }
                 else if (localized.Length > 1)
                 {
@@ -189,12 +189,12 @@ public class LocalizationScriptAdder : EditorWindow
         }
         foreach (TextMeshProUGUI textl in textspro)
         {
-            TextLocalization[] localized = textl.GetComponents<TextLocalization>();
+            UITextLocalization[] localized = textl.GetComponents<UITextLocalization>();
             if (localized != null)
             { 
                 if (localized.Length == 1)
                 {
-                    // Only One TextLocalization component is attached. Proceed
+                    // Only One UITextLocalization component is attached. Proceed
                 }
                 else if (localized.Length > 1)
                 {

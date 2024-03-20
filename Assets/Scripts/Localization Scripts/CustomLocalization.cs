@@ -276,8 +276,8 @@ public class CustomLocalization : MonoBehaviour
         {
             GameManager.currentLanguage = GetLanguage();
 
-            TextLocalization[] arrayOfTextLocale = FindObjectsOfTypeAll(typeof(TextLocalization)) as TextLocalization[];
-            foreach (TextLocalization tl in arrayOfTextLocale)
+            UITextLocalization[] arrayOfTextLocale = FindObjectsOfTypeAll(typeof(UITextLocalization)) as UITextLocalization[];
+            foreach (UITextLocalization tl in arrayOfTextLocale)
             {
                 tl.LocalizeTextText();
             }
