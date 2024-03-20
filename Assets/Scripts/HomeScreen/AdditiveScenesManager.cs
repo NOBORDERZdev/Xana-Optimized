@@ -6,7 +6,7 @@ public class AdditiveScenesManager : MonoBehaviour
 {
     public float sceneDelay;
     private string sceneTest= "LoginSignUp";
-    private string sceneTest2= "StoreScene";
+    private string sceneTest2= "InventoryScene";
     private string sceneTest3= "SNSFeedModuleScene";
     private string sceneTest4= "SNSMessageModuleScene";
     [HideInInspector]
