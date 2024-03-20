@@ -1456,9 +1456,9 @@ public class FeedUIController : MonoBehaviour
     public void OnClickCreateFeedPostBtn()
     {
         print("post btn");
-        if (PremiumUsersDetails.Instance != null && !PremiumUsersDetails.Instance.CheckSpecificItem("post button"))
+        if (UserPassManager.Instance != null && !UserPassManager.Instance.CheckSpecificItem("post button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }

@@ -59,6 +59,7 @@ namespace WaheedDynamicScrollRect
         public Transform _ContentReference;
         public List<Transform> avatarData = new List<Transform>();
         public static int Counter = 0;
+        public int _itemCount = 44;
         public GameObject myContent;
         bool _isShuffling = false, shuffled = false, myShuffle=false;
         string gameObjectName = null;
@@ -947,7 +948,7 @@ namespace WaheedDynamicScrollRect
                 CancelInvoke("ActivePrviousButton");
                 Invoke("ActivePrviousButton", 0.3f);
             }
-            if (Counter == DemoUIContent.instance._itemCount - 1)
+            if (Counter == _itemCount - 1)
                 {
                     shuffled = false;
                 }
@@ -978,7 +979,7 @@ namespace WaheedDynamicScrollRect
             _isShuffling = true;
             shufflingUI = true;
             //shuffleButton.gameObject.GetComponent<Image>().raycastTarget = false;
-            if (Counter != DemoUIContent.instance._itemCount - 1) 
+            if (Counter != _itemCount - 1) 
             {
                 shuffled = true;
             }
@@ -989,7 +990,7 @@ namespace WaheedDynamicScrollRect
             float startTime = Time.time;
             //float endTime = startTime + shuffleDuration;
            
-            int avatarRange = UnityEngine.Random.Range(4, DemoUIContent.instance._itemCount - 1);
+            int avatarRange = UnityEngine.Random.Range(4, _itemCount - 1);
             Debug.Log("Avatar Range is " + avatarRange);
             //while (Time.time - startTime < shuffleDuration)
             //{

@@ -256,9 +256,9 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("Message Option/Chat option"))
+        if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -328,9 +328,9 @@ public class XanaChatSystem : MonoBehaviour
     //}
     //public void OnEnterSend()
     //{
-    //    if (!PremiumUsersDetails.Instance.CheckSpecificItem("Message Option/Chat option"))
+    //    if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
     //    {
-    //        //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+    //        //UserPassManager.Instance.PremiumUserUI.SetActive(true);
     //        print("Please Upgrade to Premium account");
     //        return;
     //    }

@@ -63,7 +63,7 @@ public class AllWorldManage : MonoBehaviour
 
     public void GameWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("GameWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("GameWorlds"))
         {
             return;
         }
@@ -72,7 +72,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void CustomWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("NewBuilderWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("NewBuilderWorlds"))
         {
             return;
         }
@@ -81,7 +81,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("EventWrolds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("EventWrolds"))
         {
             return;
         }
@@ -90,7 +90,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void EventWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("MyBuilderWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("MyBuilderWorlds"))
         {
             return;
         }
@@ -106,7 +106,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void TestWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("TestWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("TestWorlds"))
         {
             return;
         }

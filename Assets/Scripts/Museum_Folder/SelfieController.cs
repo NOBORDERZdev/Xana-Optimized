@@ -608,9 +608,9 @@ public class SelfieController : MonoBehaviour
     public void TakeScreenShoot()
     {
         //XanaConstants.xanaConstants.SelfiMovement = false;
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("Selfie Button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             //XanaConstants.xanaConstants.SelfiMovement = false;

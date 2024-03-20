@@ -354,7 +354,7 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to Explore button click.......
     public void OnClickWorldButton()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("WorldButton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("WorldButton"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -402,7 +402,7 @@ public class BottomTabManager : MonoBehaviour
     /*public void OnclickEventButton()
     {
         Debug.Log("OnclickEventButton");
-        PremiumUsersDetails.Instance.OpenComingSoonPopUp();
+        UserPassManager.Instance.OpenComingSoonPopUp();
     }*/
 
     //this method is used to create button click.......
@@ -441,7 +441,7 @@ public class BottomTabManager : MonoBehaviour
     //this method is used to feed button click.......
     public void OnClickFeedButton()
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("sns_feed"))
         //{
         //    print("Please Upgrade to Premium account");
         //    return;
@@ -526,7 +526,7 @@ public class BottomTabManager : MonoBehaviour
 
     public void OnClickAddFriends()
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("AdFriends"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("AdFriends"))
         //{
         //    print("Please Upgrade to Premium account");
         //    return;

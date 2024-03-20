@@ -268,7 +268,7 @@ MonoBehaviour:
   loginLoader: {fileID: 7507503510076013392}
   loginButton: {fileID: 7507503510076013391}
   _web3APIforWeb2: {fileID: 495568707}
-  connectingWalletRef: {fileID: 1277272687}
+  ConnectWalletRef: {fileID: 1277272687}
   userRoleScriptScriptableObj: {fileID: 11400000, guid: cb39377bf66b4954db9f972e7eb00ad6, type: 2}
 --- !u!4 &219101428
 Transform:
@@ -685,6 +685,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 495568710, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
+      propertyPath: ConnectWallet
+      value: 
+      objectReference: {fileID: 1277272687}
     - target: {fileID: 495568710, guid: 8356d1a9e5616432c8a81ba96ad36cad, type: 3}
       propertyPath: connectingWallet
       value: 
@@ -3272,7 +3276,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6136289654949899202, guid: 45dcacac094401a4bb5d7e143737303d, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -3658,7 +3662,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3112424295862293636, guid: d17666bee6a448b4caf33249efce788d, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -3982,7 +3986,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6241005183698648185, guid: e500abec663cc92458764bbb2317fbda, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -4014,7 +4018,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1479205145}
     m_Modifications:
-    - target: {fileID: 736828110869619065, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -4635,7 +4639,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3689341248619799432, guid: eb767a179e7fdc542982f46f14ef5397, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -5256,7 +5260,7 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 6175814034884802562, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -6580,7 +6584,7 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7507503510076013379, guid: c5e3bd11bcf90114caa7e3c76bb84ce0, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -6657,7 +6661,7 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2026440373958021448}
-    - target: {fileID: 977567021243659283, guid: 9e72afcb38a82384da81db303d2c44b9, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}
@@ -6833,7 +6837,7 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    - target: {fileID: 1277468387644328973, guid: 5572c3dae779e374491a8fdd18612be1, type: 3}
+    - target: {fileID: 0}
       propertyPath: blackScreen
       value: 
       objectReference: {fileID: 1938487462}

@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TermsAndConditions : MonoBehaviour
+public class TermsConditionsManager : MonoBehaviour
 {
     public GameObject TabBG;
     public GameObject mainPanel;
     public Toggle allAgreeToggle;
     public Toggle termsAndPolicyToggle;
     public Toggle privacyPolicyToggle;
-    public static TermsAndConditions instance;
+    public static TermsConditionsManager instance;
     public Button agreeButton;
     public TextMeshProUGUI termsAndConditionText;
 
