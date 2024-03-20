@@ -141,7 +141,8 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void SplashMemoryFree(){ 
+    public void SplashMemoryFree()
+    {
         StartCoroutine(ReleaseSplashFromMemory());
     }
 

@@ -32,16 +32,13 @@ public class TermsAndConditions : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("TermsConditionAgreement"))
         {
-            //if (gameManager.UiManager)
-            //{
-            //    gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha = 1;
-            //    gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            //    gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().interactable = true;
-            //}
             mainPanel.SetActive(false);
         }
         else
         {
+            if(gameManager==null){ 
+                gameManager = GameManager.Instance;  
+            }
             if (gameManager.UiManager)
             {
                 gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha = 0;
@@ -92,7 +89,7 @@ public class TermsAndConditions : MonoBehaviour
     {
         mainPanel.SetActive(false);
          if(gameManager){ 
-                gameManager.UiManager.GetComponent<CanvasGroup>().alpha=1;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha=1;
                 gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
                 gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().interactable= true;
             }
