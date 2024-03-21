@@ -62,7 +62,7 @@ public class AvProDirectionalSound : MonoBehaviour
             foreach (AudioSource source in sources)
             {
                 source.volume = 1f;
-                source.minDistance = 50;
+                //source.minDistance = 50;
             }
         }
 
