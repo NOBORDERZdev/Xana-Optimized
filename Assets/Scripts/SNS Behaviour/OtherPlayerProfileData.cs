@@ -927,7 +927,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         isTempDirectMessageScreenOpen = true;
         FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
-        if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
+        if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
         {
             //Debug.Log("OnClickMessageButtonClick000000");
             if (MessageController.Instance != null)

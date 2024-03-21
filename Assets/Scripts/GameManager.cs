@@ -123,12 +123,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator HitReloadUnloadScene()
     {
         yield return new WaitForSeconds(.01f);
-        SceneManager.UnloadSceneAsync("UserRegistration");
-        print("Unload");
-        SceneManager.LoadScene("UserRegistration", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync("LoginSignUp");
+        SceneManager.LoadScene("LoginSignUp", LoadSceneMode.Additive);
          yield return new WaitForSeconds(1f);
-        print("wait");
-        print("Loaded");
     }  
     void Start()
     {
@@ -156,10 +153,10 @@ public class GameManager : MonoBehaviour
         else
         {
             if (!WorldBool && !BottomAvatarButtonBool)
-                StoreManager.instance.SignUpAndLoginPanel(2);
+                InventoryManager.instance.SignUpAndLoginPanel(2);
             else
             {
-                StoreManager.instance.SignUpAndLoginPanel(3);
+                InventoryManager.instance.SignUpAndLoginPanel(3);
             }
         }
     }
@@ -171,7 +168,7 @@ public class GameManager : MonoBehaviour
         if (XanaConstants.loggedIn) 
         {
             UIManager.Instance.HomePage.SetActive(false);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
         else
@@ -182,9 +179,9 @@ public class GameManager : MonoBehaviour
 
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
-        StoreManager.instance.AvatarUpdated.SetActive(false);
-        StoreManager.instance.AvatarSaved.SetActive(false);
-        StoreManager.instance.AvatarSavedGuest.SetActive(false);
+        InventoryManager.instance.AvatarUpdated.SetActive(false);
+        InventoryManager.instance.AvatarSaved.SetActive(false);
+        InventoryManager.instance.AvatarSavedGuest.SetActive(false);
     }
     public void BottomAvatarBtnPressed()
     {
@@ -194,7 +191,7 @@ public class GameManager : MonoBehaviour
         if (XanaConstants.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
             UIManager.Instance.HomePage.SetActive(false);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
         else
@@ -204,8 +201,8 @@ public class GameManager : MonoBehaviour
 
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
-        StoreManager.instance.AvatarSaved.SetActive(false);
-        StoreManager.instance.AvatarSavedGuest.SetActive(false);
+        InventoryManager.instance.AvatarSaved.SetActive(false);
+        InventoryManager.instance.AvatarSavedGuest.SetActive(false);
     }
     public void SignInSignUpCompleted()
     {
@@ -218,7 +215,7 @@ public class GameManager : MonoBehaviour
         {
             UIManager.Instance.HomePage.SetActive(false);
             BGPlane.SetActive(true);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
         }
     }
     public void BackFromStoreofCharacterCustom()

@@ -138,9 +138,9 @@ public class FollowingItemController : MonoBehaviour
         //{
         //    ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
         //}
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed", false))
+        if (!UserPassManager.Instance.CheckSpecificItem("sns_feed", false))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }

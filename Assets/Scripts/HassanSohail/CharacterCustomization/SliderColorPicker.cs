@@ -15,7 +15,7 @@ public class SliderColorPicker : MonoBehaviour
     public void Start()
     {
         bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        saveBtn = StoreManager.instance.saveButton.GetComponent<Button>();
+        saveBtn = InventoryManager.instance.saveButton.GetComponent<Button>();
         Int();
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
     }
@@ -27,9 +27,9 @@ public class SliderColorPicker : MonoBehaviour
     // Invoked when the value of the slider changes.
     public void ValueChangeCheck()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(""))
+        if (!UserPassManager.Instance.CheckSpecificItem(""))
         {
-            PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -59,18 +59,18 @@ public class SliderColorPicker : MonoBehaviour
             if (_CharacterData.Skin != bodyParts.GetBodyColor()) //
             {
                 saveBtn.interactable = true;
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-                StoreManager.instance.GreyRibbonImage.SetActive(false);
-                StoreManager.instance.WhiteRibbonImage.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+                InventoryManager.instance.GreyRibbonImage.SetActive(false);
+                InventoryManager.instance.WhiteRibbonImage.SetActive(true);
             }
             else
             {
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-                StoreManager.instance.GreyRibbonImage.SetActive(true);
-                StoreManager.instance.WhiteRibbonImage.SetActive(false);
+                InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+                InventoryManager.instance.GreyRibbonImage.SetActive(true);
+                InventoryManager.instance.WhiteRibbonImage.SetActive(false);
             }
         }
     }

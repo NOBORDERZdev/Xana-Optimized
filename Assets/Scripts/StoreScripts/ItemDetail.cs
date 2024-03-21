@@ -5,9 +5,9 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static StoreManager;
+using static InventoryManager;
 using System;
-using static AR_UndoRedo;
+using static StoreUndoRedo;
 
 public class ItemDetail : MonoBehaviour
 {
@@ -275,14 +275,14 @@ public class ItemDetail : MonoBehaviour
                         ////Debug.Log(this.id + " xanaConstantsHairs: " + XanaConstants.xanaConstants.hair);
                         ////Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
                         if ((isHairItem && this.id == XanaConstants.xanaConstants.hair) ||
-                            (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hair))
+                            (StoreStackHandler.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hair))
                         {
                             isHairItem = false;
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.HairAvatar);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.HairAvatar);
                                 //Debug.Log("<color=red> Set Default Hair </color>");
                             }
                         }
@@ -291,13 +291,13 @@ public class ItemDetail : MonoBehaviour
                 case "EyeBrowAvatar":
                     {
                         ////Debug.Log(id.ParseToInt() + " EyeBrowValue: " + _CharacterData.EyeBrowValue);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == _CharacterData.EyeBrowValue)
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == _CharacterData.EyeBrowValue)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
                                 //Debug.Log("<color=red> Set Default EyeBrow </color>");
                             }
                         }
@@ -306,13 +306,13 @@ public class ItemDetail : MonoBehaviour
                 case "SkinToneAvatar":
                     {
                         ////Debug.Log(MyIndex + " SkinValue: " + _CharacterData.SkinId);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && MyIndex == _CharacterData.SkinId)
+                        if (StoreStackHandler.obj.IsCallByBtn() && MyIndex == _CharacterData.SkinId)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.SkinToneAvatar);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.SkinToneAvatar);
                                 //Debug.Log("<color=red> Set Default Skin Color </color>");
                             }                          
                         }
@@ -321,13 +321,13 @@ public class ItemDetail : MonoBehaviour
                 case "HairAvatarColor":
                     {
                         ////Debug.Log(id + " XanaHairColoPalette: " + XanaConstants.xanaConstants.hairColoPalette);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hairColoPalette)
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hairColoPalette)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.HairAvatarColor);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.HairAvatarColor);
                                 //Debug.Log("<color=red> Set Default HairColor:::: </color>");
                             }
                         }
@@ -336,13 +336,13 @@ public class ItemDetail : MonoBehaviour
                 case "EyeBrowAvatarColor":
                     {
                         //Debug.Log("XanaEyeBrowColorPaletteIndex: " + XanaConstants.xanaConstants.eyeBrowColorPaletteIndex);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeBrowColorPaletteIndex)
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeBrowColorPaletteIndex)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyeBrowAvatarColor);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyeBrowAvatarColor);
                                 //Debug.Log("<color=red> Set Default EyeBrowColorPalette::::" + this.gameObject.name + " </color>");
                             }
                         }
@@ -351,13 +351,13 @@ public class ItemDetail : MonoBehaviour
                 case "EyesAvatarColor":
                     {
                         //Debug.Log("XanaEyeColorPalette: " + XanaConstants.xanaConstants.eyeColorPalette);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.eyeColorPalette)
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.eyeColorPalette)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyesAvatarColor);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyesAvatarColor);
                                 //Debug.Log("<color=red> Set Default EyeColorPalette:::: </color>");
                             }
                         }
@@ -366,13 +366,13 @@ public class ItemDetail : MonoBehaviour
                 case "LipsAvatarColor":
                     {
                         //Debug.Log("XanaLipColorPalette: " + XanaConstants.xanaConstants.lipColorPalette);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.lipColorPalette)
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.lipColorPalette)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.LipsAvatarColor);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.LipsAvatarColor);
                                 //Debug.Log("<color=red> Set Default LipsColorPalette:::: </color>");
                             }
                         }
@@ -381,13 +381,13 @@ public class ItemDetail : MonoBehaviour
                 case "EyeLashesAvatar":
                     {
                         ////Debug.Log(id.ParseToInt() + " EyeLashesValue: " + XanaConstants.xanaConstants.eyeLashesIndex);
-                        if (ActivePanelCallStack.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeLashesIndex)
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == XanaConstants.xanaConstants.eyeLashesIndex)
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
                                 //Debug.Log("<color=red> Set Default EyeLashes </color>");
                             }
                         }
@@ -396,13 +396,13 @@ public class ItemDetail : MonoBehaviour
                 case "Outer":
                     {
                         ////Debug.Log("Enter In outer: " + XanaConstants.xanaConstants.shirt);
-                        if (id == XanaConstants.xanaConstants.shirt)  // ActivePanelCallStack.obj.IsCallByBtn() && 
+                        if (id == XanaConstants.xanaConstants.shirt)  // StoreStackHandler.obj.IsCallByBtn() && 
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Outer);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Outer);
                                 //Debug.Log("<color=red> Set Default Shirts </color>");
                             }
                         }
@@ -411,13 +411,13 @@ public class ItemDetail : MonoBehaviour
                 case "Shoes":
                     {
                         ////Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.shoes);
-                        if (id == XanaConstants.xanaConstants.shoes)  // ActivePanelCallStack.obj.IsCallByBtn() && 
+                        if (id == XanaConstants.xanaConstants.shoes)  // StoreStackHandler.obj.IsCallByBtn() && 
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Shoes);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Shoes);
                                 //Debug.Log("<color=red> Set Default Shoes </color>");
                             }
                         }
@@ -426,13 +426,13 @@ public class ItemDetail : MonoBehaviour
                 case "Bottom":
                     {
                         ////Debug.Log("Enter In Shose: " + XanaConstants.xanaConstants.pants);
-                        if (id == XanaConstants.xanaConstants.pants)  // ActivePanelCallStack.obj.IsCallByBtn() && 
+                        if (id == XanaConstants.xanaConstants.pants)  // StoreStackHandler.obj.IsCallByBtn() && 
                         {
-                            if (!AR_UndoRedo.obj.addToList)
-                                AR_UndoRedo.obj.addToList = true;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
                             else
                             {
-                                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Bottom);
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Bottom);
                                 //Debug.Log("<color=red> Set Default Pents </color>");
                             }
                         }
@@ -513,11 +513,11 @@ public class ItemDetail : MonoBehaviour
         }
         if (!SelectedBool)
         {
-            StoreManager.instance.GetSelectedBtn(-1, CategoriesEnumVar);
+            InventoryManager.instance.GetSelectedBtn(-1, CategoriesEnumVar);
         }
         else
         {
-            StoreManager.instance.GetSelectedBtn(MyIndex, CategoriesEnumVar);
+            InventoryManager.instance.GetSelectedBtn(MyIndex, CategoriesEnumVar);
         }
     }
    
@@ -588,9 +588,9 @@ public class ItemDetail : MonoBehaviour
                 }
         }
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString))
+        if (!UserPassManager.Instance.CheckSpecificItem(CurrentString))
         {
-            PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             //print("Please Upgrade to Premium account");
             return;
@@ -626,26 +626,26 @@ public class ItemDetail : MonoBehaviour
                     }
                 case "HairColor":
                     {
-                        //if (!StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        //if (!InventoryManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
                         //{
                             //Debug.Log("<color=blue> Open Hair Color Panel: </color>");
-                            StoreManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
-                            StoreManager.instance.colorMode = true;
-                            StoreManager.instance.PutDataInOurAPPNewAPI();
-                            StoreManager.instance.colorMode = false;
+                            InventoryManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
+                            InventoryManager.instance.colorMode = true;
+                            InventoryManager.instance.PutDataInOurAPPNewAPI();
+                            InventoryManager.instance.colorMode = false;
                         //}
                         //else   
                         //{
                         //    int enumNum = Array.IndexOf(Enum.GetValues(typeof(EnumClass.CategoryEnum)), EnumClass.CategoryEnum.HairAvatar);
-                        //    AR_UndoRedo.obj.AvatarBtnPressedForcally(enumNum);
+                        //    StoreUndoRedo.obj.AvatarBtnPressedForcally(enumNum);
                         //}
 
                         // AR changes start
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.HairAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.HairAvatar);
                             //Debug.Log("<color=red> Set Hair color btn into list:::: </color>");
                         }
                         // AR changes end
@@ -655,16 +655,16 @@ public class ItemDetail : MonoBehaviour
                     }
                 case "EyesColor":
                     {
-                        StoreManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
-                        StoreManager.instance.colorMode = true;
-                        StoreManager.instance.PutDataInOurAPPNewAPI();
-                        StoreManager.instance.colorMode = false;
+                        InventoryManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
+                        InventoryManager.instance.colorMode = true;
+                        InventoryManager.instance.PutDataInOurAPPNewAPI();
+                        InventoryManager.instance.colorMode = false;
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyesAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyesAvatar);
                             //Debug.Log("<color=red> Set eye color btn into list:::: </color>");
                         }
                         if (this.gameObject.name == "Color Button")
@@ -673,16 +673,16 @@ public class ItemDetail : MonoBehaviour
                     }
                 case "LipsColor":
                     {
-                        StoreManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
-                        StoreManager.instance.colorMode = true;
-                        StoreManager.instance.PutDataInOurAPPNewAPI();
-                        StoreManager.instance.colorMode = false;
+                        InventoryManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
+                        InventoryManager.instance.colorMode = true;
+                        InventoryManager.instance.PutDataInOurAPPNewAPI();
+                        InventoryManager.instance.colorMode = false;
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.LipsAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.LipsAvatar);
                             //Debug.Log("<color=red> Set lips color btn into list:::: </color>");
                         }
 
@@ -692,16 +692,16 @@ public class ItemDetail : MonoBehaviour
                     }
                 case "EyeBrowColor":
                     {
-                        StoreManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
-                        StoreManager.instance.colorMode = true;
-                        StoreManager.instance.PutDataInOurAPPNewAPI();
-                        StoreManager.instance.colorMode = false;
+                        InventoryManager.instance.OpenColorPanel(XanaConstants.xanaConstants.currentButtonIndex);
+                        InventoryManager.instance.colorMode = true;
+                        InventoryManager.instance.PutDataInOurAPPNewAPI();
+                        InventoryManager.instance.colorMode = false;
 
-                        if (!AR_UndoRedo.obj.addToList)
-                            AR_UndoRedo.obj.addToList = true;
+                        if (!StoreUndoRedo.obj.addToList)
+                            StoreUndoRedo.obj.addToList = true;
                         else
                         {
-                            AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
+                            StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangePanel, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
                             //Debug.Log("<color=red> Set eyeBrow color btn into list:::: </color>");
                         }
                         if (this.gameObject.name == "Color Button")
@@ -715,7 +715,7 @@ public class ItemDetail : MonoBehaviour
                         SavaCharacterProperties.instance.characterController.eyeBrowId = id.ParseToInt();
                         //Debug.Log("Eye brow ID: " + SavaCharacterProperties.instance.characterController.eyeBrowId);
                         //Commented By Ahsan
-                        //Transform ParentAvatarofEyeBrows = StoreManager.instance.ParentOfBtnsAvatarEyeBrows;
+                        //Transform ParentAvatarofEyeBrows = InventoryManager.instance.ParentOfBtnsAvatarEyeBrows;
 
                         //for (int i = 1; i < ParentAvatarofEyeBrows.childCount; i++)
                         //{
@@ -729,7 +729,7 @@ public class ItemDetail : MonoBehaviour
                     {
                         XanaConstants.xanaConstants.eyeLashesIndex = id.ParseToInt();
                         SavaCharacterProperties.instance.characterController.eyeLashesId = id.ParseToInt();
-                        //Transform ParentAvatarofEyeLashes = StoreManager.instance.ParentOfBtnsAvatarEyeLashes;
+                        //Transform ParentAvatarofEyeLashes = InventoryManager.instance.ParentOfBtnsAvatarEyeLashes;
                         //for (int i = 0; i < ParentAvatarofEyeLashes.childCount; i++)
                         //{
                         //    ParentAvatarofEyeLashes.GetChild(i).GetComponent<Image>().enabled = false;
@@ -748,12 +748,12 @@ public class ItemDetail : MonoBehaviour
             }
             XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
 
-            //Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
-            if (!AR_UndoRedo.obj.addToList)
-                AR_UndoRedo.obj.addToList = true;
+            //Debug.Log("Undo Redo call in Purchase check: add to list= " + StoreUndoRedo.obj.addToList);
+            if (!StoreUndoRedo.obj.addToList)
+                StoreUndoRedo.obj.addToList = true;
             else
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, CategoriesEnumVar);
+                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, CategoriesEnumVar);
                 //Debug.Log("<color=red> Set On Btn clicked " + CurrentString + ":::: </color>");
             }
 
@@ -793,12 +793,12 @@ public class ItemDetail : MonoBehaviour
                     {
                         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_clothetype, GameManager.Instance.mainCharacter, "Male");
                     }
-                    //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(this, assetLinkAndroid, assetLinkIos, _clothetype, name.ToLower(), int.Parse(id));
+                    //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(this, assetLinkAndroid, assetLinkIos, _clothetype, name.ToLower(), int.Parse(id));
                 }
                 this.GetComponent<Image>().enabled = true;
 
-                if (StoreManager.instance.UndoBtn)
-                    StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+                if (InventoryManager.instance.UndoBtn)
+                    InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
 
                 // to updated data in equipment and to change saveindex which is for save file
                 switch (CategoriesEnumVar)
@@ -872,17 +872,17 @@ public class ItemDetail : MonoBehaviour
 
                 if (!itemAlreadySaved)
                 {
-                    StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
+                    InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
                     SavedButtonClickedBlue();
                 }
 
                 else
                 {
-                    StoreManager.instance.SaveStoreBtn.SetActive(true);
-                    StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-                    StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-                    StoreManager.instance.GreyRibbonImage.SetActive(true);
-                    StoreManager.instance.WhiteRibbonImage.SetActive(false);
+                    InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                    InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+                    InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+                    InventoryManager.instance.GreyRibbonImage.SetActive(true);
+                    InventoryManager.instance.WhiteRibbonImage.SetActive(false);
                 }
 
             }
@@ -936,9 +936,9 @@ public class ItemDetail : MonoBehaviour
 
         //Debug.Log("Current String is: " + CurrentString);
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString))
+        if (!UserPassManager.Instance.CheckSpecificItem(CurrentString))
         {
-            PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             //print("Please Upgrade to Premium account");
             return;
@@ -1001,12 +1001,12 @@ public class ItemDetail : MonoBehaviour
                 //saveIndex = 4;
             }
 
-            //Debug.Log("Undo Redo call in Purchase check: add to list= " + AR_UndoRedo.obj.addToList);
-            if (!AR_UndoRedo.obj.addToList)
-                AR_UndoRedo.obj.addToList = true;
+            //Debug.Log("Undo Redo call in Purchase check: add to list= " + StoreUndoRedo.obj.addToList);
+            if (!StoreUndoRedo.obj.addToList)
+                StoreUndoRedo.obj.addToList = true;
             else
             {
-                AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", AR_UndoRedo.ActionType.ChangeColor, _iconImg.color, CategoriesEnumVar);
+                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, CategoriesEnumVar);
                 //Debug.Log("<color=red> Set On color Btn clicked " + CurrentString + ":::: </color>");
             }
 
@@ -1027,7 +1027,7 @@ public class ItemDetail : MonoBehaviour
                     ////Debug.Log("Disabled Image Here");
                 }
             }
-            StoreManager.instance.ClearBuyItems();
+            InventoryManager.instance.ClearBuyItems();
 
             if (CategoriesEnumVar == EnumClass.CategoryEnum.SkinToneAvatar || CategoriesEnumVar == EnumClass.CategoryEnum.LipsAvatar)
             {
@@ -1051,7 +1051,7 @@ public class ItemDetail : MonoBehaviour
                         itemAlreadySaved = true;
                     }
                 }
-                //StoreManager.instance._DownloadRigClothes.StartCoroutine(StoreManager.instance._DownloadRigClothes.DownloadAndApplyEyeLenTexture(name, GameManager.Instance.mainCharacter));
+                //InventoryManager.instance._DownloadRigClothes.StartCoroutine(InventoryManager.instance._DownloadRigClothes.DownloadAndApplyEyeLenTexture(name, GameManager.Instance.mainCharacter));
             }
             else if (CategoriesEnumVar.ToString() == "HairAvatarColor")
             {
@@ -1075,7 +1075,7 @@ public class ItemDetail : MonoBehaviour
             }
             else if (!File.Exists(Application.persistentDataPath + "/" + name))
             {
-                StoreManager.instance.load.SetActive(true);
+                InventoryManager.instance.load.SetActive(true);
                 StartCoroutine(DownloadTextureFile(assetLinkIos));
             }
             else
@@ -1085,16 +1085,16 @@ public class ItemDetail : MonoBehaviour
 
             if (!itemAlreadySaved)
             {
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
                 SavedButtonClickedBlue();
             }
             else
             {
-                StoreManager.instance.SaveStoreBtn.SetActive(true);
-                StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-                StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-                StoreManager.instance.GreyRibbonImage.SetActive(true);
-                StoreManager.instance.WhiteRibbonImage.SetActive(false);
+                InventoryManager.instance.SaveStoreBtn.SetActive(true);
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+                InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+                InventoryManager.instance.GreyRibbonImage.SetActive(true);
+                InventoryManager.instance.WhiteRibbonImage.SetActive(false);
             }
             ////Debug.Log("<color=red>ItemDetail AssignLastClickedBtnHere</color>");
             XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
@@ -1186,31 +1186,31 @@ public class ItemDetail : MonoBehaviour
                 break;
         }
 
-        if (StoreManager.instance.UndoBtn)
-            StoreManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+        if (InventoryManager.instance.UndoBtn)
+            InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
 
         if (!itemAlreadySaved)
         {
-            StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
             SavedButtonClickedBlue();
         }
         else
         {
-            StoreManager.instance.SaveStoreBtn.SetActive(true);
-            StoreManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
-            StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-            StoreManager.instance.GreyRibbonImage.SetActive(true);
-            StoreManager.instance.WhiteRibbonImage.SetActive(false);
+            InventoryManager.instance.SaveStoreBtn.SetActive(true);
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = false;
+            InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+            InventoryManager.instance.GreyRibbonImage.SetActive(true);
+            InventoryManager.instance.WhiteRibbonImage.SetActive(false);
         }
-        StoreManager.instance.load.SetActive(false);
+        InventoryManager.instance.load.SetActive(false);
     }
 
     void SavedButtonClickedBlue()
     {
-        StoreManager.instance.SaveStoreBtn.SetActive(true);
-        StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-        StoreManager.instance.GreyRibbonImage.SetActive(false);
-        StoreManager.instance.WhiteRibbonImage.SetActive(true);
+        InventoryManager.instance.SaveStoreBtn.SetActive(true);
+        InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+        InventoryManager.instance.GreyRibbonImage.SetActive(false);
+        InventoryManager.instance.WhiteRibbonImage.SetActive(true);
     }
   
     

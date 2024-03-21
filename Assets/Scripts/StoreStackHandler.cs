@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivePanelCallStack : MonoBehaviour
+public class StoreStackHandler : MonoBehaviour
 {
-    public static ActivePanelCallStack obj;
+    public static StoreStackHandler obj;
 
     private void Awake()
     {

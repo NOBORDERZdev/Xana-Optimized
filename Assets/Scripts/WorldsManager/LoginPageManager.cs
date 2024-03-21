@@ -52,39 +52,39 @@ public class LoginPageManager : MonoBehaviour
             {
                 print("Clicked on DJ event");
                 EnvironmentName = "DJ Event";
-                if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName, false))
+                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
                 {
                     if (EnvironmentName != "DJ Event")
                     {
-                        //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+                        //UserPassManager.Instance.PremiumUserUI.SetActive(true);
                     }
                     else
                     {
-                        PremiumUsersDetails.Instance.PremiumUserUIDJEvent.SetActive(true);
+                        UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
                     }
                     return;
                 }
             }
             else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
             {
-                if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName, true))
+                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
                 {
-                    //PremiumUsersDetails.Instance.PremiumUserUIDJEvent.SetActive(true);
+                    //UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
                     return;
                 }
             }
            
             else if (!isBuilderScene)
             {
-                if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName))
+                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
                 {
                     //if (EnvironmentName != "DJ Event")
                     //{
-                    //    //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+                    //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
                     //}
                     //else
                     //{
-                    //    PremiumUsersDetails.Instance.PremiumUserUIDJEvent.SetActive(true);
+                    //    UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
                     //}
                     return;
                 }

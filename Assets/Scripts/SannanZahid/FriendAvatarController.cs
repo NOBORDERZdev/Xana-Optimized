@@ -1334,8 +1334,8 @@ public class FriendAvatarController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                StoreManager.instance.loaderForItems.SetActive(false);
+            if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                InventoryManager.instance.loaderForItems.SetActive(false);
         }
     }
 

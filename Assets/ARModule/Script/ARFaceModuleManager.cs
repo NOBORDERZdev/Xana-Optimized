@@ -367,7 +367,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnActionModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_body"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_body"))
         {            
             print("Please Upgrade to Premium account");
             return;
@@ -383,7 +383,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnRealityModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_face"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_face"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -400,7 +400,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnPlanDetectionModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_ar"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_ar"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -755,9 +755,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void OnFilterSelectionBtnClick()
     {
         print("Filter btn clicked");
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("filter button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("filter button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -785,9 +785,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void OnCharacterSelectionBtnClick()
     {
         print("Gesture btn clicked");
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("SNS Emote"))
+        if (!UserPassManager.Instance.CheckSpecificItem("SNS Emote"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }  
@@ -985,9 +985,9 @@ public class ARFaceModuleManager : MonoBehaviour
     {
         print("Post btn clicked");
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("post button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("post button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }

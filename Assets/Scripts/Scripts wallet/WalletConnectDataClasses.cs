@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
- public class ConnectServerDataExtraction : MonoBehaviour
+ public class WalletConnectDataClasses : MonoBehaviour
 {
   /// *************************************************   CONNECTION REQUEST  STARTED   *************************************************************************///
   
