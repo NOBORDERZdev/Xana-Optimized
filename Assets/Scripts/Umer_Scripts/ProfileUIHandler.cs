@@ -147,7 +147,8 @@ public class ProfileUIHandler : MonoBehaviour
 
     public void SetUserAvatarDefaultClothing()
     {
-        AvatarRef.GetComponent<AvatarController>().SetAvatarClothDefault(AvatarRef, "Male");
+        int _rand = Random.Range(0, 13);
+        AvatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
     }
 
     public void SetMainScrolRefs()
