@@ -143,7 +143,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         // in this example, we just pass the data to our cell's view which will update its UI
         masterCellView.SetData(_data[dataIndex]);
-        //masterCellView.seeAllBtnRef.onClick.AddListener(() => allWorldManageRef.CategoryLoadMore(_data[dataIndex].categoryTitle));
+
         // return the cell to the scroller
         return masterCellView;
     }

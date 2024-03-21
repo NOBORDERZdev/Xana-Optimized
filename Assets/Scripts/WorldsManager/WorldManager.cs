@@ -299,13 +299,18 @@ public class WorldManager : MonoBehaviour
             if (isSucess)
             {
                 CallBackCheck = 0;
-                InstantiateWorlds(aPIURL, isSucess);
                 dataIsFatched = true;
-                UpdatePageNumber(aPIURL);
-                if (_WorldInfo.data.count > 0)
+
+                if (_WorldInfo.data.rows.Count > 0)
+                {
+                    InstantiateWorlds(aPIURL, isSucess);
+                    UpdatePageNumber(aPIURL);
                     CallBack(true);
+                }
                 else
+                {
                     CallBack(false);
+                }
             }
             else
             {
@@ -354,8 +359,8 @@ public class WorldManager : MonoBehaviour
 
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
-        searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
-
+        //searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
+        Debug.Log("Category worlds list count: " + _WorldInfo.data.rows.Count);
         resultWorldList.Clear();
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
@@ -477,7 +482,7 @@ public class WorldManager : MonoBehaviour
 
 
         searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
-        if (_WorldInfo.data.count > 0)
+        if (_WorldInfo.data.rows.Count > 0)
         {
             WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
