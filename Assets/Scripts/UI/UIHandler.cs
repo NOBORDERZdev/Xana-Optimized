@@ -90,7 +90,7 @@ public class UIHandler : MonoBehaviour
     }
     public void IsWorldClicked()
     {
-        if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
+        if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstantsHolder.loggedIn)
             WorldsHandler.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
@@ -110,14 +110,14 @@ public class UIHandler : MonoBehaviour
         else
         {
             StartCoroutine(IsSplashEnable(false, 0f));
-            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
+            StartCoroutine(LoadingController.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
         SavaAvatarProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
-        LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
+        LoadingController.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
          Canvas.GetComponent<CanvasGroup>().interactable =false;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts =false;
@@ -130,7 +130,7 @@ public class UIHandler : MonoBehaviour
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts =true;
         _footerCan.GetComponent<CanvasGroup>().interactable=true;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;
-        LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
+        LoadingController.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 1.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 1.0f;
         if(Loadinghandler_CanvasRef != null)
             Loadinghandler_CanvasRef.alpha = 1.0f;

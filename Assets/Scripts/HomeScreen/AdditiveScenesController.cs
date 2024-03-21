@@ -17,7 +17,7 @@ public class AdditiveScenesController : MonoBehaviour
     
     private void Start()
     {
-        if(!XanaConstants.xanaConstants.JjWorldSceneChange)
+        if(!XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;
             StartCoroutine(AddDelayStore(sceneDelay / 3));
@@ -57,12 +57,12 @@ public class AdditiveScenesController : MonoBehaviour
             yield return null;
         }
         //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        if (XanaConstants.xanaConstants.isBackfromSns)
+        if (XanaConstantsHolder.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();
-            XanaConstants.xanaConstants.isBackfromSns=false;
+            XanaConstantsHolder.xanaConstants.isBackfromSns=false;
         }
-        LoadingHandler.Instance.HideLoading();
-       // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+        LoadingController.Instance.HideLoading();
+       // LoadingController.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstantsHolder.xanaConstants.isBackFromWorld);
     }
 }

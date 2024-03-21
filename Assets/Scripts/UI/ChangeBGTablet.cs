@@ -7,7 +7,7 @@ public class ChangeBGTablet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
         {
             tabBG.SetActive(true);
             mobileBG.SetActive(false);

@@ -28,35 +28,35 @@ public class AskForJoining : MonoBehaviour
 
     void LoadMain()
     {
-        XanaConstants.xanaConstants.isFromXanaLobby =false;
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstantsHolder.xanaConstants.isFromXanaLobby =false;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         float _rand = UnityEngine.Random.Range(6f, 10f);
-        LoadingHandler.Instance.randCurrentValue = _rand;
-        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
-        XanaConstants.xanaConstants.isBackFromWorld = true;  
-        LoadingHandler.Instance.ShowLoading();
+        LoadingController.Instance.randCurrentValue = _rand;
+        StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
+        XanaConstantsHolder.xanaConstants.isBackFromWorld = true;  
+        LoadingController.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = UITextLocalization.GetLocaliseTextByKey("Going Back to Home");
-        //LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+        //LoadingController.Instance.UpdateLoadingStatusText("Going Back to Home");
         if (GameManager.currentLanguage == "ja")
         {
-            LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
+            LoadingController.Instance.UpdateLoadingStatusText("ホームに戻っています");
         }
         else if (GameManager.currentLanguage == "en")
         {
-            LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+            LoadingController.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
         asyncLoading = SceneManager.LoadSceneAsync("Main");
         //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count
-        UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
+        UserAnalyticsManager.onUpdateWorldRelatedStats(false, false, false, true);
     }
 
     void AsyncProgress()
     {
-        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+        //LoadingController.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
     }
 
     public void GoToMainMenu()
@@ -92,16 +92,16 @@ public class AskForJoining : MonoBehaviour
                 ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
 
             float _rand = UnityEngine.Random.Range(6f, 10f);
-            LoadingHandler.Instance.randCurrentValue = _rand;
-            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+            LoadingController.Instance.randCurrentValue = _rand;
+            StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
 
-            LoadingHandler.Instance.ShowLoading();
+            LoadingController.Instance.ShowLoading();
             if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
             {
                 ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }
 
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
+            //LoadingController.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
             AvatarManager.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);

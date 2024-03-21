@@ -12,7 +12,7 @@ using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
 
 
-public class UserAnalyticsHandler : MonoBehaviour
+public class UserAnalyticsManager : MonoBehaviour
 {
     public static Action<int, string> onGetWorldId;
     public static Action<bool, bool, bool, bool> onUpdateWorldRelatedStats;
@@ -155,7 +155,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         if (!www.isHttpError && !www.isNetworkError)
         {
             response = JsonUtility.FromJson<APIResponse>(str);
-            XanaConstants.xanaConstants.worldIdFromApi = response.data;
+            XanaConstantsHolder.xanaConstants.worldIdFromApi = response.data;
             Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
         }
         else
@@ -214,13 +214,13 @@ public class UserAnalyticsHandler : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        form.AddField("record_id", XanaConstants.xanaConstants.worldIdFromApi);
+        form.AddField("record_id", XanaConstantsHolder.xanaConstants.worldIdFromApi);
 
         if (isJoined)
         {
             form.AddField("is_joined", isJoined.ToString());
-            if(!string.IsNullOrEmpty(XanaConstants.xanaConstants.playerSocketID))
-                form.AddField("socket_id", XanaConstants.xanaConstants.playerSocketID);
+            if(!string.IsNullOrEmpty(XanaConstantsHolder.xanaConstants.playerSocketID))
+                form.AddField("socket_id", XanaConstantsHolder.xanaConstants.playerSocketID);
         }
 
         if (nftClicked)
@@ -232,7 +232,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         if (isExit)
             form.AddField("is_exit", "" + isExit.ToString());
 
-        Debug.Log("####### " + XanaConstants.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
+        Debug.Log("####### " + XanaConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -265,18 +265,18 @@ public class UserAnalyticsHandler : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        form.AddField("record_id", XanaConstants.xanaConstants.worldIdFromApi);
+        form.AddField("record_id", XanaConstantsHolder.xanaConstants.worldIdFromApi);
         form.AddField("is_joined", isJoined.ToString());
         form.AddField("is_exit", "" + isExit.ToString());
 
         //if (isJoined)
         //{
-        //    if(!string.IsNullOrEmpty(XanaConstants.xanaConstants.playerSocketID))
-        //        form.AddField("socket_id", XanaConstants.xanaConstants.playerSocketID);
+        //    if(!string.IsNullOrEmpty(XanaConstantsHolder.xanaConstants.playerSocketID))
+        //        form.AddField("socket_id", XanaConstantsHolder.xanaConstants.playerSocketID);
         //}
 
 
-        Debug.Log("####### " + XanaConstants.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
+        Debug.Log("####### " + XanaConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -407,7 +407,7 @@ public class UserAnalyticsHandler : MonoBehaviour
     void PlayerSocketID(string socketId)
     {
         //Debug.Log("<color=green> Analytics-- SocketId: " + socketId + "</color>");
-        XanaConstants.xanaConstants.playerSocketID = socketId;
+        XanaConstantsHolder.xanaConstants.playerSocketID = socketId;
     }
 #endregion
 
@@ -416,10 +416,10 @@ public class UserAnalyticsHandler : MonoBehaviour
     /// </summary>
     /// <param name="isStart"> true on applicaiton start and false on application kill</param>
     IEnumerator SetSession( bool isStart){
-        while (XanaConstants.userId == "") {
+        while (XanaConstantsHolder.userId == "") {
             yield return new WaitForSeconds(2f);
         }
-        string userId = XanaConstants.userId;
+        string userId = XanaConstantsHolder.userId;
         string product ;
 #if !UNITY_EDITOR
     #if UNITY_ANDROID

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PatchForProfileWallet : MonoBehaviour
+public class WalletLoadingChecker : MonoBehaviour
 {
     public GameObject closeloader;
     private void OnDisable()
@@ -16,7 +16,7 @@ public class PatchForProfileWallet : MonoBehaviour
 
     private void Start()
     {
-        if (XanaConstants.xanaConstants.isWalletLoadingbool)
+        if (XanaConstantsHolder.xanaConstants.isWalletLoadingbool)
         {
             Invoke("OpenCrossbtn", 8f);
         }
@@ -28,9 +28,9 @@ public class PatchForProfileWallet : MonoBehaviour
     }
     public void CloseCrossbtn()
     {
-        if (!XanaConstants.loggedIn)
+        if (!XanaConstantsHolder.loggedIn)
             UserLoginSignupManager.instance.ShowWelcomeScreen();
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        LoadingController.Instance.nftLoadingScreen.SetActive(false);
     }
 
 }

@@ -35,12 +35,12 @@ public class NpcFreeSpeech : MonoBehaviour
         int id = 0;
         int temp = UnityEngine.Random.Range(0, npcChatSystem.npcAttributes.Count);
   
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+        if (!ServerBaseURlHandler.instance.IsXanaLive)
         {
             ip = "http://182.70.242.10:8034/";
             id = npcChatSystem.npcAttributes[temp].aiIds;
         }
-        else if (APIBaseUrlChange.instance.IsXanaLive)
+        else if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             ip = "http://15.152.55.82:8054/";
             id = npcChatSystem.npcAttributes[temp].actualAiIds;
@@ -63,7 +63,7 @@ public class NpcFreeSpeech : MonoBehaviour
             else
                 responseFeed = feed.response_en;
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
 
             Debug.Log("Communication Response(FreeAI): " + responseFeed);
         }

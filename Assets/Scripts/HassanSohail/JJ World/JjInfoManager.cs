@@ -106,7 +106,7 @@ public class JjInfoManager : MonoBehaviour
     {
         if (IsJjWorld)
         {
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (ServerBaseURlHandler.instance.IsXanaLive)
                 JJMusuemId = JJMusuemId_main;
             else
                 JJMusuemId = JJMusuemId_test;
@@ -152,7 +152,7 @@ public class JjInfoManager : MonoBehaviour
         //}
         //catch
         //{
-        //    //Debug.Log("<color=red>jj APi not call in " + XanaConstants.xanaConstants.EnviornmentName + "</color>");
+        //    //Debug.Log("<color=red>jj APi not call in " + XanaConstantsHolder.xanaConstants.EnviornmentName + "</color>");
         //}
         //finally
         //{
@@ -600,7 +600,7 @@ public class JjInfoManager : MonoBehaviour
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
-        string worldName = XanaConstants.xanaConstants.EnviornmentName;
+        string worldName = XanaConstantsHolder.xanaConstants.EnviornmentName;
         //if (!string.IsNullOrEmpty(firebaseEventName))
         //{
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);

@@ -110,7 +110,7 @@ public class ScrollActivityNFT : MonoBehaviour
             SubButtonText.text = "Unequip";
             SubButtonText.text = UITextLocalization.GetLocaliseTextByKey("Unequip");
             subButtonTextToCheck = "Unequip";
-            XanaConstants.xanaConstants.isNFTEquiped = true;
+            XanaConstantsHolder.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
@@ -128,7 +128,7 @@ public class ScrollActivityNFT : MonoBehaviour
             subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
-            XanaConstants.xanaConstants.isNFTEquiped = false;
+            XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
             SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
@@ -277,6 +277,6 @@ public class ScrollActivityNFT : MonoBehaviour
         nftAttributes.defence = _OwnedNFTDataObj._Attributes[_NFTIndex].defence;
         nftAttributes.special_move = _OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
         string attributesJson = JsonUtility.ToJson(nftAttributes);
-        File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
+        File.WriteAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

@@ -224,20 +224,20 @@ public class AvatarPropertiesDatabase : MonoBehaviour
             //    chkOrientation = true;
             //    try
             //    {
-            //        LoadingHandler.Instance.Loading_WhiteScreen.transform.GetChild(0).gameObject.SetActive(true);
+            //        LoadingController.Instance.Loading_WhiteScreen.transform.GetChild(0).gameObject.SetActive(true);
             //    }
             //    catch (Exception e)
             //    {
             //        Debug.Log("Exception here............................");
             //    }
 
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(true);
+            //    LoadingController.Instance.Loading_WhiteScreen.SetActive(true);
 
             //    Invoke("loadingscreenOff", 0.7f);
             //}
         }
 
-        //if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        //if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
         //{
         //    Debug.LogError("~~~~~ Waqas_ ItemDataBase ~~~~~~~~~~~");
         //    //Screen.orientation = ScreenOrientation.Portrait;
@@ -246,8 +246,8 @@ public class AvatarPropertiesDatabase : MonoBehaviour
 
         #endregion
 
-        if (LoadingHandler.Instance)
-            LoadingHandler.Instance.HideLoading();
+        if (LoadingController.Instance)
+            LoadingController.Instance.HideLoading();
 
         yield return null;
     }
@@ -256,7 +256,7 @@ public class AvatarPropertiesDatabase : MonoBehaviour
     {
         // Commented By WaqasAhmad
         {
-            //LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //LoadingController.Instance.Loading_WhiteScreen.SetActive(false);
             //chkOrientation = false;
         }
     }

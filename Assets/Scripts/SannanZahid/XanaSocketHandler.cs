@@ -9,13 +9,13 @@ using Newtonsoft.Json;
 using SimpleJSON;
 using static RestAPI;
 
-public class SocketController : MonoBehaviour
+public class XanaSocketHandler : MonoBehaviour
 {
     public SocketManager Manager;
     string address;
 
     public string socketId;
-    public static SocketController instance;
+    public static XanaSocketHandler instance;
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
@@ -92,12 +92,12 @@ public class SocketController : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-      //  Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstants.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
+      //  Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstantsHolder.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
         WWWForm form = new WWWForm();
-        form.AddField("userId", int.Parse(XanaConstants.userId));
+        form.AddField("userId", int.Parse(XanaConstantsHolder.userId));
         form.AddField("socketId", socketId);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {

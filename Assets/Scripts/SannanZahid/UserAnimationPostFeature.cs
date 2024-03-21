@@ -27,7 +27,7 @@ public class UserAnimationPostFeature : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         string finalAPIURL = PrepareApiURL();
-       // LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+       // LoadingController.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
             if (isSucess)
@@ -38,7 +38,7 @@ public class UserAnimationPostFeature : MonoBehaviour
             {
                 /* if (++CallBackCheck > 17)
                  {
-                     LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                     LoadingController.Instance.worldLoadingScreen.SetActive(false);
                      CallBackCheck = 0;
                      return;
                  }*/

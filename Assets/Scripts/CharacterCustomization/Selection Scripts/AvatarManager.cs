@@ -88,7 +88,7 @@ namespace Metaverse
             SceneTransitionHandler.callRemove = true;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
-            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+            UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
 
             Debug.Log(" ######     Quit    #########");
         }
@@ -118,14 +118,14 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
-                XanaConstants.xanaConstants.needToClearMemory = false;    
-                if (LoadingHandler.Instance)
-                    LoadingHandler.Instance.HideLoading();
+                XanaConstantsHolder.xanaConstants.needToClearMemory = false;    
+                if (LoadingController.Instance)
+                    LoadingController.Instance.HideLoading();
             GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
             InternetLost = go;
              }
 
-            if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+            if (LoadingController.Instance != null && !LoadingController.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 //CameraLook.instance.DisAllowControl();
                 OffSelfie();
@@ -150,7 +150,7 @@ namespace Metaverse
             }
 
             //WaqasAhmad
-           // LoadingHandler.Instance.UpdateLoadingSlider((LoadingHandler.Instance.loadingSlider.fillAmount + 0.1f), true);
+           // LoadingController.Instance.UpdateLoadingSlider((LoadingController.Instance.loadingSlider.fillAmount + 0.1f), true);
 
 
             //AssignAvatarModel();
@@ -241,8 +241,8 @@ namespace Metaverse
 
         IEnumerator WaitForChangeButtonCommit()
         {
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.95f, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Connected to Network");
+            //LoadingController.Instance.UpdateLoadingSlider(0.95f, true);
+            LoadingController.Instance.UpdateLoadingStatusText("Connected to Network");
 
             yield return new WaitForSeconds(1.0f);
 
@@ -259,8 +259,8 @@ namespace Metaverse
 
         IEnumerator WaitForAssignModel()
         {
-           // LoadingHandler.Instance.UpdateLoadingSlider(0.85f, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Spawning Character");
+           // LoadingController.Instance.UpdateLoadingSlider(0.85f, true);
+            LoadingController.Instance.UpdateLoadingStatusText("Spawning Character");
 
             yield return new WaitForSeconds(1.0f);
 
@@ -407,7 +407,7 @@ namespace Metaverse
 
                     currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
                     spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
-                    // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
+                    // spawnPoint.GetComponent<EmoteAnimationHandler>().animator = currentDummyPlayer.GetComponent<Animator>();
 
                     currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
                     //Defaultanimator  = currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
@@ -472,14 +472,14 @@ namespace Metaverse
             // User Analatics 
             if (!SceneManager.GetActiveScene().name.Contains("Main"))
             {
-                //UserAnalyticsHandler.onUserJoinedLeaved?.Invoke(isGameFocus);
+                //UserAnalyticsManager.onUserJoinedLeaved?.Invoke(isGameFocus);
                 if (isGameFocus)
                 {
-                    UserAnalyticsHandler.onUpdateWorldStatCustom?.Invoke(true, false);
+                    UserAnalyticsManager.onUpdateWorldStatCustom?.Invoke(true, false);
                 }
                 else
                 {
-                    UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+                    UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
                 }
             }
 
@@ -551,7 +551,7 @@ namespace Metaverse
             spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
             spawnPoint.GetComponent<PlayerControllerNew>().playerRig = currentDummyPlayer.GetComponent<FirstPersonJump>().jumpRig;
 
-            // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
+            // spawnPoint.GetComponent<EmoteAnimationHandler>().animator = currentDummyPlayer.GetComponent<Animator>();
             avatarID = _characterIndex;
             HighLighter();
             PlayerPrefs.SetInt("SelectedAvatarID", avatarID);

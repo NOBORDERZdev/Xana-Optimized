@@ -23,7 +23,7 @@ public class WalletLoginHandler: MonoBehaviour
         {
             if (PlayerPrefs.GetInt("RememberMe") == 1 && PlayerPrefs.GetString("publicID") != "")
             {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                LoadingController.Instance.nftLoadingScreen.SetActive(false);
                 // move to next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
@@ -32,7 +32,7 @@ public class WalletLoginHandler: MonoBehaviour
 
 
     void SetChainSafeInfo() {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigDataMainNet", typeof(ScriptableObject));
         }
@@ -48,12 +48,12 @@ public class WalletLoginHandler: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
-        XanaConstants.xanaConstants.isWalletLoadingbool = true;
+        XanaConstantsHolder.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            LoadingController.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = WalletConnectCallType.NewRegistration;
@@ -114,7 +114,7 @@ public class WalletLoginHandler: MonoBehaviour
         }
         catch (Exception e )
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingController.Instance.nftLoadingScreen.SetActive(false);
             throw new System.Exception("Unbale to Connect wallet on wallet connect btn at "+type+" state  with exception : "+e );
         }
 

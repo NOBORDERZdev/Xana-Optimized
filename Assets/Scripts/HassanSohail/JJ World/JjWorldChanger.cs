@@ -81,69 +81,69 @@ public class JjWorldChanger : MonoBehaviour
             worldName = name;
         }
 
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby = true;
+            XanaConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
 
-        // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        // LoadingController.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
+        LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
+        if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        //XanaConstants.xanaConstants.EnviornmentName = worldName;
+        //XanaConstantsHolder.xanaConstants.EnviornmentName = worldName;
         //FeedEventPrefab.m_EnvName = worldName;
         //Launcher.sceneName = worldName;
 
         // Added by WaqasAhmad
         // For Live User Count
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
         {
-            XanaConstants.xanaConstants.customWorldId = MainNet;
+            XanaConstantsHolder.xanaConstants.customWorldId = MainNet;
         }
         else
         {
-            XanaConstants.xanaConstants.customWorldId = testNet;
+            XanaConstantsHolder.xanaConstants.customWorldId = testNet;
         }
         //
 
         if (isMusuem)
         {
-            XanaConstants.xanaConstants.IsMuseum = true;
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            XanaConstantsHolder.xanaConstants.IsMuseum = true;
+            if (ServerBaseURlHandler.instance.IsXanaLive)
             {
-                XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
+                XanaConstantsHolder.xanaConstants.MuseumID = MainNet.ToString();
             }
             else
             {
-                XanaConstants.xanaConstants.MuseumID = testNet.ToString();
+                XanaConstantsHolder.xanaConstants.MuseumID = testNet.ToString();
             }
         }
         else if (isBuilderWorld)
         {
-            XanaConstants.xanaConstants.isBuilderScene = true;
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            XanaConstantsHolder.xanaConstants.isBuilderScene = true;
+            if (ServerBaseURlHandler.instance.IsXanaLive)
             {
-                XanaConstants.xanaConstants.builderMapID = MainNet;
+                XanaConstantsHolder.xanaConstants.builderMapID = MainNet;
             }
             else
             {
-                XanaConstants.xanaConstants.builderMapID = testNet;
+                XanaConstantsHolder.xanaConstants.builderMapID = testNet;
             }
         }
         else // FOR JJ WORLD
         {
             if (HaveMultipleSpwanPoint)
             {
-                XanaConstants.xanaConstants.mussuemEntry = mussuemEntry;
+                XanaConstantsHolder.xanaConstants.mussuemEntry = mussuemEntry;
             }
             else
             {
-                XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                XanaConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
             }
         }
         yield return new WaitForSeconds(1f);
-        XanaConstants.xanaConstants.JjWorldSceneChange = true;
-        XanaConstants.xanaConstants.JjWorldTeleportSceneName = worldName;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+        XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName = worldName;
         LoadFromFile.instance._uiReferences.LoadMain(false);
 
 

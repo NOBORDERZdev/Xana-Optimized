@@ -79,7 +79,7 @@ public class XanaVoiceChat : MonoBehaviour
             instance.Start();
         }
 
-        //if (XanaConstants.xanaConstants.mic == 1)
+        //if (XanaConstantsHolder.xanaConstants.mic == 1)
         //{
         //    TurnOnMic();
         //}
@@ -117,7 +117,7 @@ public class XanaVoiceChat : MonoBehaviour
             StopRecorder();
             Debug.Log("Its an Event Scene");
             TurnOffMic();
-            XanaConstants.xanaConstants.mic = 0;
+            XanaConstantsHolder.xanaConstants.mic = 0;
         }
         else
         {
@@ -139,13 +139,13 @@ public class XanaVoiceChat : MonoBehaviour
             micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
             micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-            if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
             {
                 micOffBtn.SetActive(false);
                 micOffBtnPotrait.SetActive(false);
                 micOnBtn.SetActive(false);
                 micOnBtnPotrait.SetActive(false);
-                XanaConstants.xanaConstants.mic = 0;
+                XanaConstantsHolder.xanaConstants.mic = 0;
             }
             StartCoroutine(CheckVoiceConnect());
         }
@@ -163,7 +163,7 @@ public class XanaVoiceChat : MonoBehaviour
     public void TurnOnMic()
     {
 
-        if (XanaConstants.xanaConstants.mic == 0)
+        if (XanaConstantsHolder.xanaConstants.mic == 0)
         {
             GameObject go = Instantiate(mictoast, placetoload);
             Destroy(go, 1.5f);
@@ -231,7 +231,7 @@ public class XanaVoiceChat : MonoBehaviour
         }
         //recorder.TransmitEnabled = true;
         recorder.DebugEchoMode = false;
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (XanaConstantsHolder.xanaConstants.mic == 1)
         {
             TurnOnMic();
         }

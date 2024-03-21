@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System;
-public class DataCleanupScript : MonoBehaviour
+public class CacheCleaner : MonoBehaviour
 {
     private void Start()
     {

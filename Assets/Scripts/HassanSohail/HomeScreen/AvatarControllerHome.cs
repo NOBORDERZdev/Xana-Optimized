@@ -38,7 +38,7 @@ public class AvatarControllerHome : MonoBehaviour
     {
        // timer = wanderTimer;
         agent.enabled = false;
-        //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
+        //animator.runtimeAnimatorController = EmoteAnimationHandler.Instance.controller;
         animator.SetBool("IsGrounded", true);
         GetComponent<FaceIK>().ikActive = false;
         GetComponent<FootStaticIK>().ikActive = false;

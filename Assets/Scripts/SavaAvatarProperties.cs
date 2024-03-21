@@ -202,11 +202,11 @@ public class SavaAvatarProperties : MonoBehaviour
             Transform bone = charcterBodyParts.BonesData[i].Obj.transform;
             SaveItemList.SavedBones.Add(new BoneDataContainer(charcterBodyParts.BonesData[i].Name, bone.localPosition, bone.localEulerAngles, bone.localScale));
         }
-        SaveItemList.faceMorphed = XanaConstants.xanaConstants.isFaceMorphed;
-        SaveItemList.eyeBrowMorphed = XanaConstants.xanaConstants.isEyebrowMorphed;
-        SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
-        SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
-        SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
+        SaveItemList.faceMorphed = XanaConstantsHolder.xanaConstants.isFaceMorphed;
+        SaveItemList.eyeBrowMorphed = XanaConstantsHolder.xanaConstants.isEyebrowMorphed;
+        SaveItemList.eyeMorphed = XanaConstantsHolder.xanaConstants.isEyeMorphed;
+        SaveItemList.noseMorphed = XanaConstantsHolder.xanaConstants.isNoseMorphed;
+        SaveItemList.lipMorphed = XanaConstantsHolder.xanaConstants.isLipMorphed;
         SaveItemList.gender = characterController.avatarGender.ToString();
 
         SaveItemList.ai_gender = InventoryManager.instance.itemData.gender;

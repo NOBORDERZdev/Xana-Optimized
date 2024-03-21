@@ -100,12 +100,12 @@ public class NpcToNpcChat : MonoBehaviour
         string ip = "";
         int id = 0;
         // same api as NPC free speech api
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+        if (!ServerBaseURlHandler.instance.IsXanaLive)
         {
             ip = "http://182.70.242.10:8034/";
             id = npcAttributes[temp].aiIds;
         }
-        else if (APIBaseUrlChange.instance.IsXanaLive)
+        else if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             ip = "http://15.152.55.82:8054/";
             id = npcAttributes[temp].actualAiIds;
@@ -128,7 +128,7 @@ public class NpcToNpcChat : MonoBehaviour
                 responseFeed = responseData.response_en;
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.NpcToNpc, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.NpcToNpc, id.ToString());
             Debug.Log("Communication Response(Npc Message)(NpcToNpc): " + responseFeed);
         }
         else
@@ -147,12 +147,12 @@ public class NpcToNpcChat : MonoBehaviour
         string ip = "";
 
         // same API as NPC to User api
-        if (!APIBaseUrlChange.instance.IsXanaLive)          
+        if (!ServerBaseURlHandler.instance.IsXanaLive)          
         {
             ip = "http://182.70.242.10:8034/";
             id = npcDB[npcCounter].aiIds;
         }
-        else if (APIBaseUrlChange.instance.IsXanaLive)
+        else if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             ip = "http://15.152.55.82:8054/";
             id = npcDB[npcCounter].actualAiIds;
@@ -178,7 +178,7 @@ public class NpcToNpcChat : MonoBehaviour
                 responseFeed = feed.output_data.user_msg_en;
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
             Debug.Log("Communication Response(Npc Reply)(NpcToNpc): " + responseFeed);
         }
         else

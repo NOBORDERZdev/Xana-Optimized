@@ -21,7 +21,7 @@ public class UpdateSplashScreen : MonoBehaviour
         Once = false;
         time = 0;
         versionText.text = "Ver." + Application.version;
-        if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
+        if (XanaConstantsHolder.xanaConstants.screenType==XanaConstantsHolder.ScreenType.TabScreen)
         {
             tabBG.SetActive(true);
         }

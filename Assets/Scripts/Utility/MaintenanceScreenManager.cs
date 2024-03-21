@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MaintenanceScreenHandler : MonoBehaviour
+public class MaintenanceScreenManager : MonoBehaviour
 {
 
     public GameObject m_ScreenUI;

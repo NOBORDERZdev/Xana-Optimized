@@ -278,7 +278,7 @@ public class ConnectWallet : MonoBehaviour
             //UserRegisterationManager.instance.OpenUIPanal(5);
         }
         
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        LoadingController.Instance.nftLoadingScreen.SetActive(false);
         
     }
     IEnumerator waitForLoader(GameObject loaderObj = null)
@@ -455,8 +455,8 @@ public class ConnectWallet : MonoBehaviour
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
-                XanaConstants.xanaToken = VerifySignatureReadObj.data.token;
-                XanaConstants.loggedIn = true;
+                XanaConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
+                XanaConstantsHolder.loggedIn = true;
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
 
                 UserLoginSignupManager.instance.LoginWithWallet();
@@ -649,7 +649,7 @@ public class ConnectWallet : MonoBehaviour
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
-        XanaConstants.xanaConstants.LoginasGustprofile = true;
+        XanaConstantsHolder.xanaConstants.LoginasGustprofile = true;
     }
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)

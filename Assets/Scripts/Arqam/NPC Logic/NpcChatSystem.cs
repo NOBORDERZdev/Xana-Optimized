@@ -174,12 +174,12 @@ public class NpcChatSystem : MonoBehaviour
             msg = playerMessages.Dequeue();
 
         string ip = "";
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+        if (!ServerBaseURlHandler.instance.IsXanaLive)
         {
             id = npcDB[counter].aiIds;
             ip = "http://182.70.242.10:8034/";
         }
-        else if (APIBaseUrlChange.instance.IsXanaLive)
+        else if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             id = npcDB[counter].actualAiIds;
             ip = "http://15.152.55.82:8054/";
@@ -209,7 +209,7 @@ public class NpcChatSystem : MonoBehaviour
 
             if (XanaChatSystem.instance)
             {
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
+                XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
                 //Debug.Log("Communication Response(UserAI): " + responseFeed);
 
                 if (NpcSpawner.npcSpawner)

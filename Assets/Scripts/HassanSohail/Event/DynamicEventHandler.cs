@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
 
-public class DynamicEventManager : Singleton<DynamicEventManager>
+public class DynamicEventHandler : Singleton<DynamicEventHandler>
 {
     #region Variables
 
@@ -87,7 +87,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 // Set a flag here for indicating that your project is ready to use Firebase.
                 
                 BindAfterInitilization();
-                XanaConstants.xanaConstants.isFirebaseInit = true;
+                XanaConstantsHolder.xanaConstants.isFirebaseInit = true;
                 InvokeDeepLink("focus");
             }
             else
@@ -102,12 +102,12 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     public void BindAfterInitilization()
     {
         DynamicLinks.DynamicLinkReceived += OnDynamicLink;
-        DynamicEventManager.deepLink += InvokeDeepLink;
+        DynamicEventHandler.deepLink += InvokeDeepLink;
     }
 
     private void OnDisable()
     {
-        DynamicEventManager.deepLink -= InvokeDeepLink;
+        DynamicEventHandler.deepLink -= InvokeDeepLink;
     }
     private void OnApplicationPause(bool pause)
     {
@@ -137,7 +137,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void OnDynamicLink(object sender, EventArgs args)
     {
-        if (StartFocusCounter == 0 && XanaConstants.xanaConstants.isFirebaseInit)
+        if (StartFocusCounter == 0 && XanaConstantsHolder.xanaConstants.isFirebaseInit)
         {
             return;
         }
@@ -224,15 +224,15 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
             if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
             else if (eventDetails.data.environmentId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
+                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
             }
             else if (eventDetails.data.museumId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
 
 
@@ -256,7 +256,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         }
                         else
                         {
-                            LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+                            LoadingController.Instance.EventLoaderCanvas.SetActive(false);
                             //print("===============Event Name is null");
                         }
 
@@ -270,13 +270,13 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             {
                 if (request.Equals(UnityWebRequest.Result.ConnectionError))
                 {
-                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+                    LoadingController.Instance.EventLoaderCanvas.SetActive(false);
                     yield return StartCoroutine(HitGetEventJson(url));
                     //print("===============Network Error");
                 }
                 else
                 {
-                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+                    LoadingController.Instance.EventLoaderCanvas.SetActive(false);
                     if (request.error != null)
                     {
                         if (eventDetails.success == false)
@@ -452,7 +452,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 {
                     ////print("-------------Event can be started");
                     StartCoroutine(DelayLoadRemainingSceneData());
-                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
+                    LoadingController.Instance.EventLoaderCanvas.SetActive(true);
                 }
                 else
                 {
@@ -466,7 +466,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         if (_eventStartSystemDateTimediff <= 0 && _eventEndSystemDateTimediff >= 0)
         {
             StartCoroutine(DelayLoadRemainingSceneData());
-            LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
+            LoadingController.Instance.EventLoaderCanvas.SetActive(true);
             ////print("On going Event");
         }
 
@@ -513,9 +513,9 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     IEnumerator DelayLoadRemainingSceneData()
     {
         yield return new WaitForSeconds(4f);
-        LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
-        LoadingHandler.Instance.ShowLoading();
-        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f)));
+        LoadingController.Instance.EventLoaderCanvas.SetActive(false);
+        LoadingController.Instance.ShowLoading();
+        StartCoroutine(LoadingController.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 10f)));
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         yield return new WaitForSeconds(4f);
         SetSceneData();
@@ -526,46 +526,46 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
         {
-            XanaConstants.xanaConstants.userLimit = "16";
+            XanaConstantsHolder.xanaConstants.userLimit = "16";
         }
         else
         {
-            XanaConstants.xanaConstants.userLimit = "15";
+            XanaConstantsHolder.xanaConstants.userLimit = "15";
         }
         //Set These Settings after loading Json Data
         
         if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
             WorldItem.m_EnvName = "Builder";
-            XanaConstants.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
-            XanaConstants.xanaConstants.isBuilderScene = true;
-            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+            XanaConstantsHolder.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
+            XanaConstantsHolder.xanaConstants.isBuilderScene = true;
+            //print("***Scene is loading from deep linking***" + XanaConstantsHolder.xanaConstants.EnviornmentName);
+            LoadingController.Instance.worldLoadingScreen.SetActive(false);
             //SceneManager.LoadScene("AddressableScene");
-            LoadingHandler.Instance.LoadSceneByIndex("Builder", true);
+            LoadingController.Instance.LoadSceneByIndex("Builder", true);
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+            if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
             {
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             }
             if (XanaEventDetails.eventDetails.museumId.Equals(0))
             {
-                XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
+                XanaConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
                 WorldItem.m_EnvName = XanaEventDetails.eventDetails.environmentName;
-                //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                //XanaConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             else
             {
-                XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
+                XanaConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
                 WorldItem.m_EnvName = XanaEventDetails.eventDetails.museumName;
-                //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                //XanaConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
-            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false); 
+            //print("***Scene is loading from deep linking***" + XanaConstantsHolder.xanaConstants.EnviornmentName);
+            LoadingController.Instance.worldLoadingScreen.SetActive(false); 
             SceneManager.LoadScene("AddressableScene");
         }
 

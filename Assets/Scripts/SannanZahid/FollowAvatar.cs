@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowUser : MonoBehaviour
+public class FollowAvatar : MonoBehaviour
 {
    // [HideInInspector]
     public Transform targ;

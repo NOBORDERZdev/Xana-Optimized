@@ -177,11 +177,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //LoadEnvironment(FeedEventPrefab.m_EnvName);
         if (currentEnvironment == null)
         {
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (XanaConstantsHolder.xanaConstants.isBuilderScene)
                 SetupEnvirnmentForBuidlerScene();
             else
             {
-                LoadEnvironment(XanaConstants.xanaConstants.EnviornmentName);
+                LoadEnvironment(XanaConstantsHolder.xanaConstants.EnviornmentName);
                 //CharacterLightCulling();  //amit-05-05-2023 commented this line as it excuted before env instantidated and env light is not culled. called this method on another right place
             }
         }
@@ -304,7 +304,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     }
     void CharacterLightCulling()
     {
-        if ((!WorldItem.m_EnvName.Contains("Xana Festival") || !WorldItem.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstants.xanaConstants.isBuilderScene)
+        if ((!WorldItem.m_EnvName.Contains("Xana Festival") || !WorldItem.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             //riken
             Light[] directionalLightList = FindObjectsOfType<Light>();
@@ -363,22 +363,22 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public IEnumerator SpawnPlayer()
     {
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
+        //    LoadingController.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
+        if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+            // LoadingController.Instance.UpdateLoadingSlider(.8f);
+            LoadingController.Instance.UpdateLoadingStatusText("Joining World...");
         }
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
             if (WorldItem.m_EnvName.Contains("AfterParty"))
             {
-                if (XanaConstants.xanaConstants.setIdolVillaPosition)
+                if (XanaConstantsHolder.xanaConstants.setIdolVillaPosition)
                 {
                     spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                    XanaConstants.xanaConstants.setIdolVillaPosition = false;
+                    XanaConstantsHolder.xanaConstants.setIdolVillaPosition = false;
                 }
                 else
                 {
@@ -478,64 +478,64 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         GetComponent<ChecklPostProcessing>().SetPostProcessing();
 
-        // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+        // LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
         InstantiateYoutubePlayer();
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        if (!XanaConstants.xanaConstants.isCameraMan)
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
         {
-            LoadingHandler.Instance.HideLoading();
-            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
+            LoadingController.Instance.HideLoading();
+            // LoadingController.Instance.UpdateLoadingSlider(0, true);
+            LoadingController.Instance.UpdateLoadingStatusText("");
         }
         if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            if (!XanaConstants.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
             if (JjMusuem.Instance)
-                JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+                JjMusuem.Instance.SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
             else
             {
-                if (!XanaConstants.xanaConstants.isCameraMan)
-                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+                if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                    LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
             }
         }
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby = false;
+            XanaConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
         yield return new WaitForSeconds(.5f);
 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (XanaConstantsHolder.xanaConstants.isCameraMan)
         {
             ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
             ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
-            XanaConstants.xanaConstants.StopMic();
+            XanaConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
             //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
         }
-        LoadingHandler.Instance.manualRoomController.HideRoomList();
+        LoadingController.Instance.manualRoomController.HideRoomList();
 
-        if (!XanaConstants.xanaConstants.isCameraMan)
-            LoadingHandler.Instance.HideLoading();
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+            LoadingController.Instance.HideLoading();
         //TurnOnPostCam();
         // Commented By WaqasAhmad
         {
             //try
             //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //    LoadingController.Instance.Loading_WhiteScreen.SetActive(false);
             //}
             //catch (System.Exception e)
             //{
@@ -545,7 +545,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         // Yes Join APi Call Here
         ////Debug.Log("Waqas : Room Joined.");
         //Debug.Log("<color=green> Analytics -- Joined </color>");
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
@@ -554,16 +554,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             string worldId = 0.ToString();
             if (XanaEventDetails.eventDetails.environmentId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+                XanaConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
             }
             else
             {
-                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+                XanaConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
             }
         }
 
-        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
-        if (XanaConstants.xanaConstants.isCameraMan)
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID);
+        if (XanaConstantsHolder.xanaConstants.isCameraMan)
         {
             if (StreamingCamera.instance)
             {
@@ -596,16 +596,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         print("AUTO BACK CALL");
         yield return new WaitForSecondsRealtime(30);
-        LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        XanaConstants.xanaConstants.JjWorldSceneChange = true;
+        LoadingController.Instance.streamingLoading.UpdateLoadingText(false);
+        LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         _uiReferences.LoadMain(false);
     }
 
 
     public IEnumerator SpawnPlayerForBuilderScene()
     {
-        LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+        LoadingController.Instance.UpdateLoadingStatusText("Joining World...");
         yield return new WaitForSeconds(0.2f);
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
@@ -632,7 +632,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
@@ -686,21 +686,21 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarManager.Instance.InitCharacter();
     End:
-        //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+        //LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
         // Commented By WaqasAhmad
         {
             //try
             //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //    LoadingController.Instance.Loading_WhiteScreen.SetActive(false);
             //}
             //catch (System.Exception e)
             //{
@@ -714,22 +714,22 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         LightCullingScene();
 
 
-        if (!XanaConstants.xanaConstants.isCameraMan)
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
         {
-            LoadingHandler.Instance.HideLoading();
-            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
+            LoadingController.Instance.HideLoading();
+            // LoadingController.Instance.UpdateLoadingSlider(0, true);
+            LoadingController.Instance.UpdateLoadingStatusText("");
         }
         if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            if (!XanaConstants.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
-            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            JjMusuem.Instance.SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
         }
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);
@@ -738,16 +738,16 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         isEnvLoaded = true;
         yield return new WaitForSeconds(1.75f);
-        LoadingHandler.Instance.HideLoading();
-        // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        //LoadingHandler.Instance.UpdateLoadingStatusText("");
+        LoadingController.Instance.HideLoading();
+        // LoadingController.Instance.UpdateLoadingSlider(0, true);
+        //LoadingController.Instance.UpdateLoadingStatusText("");
 
 
         // Yes Join APi Call Here
         ////Debug.Log("Waqas : Room Joined.");
         //Debug.Log("<color=green> Analytics -- Joined </color>");
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
-        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.builderMapID.ToString());
 
         ActivateNpcChat();
     }
@@ -769,7 +769,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         CinemachineFreeLook cam = PlayerCamera.GetComponent<CinemachineFreeLook>();
         if (cam)
         {
-            if (XanaConstants.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
             {
                 cam.Follow = mainController.transform;
                 cam.m_XAxis.Value = 0;
@@ -783,7 +783,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 cam.m_YAxis.Value = 0.5f;
             }
 
-            if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event" || XanaConstants.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstants.xanaConstants.EnviornmentName == "NFTDuel Tournament")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event" || XanaConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstantsHolder.xanaConstants.EnviornmentName == "NFTDuel Tournament")
             {
                 cam.Follow = mainController.transform;
                 cam.m_XAxis.Value = 0;
@@ -804,7 +804,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         if (cam2)
         {
 
-            if (XanaConstants.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
             {
                 cam2.Follow = mainController.transform;
                 cam2.m_XAxis.Value = 0;
@@ -818,7 +818,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 cam2.m_XAxis.Value = 180;
                 cam2.m_YAxis.Value = 0.5f;
             }
-            if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event" || XanaConstants.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstants.xanaConstants.EnviornmentName == "NFTDuel Tournament")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event" || XanaConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstantsHolder.xanaConstants.EnviornmentName == "NFTDuel Tournament")
             {
                 cam2.Follow = mainController.transform;
                 cam2.m_XAxis.Value = 0;
@@ -837,7 +837,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     void ResetPlayerPosition()
     {
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             //RaycastHit hit;
             //if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
@@ -866,7 +866,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
     }
 
 
@@ -894,12 +894,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     void SetupEnvirnmentForBuidlerScene()
     {
-        if (XanaConstants.xanaConstants.orientationchanged && XanaConstants.xanaConstants.JjWorldSceneChange)
+        if (XanaConstantsHolder.xanaConstants.orientationchanged && XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         Transform tempSpawnPoint = null;
-        LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        LoadingController.Instance.UpdateLoadingStatusText("Getting World Ready....");
         if (BuilderData.spawnPoint.Count == 1)
         {
             tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
@@ -960,20 +960,20 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
-            while (!XanaConstants.isAddressableCatalogDownload)
+            while (!XanaConstantsHolder.isAddressableCatalogDownload)
             {
                 yield return new WaitForSeconds(1f);
             }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
+            //    LoadingController.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
             //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
             {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-                //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+                LoadingController.Instance.UpdateLoadingStatusText("Loading World...");
+                //LoadingController.Instance.UpdateLoadingSlider(.6f, true);
             }
             yield return handle;
             addressableSceneName = environmentLabel;
@@ -1112,10 +1112,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         ////Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
-        else if (XanaConstants.xanaConstants.isBuilderScene)
+        else if (XanaConstantsHolder.xanaConstants.isBuilderScene)
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
         else
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstantsHolder.xanaConstants.EnviornmentName));
 
     }
 
@@ -1136,7 +1136,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 }
                 else if (sceneLight[i].name.Contains("Directional Light"))
                 {
-                    if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+                    if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
                     {
                         sceneLight[i].cullingMask = LayerMask.GetMask("Water");
                     }

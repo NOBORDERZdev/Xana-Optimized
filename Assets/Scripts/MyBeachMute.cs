@@ -15,9 +15,9 @@ public class MyBeachMute : MonoBehaviour
     {
         if (WorldItem.m_EnvName.Contains("Xana Festival") || WorldItem.m_EnvName.Contains("NFTDuel Tournament") || WorldItem.m_EnvName.Contains("BreakingDown Arena"))
         {
-            if (XanaConstants.xanaConstants.mic == 1)
+            if (XanaConstantsHolder.xanaConstants.mic == 1)
             {
-                XanaConstants.xanaConstants.StopMic();
+                XanaConstantsHolder.xanaConstants.StopMic();
                 XanaVoiceChat.instance.TurnOffMic();
                 micOn.SetActive(false);
                 micOnPotrait.SetActive(false);

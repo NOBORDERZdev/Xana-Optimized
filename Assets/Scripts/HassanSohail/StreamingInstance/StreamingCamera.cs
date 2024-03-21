@@ -44,7 +44,7 @@ public class StreamingCamera : MonoBehaviour
     }
 
     public void TriggerStreamCam(){ 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (XanaConstantsHolder.xanaConstants.isCameraMan)
         {
            
             if (Cameras.Count>0)
@@ -87,10 +87,10 @@ public class StreamingCamera : MonoBehaviour
         }
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
-      // LoadingHandler.Instance.HideLoading();
+      // LoadingController.Instance.HideLoading();
        ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
-       LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+       LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
        LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
     }
 

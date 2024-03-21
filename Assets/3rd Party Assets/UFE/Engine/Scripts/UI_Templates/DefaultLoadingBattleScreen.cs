@@ -190,11 +190,11 @@ public class DefaultLoadingBattleScreen : LoadingBattleScreen
                     //this.namePlayer2.text = UFE.config.player2Character.characterName.ToString().ToUpper();	
                     if (UFE.gameMode == GameMode.TrainingRoom)
                     {
-                        this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
+                        this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper());
                     }
                     else if (UFE.gameMode == GameMode.VersusMode)
                     {
-                        this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
+                        this.namePlayer2.text = GetFirstNameOfPlayer(XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper());
                     }
                     else
                     {

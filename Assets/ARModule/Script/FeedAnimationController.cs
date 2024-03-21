@@ -124,7 +124,7 @@ public class FeedAnimationController : MonoBehaviour
     IEnumerator GetAllAnimations()
     {
         //Debug.Log("All Anim");
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES + "/" + ServerBaseURlHandler.instance.apiversion);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -264,7 +264,7 @@ public class FeedAnimationController : MonoBehaviour
         {
             alreadyRuning = false;
 
-            string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
+            string bundlePath = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
 
             if (CheckForIsAssetBundleAvailable(bundlePath))
             {

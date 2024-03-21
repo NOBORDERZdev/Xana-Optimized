@@ -33,9 +33,9 @@ public class HomeAvatarButton : MonoBehaviour
 
     public void StoreBtnController()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (XanaConstantsHolder.xanaConstants != null)
         {
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
                 OnNFTAvatarDisableStore();
             else
                 OnNFTAvatarEnableStore();

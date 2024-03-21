@@ -93,7 +93,7 @@ public class XanaChatSocket : MonoBehaviour
     }
     void Start()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             address = socketMainnet;
             fetchAllMsgApi = address + fetchApi;
@@ -162,7 +162,7 @@ public class XanaChatSocket : MonoBehaviour
             // Socket ID Update After Reconnect 
             // Need To Emit joinRoom again with new Socket Id
 
-            onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
+            onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID);
         }
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -187,7 +187,7 @@ public class XanaChatSocket : MonoBehaviour
     void UserJoinRoom(string _worldId)
     {
         worldId = int.Parse(_worldId);
-        string userId = XanaConstants.userId;
+        string userId = XanaConstantsHolder.userId;
         var data = new { username = userId, room = _worldId };
         //Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
 
@@ -208,7 +208,7 @@ public class XanaChatSocket : MonoBehaviour
             return;
         }
 
-        string userId = XanaConstants.userId;
+        string userId = XanaConstantsHolder.userId;
         string event_Id = "1";
 
         // Checking For Event
@@ -279,7 +279,7 @@ public class XanaChatSocket : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
+        string api = fetchAllMsgApi + XanaConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
         //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;

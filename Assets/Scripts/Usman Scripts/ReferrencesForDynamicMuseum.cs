@@ -52,18 +52,18 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
 
         instance = this;
-        if (XanaConstants.xanaConstants.IsMuseum)
+        if (XanaConstantsHolder.xanaConstants.IsMuseum)
         {
             foreach (GameObject go in disableObjectsInMuseums)
             {
                 go.SetActive(false);
             }
         }
-        if (WorldItem.m_EnvName.Contains("AfterParty") || XanaConstants.xanaConstants.IsMuseum)
+        if (WorldItem.m_EnvName.Contains("AfterParty") || XanaConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItem.m_EnvName.Contains("J&J WORLD_5"))
             {
-                if (XanaConstants.xanaConstants.minimap == 1)
+                if (XanaConstantsHolder.xanaConstants.minimap == 1)
                 {
                     minimap.SetActive(true);
                 }
@@ -77,7 +77,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
         else
         {
-            if (XanaConstants.xanaConstants.minimap == 1)
+            if (XanaConstantsHolder.xanaConstants.minimap == 1)
             {
                 minimap.SetActive(true);
             }
@@ -96,7 +96,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
        
         if (WorldItem.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
-            RoomMaxPlayerCount = Convert.ToInt32(XanaConstants.xanaConstants.userLimit)-1 ;
+            RoomMaxPlayerCount = Convert.ToInt32(XanaConstantsHolder.xanaConstants.userLimit)-1 ;
             if (PhotonNetwork.CurrentRoom!=null)
             {
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
@@ -109,7 +109,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         //}
         else
         {
-            RoomMaxPlayerCount = Convert.ToInt32(XanaConstants.xanaConstants.userLimit);
+            RoomMaxPlayerCount = Convert.ToInt32(XanaConstantsHolder.xanaConstants.userLimit);
             if (PhotonNetwork.CurrentRoom != null)
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         }
@@ -117,7 +117,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         {
             if (instance.totalCounter != null)
             {
-                totalCounter.text = totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstants.xanaConstants.userLimit*/;
+                totalCounter.text = totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstantsHolder.xanaConstants.userLimit*/;
             }
         }
 
@@ -151,11 +151,11 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             StartCoroutine(counterCoroutine);
         }
 
-        if (WorldItem.m_EnvName.Contains("AfterParty") || XanaConstants.xanaConstants.IsMuseum)
+        if (WorldItem.m_EnvName.Contains("AfterParty") || XanaConstantsHolder.xanaConstants.IsMuseum)
         {
             if (WorldItem.m_EnvName.Contains("J&J WORLD_5"))
             {
-                if (XanaConstants.xanaConstants.minimap == 1)
+                if (XanaConstantsHolder.xanaConstants.minimap == 1)
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
                 else
                     ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
@@ -164,7 +164,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
         }
         else
         {
-            if (XanaConstants.xanaConstants.minimap == 1)
+            if (XanaConstantsHolder.xanaConstants.minimap == 1)
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
             else
                 ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
@@ -230,7 +230,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             //go.SetActive(true);
             if (go.name.Contains("map"))
             {
-                if (!XanaConstants.xanaConstants.IsMuseum && XanaConstants.xanaConstants.minimap != 0)
+                if (!XanaConstantsHolder.xanaConstants.IsMuseum && XanaConstantsHolder.xanaConstants.minimap != 0)
                     go.SetActive(true);
             }
             else
@@ -280,7 +280,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             //go.SetActive(true);
             if (go.name.Contains("map"))
             {
-                if (!XanaConstants.xanaConstants.IsMuseum && XanaConstants.xanaConstants.minimap != 0)
+                if (!XanaConstantsHolder.xanaConstants.IsMuseum && XanaConstantsHolder.xanaConstants.minimap != 0)
                     go.SetActive(true);
             }
             else
@@ -318,7 +318,7 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
             {
                 if (/*FeedEventPrefab.m_EnvName.Contains("Xana Festival")*/ true) // for Xana Festival
                 {
-                    if (XanaConstants.xanaConstants.isCameraManInRoom || XanaConstants.xanaConstants.isCameraMan)
+                    if (XanaConstantsHolder.xanaConstants.isCameraManInRoom || XanaConstantsHolder.xanaConstants.isCameraMan)
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount-1);
                     }
@@ -326,9 +326,9 @@ public class ReferrencesForDynamicMuseum : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstants.xanaConstants.userLimit*/;
+                totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*XanaConstantsHolder.xanaConstants.userLimit*/;
                     
-                    //if (XanaConstants.xanaConstants.isCameraMan)
+                    //if (XanaConstantsHolder.xanaConstants.isCameraMan)
                     //{
                     //    print("NAMES ARE " + PhotonNetwork.CurrentRoom.Name);
                     //    if (false)

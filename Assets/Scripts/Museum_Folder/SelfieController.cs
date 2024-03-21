@@ -62,7 +62,7 @@ public class SelfieController : MonoBehaviour
             if (OnFeatures[i] != null)
                 OnFeatures[i].SetActive(true);
             //LoadEmoteAnimations.instance.EnableObjects();
-            StartCoroutine(EmoteAnimationPlay.Instance.getAllAnimations());      //---amit 06-09-2022
+            StartCoroutine(EmoteAnimationHandler.Instance.getAllAnimations());      //---amit 06-09-2022
             if (GamePlayButtonEvents.inst != null)
             {
                 GamePlayButtonEvents.inst.SelfiePanleUpdateObject(true);
@@ -249,14 +249,14 @@ public class SelfieController : MonoBehaviour
             float xInput = Input.GetAxis("Mouse X");
             float yInput = Input.GetAxis("Mouse Y");
             //Main Character Rotation
-            if (XanaConstants.xanaConstants.SelfiMovement)
+            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
                 m_CharacterParent.transform.rotation *= Quaternion.Euler(Vector3.up * xInput * m_Speed);
 
             if (m_IKObject == null)
                 return;
             // Avatar Clamped Hand Movement In Y-Axis Only
 
-            if (XanaConstants.xanaConstants.SelfiMovement)
+            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
                 m_IKObject.transform.localPosition += Vector3.up * yInput * (Time.deltaTime * 2); //0.01f
 
             float l_Y = Mathf.Clamp(m_IKObject.transform.localPosition.y, m_Ymin, m_YMax);
@@ -267,7 +267,7 @@ public class SelfieController : MonoBehaviour
             float l_XRot = Mathf.Clamp(m_IKObject.transform.localRotation.x, avatarMin, avatarMax);
             m_IKObject.transform.localRotation = Quaternion.Euler(new Vector3(l_XRot * (360 / 3.14f), 0, 0));
 
-            if (XanaConstants.xanaConstants.SelfiMovement)
+            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
                 m_IKLookAt.transform.localPosition += Vector3.up * yInput * (Time.deltaTime * 2.5f); //0.01f
 
             float l_YLookat = Mathf.Clamp(m_IKLookAt.transform.localPosition.y, avatarMin, avatarMax);
@@ -339,8 +339,8 @@ public class SelfieController : MonoBehaviour
 
     public void EnbaleSelfieFeature()
     {
-        if (EmoteAnimationPlay.Instance)
-            EmoteAnimationPlay.Instance.clearAnimation?.Invoke();
+        if (EmoteAnimationHandler.Instance)
+            EmoteAnimationHandler.Instance.clearAnimation?.Invoke();
         StartCoroutine(EnableSelfieWithDelay());
        
 
@@ -363,7 +363,7 @@ public class SelfieController : MonoBehaviour
         m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
 
         //WaqasAhmad
-        XanaConstants.xanaConstants.SelfiMovement = true;
+        XanaConstantsHolder.xanaConstants.SelfiMovement = true;
 
         for (int i = 0; i < OnFeatures.Length; i++)
         {
@@ -506,7 +506,7 @@ public class SelfieController : MonoBehaviour
         selfiePanel.SetActive(false);
 
         //WaqasAhmad
-        //XanaConstants.xanaConstants.SelfiMovement = true;
+        //XanaConstantsHolder.xanaConstants.SelfiMovement = true;
 
 
         StartCoroutine(SetMuseumRaycasterBoolean());
@@ -607,13 +607,13 @@ public class SelfieController : MonoBehaviour
     public bool IsinAG, inSPRoom;
     public void TakeScreenShoot()
     {
-        //XanaConstants.xanaConstants.SelfiMovement = false;
+        //XanaConstantsHolder.xanaConstants.SelfiMovement = false;
         if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
-            //XanaConstants.xanaConstants.SelfiMovement = false;
+            //XanaConstantsHolder.xanaConstants.SelfiMovement = false;
             m_CapturedImage.gameObject.SetActive(false);
             if (m_CapturedImage2)
                 m_CapturedImage2.gameObject.SetActive(false);

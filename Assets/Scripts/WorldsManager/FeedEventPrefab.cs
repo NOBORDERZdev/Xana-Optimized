@@ -80,7 +80,7 @@ public class FeedEventPrefab : MonoBehaviour
     bool isClearAfterMemory = false;
     bool isNotLoaded = true;
     public LoginPageManager loginPageManager;
-    UserAnalyticsHandler userAnalyticsHandler;
+    UserAnalyticsManager userAnalyticsHandler;
     bool isBannerLoaded = false;
     private void Awake()
     {
@@ -105,7 +105,7 @@ public class FeedEventPrefab : MonoBehaviour
             }
         }
 
-        userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
+        userAnalyticsHandler = ServerBaseURlHandler.instance.GetComponent<UserAnalyticsManager>();
         UpdateUserCount();
         if (m_EnvironmentName.Contains("XANA Lobby"))
         {
@@ -124,7 +124,7 @@ public class FeedEventPrefab : MonoBehaviour
         }
         cnt += 1;
 
-        UserAnalyticsHandler.onChangeJoinUserStats += UpdateUserCount;
+        UserAnalyticsManager.onChangeJoinUserStats += UpdateUserCount;
         StartCoroutine(UpdateCoroutine());
         UpdateUserCount();
     }
@@ -222,7 +222,7 @@ public class FeedEventPrefab : MonoBehaviour
     }
     int CheckServerForID()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
             return 38; // Xana Lobby Id Mainnet
         else
             return 406; // Xana Lobby Id Testnet
@@ -346,7 +346,7 @@ public class FeedEventPrefab : MonoBehaviour
         worldIcon.sprite = null;
         worldIcon.sprite = dummyThumbnail;
         //WorldsHandler.instance.ResourcesUnloadAssetFile();
-        UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
+        UserAnalyticsManager.onChangeJoinUserStats -= UpdateUserCount;
         //StopCoroutine(UpdateCoroutine());
         StopAllCoroutines();
 
@@ -525,9 +525,9 @@ public class FeedEventPrefab : MonoBehaviour
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
         m_CreaName = creatorName;
-        XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
-        XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
-        XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
+        XanaConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
+        XanaConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+        XanaConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
         Launcher.sceneName = m_EnvName;
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
@@ -539,9 +539,9 @@ public class FeedEventPrefab : MonoBehaviour
             InstantiateWorldtags();
 
         loginPageManager.SetPanelToBottom();
-        XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
-        //XanaConstants.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
-        XanaConstants.xanaConstants.buttonClicked = this.gameObject;
+        XanaConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
+        //XanaConstantsHolder.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
+        XanaConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
             LoginPageManager.m_MuseumIsClicked = true;
 
@@ -551,19 +551,19 @@ public class FeedEventPrefab : MonoBehaviour
         m_WorldDescriptionTxt.GetComponent<UITextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
-            XanaConstants.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            XanaConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
         }
         else
         {
-            XanaConstants.xanaConstants.userLimit = userLimit;
+            XanaConstantsHolder.xanaConstants.userLimit = userLimit;
         }
         //tempWorldName = m_WorldName.text.ToString();
-        XanaConstants.xanaConstants.MuseumID = idOfObject;
+        XanaConstantsHolder.xanaConstants.MuseumID = idOfObject;
         //SetStringSize();
 
         // For Analitics & User Count
-        UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount); // Due to Flow change this API in not in use
+        UserAnalyticsManager.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
+        //UserAnalyticsManager.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount); // Due to Flow change this API in not in use
 
         if (m_EnvironmentName == "ZONE-X")
             SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());

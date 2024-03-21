@@ -47,7 +47,7 @@ public class NFTFromServer : MonoBehaviour
         }
         else 
         {
-            MussuemLink = dynamicMusuemApi + XanaConstants.xanaConstants.MuseumID;
+            MussuemLink = dynamicMusuemApi + XanaConstantsHolder.xanaConstants.MuseumID;
             Debug.Log("Openning Mussuem");
         }
 

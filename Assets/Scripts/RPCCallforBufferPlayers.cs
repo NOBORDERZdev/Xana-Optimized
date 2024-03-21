@@ -33,9 +33,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
         {
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
             {
-                return File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                return File.ReadAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
             }
             else
             {
@@ -53,7 +53,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
-            _mydatatosend[2] = XanaConstants.xanaConstants.isNFTEquiped;
+            _mydatatosend[2] = XanaConstantsHolder.xanaConstants.isNFTEquiped;
             Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
             //CallRpcInvoke();
         }

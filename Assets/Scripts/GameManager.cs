@@ -69,19 +69,19 @@ public class GameManager : MonoBehaviour
             if (HomeAvatarButton._instance)   // Disable Store Btn
                 HomeAvatarButton._instance.StoreBtnController();
 
-            if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+            if (PlayerPrefs.HasKey("Equiped") || XanaConstantsHolder.xanaConstants.isNFTEquiped)
             {
-                if (File.Exists(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson))
+                if (File.Exists(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
                 }
-                return (Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                return (Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
             }
             else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
                 if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
                 UserStatus_ = true;
                 if (File.Exists(Application.persistentDataPath + "/logIn.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
                 }
                 return (Application.persistentDataPath + "/logIn.json");
             }
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
             {
                 if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
                 UserStatus_ = false;
                 if (File.Exists(Application.persistentDataPath + "/loginAsGuestClass.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
                 }
                 return (Application.persistentDataPath + "/loginAsGuestClass.json");
             }
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         if (UIHandler.Instance.HomePage.activeInHierarchy )
             UIHandler.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
+        if (WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstantsHolder.loggedIn)
             UIHandler.Instance.IsWorldClicked();
         else
         {
@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
         UIHandler.Instance.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (XanaConstants.loggedIn) 
+        if (XanaConstantsHolder.loggedIn) 
         {
             UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
@@ -188,7 +188,7 @@ public class GameManager : MonoBehaviour
         UIHandler.Instance.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
         BottomAvatarButtonBool = true;
-        if (XanaConstants.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
+        if (XanaConstantsHolder.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
             UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);

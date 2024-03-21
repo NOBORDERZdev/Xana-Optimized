@@ -17,13 +17,13 @@ public class LoadEmoteAnimations : MonoBehaviour
     void Awake()
     {
         instance = this;
-        EmoteAnimationPlay.Instance.AnimHighlight = highlightAnim;
-        EmoteAnimationPlay.Instance.popupPenal = animationPanel;
+        EmoteAnimationHandler.Instance.AnimHighlight = highlightAnim;
+        EmoteAnimationHandler.Instance.popupPenal = animationPanel;
     }
 
     private void Start()
     {
-        StartCoroutine(EmoteAnimationPlay.Instance.getAllAnimations());
+        StartCoroutine(EmoteAnimationHandler.Instance.getAllAnimations());
     }
 
     public void OnEnable()
@@ -45,12 +45,12 @@ public class LoadEmoteAnimations : MonoBehaviour
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
 #if UNITY_EDITOR
-        EmoteAnimationPlay.Instance.animationClick();
+        EmoteAnimationHandler.Instance.animationClick();
 #endif
 #if UNITY_ANDROID || UNITY_IOS
         if (Input.touchCount > 0)
         {
-            EmoteAnimationPlay.Instance.animationClick();
+            EmoteAnimationHandler.Instance.animationClick();
         }
 #endif
     }

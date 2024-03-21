@@ -177,8 +177,8 @@ public class WorldDetailsPopupPreview : MonoBehaviour
     }
     public void CallAnalytics(string idOfObject, string entityType)
     {
-        UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
-        //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt); // Due to Flow change this API in not in use
+        UserAnalyticsManager.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
+        //UserAnalyticsManager.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt); // Due to Flow change this API in not in use
     }
     public void SetPanelToBottom()
     {

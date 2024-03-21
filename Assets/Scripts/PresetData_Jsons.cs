@@ -74,7 +74,7 @@ public class PresetData_Jsons : MonoBehaviour
     public void ChangecharacterFromPresetPanel()
     {
         GetScriptRef();
-        XanaConstants.xanaConstants.registerFirstTime = true;
+        XanaConstantsHolder.xanaConstants.registerFirstTime = true;
 
         if (!IsStartUp_Canvas)   //for presets in avatar panel 
         {
@@ -92,8 +92,8 @@ public class PresetData_Jsons : MonoBehaviour
         }
         else
         {
-            XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = this.gameObject;
-            XanaConstants.xanaConstants._curretClickedBtn = this.gameObject;
+            XanaConstantsHolder.xanaConstants.avatarStoreSelection[XanaConstantsHolder.xanaConstants.currentButtonIndex] = this.gameObject;
+            XanaConstantsHolder.xanaConstants._curretClickedBtn = this.gameObject;
 
             if (!StoreUndoRedo.obj.addToList)
                 StoreUndoRedo.obj.addToList = true;
@@ -103,7 +103,7 @@ public class PresetData_Jsons : MonoBehaviour
                 Debug.Log("<color=red> Set Default Preset</color>");
             }
 
-            if (XanaConstants.xanaConstants._lastClickedBtn && XanaConstants.xanaConstants._curretClickedBtn == XanaConstants.xanaConstants._lastClickedBtn
+            if (XanaConstantsHolder.xanaConstants._lastClickedBtn && XanaConstantsHolder.xanaConstants._curretClickedBtn == XanaConstantsHolder.xanaConstants._lastClickedBtn
                 && !IsStartUp_Canvas)
             {
                 Debug.Log("Same Button Clicked");
@@ -112,16 +112,16 @@ public class PresetData_Jsons : MonoBehaviour
 
             GameManager.Instance.isStoreAssetDownloading = true;
             InventoryManager.instance.UndoSelection();
-            XanaConstants.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
-            if (XanaConstants.xanaConstants._lastClickedBtn && !IsStartUp_Canvas)
+            XanaConstantsHolder.xanaConstants._curretClickedBtn.transform.GetChild(0).gameObject.SetActive(true);
+            if (XanaConstantsHolder.xanaConstants._lastClickedBtn && !IsStartUp_Canvas)
             {
-                if (XanaConstants.xanaConstants._lastClickedBtn.GetComponent<PresetData_Jsons>())
-                    XanaConstants.xanaConstants._lastClickedBtn.transform.GetChild(0).gameObject.SetActive(false);
+                if (XanaConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<PresetData_Jsons>())
+                    XanaConstantsHolder.xanaConstants._lastClickedBtn.transform.GetChild(0).gameObject.SetActive(false);
             }
 
-            XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
-            XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
-            XanaConstants.xanaConstants.PresetValueString = gameObject.name;
+            XanaConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
+            XanaConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
+            XanaConstantsHolder.xanaConstants.PresetValueString = gameObject.name;
             PlayerPrefs.SetInt("presetPanel", 1);
 
             // Hack for latest update // keep all preset body fat to 0
@@ -131,7 +131,7 @@ public class PresetData_Jsons : MonoBehaviour
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));        
             _CharacterData.BodyFat = 0;
             _CharacterData.PresetValue = gameObject.name;
-            XanaConstants.xanaConstants.bodyNumber = 0;
+            XanaConstantsHolder.xanaConstants.bodyNumber = 0;
             if (UGCManager.isSelfieTaken)
             {
                 SaveUGCDataOnJson(_CharacterData);
@@ -189,7 +189,7 @@ public class PresetData_Jsons : MonoBehaviour
                     InventoryManager.instance.WhiteRibbonImage.SetActive(true);
                 }
 
-                XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
+                XanaConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
             }
             if (avatarController.wornEyewearable != null)
             {
@@ -197,7 +197,7 @@ public class PresetData_Jsons : MonoBehaviour
             }
 
             if (_CharacterData.HairColor != null)
-                XanaConstants.xanaConstants.isPresetHairColor = true;
+                XanaConstantsHolder.xanaConstants.isPresetHairColor = true;
             GetSavedPreset();
             SavePresetOnServer(_CharacterData);
             ApplyPreset();

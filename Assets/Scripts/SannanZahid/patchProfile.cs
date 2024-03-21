@@ -6,7 +6,7 @@ public class patchProfile : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (!XanaConstants.xanaConstants.LoginasGustprofile)
+        if (!XanaConstantsHolder.xanaConstants.LoginasGustprofile)
         {
             if (UIHandler.Instance != null)//rik
             {

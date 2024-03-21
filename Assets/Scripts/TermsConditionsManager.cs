@@ -24,7 +24,7 @@ public class TermsConditionsManager : MonoBehaviour
     }
     private void Start()
     {
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
             TabBG.SetActive(true);
     }
     public void CheckForTermsAndCondition()

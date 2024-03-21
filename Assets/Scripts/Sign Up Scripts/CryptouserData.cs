@@ -32,9 +32,9 @@ public class CryptouserData : MonoBehaviour
         {
             instance = this;   
             
-            //if (APIBaseUrlChange.instance != null)
+            //if (ServerBaseURlHandler.instance != null)
             //{
-            //    if (APIBaseUrlChange.instance.IsXanaLive) // Mainnet
+            //    if (ServerBaseURlHandler.instance.IsXanaLive) // Mainnet
             //    {
                         
             //    }

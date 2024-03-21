@@ -33,7 +33,7 @@ public class JjMusuem : MonoBehaviour
 
     void SetPlayerPos()
     {
-        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
     }
     /// <summary>
     /// Set player position in room according to the point on which the player enter
@@ -61,19 +61,19 @@ public class JjMusuem : MonoBehaviour
     //    if (manager.allowTeleportation && (other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && player.allowTeleport)
     //    {
     //        print("player enter");
-    //        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+    //        SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
     //    }
     //}
 
     IEnumerator changePos(Transform destinationPoint)
     {
-        //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.7f, 0.85f), 4f, false);
+        //LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
+        //LoadingController.Instance.UpdateLoadingSliderForJJ(Random.Range(0.7f, 0.85f), 4f, false);
        // yield return new WaitForSeconds(.02f);
         manager.allowTeleportation = false;
         player.allowTeleport = false;
         player.m_IsMovementActive = false;
-        //StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
         yield return new WaitForSeconds(.2f);
         Vector3 tempSpawn = destinationPoint.position;
         RaycastHit hit;
@@ -109,7 +109,7 @@ public class JjMusuem : MonoBehaviour
         // isAlreadyRunning = true;
         manager.allowTeleportation = true;
         player.allowTeleport = true;
-        if (XanaConstants.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
+        if (XanaConstantsHolder.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
         {
             LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(180f, 0.5f));
         }
@@ -119,7 +119,7 @@ public class JjMusuem : MonoBehaviour
         }
 
        // yield return new WaitForSeconds(.15f);
-       // LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+       // LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
     }
 
 }

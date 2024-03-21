@@ -21,7 +21,7 @@ public class ChecklPostProcessing : MonoBehaviour
         {
             selfieCam = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<MyBeachSelfieCam>();
         }
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -71,7 +71,7 @@ public class ChecklPostProcessing : MonoBehaviour
             //    selfieCam.SelfieCapture_CamRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture_CamRenderPotraiat.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //}
-            //else if (XanaConstants.xanaConstants.isBuilderScene)
+            //else if (XanaConstantsHolder.xanaConstants.isBuilderScene)
             //{
             //    selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;

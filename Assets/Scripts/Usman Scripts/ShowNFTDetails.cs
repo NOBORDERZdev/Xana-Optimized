@@ -311,7 +311,7 @@ public class ShowNFTDetails : MonoBehaviour
         }
 
         // For Analytics NFT image Clicked = true
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
     }
 
     public void ShowVideo(MetaDataInPrefab data)
@@ -413,7 +413,7 @@ public class ShowNFTDetails : MonoBehaviour
         displayPanel.SetActive(true);
 
         // For Analytics NFT image Clicked = true
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
 
         //if (imageObject_Potrait)
         //    imageObject_Potrait.SetActive(false);
@@ -655,7 +655,7 @@ public class ShowNFTDetails : MonoBehaviour
         displayPanel.SetActive(true);
 
         // For Analytics NFT image Clicked = true
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
 
         //if (imageObject_Potrait)
         //    imageObject_Potrait.SetActive(false);

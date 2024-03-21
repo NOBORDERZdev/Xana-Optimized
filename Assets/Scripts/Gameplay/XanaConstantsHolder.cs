@@ -6,9 +6,9 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class XanaConstants : MonoBehaviour
+public class XanaConstantsHolder : MonoBehaviour
 {
-    public static XanaConstants xanaConstants;
+    public static XanaConstantsHolder xanaConstants;
 
     //Login Info
     public static bool isAdmin;

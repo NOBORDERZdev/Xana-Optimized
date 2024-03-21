@@ -56,9 +56,9 @@ public class HomeFooterTabCanvas : MonoBehaviour
         {
             additiveScenesManager = GameManager.Instance.additiveScenesManager;
         }
-        if (XanaConstants.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstants.xanaConstants.isFromXanaLobby)
+        if (XanaConstantsHolder.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            XanaConstants.xanaConstants.CurrentSceneName = "";
+            XanaConstantsHolder.xanaConstants.CurrentSceneName = "";
             Invoke(nameof(OnClickHomeWorldButton), 5);
         }
     }
@@ -416,10 +416,10 @@ public class HomeFooterTabCanvas : MonoBehaviour
             //OnSelectedClick(5);
             GameManager.Instance.defaultSelection = 5;
             GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-            if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+            if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-                XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+                Destroy(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar);
+                XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
             }
             GameObject MainSceneAvatar = Instantiate(GameManager.Instance.mainCharacter);
             Transform rootRotationObj = MainSceneAvatar.transform.Find("mixamorig:Hips");
@@ -433,7 +433,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
             MainSceneAvatar.SetActive(false);
             //MainSceneAvatar.transform.parent.transform.eulerAngles= new Vector3(0,180,0);
             Initiate.Fade("ARModuleRoomScene", Color.black, 1.0f, true);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
+            XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
 
         }
     }
@@ -538,7 +538,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         GameManager.Instance.HomeCameraInputHandler(false);
 
-        if (!XanaConstants.loggedIn) // Show login page for not sign in
+        if (!XanaConstantsHolder.loggedIn) // Show login page for not sign in
         {
             //show popup here to login for adding friends
             //UserRegisterationManager.instance.OpenUIPanal(17);
@@ -788,7 +788,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
     public void createBackFromSns()
     {
-        XanaConstants.xanaConstants.isBackfromSns = true;
+        XanaConstantsHolder.xanaConstants.isBackfromSns = true;
     }
 
 

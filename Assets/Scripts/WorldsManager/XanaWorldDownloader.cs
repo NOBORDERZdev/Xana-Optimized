@@ -94,7 +94,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!XanaConstants.xanaConstants.isBuilderScene)
+        if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
             ChangeOrientation_waqas.switchOrientation += OnOrientationChange;

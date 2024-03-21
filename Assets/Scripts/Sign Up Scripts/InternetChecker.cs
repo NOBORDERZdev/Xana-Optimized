@@ -49,7 +49,7 @@ public class InternetChecker : MonoBehaviour
      
     void checkConection()
     {
-        if (Application.internetReachability == NetworkReachability.NotReachable && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+        if (Application.internetReachability == NetworkReachability.NotReachable && !LoadingController.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
         {
             showPage();
             _hasInvokedConnection = false;
