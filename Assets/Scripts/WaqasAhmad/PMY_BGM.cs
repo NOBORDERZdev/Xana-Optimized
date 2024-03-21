@@ -46,10 +46,13 @@ public class PMY_BGM : MonoBehaviour
             //Update Music Source Parameters 
             MusicSource.gameObject.transform.localPosition = new Vector3(12.48055f, 36.14407f, 122.2209f);  //0.2212251f, 0.6412843f, 30f
             MusicSource.spatialBlend = 1;
+            MusicSource.rolloffMode = AudioRolloffMode.Linear;
+            MusicSource.maxDistance = 55;
             if (Application.platform == RuntimePlatform.IPhonePlayer)
-               MusicSource.minDistance = 20;
-            else
-                MusicSource.minDistance = 10;
+                MusicSource.volume = 1;
+            //   MusicSource.minDistance = 20;
+            //else
+            //    MusicSource.minDistance = 10;
         }
     }
 
