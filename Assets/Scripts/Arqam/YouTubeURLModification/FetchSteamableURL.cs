@@ -28,7 +28,7 @@ public class FetchSteamableURL : MonoBehaviour
     {
         WWWForm form = new WWWForm();
         form.AddField("youtubeUrl", Url);
-        using (UnityWebRequest www = UnityWebRequest.Post(("https://api-test.xana.net" + ConstantsGod.GetStreamableYoutubeUrl), form))
+        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.GetStreamableYoutubeUrl), form))  //"https://api-test.xana.net"
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
@@ -45,6 +45,7 @@ public class FetchSteamableURL : MonoBehaviour
             {
                 string data = www.downloadHandler.text;
                 GetYoutubeStreamableVideo getYoutubeStreamableVideo = JsonConvert.DeserializeObject<GetYoutubeStreamableVideo>(data);
+                videoPlayer.gameObject.SetActive(true);
                 videoPlayer.url = getYoutubeStreamableVideo.data.downloadableUrl;
                 videoPlayer.Play();
             }

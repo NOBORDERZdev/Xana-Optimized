@@ -12815,7 +12815,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 52.388, y: -12.000092}
+  m_AnchoredPosition: {x: 52.38794, y: -12.000092}
   m_SizeDelta: {x: 1173.403, y: 882.673}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1114801665657426504
@@ -16522,7 +16522,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4287824819162028023}
-  - {fileID: 8369081785627923745}
+  - {fileID: 4820444494296286846}
   m_Father: {fileID: 1772497425755825148}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33696,6 +33696,7 @@ MonoBehaviour:
   isMeshRendrer: 1
   shaderName: Sprites/Default
   isTerrain: 0
+  isSpriteRenderer: 0
 --- !u!1 &4078339026926376965
 GameObject:
   m_ObjectHideFlags: 0
@@ -34460,6 +34461,52 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &4291455214702441027
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4820444494296286846}
+  - component: {fileID: 1955136044989604478}
+  m_Layer: 23
+  m_Name: PreRecorded_VideoController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &4820444494296286846
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291455214702441027}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1725594203519792996}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1955136044989604478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4291455214702441027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2edc39a0701bbd9459fb681ca0a64078, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  youtubeVideoURL: 
+  videoPlayer: {fileID: 2306222609339597144}
 --- !u!1 &4344087041032077856
 GameObject:
   m_ObjectHideFlags: 0
@@ -39204,161 +39251,6 @@ MonoBehaviour:
   _audioOutputMode: 1
   _channelMask: 65535
   _supportPositionalAudio: 0
---- !u!1 &4939780919214331775
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1386559095606129431}
-  - component: {fileID: 1733917206987579089}
-  - component: {fileID: 4274750326848803504}
-  - component: {fileID: 1702963046480523245}
-  m_Layer: 23
-  m_Name: YoutubePlayer-DontEdit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1386559095606129431
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4939780919214331775}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8369081785627923745}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1733917206987579089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4939780919214331775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controller: {fileID: 0}
-  _events: {fileID: 0}
-  youtubeUrl: 
-  videoQuality: 1
-  is360: 0
-  dontForceFullscreen: 0
-  autoPlayOnStart: 0
-  startFromSecond: 0
-  startFromSecondTime: 20
-  showThumbnailBeforeVideoLoad: 0
-  thumbnailObject: {fileID: 0}
-  customPlaylist: 0
-  autoPlayNextVideo: 0
-  youtubeUrls: []
-  videoFormat: 0
-  autoPlayOnEnable: 0
-  playUsingInternalDevicePlayer: 0
-  loadYoutubeUrlsOnly: 0
-  objectsToRenderTheVideoImage: []
-  is3DLayoutVideo: 0
-  layout3d: 0
-  mainCamera: {fileID: 0}
-  videoPlayer: {fileID: 0}
-  mPlayer: {fileID: 0}
-  playInAVPRO: 0
-  audioPlayer: {fileID: 0}
-  debug: 0
-  ignoreTimeout: 0
-  _skipOnDrop: 1
-  videoUrl: 
-  audioUrl: 
-  ForceGetWebServer: 0
-  progressStartDrag: 0
-  skyboxMaterial3D: {fileID: 0}
-  skyboxMaterialNormal: {fileID: 0}
-  skyboxMaterial3DSide: {fileID: 0}
-  forceLocal: 0
-  videoTitle: 
-  EACMaterial: {fileID: 0}
-  Material360: {fileID: 0}
-  audioDelayOffset: 0
-  pauseCalled: 0
-  isSyncing: 0
-  encryptedSignatureVideo: 
-  encryptedSignatureAudio: 
-  decryptedUrlForVideo: 0
-  decryptedUrlForAudio: 0
-  decryptedVideoUrlResult: 
-  decryptedAudioUrlResult: 
-  EncryptUrlForVideo: 
-  EncryptUrlForAudio: 
-  jsonForHtmlVersion: 
-  checkIfSync: 0
---- !u!114 &4274750326848803504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4939780919214331775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fff3c7be5a953945843ab394d52e8cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showPlayerControl: 0
-  playbackSlider: {fileID: 0}
-  progressRectangle: {fileID: 0}
-  speedSlider: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  currentTime: {fileID: 0}
-  totalTime: {fileID: 0}
-  loading: {fileID: 0}
-  nextVideoButton: {fileID: 0}
-  previousVideoButton: {fileID: 0}
-  controllerMainUI: {fileID: 0}
-  hideScreenControlTime: 0
-  useSliderToProgressVideo: 1
---- !u!114 &1702963046480523245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4939780919214331775}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b121d95bc3e711f4fad11014675bfd8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnYoutubeUrlAreReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoReadyToStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoResumed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoPaused:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  videoTimeEvents: []
 --- !u!1 &4946495214463879126
 GameObject:
   m_ObjectHideFlags: 0
@@ -48964,7 +48856,7 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 2983699069719122003}
   imgVideo4x3: {fileID: 7337159302094469778}
   liveVideoPlayer: {fileID: 4007045488429107435}
-  preRecordedPlayer: {fileID: 7546609213237866606}
+  preRecordedPlayer: {fileID: 4291455214702441027}
   videoLink: 
   imageLink: 
   _videoType: 0
@@ -56608,60 +56500,6 @@ MonoBehaviour:
   _audioOutputMode: 1
   _channelMask: 65535
   _supportPositionalAudio: 0
---- !u!1 &7546609213237866606
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8369081785627923745}
-  - component: {fileID: 5694318051460561239}
-  m_Layer: 23
-  m_Name: YoutubeSimplified
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
---- !u!4 &8369081785627923745
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7546609213237866606}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -4.49775, y: -3.470161, z: -3.283307}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1386559095606129431}
-  m_Father: {fileID: 1725594203519792996}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5694318051460561239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7546609213237866606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1733917206987579089}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
-  videoPlayer: {fileID: 0}
-  x: 0
-  y: 0
-  z: 0
 --- !u!1 &7561022566674413180
 GameObject:
   m_ObjectHideFlags: 0
@@ -65084,7 +64922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 52.394, y: -12}
+  m_AnchoredPosition: {x: 52.394043, y: -12}
   m_SizeDelta: {x: 1173.434, y: 882.673}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &8379577885342137230

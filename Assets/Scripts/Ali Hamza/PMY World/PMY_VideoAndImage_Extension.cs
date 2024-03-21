@@ -367,25 +367,27 @@ namespace PMY
                         imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     }
                 }
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
-                VideoPlayer tempVideoPlayer;
-                if (applyVideoMesh)
-                {
-                    tempVideoPlayer = videoMesh;
-                }
-                else
-                {
-                    tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
-                }
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
+                //VideoPlayer tempVideoPlayer;
+                //if (applyVideoMesh)
+                //{
+                //    tempVideoPlayer = videoMesh;
+                //}
+                //else
+                //{
+                //    tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
+                //}
 
+                preRecordedPlayer.GetComponent<FetchSteamableURL>().youtubeVideoURL = videoLink;
                 preRecordedPlayer.SetActive(true);
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
-                imgVideo16x9.SetActive(true);
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+
+                //imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
+                //imgVideo16x9.SetActive(true);
                 if (imgVideoFrame16x9)
                 {
                     EnableImageVideoFrame(imgVideoFrame16x9);
