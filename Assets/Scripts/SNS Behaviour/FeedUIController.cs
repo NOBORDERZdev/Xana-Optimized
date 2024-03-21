@@ -400,6 +400,7 @@ public class FeedUIController : MonoBehaviour
         AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);
+        UpdateAdFrndBtnStatus(0);
     }
 
     public void OnClickAddFriendSearchBtn(){
@@ -3073,14 +3074,17 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickHotFrnd()
     {
-        HotFriendPanel.SetActive(true);
-        AddFrndFollowingPanel.SetActive(false);
-        AddFrndMutalFrndPanel.SetActive(false);
-        AddFrndRecommendedPanel.SetActive(false);
-        findFriendInputFieldAdvanced.Text = "";
-        findFriendScreen.SetActive(false);
-        APIManager.Instance.SetHotFriend();
-        UpdateAdFrndBtnStatus(0);
+        if (!HotFriendPanel.activeInHierarchy)
+        {
+            HotFriendPanel.SetActive(true);
+            AddFrndFollowingPanel.SetActive(false);
+            AddFrndMutalFrndPanel.SetActive(false);
+            AddFrndRecommendedPanel.SetActive(false);
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.SetActive(false);
+            APIManager.Instance.SetHotFriend();
+            UpdateAdFrndBtnStatus(0);
+        }
     }
 
      public void OnClickRecommedationFrnd(){
