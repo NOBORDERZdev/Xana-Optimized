@@ -105,8 +105,8 @@ public class BuildingDetect : MonoBehaviour
             playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
         if (ac.wornShirt)
             playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
-        if (ac.wornShose)
-            playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShoes)
+            playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
 
         playerBody = GamificationComponentData.instance.charcterBodyParts.body;
 

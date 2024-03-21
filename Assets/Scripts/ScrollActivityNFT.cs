@@ -210,7 +210,7 @@ public class ScrollActivityNFT : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
-        // UIManager.Instance.ShowFooter(true);
+        // GameManager.Instance.UiManager.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
     {

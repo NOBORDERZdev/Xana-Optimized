@@ -205,7 +205,7 @@ public class SNSSettingController : MonoBehaviour
             if (File.Exists(Application.persistentDataPath + "/loginAsGuestClass") || File.Exists(Application.persistentDataPath + "/logIn"))
             {
                 if (GameManager.Instance)
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
                 ClearStorePlayerPrefers();
             }
 
@@ -217,9 +217,9 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
-            if (UIManager.Instance != null)
+            if (GameManager.Instance.UiManager != null)
             {
-                UIManager.Instance._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
             }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)

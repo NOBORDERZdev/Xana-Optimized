@@ -22,7 +22,7 @@ public class PresetData_Jsons : MonoBehaviour
     //public static string lastSelectedPresetName=null;
     [SerializeField] Texture eyeTex;
     AvatarController avatarController;
-    CharcterBodyParts charcterBodyParts;
+    CharacterBodyParts charcterBodyParts;
 
     public AvatarGender avatarGender;
 
@@ -63,7 +63,7 @@ public class PresetData_Jsons : MonoBehaviour
     public void GetScriptRef()
     {
         avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
 
 
@@ -149,7 +149,7 @@ public class PresetData_Jsons : MonoBehaviour
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
-            GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().SetAvatarByGender(_CharacterData.gender);
+            GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf || StoreManager.instance.selfiePanel.activeSelf)
@@ -157,13 +157,13 @@ public class PresetData_Jsons : MonoBehaviour
                 /*Invoke("abcd", 5f);*/
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
                 StoreManager.instance.selfiePanel.SetActive(false);
-                if (!UIManager.Instance.isAvatarSelectionBtnClicked)
+                if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {
                     UserLoginSignupManager.instance.OpenUserNamePanel();
                 }
                 else
                 {
-                    UIManager.Instance.isAvatarSelectionBtnClicked = false;
+                    GameManager.Instance.UiManager.isAvatarSelectionBtnClicked = false;
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
                 }
@@ -191,7 +191,7 @@ public class PresetData_Jsons : MonoBehaviour
 
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
-            if (avatarController.wornEyewearable != null)
+            if (avatarController.wornEyeWearable != null)
             {
                 avatarController.UnStichItem("EyeWearable");
             }
@@ -270,7 +270,7 @@ public class PresetData_Jsons : MonoBehaviour
         //UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
-        avatarController.IntializeAvatar();
+        avatarController.InitializeAvatar();
     }
 
     void SavePresetOnServer(SavingCharacterDataClass savingCharacterDataClass)

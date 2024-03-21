@@ -130,7 +130,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
-        UIManager.Instance.ShowFooter(false);
+        GameManager.Instance.UiManager.ShowFooter(false);
         GameManager.Instance.WorldBool = true;
         m_WorldIsClicked = true;
         m_isSignUpPassed = true;
@@ -190,7 +190,7 @@ public class WorldItemPreviewTab : MonoBehaviour
     }
     public void CheckWorld()
     {
-        //  UIManager.Instance.HomePage.SetActive(true);
+        //  GameManager.Instance.UiManager.HomePage.SetActive(true);
         FadeImg.sprite = WorldIconImg.sprite;
         UpdateWorldPanel();
         string EnvironmentName = WorldNameTxt.text;
@@ -220,7 +220,7 @@ public class WorldItemPreviewTab : MonoBehaviour
                 return;
             }
         }
-        UIManager.Instance.ShowFooter(false);
+        GameManager.Instance.UiManager.ShowFooter(false);
         m_MuseumIsClicked = false;
         GameManager.Instance.WorldBool = true;
     }

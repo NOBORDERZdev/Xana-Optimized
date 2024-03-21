@@ -30,7 +30,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
 
     GameObject PlayerCharacter;
-    CharcterBodyParts _chbodyparts;
+    CharacterBodyParts _chbodyparts;
     public CheckInternet checkInternet;
     private void Awake()
     {
@@ -46,7 +46,7 @@ public class CharacterCustomizationManager : MonoBehaviour
         m_CanRotateCharacter = true;
 
         PlayerCharacter = GameManager.Instance.mainCharacter;
-        _chbodyparts = PlayerCharacter.GetComponent<CharcterBodyParts>();
+        _chbodyparts = PlayerCharacter.GetComponent<CharacterBodyParts>();
 
         _ChFrontPos = GameManager.Instance.mainCharacter.transform;
         CamFrontPos = _facemorphCamPosition;

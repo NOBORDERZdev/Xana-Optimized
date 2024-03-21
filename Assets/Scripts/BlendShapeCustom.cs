@@ -17,6 +17,7 @@ public class BlendShapeCustom : MonoBehaviour
     public List<ReduUnduCLass> red1;
     public int count, listcount;
     SkinnedMeshRenderer characterHead;
+    BlendShapeImporter shapeImporter;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -28,6 +29,11 @@ public class BlendShapeCustom : MonoBehaviour
         GreyRibbonImage.gameObject.SetActive(true);
         WhiteRibbonImage.gameObject.SetActive(false);
         characterHead = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>();
+    }
+
+    private void Awake()
+    {
+        shapeImporter= GameManager.Instance.BlendShapeImporter;
     }
 
     public void ResettoLastSavedMorphsOnly()
@@ -44,15 +50,15 @@ public class BlendShapeCustom : MonoBehaviour
         //  }
 
         // }
-        // print(BlendShapeImporter.Instance.SelectedMorph);
+        // print(shapeImporter.SelectedMorph);
         for (int i = 0; i < characterHead.sharedMesh.blendShapeCount; i++)
         {
-            if (characterHead.sharedMesh.GetBlendShapeName(i).Contains(BlendShapeImporter.Instance.SelectedPart) && i < _CharacterData.FaceBlendsShapes.Length)
+            if (characterHead.sharedMesh.GetBlendShapeName(i).Contains(shapeImporter.SelectedPart) && i < _CharacterData.FaceBlendsShapes.Length)
                 characterHead.SetBlendShapeWeight(i, _CharacterData.FaceBlendsShapes[i]);
         }
-        BlendShapeImporter.Instance.SliderY.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SliderX.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SetAllColors(false);
+        shapeImporter.SliderY.gameObject.SetActive(false);
+        shapeImporter.SliderX.gameObject.SetActive(false);
+        shapeImporter.SetAllColors(false);
     }
     public void savingIndex()
     {
@@ -114,9 +120,9 @@ public class BlendShapeCustom : MonoBehaviour
             for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
                 characterHead.SetBlendShapeWeight(i, red1[count].indx[i]);//                                                                     
         }
-        BlendShapeImporter.Instance.SliderY.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SliderX.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SetAllColors(false);
+        shapeImporter.SliderY.gameObject.SetActive(false);
+        shapeImporter.SliderX.gameObject.SetActive(false);
+        shapeImporter.SetAllColors(false);
     }
 
 

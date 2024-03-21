@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class patchProfile : MonoBehaviour
 {
+    GameManager gameManager;
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
     private void OnEnable()
     {
         if (!XanaConstants.xanaConstants.LoginasGustprofile)
         {
-            if (UIManager.Instance != null)//rik
+            if (gameManager.UiManager != null)//rik
             {
-                // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+                // GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
                 
             }
         }
     }
     private void OnDisable()
     {
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
-        GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
+        gameManager.ActorManager.IdlePlayerAvatorForMenu(false);
+        gameManager.m_RenderTextureCamera.gameObject.SetActive(false);
     }
 }

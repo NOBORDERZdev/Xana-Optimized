@@ -11,7 +11,7 @@ public class SilderColorPicker : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] Image output;
     [SerializeField] TMP_Text outputTxt;
-    CharcterBodyParts bodyParts;
+    CharacterBodyParts bodyParts;
     Button saveBtn;
     bool itemAlreadySaved = false;
 
@@ -28,7 +28,7 @@ public class SilderColorPicker : MonoBehaviour
     {
 
         //bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
         saveBtn = StoreManager.instance.saveButton.GetComponent<Button>();
 
         //Int();
@@ -42,7 +42,7 @@ public class SilderColorPicker : MonoBehaviour
     {
         SetRelatedData();
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply += ChangeSliderColor;
+            CharacterBodyParts.OnSkinColorApply += ChangeSliderColor;
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
         if (saveBtn.interactable)
@@ -55,7 +55,7 @@ public class SilderColorPicker : MonoBehaviour
     private void OnDisable()
     {
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply -= ChangeSliderColor;
+            CharacterBodyParts.OnSkinColorApply -= ChangeSliderColor;
         slider.onValueChanged.RemoveAllListeners();
         isSaveBtnEnable = false;
     }

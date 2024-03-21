@@ -119,7 +119,7 @@ public class WorldManager : MonoBehaviour
     }
     public void ChangeWorld(APIURL tab)
     {
-        if (UIManager.Instance.IsSplashActive)
+        if (GameManager.Instance.UiManager.IsSplashActive)
         {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
@@ -491,7 +491,7 @@ public class WorldManager : MonoBehaviour
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        //if (!UIManager.Instance.IsSplashActive)
+        //if (!GameManager.Instance.UiManager.IsSplashActive)
         //{
         //    Invoke(nameof(ShowTutorial), 1f);
         //}
@@ -609,8 +609,8 @@ public class WorldManager : MonoBehaviour
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
             }
             else
             {
@@ -686,8 +686,8 @@ public class WorldManager : MonoBehaviour
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
             }
             else
             {

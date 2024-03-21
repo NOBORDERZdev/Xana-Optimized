@@ -16,7 +16,7 @@ public class SavaCharacterProperties : MonoBehaviour
 
 
     //private Equipment equipment;
-    private CharcterBodyParts charcterBodyParts;
+    private CharacterBodyParts charcterBodyParts;
     public AvatarController characterController;
 
     private void Awake()
@@ -26,7 +26,7 @@ public class SavaCharacterProperties : MonoBehaviour
     }
     public void Start()
     {
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
         characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         StartLocal();
 
@@ -87,20 +87,20 @@ public class SavaCharacterProperties : MonoBehaviour
             CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);// Implementing Save Skin Color
             if (_CharacterData.Skin != null && _CharacterData.SssIntensity != null)
             {
-                CharcterBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin, _CharacterData.SssIntensity);
+                charcterBodyParts.ImplementSavedSkinColor(_CharacterData.Skin, _CharacterData.SssIntensity);
             }
             else
             {
-                CharcterBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin);
+                charcterBodyParts.ImplementSavedSkinColor(_CharacterData.Skin);
             }
 
             if (_CharacterData.SkinGerdientColor != null)
             {
-                CharcterBodyParts.instance.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
+                charcterBodyParts.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
             }
             else
             {
-                CharcterBodyParts.instance.ApplyGredientDefault(GameManager.Instance.mainCharacter);
+                charcterBodyParts.ApplyGredientDefault(GameManager.Instance.mainCharacter);
             }
 
         }
@@ -168,10 +168,10 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
-        SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShose.name, "Feet"));
-        if (characterController.wornEyewearable != null)
+        SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
+        if (characterController.wornEyeWearable != null)
         {
-            SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyewearable.name, "EyeWearable"));
+            SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyeWearable.name, "EyeWearable"));
         }
         SaveItemList.HairColorPaletteValue = characterController.hairColorPaletteId;
         SaveItemList.myItemObj.Add(new Item(0, "", "Glove"));

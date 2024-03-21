@@ -12,6 +12,12 @@ public class AllWorldManage : MonoBehaviour
     [Header("World Page Scrollviews and Component")]
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
 
     private void OnEnable()
     {
@@ -25,12 +31,12 @@ public class AllWorldManage : MonoBehaviour
 
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
-        /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);*/
+        /*gameManager.UiManager.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
     public void SearchScreenLoad()
     {
         WorldSearchManager.IsSearchBarActive = true;
-        UIManager.Instance.SwitchToScreen(2);
+        gameManager.UiManager.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
         WorldManager.instance.SearchPageNumb = 1;
@@ -39,7 +45,7 @@ public class AllWorldManage : MonoBehaviour
     public void SearchScreenLoad(string searchKey)
     {
         WorldSearchManager.IsSearchBarActive = true;
-        UIManager.Instance.SwitchToScreen(2);
+        gameManager.UiManager.SwitchToScreen(2);
         FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
     }
@@ -47,7 +53,7 @@ public class AllWorldManage : MonoBehaviour
     public void BackToPreviousScreen()
     {
         WorldManager.instance.WorldScrollReset();
-        UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
+        gameManager.UiManager.SwitchToScreen(gameManager.UiManager.PreviousScreen);
         //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);
     }
@@ -55,9 +61,9 @@ public class AllWorldManage : MonoBehaviour
     {
         ScrollEnableDisable(0);
         WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
-        if(UIManager.Instance.PreviousScreen==0)
+        if(GameManager.Instance.UiManager.PreviousScreen==0)
         {
-            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+            GameManager.Instance.UiManager.LobbyTabHolder.gameObject.SetActive(GameManager.Instance.UiManager.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
         }
     }
 

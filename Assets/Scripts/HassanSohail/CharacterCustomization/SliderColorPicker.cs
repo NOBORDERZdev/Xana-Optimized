@@ -9,12 +9,12 @@ public class SliderColorPicker : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] Image output;
     [SerializeField] TMP_Text outputTxt;
-    CharcterBodyParts bodyParts;
+    CharacterBodyParts bodyParts;
     Button saveBtn;
     bool itemAlreadySaved = false;
     public void Start()
     {
-        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
         saveBtn = StoreManager.instance.saveButton.GetComponent<Button>();
         Int();
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
@@ -38,7 +38,7 @@ public class SliderColorPicker : MonoBehaviour
             print("Horayyy you have Access");
             itemAlreadySaved = false;
             Color tempColor = Color.HSVToRGB(slider.value, 1, 1);
-            CharcterBodyParts.instance.ChangeSkinColor(tempColor);
+            bodyParts.ChangeSkinColor(tempColor);
             UpdateColorInTextBox();
             CheckIsColorChange();
         }

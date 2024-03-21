@@ -447,10 +447,10 @@ public class UserRegisterationManager : MonoBehaviour
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -675,7 +675,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (GameManager.Instance.mainCharacter)
         {
-            GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
+            GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().DefaultTexture();
         }
         SavaCharacterProperties.instance.LoadMorphsfromFile();
         float t = 0;
@@ -1290,7 +1290,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     void resetClothstoGuest()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
         SavaCharacterProperties.instance.LoadMorphsfromFile();
     }
 
@@ -2651,7 +2651,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.Save();
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 }
             }
         }
@@ -3522,9 +3522,9 @@ public class UserRegisterationManager : MonoBehaviour
                                 usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
                             }
                         }
-                        if (UIManager.Instance != null)//rik
+                        if (GameManager.Instance.UiManager != null)//rik
                         {
-                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+                            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
                         }
                     }
 
@@ -3794,10 +3794,10 @@ public class UserRegisterationManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
 

@@ -17,13 +17,14 @@ public class TermsAndConditions : MonoBehaviour
 
     private string privacyPolicyLink = "https://cdn.xana.net/xanaprod/privacy-policy/PRIVACYPOLICY-2.pdf";
     private string termsAndConditionLink = "https://cdn.xana.net/xanaprod/privacy-policy/termsofuse.pdf";
-
+    GameManager gameManager;
     private void OnEnable()
     {
         CheckForTermsAndCondition();
     }
     private void Start()
     {
+        gameManager = GameManager.Instance;
         if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
             TabBG.SetActive(true);
     }
@@ -31,21 +32,18 @@ public class TermsAndConditions : MonoBehaviour
     {
         if (PlayerPrefs.HasKey("TermsConditionAgreement"))
         {
-            //if (UIManager.Instance)
-            //{
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 1;
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = true;
-            //}
             mainPanel.SetActive(false);
         }
         else
         {
-            if (UIManager.Instance)
+            if(gameManager==null){ 
+                gameManager = GameManager.Instance;  
+            }
+            if (gameManager.UiManager)
             {
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 0;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = false;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha = 0;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().interactable = false;
             }
             mainPanel.SetActive(true);
         }
@@ -90,12 +88,12 @@ public class TermsAndConditions : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
-         if(UIManager.Instance){ 
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable= true;
+         if(gameManager){ 
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().alpha=1;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
+                gameManager.UiManager.Canvas.GetComponent<CanvasGroup>().interactable= true;
             }
-        UIManager.Instance.StartCoroutine(UIManager.Instance.IsSplashEnable(false, 0.1f));
+        gameManager.UiManager.StartCoroutine(gameManager.UiManager.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
     }
 

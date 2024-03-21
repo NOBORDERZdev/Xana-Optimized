@@ -92,7 +92,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             if (Launcher.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
             {
                 otherPlayer = Launcher.instance.playerobjects[j].GetComponent<AvatarController>();
-                CharcterBodyParts bodyparts = otherPlayer.GetComponent<CharcterBodyParts>();
+                CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
             
             //otherPlayer._CharData = _CharacterData;
             if (IsNFTCharacter)
@@ -432,7 +432,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (applyOn.GetComponent<AvatarController>().wornShirt)
                     {
                         UnStichItem("Chest");
-                        applyOn.GetComponent<CharcterBodyParts>().TextureForShirt(null);
+                        applyOn.GetComponent<CharacterBodyParts>().TextureForShirt(null);
                     }
                 }
                 else if (itemtype.Contains("Hair"))
@@ -445,21 +445,21 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (applyOn.GetComponent<AvatarController>().wornPant)
                     {
                         UnStichItem("Legs");
-                        applyOn.GetComponent<CharcterBodyParts>().TextureForPant(null);
+                        applyOn.GetComponent<CharacterBodyParts>().TextureForPant(null);
                     }
                 }
                 else if (itemtype.Contains("Feet"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornShose)
+                    if (applyOn.GetComponent<AvatarController>().wornShoes)
                     {
                         UnStichItem("Feet");
-                        applyOn.GetComponent<CharcterBodyParts>().TextureForShoes(null);
+                        applyOn.GetComponent<CharacterBodyParts>().TextureForShoes(null);
                     }
 
                 }
                 else if (itemtype.Contains("EyeWearable"))
                 {
-                    if (applyOn.GetComponent<AvatarController>().wornEyewearable)
+                    if (applyOn.GetComponent<AvatarController>().wornEyeWearable)
                         UnStichItem("EyeWearable");
                 }
                 else if (itemtype.Contains("Glove"))
@@ -467,7 +467,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     if (applyOn.GetComponent<AvatarController>().wornGloves)
                     {
                         UnStichItem("Glove");
-                        applyOn.GetComponent<CharcterBodyParts>().TextureForGlove(null);
+                        applyOn.GetComponent<CharacterBodyParts>().TextureForGlove(null);
                     }
 
                 }
@@ -491,7 +491,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     }
 
 
-    void ApplyAIData(SavingCharacterDataClass _CharacterData, CharcterBodyParts applyon)
+    void ApplyAIData(SavingCharacterDataClass _CharacterData, CharacterBodyParts applyon)
     {
         applyon.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         applyon.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
@@ -550,10 +550,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 Destroy(GetComponent<AvatarController>().wornHair);
                 break;
             case "Feet":
-                Destroy(GetComponent<AvatarController>().wornShose);
+                Destroy(GetComponent<AvatarController>().wornShoes);
                 break;
             case "EyeWearable":
-                Destroy(GetComponent<AvatarController>().wornEyewearable);
+                Destroy(GetComponent<AvatarController>().wornEyeWearable);
                 break;
             case "Chain":
                 Destroy(GetComponent<AvatarController>().wornChain);

@@ -11,6 +11,7 @@ using UnityEngine.Networking;
 using System.Text;
 using UnityEngine.UI;
 using System.IO;
+using Photon.Pun.Demo.PunBasics;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -232,10 +233,10 @@ public class UserLoginSignupManager : MonoBehaviour
         GetUserClothData();
         StartCoroutine(WaitForDeepLink());
         PlayerPrefs.Save();
-        if (UIManager.Instance != null)
+        if (GameManager.Instance.UiManager != null)
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -399,10 +400,10 @@ public class UserLoginSignupManager : MonoBehaviour
         PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (UIManager.Instance != null)//rik
+        if (GameManager.Instance.UiManager != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
 
@@ -850,7 +851,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     else
                         CallBack(false);
                 }));
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
         }
         else

@@ -39,7 +39,7 @@ public class APIManager : MonoBehaviour
     public bool isCommentDataLoaded = false;
     private int BFCount = 0;
     private int maxBfCount = 10;
-
+    GameManager gameManager;
     private void Awake()
     {
         if (Instance == null)
@@ -52,6 +52,7 @@ public class APIManager : MonoBehaviour
         //{
         userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
         userId = int.Parse(PlayerPrefs.GetString("UserName"));
+        gameManager = GameManager.Instance;
         //}
         //}
     }
@@ -2020,9 +2021,9 @@ public class APIManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FeedUIController.Instance.BestFriendFull.SetActive(true);
             //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }
