@@ -7,6 +7,7 @@ using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Climbing;
+using TMPro;
 
 public class CameraLook : MonoBehaviour
 {
@@ -63,9 +64,13 @@ public class CameraLook : MonoBehaviour
     CharcterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
+
+    public TMP_Text fix_txt;
+    public TMP_Text other_txt;
     private void OnEnable()
     {
         controls.Enable();
+        isJoystickPressed = false;
         ChangeOrientation_waqas.switchOrientation += SwitchOrientation;
     }
     private void OnDisable()
@@ -87,6 +92,7 @@ public class CameraLook : MonoBehaviour
 
     private void Start()
     {
+        isJoystickPressed = false;
         lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.72f);
         playerController = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
@@ -228,6 +234,9 @@ public class CameraLook : MonoBehaviour
 
         gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
         delta = Vector2.zero;
+
+        //other_txt.text = $"{o}: !gyroCheck:{!gyroCheck}, SelfieController.Instance.disablecamera:{SelfieController.Instance.disablecamera}, Input.touchCount > 0:{Input.touchCount > 0}, !playerController.sprint:{!playerController.sprint}";
+        //Debug.LogError($"!isJoystickPressed:{!isJoystickPressed}, !gyroCheck:{!gyroCheck}, SelfieController.Instance.disablecamera:{SelfieController.Instance.disablecamera}, Input.touchCount > 0:{Input.touchCount > 0}, !playerController.sprint:{!playerController.sprint}");
         if (!gyroCheck && SelfieController.Instance.disablecamera && Input.touchCount > 0
             && !playerController.sprint)
         {
@@ -273,6 +282,11 @@ public class CameraLook : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            //Debug.LogError("*No Others");
+            //Debug.LogError($"Longtouch--> Delta:{delta},!gyroCheck:{!gyroCheck}, SelfieController.Instance.disablecamera:{SelfieController.Instance.disablecamera}, Input.touchCount > 0:{Input.touchCount > 0}, !playerController.sprint:{!playerController.sprint}");
+        }
     }
     void OneFingureTouch()
     {
@@ -286,6 +300,8 @@ public class CameraLook : MonoBehaviour
         {
             _allowSyncedControl = false;
         }
+
+        //Debug.LogError("One Deleta:" + delta);
     }
     void TwoFingureTouch()
     {
@@ -302,17 +318,30 @@ public class CameraLook : MonoBehaviour
         {
             _allowSyncedControl = false;
         }
+
+        //Debug.LogError("two Deleta:" + delta);
     }
 
     private void FixedUpdate()
     {
+        Debug.LogError($"Delta: {delta}, !isJoystickPressed:{!isJoystickPressed}, _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}");
+        //MoveCamera(delta);
+        //fix_txt.text = $"{f}: _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}";
         if (_allowSyncedControl && _allowRotation && !playerController.isFirstPerson)
         {
+            //Debug.LogError("Delta: " + delta);
             MoveCamera(delta);            // Rotate camera on the base input
+        }
+        else
+        {
+            //Debug.LogError("*No FixedUpdate");
+            //Debug.LogError($"Delta: {delta}, FixedUpdate --> _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}");
         }
     }
     private void MoveCamera(Vector2 delta)
     {
+        //Debug.LogError("Delta: " + delta);
+
         cinemachine.m_XAxis.Value += delta.x * 10 * lookSpeedd * Time.deltaTime;
         cinemachine.m_YAxis.Value += -delta.y * 0.08f * lookSpeedd * Time.deltaTime;
     }

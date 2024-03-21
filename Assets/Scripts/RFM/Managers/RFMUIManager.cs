@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using RFM.Character;
 using System;
+using UnityEngine.EventSystems;
 
 namespace RFM.Managers
 {
@@ -202,6 +203,10 @@ namespace RFM.Managers
             }
 
             RFM.Managers.RFMManager.Instance.RestartRFM();
+            //****************************************
+            PlayerControllerNew.isJoystickDragging = false;
+            CameraLook.instance.isJoystickPressed = false;
+            CameraLook.instance.isRotatingScreen = false;
         }
 
         public void RunnerCaught(string nickName, int money, float timeSurvived)
