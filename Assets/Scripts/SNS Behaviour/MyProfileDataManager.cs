@@ -1223,8 +1223,9 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to check and setup ui for Empty photo tab message.......
     public void SetupEmptyMsgForPhotoTab(bool isReset)
     {
-        //check for photo.......
-        if (allPhotoContainer.childCount > 1 || isReset)
+        // check for photo.......
+        // No need to check from 1 As we are not creating empty object at end of posts
+        if (allPhotoContainer.childCount > 0 || isReset)
         {
             allPhotoContainer.gameObject.SetActive(true);
             emptyPhotoPostMsgObj.SetActive(false);
