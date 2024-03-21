@@ -4296,8 +4296,8 @@ MonoBehaviour:
   defaultFightingName: 
   mic: 0
   minimap: 0
-  userName: 0
-  userId: 
+  userNameVisibilty: 0
+  profileImageModifedByUser: 0
   userProfileLink: 
   CurrentSceneName: 
   EnviornmentName: 
@@ -7813,7 +7813,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941328440567, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -58.297302
+      value: -58.297363
       objectReference: {fileID: 0}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
@@ -10481,7 +10481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da5874752d2e9741aa112b557bf6c06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 0}
 --- !u!114 &1203579133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30631,7 +30630,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -15.000183}
+  m_AnchoredPosition: {x: 0, y: -15.000244}
   m_SizeDelta: {x: 0, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4623324842862843087
@@ -31174,6 +31173,10 @@ PrefabInstance:
       propertyPath: avatarPathSystemManager
       value: 
       objectReference: {fileID: 2302478908345900027}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: bottomTabManagerInstance
+      value: 
+      objectReference: {fileID: 6527359761169222394}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: userAnimationPostFeature
       value: 
@@ -49120,7 +49123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -30.000183}
+  m_AnchoredPosition: {x: 0, y: -30.000244}
   m_SizeDelta: {x: 0, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6409040145222141288
@@ -60429,7 +60432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7141477523298660082, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 27.900085
+      value: 27.900024
       objectReference: {fileID: 0}
     - target: {fileID: 7141477523298660082, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_AnchoredPosition.y
