@@ -113,6 +113,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
         XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+
+        if ((ConstantsGod.API_BASEURL.Contains("test")))
+            XanaConstants.xanaConstants.MuseumID = "406";
+        else
+            XanaConstants.xanaConstants.MuseumID = "38";
+
         StartCoroutine(LoadMainEnumerator());
     }
     IEnumerator LoadMainEnumerator()
