@@ -147,7 +147,7 @@ public class AnimationBtn : MonoBehaviour
     {
         if (highlightButton == null)
         {
-            highlightButton = CanvasButtonsHandler.inst.AnimationBtnClose;
+            highlightButton = GamePlayUIHandler.inst.AnimationBtnClose;
         }
         // Debug.Log("Animation start hua ");
         highlightButton.SetActive(true);

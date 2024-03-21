@@ -111,11 +111,11 @@ public class JjMusuem : MonoBehaviour
         player.allowTeleport = true;
         if (XanaConstants.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
         {
-            GamePlayLoader.instance.StartCoroutine(GamePlayLoader.instance.setPlayerCamAngle(180f, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(180f, 0.5f));
         }
         else
         {
-            GamePlayLoader.instance.StartCoroutine(GamePlayLoader.instance.setPlayerCamAngle(0f, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(0f, 0.5f));
         }
 
        // yield return new WaitForSeconds(.15f);

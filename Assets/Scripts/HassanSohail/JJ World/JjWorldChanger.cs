@@ -32,16 +32,16 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
                 ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
             if (isEnteringPopup)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
 
     }
@@ -144,7 +144,7 @@ public class JjWorldChanger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = worldName;
-        GamePlayLoader.instance._uiReferences.LoadMain(false);
+        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
 
 
     }

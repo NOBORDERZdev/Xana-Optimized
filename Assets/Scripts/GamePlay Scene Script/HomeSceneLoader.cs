@@ -7,22 +7,18 @@ using Metaverse;
 using System.Collections;
 using System;
 
-public class SceneManage : MonoBehaviourPunCallbacks
+public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
     public static bool callRemove;
     public bool isAddressableScene = true;
-    public GameObject AnimHighlight;
-    public GameObject popupPenal;
-    public GameObject spawnCharacterObject;
-    public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
     private string mainScene = "Main";
     bool exitOnce = true;
     private void OnEnable()
     {
-        if (GamePlayLoader.instance)
+        if (GameplayEntityLoader.instance)
         {
-            GamePlayLoader.instance._uiReferences = this;
+            GameplayEntityLoader.instance._uiReferences = this;
         }
     }
 

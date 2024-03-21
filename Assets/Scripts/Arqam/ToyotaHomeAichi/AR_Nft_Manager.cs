@@ -515,9 +515,9 @@ namespace Toyota
 
                 }
             }
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
             }
 
             #region For firebase analytics
@@ -566,9 +566,9 @@ namespace Toyota
             ratioReferences[ratioId].l_Loader.SetActive(false);
             LandscapeObj.SetActive(false);
             PotraiteObj.SetActive(false);
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
         }
@@ -617,9 +617,9 @@ namespace Toyota
         public void EnableControlls()
         {
             ActionOnExitBtn();
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
             ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);

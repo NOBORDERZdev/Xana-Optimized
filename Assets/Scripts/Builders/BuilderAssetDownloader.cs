@@ -426,7 +426,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = GamePlayLoader.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -457,7 +457,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = GamePlayLoader.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {

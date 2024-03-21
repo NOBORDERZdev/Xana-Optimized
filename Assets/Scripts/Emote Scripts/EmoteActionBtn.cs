@@ -174,7 +174,7 @@ public class EmoteActionBtn : MonoBehaviour {
             //actionBtn.Select();
             try
             {
-                GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
             }
             catch (Exception e)
@@ -202,7 +202,7 @@ public class EmoteActionBtn : MonoBehaviour {
         if (dragDectector.isDragging)
             return;
         PlayerPrefsUtility.SetEncryptedInt(ConstantsGod.EMOTE_SELECTION_INDEX, transform.parent.GetSiblingIndex());
-        CanvasButtonsHandler.inst.OnOpenAnimationPanel();
+        GamePlayUIHandler.inst.OnOpenAnimationPanel();
     }
 
     private void AnimationStopped(string animName)

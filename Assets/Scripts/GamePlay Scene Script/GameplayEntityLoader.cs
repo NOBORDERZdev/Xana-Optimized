@@ -15,10 +15,10 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
 
-public class GamePlayLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
+public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     [Header("singleton object")]
-    public static GamePlayLoader instance;
+    public static GameplayEntityLoader instance;
 
     public GameObject mainPlayer;
     public GameObject mainController;
@@ -56,7 +56,7 @@ public class GamePlayLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCal
 
     public double eventRemainingTime;
 
-    public SceneManage _uiReferences;
+    public HomeSceneLoader _uiReferences;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;

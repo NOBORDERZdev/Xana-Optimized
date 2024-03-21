@@ -1,14 +1,9 @@
 using Photon.Pun;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Photon.Realtime;
-using System.IO;
-using System.Linq;
-using TMPro;
 
 namespace Metaverse
 {
@@ -37,11 +32,10 @@ namespace Metaverse
             Instance = this;
         }
 
-
         private void OnApplicationQuit()
         {
             PhotonNetwork.Destroy(currentDummyPlayer);
-            SceneManage.callRemove = true;
+            HomeSceneLoader.callRemove = true;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
@@ -140,11 +134,6 @@ namespace Metaverse
         {
             if (OninternetConnected != null)
                 OninternetConnected.Invoke();
-        }
-
-        private void LogFeedback(string v)
-        {
-            throw new NotImplementedException();
         }
 
         void OnApplicationFocus(bool isGameFocus)

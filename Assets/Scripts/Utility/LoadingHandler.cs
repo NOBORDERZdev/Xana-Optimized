@@ -259,9 +259,9 @@ public class LoadingHandler : MonoBehaviour
    
     public void ResetLoadingValues()
     {
-        //if (GamePlayLoader.instance)
+        //if (GameplayEntityLoader.instance)
         //{
-        //    GamePlayLoader.instance.isEnvLoaded = false;
+        //    GameplayEntityLoader.instance.isEnvLoaded = false;
         //}
         currentValue = 0;
         isLoadingComplete = false;
@@ -536,9 +536,9 @@ public class LoadingHandler : MonoBehaviour
             }
 
 
-            if (GamePlayLoader.instance && !loadMainScene)
+            if (GameplayEntityLoader.instance && !loadMainScene)
             {
-                if (GamePlayLoader.instance.isEnvLoaded)
+                if (GameplayEntityLoader.instance.isEnvLoaded)
                 {
                     isLoadingComplete = true;
                 }

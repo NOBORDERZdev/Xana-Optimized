@@ -686,7 +686,7 @@ public class DynamicGalleryData : MonoBehaviour
                 if (isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
                 {
                     print("showing video");
-                    CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+                    GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
                     ShowNFTDetails.instance.ShowVideo(this);
                     if (hit.collider.GetComponent<DynamicGalleryData>().detail.description.Length > 0)
                     {
@@ -703,7 +703,7 @@ public class DynamicGalleryData : MonoBehaviour
                else if (!isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
                 {
                     //print(SelfieController.Instance.m_IsSelfieFeatureActive);
-                    CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+                    GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
                     ShowNFTDetails.instance.ShowImage(this.GetComponent<DynamicGalleryData>());
                     isVisible = true;
 

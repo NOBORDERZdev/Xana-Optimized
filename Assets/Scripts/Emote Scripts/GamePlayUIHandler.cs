@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public class CanvasButtonsHandler : MonoBehaviour
+public class GamePlayUIHandler : MonoBehaviour
 {
-    static CanvasButtonsHandler _inst;
-    public static CanvasButtonsHandler inst
+    static GamePlayUIHandler _inst;
+    public static GamePlayUIHandler inst
     {
         get
         {
-            if (_inst == null) _inst = FindObjectOfType<CanvasButtonsHandler>();
+            //if (_inst == null) _inst = FindObjectOfType<GamePlayUIHandler>();
             return _inst;
         }
     }
@@ -156,7 +156,6 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void OnOpenAnimationPanel()
     {
-        ;
         ref_LoadEmoteAnimations.OpenAnimationSelectionPanel();
         Debug.Log("call hua times 3===" + GamePlayButtonEvents.inst.selectionPanelOpen);
         GamePlayButtonEvents.inst.selectionPanelOpen = true;

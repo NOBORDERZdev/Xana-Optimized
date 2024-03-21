@@ -51,7 +51,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public bool lobbyJoined, roomJoined, movingToScene;
 
-        public GamePlayLoader LFF;
+        public GameplayEntityLoader LFF;
         public List<GameObject> playerobjects;
         public static string sceneName;
         string lobbyName;
@@ -285,7 +285,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             print("Launcher " + "OnJoinRoomFailed : Returining Main" );
             print(returnCode.ToString() + "	" + message);
-            GamePlayLoader.instance._uiReferences.LoadMain(true);
+            GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
         public override void OnCreatedRoom()
         {
@@ -366,7 +366,7 @@ namespace Photon.Pun.Demo.PunBasics
                 } else
                 { 
                     // there is no room for stremaing so move to main menu to switch other world
-                    GamePlayLoader.instance._uiReferences.LoadMain(false); 
+                    GameplayEntityLoader.instance._uiReferences.LoadMain(false); 
                 }
             }
            

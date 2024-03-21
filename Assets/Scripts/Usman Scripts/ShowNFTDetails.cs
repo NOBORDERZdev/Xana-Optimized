@@ -700,7 +700,7 @@ public class ShowNFTDetails : MonoBehaviour
         ownerimageObject.GetComponent<Image>().sprite = null;
         if (nFTFromServer != null && nFTFromServer.isDynamicMuseum)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
 
         Resources.UnloadUnusedAssets();

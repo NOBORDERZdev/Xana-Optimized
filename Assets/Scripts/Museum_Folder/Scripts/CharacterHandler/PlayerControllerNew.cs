@@ -167,7 +167,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            CinemachineCollider cinemachineCollider = GamePlayLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+            CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
                 int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
@@ -303,7 +303,7 @@ public class PlayerControllerNew : MonoBehaviour
         isFirstPerson = !isFirstPerson;
         gravityVector.y = 0;
 
-        CanvasButtonsHandler.inst.OnChangehighlightedFPSbutton(isFirstPerson);
+        GamePlayUIHandler.inst.OnChangehighlightedFPSbutton(isFirstPerson);
         if (isFirstPerson)
         {
 
@@ -583,7 +583,7 @@ public class PlayerControllerNew : MonoBehaviour
                 else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
                 {
                     //PlayerIsIdle?.Invoke();
-                    //UpdateSefieBtn(!GamePlayLoader.animClick);
+                    //UpdateSefieBtn(!GameplayEntityLoader.animClick);
                     if (animator != null)
                     {
                         animator.SetFloat("Blend", 0.23f * 0, speedSmoothTime, Time.deltaTime);

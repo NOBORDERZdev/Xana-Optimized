@@ -53,7 +53,7 @@ public class StreamingCamera : MonoBehaviour
             }
             else // there is no any streaming camera in scene so back to main menu
             {
-                  GamePlayLoader.instance._uiReferences.LoadMain(false);
+                  GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             }
         }    
     }
@@ -91,7 +91,7 @@ public class StreamingCamera : MonoBehaviour
        ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-       GamePlayLoader.instance.StartCoroutine(GamePlayLoader.instance.BackToMainmenuforAutoSwtiching());
+       GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.BackToMainmenuforAutoSwtiching());
     }
 
    

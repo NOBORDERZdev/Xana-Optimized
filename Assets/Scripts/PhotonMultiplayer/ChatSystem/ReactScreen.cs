@@ -72,7 +72,7 @@ public class ReactScreen : MonoBehaviour
         if (isOpen || reactionScreenParent.activeInHierarchy)
         {
             reactImage.sprite = react_disable;
-            if (!CanvasButtonsHandler.inst.actionsContainer.activeInHierarchy)
+            if (!GamePlayUIHandler.inst.actionsContainer.activeInHierarchy)
             {
                 ClosePanel();
                 HideReactionScreen();
@@ -111,7 +111,7 @@ public class ReactScreen : MonoBehaviour
                 print("Horayyy you have Access");
             }
 
-            //if (!CanvasButtonsHandler.inst.actionsContainer.activeInHierarchy)
+            //if (!GamePlayUIHandler.inst.actionsContainer.activeInHierarchy)
             //{
             //    reactionScreenParent.SetActive(true);
             //    //if (Input.deviceOrientation == DeviceOrientation.Portrait)

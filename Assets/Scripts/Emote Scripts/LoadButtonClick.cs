@@ -122,7 +122,7 @@ public class LoadButtonClick : MonoBehaviour
 
             if (EmoteAnimationPlay.Instance.alreadyRuning)
             {
-                //GamePlayLoader.animClick = true;
+                //GameplayEntityLoader.animClick = true;
                 EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
                 EmoteAnimationPlay.remoteUrlAnimationName = animationName;
                 //  PlayerPrefs.Save();
@@ -140,7 +140,7 @@ public class LoadButtonClick : MonoBehaviour
             }
             try
             {
-                GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
             }
             catch (Exception e)
@@ -176,7 +176,7 @@ public class LoadButtonClick : MonoBehaviour
 
                 if (EmoteAnimationPlay.Instance.alreadyRuning)
                 {
-                    //GamePlayLoader.animClick = true;
+                    //GameplayEntityLoader.animClick = true;
                     EmoteAnimationPlay.remoteUrlAnimation = objectUrl;
                     EmoteAnimationPlay.remoteUrlAnimationName = animationName;
                     //  PlayerPrefs.Save();
@@ -194,7 +194,7 @@ public class LoadButtonClick : MonoBehaviour
                 }
                 try
                 {
-                    GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                    GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
                 }
                 catch (Exception e)

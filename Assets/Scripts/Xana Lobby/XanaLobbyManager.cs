@@ -190,9 +190,9 @@ public class XanaLobbyManager : MonoBehaviour
             XLRatios.instance.ratioReferences[ratioId].p_obj.SetActive(true);
             
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
 }

@@ -13,7 +13,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 {
     #region Variables
 
-    [SerializeField] SceneManage sceneManage;
 
     //Json data response properties
     string data;

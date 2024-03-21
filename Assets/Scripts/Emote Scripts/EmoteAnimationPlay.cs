@@ -294,7 +294,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
                                                 //            AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
                                                 //            AnimHighlight.SetActive(false);
-                                                //            GamePlayLoader.animClick = false;
+                                                //            GameplayEntityLoader.animClick = false;
                                                 //            break;
                                                 //        }
                                                 //    }
@@ -515,7 +515,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
     {
         //  AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = false;
         AnimHighlight.SetActive(true);
-        // GamePlayLoader.animClick = true;
+        // GameplayEntityLoader.animClick = true;
 
 
         ////Debug.Log("mine Player===" + GameObject.FindGameObjectWithTag("Player").transform.GetChild(19).GetComponent<PhotonView>().ViewID);
@@ -895,7 +895,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
             try
             {
-                GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = GamePlayLoader.instance.joyStickMovementRange;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = GameplayEntityLoader.instance.joyStickMovementRange;
 
             }
             catch (Exception e)
@@ -912,7 +912,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
             isEmoteActive = true;
             try
             {
-                GamePlayLoader.instance.joyStickMovementRange = GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange;
+                GameplayEntityLoader.instance.joyStickMovementRange = GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange;
 
             }
             catch (Exception e)
