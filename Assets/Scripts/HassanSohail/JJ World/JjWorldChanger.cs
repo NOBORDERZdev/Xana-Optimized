@@ -99,24 +99,26 @@ public class JjWorldChanger : MonoBehaviour
         if (APIBaseUrlChange.instance.IsXanaLive)
         {
             XanaConstants.xanaConstants.customWorldId = MainNet;
+            XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
         }
         else
         {
             XanaConstants.xanaConstants.customWorldId = testNet;
+            XanaConstants.xanaConstants.MuseumID = testNet.ToString();
         }
         //
 
         if (isMusuem)
         {
             XanaConstants.xanaConstants.IsMuseum = true;
-            if (APIBaseUrlChange.instance.IsXanaLive)
-            {
-                XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
-            }
-            else
-            {
-                XanaConstants.xanaConstants.MuseumID = testNet.ToString();
-            }
+            //if (APIBaseUrlChange.instance.IsXanaLive)
+            //{
+            //    XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
+            //}
+            //else
+            //{
+            //    XanaConstants.xanaConstants.MuseumID = testNet.ToString();
+            //}
         }
         else if (isBuilderWorld)
         {
