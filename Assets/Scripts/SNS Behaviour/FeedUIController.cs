@@ -20,7 +20,7 @@ public class FeedUIController : MonoBehaviour
 
     [Header("-------FooterCan-------")]
     public GameObject footerCan;
-    public BottomTabManager bottomTabManager;
+    public HomeFooterTabCanvas bottomTabManager;
 
     [Space]
     [Header("-------API Controller Feed References-------")]
@@ -653,7 +653,7 @@ public class FeedUIController : MonoBehaviour
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    footerCan.GetComponent<HomeFooterTabCanvas>().SetDefaultButtonSelection(4);
                     break;
                 case "HotTabScreen":
                     //Debug.Log("Comes from Hot or Discover tab full feed screen");

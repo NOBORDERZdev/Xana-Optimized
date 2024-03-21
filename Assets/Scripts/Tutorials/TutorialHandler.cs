@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TutorialsManager : MonoBehaviour
+public class TutorialHandler : MonoBehaviour
 {
-    public static TutorialsManager instance;
+    public static TutorialHandler instance;
     private CanvasScaler canvasScaler;
     public Button skipButton;
     public Button rightNextButton;

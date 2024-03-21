@@ -461,7 +461,7 @@ public class FeedController : MonoBehaviour
             noFeedSerach.gameObject.SetActive(false);
             noFeedsScreen.gameObject.SetActive(false);
             FeedLoader.gameObject.SetActive(false);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickHomeButton();
         }
      }
     private void OnDisable()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class BottomTabManager : MonoBehaviour
+public class HomeFooterTabCanvas : MonoBehaviour
 {
     public List<Image> allButtonIcon = new List<Image>();
     public List<Sprite> allButtonUnSelected = new List<Sprite>();
@@ -262,8 +262,8 @@ public class BottomTabManager : MonoBehaviour
             }
             ////---->>>Sannan   if (UIManager.Instance != null)
             //   {
-            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
-            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().defaultSelection = 0;
+            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
             // }
             if (UIManager.Instance != null)
             {
@@ -315,7 +315,7 @@ public class BottomTabManager : MonoBehaviour
                 if (UIManager.Instance != null)
                 {
                     GameManager.Instance.defaultSelection = 1;
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
+                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
                 }
                // UIManager.Instance.Canvas.SetActive(true);
                 UIManager.Instance.SwitchToScreen(1);
@@ -344,7 +344,7 @@ public class BottomTabManager : MonoBehaviour
             if (UIManager.Instance != null)
             {
                 GameManager.Instance.defaultSelection = 0;
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
             }
 
             // UIManager.Instance.Canvas.SetActive(true);
@@ -381,7 +381,7 @@ public class BottomTabManager : MonoBehaviour
                 additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 GameManager.Instance.defaultSelection = 1;
-                MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
+                MessageController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
             }
             else
             {
@@ -468,8 +468,8 @@ public class BottomTabManager : MonoBehaviour
                 additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 3;
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(3);
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 UIManager.Instance.HomeWorldScreen.SetActive(false);
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
                 UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
@@ -571,7 +571,7 @@ public class BottomTabManager : MonoBehaviour
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
 
 
             //Invoke(nameof(InvokeDisableFeed),1f);
@@ -676,7 +676,7 @@ public class BottomTabManager : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                 additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 4;
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
             }
             else
             {
@@ -706,7 +706,7 @@ public class BottomTabManager : MonoBehaviour
                 UIManager.Instance.Canvas.SetActive(false);
 
                 UIManager.Instance.HomeWorldScreen.SetActive(false);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -742,8 +742,8 @@ public class BottomTabManager : MonoBehaviour
         {
             additiveScenesManager.SNSmodule.SetActive(false);
             additiveScenesManager.SNSMessage.SetActive(false);
-            // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().GameManager.Instance.defaultSelection = 4;
-            //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+            // FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().GameManager.Instance.defaultSelection = 4;
+            //  FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
         }
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);

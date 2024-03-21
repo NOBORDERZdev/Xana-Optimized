@@ -66,8 +66,8 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
         {
-            if (menuAvatarFlowButton._instance)   // Disable Store Btn
-                menuAvatarFlowButton._instance.StoreBtnController();
+            if (HomeAvatarButton._instance)   // Disable Store Btn
+                HomeAvatarButton._instance.StoreBtnController();
 
             if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
             {
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.HomePage.activeInHierarchy )
             UIManager.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
+        if (WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
             UIManager.Instance.IsWorldClicked();
         else
         {

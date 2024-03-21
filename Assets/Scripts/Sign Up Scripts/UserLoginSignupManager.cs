@@ -233,8 +233,8 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         if (UIManager.Instance != null)
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -399,8 +399,8 @@ public class UserLoginSignupManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (UIManager.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
 
@@ -821,7 +821,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     else
                         CallBack(false);
                 }));
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
         }
         else
@@ -1210,7 +1210,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     enterNamePanel.SetActive(false);
                     userNameField.Clear();
-                    //TutorialsManager.instance.ShowTutorials();
+                    //TutorialHandler.instance.ShowTutorials();
                     break;
                 }
             case 17:

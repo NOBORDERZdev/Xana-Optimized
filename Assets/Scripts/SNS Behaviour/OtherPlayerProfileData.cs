@@ -819,7 +819,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
@@ -836,7 +836,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from message module group details screen");
                     isProfiletranzistFromMessage = true;
                     RemoveAndCheckBackKey();
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickWorldButton();
                     break;
                 default:
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
@@ -926,7 +926,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void OnClickMessageButtonClick()
     {
         isTempDirectMessageScreenOpen = true;
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+        FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickWorldButton();
         if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
         {
             //Debug.Log("OnClickMessageButtonClick000000");

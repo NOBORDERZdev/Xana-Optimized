@@ -61,7 +61,7 @@ public class WorldManager : MonoBehaviour
     public WorldsInfo _WorldInfo;
     public HomeWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
-    public WorldItemPreviewTab worldItemPreviewTabRef;
+    public WorldDetailsPopupPreview worldItemPreviewTabRef;
     public WorldSearchManager worldSearchManager;
     public SearchWorldController searchWorldControllerRef;
     public static WorldManager instance;
@@ -537,7 +537,7 @@ public class WorldManager : MonoBehaviour
 
     public void ShowTutorial()
     {
-        TutorialsManager.instance.ShowTutorials();
+        TutorialHandler.instance.ShowTutorials();
     }
 
     public void WorldScrollReset()

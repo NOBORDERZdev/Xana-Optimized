@@ -97,7 +97,7 @@ public class UserAnimationPostFeature : MonoBehaviour
         {
             string finalName = selectedMoods[i].name.Replace(checkString, "");
             finalName = finalName.Replace("-01", "");
-            MoodTabList[i].GetComponent<MoodTabItemView>().InitItem(finalName, selectedMoods[i].emoji_link,this);
+            MoodTabList[i].GetComponent<MoodItem>().InitItem(finalName, selectedMoods[i].emoji_link,this);
             MoodTabList[i].gameObject.SetActive(true);
         }
     }

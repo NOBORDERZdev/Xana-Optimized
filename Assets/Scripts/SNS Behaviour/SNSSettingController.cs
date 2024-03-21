@@ -213,13 +213,13 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.ResetAllFeedScreen(false);
             FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickHomeButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
             UserPassManager.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
             if (UIManager.Instance != null)
             {
-                UIManager.Instance._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+                UIManager.Instance._footerCan.GetComponentInChildren<HomeFooterTabCanvas>().OnClickHomeButton();
             }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)

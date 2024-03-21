@@ -10,8 +10,8 @@ public class patchProfile : MonoBehaviour
         {
             if (UIManager.Instance != null)//rik
             {
-                // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+                // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().SetProfileButton();
                 
             }
         }

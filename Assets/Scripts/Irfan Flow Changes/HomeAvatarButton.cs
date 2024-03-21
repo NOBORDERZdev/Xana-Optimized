@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class menuAvatarFlowButton : MonoBehaviour
+public class HomeAvatarButton : MonoBehaviour
 {
-    public static menuAvatarFlowButton _instance;
+    public static HomeAvatarButton _instance;
 
     private void Awake()
     {

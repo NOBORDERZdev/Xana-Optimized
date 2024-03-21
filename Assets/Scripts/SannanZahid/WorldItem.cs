@@ -122,7 +122,7 @@ public class WorldItem : MonoBehaviour
     public string CreatorDescription;
     public string worldVisitCount;
     public bool isFavourite;
-    public WorldItemPreviewTab worldItemPreview;
+    public WorldDetailsPopupPreview worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
     //private void OnEnable()
@@ -376,7 +376,7 @@ public class WorldItem : MonoBehaviour
         XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
         XanaConstants.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
-            WorldItemPreviewTab.m_MuseumIsClicked = true;
+            WorldDetailsPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
             XanaConstants.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();

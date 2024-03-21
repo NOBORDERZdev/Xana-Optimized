@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoodTaghandler : MonoBehaviour
+public class MoodScreenTagHandler : MonoBehaviour
 {
     public List<Transform> MoodText = new List<Transform>();
     public List<Transform> MoodButton = new List<Transform>();

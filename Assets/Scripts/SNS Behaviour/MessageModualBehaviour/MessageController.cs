@@ -562,7 +562,7 @@ public class MessageController : MonoBehaviour
             {
                 MessageController.Instance.isDirectMessageFirstTimeRecivedID = "";
                 OtherPlayerProfileData.Instance.isDirectMessageScreenOpen = false;
-                footerCan.GetComponent<BottomTabManager>().OnClickFeedButton();
+                footerCan.GetComponent<HomeFooterTabCanvas>().OnClickFeedButton();
             }
             else
             {

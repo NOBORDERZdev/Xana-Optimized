@@ -85,12 +85,12 @@ public class UIManager : MonoBehaviour
     }
     public void AvaterButtonCustomPushed()
     {
-        WorldItemPreviewTab.m_WorldIsClicked = false;
-        WorldItemPreviewTab.m_MuseumIsClicked = false;
+        WorldDetailsPopupPreview.m_WorldIsClicked = false;
+        WorldDetailsPopupPreview.m_MuseumIsClicked = false;
     }
     public void IsWorldClicked()
     {
-        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
+        if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)

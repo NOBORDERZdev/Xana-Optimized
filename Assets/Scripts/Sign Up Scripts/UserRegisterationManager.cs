@@ -449,8 +449,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.Save();
         if (UIManager.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -2651,7 +2651,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.Save();
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 }
             }
         }
@@ -2696,7 +2696,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.SetActive(true);
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
-        TutorialsManager.instance.ShowTutorials();
+        TutorialHandler.instance.ShowTutorials();
         ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
@@ -3524,7 +3524,7 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (UIManager.Instance != null)//rik
                         {
-                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
                         }
                     }
 
@@ -3796,8 +3796,8 @@ public class UserRegisterationManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (UIManager.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
 

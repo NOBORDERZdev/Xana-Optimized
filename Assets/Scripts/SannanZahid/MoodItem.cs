@@ -6,7 +6,7 @@ using UnityEngine;
 using SuperStar.Helpers;
 using System;
 
-public class MoodTabItemView : MonoBehaviour
+public class MoodItem : MonoBehaviour
 {
     public string m_ThumbnailDownloadURL;
     public Image _moodIcon;

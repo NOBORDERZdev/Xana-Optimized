@@ -13,7 +13,7 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSmodule;
     [HideInInspector]
     public GameObject SNSMessage;
-    public BottomTabManager homeBottomTab;
+    public HomeFooterTabCanvas homeBottomTab;
     
     private void Start()
     {

@@ -22,6 +22,6 @@ public class SnsFeedObjScript : MonoBehaviour
         //additiveSceneManger = FindObjectOfType<AdditiveScenesManager>();
         GameManager.Instance.additiveScenesManager.SNSmodule = this.sns1;
 
-       // FindObjectOfType<BottomTabManager>().LoaderShow(false);
+       // FindObjectOfType<HomeFooterTabCanvas>().LoaderShow(false);
     }
 }

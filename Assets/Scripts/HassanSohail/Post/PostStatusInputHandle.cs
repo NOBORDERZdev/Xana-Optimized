@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
-public class PostScreenInput : MonoBehaviour
+public class PostStatusInputHandle : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
    [SerializeField] TMP_InputField inputField;

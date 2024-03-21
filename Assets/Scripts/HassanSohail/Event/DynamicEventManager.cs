@@ -575,13 +575,13 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     public void SetEventPopUpDialog(string _headingtext = "", string _descriptiontext = "", string _timertext = "", bool _panelstate = false)
     {
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.headingText, _headingtext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.headingText, _headingtext);
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.descriptionText, _descriptiontext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.descriptionText, _descriptiontext);
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.timerText, _timertext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.timerText, _timertext);
 
-        PopupMessageController.Instance.SetPanelState(_panelstate);
+        PopupMessageHandler.Instance.SetPanelState(_panelstate);
 
     }
 
