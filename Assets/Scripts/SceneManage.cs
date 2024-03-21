@@ -114,6 +114,9 @@ public class SceneManage : MonoBehaviourPunCallbacks
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 
+        // While Retruing from sub world to Xana Lobby
+        // Storing Xana Lobby Ids
+
         if ((ConstantsGod.API_BASEURL.Contains("test")))
             XanaConstants.xanaConstants.MuseumID = "406";
         else
