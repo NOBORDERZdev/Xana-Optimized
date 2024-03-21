@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     public static string currentLanguage = "";
     public bool isStoreAssetDownloading = false;
     public Transform PostManager;
+
+    //Script references
     public AvatarPathSystemManager avatarPathSystemManager;
     public ActorManager ActorManager;
     public MoodManager moodManager;
@@ -47,7 +49,7 @@ public class GameManager : MonoBehaviour
     public AdditiveScenesManager additiveScenesManager;
     public HomeCameraController HomeCamera;
     public UIManager UiManager;
-
+    public BottomTabManager bottomTabManagerInstance;
     internal string selectedPresetData="";
     private void Awake()
     {
