@@ -20,7 +20,7 @@ public class LoadingTextAnim : MonoBehaviour
 
     void changeTxt()
     {
-        if(!CustomLocalization.forceJapanese && GameManager.currentLanguage=="en")
+        if(!LocalizationManager.forceJapanese && GameManager.currentLanguage=="en")
             LoadingText.text = texts[i];
         else
             LoadingText.text = textsJP[i];

@@ -416,7 +416,7 @@ public class AddressableDownloader : MonoBehaviour
             PlayerPrefs.SetInt("presetPanel", 0);
             PlayerPrefs.SetInt("FristPresetSet", 1);
             PlayerPrefs.Save();
-            ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+            AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>().SavePlayerProperties();
         }
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AdditiveScenesManager : MonoBehaviour
+public class AdditiveScenesController : MonoBehaviour
 {
     public float sceneDelay;
     private string sceneTest= "LoginSignUp";
@@ -34,7 +34,7 @@ public class AdditiveScenesManager : MonoBehaviour
         {
             yield return null;
         }
-        BodyCustomizer.Instance.BodyCustomCallFromStore();
+        FaceBodyCustomizer.Instance.BodyCustomCallFromStore();
     }
     IEnumerator AddDelay(float delay)
     {

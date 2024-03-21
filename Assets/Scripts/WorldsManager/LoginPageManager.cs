@@ -32,15 +32,15 @@ public class LoginPageManager : MonoBehaviour
            // m_WorldPlayPanel.transform.SetParent(WorldsHandler.instance.DescriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIHandler.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIHandler.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_WorldPlayPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             m_WorldPlayPanel.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        UIHandler.Instance.HomePage.SetActive(true);
         this.GetComponent<FeedEventPrefab>().m_FadeImage = this.GetComponent<FeedEventPrefab>().worldIcon;
         this.GetComponent<FeedEventPrefab>().UpdateWorldPanel();
         if (!gameObject.GetComponent<PointerDown>().tapAndHolded)
@@ -90,7 +90,7 @@ public class LoginPageManager : MonoBehaviour
                 }
             }
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             GetComponent<PointerDown>().tapAndHolded = false;
             m_MuseumIsClicked = false;
@@ -99,17 +99,17 @@ public class LoginPageManager : MonoBehaviour
         {
             m_TapAndHoldPanel.SetActive(true);
             m_TapAndHoldPanel.GetComponent<OnPanel>().rectInterpolate = true;
-            m_TapAndHoldPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_TapAndHoldPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = UIHandler.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = UIHandler.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_TapAndHoldPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             tapholdloadre();
             this.GetComponent<PointerDown>().tapAndHolded = false;
             GetComponent<PointerDown>().timer = 0;
         }
-        UIManager.Instance.ShowFooter(false);//rik
+        UIHandler.Instance.ShowFooter(false);//rik
 
         GameManager.Instance.WorldBool = true;
         m_WorldIsClicked = true;
@@ -213,13 +213,13 @@ public class LoginPageManager : MonoBehaviour
     {
         if (m_WorldIsClicked || m_isSignUpPassed || XanaConstants.loggedIn)
         {
-            UIManager.Instance.LoginRegisterScreen.SetActive(false);
-            UIManager.Instance.HomePage.SetActive(true);
+            UIHandler.Instance.LoginRegisterScreen.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(true);
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             m_WorldIsClicked = false;
-            UIManager.Instance.ShowFooter(false);//rik
+            UIHandler.Instance.ShowFooter(false);//rik
         }
     }
 

@@ -121,12 +121,12 @@ public class SceneTransitionHandler : MonoBehaviourPunCallbacks
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            UIHandler.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
+            UIHandler.Instance.LoginRegisterScreen.SetActive(true);
         }
         else
         {
-            UIManager.Instance.IsWorldClicked();
+            UIHandler.Instance.IsWorldClicked();
         }
     }
     public void LeaveRoom()

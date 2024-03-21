@@ -1049,7 +1049,7 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             feedMediaPlayer.Pause();
         }
-        AWSHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
+        AWSDataHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
     }
 
 

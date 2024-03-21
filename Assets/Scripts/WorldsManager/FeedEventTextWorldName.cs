@@ -26,7 +26,7 @@ public class FeedEventTextWorldName : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+        if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
         {
             if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
                 PreferredLength = 40;

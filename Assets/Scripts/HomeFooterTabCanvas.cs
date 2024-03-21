@@ -24,7 +24,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
-    AdditiveScenesManager additiveScenesManager;
+    AdditiveScenesController additiveScenesManager;
     private void Awake()
     {
         if (GameManager.Instance.defaultSelection == 3)
@@ -41,14 +41,14 @@ public class HomeFooterTabCanvas : MonoBehaviour
     }
     void Start()
     {
-        if (UIManager.Instance != null)
+        if (UIHandler.Instance != null)
         {
             GameManager.Instance.defaultSelection = 0;
         }
         //---->>>Sannan  OnSelectedClick(GameManager.Instance.defaultSelection);
 
 
-        if (UIManager.Instance != null && GameManager.Instance.defaultSelection == 0)
+        if (UIHandler.Instance != null && GameManager.Instance.defaultSelection == 0)
         {
             CheckLoginOrNotForFooterButton();
         }
@@ -209,19 +209,19 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 }
                 //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
                 GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
-                if (UIManager.Instance != null)
+                if (UIHandler.Instance != null)
                 {
                     CheckLoginOrNotForFooterButton();
-                    UIManager.Instance.HomeWorldScreen.SetActive(false);
-                    UIManager.Instance.HomePage.SetActive(true);
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                    UIManager.Instance.Canvas.SetActive(true);
+                    UIHandler.Instance.HomeWorldScreen.SetActive(false);
+                    UIHandler.Instance.HomePage.SetActive(true);
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    UIHandler.Instance.Canvas.SetActive(true);
 
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1;
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                    UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                    UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
                     if (FeedUIController.Instance)
                     {
@@ -260,21 +260,21 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(false);
                 additiveScenesManager.SNSMessage.SetActive(false);
             }
-            ////---->>>Sannan   if (UIManager.Instance != null)
+            ////---->>>Sannan   if (UIHandler.Instance != null)
             //   {
-            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().defaultSelection = 0;
-            //     UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
+            //     UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().defaultSelection = 0;
+            //     UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
             // }
-            if (UIManager.Instance != null)
+            if (UIHandler.Instance != null)
             {
                 CheckLoginOrNotForFooterButton();
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                UIManager.Instance.Canvas.SetActive(true);
-                UIManager.Instance.HomeWorldScreen.SetActive(true);
-                UIManager.Instance.HomePage.SetActive(false);
-                UIManager.Instance.SwitchToScreen(0);
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                UIHandler.Instance.Canvas.SetActive(true);
+                UIHandler.Instance.HomeWorldScreen.SetActive(true);
+                UIHandler.Instance.HomePage.SetActive(false);
+                UIHandler.Instance.SwitchToScreen(0);
                 if (FeedUIController.Instance)
                 {
                     FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
@@ -300,25 +300,25 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
     /*public void OnClickNewWorldButton()
     {
-        //if (!UIManager.Instance.WorldPage.activeSelf)
+        //if (!UIHandler.Instance.WorldPage.activeSelf)
         {
             Debug.Log("World button onclick");
             if (GameManager.Instance.defaultSelection != 1)
             {
                // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
                 OnSelectedClick(1);
-                if (FindObjectOfType<AdditiveScenesManager>() != null)
+                if (FindObjectOfType<AdditiveScenesController>() != null)
                 {
-                    FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                    FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                    FindObjectOfType<AdditiveScenesController>().SNSmodule.SetActive(false);
+                    FindObjectOfType<AdditiveScenesController>().SNSMessage.SetActive(false);
                 }
-                if (UIManager.Instance != null)
+                if (UIHandler.Instance != null)
                 {
                     GameManager.Instance.defaultSelection = 1;
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
+                    UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
                 }
-               // UIManager.Instance.Canvas.SetActive(true);
-                UIManager.Instance.SwitchToScreen(1);
+               // UIHandler.Instance.Canvas.SetActive(true);
+                UIHandler.Instance.SwitchToScreen(1);
                 WorldsHandler.instance.ChangeWorld(APIURL.Hot);
                 WorldsHandler.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
@@ -341,13 +341,13 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(false);
                 additiveScenesManager.SNSMessage.SetActive(false);
             }
-            if (UIManager.Instance != null)
+            if (UIHandler.Instance != null)
             {
                 GameManager.Instance.defaultSelection = 0;
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
+                UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().OnSelectedClick(0);
             }
 
-            // UIManager.Instance.Canvas.SetActive(true);
+            // UIHandler.Instance.Canvas.SetActive(true);
         }
         GameManager.Instance.BottomAvatarBtnPressed();
     }
@@ -388,13 +388,13 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 Initiate.Fade("SNSMessageModuleScene", Color.black, 1.0f, true);
             }
 
-            if (UIManager.Instance.Canvas.activeSelf)
+            if (UIHandler.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                UIManager.Instance.Canvas.SetActive(true);
-                // UIManager.Instance.Canvas.SetActive(false);
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 1; // hiding home footer
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                UIHandler.Instance.Canvas.SetActive(true);
+                // UIHandler.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
         }
@@ -470,10 +470,10 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
                 FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(3);
                 FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                UIManager.Instance.HomeWorldScreen.SetActive(false);
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                UIHandler.Instance.HomeWorldScreen.SetActive(false);
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
@@ -510,10 +510,10 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 ////}
                 // End Old Feed UI
             }
-            UIManager.Instance.HomeWorldScreen.SetActive(false);
-            if (UIManager.Instance.Canvas.activeSelf)
+            UIHandler.Instance.HomeWorldScreen.SetActive(false);
+            if (UIHandler.Instance.Canvas.activeSelf)
             {
-                // UIManager.Instance.Canvas.SetActive(false);
+                // UIHandler.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
 
@@ -593,17 +593,17 @@ public class HomeFooterTabCanvas : MonoBehaviour
             //        FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
             //    }
             //}
-            UIManager.Instance.HomeWorldScreen.SetActive(false);
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            UIHandler.Instance.HomeWorldScreen.SetActive(false);
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            if (UIManager.Instance.Canvas.activeSelf)
+            if (UIHandler.Instance.Canvas.activeSelf)
             {
-                // UIManager.Instance.Canvas.SetActive(false);
+                // UIHandler.Instance.Canvas.SetActive(false);
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
 
@@ -698,14 +698,14 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 FeedUIController.Instance.AddFriendPanel.SetActive(false);
                 FeedUIController.Instance.ShowLoader(true);
             }
-            if (UIManager.Instance.Canvas.activeSelf)
+            if (UIHandler.Instance.Canvas.activeSelf)
             {
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0; // hiding home footer
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-                UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                UIManager.Instance.Canvas.SetActive(false);
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0; // hiding home footer
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+                UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                UIHandler.Instance.Canvas.SetActive(false);
 
-                UIManager.Instance.HomeWorldScreen.SetActive(false);
+                UIHandler.Instance.HomeWorldScreen.SetActive(false);
                 FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
@@ -748,7 +748,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
         // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-        UIManager.Instance.HomeWorldScreen.SetActive(false);
+        UIHandler.Instance.HomeWorldScreen.SetActive(false);
     }
     public void SetDefaultButtonSelection(int index)
     {

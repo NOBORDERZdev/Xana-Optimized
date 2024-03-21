@@ -48,7 +48,7 @@ public class UITextLocalization : MonoBehaviour
 
     private IEnumerator StartTranslation()
     {
-        while (!CustomLocalization.IsReady)
+        while (!LocalizationManager.IsReady)
         {
             yield return null;
         }
@@ -74,11 +74,11 @@ public class UITextLocalization : MonoBehaviour
 
     private void StaticLocalizeTextPro()
     {
-        if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
+        if (LocalizationManager.localisationDict == null || LocalizationManager.localisationDict.Count <= 0) return;
 
         #region Old Method
 
-        // foreach (RecordsLanguage rl in CustomLocalization.LocalisationSheet)
+        // foreach (RecordsLanguage rl in LocalizationManager.LocalisationSheet)
         // {
         //     if (rl.Keys == LocalizeTextTMP.text && !LocalizeTextTMP.text.IsNullOrEmpty())
         //     {
@@ -96,9 +96,9 @@ public class UITextLocalization : MonoBehaviour
         #endregion
         if (!string.IsNullOrEmpty(key))
         {
-            if (CustomLocalization.localisationDict.TryGetValue(key, out RecordsLanguage find))
+            if (LocalizationManager.localisationDict.TryGetValue(key, out RecordsLanguage find))
             {
-                if (!CustomLocalization.forceJapanese)
+                if (!LocalizationManager.forceJapanese)
                 {
                     switch (GameManager.currentLanguage)
                     {
@@ -123,9 +123,9 @@ public class UITextLocalization : MonoBehaviour
             {
                 currentText = LocalizeTextTMP.text;
             }
-            if (!currentText.IsNullOrEmpty() && CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
+            if (!currentText.IsNullOrEmpty() && LocalizationManager.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
             {
-                if (!CustomLocalization.forceJapanese)
+                if (!LocalizationManager.forceJapanese)
                 {
                     switch (GameManager.currentLanguage)
                     {
@@ -148,11 +148,11 @@ public class UITextLocalization : MonoBehaviour
 
     private void StaticLocalizeTextText()
     {
-        if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
+        if (LocalizationManager.localisationDict == null || LocalizationManager.localisationDict.Count <= 0) return;
 
         #region Old Method
 
-        // foreach (RecordsLanguage rl in CustomLocalization.LocalisationSheet)
+        // foreach (RecordsLanguage rl in LocalizationManager.LocalisationSheet)
         // {
         //     if (rl.Keys == LocalizeText.text && !LocalizeText.text.IsNullOrEmpty())
         //     {
@@ -170,9 +170,9 @@ public class UITextLocalization : MonoBehaviour
 
         if (!string.IsNullOrEmpty(key))
         {
-            if (CustomLocalization.localisationDict.TryGetValue(key, out RecordsLanguage find))
+            if (LocalizationManager.localisationDict.TryGetValue(key, out RecordsLanguage find))
             {
-                if (!CustomLocalization.forceJapanese)
+                if (!LocalizationManager.forceJapanese)
                 {
                     switch (GameManager.currentLanguage)
                     {
@@ -196,9 +196,9 @@ public class UITextLocalization : MonoBehaviour
             {
                 currentText = LocalizeText.text;
             }
-            if (CustomLocalization.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
+            if (LocalizationManager.localisationDict.TryGetValue(currentText, out RecordsLanguage find))
             {
-                if (!CustomLocalization.forceJapanese)
+                if (!LocalizationManager.forceJapanese)
                 {
                     switch (GameManager.currentLanguage)
                     {
@@ -247,10 +247,10 @@ public class UITextLocalization : MonoBehaviour
     /// <returns>Found Key as string or key itself if not found in sheet</returns>
     public static string GetLocaliseTextByKey(string key)
     {
-        if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return key;
-        if (CustomLocalization.localisationDict.TryGetValue(key, out RecordsLanguage find))
+        if (LocalizationManager.localisationDict == null || LocalizationManager.localisationDict.Count <= 0) return key;
+        if (LocalizationManager.localisationDict.TryGetValue(key, out RecordsLanguage find))
         {
-            if (!CustomLocalization.forceJapanese)
+            if (!LocalizationManager.forceJapanese)
             {
                 switch (GameManager.currentLanguage)
                 {

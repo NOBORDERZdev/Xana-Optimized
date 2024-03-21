@@ -430,9 +430,9 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
             //DefaultEnteriesforManican.instance.ResetForPresets();
             //DownloadPlayerAssets();
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            SavaCharacterProperties.instance.LoadMorphsfromFile();
+            SavaAvatarProperties.instance.LoadMorphsfromFile();
             loadprevious();
-            StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+            StartCoroutine(AvatarPropertiesDatabase.instance.WaitAndDownloadFromRevert(0));
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
             //InventoryManager.instance.UndoSelection();
 
@@ -505,7 +505,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                 if (_CharacterData.myItemObj[i].ItemID == 0)
                 {
-                    ItemDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
+                    AvatarPropertiesDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
                 }
                 else
                 {
@@ -551,7 +551,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         if (avatarId != null)
         {
             PlayerPrefs.SetInt("presetPanel", 0);
-            SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
+            SavaAvatarProperties.instance.SavePlayerPropertiesInClassObj();
             OnUpdateExistingRemoveOld(avatarId);
             ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
         }
@@ -614,7 +614,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                 File.WriteAllText((Application.persistentDataPath + "/SavingCharacterDataClass.json"), JsonUtility.ToJson(_CharacterData));
                 DownloadPlayerAssets();
                 //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-                SavaCharacterProperties.instance.LoadMorphsfromFile();
+                SavaAvatarProperties.instance.LoadMorphsfromFile();
 
                 isAlreadyRunning = true;
             }

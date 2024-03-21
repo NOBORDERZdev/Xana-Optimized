@@ -13,7 +13,7 @@ public class FriendAvatarController : MonoBehaviour
     public static event CharacterLoaded characterLoaded;
 
     public Stitcher stitcher;
-    private ItemDatabase itemDatabase;
+    private AvatarPropertiesDatabase itemDatabase;
     public GameObject wornHair, wornPant, wornShirt, wornShose, wornEyewearable, wornGloves, wornChain;
     [HideInInspector]
     public int wornHairId, hairColorPaletteId, wornPantId, wornShirtId, wornShoesId, wornEyewearableId, skinId, faceId, eyeBrowId, eyeBrowColorPaletteId, eyesId, eyesColorId, eyesColorPaletteId, noseId, lipsId, lipsColorId, lipsColorPaletteId, bodyFat, makeupId, eyeLashesId, wornGlovesId, wornChainId;
@@ -42,7 +42,7 @@ public class FriendAvatarController : MonoBehaviour
        // BoxerNFTEventManager.OnNFTequip += EquipNFT;
        // BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
 
-        itemDatabase = ItemDatabase.instance;
+        itemDatabase = AvatarPropertiesDatabase.instance;
 
         if (IsInit)
         {
@@ -1016,20 +1016,20 @@ public class FriendAvatarController : MonoBehaviour
             switch (type)
             {
                 case "Legs":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultPent)
-                        StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultPent)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultPent, type, applyOn);
                     break;
                 case "Chest":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShirt)
-                        StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultShirt)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultShirt, type, applyOn);
                     break;
                 case "Feet":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShoes)
-                        StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultShoes)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultShoes, type, applyOn);
                     break;
                 case "Hair":
-                    if(ItemDatabase.instance.maleAvatarDefaultCostume.DefaultHair)
-                        StichItem(-1, ItemDatabase.instance.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultHair)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.maleAvatarDefaultCostume.DefaultHair, type, applyOn);
                     break;
                 default:
                     break;
@@ -1042,20 +1042,20 @@ public class FriendAvatarController : MonoBehaviour
             switch (type)
             {
                 case "Legs":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultPent)
-                        StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultPent)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultPent, type, applyOn);
                     break;
                 case "Chest":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt)
-                        StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultShirt, type, applyOn);
                     break;
                 case "Feet":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes)
-                        StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultShoes, type, applyOn);
                     break;
                 case "Hair":
-                    if(ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultHair)
-                        StichItem(-1, ItemDatabase.instance.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
+                    if(AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultHair)
+                        StichItem(-1, AvatarPropertiesDatabase.instance.femaleAvatarDefaultCostume.DefaultHair, type, applyOn);
                     break;
                 default:
                     break;
@@ -1068,16 +1068,16 @@ public class FriendAvatarController : MonoBehaviour
             switch (type)
             {
                 case "Legs":
-                    StichItem(-1, ItemDatabase.instance.DefaultPent, type, applyOn);
+                    StichItem(-1, AvatarPropertiesDatabase.instance.DefaultPent, type, applyOn);
                     break;
                 case "Chest":
-                    StichItem(-1, ItemDatabase.instance.DefaultShirt, type, applyOn);
+                    StichItem(-1, AvatarPropertiesDatabase.instance.DefaultShirt, type, applyOn);
                     break;
                 case "Feet":
-                    StichItem(-1, ItemDatabase.instance.DefaultShoes, type, applyOn);
+                    StichItem(-1, AvatarPropertiesDatabase.instance.DefaultShoes, type, applyOn);
                     break;
                 case "Hair":
-                    StichItem(-1, ItemDatabase.instance.DefaultHair, type, applyOn);
+                    StichItem(-1, AvatarPropertiesDatabase.instance.DefaultHair, type, applyOn);
                     break;
                 default:
                     break;
@@ -1087,7 +1087,7 @@ public class FriendAvatarController : MonoBehaviour
 
     public void WearDefaultHair(GameObject applyOn, Color hairColor)
     {
-        StichItem(-1, ItemDatabase.instance.DefaultHair, "Hair", applyOn, hairColor);
+        StichItem(-1, AvatarPropertiesDatabase.instance.DefaultHair, "Hair", applyOn, hairColor);
     }
 
 
@@ -1095,16 +1095,16 @@ public class FriendAvatarController : MonoBehaviour
     {
 
         //body fats
-        SavaCharacterProperties.instance.SaveItemList.BodyFat = 0;
+        SavaAvatarProperties.instance.SaveItemList.BodyFat = 0;
         //body blends
-        CharacterCustomizationManager.Instance.UpdateChBodyShape(0);
+        AvatarCustomizationManager.Instance.UpdateChBodyShape(0);
 
-        ItemDatabase.instance.RevertSavedCloths();
+        AvatarPropertiesDatabase.instance.RevertSavedCloths();
     }
 
     public void LastSaved_Reset()
     {
-        ItemDatabase.instance.RevertSavedCloths();
+        AvatarPropertiesDatabase.instance.RevertSavedCloths();
     }
 
     /// <summary>

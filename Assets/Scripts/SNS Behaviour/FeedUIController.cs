@@ -1478,7 +1478,7 @@ public class FeedUIController : MonoBehaviour
         {
             createFeedMediaPlayer.Pause();
         }
-        AWSHandler.Instance.PostObjectFeed(createFeedLastPickFilePath, createFeedLastPickFileName, "CreateFeed", iscompress);
+        AWSDataHandler.Instance.PostObjectFeed(createFeedLastPickFilePath, createFeedLastPickFileName, "CreateFeed", iscompress);
     }
 
     public void OnClickCreateFeedBackBtn(bool isDataNotReset)
@@ -1569,7 +1569,7 @@ public class FeedUIController : MonoBehaviour
     public void ProfileFollowerFollowingScreenSetup(int Tabindex, string userName)
     {
         //string titleLocalize = UITextLocalization.GetLocaliseTextByKey("s friends");
-        //if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
+        //if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese)
         //{
         //    titleLocalize = "'" + titleLocalize;
         //}
@@ -2176,13 +2176,13 @@ public class FeedUIController : MonoBehaviour
     {
         /*var request_1 = new GetPreSignedUrlRequest()
         {
-            BucketName = AWSHandler.Instance.Bucketname,
+            BucketName = AWSDataHandler.Instance.Bucketname,
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+        //Debug.Log("Feed Video file sending url request:" + AWSDataHandler.Instance._s3Client);
 
-        AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
+        AWSDataHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
             if (callback.Exception == null)
             {
@@ -3110,9 +3110,9 @@ public class FeedUIController : MonoBehaviour
     }
 
     public void SetMainMenuFooter(){ 
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
     }
 
     public void OnClickProfileFollowerButton() 

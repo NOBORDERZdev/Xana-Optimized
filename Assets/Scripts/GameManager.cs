@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public GameObject bodyCam;
     public GameObject RequiredNFTPopUP;
     public GameObject ShadowPlane;
-    public SavaCharacterProperties SaveCharacterProperties;
+    public SavaAvatarProperties SaveCharacterProperties;
     public EquipUI EquipUiObj;
     public BlendShapeImporter BlendShapeObj;
     public bool UserStatus_;   //if its true user is logged in else its as a guest
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
-    public AdditiveScenesManager additiveScenesManager;
+    public AdditiveScenesController additiveScenesManager;
     public Transform HomeCamera;
 
     internal string selectedPresetData="";
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
         if (additiveScenesManager == null) // If Null then find object
         {
-           additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
+           additiveScenesManager = FindObjectOfType<AdditiveScenesController>();
         }
     }
     public void HomeCameraInputHandler(bool flag)
@@ -137,19 +137,19 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitForInstancefromWorld()
     {
         yield return new WaitForSeconds(.05f);
-        SaveCharacterProperties = ItemDatabase.instance.GetComponent<SavaCharacterProperties>();
-         if (ItemDatabase.instance != null)
-        ItemDatabase.instance.DownloadFromOtherWorld();
+        SaveCharacterProperties = AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>();
+         if (AvatarPropertiesDatabase.instance != null)
+        AvatarPropertiesDatabase.instance.DownloadFromOtherWorld();
     }
     public void NotNowOfSignManager()
     {
-      UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+      UIHandler.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
        
-        if (UIManager.Instance.HomePage.activeInHierarchy )
-            UIManager.Instance.HomePage.SetActive(false);
+        if (UIHandler.Instance.HomePage.activeInHierarchy )
+            UIHandler.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
         if (WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
-            UIManager.Instance.IsWorldClicked();
+            UIHandler.Instance.IsWorldClicked();
         else
         {
             if (!WorldBool && !BottomAvatarButtonBool)
@@ -162,12 +162,12 @@ public class GameManager : MonoBehaviour
     }
     public void AvatarMenuBtnPressed()
     {
-        UIManager.Instance.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+        UIHandler.Instance.AvaterButtonCustomPushed();
+        AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
         if (XanaConstants.loggedIn) 
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
@@ -185,12 +185,12 @@ public class GameManager : MonoBehaviour
     }
     public void BottomAvatarBtnPressed()
     {
-        UIManager.Instance.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+        UIHandler.Instance.AvaterButtonCustomPushed();
+        AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
         BottomAvatarButtonBool = true;
         if (XanaConstants.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
@@ -208,19 +208,19 @@ public class GameManager : MonoBehaviour
     {
         if (WorldBool)
         {
-            UIManager.Instance.HomePage.SetActive(true);
+            UIHandler.Instance.HomePage.SetActive(true);
             BGPlane.SetActive(false);
         }
         else
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             BGPlane.SetActive(true);
             InventoryManager.instance.SignUpAndLoginPanel(3);
         }
     }
     public void BackFromStoreofCharacterCustom()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        UIHandler.Instance.HomePage.SetActive(true);
         BGPlane.SetActive(false);
     }
     public void ChangeCharacterAnimationState(bool l_State)

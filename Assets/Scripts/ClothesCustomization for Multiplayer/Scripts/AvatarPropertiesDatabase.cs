@@ -10,11 +10,11 @@ public class AvatarDefaultClothes
     public Texture2D DefaultSkin, DefaultEyes, DefaultLips;
     public GameObject DefaultPent, DefaultShoes, DefaultShirt, DefaultHair;
 }
-public class ItemDatabase : MonoBehaviour
+public class AvatarPropertiesDatabase : MonoBehaviour
 {
     public List<Item> itemList = new List<Item>();
-    public static ItemDatabase instance;
-    SavaCharacterProperties saveCharacterObj;
+    public static AvatarPropertiesDatabase instance;
+    SavaAvatarProperties saveCharacterObj;
     private bool RevertBool;
 
     public Texture2D DefaultSkin, DefaultEyes, DefaultLips;
@@ -57,7 +57,7 @@ public class ItemDatabase : MonoBehaviour
     {
         //naked
         if (this.gameObject != null)
-            saveCharacterObj = this.gameObject.GetComponent<SavaCharacterProperties>();
+            saveCharacterObj = this.gameObject.GetComponent<SavaAvatarProperties>();
         itemList.Add(new Item(0, "", "", "naked_legs", "Legs"));
         itemList.Add(new Item(1, "", "", "naked_chest", "Chest"));
         itemList.Add(new Item(2, "", "", "bald_head", "Hair"));
@@ -124,10 +124,10 @@ public class ItemDatabase : MonoBehaviour
     public IEnumerator WaitAndDownloadFromRevert(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SavaCharacterProperties.instance.characterController.IntializeAvatar();
+        SavaAvatarProperties.instance.characterController.IntializeAvatar();
 
         #region Commented Section
-        //SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
+        //SavaAvatarProperties.instance.SavePlayerPropertiesInClassObj();
         //        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         //        {
         //            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();

@@ -202,7 +202,7 @@ public class NpcChatSystem : MonoBehaviour
             OutputData outputD = feed.output_data;
 
             string responseFeed = "";
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
                 responseFeed = feed.output_data.user_msg_jp;
             else
                 responseFeed = feed.output_data.user_msg_en;

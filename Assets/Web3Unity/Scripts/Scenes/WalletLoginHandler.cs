@@ -169,9 +169,9 @@ public class WalletLoginHandler: MonoBehaviour
     // //               PlayerPrefs.SetInt("FristPresetSet", 1);
     // //               ServerSideUserDataHandler.Instance.GetDataFromServer();  
     // //               PlayerPrefs.SetString("PlayerName", localUsername);
-    // //               if (UIManager.Instance != null)//rik  
+    // //               if (UIHandler.Instance != null)//rik  
     // //               {
-    // //                   UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+    // //                   UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
     // //               }
     // //            }
     // //       }

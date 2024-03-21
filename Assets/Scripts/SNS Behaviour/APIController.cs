@@ -1310,7 +1310,7 @@ public class APIController : MonoBehaviour
                 string fileName = Path.GetFileName(path);
                Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
-                AWSHandler.Instance.PostAvatarObject(path, fileName, "UpdateUserAvatar");
+                AWSDataHandler.Instance.PostAvatarObject(path, fileName, "UpdateUserAvatar");
             }
         });
         Debug.Log("Permission result: " + permission);

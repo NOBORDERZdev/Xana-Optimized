@@ -669,7 +669,7 @@ public class SelfieController : MonoBehaviour
 
         if (l_Bytes != null)
         {
-            if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+            if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
             {
                 showToast(ShowToastMessage, "写真フォルダへ保存しました！", 2);
             }
@@ -699,7 +699,7 @@ public class SelfieController : MonoBehaviour
 
         if (l_Bytes != null)
         {
-            if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+            if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
             {
                 showToast(ShowToastMessage, "写真フォルダへ保存しました！", 2);
             }

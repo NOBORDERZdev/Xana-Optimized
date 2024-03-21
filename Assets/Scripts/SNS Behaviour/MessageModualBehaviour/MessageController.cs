@@ -824,7 +824,7 @@ public class MessageController : MonoBehaviour
                 LoaderShow(true);
                 //byte[] bytes = setGroupTempAvatarTexture.EncodeToPNG();
                 //File.WriteAllBytes(setGroupAvatarTempPath, bytes);
-                AWSHandler.Instance.PostAvatarObject(setGroupAvatarTempPath, setGroupAvatarTempFilename, "CreateGroupAvatar");//upload avatar image on AWS.
+                AWSDataHandler.Instance.PostAvatarObject(setGroupAvatarTempPath, setGroupAvatarTempFilename, "CreateGroupAvatar");//upload avatar image on AWS.
             }
             else
             {
@@ -1124,7 +1124,7 @@ public class MessageController : MonoBehaviour
                 setGroupAvatarTempFilename = fileName;
 
                 Crop(texture, setGroupAvatarTempPath);
-                //AWSHandler.Instance.PostAvatarObject(path, fileName, "CreateGroupAvatar");                
+                //AWSDataHandler.Instance.PostAvatarObject(path, fileName, "CreateGroupAvatar");                
             }
         });
         Debug.Log("Permission result: " + permission);
@@ -1422,7 +1422,7 @@ public class MessageController : MonoBehaviour
                 string fileName = Path.GetFileName(path);
                Debug.Log("filename : " + fileName);
 
-                AWSHandler.Instance.PostObject(path, fileName, "true");
+                AWSDataHandler.Instance.PostObject(path, fileName, "true");
             }
         });
         Debug.Log("Permission result: " + permission);
@@ -1491,7 +1491,7 @@ public class MessageController : MonoBehaviour
                     string fileName = Path.GetFileName(path);
                    Debug.Log("Pick Image Or Video Path: " + path + "  :Filename : " + fileName + "    :Iscompress:" + iscompress);
 
-                    AWSHandler.Instance.PostObject(path, (Time.time + fileName), iscompress);
+                    AWSDataHandler.Instance.PostObject(path, (Time.time + fileName), iscompress);
                 }
             }, NativeGallery.MediaType.Image | NativeGallery.MediaType.Video, "Select an image or video");
 
@@ -1575,7 +1575,7 @@ public class MessageController : MonoBehaviour
 
                 File.WriteAllBytes(filePath, bytes);//Delete karvani baki che
 
-                AWSHandler.Instance.PostObject(filePath, fileName, "true");
+                AWSDataHandler.Instance.PostObject(filePath, fileName, "true");
             }
         }, maxSize);
 

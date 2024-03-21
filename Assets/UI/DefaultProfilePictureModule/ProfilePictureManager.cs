@@ -97,7 +97,7 @@ public class ProfilePictureManager : MonoBehaviour
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
+            AWSDataHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
             
             Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));

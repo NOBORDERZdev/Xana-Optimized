@@ -75,7 +75,7 @@ public class UserLoginSignupManager : MonoBehaviour
         instance = this;
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
-            SavaCharacterProperties.instance.CreateFileFortheFirstTime();
+            SavaAvatarProperties.instance.CreateFileFortheFirstTime();
         }
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
@@ -231,10 +231,10 @@ public class UserLoginSignupManager : MonoBehaviour
         GetUserClothData();
         StartCoroutine(WaitForDeepLink());
         PlayerPrefs.Save();
-        if (UIManager.Instance != null)
+        if (UIHandler.Instance != null)
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -397,10 +397,10 @@ public class UserLoginSignupManager : MonoBehaviour
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (UIManager.Instance != null)//rik
+        if (UIHandler.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
 
@@ -821,7 +821,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     else
                         CallBack(false);
                 }));
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
         }
         else
@@ -874,7 +874,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     XanaConstants.userName = localUsername;
                     XanaConstants.loggedIn = true;
                     OpenUIPanel(16);
-                    ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+                    AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>().SavePlayerProperties();
                     DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
                     MainSceneEventHandler.OnSucessFullLogin?.Invoke();
 

@@ -58,7 +58,7 @@ public class NpcFreeSpeech : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             string responseFeed = "";
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
                 responseFeed = feed.response_jp;
             else
                 responseFeed = feed.response_en;

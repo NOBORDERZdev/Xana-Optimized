@@ -398,13 +398,13 @@ public class FeedController : MonoBehaviour
             }
             else
             {
-                if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese) // for English 
+                if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese) // for English 
                 {
                     noFeedText.text = "We couldn’t find a match for “ "+
                                        SerchStringToEllipsis( input)
                                         +"”.\r\nPlease try another search.";
                 }
-                else if(GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)   // for Jp 
+                else if(GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)   // for Jp 
                 {
                     noFeedText.text = SerchStringToEllipsis( input) + "に一致するものが見つかりませんでした。\r\n" +
                                         "別のキーワードで試してみてください。";

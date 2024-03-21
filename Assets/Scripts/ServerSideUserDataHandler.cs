@@ -312,7 +312,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
             ////Debug.Log("~~~ load pervoius call");
             //Invoke(nameof(WaitForFile), 10);
             //StartCoroutine(WaitForFile());
-            SavaCharacterProperties.instance.LoadMorphsfromFile(); // loading morohs 
+            SavaAvatarProperties.instance.LoadMorphsfromFile(); // loading morohs 
                                                                    // DefaultEnteriesforManican.instance.LastSaved_Reset();
         }
 

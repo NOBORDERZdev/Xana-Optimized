@@ -6,7 +6,7 @@ public class RotateAvatar : MonoBehaviour
 {
     public void CharacterRotate()
     {
-        if(CharacterCustomizationManager.Instance.checkInternet.ispopUpClose)
-            CharacterCustomizationManager.Instance.RotateAvatar();
+        if(AvatarCustomizationManager.Instance.checkInternet.ispopUpClose)
+            AvatarCustomizationManager.Instance.RotateAvatar();
     }
 }

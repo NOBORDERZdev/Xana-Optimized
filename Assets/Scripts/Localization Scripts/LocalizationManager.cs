@@ -9,9 +9,9 @@ using UnityEngine.Networking;
 using WebSocketSharp;
 using UnityEngine.UI;
 
-public class CustomLocalization : MonoBehaviour
+public class LocalizationManager : MonoBehaviour
 {
-    public static CustomLocalization _instance;
+    public static LocalizationManager _instance;
     public string LocalizeURL,LocalizeDateStamp;
     private string _path;
     private Coroutine prevCoroutine;

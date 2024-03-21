@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
-public class CharacterCustomizationManager : MonoBehaviour
+public class AvatarCustomizationManager : MonoBehaviour
 {
-    public static CharacterCustomizationManager Instance;
+    public static AvatarCustomizationManager Instance;
 
     [HideInInspector]
     public GameObject m_MainCharacter;
@@ -31,7 +31,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     GameObject PlayerCharacter;
     CharcterBodyParts _chbodyparts;
-    public CheckInternet checkInternet;
+    public InternetChecker checkInternet;
     private void Awake()
     {
         Instance = this;
@@ -50,7 +50,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
         _ChFrontPos = GameManager.Instance.mainCharacter.transform;
         CamFrontPos = _facemorphCamPosition;
-        checkInternet = CheckInternet.instance;
+        checkInternet = InternetChecker.instance;
     }
 
     private void Update()
@@ -70,7 +70,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     public void RotateAvatar()
     {
-        if (CharacterCustomizationUIManager.Instance.headCamera.activeSelf)
+        if (AvatarCustomizationUIHandler.Instance.headCamera.activeSelf)
             m_CharacterRotationSpeed = 1.3f;
         else
             m_CharacterRotationSpeed = 2.5f;
@@ -161,7 +161,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     public void OnClosePanel()
     {
-        CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
+        AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
     }
 
 
@@ -216,7 +216,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     public void ApplyBlendShapeValuesToCustomFace(GameObject l_FaceObject)
     {
-        if (BodyCustomizer.Instance.m_IsFaceBlendShapeApplied)
+        if (FaceBodyCustomizer.Instance.m_IsFaceBlendShapeApplied)
         {
             int l_One = PlayerPrefs.GetInt("FaceMorphIndexOne");
             int l_Two = PlayerPrefs.GetInt("FaceMorphIndexTwo");

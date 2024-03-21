@@ -237,7 +237,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (PlayerPrefs.GetInt("iSignup") == 1)
             {
                 PlayerPrefs.SetInt("presetPanel", 1);
-                ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+                AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>().SavePlayerProperties();
                 InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
         }
@@ -306,7 +306,7 @@ public class UserRegisterationManager : MonoBehaviour
     //    instance = this;
     //    if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
     //    {
-    //        SavaCharacterProperties.instance.CreateFileFortheFirstTime();
+    //        SavaAvatarProperties.instance.CreateFileFortheFirstTime();
     //    }
     //    if (!PlayerPrefs.HasKey("iSignup"))
     //    {
@@ -447,10 +447,10 @@ public class UserRegisterationManager : MonoBehaviour
         LoggedInAsGuest = false;
         usernamePanal.SetActive(false);
         PlayerPrefs.Save();
-        if (UIManager.Instance != null)//rik
+        if (UIHandler.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -484,8 +484,8 @@ public class UserRegisterationManager : MonoBehaviour
     //    mainfieldOTPNew.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
     //    BackBool = false;
-    //    UIManager.Instance.LoginRegisterScreen = FirstPanal;
-    //    UIManager.Instance.SignUpScreen = SignUpPanal;
+    //    UIHandler.Instance.LoginRegisterScreen = FirstPanal;
+    //    UIHandler.Instance.SignUpScreen = SignUpPanal;
     //    CountryCodeText.text = "+81";
     //    mobile_number = false;
 
@@ -513,7 +513,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     //        LoggedInAsGuest = true;
     //        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-    //        SavaCharacterProperties.instance.LoadMorphsfromFile();
+    //        SavaAvatarProperties.instance.LoadMorphsfromFile();
     //        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
     //    }
 
@@ -677,7 +677,7 @@ public class UserRegisterationManager : MonoBehaviour
         {
             GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
         }
-        SavaCharacterProperties.instance.LoadMorphsfromFile();
+        SavaAvatarProperties.instance.LoadMorphsfromFile();
         float t = 0;
         var target = tabSelectorAnimator.GetComponent<Image>().rectTransform.position;
 
@@ -1291,7 +1291,7 @@ public class UserRegisterationManager : MonoBehaviour
     void resetClothstoGuest()
     {
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-        SavaCharacterProperties.instance.LoadMorphsfromFile();
+        SavaAvatarProperties.instance.LoadMorphsfromFile();
     }
 
     // Submit Logout
@@ -2651,7 +2651,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.Save();
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
-                    UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 }
             }
         }
@@ -2697,7 +2697,7 @@ public class UserRegisterationManager : MonoBehaviour
         BlackScreen.GetComponent<Image>().color = new Color(0, 0, 0, 1);
         StartCoroutine(LerpFunction(new Color(0, 0, 0, 0), 2));
         TutorialHandler.instance.ShowTutorials();
-        ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+        AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>().SavePlayerProperties();
     }
     IEnumerator LerpFunction(Color endValue, float duration)
     {
@@ -3522,9 +3522,9 @@ public class UserRegisterationManager : MonoBehaviour
                                 usernamePanal.transform.Find("Back-Btn (1)").gameObject.SetActive(false);
                             }
                         }
-                        if (UIManager.Instance != null)//rik
+                        if (UIHandler.Instance != null)//rik
                         {
-                            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
+                            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
                         }
                     }
 
@@ -3794,10 +3794,10 @@ public class UserRegisterationManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         PlayerPrefs.Save();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (UIManager.Instance != null)//rik
+        if (UIHandler.Instance != null)//rik
         {
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().GetComponent<HomeFooterTabCanvas>().CheckLoginOrNotForFooterButton();
         }
     }
 

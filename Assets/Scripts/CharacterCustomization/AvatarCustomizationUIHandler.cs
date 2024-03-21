@@ -12,9 +12,9 @@ public struct Panel
     public string m_PanelName_Str;
 }
 
-public class CharacterCustomizationUIManager : MonoBehaviour
+public class AvatarCustomizationUIHandler : MonoBehaviour
 {
-    public static CharacterCustomizationUIManager Instance;
+    public static AvatarCustomizationUIHandler Instance;
     [Header("Blink Panel Animation")]  // this is used, to change the panel from face to body customization ui panel
     public GameObject m_BlinkAnimationPanel;
     public AnimationCurve m_AnimCurve;
@@ -51,7 +51,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
     public void CustomSliderSaveBtnFtn()
     {
-        SavaCharacterProperties.instance.SavePlayerProperties();
+        SavaAvatarProperties.instance.SavePlayerProperties();
     }
 
 
@@ -61,7 +61,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     public void LoadCharacterCustomizationPanel()
     {
         InventoryManager.instance.gameObject.SetActive(true);
-        CharacterCustomizationManager.Instance.OnLoadCharacterCustomizationPanel();
+        AvatarCustomizationManager.Instance.OnLoadCharacterCustomizationPanel();
         l_ZoomOutState = false;
         ZoomOutCamera();
     }
@@ -69,7 +69,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     public void CloseCharacterCustomizationPanel()
     {
         InventoryManager.instance.gameObject.SetActive(false);
-        CharacterCustomizationManager.Instance.OnCloseCharacterCustomizationPanel();
+        AvatarCustomizationManager.Instance.OnCloseCharacterCustomizationPanel();
     }
 
     #endregion
@@ -82,14 +82,14 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         LoadPanel_BodyCustomization("My");
         ZoomInCamera();
         GameManager.Instance.ChangeCharacterAnimationState(true);
-        CharacterCustomizationManager.Instance.ResetCharacterRotation(180f); 
+        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f); 
     }
 
     public void LoadSection_ClothesCustomization()
     {
         ZoomOutCamera();
 
-        CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
+        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
         GameManager.Instance.ChangeCharacterAnimationState(false);
     }
 
@@ -123,23 +123,23 @@ public class CharacterCustomizationUIManager : MonoBehaviour
 
     public void LoadCustomBlendShapePanel(string id)
     {
-        CharacterCustomizationManager.Instance.m_IsCharacterRotating = false;
+        AvatarCustomizationManager.Instance.m_IsCharacterRotating = false;
 
         GameManager.Instance.ChangeCharacterAnimationState(true);
         
         // Commented By WaqasAhmad
-        //CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = false;
-        //CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = false;
+        //AvatarCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = false;
+        //AvatarCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = false;
 
       InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-        UIManager.Instance.faceMorphPanel.SetActive(true);
+        UIHandler.Instance.faceMorphPanel.SetActive(true);
         GameManager.Instance.faceMorphCam.SetActive(true);
     }
 
 
     public void CloseCustomBlendShapePanel()
     {
-        UIManager.Instance._footerCan.SetActive(true);
+        UIHandler.Instance._footerCan.SetActive(true);
         InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         // Commented By Ahsan
         //if (InventoryManager.instance.ParentOfBtnsAvatarEyeBrows.gameObject.activeSelf)
@@ -150,30 +150,30 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //    }
         //    InventoryManager.instance.SubmitAllItemswithSpecificSubCategory(InventoryManager.instance.SubCategoriesList[XanaConstants.xanaConstants.currentButtonIndex + 8].id, true);
         //}
-        UIManager.Instance.faceMorphPanel.SetActive(false);
+        UIHandler.Instance.faceMorphPanel.SetActive(false);
         GameManager.Instance.faceMorphCam.SetActive(false);
-        CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
+        AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
 
-        CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
-        CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
+        AvatarCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
+        AvatarCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
         //---------------------------------
 
         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-        CharacterCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
+        AvatarCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
         GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.6f, 6.41f);
 
-        CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
-        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
+        AvatarCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
+        AvatarCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(2).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
 
-        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
-        CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
+        AvatarCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
+        AvatarCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
         //----------------------
         SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
 
         //Comment because file is rewriting the vale here again...(Abdullah)
-        //SavaCharacterProperties.instance.AssignCustomSlidersData();
+        //SavaAvatarProperties.instance.AssignCustomSlidersData();
         InventoryManager.instance.ResetMorphBooleanValues();
         BlendShapeImporter.Instance.TurnOffAllObjects();
 
@@ -183,55 +183,55 @@ public class CharacterCustomizationUIManager : MonoBehaviour
             StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
         }
 
-        //  SavaCharacterProperties.instance.AssignCustomsliderNewData();
+        //  SavaAvatarProperties.instance.AssignCustomsliderNewData();
     }
 
 
     // save morph to server 
     public void CloseCustomBlendShapePanelSave_Morphs()
     {
-        UIManager.Instance._footerCan.SetActive(true);
+        UIHandler.Instance._footerCan.SetActive(true);
         InventoryManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
-        UIManager.Instance.faceMorphPanel.SetActive(false);
+        UIHandler.Instance.faceMorphPanel.SetActive(false);
         GameManager.Instance.faceMorphCam.SetActive(false);
-        CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
+        AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
 
-        CharacterCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
-        CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
+        AvatarCustomizationManager.Instance.m_MainCharacter.GetComponent<Animator>().enabled = true;
+        AvatarCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = true;
         //---------------------------------
 
         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
-        CharacterCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
+        AvatarCustomizationManager.Instance._facemorphCamPosition.localPosition = new Vector3(-0.031f, 1.485f, 4.673f);
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
         GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.48f, 6.41f);
 
-        CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
-        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
+        AvatarCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.3960f, 0.3960f, 0.3960f, 1f);
+        AvatarCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(0).GetComponent<Text>().color = new Color(0.2274f, 0.5921f, 1f, 1f);
 
-        CharacterCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
-        CharacterCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
+        AvatarCustomizationManager.Instance.m_FrontSidebtn.transform.GetChild(1).gameObject.SetActive(true);
+        AvatarCustomizationManager.Instance.m_LeftSideBtn.transform.GetChild(1).gameObject.SetActive(false);
         //----------------------
         SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
-        // SavaCharacterProperties.instance.AssignCustomSlidersData();
+        // SavaAvatarProperties.instance.AssignCustomSlidersData();
 
         InventoryManager.instance.saveStoreBtnButton.onClick.Invoke();
         Debug.Log("<color=red>CustomizationManager AssignLastClickedBtnHere</color>");
         XanaConstants.xanaConstants._lastClickedBtn = gameObject;
-        //  SavaCharacterProperties.instance.AssignCustomsliderNewData();
+        //  SavaAvatarProperties.instance.AssignCustomsliderNewData();
 
     }
 
     public void LoadMyFaceCustomizationPanel()
     {
-        CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
+        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
         GameManager.Instance.ChangeCharacterAnimationState(true);
         ZoomInCamera();
     }
 
     public void LoadMyClothCustomizationPanel()
     {
-        CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
-        CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
+        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+        AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
         GameManager.Instance.ChangeCharacterAnimationState(false);
         ZoomOutCamera();
     }

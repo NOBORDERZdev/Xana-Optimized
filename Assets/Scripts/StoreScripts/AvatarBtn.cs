@@ -525,13 +525,13 @@ public class AvatarBtn : MonoBehaviour
                 case "Face":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.faceId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.faceId = AvatarBtnId;
                         break;
                     }
                 case "EyeBrow":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.eyeBrowId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.eyeBrowId = AvatarBtnId;
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
@@ -542,14 +542,14 @@ public class AvatarBtn : MonoBehaviour
                     {
                         string lashesName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(lashesName, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
-                        SavaCharacterProperties.instance.characterController.eyeLashesId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.eyeLashesId = AvatarBtnId;
                         break;
                     }
                 case "Makup":
                     {
                         string makeupName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(makeupName, GameManager.Instance.mainCharacter, CurrentTextureType.Makeup));
-                        SavaCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.makeupId = AvatarBtnId;
                         break;
                     }
                 case "Makeup":
@@ -557,13 +557,13 @@ public class AvatarBtn : MonoBehaviour
                         //print("~~~~~~~~~ makeup call ");
                         string lashesName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(lashesName, GameManager.Instance.mainCharacter, CurrentTextureType.Makeup));
-                        SavaCharacterProperties.instance.characterController.makeupId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.makeupId = AvatarBtnId;
                         break;
                     }
                 case "Eyes":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.eyesId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.eyesId = AvatarBtnId;
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
@@ -572,7 +572,7 @@ public class AvatarBtn : MonoBehaviour
                 case "Nose":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.noseId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.noseId = AvatarBtnId;
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
@@ -581,7 +581,7 @@ public class AvatarBtn : MonoBehaviour
                 case "Lips":
                     {
                         _BDCTrigger.CustomizationTriggerTwo();
-                        SavaCharacterProperties.instance.characterController.lipsId = AvatarBtnId;
+                        SavaAvatarProperties.instance.characterController.lipsId = AvatarBtnId;
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
@@ -595,7 +595,7 @@ public class AvatarBtn : MonoBehaviour
                         InventoryManager.instance.WhiteRibbonImage.SetActive(true);
                         InventoryManager.instance.ClearBuyItems();
 
-                        SavaCharacterProperties.instance.characterController.bodyFat = _Bodyint;
+                        SavaAvatarProperties.instance.characterController.bodyFat = _Bodyint;
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
@@ -611,26 +611,26 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "FaceMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
 
                         //BlendShapeImporter.Instance.MorphTypeSelected("Head");
                         BlendShapeImporter.Instance.MorphTypeSelected("FaceMorph");
 
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Face");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Face");
                         BlendShapeImporter.Instance.TurnOnPoints("FaceMorph");
                         break;
                     }
                 case "EyeBrowMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("EyeBrow");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyebrow");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyebrow");
                         BlendShapeImporter.Instance.TurnOnPoints("EyeBrowMorph");
                         break;
                     }
@@ -638,45 +638,45 @@ public class AvatarBtn : MonoBehaviour
                     {
                         EyesBlinking.instance.isBlinking = false;       // Added by Ali Hamza
 
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("eye");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Eyes");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyes");
                         BlendShapeImporter.Instance.TurnOnPoints("EyesMorph");
                         break;
                     }
                 case "NoseMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Nose");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Nose");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Nose");
                         BlendShapeImporter.Instance.TurnOnPoints("NoseMorph");
                         break;
                     }
                 case "LipsMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Lips");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Lips");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Lips");
                         BlendShapeImporter.Instance.TurnOnPoints("LipsMorph");
                         break;
                     }
                 case "HeadMorph":
                     {
-                        CharacterCustomizationManager.Instance.OnFrontSide();
-                        UIManager.Instance._footerCan.SetActive(false);
+                        AvatarCustomizationManager.Instance.OnFrontSide();
+                        UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
                         BlendShapeImporter.Instance.MorphTypeSelected("Head");
-                        CharacterCustomizationUIManager.Instance.LoadCustomBlendShapePanel("Head");
+                        AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Head");
                         BlendShapeImporter.Instance.TurnOnPoints("HeadMorph");
                     }
                     break;

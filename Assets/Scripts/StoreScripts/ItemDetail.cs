@@ -273,7 +273,7 @@ public class ItemDetail : MonoBehaviour
                 case "HairAvatar":
                     {
                         ////Debug.Log(this.id + " xanaConstantsHairs: " + XanaConstants.xanaConstants.hair);
-                        ////Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
+                        ////Debug.Log("wornHairId: " + SavaAvatarProperties.instance.characterController.wornHairId.ToString());
                         if ((isHairItem && this.id == XanaConstants.xanaConstants.hair) ||
                             (StoreStackHandler.obj.IsCallByBtn() && this.id == XanaConstants.xanaConstants.hair))
                         {
@@ -621,7 +621,7 @@ public class ItemDetail : MonoBehaviour
                         XanaConstants.xanaConstants.avatarStoreSelection[XanaConstants.xanaConstants.currentButtonIndex] = gameObject;
                         saveIndex = 2;
                         ////Debug.Log("XanaConstants Hairs: " + XanaConstants.xanaConstants.hair);
-                        ////Debug.Log("wornHairId: " + SavaCharacterProperties.instance.characterController.wornHairId.ToString());
+                        ////Debug.Log("wornHairId: " + SavaAvatarProperties.instance.characterController.wornHairId.ToString());
                         break;
                     }
                 case "HairColor":
@@ -712,8 +712,8 @@ public class ItemDetail : MonoBehaviour
                     {
                         XanaConstants.xanaConstants.eyeBrowIndex = id.ParseToInt();
                         //Debug.Log("Eye brow eyeBrowIndex: " + XanaConstants.xanaConstants.eyeBrowIndex);
-                        SavaCharacterProperties.instance.characterController.eyeBrowId = id.ParseToInt();
-                        //Debug.Log("Eye brow ID: " + SavaCharacterProperties.instance.characterController.eyeBrowId);
+                        SavaAvatarProperties.instance.characterController.eyeBrowId = id.ParseToInt();
+                        //Debug.Log("Eye brow ID: " + SavaAvatarProperties.instance.characterController.eyeBrowId);
                         //Commented By Ahsan
                         //Transform ParentAvatarofEyeBrows = InventoryManager.instance.ParentOfBtnsAvatarEyeBrows;
 
@@ -728,7 +728,7 @@ public class ItemDetail : MonoBehaviour
                 case "Eye Lashes":
                     {
                         XanaConstants.xanaConstants.eyeLashesIndex = id.ParseToInt();
-                        SavaCharacterProperties.instance.characterController.eyeLashesId = id.ParseToInt();
+                        SavaAvatarProperties.instance.characterController.eyeLashesId = id.ParseToInt();
                         //Transform ParentAvatarofEyeLashes = InventoryManager.instance.ParentOfBtnsAvatarEyeLashes;
                         //for (int i = 0; i < ParentAvatarofEyeLashes.childCount; i++)
                         //{
@@ -1038,7 +1038,7 @@ public class ItemDetail : MonoBehaviour
                 if (name != "")
                 {
                     downloader.StartCoroutine(downloader.DownloadAddressableTexture(name, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLense));
-                    SavaCharacterProperties.instance.characterController.eyesColorId = int.Parse(id);
+                    SavaAvatarProperties.instance.characterController.eyesColorId = int.Parse(id);
                 }
                 if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
                 {
@@ -1056,22 +1056,22 @@ public class ItemDetail : MonoBehaviour
             else if (CategoriesEnumVar.ToString() == "HairAvatarColor")
             {
                 CharcterBodyParts.instance.ChangeHairColor(MyIndex);
-                SavaCharacterProperties.instance.characterController.hairColorPaletteId = int.Parse(id);
+                SavaAvatarProperties.instance.characterController.hairColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "EyeBrowAvatarColor")
             {
                 CharcterBodyParts.instance.ChangeEyebrowColor(MyIndex);
-                SavaCharacterProperties.instance.characterController.eyeBrowColorPaletteId = int.Parse(id);
+                SavaAvatarProperties.instance.characterController.eyeBrowColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "EyesAvatarColor")
             {
                 CharcterBodyParts.instance.ChangeEyeColor(MyIndex);
-                SavaCharacterProperties.instance.characterController.eyesColorPaletteId = int.Parse(id);
+                SavaAvatarProperties.instance.characterController.eyesColorPaletteId = int.Parse(id);
             }
             else if (CategoriesEnumVar.ToString() == "LipsAvatarColor")
             {
                 CharcterBodyParts.instance.ChangeLipColorForPalette(MyIndex);
-                SavaCharacterProperties.instance.characterController.lipsColorPaletteId = int.Parse(id);
+                SavaAvatarProperties.instance.characterController.lipsColorPaletteId = int.Parse(id);
             }
             else if (!File.Exists(Application.persistentDataPath + "/" + name))
             {
@@ -1150,7 +1150,7 @@ public class ItemDetail : MonoBehaviour
             case "Lip":
 
                 CharcterBodyParts.instance.ChangeLipColor(MyIndex);
-                SavaCharacterProperties.instance.characterController.lipsColorId = int.Parse(id);
+                SavaAvatarProperties.instance.characterController.lipsColorId = int.Parse(id);
 
                 if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
                 {
@@ -1170,7 +1170,7 @@ public class ItemDetail : MonoBehaviour
                 CharcterBodyParts.instance.ChangeSkinColor(MyIndex);
                 //Debug.Log("Skin color slider");
                 CharcterBodyParts.instance.ChangeSkinColorSlider(MyIndex);
-                SavaCharacterProperties.instance.characterController.skinId = MyIndex;
+                SavaAvatarProperties.instance.characterController.skinId = MyIndex;
 
                 if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
                 {

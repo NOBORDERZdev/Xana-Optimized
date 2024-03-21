@@ -108,7 +108,7 @@ public class ShowNFTDetails : MonoBehaviour
 
         nftlinkText = data.nftLink;
         ownerlinkText = data.creatorLink;
-        if (CustomLocalization.forceJapanese)
+        if (LocalizationManager.forceJapanese)
         {
             titleText.text = "" + data.metaData.name;
             descriptionText.text = "" + data.tokenDetails.ja_nft_description;
@@ -177,7 +177,7 @@ public class ShowNFTDetails : MonoBehaviour
             //imageObjectWithStats_Potrait.GetComponent<Image>().sprite = data.thunbNailImage;
             Debug.Log("Showing with stats ");
 
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 nftWithDes[type].ownerTextLandscape.text = "" + data.detail.authorName[1];
                 nftWithDes[type].titleTxtLandscape.text = "" + data.detail.title[1];
@@ -456,7 +456,7 @@ public class ShowNFTDetails : MonoBehaviour
             VideoObjectWithDes.gameObject.SetActive(true);
             VideoObjectWithDes.GetComponent<RawImage>().enabled = false;
             
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 nftWithDes[type].videoDescriptionTxtLandscape.text = "" + data.detail.description[1];
                 nftWithDes[type].videoTitleLandscape.text = "" + data.detail.title[1];

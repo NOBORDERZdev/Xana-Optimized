@@ -1386,7 +1386,7 @@ public class APIManager : MonoBehaviour
     {
         lastCommentTotalCount = count;
         //Debug.Log("Comment Count:" + count);
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+        if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
         {
             FeedUIController.Instance.CommentCount.text = UITextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + UITextLocalization.GetLocaliseTextByKey("s");
         }
@@ -1449,9 +1449,9 @@ public class APIManager : MonoBehaviour
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             yield return www.SendWebRequest();
-            if (AWSHandler.Instance.currentSNSApiLoaderController != null)
+            if (AWSDataHandler.Instance.currentSNSApiLoaderController != null)
             {
-                AWSHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
+                AWSDataHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
             }
             switch (callingFrom)
             {
@@ -2020,9 +2020,9 @@ public class APIManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FeedUIController.Instance.BestFriendFull.SetActive(true);
             //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }

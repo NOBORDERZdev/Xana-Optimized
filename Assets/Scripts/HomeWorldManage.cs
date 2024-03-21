@@ -25,12 +25,12 @@ public class HomeWorldManage : MonoBehaviour
 
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
-        /*UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);*/
+        /*UIHandler.Instance.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
     public void SearchScreenLoad()
     {
         WorldSearchManager.IsSearchBarActive = true;
-        UIManager.Instance.SwitchToScreen(2);
+        UIHandler.Instance.SwitchToScreen(2);
         RectModifire.OnAdjustSize?.Invoke(true);
         WorldsHandler.instance.WorldScrollReset();
         WorldsHandler.instance.SearchPageNumb = 1;
@@ -39,7 +39,7 @@ public class HomeWorldManage : MonoBehaviour
     public void SearchScreenLoad(string searchKey)
     {
         WorldSearchManager.IsSearchBarActive = true;
-        UIManager.Instance.SwitchToScreen(2);
+        UIHandler.Instance.SwitchToScreen(2);
         RectModifire.OnAdjustSize?.Invoke(true);
         WorldsHandler.instance.WorldScrollReset();
     }
@@ -47,7 +47,7 @@ public class HomeWorldManage : MonoBehaviour
     public void BackToPreviousScreen()
     {
         WorldsHandler.instance.WorldScrollReset();
-        UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
+        UIHandler.Instance.SwitchToScreen(UIHandler.Instance.PreviousScreen);
         //WorldsHandler.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);
     }
@@ -55,9 +55,9 @@ public class HomeWorldManage : MonoBehaviour
     {
         ScrollEnableDisable(0);
         WorldsHandler.instance.ChangeWorld(APIURL.HotSpaces);
-        if(UIManager.Instance.PreviousScreen==0)
+        if(UIHandler.Instance.PreviousScreen==0)
         {
-            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldItemFlagHandler>().ActivityInApp());
+            UIHandler.Instance.LobbyTabHolder.gameObject.SetActive(UIHandler.Instance.LobbyTabHolder.GetComponent<LobbyWorldItemFlagHandler>().ActivityInApp());
         }
     }
 

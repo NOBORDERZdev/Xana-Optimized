@@ -33,7 +33,7 @@ public class CharacSelectScroll : MonoBehaviour
         {
             hssRef.enabled = true;
         }
-        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        if (UIHandler.Instance.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
         }

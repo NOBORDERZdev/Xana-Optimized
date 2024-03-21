@@ -56,7 +56,7 @@ public class ChatDataScript : MonoBehaviour
 
     public void LoadFeed()
     {
-        //attechMentUrl = AWSHandler.Instance.URL;
+        //attechMentUrl = AWSDataHandler.Instance.URL;
         double minuts = (System.DateTime.Now - MessageRow.createdAt).TotalMinutes;
         if (!string.IsNullOrEmpty(MessageRow.message.msg))
         {
@@ -266,13 +266,13 @@ public class ChatDataScript : MonoBehaviour
     {
         /*var request_1 = new GetPreSignedUrlRequest()
         {
-            BucketName = AWSHandler.Instance.Bucketname,
+            BucketName = AWSDataHandler.Instance.Bucketname,
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.LogError("Chat Video file sending url request:"+AWSHandler.Instance._s3Client);
-        //AWSHandler.Instance.GetObject(key);
-        AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
+        //Debug.LogError("Chat Video file sending url request:"+AWSDataHandler.Instance._s3Client);
+        //AWSDataHandler.Instance.GetObject(key);
+        AWSDataHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
             if (callback.Exception == null)
             {

@@ -122,7 +122,7 @@ public class NpcToNpcChat : MonoBehaviour
         {
             responseData = JsonUtility.FromJson<ResponseData>(request.downloadHandler.text);
             string responseFeed = "";
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
                 responseFeed = responseData.response_jp;
             else
                 responseFeed = responseData.response_en;
@@ -172,7 +172,7 @@ public class NpcToNpcChat : MonoBehaviour
             feed = JsonUtility.FromJson<FeedData>(request.downloadHandler.text);
 
             string responseFeed = "";
-            if (CustomLocalization.forceJapanese || GameManager.currentLanguage == "ja")
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
                 responseFeed = feed.output_data.user_msg_jp;
             else
                 responseFeed = feed.output_data.user_msg_en;
