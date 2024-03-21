@@ -136,9 +136,9 @@ public class WorldDetailsPopupPreview : MonoBehaviour
         m_isSignUpPassed = true;
         _isBuilderScene = isBuilderSceneF;
         if (_isBuilderScene)
-            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinBuilderWorld());
+            JoinEventBtn.onClick.AddListener(() => WorldsHandler.instance.JoinBuilderWorld());
         else
-            JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
+            JoinEventBtn.onClick.AddListener(() => WorldsHandler.instance.JoinEvent());
         SetPanelToBottom();
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
@@ -340,8 +340,8 @@ public class WorldDetailsPopupPreview : MonoBehaviour
                 if (thumbnailPrefabRef)
                     thumbnailPrefabRef.GetComponent<WorldItem>().isFavourite = true;
                 //Reloading following space
-                WorldManager.instance.changeFollowState = true;
-                WorldManager.ReloadFollowingSpace?.Invoke();
+                WorldsHandler.instance.changeFollowState = true;
+                WorldsHandler.ReloadFollowingSpace?.Invoke();
             }
             else
             {
@@ -370,8 +370,8 @@ public class WorldDetailsPopupPreview : MonoBehaviour
 
                 }
                 //Reloading following space
-                WorldManager.instance.changeFollowState = true;
-                WorldManager.ReloadFollowingSpace?.Invoke();
+                WorldsHandler.instance.changeFollowState = true;
+                WorldsHandler.ReloadFollowingSpace?.Invoke();
 
             }
             else

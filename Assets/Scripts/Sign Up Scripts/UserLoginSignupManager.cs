@@ -1096,7 +1096,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     void GetUserClothData()
     {
-        ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+        ServerSideUserDataHandler.Instance.GetDataFromServer();
     }
 
 

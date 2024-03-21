@@ -274,9 +274,9 @@ namespace DynamicScrollRect
             if (!CanAddNewItemIntoTail())
             {
                 //Debug.LogError("Can't add new item into tail");
-                if (WorldManager.instance.dataIsFatched)
+                if (WorldsHandler.instance.dataIsFatched)
                 {
-                    WorldManager.instance.WorldPageLoading();
+                    WorldsHandler.instance.WorldPageLoading();
                 }
                 return;
             }
@@ -290,9 +290,9 @@ namespace DynamicScrollRect
             {
                 previousItems = TotalItems;
                 //Debug.LogError("Fetch data again");
-                if (WorldManager.instance.dataIsFatched)
+                if (WorldsHandler.instance.dataIsFatched)
                 {
-                    WorldManager.instance.WorldPageLoading();
+                    WorldsHandler.instance.WorldPageLoading();
                 }
             }
         }

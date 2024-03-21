@@ -106,7 +106,7 @@ public class TutorialHandler : MonoBehaviour
         HandleButtons(index);
         if (index == 1)
         {
-            xanaLobby = WorldManager.instance.EventPrefabLobby;
+            xanaLobby = WorldsHandler.instance.EventPrefabLobby;
             ShowWorlds(index);
         }
         else if (index == 2)
@@ -146,7 +146,7 @@ public class TutorialHandler : MonoBehaviour
         }
         else //instantiate first 6 worlds
         {
-            /*List<WorldItemDetail> Worlds = WorldManager.instance.WorldItemManager.Get6WorldsForTutorial();
+            /*List<WorldItemDetail> Worlds = WorldsHandler.instance.WorldItemManager.Get6WorldsForTutorial();
             for (int i = 0; i < 6; i++)
             {
                 panels[2].transform.GetChild(1).GetChild(0).GetChild(i).

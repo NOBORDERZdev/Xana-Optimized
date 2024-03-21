@@ -4756,7 +4756,7 @@ public class InventoryManager : MonoBehaviour
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-                ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() =>
+                ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
                 {
                 });
         }

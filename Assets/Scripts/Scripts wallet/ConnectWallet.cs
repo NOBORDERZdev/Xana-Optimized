@@ -673,7 +673,7 @@ public class ConnectWallet : MonoBehaviour
                 {
                     PlayerPrefs.SetInt("IsLoggedIn", 1);
                     PlayerPrefs.SetInt("FristPresetSet", 1);
-                    ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+                    ServerSideUserDataHandler.Instance.GetDataFromServer();
                     PlayerPrefs.SetString("PlayerName", localUsername);
                     if (UIManager.Instance != null)//rik  
                     {

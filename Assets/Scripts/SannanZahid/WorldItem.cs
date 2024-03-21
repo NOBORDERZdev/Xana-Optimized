@@ -152,7 +152,7 @@ public class WorldItem : MonoBehaviour
         userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
         //UpdateUserCount();
         SetWorldName();
-        worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
+        worldItemPreview = WorldsHandler.instance.worldItemPreviewTabRef;
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)

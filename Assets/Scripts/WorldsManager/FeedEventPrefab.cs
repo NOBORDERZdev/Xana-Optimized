@@ -283,7 +283,7 @@ public class FeedEventPrefab : MonoBehaviour
                 AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
                 worldIcon.sprite = null;
                 worldIcon.sprite = dummyThumbnail;
-               // WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+               // WorldsHandler.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
             }
             else if (isOnScreen && (worldIcon.sprite == null || worldIcon.sprite == dummyThumbnail))
             {
@@ -345,7 +345,7 @@ public class FeedEventPrefab : MonoBehaviour
         //}
         worldIcon.sprite = null;
         worldIcon.sprite = dummyThumbnail;
-        //WorldManager.instance.ResourcesUnloadAssetFile();
+        //WorldsHandler.instance.ResourcesUnloadAssetFile();
         UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
         //StopCoroutine(UpdateCoroutine());
         StopAllCoroutines();
@@ -377,9 +377,9 @@ public class FeedEventPrefab : MonoBehaviour
         }
 
         if (isBuilderScene)
-            m_JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinBuilderWorld());
+            m_JoinEventBtn.onClick.AddListener(() => WorldsHandler.instance.JoinBuilderWorld());
         else
-            m_JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
+            m_JoinEventBtn.onClick.AddListener(() => WorldsHandler.instance.JoinEvent());
 
         isVisible = true;
     }

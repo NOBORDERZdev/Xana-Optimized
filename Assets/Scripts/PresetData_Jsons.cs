@@ -278,7 +278,7 @@ public class PresetData_Jsons : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
             File.WriteAllText((Application.persistentDataPath + "/logIn.json"), JsonUtility.ToJson(savingCharacterDataClass));
-            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() =>
+            ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
             {
             });
         }

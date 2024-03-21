@@ -31,30 +31,30 @@ public class HomeWorldManage : MonoBehaviour
     {
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
-        FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.WorldScrollReset();
-        WorldManager.instance.SearchPageNumb = 1;
+        RectModifire.OnAdjustSize?.Invoke(true);
+        WorldsHandler.instance.WorldScrollReset();
+        WorldsHandler.instance.SearchPageNumb = 1;
     }
 
     public void SearchScreenLoad(string searchKey)
     {
         WorldSearchManager.IsSearchBarActive = true;
         UIManager.Instance.SwitchToScreen(2);
-        FlexibleRect.OnAdjustSize?.Invoke(true);
-        WorldManager.instance.WorldScrollReset();
+        RectModifire.OnAdjustSize?.Invoke(true);
+        WorldsHandler.instance.WorldScrollReset();
     }
 
     public void BackToPreviousScreen()
     {
-        WorldManager.instance.WorldScrollReset();
+        WorldsHandler.instance.WorldScrollReset();
         UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        //WorldsHandler.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);
     }
     /*public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        WorldsHandler.instance.ChangeWorld(APIURL.HotSpaces);
         if(UIManager.Instance.PreviousScreen==0)
         {
             UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldItemFlagHandler>().ActivityInApp());
@@ -68,7 +68,7 @@ public class HomeWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(1);
-        WorldManager.instance.ChangeWorld(APIURL.GameWorld);
+        WorldsHandler.instance.ChangeWorld(APIURL.GameWorld);
     }
     public void CustomWorldLoad()
     {
@@ -77,7 +77,7 @@ public class HomeWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(2);
-        WorldManager.instance.ChangeWorld(APIURL.AllWorld);
+        WorldsHandler.instance.ChangeWorld(APIURL.AllWorld);
     }
     public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
     {
@@ -86,7 +86,7 @@ public class HomeWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(3);
-        WorldManager.instance.ChangeWorld(APIURL.EventWorld);
+        WorldsHandler.instance.ChangeWorld(APIURL.EventWorld);
     }
     public void EventWorldLoad()
     {
@@ -97,7 +97,7 @@ public class HomeWorldManage : MonoBehaviour
         ScrollEnableDisable(4);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            WorldManager.instance.ChangeWorld(APIURL.MyWorld);
+            WorldsHandler.instance.ChangeWorld(APIURL.MyWorld);
         }
         else
         {
@@ -111,7 +111,7 @@ public class HomeWorldManage : MonoBehaviour
             return;
         }
         ScrollEnableDisable(5);
-        WorldManager.instance.ChangeWorld(APIURL.TestWorld);
+        WorldsHandler.instance.ChangeWorld(APIURL.TestWorld);
     }*/
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
@@ -144,36 +144,36 @@ public class HomeWorldManage : MonoBehaviour
     public void HotSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.hotSpacePN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
+        WorldsHandler.instance.hotSpacePN = 1;
+        WorldsHandler.instance.ChangeWorldTab(APIURL.HotSpaces);
     }
 
     public void HotGamesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.hotGamesPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
+        WorldsHandler.instance.hotGamesPN = 1;
+        WorldsHandler.instance.ChangeWorldTab(APIURL.HotGames);
     }
 
     public void FollowingSpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.followingPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
+        WorldsHandler.instance.followingPN = 1;
+        WorldsHandler.instance.ChangeWorldTab(APIURL.FolloingSpace);
     }
 
     public void MySpacesLoadMore()
     {
         SearchScreenLoad();
-        WorldManager.instance.mySpacesPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
+        WorldsHandler.instance.mySpacesPN = 1;
+        WorldsHandler.instance.ChangeWorldTab(APIURL.MySpace);
     }
 
     public void CategorySpacesLoadMore(int tag)
     {
-        WorldManager.instance.SearchKey = WorldSpacesHomeScreen.mostVisitedTagList[tag];
+        WorldsHandler.instance.SearchKey = SetupHomeWorldsPreview.mostVisitedTagList[tag];
         SearchScreenLoad();
-        WorldManager.instance.SearchTagPageNumb = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
+        WorldsHandler.instance.SearchTagPageNumb = 1;
+        WorldsHandler.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }

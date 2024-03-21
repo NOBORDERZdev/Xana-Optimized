@@ -10,7 +10,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class APIManager : MonoBehaviour
 {

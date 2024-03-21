@@ -19,7 +19,7 @@ public class WorldItemPreview : MonoBehaviour
         if (scrollActivity.gameObject.activeInHierarchy)
         {
             scrollActivity.BottomToTop();
-            m_WorldPlayPanel.transform.SetParent(WorldManager.instance.descriptionParentPanel.transform);
+            m_WorldPlayPanel.transform.SetParent(WorldsHandler.instance.descriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
             m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;

@@ -296,7 +296,7 @@ public class SavaCharacterProperties : MonoBehaviour
     {
         SavePlayerPropertiesInClassObj();
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() =>
+            ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
             {
             });
     }

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-public class LoadPlayerAvatar : ServerSIdeCharacterHandling
+public class LoadPlayerAvatar : ServerSideUserDataHandler
 {
     public GameObject mainPanel;
     public ScrollRect avatarScrollRect;
@@ -438,7 +438,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
 
             isAlreadyRunning = true;
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
             //if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
@@ -553,7 +553,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
             PlayerPrefs.SetInt("presetPanel", 0);
             SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
         }
     }
 

@@ -7,9 +7,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class ServerSIdeCharacterHandling : MonoBehaviour
+public class ServerSideUserDataHandler : MonoBehaviour
 {
-    public static ServerSIdeCharacterHandling Instance;
+    public static ServerSideUserDataHandler Instance;
 
     //Event will be called when user loged In and new Avatar is saved by user. Event is created for multiple avatar saving.
     public event Action<int, int> loadAllAvatar;

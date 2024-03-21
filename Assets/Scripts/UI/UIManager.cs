@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
     public void IsWorldClicked()
     {
         if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstants.loggedIn)
-            WorldManager.instance.PlayWorld();
+            WorldsHandler.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
     {
@@ -151,8 +151,8 @@ public class UIManager : MonoBehaviour
                     /*LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldItemFlagHandler>().ActivityInApp());*/
                   //  HomeWorldTabsHolder.gameObject.SetActive(true);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    //WorldManager.instance.WorldPageStateHandler(false);
-                    //WorldManager.instance.WorldScrollReset();
+                    //WorldsHandler.instance.WorldPageStateHandler(false);
+                    //WorldsHandler.instance.WorldScrollReset();
                     worldHolder.SetActive(true);
                     searchWorldHolder.SetActive(false);
                     /*SecondSliderScrollView.GetComponent<Mask>().enabled = false;*/
@@ -168,8 +168,8 @@ public class UIManager : MonoBehaviour
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(true);
-                    //WorldManager.instance.WorldPageStateHandler(true);
-                    //WorldManager.instance.WorldScrollReset();
+                    //WorldsHandler.instance.WorldPageStateHandler(true);
+                    //WorldsHandler.instance.WorldScrollReset();
                     /*SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     break;
                 }
@@ -185,8 +185,8 @@ public class UIManager : MonoBehaviour
                     searchWorldHolder.SetActive(true);
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     WorldWorldTabsHolder.gameObject.SetActive(false);
-                    //WorldManager.instance.WorldPageStateHandler(true);
-                    WorldManager.instance.WorldScrollReset();
+                    //WorldsHandler.instance.WorldPageStateHandler(true);
+                    WorldsHandler.instance.WorldScrollReset();
                    /* SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     ShowFooter(true);
                     break;

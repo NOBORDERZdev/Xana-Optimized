@@ -3780,7 +3780,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     void getdatafromserver()
     {
-        ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+        ServerSideUserDataHandler.Instance.GetDataFromServer();
     }
     public void LoginWithWallet()
     {

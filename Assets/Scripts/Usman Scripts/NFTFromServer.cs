@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {

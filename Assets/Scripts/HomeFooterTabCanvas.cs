@@ -284,17 +284,17 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
             }
            
-            WorldManager.LoadHomeScreenWorlds?.Invoke();
-            FlexibleRect.OnAdjustSize?.Invoke(false);
+            WorldsHandler.LoadHomeScreenWorlds?.Invoke();
+            RectModifire.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
-            //WorldManager.instance.ChangeWorld(APIURL.Hot);
-            //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+            //WorldsHandler.instance.ChangeWorld(APIURL.Hot);
+            //WorldsHandler.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
 
         if (WorldSearchManager.IsSearchBarActive)
         {
             WorldSearchManager.IsSearchBarActive = false;
-            WorldManager.instance.worldSearchManager.ClearInputField();
+            WorldsHandler.instance.worldSearchManager.ClearInputField();
         }
     }
 
@@ -319,8 +319,8 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 }
                // UIManager.Instance.Canvas.SetActive(true);
                 UIManager.Instance.SwitchToScreen(1);
-                WorldManager.instance.ChangeWorld(APIURL.Hot);
-                WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
+                WorldsHandler.instance.ChangeWorld(APIURL.Hot);
+                WorldsHandler.instance.AllWorldTabReference.ScrollEnableDisable(0);
             }
         }
     }*/
@@ -519,7 +519,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
 
             //home page thumnbail images destroy
-            WorldManager.instance.ClearHomePageData();
+            WorldsHandler.instance.ClearHomePageData();
             DisableSubScreen();
         }
     }
@@ -732,7 +732,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         }
 
         //home page thumnbail images destroy
-        WorldManager.instance.ClearHomePageData();
+        WorldsHandler.instance.ClearHomePageData();
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
     }
 
