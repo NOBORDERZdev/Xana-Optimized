@@ -110,8 +110,7 @@ public class UserLoginSignupManager : MonoBehaviour
             XanaConstants.xanaToken = PlayerPrefs.GetString("LoginToken");
             XanaConstants.isWalletLogin = true;
             StoreManager.instance.WalletLoggedinCall();
-            WalletAutoLogin(true);
-            StartCoroutine(WalletLoggedInAccessGroup(true));
+            WalletAutoLogin();
         }
         else
         {
@@ -224,19 +223,26 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
     //wallet login functions 
-    public void WalletAutoLogin(bool auto = false)
-    {
+    public void WalletAutoLogin()
+    { 
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
         PlayerPrefs.SetInt("WalletLogin", 1);
-        GetUserClothData();
-        StartCoroutine(WaitForDeepLink());
+        PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
-        if (GameManager.Instance.UiManager != null)
+        XanaConstants.loggedIn = true;
+        XanaConstants.isWalletLogin = true;
+        GetUserClothData();
+        GetOwnedNFTsFromAPI();
+        PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+        StartCoroutine(WaitForDeepLink());
+        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -247,11 +253,6 @@ public class UserLoginSignupManager : MonoBehaviour
 
     IEnumerator WalletLoggedInAccessGroup(bool loadData = false)
     {
-        if (loadData)
-        {
-            GetOwnedNFTsFromAPI();
-            yield return new WaitForSeconds(.1f);
-        }
         if (userRoleScriptScriptableObj.userNftRoleSlist.Count > 0)
         {
             int x = (int)NftRolePriority.guest;
@@ -308,6 +309,7 @@ public class UserLoginSignupManager : MonoBehaviour
             PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         }
         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+        yield return null;
     }
 
     int ReturnNftRole(string role)
