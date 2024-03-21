@@ -247,4 +247,9 @@ public class ConstantsGod
     #region PMY World Api's
     public static string PMYWorldASSET = "/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
+
+    #region
+    public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
+    #endregion
+
 }
