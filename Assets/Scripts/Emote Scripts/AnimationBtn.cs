@@ -81,11 +81,11 @@ public class AnimationBtn : MonoBehaviour
             if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
                 ReactScreen.Instance.HideReactionScreen();
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
-                //if (ChangeOrientation_waqas._instance.isPotrait)
-                //    ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+                ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+                //if (ScreenOrientationManager._instance.isPotrait)
+                //    ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
                 // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
                 BottomObject.SetActive(false);
               
@@ -121,10 +121,10 @@ public class AnimationBtn : MonoBehaviour
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
             EmoteAnimationPlay.Instance.StopAnimation(); // stoping animation is any action is performing.
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
-                JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-                JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+                JyosticksObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+                JumpObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
                 //BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-475);
             }
             else

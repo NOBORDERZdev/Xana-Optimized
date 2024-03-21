@@ -58,7 +58,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     }
     void ChangeOrientation()
     {
-        ChangeOrientation_waqas._instance.ChangeOrientation_editor();
+        ScreenOrientationManager._instance.ChangeOrientation_editor();
     }
 
     public void OnGotoAnotherWorldClick()
@@ -202,10 +202,10 @@ public class CanvasButtonsHandler : MonoBehaviour
     bool isActionShowing;
     public void OnActionsToggleClicked()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
-            if (ChangeOrientation_waqas._instance.joystickInitPosY == 0)
-                ChangeOrientation_waqas._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
+            if (ScreenOrientationManager._instance.joystickInitPosY == 0)
+                ScreenOrientationManager._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
         }
         if (!UserPassManager.Instance.CheckSpecificItem("env_actions"))
         {

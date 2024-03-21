@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using System.Collections.Generic;
 
-public class ChecklPostProcessing : MonoBehaviour
+public class PostProcessManager : MonoBehaviour
 {
     public Camera thirdPersonCam;
     public Camera freeCam;

@@ -208,7 +208,7 @@ public class ShowNFTDetails : MonoBehaviour
                 nftWithDes[i].landscapeObj.SetActive(false);
             }
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayImagePanel.SetActive(false);
                 displayImagePanelPortrait.SetActive(true);
@@ -254,7 +254,7 @@ public class ShowNFTDetails : MonoBehaviour
             if (displayPanelOnlyImage != null)
                 displayPanelOnlyImage.SetActive(true);
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayImagePanel.SetActive(false);
                 displayImagePanelPortrait.SetActive(false);
@@ -449,7 +449,7 @@ public class ShowNFTDetails : MonoBehaviour
             }
             //displayVideoPanel.SetActive(false);
             loadingImage.SetActive(true);
-            SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+            SetLoader(ScreenOrientationManager._instance.isPotrait);
             //displayVideoPanel.GetComponent<Image>().enabled = false;
             
             VideoObjectWithDes.GetComponent<VideoPlayer>().url = data.detail.asset_link;
@@ -485,7 +485,7 @@ public class ShowNFTDetails : MonoBehaviour
             //videoDescriptionText_Potrait.text = videoDescriptionText.text;
 
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 displayVideoPanelPortrait.SetActive(true);
                 displayVideoPanelWithStats.SetActive(false);
@@ -543,7 +543,7 @@ public class ShowNFTDetails : MonoBehaviour
         else
         {
             loadingImage.SetActive(true);
-            SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+            SetLoader(ScreenOrientationManager._instance.isPotrait);
             VideoObject.GetComponent<VideoPlayer>().url = data.detail.asset_link;
             VideoObject.gameObject.SetActive(true);
             VideoObject.GetComponent<RawImage>().enabled = false;
@@ -553,7 +553,7 @@ public class ShowNFTDetails : MonoBehaviour
             displayVideoPanel.SetActive(true);
             displayVideoPanelWithStats.SetActive(false);
             displayVideoPanelPortrait.SetActive(false);
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 //VideoObject.transform.localScale = new Vector3(2, 2, 2);
                 //VideoObject.transform.localPosition = new Vector3(0f, 300f, 0f);
@@ -676,7 +676,7 @@ public class ShowNFTDetails : MonoBehaviour
     public void ClosePanel()
     {
         ShowNFTDetails.instance.loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         potraiteLoaderIcon.SetActive(false);
         landscapeLoaderIcon.SetActive(false);
         VideoObject.gameObject.SetActive(false);
@@ -734,14 +734,14 @@ public class ShowNFTDetails : MonoBehaviour
     {
         VideoObject.GetComponent<RawImage>().enabled = true;
         loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         VideoObject.GetComponent<VideoPlayer>().Play();
     }
     private void M_VideoPlayerOnprepareCompletedWithStats(VideoPlayer source)
     {
         VideoObjectWithDes.GetComponent<RawImage>().enabled = true;
         loadingImage.SetActive(false);
-        SetLoader(ChangeOrientation_waqas._instance.isPotrait);
+        SetLoader(ScreenOrientationManager._instance.isPotrait);
         VideoObjectWithDes.GetComponent<VideoPlayer>().Play();
     }
 

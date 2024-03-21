@@ -666,8 +666,8 @@ public class BuilderMapDownload : MonoBehaviour
         reflectionProbe.enabled = true;
         if (levelData.skyProperties.skyId != -1)
         {
-            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
-            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+            GamePlayLoader.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            GamePlayLoader.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
     }
 

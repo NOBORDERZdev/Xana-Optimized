@@ -51,7 +51,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public bool lobbyJoined, roomJoined, movingToScene;
 
-        public LoadFromFile LFF;
+        public GamePlayLoader LFF;
         public List<GameObject> playerobjects;
         public static string sceneName;
         string lobbyName;
@@ -183,7 +183,6 @@ namespace Photon.Pun.Demo.PunBasics
             lastSceneName = SceneManager.GetActiveScene().name;
             lastLobbyName = lobbyN;
             print("Connecting: ");
-            AvatarManager.timercall = false;
             //	RPCCallforBufferPlayers.playerobjects = null;
 
             Guid guid = System.Guid.NewGuid();
@@ -286,7 +285,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             print("Launcher " + "OnJoinRoomFailed : Returining Main" );
             print(returnCode.ToString() + "	" + message);
-            LoadFromFile.instance._uiReferences.LoadMain(true);
+            GamePlayLoader.instance._uiReferences.LoadMain(true);
         }
         public override void OnCreatedRoom()
         {
@@ -367,7 +366,7 @@ namespace Photon.Pun.Demo.PunBasics
                 } else
                 { 
                     // there is no room for stremaing so move to main menu to switch other world
-                    LoadFromFile.instance._uiReferences.LoadMain(false); 
+                    GamePlayLoader.instance._uiReferences.LoadMain(false); 
                 }
             }
            
@@ -462,7 +461,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (!(SceneManager.GetActiveScene().name == "AddressableScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
             {
-                AvatarManager.Instance.InitCharacter();
+                AvatarSpawnerOnDisconnect.Instance.InitCharacter();
             }
             else
             {

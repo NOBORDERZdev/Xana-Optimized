@@ -432,7 +432,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -579,7 +579,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);

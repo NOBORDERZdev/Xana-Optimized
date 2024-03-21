@@ -67,13 +67,13 @@ public class CameraLook : MonoBehaviour
     private void OnEnable()
     {
         controls.Enable();
-        ChangeOrientation_waqas.switchOrientation += SwitchOrientation;
+        ScreenOrientationManager.switchOrientation += SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight += ChangeCameraHeight;
     }
     private void OnDisable()
     {
         controls.Disable();
-        ChangeOrientation_waqas.switchOrientation -= SwitchOrientation;
+        ScreenOrientationManager.switchOrientation -= SwitchOrientation;
         BuilderEventManager.ChangeCameraHeight -= ChangeCameraHeight;
 
     }
@@ -93,7 +93,7 @@ public class CameraLook : MonoBehaviour
     {
         lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
         lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
-        playerController = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
+        playerController = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;

@@ -167,7 +167,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
-            CinemachineCollider cinemachineCollider = LoadFromFile.instance.PlayerCamera.GetComponent<CinemachineCollider>();
+            CinemachineCollider cinemachineCollider = GamePlayLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
                 int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
@@ -583,7 +583,7 @@ public class PlayerControllerNew : MonoBehaviour
                 else if ((Mathf.Abs(horizontal) <= .001f || Mathf.Abs(vertical) <= .001f))
                 {
                     //PlayerIsIdle?.Invoke();
-                    //UpdateSefieBtn(!LoadFromFile.animClick);
+                    //UpdateSefieBtn(!GamePlayLoader.animClick);
                     if (animator != null)
                     {
                         animator.SetFloat("Blend", 0.23f * 0, speedSmoothTime, Time.deltaTime);
@@ -1113,7 +1113,7 @@ public class PlayerControllerNew : MonoBehaviour
     public void animationPlay()
     {
         //Debug.Log("persistentdata pat");
-        //AvatarManager.Instance.loadassetsstreming(); 
+        //AvatarSpawnerOnDisconnect.Instance.loadassetsstreming(); 
     }
 
     public void OnMoveInput(float horizontal, float vertical)

@@ -419,7 +419,7 @@ namespace Toyota
                     ratioReferences[ratioId].p_image.gameObject.SetActive(false);
                     ratioReferences[ratioId].p_videoPlayer.url = videoLink;
                 }
-                if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+                if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
                 {
                     LandscapeObj.SetActive(true);
                     PotraiteObj.SetActive(false);
@@ -594,7 +594,7 @@ namespace Toyota
         }
         //public async void EnableQuizPanel()
         //{
-        //    if (!ChangeOrientation_waqas._instance.isPotrait)
+        //    if (!ScreenOrientationManager._instance.isPotrait)
         //    {
         //        quizPanel_L.SetActive(true);
         //    }
@@ -605,7 +605,7 @@ namespace Toyota
         //}
         public void Enable_PDF_Panel()
         {
-            if (!ChangeOrientation_waqas._instance.isPotrait)
+            if (!ScreenOrientationManager._instance.isPotrait)
                 pdfPanel_L.SetActive(true);
             else
                 pdfPanel_P.SetActive(true);

@@ -19,9 +19,9 @@ public class FaceCameraUI : MonoBehaviour
     void Start()
     {
         localTrans = GetComponent<Transform>();
-        mainCam = LoadFromFile.instance.PlayerCamera.transform;
+        mainCam = GamePlayLoader.instance.PlayerCamera.transform;
         thirdPersonCam = mainCam;
-        firstPersonCam = LoadFromFile.instance.firstPersonCamera.transform;
+        firstPersonCam = GamePlayLoader.instance.firstPersonCamera.transform;
     }
 
     // Update is called once per frame

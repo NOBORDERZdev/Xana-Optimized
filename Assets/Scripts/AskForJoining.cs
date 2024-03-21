@@ -96,14 +96,14 @@ public class AskForJoining : MonoBehaviour
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
             LoadingHandler.Instance.ShowLoading();
-            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+                ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
-            AvatarManager.Instance.InstantiatePlayerAgain();
+            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
             Destroy(this.gameObject);

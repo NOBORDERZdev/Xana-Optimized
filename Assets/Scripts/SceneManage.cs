@@ -16,18 +16,13 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
-    public string mainScene = "Main";
+    private string mainScene = "Main";
     bool exitOnce = true;
     private void OnEnable()
     {
-        mainScene = "Main";
-        if (SceneManager.GetActiveScene().name == "Main")
+        if (GamePlayLoader.instance)
         {
-            AvatarManager.sendDataValue = false;
-        }
-        if (LoadFromFile.instance)
-        {
-            LoadFromFile.instance._uiReferences = this;
+            GamePlayLoader.instance._uiReferences = this;
         }
     }
 

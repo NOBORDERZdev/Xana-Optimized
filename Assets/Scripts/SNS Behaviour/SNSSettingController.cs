@@ -240,7 +240,6 @@ public class SNSSettingController : MonoBehaviour
         PlayerPrefs.DeleteKey("AppliedShapeIndexppp");
         PlayerPrefs.DeleteKey("FaceBlendShapeApplied");
         PlayerPrefs.DeleteKey("AppliedShapeIndexppp");
-        PlayerPrefs.DeleteKey("SelectedAvatarID");
     }
 
     public void DeleteAccountConfirmation()

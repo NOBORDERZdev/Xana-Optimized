@@ -191,7 +191,7 @@ public class LoadingHandler : MonoBehaviour
             //isFedderActive = true;
             if (XanaConstants.xanaConstants.isBackFromWorld)
             {
-                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+                if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
                 {
                     ActivateFadder_AtLoadingStart();
                 }
@@ -259,9 +259,9 @@ public class LoadingHandler : MonoBehaviour
    
     public void ResetLoadingValues()
     {
-        //if (LoadFromFile.instance)
+        //if (GamePlayLoader.instance)
         //{
-        //    LoadFromFile.instance.isEnvLoaded = false;
+        //    GamePlayLoader.instance.isEnvLoaded = false;
         //}
         currentValue = 0;
         isLoadingComplete = false;
@@ -308,7 +308,7 @@ public class LoadingHandler : MonoBehaviour
                 XanaConstants.xanaConstants.isBackFromWorld = false;
 
 
-                //if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
+                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
                 //{
                 //    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
                 //    Screen.orientation = ScreenOrientation.Portrait;
@@ -536,9 +536,9 @@ public class LoadingHandler : MonoBehaviour
             }
 
 
-            if (LoadFromFile.instance && !loadMainScene)
+            if (GamePlayLoader.instance && !loadMainScene)
             {
-                if (LoadFromFile.instance.isEnvLoaded)
+                if (GamePlayLoader.instance.isEnvLoaded)
                 {
                     isLoadingComplete = true;
                 }

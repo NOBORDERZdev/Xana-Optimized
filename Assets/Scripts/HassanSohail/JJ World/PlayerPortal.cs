@@ -165,7 +165,7 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            GamePlayLoader.instance.StartCoroutine(GamePlayLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));

@@ -144,7 +144,7 @@ public class JjWorldChanger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = worldName;
-        LoadFromFile.instance._uiReferences.LoadMain(false);
+        GamePlayLoader.instance._uiReferences.LoadMain(false);
 
 
     }

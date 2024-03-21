@@ -40,7 +40,7 @@ public class GalleryImageManager : MonoBehaviour
     {
         get
         {
-            if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+            if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
             {
                 m_LoadingIcon.transform.localScale = Vector3.one * 0.5f;
             }
@@ -186,7 +186,7 @@ public class GalleryImageManager : MonoBehaviour
     private void M_VideoPlayerOnprepareCompleted(VideoPlayer source)
     {
         m_VideoPlayer.gameObject.SetActive(true);
-        if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+        if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
             cancel_Portrait.SetActive(true);
         else
             cancel.SetActive(true);
@@ -390,7 +390,7 @@ public class GalleryImageManager : MonoBehaviour
         else
         {
             m_Picture.SetActive(true);
-            if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+            if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
                 cancel_Portrait.SetActive(true);
             else
                 cancel.SetActive(true);
@@ -432,7 +432,7 @@ public class GalleryImageManager : MonoBehaviour
 
         m_Picture.SetActive(true);
 
-        if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+        if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
             cancel_Portrait.SetActive(true);
         else
             cancel.SetActive(true);

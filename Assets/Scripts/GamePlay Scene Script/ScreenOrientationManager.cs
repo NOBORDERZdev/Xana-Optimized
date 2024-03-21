@@ -5,13 +5,13 @@ using System;
 using DG.Tweening;
 using Metaverse;
 
-public class ChangeOrientation_waqas : MonoBehaviour
+public class ScreenOrientationManager : MonoBehaviour
 {
     public List<GameObject> landscapeObj;
     public List<GameObject> potraitObj;
 
     public bool isPotrait = false;
-    public static ChangeOrientation_waqas _instance;
+    public static ScreenOrientationManager _instance;
     public static Action switchOrientation;
 
     [HideInInspector]
@@ -20,8 +20,8 @@ public class ChangeOrientation_waqas : MonoBehaviour
     CanvasGroup landscapeCanvas;
     CanvasGroup potraitCanvas;
 
-    public AvatarManager ref_avatarManager;
-    public AvatarManager ref_avatarManager_Portrait;
+    public AvatarSpawnerOnDisconnect ref_AvatarSpawnerOnDisconnect;
+    public AvatarSpawnerOnDisconnect ref_AvatarSpawnerOnDisconnect_Portrait;
 
     private void Awake()
     {
@@ -91,10 +91,10 @@ public class ChangeOrientation_waqas : MonoBehaviour
         potraitCanvas.blocksRaycasts = false;
         potraitCanvas.interactable = false;
         yield return new WaitForSeconds(0.1f);
-        AvatarManager.Instance = null;
+        AvatarSpawnerOnDisconnect.Instance = null;
         if (isPotrait)
         {
-            AvatarManager.Instance = ref_avatarManager_Portrait;
+            AvatarSpawnerOnDisconnect.Instance = ref_AvatarSpawnerOnDisconnect_Portrait;
             potraitCanvas.DOFade(1, 0.5f);
             potraitCanvas.blocksRaycasts = true;
             potraitCanvas.interactable = true;
@@ -102,7 +102,7 @@ public class ChangeOrientation_waqas : MonoBehaviour
         }
         else
         {
-            AvatarManager.Instance = ref_avatarManager;
+            AvatarSpawnerOnDisconnect.Instance = ref_AvatarSpawnerOnDisconnect;
             landscapeCanvas.DOFade(1, 0.5f);
             landscapeCanvas.blocksRaycasts = true;
             landscapeCanvas.interactable = true;
@@ -111,8 +111,8 @@ public class ChangeOrientation_waqas : MonoBehaviour
 
         if (ArrowManager.Instance)
         {
-            AvatarManager.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
-            AvatarManager.Instance.Defaultanimator = AvatarManager.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
+            AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
         }
 
         for (int i = 0; i < landscapeObj.Count; i++)

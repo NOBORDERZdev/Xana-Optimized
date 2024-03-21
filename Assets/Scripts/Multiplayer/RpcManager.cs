@@ -14,26 +14,21 @@ public class RpcManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-      
         checkPlayerInstance();
-
-
-
     }
     void checkPlayerInstance()
     {
-
         GameObject[] objects = GameObject.FindGameObjectsWithTag("PhotonPlayer");
 
-        for(int i = 0; i < objects.Length; i++)
+        for (int i = 0; i < objects.Length; i++)
         {
             if (objects[i].GetComponent<PhotonView>().IsMine)
             {
                 PhotonNetwork.Destroy(objects[i]);
                 Destroy(objects[i]);
             }
-        
-          
+
+
         }
     }
 
@@ -79,7 +74,7 @@ public class RpcManager : MonoBehaviourPunCallbacks
                 {
                     if (Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("EtcAnimStart"))
                     {
-                        if (!Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("Stand")) 
+                        if (!Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("Stand"))
                         {
                             Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
                             Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
@@ -90,19 +85,10 @@ public class RpcManager : MonoBehaviourPunCallbacks
             }
         }
     }
-    
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Publictest)
-        //{
-        //    CheckRpcPlayer();
-        //}
-    }
     public void CheckRpcPlayer()
     {
-       this.GetComponent<PhotonView>().RPC("CheckRpc", RpcTarget.All);
+        this.GetComponent<PhotonView>().RPC("CheckRpc", RpcTarget.All);
     }
     [PunRPC]
     void CheckRpc(int i)
@@ -110,45 +96,35 @@ public class RpcManager : MonoBehaviourPunCallbacks
         if (i == this.GetComponent<PhotonView>().ViewID)
         {
             PhotonNetwork.RemoveBufferedRPCs(i);
-            //Debug.Log("value rpc===" + i);
             if (this.GetComponent<PhotonView>().IsMine)
             {
-                //Debug.Log("this.GetComponent<PhotonView>().IsMine"+ this.GetComponent<PhotonView>().IsMine);
-
                 PhotonNetwork.Destroy(this.gameObject);
                 PhotonNetwork.SendAllOutgoingCommands();
-
-
             }
             else
             {
-                //Debug.Log("this" + this.GetComponent<PhotonView>().IsMine);
                 this.GetComponent<PhotonView>().TransferOwnership(this.GetComponent<PhotonView>().ViewID);
-                PhotonNetwork.DestroyPlayerObjects(this.GetComponent<PhotonView>().ViewID,false);
+                PhotonNetwork.DestroyPlayerObjects(this.GetComponent<PhotonView>().ViewID, false);
                 PhotonNetwork.SendAllOutgoingCommands();
-                //DestroyImmediate(this.gameObject);
             }
         }
 
     }
     private void OnDestroy()
     {
-       
+
     }
 
     private void OnApplicationQuit()
     {
-        Debug.Log("App quit call");
-        AvatarManager.sendDataValue = false;
         if (this.GetComponent<PhotonView>().IsMine)
         {
-                 this.GetComponent<PhotonView>().RPC("CheckRpc",RpcTarget.All,this.GetComponent<PhotonView>().ViewID);
-       
-        PhotonNetwork.SendAllOutgoingCommands();
+            this.GetComponent<PhotonView>().RPC("CheckRpc", RpcTarget.All, this.GetComponent<PhotonView>().ViewID);
+
+            PhotonNetwork.SendAllOutgoingCommands();
         }
-        // CheckRpcPlayer();
-   
+
     }
-   
+
 
 }

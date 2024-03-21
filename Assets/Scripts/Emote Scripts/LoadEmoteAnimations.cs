@@ -58,7 +58,7 @@ public class LoadEmoteAnimations : MonoBehaviour
 
     public void OpenAnimationSelectionPanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             animationSelectionPanelPotrait.SetActive(true);
         }
@@ -74,7 +74,7 @@ public class LoadEmoteAnimations : MonoBehaviour
     
     public void CloseAnimationSelectionPanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             animationSelectionPanelPotrait.SetActive(false);
         }

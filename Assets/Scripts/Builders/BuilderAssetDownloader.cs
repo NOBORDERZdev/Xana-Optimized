@@ -55,7 +55,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
+            ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
     }
 
@@ -65,7 +65,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+            ScreenOrientationManager.switchOrientation -= OnOrientationChange;
         }
         ResetAll();
     }
@@ -426,7 +426,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GamePlayLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -457,7 +457,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GamePlayLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -506,7 +506,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);

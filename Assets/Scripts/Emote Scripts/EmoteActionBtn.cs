@@ -174,7 +174,7 @@ public class EmoteActionBtn : MonoBehaviour {
             //actionBtn.Select();
             try
             {
-                LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                GamePlayLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
             }
             catch (Exception e)

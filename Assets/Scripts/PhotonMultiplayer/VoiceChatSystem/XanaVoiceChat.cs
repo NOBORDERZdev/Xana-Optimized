@@ -100,7 +100,7 @@ public class XanaVoiceChat : MonoBehaviour
 
         //InvokeRepeating(nameof(MicroPhoneName), 2f, 2f);
 
-        if (!ChangeOrientation_waqas._instance.isPotrait)
+        if (!ScreenOrientationManager._instance.isPotrait)
         {
             // There is two instance of this script
             // one used for Landscape & one for Portrait

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class ChangeLightingProfile : MonoBehaviour
+public class URPProfileManager : MonoBehaviour
 {
     public RenderPipelineAsset xanaProfile;
     public RenderPipelineAsset builderProfile;

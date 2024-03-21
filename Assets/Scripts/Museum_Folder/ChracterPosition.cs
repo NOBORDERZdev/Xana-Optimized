@@ -149,7 +149,7 @@ public class ChracterPosition : MonoBehaviour
 
         yield return new WaitForSeconds(.5f);
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = spawnPos;
-        LoadFromFile.instance.SetAxis();
+        GamePlayLoader.instance.SetAxis();
         yield return StartCoroutine(LoadingHandler.Instance.FadeOut());
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
         isAlreadyRunning = true;
