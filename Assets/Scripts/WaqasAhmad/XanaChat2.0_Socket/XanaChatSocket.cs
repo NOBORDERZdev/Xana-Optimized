@@ -400,15 +400,24 @@ public class XanaChatSocket : MonoBehaviour
 [System.Serializable]
 public class ChatUserData
 {
+    public string userId;
     public string socket_id;
     public string username;
     public string name;
     public string avatar;
     public string message;
     public string world;
+    public string world_entity;
     public int event_id;
     public int world_id;
-    public long time;
+    public string emotion;
+    public string time;
+    public string timestamp;
+    public string profileIconColor;
+    public string image;
+    public string video;
+    public bool isLiked;
+    public int likesCount;
 }
 //{
 //    socket_id: _socketId,
