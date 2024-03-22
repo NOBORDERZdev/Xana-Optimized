@@ -72139,7 +72139,6 @@ GameObject:
   - component: {fileID: 8665973585304918233}
   - component: {fileID: 8665973585304918234}
   - component: {fileID: 8665973585304918235}
-  - component: {fileID: 8665973585304918212}
   m_Layer: 5
   m_Name: NftInfoDynamicCanvas
   m_TagString: Untagged
@@ -72613,37 +72612,9 @@ MonoBehaviour:
   - {fileID: 6104188433501322198}
   - {fileID: 6848385482927477525}
   roomName: 
---- !u!114 &8665973585304918212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8665973585304918214}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79f6915e7e9e4a348992f7b0ab79693f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ratioReferences:
-  - name: 1:1 WithDes
-    l_obj: {fileID: 6737258261834068365}
-    l_Title: {fileID: 6737258262293950290}
-    l_Aurthur: {fileID: 6737258262424832851}
-    l_Description: {fileID: 6737258262353820925}
-    l_image: {fileID: 700862237849661025, guid: d9ad113dc0e7300449230d6d16a5400c, type: 3}
-    l_videoPlayer: {fileID: 8665973585518520967}
-    l_Loader: {fileID: 6737258262739078881}
-    p_obj: {fileID: 248004238459553783}
-    p_Title: {fileID: 248004237768962739}
-    p_Aurthur: {fileID: 248004238024893364}
-    p_Description: {fileID: 248004236873566708}
-    p_image: {fileID: 700862237849661026, guid: d9ad113dc0e7300449230d6d16a5400c, type: 3}
-    p_videoPlayer: {fileID: 8665973585627795417}
-    p_Loader: {fileID: 6737258261945390326}
-  LandscapeObj: {fileID: 6737258262246286310}
-  PotraiteObj: {fileID: 914281469071854986}
-  renderTexture: {fileID: 8400000, guid: 881d1b001fb5b1249a1bea368ce7d469, type: 2}
+  allDataLoaded:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &8665973585518520961
 GameObject:
   m_ObjectHideFlags: 0
