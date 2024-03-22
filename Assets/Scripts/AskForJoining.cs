@@ -15,16 +15,6 @@ public class AskForJoining : MonoBehaviour
     // Start is called before the first frame update
 
     AsyncOperation asyncLoading;
-    private CameraLook[] _cameraLooks;
-
-
-
-    private void Awake()
-    {
-        _cameraLooks = FindObjectsOfType<CameraLook>();
-
-    }
-
 
     void LoadMain()
     {
@@ -96,7 +86,7 @@ public class AskForJoining : MonoBehaviour
             StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
 
             LoadingController.Instance.ShowLoading();
-            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }

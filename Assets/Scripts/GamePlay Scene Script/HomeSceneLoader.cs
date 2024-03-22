@@ -74,7 +74,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 {
                     LoadingController.Instance.UpdateLoadingStatusText("Going Back to Home");
                 }
-                LoadingManager.Instance.ShowLoading();
+                LoadingController.Instance.ShowLoading();
                 //LoadingManager.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
 
                 if (XanaConstantsHolder.xanaConstants.needToClearMemory)

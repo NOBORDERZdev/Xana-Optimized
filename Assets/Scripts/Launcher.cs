@@ -46,7 +46,6 @@ namespace Photon.Pun.Demo.PunBasics
         public static bool isRoom = false;
         public static bool isLoading = false;
         [HideInInspector]
-        public LoadingManager Loader;
         public RoomOptions roomOptions;
 
         public bool lobbyJoined, roomJoined, movingToScene;
@@ -120,8 +119,6 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-
-            Loader = LoadingManager.Instance;
             Connect(XanaConstantsHolder.xanaConstants.EnviornmentName);
             print(XanaConstantsHolder.xanaConstants.EnviornmentName);
         }

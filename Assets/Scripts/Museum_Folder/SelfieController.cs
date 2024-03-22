@@ -389,7 +389,7 @@ public class SelfieController : MonoBehaviour
             ChangeCloseObjectsState(false);
             m_SelfieStick.SetActive(true);
             m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
-            XanaConstants.xanaConstants.SelfiMovement = true;
+            XanaConstantsHolder.xanaConstants.SelfiMovement = true;
 
             for (int i = 0; i < OnFeatures.Length; i++)
             {

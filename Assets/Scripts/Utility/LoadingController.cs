@@ -308,7 +308,7 @@ public class LoadingController : MonoBehaviour
                 XanaConstantsHolder.xanaConstants.isBackFromWorld = false;
 
 
-                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
+                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
                 //{
                 //    // Debug.LogError("~~~~~ Waqas_ LoadingController ~~~~~~~~~~~");
                 //    Screen.orientation = ScreenOrientation.Portrait;

@@ -38,21 +38,21 @@ namespace Metaverse
             HomeSceneLoader.callRemove = true;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
-            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+            UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
         }
 
         public void ShowJoinRoomPanel()
         {
             if (InternetLost == null)
             {
-                XanaConstants.xanaConstants.needToClearMemory = false;
-                if (LoadingHandler.Instance)
-                    LoadingHandler.Instance.HideLoading();
+                XanaConstantsHolder.xanaConstants.needToClearMemory = false;
+                if (LoadingController.Instance)
+                    LoadingController.Instance.HideLoading();
                 GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
                 InternetLost = go;
             }
 
-            if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
+            if (LoadingController.Instance != null && !LoadingController.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
                 OffSelfie();
                 TurnCameras(false);
@@ -144,11 +144,11 @@ namespace Metaverse
                 //UserAnalyticsHandler.onUserJoinedLeaved?.Invoke(isGameFocus);
                 if (isGameFocus)
                 {
-                    UserAnalyticsHandler.onUpdateWorldStatCustom?.Invoke(true, false);
+                    UserAnalyticsManager.onUpdateWorldStatCustom?.Invoke(true, false);
                 }
                 else
                 {
-                    UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+                    UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
                 }
             }
 
