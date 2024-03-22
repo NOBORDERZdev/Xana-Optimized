@@ -356,22 +356,24 @@ public class UserLoginSignupManager : MonoBehaviour
             if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
             {
                 await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-
-                if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
+                Debug.Log("<color=red> BoxerNFT: Wear NFT Funtionality Disabled </color>");
                 {
-                    if (PlayerPrefs.HasKey("Equiped"))
-                    {
-                        XanaConstants.xanaConstants.isNFTEquiped = true;
-                        BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    }
-                }
-                else
-                {
-                    PlayerPrefs.DeleteKey("Equiped");
-                    PlayerPrefs.DeleteKey("nftID");
-                    XanaConstants.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    //if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
+                    //{
+                    //    if (PlayerPrefs.HasKey("Equiped"))
+                    //    {
+                    //        XanaConstants.xanaConstants.isNFTEquiped = true;
+                    //        BoxerNFTEventManager.OnNFTequip?.Invoke(false);
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    PlayerPrefs.DeleteKey("Equiped");
+                    //    PlayerPrefs.DeleteKey("nftID");
+                    //    XanaConstants.xanaConstants.isNFTEquiped = false;
+                    //    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                    //    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    //}
                 }
             }
             else
