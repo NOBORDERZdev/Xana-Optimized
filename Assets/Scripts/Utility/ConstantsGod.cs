@@ -79,6 +79,7 @@ public class ConstantsGod
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
+    public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
     // public static string GetUserDetailsAPI = "users/single-user";

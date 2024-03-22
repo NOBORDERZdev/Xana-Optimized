@@ -18,7 +18,7 @@ public class JJVideoAndImage : MonoBehaviour
     public GameObject imgVideo4x3;
 
     public GameObject liveVideoPlayer;
-    public GameObject preRecordedPlayer;
+    //public GameObject preRecordedPlayer;
 
     public string videoLink;
     public string imageLink;
@@ -57,7 +57,7 @@ public class JJVideoAndImage : MonoBehaviour
     [Header("For Firebase roomNumber")]
     [Range(0, 12)]
     public int roomNumber = 1;
-
+    private StreamYoutubeVideo streamYoutubeVideo;
     private void Start()
     {
         imgVideo16x9.AddComponent<Button>();
@@ -75,6 +75,10 @@ public class JJVideoAndImage : MonoBehaviour
         imgVideo4x3.AddComponent<Button>();
         //JjWorldInfo jjWorldInfo3 = imgVideo4x3.GetComponent<JjWorldInfo>();
         imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+        if (this.GetComponent<StreamYoutubeVideo>() != null)
+        {
+            streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+        }
 
     }
 
@@ -106,8 +110,8 @@ public class JJVideoAndImage : MonoBehaviour
             imgVideo4x3.SetActive(false);
         if (liveVideoPlayer)
             liveVideoPlayer.SetActive(false);
-        if (preRecordedPlayer)
-            preRecordedPlayer.SetActive(false);
+        //if (preRecordedPlayer)
+        //    preRecordedPlayer.SetActive(false);
 
 
         StartCoroutine(GetSprite(imageLink, (response) =>
@@ -227,13 +231,13 @@ public class JJVideoAndImage : MonoBehaviour
          imgVideo1x1.SetActive(false);
           imgVideo4x3.SetActive(false);
          liveVideoPlayer.SetActive(false);
-         preRecordedPlayer.SetActive(false);
+         //preRecordedPlayer.SetActive(false);
          imgVideo16x9.SetActive(false);
           imgVideo9x16.SetActive(false);
          imgVideo1x1.SetActive(false);
          imgVideo4x3.SetActive(false);
          liveVideoPlayer.SetActive(false);
-          preRecordedPlayer.SetActive(false);
+          //preRecordedPlayer.SetActive(false);
     }
 
     IEnumerator GetSprite(string path, System.Action<Texture> callback)
@@ -287,21 +291,23 @@ public class JJVideoAndImage : MonoBehaviour
             imgVideo4x3.SetActive(false);
         if (liveVideoPlayer)
             liveVideoPlayer.SetActive(false);
-        if (preRecordedPlayer)
-            preRecordedPlayer.SetActive(false);
+        //if (preRecordedPlayer)
+        //    preRecordedPlayer.SetActive(false);
 
         if (_videoType==VideoTypeRes.islive && liveVideoPlayer)
         {
             JjInfoManager.Instance.videoRenderObject = liveVideoPlayer;
             if (liveVideoPlayer)
             liveVideoPlayer.SetActive(true);
-            liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-            liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-            liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
+            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+            if(streamYoutubeVideo!=null)
+                streamYoutubeVideo.StreamYtVideo(videoLink, true);
             SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
             SoundManagerSettings.soundManagerSettings.setNewSliderValues();
         }
-        else if(_videoType == VideoTypeRes.prerecorded && preRecordedPlayer)
+        else if(_videoType == VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
         {
             RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
             SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
@@ -319,7 +325,7 @@ public class JJVideoAndImage : MonoBehaviour
                     imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
                 }
             }
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
                 VideoPlayer tempVideoPlayer;
                 if (applyVideoMesh)
                 {
@@ -330,12 +336,14 @@ public class JJVideoAndImage : MonoBehaviour
                     tempVideoPlayer =imgVideo16x9.GetComponent<VideoPlayer>();
                 }
 
-            preRecordedPlayer.SetActive(true);
-            preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-            preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-            preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-            preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-            preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+            //preRecordedPlayer.SetActive(true);
+            //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
+            //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
+            //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
+            //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+            //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+            if(streamYoutubeVideo!=null)
+                streamYoutubeVideo.StreamYtVideo(videoLink, false);
             imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
             imgVideo16x9.SetActive(true);
             if (imgVideoFrame16x9)

@@ -37080,7 +37080,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 971071576159563819}
-  - component: {fileID: 3934022562820126393}
   - component: {fileID: 8380076577302196608}
   - component: {fileID: 7805945894558048790}
   m_Layer: 23
@@ -37105,71 +37104,6 @@ Transform:
   m_Father: {fileID: 5026257659759755854}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3934022562820126393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3570165301484259747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controller: {fileID: 0}
-  _events: {fileID: 0}
-  youtubeUrl: 
-  videoQuality: 1
-  is360: 0
-  dontForceFullscreen: 0
-  autoPlayOnStart: 0
-  startFromSecond: 0
-  startFromSecondTime: 20
-  showThumbnailBeforeVideoLoad: 0
-  thumbnailObject: {fileID: 0}
-  customPlaylist: 0
-  autoPlayNextVideo: 0
-  youtubeUrls: []
-  videoFormat: 0
-  autoPlayOnEnable: 0
-  playUsingInternalDevicePlayer: 0
-  loadYoutubeUrlsOnly: 0
-  objectsToRenderTheVideoImage: []
-  is3DLayoutVideo: 0
-  layout3d: 0
-  mainCamera: {fileID: 0}
-  videoPlayer: {fileID: 5026257661121068993}
-  mPlayer: {fileID: 2507505394166159395}
-  playInAVPRO: 0
-  audioPlayer: {fileID: 5026257661121068993}
-  debug: 0
-  ignoreTimeout: 0
-  _skipOnDrop: 1
-  videoUrl: 
-  audioUrl: 
-  ForceGetWebServer: 0
-  progressStartDrag: 0
-  skyboxMaterial3D: {fileID: 0}
-  skyboxMaterialNormal: {fileID: 0}
-  skyboxMaterial3DSide: {fileID: 0}
-  forceLocal: 0
-  videoTitle: 
-  EACMaterial: {fileID: 0}
-  Material360: {fileID: 0}
-  audioDelayOffset: 0
-  pauseCalled: 0
-  isSyncing: 0
-  encryptedSignatureVideo: 
-  encryptedSignatureAudio: 
-  decryptedUrlForVideo: 0
-  decryptedUrlForAudio: 0
-  decryptedVideoUrlResult: 
-  decryptedAudioUrlResult: 
-  EncryptUrlForVideo: 
-  EncryptUrlForAudio: 
-  jsonForHtmlVersion: 
-  checkIfSync: 0
 --- !u!114 &8380076577302196608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39702,7 +39636,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5026257659759755854}
-  - component: {fileID: 5026257659759755853}
   m_Layer: 23
   m_Name: YoutubeSimplified
   m_TagString: Untagged
@@ -39726,28 +39659,6 @@ Transform:
   m_Father: {fileID: 5026257660853740472}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5026257659759755853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5026257659759755855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 3934022562820126393}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
-  videoPlayer: {fileID: 0}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 0
 --- !u!1 &5026257659777904424
 GameObject:
   m_ObjectHideFlags: 0
@@ -43017,6 +42928,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5026257661413201835}
   - component: {fileID: 5993596980157930893}
+  - component: {fileID: 6932195789214149364}
   m_Layer: 23
   m_Name: 2
   m_TagString: Untagged
@@ -43083,6 +42995,21 @@ MonoBehaviour:
       m_Calls: []
   nftMAnager: {fileID: 6988723540947776609}
   roomNumber: 1
+--- !u!114 &6932195789214149364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026257661413201836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 2507505394166159395}
+  videoPlayer: {fileID: 5026257661121068993}
 --- !u!1 &5026257661454157507
 GameObject:
   m_ObjectHideFlags: 0
