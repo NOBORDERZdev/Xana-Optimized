@@ -1511,7 +1511,7 @@ public class APIManager : MonoBehaviour
     //this api is used to delete feed.......
     public void RequestDeleteFeed(string feed_Id, string callingFrom)
     {
-        SNSNotificationManager.Instance.DeleteLoaderShow(true);//delete loader active
+        SNSNotificationHandler.Instance.DeleteLoaderShow(true);//delete loader active
 
         StartCoroutine(IERequestDeleteFeed(feed_Id, callingFrom));
     }
@@ -1527,7 +1527,7 @@ public class APIManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            SNSNotificationManager.Instance.DeleteLoaderShow(false);//delete loader disable
+            SNSNotificationHandler.Instance.DeleteLoaderShow(false);//delete loader disable
             //FeedUIController.Instance.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
@@ -2024,7 +2024,7 @@ public class APIManager : MonoBehaviour
             UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
             UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FeedUIController.Instance.BestFriendFull.SetActive(true);
-            //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
+            //SNSNotificationHandler.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn)
@@ -2592,9 +2592,9 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "Conversation":
-                        if (CommonAPIManager.Instance != null)//For Get All Chat UnRead Message Count.......
+                        if (CommonAPIHandler.Instance != null)//For Get All Chat UnRead Message Count.......
                         {
-                            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+                            CommonAPIHandler.Instance.RequestGetAllChatUnReadMessagesCount();
                         }
                         break;
                     default:

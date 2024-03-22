@@ -77,9 +77,9 @@ public class MyProfileDataManager : MonoBehaviour
     [Header("Photo, Movie, NFT Button Panel Tab panel Reference")]
     public string CurrentSection;
     public ScrollRectGiftScreen tabScrollRectGiftScreen;
-    public ParentHeightResetScript parentHeightResetScript;
-    public SelectionItemScript selectionItemScript1;
-    public SelectionItemScript selectionItemScript2;
+    public ParentHeightHandler parentHeightResetScript;
+    public TabSelectionHandler selectionItemScript1;
+    public TabSelectionHandler selectionItemScript2;
 
     [Space]
     [Header("Follow Message Button References")]
@@ -357,10 +357,10 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
-        if (ProfileUIHandler.instance)
+        if (ProfileScreenController.instance)
         {
-            ProfileUIHandler.instance.followerBtn.interactable = true;
-            ProfileUIHandler.instance.followingBtn.interactable = true;
+            ProfileScreenController.instance.followerBtn.interactable = true;
+            ProfileScreenController.instance.followingBtn.interactable = true;
         }
 
         userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
@@ -526,48 +526,48 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (myProfileData.tags != null && myProfileData.tags.Length > 0)
         {
-            if (ProfileUIHandler.instance)
+            if (ProfileScreenController.instance)
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
-                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
+                ProfileScreenController.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+                if (ProfileScreenController.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
                 {
-                    for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                    for (int i = 0; i < ProfileScreenController.instance.UserTagsParent.transform.childCount; i++)
                     {
                         if (i >= myProfileData.tags.Length)
                         {
-                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
+                            Destroy(ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
                         }
                         else
                         {
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                            ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                            ProfileScreenController.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
                     }
                 }
-                else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+                else if (ProfileScreenController.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
                 {
-                    if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                    if (ProfileScreenController.instance.UserTagsParent.transform.childCount == 0)
                     {
                         for (int i = 0; i < myProfileData.tags.Length; i++)
                         {
-                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            GameObject _tagobject = Instantiate(ProfileScreenController.instance.TagPrefab, ProfileScreenController.instance.UserTagsParent.transform);
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                            ProfileScreenController.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
                     }
                     else
                     {
                         for (int i = 0; i < myProfileData.tags.Length; i++)
                         {
-                            if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                            if (i >= ProfileScreenController.instance.UserTagsParent.transform.childCount)
                             {
-                                GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                                GameObject _tagobject = Instantiate(ProfileScreenController.instance.TagPrefab, ProfileScreenController.instance.UserTagsParent.transform);
                                 _tagobject.name = "TagPrefab" + i;
                                 _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
                             }
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                            ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
+                            ProfileScreenController.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                         }
                     }
                 }
@@ -575,9 +575,9 @@ public class MyProfileDataManager : MonoBehaviour
         }
         else
         {
-            if (ProfileUIHandler.instance)
+            if (ProfileScreenController.instance)
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+                ProfileScreenController.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
             }
         }
     }
@@ -1146,11 +1146,11 @@ public class MyProfileDataManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         //if (IsMyProfileFeed)
         //{
-        //    userPostPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
+        //    userPostPart.GetComponent<ParentHeightHandler>().GetAndCheckMaxHeightInAllTab();
         //}
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-        userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
+        userPostPart.GetComponent<ParentHeightHandler>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(1f);
         FeedUIController.Instance.ShowLoader(false);
         isFeedLoaded = true;

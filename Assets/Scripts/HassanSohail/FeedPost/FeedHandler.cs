@@ -13,7 +13,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class FeedController : MonoBehaviour
+public class FeedHandler : MonoBehaviour
 {
     [SerializeField] private FeedUIController feedUIController;
     [SerializeField] private GameObject feedPostPrefab;
@@ -25,7 +25,7 @@ public class FeedController : MonoBehaviour
     List<FeedData> feedList = new List<FeedData>();
     bool isFeedInitialized = false;
     [SerializeField]
-    FeedScroller scrollerController;
+    ScrollFeedManager scrollerController;
     [SerializeField] private Transform noFeedsScreen;
     [SerializeField] private Transform noFeedSerach;
     [SerializeField] private TMP_Text noFeedText;

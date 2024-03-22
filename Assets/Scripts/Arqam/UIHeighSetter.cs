@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UI_Height_controller : MonoBehaviour
+public class UIHeighSetter : MonoBehaviour
 {
     public RectTransform targetTransform;
     public float defaultHeight = 1867.45f;

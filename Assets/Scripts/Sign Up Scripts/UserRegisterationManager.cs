@@ -180,7 +180,7 @@ public class UserRegisterationManager : MonoBehaviour
     public int btnClickedNo = 0;
     public void ShowCommingsoonPopup()
     {
-        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 
     #region WelcomeScreen

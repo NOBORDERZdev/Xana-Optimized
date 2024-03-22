@@ -141,9 +141,9 @@ public class HomeFooterTabCanvas : MonoBehaviour
             allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = true;
             allButtonIcon[4].transform.GetComponent<Image>().color = ActiveButtonColor;
         }
-        if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
+        if (CommonAPIHandler.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
         {
-            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+            CommonAPIHandler.Instance.RequestGetAllChatUnReadMessagesCount();
         }
     }
 
@@ -181,9 +181,9 @@ public class HomeFooterTabCanvas : MonoBehaviour
             }
         }
 
-        if (CommonAPIManager.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
+        if (CommonAPIHandler.Instance != null && PlayerPrefs.GetInt("IsLoggedIn") != 0)//For Get All Chat UnRead Message Count.......
         {
-            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+            CommonAPIHandler.Instance.RequestGetAllChatUnReadMessagesCount();
         }
     }
 
@@ -656,10 +656,10 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 FeedUIController.Instance.feedUiScreen.SetActive(false);
             }
 
-            if (ProfileUIHandler.instance)
+            if (ProfileScreenController.instance)
             {
                 // Reset Scroller position 
-                Transform contantObj = ProfileUIHandler.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
+                Transform contantObj = ProfileScreenController.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
                 Vector2 tempPos = contantObj.position;
                 tempPos.y = 0f;
                 contantObj.position = tempPos;
@@ -722,11 +722,11 @@ public class HomeFooterTabCanvas : MonoBehaviour
             {
                 MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
-            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
-            ProfileUIHandler.instance.SetMainScrolRefs();
-            ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>()._PCharacterData);
-            ProfileUIHandler.instance.editProfileBtn.SetActive(true);
-            ProfileUIHandler.instance.followProfileBtn.SetActive(false);
+            ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(true);
+            ProfileScreenController.instance.SetMainScrolRefs();
+            ProfileScreenController.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>()._PCharacterData);
+            ProfileScreenController.instance.editProfileBtn.SetActive(true);
+            ProfileScreenController.instance.followProfileBtn.SetActive(false);
 
             DisableSubScreen();
         }
@@ -794,6 +794,6 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
     public void ComingSoon()
     {
-        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 }

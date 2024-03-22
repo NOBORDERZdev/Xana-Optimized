@@ -58,7 +58,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     [Header("Other")]
     public Button[] bottomMainPanelButtons;
-    public SelectionItemScript selectionItemScript;
+    public TabSelectionHandler selectionItemScript;
     //public bool isImageCapture = false;
     //float imageCaptureTime;
     public Transform addItemParent;
@@ -493,9 +493,9 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             LiveVideoRoomManager.Instance.ImageSelectionAllUIDisable(false);
         }
-        if (SNSNotificationManager.Instance != null)
+        if (SNSNotificationHandler.Instance != null)
         {
-            SNSNotificationManager.Instance.ResetAndInstantHideNotificationBar();
+            SNSNotificationHandler.Instance.ResetAndInstantHideNotificationBar();
         }
         Capture();
     }
@@ -552,9 +552,9 @@ public class ARFaceModuleManager : MonoBehaviour
         }
         else
         {
-            if (SNSNotificationManager.Instance != null)
+            if (SNSNotificationHandler.Instance != null)
             {
-                SNSNotificationManager.Instance.ShowNotificationMsg("Save Photo success");
+                SNSNotificationHandler.Instance.ShowNotificationMsg("Save Photo success");
             }
             else
             {
@@ -1127,9 +1127,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void CreateFeedSuccess()
     {        
         ShowLoader(false);
-        if (SNSNotificationManager.Instance != null)
+        if (SNSNotificationHandler.Instance != null)
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Feed Created");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Feed Created");
         }
         else
         {

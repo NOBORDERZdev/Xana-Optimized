@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
+public class ScrollFeedManager : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDragHandler, IEndDragHandler
 {
     /// <summary>
     /// Internal representation of our data. Note that the scroller will never see
@@ -14,7 +14,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
     /// </summary>
     public SmallList<FeedResponseRow> _data;
     public List<FeedHeightData> feedHeight;
-    FeedController feedController;
+    FeedHandler feedController;
     /// <summary>
     /// Whether the scroller is being dragged
     /// </summary>
@@ -167,7 +167,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
 
         // in this example, we just pass the data to our cell's view which will update its UI
         //cellView.SetData(_data[dataIndex]);
-        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<FeedScroller>());
+        cellView.GetComponent<FeedData>().SetFeedUiController(this.GetComponent<ScrollFeedManager>());
         cellView.GetComponent<FeedData>().SetFeedPrefab(_data[dataIndex]);
         // return the cell to the scroller
         return cellView;
@@ -231,7 +231,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
             //}
             
         /// GET NEW DATA FROM API
-             scroller.GetComponent<FeedController>().GetComponent<FeedController>().PullNewPlayerPost();
+             scroller.GetComponent<FeedHandler>().GetComponent<FeedHandler>().PullNewPlayerPost();
             // reload the scroller to show the new data
             scroller.ReloadData();
 

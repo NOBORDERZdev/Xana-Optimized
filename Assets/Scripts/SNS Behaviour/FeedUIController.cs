@@ -220,7 +220,7 @@ public class FeedUIController : MonoBehaviour
 
     [Header("Feed 2.0")]
     [SerializeField] GameObject FeedSerachBar;
-    public FeedController feedController;
+    public FeedHandler feedController;
     private void Awake()
     {
         if (Instance == null)
@@ -241,7 +241,7 @@ public class FeedUIController : MonoBehaviour
         callCount += 1;
         if (feedController == null)
         {
-            feedController = feedUiScreen.GetComponentInChildren<FeedController>();
+            feedController = feedUiScreen.GetComponentInChildren<FeedHandler>();
         }
     }
 
@@ -265,7 +265,7 @@ public class FeedUIController : MonoBehaviour
     //this method calling start of the scene.......
     public void StartMethodCalling()
     {
-        //Debug.Log("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("FeedHandler Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         //Debug.Log("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
         
         // OLD FEED UI
@@ -627,8 +627,8 @@ public class FeedUIController : MonoBehaviour
         //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
         //MyProfileDataManager.Instance.gameObject.SetActive(false);
 
-        //ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        //ProfileUIHandler.instance.SetMainScrolRefs();
+        //ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        //ProfileScreenController.instance.SetMainScrolRefs();
         //Other player avatar initialization required here
 
         //if (_callFromFindFriendWithName)
@@ -636,12 +636,12 @@ public class FeedUIController : MonoBehaviour
         //    if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
         //    {
         //        //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
-        //        ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
+        //        ProfileScreenController.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
         //    }
         //    else
         //    {
         //        //print("wearing default clothing here");
-        //        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //        ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         //    }
         //}
 
@@ -1283,16 +1283,16 @@ public class FeedUIController : MonoBehaviour
                         }
                         else
                         {
-                            if (SNSNotificationManager.Instance != null)
+                            if (SNSNotificationHandler.Instance != null)
                             {
-                                SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
+                                SNSNotificationHandler.Instance.ShowNotificationMsg("Please upload valid image or video file");
                             }
                             return;
                         }
 #else
-                        if (SNSNotificationManager.Instance != null)
+                        if (SNSNotificationHandler.Instance != null)
                         {
-                            SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
+                            SNSNotificationHandler.Instance.ShowNotificationMsg("Please upload valid image or video file");
                         }
                         return;
 #endif
@@ -1365,9 +1365,9 @@ public class FeedUIController : MonoBehaviour
                             }
                             else
                             {
-                                if (SNSNotificationManager.Instance != null)
+                                if (SNSNotificationHandler.Instance != null)
                                 {
-                                    SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
+                                    SNSNotificationHandler.Instance.ShowNotificationMsg("Please upload valid image or video file");
                                 }
                                 return;
                             }
@@ -1441,7 +1441,7 @@ public class FeedUIController : MonoBehaviour
     public void FeedCreateVideoError()
     {
        Debug.Log("Error to load feed seleted video");
-        SNSNotificationManager.Instance.ShowNotificationMsg("video can't load please try again");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("video can't load please try again");
         createFeedMediaPlayer.CloseMedia();
         imageOrVideo = "";
         createFeedLastPickFilePath = "";
@@ -1576,9 +1576,9 @@ public class FeedUIController : MonoBehaviour
 
         //profileFFScreenTitleText.text = userName + titleLocalize;
         profileFollowerFollowingListScreen.SetActive(true);
-        if (ProfileUIHandler.instance)
+        if (ProfileScreenController.instance)
         {
-            ProfileUIHandler.instance.gameObject.SetActive(false);
+            ProfileScreenController.instance.gameObject.SetActive(false);
         }
         //if (tempFollowFollowingScreenOpenCount == 0)
         //{
@@ -2079,7 +2079,7 @@ public class FeedUIController : MonoBehaviour
         OnClickDeleteFeedConfirmationCancelButton();
         editDeleteFeedScreen.GetComponent<OnEnableDisable>().ClosePopUp();
 
-        //SNSNotificationManager.Instance.ShowNotificationMsg("Post deleted");//this method is used to show SNS notification.......
+        //SNSNotificationHandler.Instance.ShowNotificationMsg("Post deleted");//this method is used to show SNS notification.......
 
         MyProfileDataManager.Instance.RequestGetUserDetails();
 

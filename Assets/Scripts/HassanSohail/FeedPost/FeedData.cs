@@ -27,7 +27,7 @@ public class FeedData : MonoBehaviour
     bool isLiked = false;
     bool isEnable = false;
     int timeUpdateInterval = 1;
-    FeedScroller scrollerController;
+    ScrollFeedManager scrollerController;
     public bool isProfileScene = false;
     public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){
         if (gameObject.activeInHierarchy)
@@ -116,19 +116,19 @@ public class FeedData : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
-        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
+        ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileScreenController.instance.SetMainScrolRefs();
+        ProfileScreenController.instance.editProfileBtn.SetActive(false);
         if (_feedUserData.am_i_following)
         {
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
         }
         else
         {
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
-        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        ProfileScreenController.instance.followProfileBtn.SetActive(true);
+        ProfileScreenController.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = _feedUserData.id;
@@ -186,11 +186,11 @@ public class FeedData : MonoBehaviour
         ////Other player avatar initialization required here
         if (APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileScreenController.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+            ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         }
     }
 
@@ -400,7 +400,7 @@ public class FeedData : MonoBehaviour
             Likes.text = "0";
     }
 
-    public void SetFeedUiController(FeedScroller controller){ 
+    public void SetFeedUiController(ScrollFeedManager controller){ 
         scrollerController = controller;    
     }
 

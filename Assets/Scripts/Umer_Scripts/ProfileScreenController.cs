@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
 
-public class ProfileUIHandler : MonoBehaviour
+public class ProfileScreenController : MonoBehaviour
 {
-    public static ProfileUIHandler instance;
+    public static ProfileScreenController instance;
     [Header("User Data Tabs Buttons")]
     public GameObject myProfileTopPartButton;
     public GameObject OtherProfileTopPartButton;
@@ -42,11 +42,11 @@ public class ProfileUIHandler : MonoBehaviour
 
     [Space]
     [Header("Script References")]
-    public MainScrollController mainscrollControllerRef;
-    public SelectionItemScript mainButtonPanelScriptRef;
-    public SelectionItemScript otherUserButtonPanelScriptRef;
-    public SelectionItemScript immitateMainButtonPanelScriptRef;
-    public SelectionItemScript immitateOtherUserButtonPanelScriptRef;
+    public ScrollProfileManager mainscrollControllerRef;
+    public TabSelectionHandler mainButtonPanelScriptRef;
+    public TabSelectionHandler otherUserButtonPanelScriptRef;
+    public TabSelectionHandler immitateMainButtonPanelScriptRef;
+    public TabSelectionHandler immitateOtherUserButtonPanelScriptRef;
 
     private GameObject menuLightingObj;
     private GameObject lightingObj;

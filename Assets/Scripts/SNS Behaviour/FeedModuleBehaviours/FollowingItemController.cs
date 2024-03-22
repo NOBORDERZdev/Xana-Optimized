@@ -124,19 +124,19 @@ public class FollowingItemController : MonoBehaviour
         OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
         MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
         OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
-        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
-        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileScreenController.instance.SetMainScrolRefs();
+        ProfileScreenController.instance.editProfileBtn.SetActive(false);
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        ProfileScreenController.instance.followProfileBtn.SetActive(true);
+        ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         //if ( followingRawData.userOccupiedAssets.Count > 0 )
         //{
-        //    ProfileUIHandler.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
+        //    ProfileScreenController.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
         //}
         //else
         //{
-        //    ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //    ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         //}
         if (!UserPassManager.Instance.CheckSpecificItem("sns_feed", false))
         {
@@ -213,11 +213,11 @@ public class FollowingItemController : MonoBehaviour
         ////Other player avatar initialization required here
         if (APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileScreenController.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+            ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         }
     }
 

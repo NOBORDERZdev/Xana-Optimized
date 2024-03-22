@@ -205,14 +205,14 @@ public class UGCManager : MonoBehaviour
                     warningPanel.SetActive(true);
                     InventoryManager.instance.loaderPanel.SetActive(false);
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
-                    //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
+                    //SNSNotificationHandler.Instance.ShowNotificationMsg(response.description);
                 }
                 else
                 {
                     Debug.Log("Response Data: " + response.ToString());
                     // selfieSprite.gameObject.SetActive(false);
                     InventoryManager.instance.loaderPanel.SetActive(false);
-                    // SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
+                    // SNSNotificationHandler.Instance.ShowNotificationMsg(response.ToString());
                     ugcItems = response;
                     isSelfieTaken = true;
                     SetFaceData(InventoryManager.instance.ugcItemsData.GetFaceData(response.face_type), InventoryManager.instance.ugcItemsData.GetNoseData(response.nose_shape),

@@ -284,9 +284,9 @@ public class SocketHandler : MonoBehaviour
                 };
                 APIManager.Instance.allChatMessagesRoot = JsonConvert.DeserializeObject<ChatGetMessagesRoot>(data, settings);
 
-                if (CommonAPIManager.Instance != null)//For Get All Chat UnRead Message Count.......
+                if (CommonAPIHandler.Instance != null)//For Get All Chat UnRead Message Count.......
                 {
-                    CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+                    CommonAPIHandler.Instance.RequestGetAllChatUnReadMessagesCount();
                 }
                 yield return new WaitForSeconds(0.03f);
                 APIController.Instance.GetAllChat(message_pageNumber, "SocketHandler");

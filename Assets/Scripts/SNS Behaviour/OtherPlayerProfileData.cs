@@ -58,7 +58,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public Transform userTagPostParent;
     public Transform allMovieContainer;
     public ScrollRectGiftScreen tabScrollRectGiftScreen;
-    public ParentHeightResetScript parentHeightResetScript;
+    public ParentHeightHandler parentHeightResetScript;
 
     [Header("post empty message reference")]
     public GameObject emptyPhotoPostMsgObj;
@@ -194,12 +194,12 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void LoadUserData(bool isFirstTime)
     {
-        if (ProfileUIHandler.instance)
+        if (ProfileScreenController.instance)
         {
-            ProfileUIHandler.instance.followerBtn.interactable = false;
-            ProfileUIHandler.instance.followingBtn.interactable = false;
-            ProfileUIHandler.instance.editProfileBtn.SetActive(false);
-            ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+            ProfileScreenController.instance.followerBtn.interactable = false;
+            ProfileScreenController.instance.followingBtn.interactable = false;
+            ProfileScreenController.instance.editProfileBtn.SetActive(false);
+            ProfileScreenController.instance.followProfileBtn.SetActive(true);
         }
 
         //Debug.Log("Other user profile load data");
@@ -308,60 +308,60 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
             if (singleUserProfileData.tags != null && singleUserProfileData.tags.Length > 0)
             {
-            if (ProfileUIHandler.instance)
+            if (ProfileScreenController.instance)
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
-                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
+                ProfileScreenController.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
+                if (ProfileScreenController.instance.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
                 {
-                    for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                    for (int i = 0; i < ProfileScreenController.instance.UserTagsParent.transform.childCount; i++)
                     {
                         if (i >= singleUserProfileData.tags.Length)
                         {
-                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
+                            Destroy(ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
                         }
                         else
                         {
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                         }
                     }
                 }
-                else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
+                else if (ProfileScreenController.instance.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
                 {
-                    if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                    if (ProfileScreenController.instance.UserTagsParent.transform.childCount == 0)
                     {
                         for (int i = 0; i < singleUserProfileData.tags.Length; i++)
                         {
-                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            GameObject _tagobject = Instantiate(ProfileScreenController.instance.TagPrefab, ProfileScreenController.instance.UserTagsParent.transform);
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                         }
-                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                        ProfileScreenController.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                     else
                     {
                         for (int i = 0; i < singleUserProfileData.tags.Length; i++)
                         {
-                            if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                            if (i >= ProfileScreenController.instance.UserTagsParent.transform.childCount)
                             {
-                                GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                                GameObject _tagobject = Instantiate(ProfileScreenController.instance.TagPrefab, ProfileScreenController.instance.UserTagsParent.transform);
                                 _tagobject.name = "TagPrefab" + i;
                                 _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
                             else
                             {
-                                ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                                ProfileScreenController.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
                         }
-                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                        ProfileScreenController.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                 }
             }
             }
             else
             {
-            if (ProfileUIHandler.instance)
+            if (ProfileScreenController.instance)
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+                ProfileScreenController.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
             }
             }
     }
@@ -646,10 +646,10 @@ public class OtherPlayerProfileData : MonoBehaviour
         IEnumerator WaitToFeedLoadedUpdate(int pageNum)
     {
         yield return new WaitForSeconds(0.1f);
-        //userPostMainPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
+        //userPostMainPart.GetComponent<ParentHeightHandler>().GetAndCheckMaxHeightInAllTab();
 
         SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-        userPostMainPart.GetComponent<ParentHeightResetScript>().SetParentheight(userPostParent.GetComponent<RectTransform>().sizeDelta);
+        userPostMainPart.GetComponent<ParentHeightHandler>().SetParentheight(userPostParent.GetComponent<RectTransform>().sizeDelta);
         yield return new WaitForSeconds(0.5f);
         FeedUIController.Instance.ShowLoader(false);
 
@@ -667,14 +667,14 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void OnClickPhotoButton()
     {
         tabScrollRectGiftScreen.LerpToPage(0);
-        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(0);
+        ProfileScreenController.instance.otherUserButtonPanelScriptRef.OnSelectedClick(0);
         //tabScrollRectGiftScreen.SetPage(0);
         parentHeightResetScript.OnHeightReset(0);
     }
     public void OnClickMovieButton()
     {
         tabScrollRectGiftScreen.LerpToPage(1);
-        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(1);
+        ProfileScreenController.instance.otherUserButtonPanelScriptRef.OnSelectedClick(1);
         //tabScrollRectGiftScreen.SetPage(1);
         parentHeightResetScript.OnHeightReset(1);
     }
@@ -911,15 +911,15 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Follow");
+            //ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Unfollow");
+            //ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Unfollow");
         }
     }
 

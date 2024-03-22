@@ -221,7 +221,7 @@ public class SNSSettingController : MonoBehaviour
             {
                 UIHandler.Instance._footerCan.GetComponentInChildren<HomeFooterTabCanvas>().OnClickHomeButton();
             }
-            CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
+            CommonAPIHandler.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
                 LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();

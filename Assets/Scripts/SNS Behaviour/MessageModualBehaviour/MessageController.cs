@@ -1468,9 +1468,9 @@ public class MessageController : MonoBehaviour
                             }
                             else
                             {
-                                if (SNSNotificationManager.Instance != null)
+                                if (SNSNotificationHandler.Instance != null)
                                 {
-                                    SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
+                                    SNSNotificationHandler.Instance.ShowNotificationMsg("Please upload valid image or video file");
                                 }
                                 return;
                             }
@@ -1856,7 +1856,7 @@ public class MessageController : MonoBehaviour
             DestroyImmediate(currentSelectedGroupMemberDataScript.gameObject);
             currentSelectedGroupMemberDataScript = null;
 
-            SNSNotificationManager.Instance.ShowNotificationMsg("Removed success");//this method is used to show SNS notification.......
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Removed success");//this method is used to show SNS notification.......
 
             StartCoroutine(APIController.Instance.WaitToSetDetailsScreen());
         }
@@ -1932,7 +1932,7 @@ public class MessageController : MonoBehaviour
             DestroyImmediate(deleteConfirmationCurrentConversationDataScript.gameObject);
             deleteConfirmationCurrentConversationDataScript = null;
 
-            SNSNotificationManager.Instance.ShowNotificationMsg(notificationMessage);//this method is used to show SNS notification.......
+            SNSNotificationHandler.Instance.ShowNotificationMsg(notificationMessage);//this method is used to show SNS notification.......
         }
     }
 
@@ -1978,7 +1978,7 @@ public class MessageController : MonoBehaviour
         MessageDetailScreen.SetActive(false);
         OnClickMessageButton();//active message list screen and refreshing list api
 
-        SNSNotificationManager.Instance.ShowNotificationMsg("Group Deleted");//this method is used to show SNS notification.......
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Group Deleted");//this method is used to show SNS notification.......
 
         //if user fire message then create message with group deleted no longer you send message
         /*MessageController.Instance.isLeaveGroup = true;
