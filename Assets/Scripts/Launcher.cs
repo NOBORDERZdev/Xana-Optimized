@@ -46,12 +46,11 @@ namespace Photon.Pun.Demo.PunBasics
         public static bool isRoom = false;
         public static bool isLoading = false;
         [HideInInspector]
-        public LoadingManager Loader;
         public RoomOptions roomOptions;
 
         public bool lobbyJoined, roomJoined, movingToScene;
 
-        public LoadFromFile LFF;
+        public GameplayEntityLoader LFF;
         public List<GameObject> playerobjects;
         public static string sceneName;
         string lobbyName;
@@ -120,8 +119,6 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-
-            Loader = LoadingManager.Instance;
             Connect(XanaConstantsHolder.xanaConstants.EnviornmentName);
             print(XanaConstantsHolder.xanaConstants.EnviornmentName);
         }
@@ -183,7 +180,6 @@ namespace Photon.Pun.Demo.PunBasics
             lastSceneName = SceneManager.GetActiveScene().name;
             lastLobbyName = lobbyN;
             print("Connecting: ");
-            AvatarManager.timercall = false;
             //	RPCCallforBufferPlayers.playerobjects = null;
 
             Guid guid = System.Guid.NewGuid();
@@ -286,7 +282,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             print("Launcher " + "OnJoinRoomFailed : Returining Main" );
             print(returnCode.ToString() + "	" + message);
-            LoadFromFile.instance._uiReferences.LoadMain(true);
+            GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
         public override void OnCreatedRoom()
         {
@@ -367,7 +363,7 @@ namespace Photon.Pun.Demo.PunBasics
                 } else
                 { 
                     // there is no room for stremaing so move to main menu to switch other world
-                    LoadFromFile.instance._uiReferences.LoadMain(false); 
+                    GameplayEntityLoader.instance._uiReferences.LoadMain(false); 
                 }
             }
            
@@ -462,7 +458,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (!(SceneManager.GetActiveScene().name == "AddressableScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
             {
-                AvatarManager.Instance.InitCharacter();
+                AvatarSpawnerOnDisconnect.Instance.InitCharacter();
             }
             else
             {

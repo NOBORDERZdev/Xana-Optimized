@@ -83,18 +83,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
         playerMat = Resources.Load<Material>("Material #25");
-        mainPlayerParent = AvatarManager.Instance.spawnPoint.transform;
+        mainPlayerParent = AvatarSpawnerOnDisconnect.Instance.spawnPoint.transform;
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (XanaConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
-            if (AvatarManager.Instance.currentDummyPlayer == null)
+            if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
                 this.transform.parent = mainPlayerParent;
                 this.transform.localPosition = new Vector3(0, -0.081f, 0);
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
-                AvatarManager.Instance.currentDummyPlayer = this.gameObject;
+                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
                 print("nick name 3==" + XanaChatSystem.instance.UserName);
                 PhotonUserName.text = PhotonNetwork.NickName;
 
@@ -107,11 +107,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
 
 
-                AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().animator = this.GetComponent<Animator>();
-                //AvatarManager.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
-                AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
+                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().animator = this.GetComponent<Animator>();
+                //AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<EmoteAnimationPlay>().animatorremote = this.GetComponent<Animator>();
+                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
 
-                AvatarManager.Instance.Defaultanimator = AvatarManager.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
             }
         }
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
@@ -122,7 +122,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
         try
         {
-            AvatarManager.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
         }
         catch (Exception e)
         {

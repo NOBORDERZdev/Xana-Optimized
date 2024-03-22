@@ -89,7 +89,7 @@ public class SoundManagerSettings : MonoBehaviour
     {
 
         Invoke("AddingDeley", 0.25f);
-        ChangeOrientation_waqas.switchOrientation += OnOrientationChanged;
+        ScreenOrientationManager.switchOrientation += OnOrientationChanged;
         //  Invoke("ObjectsDeley", 1f);
     }
     void OnOrientationChanged()
@@ -250,8 +250,8 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetAllVolumes(float volume)
     {
-        //Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        //Debug.Log("check orientation===" + ScreenOrientationManager._instance.isPotrait);
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, volume);
             SetMicVolume(PlayerPrefs.GetFloat(ConstantsGod.MIC));
@@ -291,7 +291,7 @@ public class SoundManagerSettings : MonoBehaviour
     }
     public void SetVideoVolume(float Vol)
     {
-        //Debug.Log("check orientation===" + ChangeOrientation_waqas._instance.isPotrait);
+        //Debug.Log("check orientation===" + ScreenOrientationManager._instance.isPotrait);
         
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
             // PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, Vol);
@@ -402,6 +402,6 @@ public class SoundManagerSettings : MonoBehaviour
     private void OnDisable()
     {
         soundManagerSettings = null;
-        ChangeOrientation_waqas.switchOrientation -= OnOrientationChanged;
+        ScreenOrientationManager.switchOrientation -= OnOrientationChanged;
     }
 }

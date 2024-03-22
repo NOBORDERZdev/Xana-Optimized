@@ -104,7 +104,7 @@ public class EmoteSelectionBtn : MonoBehaviour
         {
             if (animData.animationName == EmoteAnimationHandler.remoteUrlAnimationName)            
             {
-                CanvasButtonsHandler.inst.stopCurrentPlayingAnim = true;
+                GamePlayUIHandler.inst.stopCurrentPlayingAnim = true;
                 GamePlayButtonEvents.inst.OnEmoteAnimationStop();
             }
            // Debug.Log(animData.animationName + "  is playing  " + EmoteAnimationHandler.remoteUrlAnimationName);

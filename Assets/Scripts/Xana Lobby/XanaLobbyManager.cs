@@ -173,7 +173,7 @@ public class XanaLobbyManager : MonoBehaviour
             XLRatios.instance.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             XLRatios.instance.LandscapeObj.SetActive(true);
             XLRatios.instance.PotraiteObj.SetActive(false);
@@ -190,9 +190,9 @@ public class XanaLobbyManager : MonoBehaviour
             XLRatios.instance.ratioReferences[ratioId].p_obj.SetActive(true);
             
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
 }

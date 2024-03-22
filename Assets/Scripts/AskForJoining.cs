@@ -15,16 +15,6 @@ public class AskForJoining : MonoBehaviour
     // Start is called before the first frame update
 
     AsyncOperation asyncLoading;
-    private CameraLook[] _cameraLooks;
-
-
-
-    private void Awake()
-    {
-        _cameraLooks = FindObjectsOfType<CameraLook>();
-
-    }
-
 
     void LoadMain()
     {
@@ -96,14 +86,14 @@ public class AskForJoining : MonoBehaviour
             StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
 
             LoadingController.Instance.ShowLoading();
-            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+                ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }
 
             //LoadingController.Instance.UpdateLoadingSlider(0.5f);
             Launcher.instance.Connect(Launcher.instance.lastLobbyName);
-            AvatarManager.Instance.InstantiatePlayerAgain();
+            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
             Destroy(this.gameObject);

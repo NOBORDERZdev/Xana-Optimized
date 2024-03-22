@@ -83,8 +83,8 @@ public class BDButtonsLayoutManager : MonoBehaviour
         for (int i = 0; i < buttonImages.Length; i++)
         {
             buttonImages[i].sprite = btnIcons[i];
-            BDCanvasButtonsHandler.inst.buttonImgs[i].sprite = btnIcons[i];
-            BDCanvasButtonsHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnIcons[i];
+            BDGamePlayUIHandler.inst.buttonImgs[i].sprite = btnIcons[i];
+            BDGamePlayUIHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnIcons[i];
         }
     }
 
@@ -94,8 +94,8 @@ public class BDButtonsLayoutManager : MonoBehaviour
         for (int i = 0; i < buttonImages.Length; i++)
         {
             buttonImages[i].sprite = btnInitials[i];
-            BDCanvasButtonsHandler.inst.buttonImgs[i].sprite = btnInitials[i];
-            BDCanvasButtonsHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnInitials[i];
+            BDGamePlayUIHandler.inst.buttonImgs[i].sprite = btnInitials[i];
+            BDGamePlayUIHandler.inst.buttonImgs2[i].spriteNeutral.sprite = btnInitials[i];
         }
     }
 
@@ -153,34 +153,34 @@ public class BDButtonsLayoutManager : MonoBehaviour
 
 
 
-        BDCanvasButtonsHandler.inst.joystick.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.joystick.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
-   //     CanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.joystick.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.joystick.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
+   //     GamePlayUIHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-        BDCanvasButtonsHandler.inst.LK.anchoredPosition = new Vector3(LK.anchoredPosition.x, LK.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.LK.transform.localScale = new Vector3(LK.transform.localScale.x, LK.transform.localScale.y, 0);
-      //  CanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.LK.anchoredPosition = new Vector3(LK.anchoredPosition.x, LK.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.LK.transform.localScale = new Vector3(LK.transform.localScale.x, LK.transform.localScale.y, 0);
+      //  GamePlayUIHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
 
-        BDCanvasButtonsHandler.inst.LP.anchoredPosition = new Vector3(LP.anchoredPosition.x, LP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.LP.transform.localScale = new Vector3(LP.transform.localScale.x, LP.transform.localScale.y, 0);
-       // CanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.LP.anchoredPosition = new Vector3(LP.anchoredPosition.x, LP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.LP.transform.localScale = new Vector3(LP.transform.localScale.x, LP.transform.localScale.y, 0);
+       // GamePlayUIHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-        BDCanvasButtonsHandler.inst.HP.anchoredPosition = new Vector3(HP.anchoredPosition.x, HP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.HP.transform.localScale = new Vector3(HP.transform.localScale.x, HP.transform.localScale.y, 0);
-       // CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.HP.anchoredPosition = new Vector3(HP.anchoredPosition.x, HP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.HP.transform.localScale = new Vector3(HP.transform.localScale.x, HP.transform.localScale.y, 0);
+       // GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-        BDCanvasButtonsHandler.inst.HK.anchoredPosition = new Vector3(HK.anchoredPosition.x, HK.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.HK.transform.localScale = new Vector3(HK.transform.localScale.x, HK.transform.localScale.y, 0);
-      //  CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.HK.anchoredPosition = new Vector3(HK.anchoredPosition.x, HK.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.HK.transform.localScale = new Vector3(HK.transform.localScale.x, HK.transform.localScale.y, 0);
+      //  GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-        BDCanvasButtonsHandler.inst.SP.anchoredPosition = new Vector3(SP.anchoredPosition.x, SP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.SP.transform.localScale = new Vector3(SP.transform.localScale.x, SP.transform.localScale.y, 0);
-     //   CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.SP.anchoredPosition = new Vector3(SP.anchoredPosition.x, SP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.SP.transform.localScale = new Vector3(SP.transform.localScale.x, SP.transform.localScale.y, 0);
+     //   GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
-        BDCanvasButtonsHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
-        //   CanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        BDGamePlayUIHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
+        //   GamePlayUIHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         ApplyNewSettings();
 
@@ -191,13 +191,13 @@ public class BDButtonsLayoutManager : MonoBehaviour
     
     
     void ApplyNewSettings() {
-        BDCanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchJoystick>().SetupNewInits("JOYSTICK");
-        BDCanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits("LK");
-        BDCanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits("LP");
-        BDCanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits("HK");
-        BDCanvasButtonsHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits("HP");
-        BDCanvasButtonsHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits("SP");
-        BDCanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits("BLOCK");
+        BDGamePlayUIHandler.inst.joystick.gameObject.GetComponent<TouchJoystick>().SetupNewInits("JOYSTICK");
+        BDGamePlayUIHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits("LK");
+        BDGamePlayUIHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits("LP");
+        BDGamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits("HK");
+        BDGamePlayUIHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits("HP");
+        BDGamePlayUIHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits("SP");
+        BDGamePlayUIHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits("BLOCK");
     }
     
     
@@ -227,27 +227,27 @@ public class BDButtonsLayoutManager : MonoBehaviour
         B.transform.localScale = new Vector3(PlayerPrefs.GetFloat("BScaleX", 1), PlayerPrefs.GetFloat("BScaleY", 1), 0);
 
        
-        BDCanvasButtonsHandler.inst.joystick.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.joystick.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.joystick.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.joystick.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
 
-        BDCanvasButtonsHandler.inst.LK.anchoredPosition = new Vector3(LK.anchoredPosition.x, LK.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.LK.transform.localScale = new Vector3(LK.transform.localScale.x, LK.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.LK.anchoredPosition = new Vector3(LK.anchoredPosition.x, LK.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.LK.transform.localScale = new Vector3(LK.transform.localScale.x, LK.transform.localScale.y, 0);
 
 
-        BDCanvasButtonsHandler.inst.LP.anchoredPosition = new Vector3(LP.anchoredPosition.x, LP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.LP.transform.localScale = new Vector3(LP.transform.localScale.x, LP.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.LP.anchoredPosition = new Vector3(LP.anchoredPosition.x, LP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.LP.transform.localScale = new Vector3(LP.transform.localScale.x, LP.transform.localScale.y, 0);
 
-        BDCanvasButtonsHandler.inst.HP.anchoredPosition = new Vector3(HP.anchoredPosition.x, HP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.HP.transform.localScale = new Vector3(HP.transform.localScale.x, HP.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.HP.anchoredPosition = new Vector3(HP.anchoredPosition.x, HP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.HP.transform.localScale = new Vector3(HP.transform.localScale.x, HP.transform.localScale.y, 0);
 
-        BDCanvasButtonsHandler.inst.HK.anchoredPosition = new Vector3(HK.anchoredPosition.x, HK.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.HK.transform.localScale = new Vector3(HK.transform.localScale.x, HK.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.HK.anchoredPosition = new Vector3(HK.anchoredPosition.x, HK.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.HK.transform.localScale = new Vector3(HK.transform.localScale.x, HK.transform.localScale.y, 0);
 
-        BDCanvasButtonsHandler.inst.SP.anchoredPosition = new Vector3(SP.anchoredPosition.x, SP.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.SP.transform.localScale = new Vector3(SP.transform.localScale.x, SP.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.SP.anchoredPosition = new Vector3(SP.anchoredPosition.x, SP.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.SP.transform.localScale = new Vector3(SP.transform.localScale.x, SP.transform.localScale.y, 0);
 
-        BDCanvasButtonsHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
-        BDCanvasButtonsHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
+        BDGamePlayUIHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
+        BDGamePlayUIHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
     }
 
     

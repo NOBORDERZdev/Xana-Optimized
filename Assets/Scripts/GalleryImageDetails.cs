@@ -99,7 +99,7 @@ public class GalleryImageDetails : MonoBehaviour
             }
             else if (m_IsPortrait)
             {
-                if (!ChangeOrientation_waqas._instance.isPotrait)
+                if (!ScreenOrientationManager._instance.isPotrait)
                 {
                     CurrentContext = Context.IsPortrait;
                     RectTransform rt = GalleryImageManager.Instance.m_Picture.GetComponent<RectTransform>();
