@@ -299,7 +299,7 @@ public class EmoteFilterManager : MonoBehaviour
     {
         //if (Input.deviceOrientation == DeviceOrientation.Portrait)
         //{
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomObject.SetActive(true);
@@ -308,8 +308,8 @@ public class EmoteFilterManager : MonoBehaviour
             if (panel == this.gameObject)
                 panel.transform.DOLocalMoveY(-1500f, 0.1f);
 
-            JyosticksObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-            JumpObject.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            JyosticksObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+            JumpObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             
                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
          //   ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;

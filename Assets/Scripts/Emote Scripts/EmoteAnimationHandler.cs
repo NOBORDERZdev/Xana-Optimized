@@ -274,7 +274,7 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
 
                                                 //        if (!AnimHighlight.activeInHierarchy)
                                                 //        {
-                                                //            AvatarManager.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
+                                                //            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
 
                                                 //            //  animatorremote = null;
 
@@ -292,9 +292,9 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
                                                 //            // controller.SetStateEffectiveMotion(state, null);
                                                 //            // animator.SetBool("IsEmote", false);
 
-                                                //            AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
+                                                //            AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
                                                 //            AnimHighlight.SetActive(false);
-                                                //            LoadFromFile.animClick = false;
+                                                //            GameplayEntityLoader.animClick = false;
                                                 //            break;
                                                 //        }
                                                 //    }
@@ -320,13 +320,13 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
                                                 animatorremote.SetBool("IsEmote", true);
                                                 isPreviousBundleLoad = true;
                                                 CheckSelfieOn();
-                                                // AvatarManager.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, 0f, 0);
+                                                // AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, 0f, 0);
 
 
                                             }
                                             else
                                             {
-                                                //  AvatarManager.Instance.currentDummyPlayer.GetComponent<Animator>().runtimeAnimatorController = controller;
+                                                //  AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<Animator>().runtimeAnimatorController = controller;
                                             }
 
                                         }
@@ -458,9 +458,9 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
         //}
         //if (!AnimHighlight.activeInHierarchy)
         {
-            if (AvatarManager.Instance.currentDummyPlayer != null)
+            if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer != null)
             {
-                AvatarManager.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
+                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
             }
 
             //  animatorremote = null;
@@ -488,7 +488,7 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
             // controller.SetStateEffectiveMotion(state, null);
             // animator.SetBool("IsEmote", false);
 
-            AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
+            AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
             //   if (AnimHighlight != null) AnimHighlight.SetActive(false);
             PlayerPrefsUtility.SetEncryptedString(ConstantsGod.SELECTED_ANIMATION_NAME, "");
             LoadEmoteAnimations.animClick = false;
@@ -513,9 +513,9 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
 
     public void sendDataAnimationUrl(string url)
     {
-        //  AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = false;
+        //  AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = false;
         AnimHighlight.SetActive(true);
-        // LoadFromFile.animClick = true;
+        // GameplayEntityLoader.animClick = true;
 
 
         ////Debug.Log("mine Player===" + GameObject.FindGameObjectWithTag("Player").transform.GetChild(19).GetComponent<PhotonView>().ViewID);
@@ -871,7 +871,7 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
             //EmoteFilterManager.TouchDisable = false;
             //popupPenal.SetActive(false);
 
-            AvatarManager.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
 
             //  animatorremote = null;
 
@@ -888,14 +888,14 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
             // controller.SetStateEffectiveMotion(state, null);
             // animator.SetBool("IsEmote", false);
 
-            AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
+            AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>().enabled = true;
             AnimHighlight.SetActive(false);
             LoadEmoteAnimations.animClick = false;
 
 
             try
             {
-                LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = LoadFromFile.instance.joyStickMovementRange;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = GameplayEntityLoader.instance.joyStickMovementRange;
 
             }
             catch (Exception e)
@@ -912,7 +912,7 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
             isEmoteActive = true;
             try
             {
-                LoadFromFile.instance.joyStickMovementRange = LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange;
+                GameplayEntityLoader.instance.joyStickMovementRange = GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange;
 
             }
             catch (Exception e)

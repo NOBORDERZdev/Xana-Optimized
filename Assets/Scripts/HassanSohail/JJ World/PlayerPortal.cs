@@ -58,7 +58,7 @@ public class PlayerPortal : MonoBehaviour
             if (destinationPoint != null && other.GetComponent<PhotonView>().IsMine)
             {
                 print("player enter : " + transform.parent.parent.name);
-                CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+                GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
                 // For NFT Click
                 JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
                 if (transform.parent.parent.name.Contains("Rental"))
@@ -87,9 +87,9 @@ public class PlayerPortal : MonoBehaviour
                 triggerObject = other.gameObject;
 
                 if (currentPortal == PortalType.Enter || currentPortal == PortalType.Teleport)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
                 else if (currentPortal == PortalType.Exit)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
             }
         }
     }
@@ -165,7 +165,7 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
             LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));

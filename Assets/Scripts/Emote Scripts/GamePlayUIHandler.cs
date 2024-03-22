@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 
-public class CanvasButtonsHandler : MonoBehaviour
+public class GamePlayUIHandler : MonoBehaviour
 {
-    static CanvasButtonsHandler _inst;
-    public static CanvasButtonsHandler inst
+    static GamePlayUIHandler _inst;
+    public static GamePlayUIHandler inst
     {
         get
         {
-            if (_inst == null) _inst = FindObjectOfType<CanvasButtonsHandler>();
+            //if (_inst == null) _inst = FindObjectOfType<GamePlayUIHandler>();
             return _inst;
         }
     }
@@ -58,7 +58,7 @@ public class CanvasButtonsHandler : MonoBehaviour
     }
     void ChangeOrientation()
     {
-        ChangeOrientation_waqas._instance.ChangeOrientation_editor();
+        ScreenOrientationManager._instance.ChangeOrientation_editor();
     }
 
     public void OnGotoAnotherWorldClick()
@@ -156,7 +156,6 @@ public class CanvasButtonsHandler : MonoBehaviour
 
     public void OnOpenAnimationPanel()
     {
-        ;
         ref_LoadEmoteAnimations.OpenAnimationSelectionPanel();
         Debug.Log("call hua times 3===" + GamePlayButtonEvents.inst.selectionPanelOpen);
         GamePlayButtonEvents.inst.selectionPanelOpen = true;
@@ -202,10 +201,10 @@ public class CanvasButtonsHandler : MonoBehaviour
     bool isActionShowing;
     public void OnActionsToggleClicked()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
-            if (ChangeOrientation_waqas._instance.joystickInitPosY == 0)
-                ChangeOrientation_waqas._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
+            if (ScreenOrientationManager._instance.joystickInitPosY == 0)
+                ScreenOrientationManager._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
         }
         if (!UserPassManager.Instance.CheckSpecificItem("env_actions"))
         {

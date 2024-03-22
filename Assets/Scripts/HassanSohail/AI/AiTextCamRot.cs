@@ -16,9 +16,9 @@ public class AiTextCamRot : MonoBehaviour
     void Start()
     {
         localTrans = GetComponent<Transform>();
-        mainCam = LoadFromFile.instance.PlayerCamera.transform;
+        mainCam = GameplayEntityLoader.instance.PlayerCamera.transform;
         thirdPersonCam = mainCam;
-        firstPersonCam = LoadFromFile.instance.firstPersonCamera.transform;
+        firstPersonCam = GameplayEntityLoader.instance.firstPersonCamera.transform;
     }
 
     void Update()

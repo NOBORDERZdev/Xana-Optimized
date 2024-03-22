@@ -73,11 +73,11 @@ public class Reaction_EmotePanel : MonoBehaviour
         //}
         m_ReactPanel.SetActive(true);
         m_EmotePanel.SetActive(false);
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
 
-            //if (ChangeOrientation_waqas._instance.isPotrait)
-            //    ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+            //if (ScreenOrientationManager._instance.isPotrait)
+            //    ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
 
             //BottomObject.SetActive(false);
             //XanaChatObject.SetActive(false);
@@ -115,10 +115,10 @@ public class Reaction_EmotePanel : MonoBehaviour
         //}
         m_EmotePanel.SetActive(true);
         m_ReactPanel.SetActive(false);
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
-            //if (ChangeOrientation_waqas._instance.isPotrait)
-            //    ChangeOrientation_waqas._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
+            //if (ScreenOrientationManager._instance.isPotrait)
+            //    ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
 
             //BottomObject.SetActive(false);
             //XanaChatObject.SetActive(false);

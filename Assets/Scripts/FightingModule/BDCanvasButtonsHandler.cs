@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BDCanvasButtonsHandler : MonoBehaviour
+public class BDGamePlayUIHandler : MonoBehaviour
 {
     public RectTransform joystick, LK, LP, HP, HK, SP, B;
     public Image[] buttonImgs;
     public TouchButtonSpriteAnimator[] buttonImgs2;
-    public static BDCanvasButtonsHandler inst;
+    public static BDGamePlayUIHandler inst;
 
     private void Awake()
     {

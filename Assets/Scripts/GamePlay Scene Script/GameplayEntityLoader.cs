@@ -15,10 +15,10 @@ using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
 
-public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
+public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     [Header("singleton object")]
-    public static LoadFromFile instance;
+    public static GameplayEntityLoader instance;
 
     public GameObject mainPlayer;
     public GameObject mainController;
@@ -56,7 +56,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     public double eventRemainingTime;
 
-    public SceneTransitionHandler _uiReferences;
+    public HomeSceneLoader _uiReferences;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -471,12 +471,12 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
-        Metaverse.AvatarManager.Instance.InitCharacter();
+        Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
         if (player.GetComponent<StepsManager>())
         {
             player.GetComponent<StepsManager>().isplayer = true;
         }
-        GetComponent<ChecklPostProcessing>().SetPostProcessing();
+        GetComponent<PostProcessManager>().SetPostProcessing();
 
         // LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
 
@@ -661,7 +661,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //Post Process enable for Builder Scene
             firstPersonCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             environmentCameraRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-            Camera freeCam = this.GetComponent<ChecklPostProcessing>().freeCam;
+            Camera freeCam = this.GetComponent<PostProcessManager>().freeCam;
             freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             if (player.GetComponent<StepsManager>())
             {
@@ -691,7 +691,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
-        Metaverse.AvatarManager.Instance.InitCharacter();
+        Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
     End:
         //LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
@@ -896,7 +896,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         if (XanaConstantsHolder.xanaConstants.orientationchanged && XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
-            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         Transform tempSpawnPoint = null;
         LoadingController.Instance.UpdateLoadingStatusText("Getting World Ready....");
@@ -1123,7 +1123,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     {
         // Forcfully resetting lights because on 
 
-        if (GetComponent<ChecklPostProcessing>().CheckPostProcessEnable())
+        if (GetComponent<PostProcessManager>().CheckPostProcessEnable())
         {
             Light[] sceneLight;
             sceneLight = GameObject.FindObjectsOfType<Light>();

@@ -432,7 +432,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -523,9 +523,9 @@ public class JjInfoManager : MonoBehaviour
             }
 
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
 
         #region For firebase analytics
@@ -579,7 +579,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -593,9 +593,9 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].l_obj.SetActive(false);
             ratioReferences[ratioId].p_obj.SetActive(true);
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
@@ -665,9 +665,9 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_Loader.SetActive(false);
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
 
     }

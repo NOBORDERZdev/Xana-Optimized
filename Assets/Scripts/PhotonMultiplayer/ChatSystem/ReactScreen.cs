@@ -72,7 +72,7 @@ public class ReactScreen : MonoBehaviour
         if (isOpen || reactionScreenParent.activeInHierarchy)
         {
             reactImage.sprite = react_disable;
-            if (!CanvasButtonsHandler.inst.actionsContainer.activeInHierarchy)
+            if (!GamePlayUIHandler.inst.actionsContainer.activeInHierarchy)
             {
                 ClosePanel();
                 HideReactionScreen();
@@ -82,11 +82,11 @@ public class ReactScreen : MonoBehaviour
             {
                 reactionScreenParent.SetActive(false);
                 HideReactionScreen();
-                if (ChangeOrientation_waqas._instance.isPotrait)
+                if (ScreenOrientationManager._instance.isPotrait)
                 {
-                    ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                    //if (ChangeOrientation_waqas._instance.isPotrait)
-                    //    ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
+                    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
+                    //if (ScreenOrientationManager._instance.isPotrait)
+                    //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                     //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
 
                     jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
@@ -111,17 +111,17 @@ public class ReactScreen : MonoBehaviour
                 print("Horayyy you have Access");
             }
 
-            //if (!CanvasButtonsHandler.inst.actionsContainer.activeInHierarchy)
+            //if (!GamePlayUIHandler.inst.actionsContainer.activeInHierarchy)
             //{
             //    reactionScreenParent.SetActive(true);
             //    //if (Input.deviceOrientation == DeviceOrientation.Portrait)
             //    //{
 
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                //if (ChangeOrientation_waqas._instance.isPotrait)
-                //    ChangeOrientation_waqas._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
+                ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
+                //if (ScreenOrientationManager._instance.isPotrait)
+                //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                 //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
                 reactionScreenParent.SetActive(true);
                 jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
@@ -154,14 +154,14 @@ public class ReactScreen : MonoBehaviour
 
     public void ClosePanel()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
             // XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
-            jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-            jumpBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+            jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             //ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
         }
         reactionScreenParent.SetActive(false);
@@ -176,15 +176,15 @@ public class ReactScreen : MonoBehaviour
     {
         isOpen = false;
         reactImage.sprite = react_disable;
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
             //  XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             emoteAnimationScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
-            jyostickBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
-            jumpBtn.transform.DOLocalMoveY(ChangeOrientation_waqas._instance.joystickInitPosY, 0.1f);
+            jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
+            jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
             BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
         }

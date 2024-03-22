@@ -13,7 +13,7 @@ public class LookAtScript : MonoBehaviour
     PlayerControllerNew player; // Player script
     private void Awake()
     {
-        player = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
+        player = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
         //cameraObject = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
         //SetCam();
     }
