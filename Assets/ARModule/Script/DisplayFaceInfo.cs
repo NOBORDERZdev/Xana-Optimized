@@ -65,11 +65,11 @@
 //                lastState = isTracking;
 //                if (isTracking)
 //                {
-//                    m_FaceInfoText.text = TextLocalization.GetLocaliseTextByKey("Your face tracking started");
+//                    m_FaceInfoText.text = UITextLocalization.GetLocaliseTextByKey("Your face tracking started");
 //                }
 //                else 
 //                { 
-//                    m_FaceInfoText.text = TextLocalization.GetLocaliseTextByKey("Oops! Your face can't be detected Please go to a brighter place and look straight into the camera");
+//                    m_FaceInfoText.text = UITextLocalization.GetLocaliseTextByKey("Oops! Your face can't be detected Please go to a brighter place and look straight into the camera");
 //                }
 //                InfoPanel.SetActive(true);
 

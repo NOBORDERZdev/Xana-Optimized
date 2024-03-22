@@ -97,7 +97,7 @@ public class BuildingDetect : MonoBehaviour
             vignette.active = false;
             motionBlur.active = false;
         }
-        AvatarController ac = GamificationComponentData.instance.avatarController;
+        AvatarSetupController ac = GamificationComponentData.instance.avatarController;
         //Initializing
         if (ac.wornHair)
             playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();

@@ -152,7 +152,7 @@ public class ThrowThingsTrejectorySyncing : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 this.player = _photonView.Owner;
                 return playerObject;

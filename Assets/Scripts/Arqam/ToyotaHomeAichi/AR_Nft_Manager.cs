@@ -111,17 +111,17 @@ namespace Toyota
 
         private void Start()
         {
-            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
+            if (ServerBaseURlHandler.instance && ServerBaseURlHandler.instance.IsXanaLive)
             {
                 //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Main;
+                //    PMY_RoomId = XanaConstantsHolder.xanaConstants.pmy_classRoomID_Main;
                 //else
                     PMY_RoomId = PMY_RoomId_main;
             }
             else
             {
                 //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Test;
+                //    PMY_RoomId = XanaConstantsHolder.xanaConstants.pmy_classRoomID_Test;
                 //else
                     PMY_RoomId = PMY_RoomId_test;
             }

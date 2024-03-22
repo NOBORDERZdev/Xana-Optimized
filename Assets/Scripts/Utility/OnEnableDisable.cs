@@ -10,18 +10,18 @@ public class OnEnableDisableHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (CharacterCustomizationManager.Instance != null)
+        if (AvatarCustomizationManager.Instance != null)
         {
-            CharacterCustomizationManager.Instance.m_CanRotateCharacter = false;
+            AvatarCustomizationManager.Instance.m_CanRotateCharacter = false;
         }
         OnEnabled.Invoke();
     }
 
     private void OnDisable()
     {
-        if (CharacterCustomizationManager.Instance != null)
+        if (AvatarCustomizationManager.Instance != null)
         {
-            CharacterCustomizationManager.Instance.m_CanRotateCharacter = true;
+            AvatarCustomizationManager.Instance.m_CanRotateCharacter = true;
         }
         OnDisabled.Invoke();
     }
@@ -29,7 +29,7 @@ public class OnEnableDisableHandler : MonoBehaviour
     public void ClosePopUp()
     {
         OnDisabled.Invoke();
-        UIManager.Instance.ShowFooter(true);
+        UIHandler.Instance.ShowFooter(true);
         StartCoroutine(WaitForPopup());
     }
     IEnumerator WaitForPopup()

@@ -45,8 +45,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
         {
             yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
-            AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            AvatarSetupController ac = playerObj.GetComponent<AvatarSetupController>();
+            AvatarBodyParts charcterBodyParts = playerObj.GetComponent<AvatarBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
 
             if (ac.wornHair)
@@ -97,7 +97,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
         PhotonView[] photonViews = GameObject.FindObjectsOfType<PhotonView>();
         foreach (PhotonView photonView in photonViews)
         {
-            if (photonView.Owner == player && photonView.GetComponent<AvatarController>())
+            if (photonView.Owner == player && photonView.GetComponent<AvatarSetupController>())
             {
                 return photonView.gameObject;
             }

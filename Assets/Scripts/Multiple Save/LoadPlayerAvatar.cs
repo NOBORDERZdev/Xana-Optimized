@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-public class LoadPlayerAvatar : ServerSIdeCharacterHandling
+public class LoadPlayerAvatar : ServerSideUserDataHandler
 {
     public GameObject mainPanel;
     public ScrollRect avatarScrollRect;
@@ -401,10 +401,10 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
 
 
         // Commented By Talha Now use texture for Body
-        //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
+        //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts.Count; i++)
         //{
-        //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
-        //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.SetTexture("_BaseMap", tex);
+        //    if (GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
+        //        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.SetTexture("_BaseMap", tex);
         //}
     }
 
@@ -430,15 +430,15 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //DefaultEnteriesforManican.instance.ResetForPresets();
             //DownloadPlayerAssets();
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            SavaCharacterProperties.instance.LoadMorphsfromFile();
+            SavaAvatarProperties.instance.LoadMorphsfromFile();
             loadprevious();
-            StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+            StartCoroutine(AvatarPropertiesDatabase.instance.WaitAndDownloadFromRevert(0));
+            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
             //InventoryManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
             //if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
@@ -505,7 +505,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                 if (_CharacterData.myItemObj[i].ItemID == 0)
                 {
-                    ItemDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
+                    AvatarPropertiesDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
                 }
                 else
                 {
@@ -524,11 +524,11 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                             if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
+                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>(), Color.clear));
                             }
                             else
                             {
-                                GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                             }
 
                             //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
@@ -551,9 +551,9 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         if (avatarId != null)
         {
             PlayerPrefs.SetInt("presetPanel", 0);
-            SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
+            SavaAvatarProperties.instance.SavePlayerPropertiesInClassObj();
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
         }
     }
 
@@ -614,7 +614,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                 File.WriteAllText((Application.persistentDataPath + "/SavingCharacterDataClass.json"), JsonUtility.ToJson(_CharacterData));
                 DownloadPlayerAssets();
                 //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-                SavaCharacterProperties.instance.LoadMorphsfromFile();
+                SavaAvatarProperties.instance.LoadMorphsfromFile();
 
                 isAlreadyRunning = true;
             }

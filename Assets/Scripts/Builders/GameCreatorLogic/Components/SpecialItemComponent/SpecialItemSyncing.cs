@@ -44,8 +44,8 @@ public class SpecialItemSyncing : MonoBehaviourPun
             this.transform.SetParent(playerObj.transform);
             transform.localEulerAngles = Vector3.up * 180;
             transform.localPosition = Vector3.up * 0.824f;
-            AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            AvatarSetupController ac = playerObj.GetComponent<AvatarSetupController>();
+            AvatarBodyParts charcterBodyParts = playerObj.GetComponent<AvatarBodyParts>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornPant)
@@ -74,7 +74,7 @@ public class SpecialItemSyncing : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 return playerObject;
             }

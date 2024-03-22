@@ -24,28 +24,28 @@ public class TermsConditionsManager : MonoBehaviour
     }
     private void Start()
     {
-        if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
             TabBG.SetActive(true);
     }
     public void CheckForTermsAndCondition()
     {
         if (PlayerPrefs.HasKey("TermsConditionAgreement"))
         {
-            //if (UIManager.Instance)
+            //if (UIHandler.Instance)
             //{
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 1;
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            //    UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = true;
+            //    UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 1;
+            //    UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            //    UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().interactable = true;
             //}
             mainPanel.SetActive(false);
         }
         else
         {
-            if (UIManager.Instance)
+            if (UIHandler.Instance)
             {
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 0;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable = false;
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().alpha = 0;
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().interactable = false;
             }
             mainPanel.SetActive(true);
         }
@@ -90,12 +90,12 @@ public class TermsConditionsManager : MonoBehaviour
     public void OnAgreeButtonClick()
     {
         mainPanel.SetActive(false);
-         if(UIManager.Instance){ 
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
-                UIManager.Instance.Canvas.GetComponent<CanvasGroup>().interactable= true;
+         if(UIHandler.Instance){ 
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().alpha=1;
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().blocksRaycasts= true;
+                UIHandler.Instance.Canvas.GetComponent<CanvasGroup>().interactable= true;
             }
-        UIManager.Instance.StartCoroutine(UIManager.Instance.IsSplashEnable(false, 0.1f));
+        UIHandler.Instance.StartCoroutine(UIHandler.Instance.IsSplashEnable(false, 0.1f));
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
     }
 

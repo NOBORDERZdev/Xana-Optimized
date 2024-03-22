@@ -68,7 +68,7 @@ public class ReactScreen : MonoBehaviour
     {
         Debug.Log("check value of reaction panel===" + isOpen);
         Debug.Log("check value of reaction panel 1===" + reactionScreenParent.activeInHierarchy);
-        EmoteAnimationPlay.Instance.isEmoteActive = false;
+        EmoteAnimationHandler.Instance.isEmoteActive = false;
         if (isOpen || reactionScreenParent.activeInHierarchy)
         {
             reactImage.sprite = react_disable;
@@ -168,7 +168,7 @@ public class ReactScreen : MonoBehaviour
     }
     public void HideEmoteScreen()
     {
-        if (!EmoteAnimationPlay.Instance.isAnimRunning)
+        if (!EmoteAnimationHandler.Instance.isAnimRunning)
             emoteAnimationHighlightButton.SetActive(false);
         emoteAnimationScreenParent.SetActive(false);
     }
@@ -280,7 +280,7 @@ public class ReactScreen : MonoBehaviour
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllReactions + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllReactions + "/" + ServerBaseURlHandler.instance.apiversion);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

@@ -91,7 +91,7 @@ public class WorldItemManager : MonoBehaviour
 
     public void WorldLoadingText(APIURL aPIURL)
     {
-        LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+        LoadingController.Instance.SearchLoadingCanvas.SetActive(false);
         switch (aPIURL)
         {
             case APIURL.HotSpaces:

@@ -14,7 +14,7 @@ public class JJMuseumInfoManager : MonoBehaviour
 
     private void Start()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
             JJMusuemId = JJMusuemId_main;
         else
             JJMusuemId = JJMusuemId_test;

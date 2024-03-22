@@ -34,8 +34,8 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
         if (playerObj != null)
         {
             yield return new WaitForSeconds(0.5f);
-            AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            AvatarSetupController ac = playerObj.GetComponent<AvatarSetupController>();
+            AvatarBodyParts charcterBodyParts = playerObj.GetComponent<AvatarBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
@@ -80,7 +80,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 return playerObject;
             }

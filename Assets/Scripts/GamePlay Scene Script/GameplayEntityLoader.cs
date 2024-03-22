@@ -177,11 +177,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //LoadEnvironment(FeedEventPrefab.m_EnvName);
         if (currentEnvironment == null)
         {
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (XanaConstantsHolder.xanaConstants.isBuilderScene)
                 SetupEnvirnmentForBuidlerScene();
             else
             {
-                LoadEnvironment(XanaConstants.xanaConstants.EnviornmentName);
+                LoadEnvironment(XanaConstantsHolder.xanaConstants.EnviornmentName);
                 //CharacterLightCulling();  //amit-05-05-2023 commented this line as it excuted before env instantidated and env light is not culled. called this method on another right place
             }
         }
@@ -204,8 +204,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         if (YoutubeStreamPlayer == null)
         {
-            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
-            if (WorldItemView.m_EnvName.Contains("DJ Event"))
+            //Debug.Log("DJ Beach====" + WorldItem.m_EnvName);
+            if (WorldItem.m_EnvName.Contains("DJ Event"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
 
@@ -227,7 +227,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
-            if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
+            if (WorldItem.m_EnvName.Contains("XANA Festival Stage") && !WorldItem.m_EnvName.Contains("Dubai"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
 
@@ -250,7 +250,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 }
             }
 
-            if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+            if (WorldItem.m_EnvName.Contains("Xana Festival") || WorldItem.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
 
@@ -272,7 +272,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     YoutubeStreamPlayer.SetActive(true);
                 }
             }
-            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            if (WorldItem.m_EnvName.Contains("XANA Lobby"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
 
@@ -304,7 +304,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
     void CharacterLightCulling()
     {
-        if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstants.xanaConstants.isBuilderScene)
+        if ((!WorldItem.m_EnvName.Contains("Xana Festival") || !WorldItem.m_EnvName.Contains("NFTDuel Tournament")) && !XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             //riken
             Light[] directionalLightList = FindObjectsOfType<Light>();
@@ -363,22 +363,22 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public IEnumerator SpawnPlayer()
     {
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
+        //    LoadingController.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
+        if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+            // LoadingController.Instance.UpdateLoadingSlider(.8f);
+            LoadingController.Instance.UpdateLoadingStatusText("Joining World...");
         }
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            if (WorldItemView.m_EnvName.Contains("AfterParty"))
+            if (WorldItem.m_EnvName.Contains("AfterParty"))
             {
-                if (XanaConstants.xanaConstants.setIdolVillaPosition)
+                if (XanaConstantsHolder.xanaConstants.setIdolVillaPosition)
                 {
                     spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                    XanaConstants.xanaConstants.setIdolVillaPosition = false;
+                    XanaConstantsHolder.xanaConstants.setIdolVillaPosition = false;
                 }
                 else
                 {
@@ -419,19 +419,19 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
                 spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
-            if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
+            if (WorldItem.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
             }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+            else if (WorldItem.m_EnvName.Contains("DJ Event") || WorldItem.m_EnvName.Contains("XANA Festival Stage"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
-            else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            else if (WorldItem.m_EnvName.Contains("Koto") || WorldItem.m_EnvName.Contains("Tottori") || WorldItem.m_EnvName.Contains("DEEMO") || WorldItem.m_EnvName.Contains("XANA Lobby"))
             {
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
                 //Invoke(nameof(SetKotoAngle), 0.5f);
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+                if (WorldItem.m_EnvName.Contains("XANA Lobby"))
                 {
                     StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
                 }
@@ -441,20 +441,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
                 }
             }
-            else if (WorldItemView.m_EnvName.Contains("Genesis"))
+            else if (WorldItem.m_EnvName.Contains("Genesis"))
             {
                 // No Need TO Rotate Player
                 StartCoroutine(setPlayerCamAngle(0, 0.75f));
             }
-            else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            else if (WorldItem.m_EnvName.Contains("ZONE X Musuem") || WorldItem.m_EnvName.Contains("FIVE ELEMENTS"))
             {
                 StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
             }
-            else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
+            else if (WorldItem.m_EnvName.Contains("ZONE-X"))
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
-            if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
+            if (WorldItem.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
@@ -478,64 +478,64 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         GetComponent<PostProcessManager>().SetPostProcessing();
 
-        // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+        // LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
         InstantiateYoutubePlayer();
 
         SetAddressableSceneActive();
         CharacterLightCulling();
-        if (!XanaConstants.xanaConstants.isCameraMan)
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
         {
-            LoadingHandler.Instance.HideLoading();
-            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
+            LoadingController.Instance.HideLoading();
+            // LoadingController.Instance.UpdateLoadingSlider(0, true);
+            LoadingController.Instance.UpdateLoadingStatusText("");
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            if (!XanaConstants.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
             if (JjMusuem.Instance)
-                JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+                JjMusuem.Instance.SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
             else
             {
-                if (!XanaConstants.xanaConstants.isCameraMan)
-                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+                if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                    LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
             }
         }
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby = false;
+            XanaConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
         yield return new WaitForSeconds(.5f);
 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (XanaConstantsHolder.xanaConstants.isCameraMan)
         {
             ReferrencesForDynamicMuseum.instance.randerCamera.gameObject.SetActive(false);
             ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
-            XanaConstants.xanaConstants.StopMic();
+            XanaConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
-            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
+            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<AvatarBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
         }
-        LoadingHandler.Instance.manualRoomController.HideRoomList();
+        LoadingController.Instance.manualRoomController.HideRoomList();
 
-        if (!XanaConstants.xanaConstants.isCameraMan)
-            LoadingHandler.Instance.HideLoading();
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+            LoadingController.Instance.HideLoading();
         //TurnOnPostCam();
         // Commented By WaqasAhmad
         {
             //try
             //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //    LoadingController.Instance.Loading_WhiteScreen.SetActive(false);
             //}
             //catch (System.Exception e)
             //{
@@ -545,7 +545,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // Yes Join APi Call Here
         ////Debug.Log("Waqas : Room Joined.");
         //Debug.Log("<color=green> Analytics -- Joined </color>");
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
@@ -554,16 +554,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             string worldId = 0.ToString();
             if (XanaEventDetails.eventDetails.environmentId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+                XanaConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
             }
             else
             {
-                XanaConstants.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+                XanaConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
             }
         }
 
-        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.MuseumID);
-        if (XanaConstants.xanaConstants.isCameraMan)
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID);
+        if (XanaConstantsHolder.xanaConstants.isCameraMan)
         {
             if (StreamingCamera.instance)
             {
@@ -596,16 +596,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         print("AUTO BACK CALL");
         yield return new WaitForSecondsRealtime(30);
-        LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        XanaConstants.xanaConstants.JjWorldSceneChange = true;
+        LoadingController.Instance.streamingLoading.UpdateLoadingText(false);
+        LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         _uiReferences.LoadMain(false);
     }
 
 
     public IEnumerator SpawnPlayerForBuilderScene()
     {
-        LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+        LoadingController.Instance.UpdateLoadingStatusText("Joining World...");
         yield return new WaitForSeconds(0.2f);
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
@@ -632,7 +632,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
@@ -654,8 +654,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
-            GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
-            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
+            GamificationComponentData.instance.avatarController = player.GetComponent<AvatarSetupController>();
+            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<AvatarBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
 
             //Post Process enable for Builder Scene
@@ -684,23 +684,23 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
     End:
-        //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
+        //LoadingController.Instance.UpdateLoadingSlider(0.98f, true);
         yield return new WaitForSeconds(1);
 
         // Commented By WaqasAhmad
         {
             //try
             //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
+            //    LoadingController.Instance.Loading_WhiteScreen.SetActive(false);
             //}
             //catch (System.Exception e)
             //{
@@ -714,22 +714,22 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         LightCullingScene();
 
 
-        if (!XanaConstants.xanaConstants.isCameraMan)
+        if (!XanaConstantsHolder.xanaConstants.isCameraMan)
         {
-            LoadingHandler.Instance.HideLoading();
-            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
+            LoadingController.Instance.HideLoading();
+            // LoadingController.Instance.UpdateLoadingSlider(0, true);
+            LoadingController.Instance.UpdateLoadingStatusText("");
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItem.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
-            if (!XanaConstants.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            if (!XanaConstantsHolder.xanaConstants.isCameraMan)
+                LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
-            JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+            JjMusuem.Instance.SetPlayerPos(XanaConstantsHolder.xanaConstants.mussuemEntry);
         }
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);
@@ -738,16 +738,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         isEnvLoaded = true;
         yield return new WaitForSeconds(1.75f);
-        LoadingHandler.Instance.HideLoading();
-        // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        //LoadingHandler.Instance.UpdateLoadingStatusText("");
+        LoadingController.Instance.HideLoading();
+        // LoadingController.Instance.UpdateLoadingSlider(0, true);
+        //LoadingController.Instance.UpdateLoadingStatusText("");
 
 
         // Yes Join APi Call Here
         ////Debug.Log("Waqas : Room Joined.");
         //Debug.Log("<color=green> Analytics -- Joined </color>");
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
-        XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        XanaChatSocket.onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.builderMapID.ToString());
 
         ActivateNpcChat();
     }
@@ -769,7 +769,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         CinemachineFreeLook cam = PlayerCamera.GetComponent<CinemachineFreeLook>();
         if (cam)
         {
-            if (XanaConstants.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
             {
                 cam.Follow = mainController.transform;
                 cam.m_XAxis.Value = 0;
@@ -783,7 +783,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 cam.m_YAxis.Value = 0.5f;
             }
 
-            if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event" || XanaConstants.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstants.xanaConstants.EnviornmentName == "NFTDuel Tournament")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event" || XanaConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstantsHolder.xanaConstants.EnviornmentName == "NFTDuel Tournament")
             {
                 cam.Follow = mainController.transform;
                 cam.m_XAxis.Value = 0;
@@ -804,7 +804,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (cam2)
         {
 
-            if (XanaConstants.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "XANALIA NFTART AWARD 2021")
             {
                 cam2.Follow = mainController.transform;
                 cam2.m_XAxis.Value = 0;
@@ -818,7 +818,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 cam2.m_XAxis.Value = 180;
                 cam2.m_YAxis.Value = 0.5f;
             }
-            if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event" || XanaConstants.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstants.xanaConstants.EnviornmentName == "NFTDuel Tournament")
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event" || XanaConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival" || XanaConstantsHolder.xanaConstants.EnviornmentName == "NFTDuel Tournament")
             {
                 cam2.Follow = mainController.transform;
                 cam2.m_XAxis.Value = 0;
@@ -837,7 +837,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void ResetPlayerPosition()
     {
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             //RaycastHit hit;
             //if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
@@ -866,7 +866,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
+        UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
     }
 
 
@@ -894,12 +894,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void SetupEnvirnmentForBuidlerScene()
     {
-        if (XanaConstants.xanaConstants.orientationchanged && XanaConstants.xanaConstants.JjWorldSceneChange)
+        if (XanaConstantsHolder.xanaConstants.orientationchanged && XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         Transform tempSpawnPoint = null;
-        LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+        LoadingController.Instance.UpdateLoadingStatusText("Getting World Ready....");
         if (BuilderData.spawnPoint.Count == 1)
         {
             tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
@@ -960,20 +960,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 string name = environmentLabel.Replace(" : ", string.Empty);
                 environmentLabel = name;
             }
-            while (!XanaConstants.isAddressableCatalogDownload)
+            while (!XanaConstantsHolder.isAddressableCatalogDownload)
             {
                 yield return new WaitForSeconds(1f);
             }
             //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
+            //    LoadingController.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
             //}
-            if (!XanaConstants.xanaConstants.isFromXanaLobby)
+            if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
             {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-                //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
+                LoadingController.Instance.UpdateLoadingStatusText("Loading World...");
+                //LoadingController.Instance.UpdateLoadingSlider(.6f, true);
             }
             yield return handle;
             addressableSceneName = environmentLabel;
@@ -1112,10 +1112,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ////Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
-        else if (XanaConstants.xanaConstants.isBuilderScene)
+        else if (XanaConstantsHolder.xanaConstants.isBuilderScene)
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Builder"));
         else
-            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstants.xanaConstants.EnviornmentName));
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName(XanaConstantsHolder.xanaConstants.EnviornmentName));
 
     }
 
@@ -1136,7 +1136,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 }
                 else if (sceneLight[i].name.Contains("Directional Light"))
                 {
-                    if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+                    if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
                     {
                         sceneLight[i].cullingMask = LayerMask.GetMask("Water");
                     }

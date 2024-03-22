@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI.Extensions.Tweens;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class Swipe_menu : MonoBehaviour
 {
@@ -37,7 +37,7 @@ public class Swipe_menu : MonoBehaviour
     private void OnEnable()
     {
         scroll_pos = 0;
-        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        if (UIHandler.Instance.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
         }
@@ -107,7 +107,7 @@ public class Swipe_menu : MonoBehaviour
             //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
-            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
 
         }
     }

@@ -21,7 +21,7 @@ public class PostProcessManager : MonoBehaviour
         {
             selfieCam = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<MyBeachSelfieCam>();
         }
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         {
             firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -71,7 +71,7 @@ public class PostProcessManager : MonoBehaviour
             //    selfieCam.SelfieCapture_CamRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture_CamRenderPotraiat.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //}
-            //else if (XanaConstants.xanaConstants.isBuilderScene)
+            //else if (XanaConstantsHolder.xanaConstants.isBuilderScene)
             //{
             //    selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -93,7 +93,7 @@ public class PostProcessManager : MonoBehaviour
 
     public bool CheckPostProcessEnable()
     {
-        if (m_SceneNames.Contains(WorldItemView.m_EnvName))
+        if (m_SceneNames.Contains(WorldItem.m_EnvName))
         {
             return true;
         }

@@ -133,16 +133,16 @@ public class ChatMemberData : MonoBehaviour
         if (isFollow)
         {
             followButtonImage.color = FollowingTextColor;
-            followText.text = TextLocalization.GetLocaliseTextByKey("Following");
+            followText.text = UITextLocalization.GetLocaliseTextByKey("Following");
             followText.color = Color.black;
         }
         else
         {
             followButtonImage.color = Color.black;
-            followText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+            followText.text = UITextLocalization.GetLocaliseTextByKey("Follow");
             followText.color = Color.white;
         }
-        //followText.GetComponent<TextLocalization>().LocalizeTextText();
+        //followText.GetComponent<UITextLocalization>().LocalizeTextText();
     }
 
     //this method is user to Update main messagecontroller conversation data groupuser follow, following.......
@@ -324,7 +324,7 @@ public class ChatMemberData : MonoBehaviour
        Debug.Log("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
         if (callingIndex == 0)
         {
-            MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickFeedButton();
+            MessageController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickFeedButton();
             if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
             {
                 if (OtherPlayerProfileData.Instance != null)

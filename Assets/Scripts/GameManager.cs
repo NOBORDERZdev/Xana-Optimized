@@ -32,9 +32,9 @@ public class GameManager : MonoBehaviour
     public GameObject bodyCam;
     public GameObject RequiredNFTPopUP;
     public GameObject ShadowPlane;
-    public SavaCharacterProperties SaveCharacterProperties;
+    public SavaAvatarProperties SaveCharacterProperties;
     public EquipUI EquipUiObj;
-    public BlendShapeImporter BlendShapeObj;
+    public BlendShapesManager BlendShapeObj;
     public bool UserStatus_;   //if its true user is logged in else its as a guest
     public static string currentLanguage = "";
     public bool isStoreAssetDownloading = false;
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
-    public AdditiveScenesManager additiveScenesManager;
+    public AdditiveScenesController additiveScenesManager;
     public Transform HomeCamera;
 
     internal string selectedPresetData="";
@@ -55,33 +55,33 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
         if (additiveScenesManager == null) // If Null then find object
         {
-           additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
+           additiveScenesManager = FindObjectOfType<AdditiveScenesController>();
         }
     }
     public void HomeCameraInputHandler(bool flag)
     {
-        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
+        HomeCamera.GetComponent<HomeCameraHandler>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
         {
-            if (menuAvatarFlowButton._instance)   // Disable Store Btn
-                menuAvatarFlowButton._instance.StoreBtnController();
+            if (HomeAvatarButton._instance)   // Disable Store Btn
+                HomeAvatarButton._instance.StoreBtnController();
 
-            if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+            if (PlayerPrefs.HasKey("Equiped") || XanaConstantsHolder.xanaConstants.isNFTEquiped)
             {
-                if (File.Exists(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson))
+                if (File.Exists(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
                 }
-                return (Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson);
+                return (Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
             }
             else if (PlayerPrefs.GetInt("presetPanel") == 1)  // presetpanel enabled account)
             {
                 if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour
                 UserStatus_ = true;
                 if (File.Exists(Application.persistentDataPath + "/logIn.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/logIn.json");
                 }
                 return (Application.persistentDataPath + "/logIn.json");
             }
@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
             {
                 if (File.Exists(Application.persistentDataPath + "/SavingReoPreset.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/SavingReoPreset.json");
                 }
                 return (Application.persistentDataPath + "/SavingReoPreset.json");
             }
@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
                 UserStatus_ = false;
                 if (File.Exists(Application.persistentDataPath + "/loginAsGuestClass.json"))
                 {
-                    XanaConstants.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+                    XanaConstantsHolder.xanaConstants.clothJson = File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
                 }
                 return (Application.persistentDataPath + "/loginAsGuestClass.json");
             }
@@ -137,19 +137,19 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitForInstancefromWorld()
     {
         yield return new WaitForSeconds(.05f);
-        SaveCharacterProperties = ItemDatabase.instance.GetComponent<SavaCharacterProperties>();
-         if (ItemDatabase.instance != null)
-        ItemDatabase.instance.DownloadFromOtherWorld();
+        SaveCharacterProperties = AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>();
+         if (AvatarPropertiesDatabase.instance != null)
+        AvatarPropertiesDatabase.instance.DownloadFromOtherWorld();
     }
     public void NotNowOfSignManager()
     {
-      UIManager.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+      UIHandler.Instance.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
        
-        if (UIManager.Instance.HomePage.activeInHierarchy )
-            UIManager.Instance.HomePage.SetActive(false);
+        if (UIHandler.Instance.HomePage.activeInHierarchy )
+            UIHandler.Instance.HomePage.SetActive(false);
         BGPlane.SetActive(true);
-        if (WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
-            UIManager.Instance.IsWorldClicked();
+        if (WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstantsHolder.loggedIn)
+            UIHandler.Instance.IsWorldClicked();
         else
         {
             if (!WorldBool && !BottomAvatarButtonBool)
@@ -162,12 +162,12 @@ public class GameManager : MonoBehaviour
     }
     public void AvatarMenuBtnPressed()
     {
-        UIManager.Instance.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+        UIHandler.Instance.AvaterButtonCustomPushed();
+        AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (XanaConstants.loggedIn) 
+        if (XanaConstantsHolder.loggedIn) 
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
@@ -185,12 +185,12 @@ public class GameManager : MonoBehaviour
     }
     public void BottomAvatarBtnPressed()
     {
-        UIManager.Instance.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+        UIHandler.Instance.AvaterButtonCustomPushed();
+        AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
         BottomAvatarButtonBool = true;
-        if (XanaConstants.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
+        if (XanaConstantsHolder.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
@@ -208,19 +208,19 @@ public class GameManager : MonoBehaviour
     {
         if (WorldBool)
         {
-            UIManager.Instance.HomePage.SetActive(true);
+            UIHandler.Instance.HomePage.SetActive(true);
             BGPlane.SetActive(false);
         }
         else
         {
-            UIManager.Instance.HomePage.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(false);
             BGPlane.SetActive(true);
             InventoryManager.instance.SignUpAndLoginPanel(3);
         }
     }
     public void BackFromStoreofCharacterCustom()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        UIHandler.Instance.HomePage.SetActive(true);
         BGPlane.SetActive(false);
     }
     public void ChangeCharacterAnimationState(bool l_State)

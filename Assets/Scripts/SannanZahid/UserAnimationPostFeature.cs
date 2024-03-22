@@ -27,7 +27,7 @@ public class UserAnimationPostFeature : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         string finalAPIURL = PrepareApiURL();
-       // LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+       // LoadingController.Instance.worldLoadingScreen.SetActive(true);
         StartCoroutine(FetchUserMapFromServer(finalAPIURL, (isSucess) =>
         {
             if (isSucess)
@@ -38,7 +38,7 @@ public class UserAnimationPostFeature : MonoBehaviour
             {
                 /* if (++CallBackCheck > 17)
                  {
-                     LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                     LoadingController.Instance.worldLoadingScreen.SetActive(false);
                      CallBackCheck = 0;
                      return;
                  }*/
@@ -97,7 +97,7 @@ public class UserAnimationPostFeature : MonoBehaviour
         {
             string finalName = selectedMoods[i].name.Replace(checkString, "");
             finalName = finalName.Replace("-01", "");
-            MoodTabList[i].GetComponent<MoodTabItemView>().InitItem(finalName, selectedMoods[i].emoji_link,this);
+            MoodTabList[i].GetComponent<MoodItem>().InitItem(finalName, selectedMoods[i].emoji_link,this);
             MoodTabList[i].gameObject.SetActive(true);
         }
     }

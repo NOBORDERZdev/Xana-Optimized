@@ -45,11 +45,11 @@ public class TutorialWorldItemView : MonoBehaviour
         if (m_EnvironmentName.Contains("Dubai"))
         {
             eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(eviroment_Name.text);
         }
         else
         {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            eviroment_Name.GetComponent<UITextLocalization>().LocalizeTextText(m_EnvironmentName);
         }
         eviroment_Name.text = eviroment_Name.text;
         yield return null;

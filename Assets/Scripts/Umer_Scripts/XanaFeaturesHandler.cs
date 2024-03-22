@@ -39,8 +39,8 @@ public class XanaFeaturesHandler : MonoBehaviour
             voiceChatSettingBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
             if (!XanaEventDetails.eventDetails.voiceChat)
             {
-                XanaConstants.xanaConstants.mic = 1;
-                XanaConstants.xanaConstants.StopMic();
+                XanaConstantsHolder.xanaConstants.mic = 1;
+                XanaConstantsHolder.xanaConstants.StopMic();
             }
         }
     }

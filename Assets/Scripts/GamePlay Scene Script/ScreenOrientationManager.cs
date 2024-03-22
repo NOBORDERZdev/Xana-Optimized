@@ -36,16 +36,16 @@ public class ScreenOrientationManager : MonoBehaviour
 
     void CheckOrienataionWhenComeFromLobby()
     {
-        if (XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.orientationchanged)
+        if (XanaConstantsHolder.xanaConstants.isFromXanaLobby && XanaConstantsHolder.xanaConstants.orientationchanged)
         {
             MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         else
         {
-            XanaConstants.xanaConstants.orientationchanged = false;
+            XanaConstantsHolder.xanaConstants.orientationchanged = false;
         }
 
-        isPotrait = XanaConstants.xanaConstants.orientationchanged;
+        isPotrait = XanaConstantsHolder.xanaConstants.orientationchanged;
     }
 
     private void OnEnable()
@@ -80,7 +80,7 @@ public class ScreenOrientationManager : MonoBehaviour
     IEnumerator ChangeOrientation(bool orientation)
     {
         isPotrait = orientation;
-        XanaConstants.xanaConstants.orientationchanged = isPotrait;
+        XanaConstantsHolder.xanaConstants.orientationchanged = isPotrait;
         BuilderEventManager.BuilderSceneOrientationChange?.Invoke(orientation);
         landscapeCanvas.DOKill();
         landscapeCanvas.alpha = 0;

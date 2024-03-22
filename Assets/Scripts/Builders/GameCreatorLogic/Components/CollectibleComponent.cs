@@ -31,7 +31,7 @@ public class CollectibleComponent : ItemComponent
     {
         ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
         //this.gameObject.SetActive(false);
-        //Toast.Show(XanaConstants.collectibleMsg);
+        //Toast.Show(XanaConstantsHolder.collectibleMsg);
     }
 
     private void StopComponent()

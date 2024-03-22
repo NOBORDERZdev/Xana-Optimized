@@ -86,9 +86,9 @@ public class Toast : MonoBehaviour
             time = 9999;
         //Localisation
         string localizedMsg = string.Empty;
-        if (CustomLocalization.IsReady)
+        if (LocalizationManager.IsReady)
         {
-            localizedMsg = TextLocalization.GetLocaliseTextByKey(msg);
+            localizedMsg = UITextLocalization.GetLocaliseTextByKey(msg);
         }
         if(localizedMsg.IsNullOrEmpty()) localizedMsg = msg;
 

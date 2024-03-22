@@ -504,13 +504,13 @@ public class PostFeedVideoItem : MonoBehaviour
     {
         /*var request_1 = new GetPreSignedUrlRequest()
         {
-            BucketName = AWSHandler.Instance.Bucketname,
+            BucketName = AWSDataHandler.Instance.Bucketname,
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+        //Debug.Log("Feed Video file sending url request:" + AWSDataHandler.Instance._s3Client);
 
-        AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
+        AWSDataHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
             if (callback.Exception == null)
             {
@@ -771,11 +771,11 @@ public class PostFeedVideoItem : MonoBehaviour
         /*string tempFeedURl = "";
         var request_1 = new GetPreSignedUrlRequest()
         {
-            BucketName = AWSHandler.Instance.Bucketname,
+            BucketName = AWSDataHandler.Instance.Bucketname,
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
+        AWSDataHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
             if (callback.Exception == null)
             {

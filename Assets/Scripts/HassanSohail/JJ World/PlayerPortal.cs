@@ -128,10 +128,10 @@ public class PlayerPortal : MonoBehaviour
                 JjInfoManager.Instance.IntJjInfoManager();
             }
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
-            LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
-            //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
+            LoadingController.Instance.JJLoadingSlider.fillAmount = 0;
+            //LoadingController.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
+            LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
+            StartCoroutine(LoadingController.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
             yield return new WaitForSeconds(.5f);
             RaycastHit hit;
         CheckAgain:
@@ -168,7 +168,7 @@ public class PlayerPortal : MonoBehaviour
             GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {

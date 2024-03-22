@@ -20,7 +20,7 @@ public class FeedUIController : MonoBehaviour
 
     [Header("-------FooterCan-------")]
     public GameObject footerCan;
-    public BottomTabManager bottomTabManager;
+    public HomeFooterTabCanvas bottomTabManager;
 
     [Space]
     [Header("-------API Controller Feed References-------")]
@@ -287,7 +287,7 @@ public class FeedUIController : MonoBehaviour
         // OLD FEED UI
         //for (int i = 0; i < allFeedMessageTextList.Count; i++)
         //{
-        //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
+        //    AllFeedScreenMessageTextActive(true, i, UITextLocalization.GetLocaliseTextByKey("please wait"));
         //}
         // END Old UI
         //Debug.Log("FeedUIController Start:" + Application.internetReachability);
@@ -653,7 +653,7 @@ public class FeedUIController : MonoBehaviour
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    footerCan.GetComponent<HomeFooterTabCanvas>().SetDefaultButtonSelection(4);
                     break;
                 case "HotTabScreen":
                     //Debug.Log("Comes from Hot or Discover tab full feed screen");
@@ -922,27 +922,27 @@ public class FeedUIController : MonoBehaviour
 
         if (timeDiff.TotalMinutes < 1)
         {
-            timestr = TextLocalization.GetLocaliseTextByKey("Just Now");
+            timestr = UITextLocalization.GetLocaliseTextByKey("Just Now");
         }
         else if (timeDiff.TotalMinutes > 1 && timeDiff.TotalMinutes <= 60)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + TextLocalization.GetLocaliseTextByKey("minutes ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + UITextLocalization.GetLocaliseTextByKey("minutes ago");
         }
         else if (timeDiff.TotalMinutes > 60 && timeDiff.TotalMinutes <= 1440)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + TextLocalization.GetLocaliseTextByKey("hours ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + UITextLocalization.GetLocaliseTextByKey("hours ago");
         }
         else if (timeDiff.TotalDays > 1 && timeDiff.TotalDays <= 30)
         {
-            timestr = timeDiff.Days.ToString() + " " + TextLocalization.GetLocaliseTextByKey("days ago");
+            timestr = timeDiff.Days.ToString() + " " + UITextLocalization.GetLocaliseTextByKey("days ago");
         }
         else if (timeDiff.TotalDays > 30 && timeDiff.TotalDays <= 365)
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + TextLocalization.GetLocaliseTextByKey("months ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + UITextLocalization.GetLocaliseTextByKey("months ago");
         }
         else
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + TextLocalization.GetLocaliseTextByKey("years ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + UITextLocalization.GetLocaliseTextByKey("years ago");
         }
         return timestr;
     }
@@ -960,27 +960,27 @@ public class FeedUIController : MonoBehaviour
 
         if (timeDiff.TotalMinutes < 1)
         {
-            timestr = TextLocalization.GetLocaliseTextByKey("Just Now");
+            timestr = UITextLocalization.GetLocaliseTextByKey("Just Now");
         }
         else if (timeDiff.TotalMinutes > 1 && timeDiff.TotalMinutes <= 60)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + TextLocalization.GetLocaliseTextByKey("minutes ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes)) + " " + UITextLocalization.GetLocaliseTextByKey("minutes ago");
         }
         else if (timeDiff.TotalMinutes > 60 && timeDiff.TotalMinutes <= 1440)
         {
-            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + TextLocalization.GetLocaliseTextByKey("hours ago");
+            timestr = Mathf.Round((float)(timeDiff.TotalMinutes / 60)) + " " + UITextLocalization.GetLocaliseTextByKey("hours ago");
         }
         else if (timeDiff.TotalDays > 1 && timeDiff.TotalDays <= 30)
         {
-            timestr = timeDiff.Days.ToString() + " " + TextLocalization.GetLocaliseTextByKey("days ago");
+            timestr = timeDiff.Days.ToString() + " " + UITextLocalization.GetLocaliseTextByKey("days ago");
         }
         else if (timeDiff.TotalDays > 30 && timeDiff.TotalDays <= 365)
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + TextLocalization.GetLocaliseTextByKey("months ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 30)) + " " + UITextLocalization.GetLocaliseTextByKey("months ago");
         }
         else
         {
-            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + TextLocalization.GetLocaliseTextByKey("years ago");
+            timestr = Mathf.Round((float)(timeDiff.Days / 365)) + " " + UITextLocalization.GetLocaliseTextByKey("years ago");
         }
         return timestr;
     }
@@ -1478,7 +1478,7 @@ public class FeedUIController : MonoBehaviour
         {
             createFeedMediaPlayer.Pause();
         }
-        AWSHandler.Instance.PostObjectFeed(createFeedLastPickFilePath, createFeedLastPickFileName, "CreateFeed", iscompress);
+        AWSDataHandler.Instance.PostObjectFeed(createFeedLastPickFilePath, createFeedLastPickFileName, "CreateFeed", iscompress);
     }
 
     public void OnClickCreateFeedBackBtn(bool isDataNotReset)
@@ -1568,8 +1568,8 @@ public class FeedUIController : MonoBehaviour
     //this method is used to profile follower button click.......
     public void ProfileFollowerFollowingScreenSetup(int Tabindex, string userName)
     {
-        //string titleLocalize = TextLocalization.GetLocaliseTextByKey("s friends");
-        //if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
+        //string titleLocalize = UITextLocalization.GetLocaliseTextByKey("s friends");
+        //if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese)
         //{
         //    titleLocalize = "'" + titleLocalize;
         //}
@@ -1864,11 +1864,11 @@ public class FeedUIController : MonoBehaviour
         }
         if (GameManager.currentLanguage == "ja")
         {
-            editDeleteFeedUserNameText.text = feedEditOrDeleteData.userData.Name + " " + TextLocalization.GetLocaliseTextByKey("Post by");
+            editDeleteFeedUserNameText.text = feedEditOrDeleteData.userData.Name + " " + UITextLocalization.GetLocaliseTextByKey("Post by");
         }
         else
         {
-            editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post by") + " " + feedEditOrDeleteData.userData.Name;
+            editDeleteFeedUserNameText.text = UITextLocalization.GetLocaliseTextByKey("Post by") + " " + feedEditOrDeleteData.userData.Name;
         }
         if (feedEditOrDeleteData.UpdatedAt != null)
         {
@@ -1904,7 +1904,7 @@ public class FeedUIController : MonoBehaviour
         editDeleteVideoDisplay.SetActive(false);
         //editDeleteMideaPlayer.gameObject.SetActive(false);
 
-        editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post") + " " + TextLocalization.GetLocaliseTextByKey("by");
+        editDeleteFeedUserNameText.text = UITextLocalization.GetLocaliseTextByKey("Post") + " " + UITextLocalization.GetLocaliseTextByKey("by");
         editDeleteFeedUserNameText.text = "";
         AssetCache.Instance.RemoveFromMemory(editDeleteCurrentFeedImage.sprite);
         editDeleteCurrentFeedImage.sprite = null;
@@ -2058,11 +2058,11 @@ public class FeedUIController : MonoBehaviour
         // OLD FEED UI
         //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
         //{
-        //    AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //    AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //}
         //else
         //{
-        //    AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
         //}
         // END OLD FEED UI
 
@@ -2176,13 +2176,13 @@ public class FeedUIController : MonoBehaviour
     {
         /*var request_1 = new GetPreSignedUrlRequest()
         {
-            BucketName = AWSHandler.Instance.Bucketname,
+            BucketName = AWSDataHandler.Instance.Bucketname,
             Key = key,
             Expires = DateTime.Now.AddHours(6)
         };
-        //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
+        //Debug.Log("Feed Video file sending url request:" + AWSDataHandler.Instance._s3Client);
 
-        AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
+        AWSDataHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
         {
             if (callback.Exception == null)
             {
@@ -3110,9 +3110,9 @@ public class FeedUIController : MonoBehaviour
     }
 
     public void SetMainMenuFooter(){ 
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
-        UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha=1;
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable=true;
+        UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts=true;    
     }
 
     public void OnClickProfileFollowerButton() 

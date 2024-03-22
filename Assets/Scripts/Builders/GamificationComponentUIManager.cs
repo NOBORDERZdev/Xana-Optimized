@@ -269,7 +269,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         RandomNumberUIParent.SetActive(true);
         if (defaultFont)
             RandomNumberText.font = defaultFont;
-        string s = TextLocalization.GetLocaliseTextByKey("Generated Number On This");
+        string s = UITextLocalization.GetLocaliseTextByKey("Generated Number On This");
         RandomNumberText.text = s + " : " + r.ToString();
     }
     public void DisableRandomNumberUI()
@@ -662,7 +662,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         wrong = 0;
 
         nextButtonText = nextButton.GetComponentInChildren<TextMeshProUGUI>();
-        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+        confirm = UITextLocalization.GetLocaliseTextByKey("Confirm");
         nextButtonText.text = confirm;
         if (defaultFont)
             nextButtonText.font = defaultFont;
@@ -683,9 +683,9 @@ public class GamificationComponentUIManager : MonoBehaviour
         }
 
         questionIndex += 1;
-        next = TextLocalization.GetLocaliseTextByKey("Next");
-        result = TextLocalization.GetLocaliseTextByKey("Result");
-        //Debug.Log("TextLocalization==>" + next + " " + result);
+        next = UITextLocalization.GetLocaliseTextByKey("Next");
+        result = UITextLocalization.GetLocaliseTextByKey("Result");
+        //Debug.Log("UITextLocalization==>" + next + " " + result);
 
         nextButtonText.text = (questionIndex < numOfQuestions) ? next : result;
         if (defaultFont)
@@ -703,8 +703,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (!isOptionSelected)
         {
             isOptionSelected = true;
-            confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
-            //Debug.Log("TextLocalization==>" + confirm);
+            confirm = UITextLocalization.GetLocaliseTextByKey("Confirm");
+            //Debug.Log("UITextLocalization==>" + confirm);
 
             nextButtonText.text = confirm;
             if (defaultFont)
@@ -749,7 +749,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     void ShowQuestion()
     {
         SetButtonInteractability(true, true);
-        confirm = TextLocalization.GetLocaliseTextByKey("Confirm");
+        confirm = UITextLocalization.GetLocaliseTextByKey("Confirm");
         //Debug.Log("Confirm Localise " + confirm);
 
         nextButtonText.text = confirm;
@@ -757,10 +757,10 @@ public class GamificationComponentUIManager : MonoBehaviour
             nextButtonText.font = defaultFont;
         if (questionIndex < numOfQuestions)
         {
-            string s = TextLocalization.GetLocaliseTextByKey("Question");
-            string s2 = "/";// TextLocalization.GetLocaliseTextByKey("of");
-            string s3 = TextLocalization.GetLocaliseTextByKey("Q");
-            //Debug.Log("TextLocalization==>" + s + " " + s2 + " " + s3);
+            string s = UITextLocalization.GetLocaliseTextByKey("Question");
+            string s2 = "/";// UITextLocalization.GetLocaliseTextByKey("of");
+            string s3 = UITextLocalization.GetLocaliseTextByKey("Q");
+            //Debug.Log("UITextLocalization==>" + s + " " + s2 + " " + s3);
 
             numberOfQuestions.text = s + " " + (questionIndex + 1) + " " + s2 + " " + numOfQuestions;
             quizButtonTextInformation.text = s3 + ": " + quizComponentData.rewritingStringList[questionIndex * inputFieldsPerQuestion];
@@ -781,7 +781,7 @@ public class GamificationComponentUIManager : MonoBehaviour
                     options[i - 1].GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
                 if (!isPotrait)
                 {
-                    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
+                    if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese || ContainsJapaneseText(sb))
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 11.3f;
                     else
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 12;
@@ -897,11 +897,11 @@ public class GamificationComponentUIManager : MonoBehaviour
     private void ShowScoreCanvasRoutine()
     {
         scoreCanvas.SetActive(true);
-        string s = TextLocalization.GetLocaliseTextByKey("Correct");
-        string s2 = TextLocalization.GetLocaliseTextByKey("Wrong");
-        string s3 = TextLocalization.GetLocaliseTextByKey("Correct Answer is");
-        string s4 = TextLocalization.GetLocaliseTextByKey("Confirm");
-        //Debug.Log("TextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
+        string s = UITextLocalization.GetLocaliseTextByKey("Correct");
+        string s2 = UITextLocalization.GetLocaliseTextByKey("Wrong");
+        string s3 = UITextLocalization.GetLocaliseTextByKey("Correct Answer is");
+        string s4 = UITextLocalization.GetLocaliseTextByKey("Confirm");
+        //Debug.Log("UITextLocalization==>" + s + " " + s2 + " " + s3 + " " + s4);
         correctText.text = s + ": " + correct;
         wrongText.text = s2 + ": " + wrong;
         float percentage = (((float)correct / numOfQuestions) * 100);
@@ -1394,7 +1394,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public IEnumerator IEEnableDoorKeyUI(string DisplayMessage)
     {
-        DisplayMessage = TextLocalization.GetLocaliseTextByKey(DisplayMessage);
+        DisplayMessage = UITextLocalization.GetLocaliseTextByKey(DisplayMessage);
         DoorKeyText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
         //Debug.LogError(isJPText);

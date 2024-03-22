@@ -24,8 +24,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public Shader skinShader;
     public Shader cloathShader;
     internal PlayerControllerNew playerControllerNew;
-    internal AvatarController avatarController;
-    internal CharcterBodyParts charcterBodyParts;
+    internal AvatarSetupController avatarController;
+    internal AvatarBodyParts charcterBodyParts;
     internal IKMuseum ikMuseum;
 
     public Vector3 spawnPointPosition;

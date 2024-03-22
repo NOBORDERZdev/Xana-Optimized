@@ -28,7 +28,7 @@ public class MoodManager : MonoBehaviour
             //  if (!flag)
             //      loadOp =
             loadOp = Addressables.LoadAssetAsync<AnimationClip>("Assets/Animations/Mood Animations/"+ key +".anim");
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
+            LoadingController.Instance.worldLoadingScreen.SetActive(true);
             while (!loadOp.IsDone)
                 yield return loadOp;
 
@@ -58,7 +58,7 @@ public class MoodManager : MonoBehaviour
                     overrideController.ApplyOverrides(clips);
                 }
             }
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+            LoadingController.Instance.worldLoadingScreen.SetActive(false);
         }
     }
     public void SetMoodPosted(string animkey, bool walkFlag,AnimatorOverrideController overrideController, Animator _anim)

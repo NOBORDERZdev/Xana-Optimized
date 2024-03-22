@@ -114,14 +114,14 @@ public class PopulationGenerator : MonoBehaviour
     public void FillWayPoints()
     {
         GameObject[] positions = GameObject.FindGameObjectsWithTag("waypoint");
-        WaypointsData wpData = Resources.Load<WaypointsData>("Environment Data/" + WorldItemView.m_EnvName + " Data/PopulationWayPointData/WaypointsData");
-        Debug.Log(WorldItemView.m_EnvName);
+        WaypointsData wpData = Resources.Load<WaypointsData>("Environment Data/" + WorldItem.m_EnvName + " Data/PopulationWayPointData/WaypointsData");
+        Debug.Log(WorldItem.m_EnvName);
         
-        string path = "Assets/Resources/Environment Data/" + WorldItemView.m_EnvName + " Data";
+        string path = "Assets/Resources/Environment Data/" + WorldItem.m_EnvName + " Data";
 
         if (!wpData)
         {
-            path = "Assets/Resources/Environment Data/" + WorldItemView.m_EnvName + " Data";
+            path = "Assets/Resources/Environment Data/" + WorldItem.m_EnvName + " Data";
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -139,7 +139,7 @@ public class PopulationGenerator : MonoBehaviour
 
         }
         
-        wpData = Resources.Load<WaypointsData>("Environment Data/" + WorldItemView.m_EnvName + " Data/PopulationWayPointData/WaypointsData");
+        wpData = Resources.Load<WaypointsData>("Environment Data/" + WorldItem.m_EnvName + " Data/PopulationWayPointData/WaypointsData");
         
         
 

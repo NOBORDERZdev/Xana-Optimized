@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class XanaFightingPlayer : MonoBehaviour
 {
-    public AvatarController avatarController;
+    public AvatarSetupController avatarController;
     public string cloth;
     void Start()
     {
@@ -62,13 +62,13 @@ public class XanaFightingPlayer : MonoBehaviour
                 {
                     avatarController.isLoadStaticClothFromJson = true;
                     avatarController.staticPlayer = false;
-                    controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+                    controlsScript.myInfo.characterName = XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper();
                 }
                 else if (UFE.gameMode==UFE3D.GameMode.VersusMode)
                 {
                     avatarController.isLoadStaticClothFromJson = true;
                     avatarController.staticPlayer = false;
-                    controlsScript.myInfo.characterName = XanaConstants.xanaConstants.defaultFightingName.ToUpper();
+                    controlsScript.myInfo.characterName = XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper();
                 }
                 else
                 {

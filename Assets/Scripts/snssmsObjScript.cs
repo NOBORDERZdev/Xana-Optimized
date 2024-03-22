@@ -5,7 +5,7 @@ using UnityEngine;
 public class snssmsObjScript : MonoBehaviour
 {
     public GameObject sns2;
-    private AdditiveScenesManager additiveSceneManger;
+    private AdditiveScenesController additiveSceneManger;
 
     public bool isTest;
     public GameObject testingObj;
@@ -19,9 +19,9 @@ public class snssmsObjScript : MonoBehaviour
             return;
         }
 
-        additiveSceneManger = FindObjectOfType<AdditiveScenesManager>();
+        additiveSceneManger = FindObjectOfType<AdditiveScenesController>();
         additiveSceneManger.SNSMessage = this.sns2;
 
-        //FindObjectOfType<AdditiveScenesManager>().SNSMessage = this.sns2;
+        //FindObjectOfType<AdditiveScenesController>().SNSMessage = this.sns2;
     }
 }

@@ -19,14 +19,14 @@ public class FriendHomeManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(BuildMoodDialog());
-        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
+        XanaSocketHandler.instance.updateFriendPostDelegate += UpdateFriendPost;
 
         MainSceneEventHandler.OnSucessFullLogin += SpawnFriends;
     }
     private void OnDisable()
     {
-        if (SocketController.instance != null)
-            SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
+        if (XanaSocketHandler.instance != null)
+            XanaSocketHandler.instance.updateFriendPostDelegate -= UpdateFriendPost;
 
         MainSceneEventHandler.OnSucessFullLogin -= SpawnFriends;
     }
@@ -42,7 +42,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     string PrepareApiURL()
     {
-        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.userId;
+        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstantsHolder.userId;
     }
    IEnumerator BuildMoodDialog()
     {
@@ -79,7 +79,7 @@ public class FriendHomeManager : MonoBehaviour
 
         Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
-        CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
+        CreatedNameTag.GetComponent<FollowAvatar>().targ = CreatedFriend;
         CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
         CreatedFriend.gameObject.SetActive(true);

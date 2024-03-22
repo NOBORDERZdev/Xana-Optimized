@@ -112,11 +112,11 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 mainAvatar.SetActive(true);
             }
-            if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+            if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                GameObject mainSceneAvatar = Instantiate(XanaConstants.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
-               // mainSceneAvatar.GetComponent<AvatarControllerHome>().UpdateState(true);
-                mainSceneAvatar.GetComponent<AvatarControllerHome>().SetAvatarforAR();
+                GameObject mainSceneAvatar = Instantiate(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
+               // mainSceneAvatar.GetComponent<HomeAvatarHandler>().UpdateState(true);
+                mainSceneAvatar.GetComponent<HomeAvatarHandler>().SetAvatarforAR();
                 mainSceneAvatar.transform.localScale = Vector3.one;
                 mainSceneAvatar.transform.localPosition = new Vector3(0, 0, 0);
                 mainSceneAvatar.transform.rotation = Quaternion.Euler(0, 180, 0);
@@ -141,10 +141,10 @@ public class ARFaceModuleManager : MonoBehaviour
 
     private void OnDisable()
     {
-        /*if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        /*if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }*/
     }
 
@@ -229,10 +229,10 @@ public class ARFaceModuleManager : MonoBehaviour
             videoCaptureButton.CancelingVideoToBackButtonPress();
             return;
         }
-        if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }
         Initiate.Fade("Main", loadToColor, 1.0f);
     }
@@ -889,8 +889,8 @@ public class ARFaceModuleManager : MonoBehaviour
     #region Notification msg reference.......
     public void ShowNotificationMsg(string msg)
     {
-        notificationText.text = TextLocalization.GetLocaliseTextByKey(msg);
-        //notificationText.GetComponent<TextLocalization>().LocalizeTextText();
+        notificationText.text = UITextLocalization.GetLocaliseTextByKey(msg);
+        //notificationText.GetComponent<UITextLocalization>().LocalizeTextText();
         notificationScreen.GetComponent<RectTransform>().DOAnchorPosY(-50, 0.3f).SetEase(Ease.Linear);
         Invoke("NotificationScreenClose", 1f);
     }
@@ -1049,7 +1049,7 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             feedMediaPlayer.Pause();
         }
-        AWSHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
+        AWSDataHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
     }
 
 

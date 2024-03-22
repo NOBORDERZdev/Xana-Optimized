@@ -70,7 +70,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
-        BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
 
@@ -261,7 +261,7 @@ public class BuilderMapDownload : MonoBehaviour
         GamificationComponentData.instance.xanaItems.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
-        LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
+        LoadingController.Instance.UpdateLoadingStatusText("Downloading Assets...");
 
         for (int i = 0; i < count; i++)
         {
@@ -283,12 +283,12 @@ public class BuilderMapDownload : MonoBehaviour
                 GetObject(_async, levelData.otherItems[i]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
+            //    LoadingController.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
             //}
             //else
-            //    LoadingHandler.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
+            //    LoadingController.Instance.UpdateLoadingSlider(i * progressPlusValue + .2f);
 
             // Addressables.Release(_async);
         }
@@ -826,14 +826,14 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
+        //    LoadingController.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
         //}
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
-            LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
+            // LoadingController.Instance.UpdateLoadingSlider(.8f);
+            LoadingController.Instance.UpdateLoadingStatusText("Getting World Ready....");
         }
     }
 

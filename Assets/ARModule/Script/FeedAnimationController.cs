@@ -29,9 +29,9 @@ public class FeedAnimationController : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         StartCoroutine(GetAllAnimations());
         ////////////Added By Abdullah Rashid For eye Blinking in Create Scene
-        EyesBlinking.instance.StoreBlendShapeValues();
+        EyesBlinkController.instance.StoreBlendShapeValues();
         yield return new WaitForSeconds(1.0f);
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        StartCoroutine(EyesBlinkController.instance.BlinkingStartRoutine());
     }
 
     IEnumerator FindPlayerAvatar()
@@ -124,7 +124,7 @@ public class FeedAnimationController : MonoBehaviour
     IEnumerator GetAllAnimations()
     {
         //Debug.Log("All Anim");
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.ANIMATIONFILES + "/" + ServerBaseURlHandler.instance.apiversion);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -190,7 +190,7 @@ public class FeedAnimationController : MonoBehaviour
                         if (animationGroup[i] == "Etc")
                             animationGroup[i] = "Sit & lying";
                         categoryObject.name = animationGroup[i];
-                        categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey(animationGroup[i]);
+                        categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey(animationGroup[i]);
                         categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
                         categoryObject.transform.GetChild(0).gameObject.SetActive(true);
                         int x = i + 1;
@@ -264,7 +264,7 @@ public class FeedAnimationController : MonoBehaviour
         {
             alreadyRuning = false;
 
-            string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
+            string bundlePath = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
 
             if (CheckForIsAssetBundleAvailable(bundlePath))
             {

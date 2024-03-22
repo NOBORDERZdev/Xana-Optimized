@@ -33,7 +33,7 @@ public class MyBeachSelfieCam : MonoBehaviour
 
     bool CheckPostProcessEnable()
     {
-        if (m_SceneNames.Contains(WorldItemView.m_EnvName))
+        if (m_SceneNames.Contains(WorldItem.m_EnvName))
         {
             return true;
         }

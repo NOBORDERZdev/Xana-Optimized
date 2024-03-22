@@ -104,9 +104,9 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void EnableJJPortalPopup(GameObject obj, int indexForText)
     {
-        if(LoadingHandler.Instance != null)
+        if(LoadingController.Instance != null)
         {
-            LoadingHandler.Instance.ResetLoadingValues();
+            LoadingController.Instance.ResetLoadingValues();
         }
         JJPortalPopupText.text = JJPortalPopupTextData[indexForText].ToString();
         currentPortalObject = obj;
@@ -166,13 +166,13 @@ public class GamePlayUIHandler : MonoBehaviour
     {
         BuilderEventManager.UIToggle?.Invoke(false);
 
-        EmoteAnimationPlay.Instance.isEmoteActive = false;      // AH working
+        EmoteAnimationHandler.Instance.isEmoteActive = false;      // AH working
 
         if (stopCurrentPlayingAnim)                            // AH working
         {
 
             stopCurrentPlayingAnim = false;
-            EmoteAnimationPlay.Instance.StopAnimation();
+            EmoteAnimationHandler.Instance.StopAnimation();
         }
 
         ref_LoadEmoteAnimations.CloseAnimationSelectionPanel();

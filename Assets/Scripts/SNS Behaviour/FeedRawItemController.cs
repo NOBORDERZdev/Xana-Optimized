@@ -67,7 +67,7 @@ public class FeedRawItemController : MonoBehaviour
 
         feedPlayerName.text = FeedRawData.name;
         //Debug.LogError("FeedRawItemController00000:" + FeedRawData.feedCount + "  :Posts");
-        tottlePostText.text = (FeedRawData.feedCount + TextLocalization.GetLocaliseTextByKey("Posts"));
+        tottlePostText.text = (FeedRawData.feedCount + UITextLocalization.GetLocaliseTextByKey("Posts"));
         //Debug.LogError("FeedRawItemController11111:" + FeedRawData.feedCount + "  :Posts");
         int tottlehotFeeditem;
         if (FeedRawData.feeds.Count > 3)
@@ -145,7 +145,7 @@ public class FeedRawItemController : MonoBehaviour
     public void OnFollowUserSuccessful()
     {
         followButtonImage.sprite = followingSprite;
-        followText.text = TextLocalization.GetLocaliseTextByKey("Following");
+        followText.text = UITextLocalization.GetLocaliseTextByKey("Following");
         followText.color = FollowingTextColor;
 
         APIController.Instance.RemoveFollowedUserFromHot(FeedRawData.id);

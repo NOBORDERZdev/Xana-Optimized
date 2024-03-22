@@ -148,9 +148,9 @@ public class FollowingItemController : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-        //if (XanaConstants.xanaConstants != null)
+        //if (XanaConstantsHolder.xanaConstants != null)
         //{
-        //    if (XanaConstants.xanaConstants.r_isSNSComingSoonActive)
+        //    if (XanaConstantsHolder.xanaConstants.r_isSNSComingSoonActive)
         //    {
         //        print("sns features coming soon.......");
         //        return;
@@ -225,20 +225,20 @@ public class FollowingItemController : MonoBehaviour
     {
         if (isFollowing)
         {
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
             UpdateBfBtn(false);
 
         }
         else
         {
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
             MakeBfBtn.SetActive(false);
             RemoveBfBtn.SetActive(false);
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
-        //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
+        //followFollowingText.GetComponent<UITextLocalization>().LocalizeTextText();
     }
 
     #region Follow Following Button click and follow and unfollowing api.......
