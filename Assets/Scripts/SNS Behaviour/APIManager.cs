@@ -2030,10 +2030,10 @@ public class APIManager : MonoBehaviour
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn)
     {
-        if (FeedUIController.Instance != null)
-        {
-            FeedUIController.Instance.ShowLoader(true);
-        }
+        //if (FeedUIController.Instance != null)
+        //{
+        //    FeedUIController.Instance.ShowLoader(true);
+        //}
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Post(uri, "POST"))
         {
@@ -2076,10 +2076,10 @@ public class APIManager : MonoBehaviour
 
     public void RemoveBestFriend(int userId, GameObject FrndBtn)
     {
-        if (FeedUIController.Instance != null)
-        {
-            FeedUIController.Instance.ShowLoader(true);
-        }
+        //if (FeedUIController.Instance != null)
+        //{
+        //    FeedUIController.Instance.ShowLoader(true);
+        //}
         StartCoroutine(IERemoveBestFriend(userId, FrndBtn));
     }
     IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn)
