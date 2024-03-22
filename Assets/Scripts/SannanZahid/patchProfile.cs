@@ -6,12 +6,12 @@ public class patchProfile : MonoBehaviour
 {
     private void OnEnable()
     {
-        if (!XanaConstants.xanaConstants.LoginasGustprofile)
+        if (!XanaConstantsHolder.xanaConstants.LoginasGustprofile)
         {
-            if (UIManager.Instance != null)//rik
+            if (UIHandler.Instance != null)//rik
             {
-                // UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+                // UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                UIHandler.Instance._footerCan.transform.GetChild(0).GetComponent<HomeFooterTabCanvas>().SetProfileButton();
                 
             }
         }

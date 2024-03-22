@@ -44,7 +44,7 @@ public class UGCManager : MonoBehaviour
         texture = null;
         InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         InventoryManager.instance.itemData.CharactertypeAi = false;
-        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
     }
     public void OnClickSelfieButton()
     {
@@ -191,7 +191,7 @@ public class UGCManager : MonoBehaviour
                 //    warningText.text = www.error;
                 //}
                 InventoryManager.instance.loaderPanel.SetActive(false);
-                GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
             }
             else
             {
@@ -200,11 +200,11 @@ public class UGCManager : MonoBehaviour
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
                     Debug.Log(response.description_Eng);
-                    if (GameManager.currentLanguage.Contains("en") || !CustomLocalization.forceJapanese) { warningText.text = response.description_Eng; }
+                    if (GameManager.currentLanguage.Contains("en") || !LocalizationManager.forceJapanese) { warningText.text = response.description_Eng; }
                     else { warningText.text = response.description_Jap; }
                     warningPanel.SetActive(true);
                     InventoryManager.instance.loaderPanel.SetActive(false);
-                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
                     //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
                 }
                 else
@@ -221,10 +221,10 @@ public class UGCManager : MonoBehaviour
                     //InventoryManager.instance.ApplyUGCValueOnCharacter();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-                    CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
                     //Swipe_menu.instance.OnClickNext();
                     CharacSelectScroll.instance.OnClickNext();
-                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
 
                     // release memory after result successfull
                     //Destroy(selfieSprite);

@@ -160,7 +160,7 @@ public class LoadingManager : MonoBehaviour
        
          yield return new WaitForSeconds(TotalTimer);
         loading_.SetActive(true);
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
         {
             //Debug.LogError("~~~~~ Waqas_ LoadingManager ~~~~~~~~~~~");
             //Screen.orientation = ScreenOrientation.Portrait;

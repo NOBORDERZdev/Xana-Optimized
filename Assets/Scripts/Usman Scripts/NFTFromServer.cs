@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {
@@ -47,7 +47,7 @@ public class NFTFromServer : MonoBehaviour
         }
         else 
         {
-            MussuemLink = dynamicMusuemApi + XanaConstants.xanaConstants.MuseumID;
+            MussuemLink = dynamicMusuemApi + XanaConstantsHolder.xanaConstants.MuseumID;
             Debug.Log("Openning Mussuem");
         }
 

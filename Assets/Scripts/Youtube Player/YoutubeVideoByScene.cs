@@ -23,7 +23,7 @@ public class YoutubeVideoByScene : MonoBehaviour
 
     public IEnumerator GetStream()
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE+ WorldItemView.m_EnvName))
+        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE+ WorldItem.m_EnvName))
         {
             www.timeout = 10;
             www.SendWebRequest();

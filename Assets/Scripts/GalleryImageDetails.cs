@@ -120,10 +120,10 @@ public class GalleryImageDetails : MonoBehaviour
                 //dialogue = m_NPCTrigger.GetComponent<NPC_DialogueTrigger>().dialogue;
                 CurrentContext = Context.IsLandscape;
                 GalleryImageManager.Instance.LoadPictureDescriptionPanel(m_PictureIndex, m_IsSpecialPainting);
-                UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
+                UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
             }
 
-            if(XanaConstants.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
+            if(XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
             {
                 DataType myType = DataType.Image;
                 if (m_IsVideo)

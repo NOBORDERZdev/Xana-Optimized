@@ -243,7 +243,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                 {
                     //textUserBio.text = "You have no bio yet.";
                     seeMoreBioButton.SetActive(false);
-                    textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+                    textUserBio.text = UITextLocalization.GetLocaliseTextByKey("You have no bio yet.");
                 }
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.website))
                 {
@@ -273,7 +273,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 //textUserBio.text = "You have no bio yet.";
                 seeMoreBioButton.SetActive(false);
-                textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+                textUserBio.text = UITextLocalization.GetLocaliseTextByKey("You have no bio yet.");
             }
 
             if (!string.IsNullOrEmpty(singleUserProfileData.avatar))//set avatar image.......
@@ -742,7 +742,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         if (isFollow)
         {
             //followText.text = "Following";
-            followText.text = TextLocalization.GetLocaliseTextByKey("UnFollow");
+            followText.text = UITextLocalization.GetLocaliseTextByKey("UnFollow");
             //followButtonImage.sprite = followingSprite;
             //followText.color = FollowingTextColor;
             if (!isOtherPlayerProfileNew)
@@ -754,7 +754,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         else
         {
             //followText.text = "Follow";
-            followText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+            followText.text = UITextLocalization.GetLocaliseTextByKey("Follow");
             //followButtonImage.sprite = followSprite;
             //followText.color = followtextColor;
             if (!isOtherPlayerProfileNew)
@@ -769,7 +769,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             currentFindFriendWithNameItemScript.searchUserRow.is_following_me = isFollow;
             currentFindFriendWithNameItemScript.FollowFollowingSetUp(isFollow);
         }
-        //followText.GetComponent<TextLocalization>().LocalizeTextText();
+        //followText.GetComponent<UITextLocalization>().LocalizeTextText();
         //Debug.Log("Other profile follow text:" + followText.text);
     }
 
@@ -819,7 +819,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
@@ -836,7 +836,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from message module group details screen");
                     isProfiletranzistFromMessage = true;
                     RemoveAndCheckBackKey();
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickWorldButton();
                     break;
                 default:
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
@@ -912,21 +912,21 @@ public class OtherPlayerProfileData : MonoBehaviour
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
+            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<UITextLocalization>().LocalizeTextText("Unfollow");
         }
     }
 
     public void OnClickMessageButtonClick()
     {
         isTempDirectMessageScreenOpen = true;
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+        FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickWorldButton();
         if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
         {
             //Debug.Log("OnClickMessageButtonClick000000");

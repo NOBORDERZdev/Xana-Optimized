@@ -699,7 +699,7 @@ public class MetaDataInPrefab : MonoBehaviour
         //            if (Input.touchCount == 1)
         //            {
         //#endif
-        //            if (EmoteAnimationPlay.Instance.isEmoteActive || CameraLook.IsPointerOverUIObject()) return;
+        //            if (EmoteAnimationHandler.Instance.isEmoteActive || CameraLook.IsPointerOverUIObject()) return;
 
         //            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 

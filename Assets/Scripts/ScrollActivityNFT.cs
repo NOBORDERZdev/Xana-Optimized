@@ -108,34 +108,34 @@ public class ScrollActivityNFT : MonoBehaviour
             //print(PlayerPrefs.GetInt("Equiped"));
             //print("Equip Button Clicked");
             SubButtonText.text = "Unequip";
-            SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Unequip");
+            SubButtonText.text = UITextLocalization.GetLocaliseTextByKey("Unequip");
             subButtonTextToCheck = "Unequip";
-            XanaConstants.xanaConstants.isNFTEquiped = true;
+            XanaConstantsHolder.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = " Equip Successfully !";
-            EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Equip Successfully");
+            EquipUIText.text = UITextLocalization.GetLocaliseTextByKey("Equip Successfully");
             EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else if (subButtonTextToCheck == "Unequip")
         {
             EquipUIText.text = "Unequiping...";
             SubButtonText.text = "Equip";
-            SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Equip");
+            SubButtonText.text = UITextLocalization.GetLocaliseTextByKey("Equip");
             subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
-            XanaConstants.xanaConstants.isNFTEquiped = false;
+            XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+            EquipShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";
-            EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
+            EquipUIText.text = UITextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
             EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else
@@ -210,7 +210,7 @@ public class ScrollActivityNFT : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
-        // UIManager.Instance.ShowFooter(true);
+        // UIHandler.Instance.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
     {
@@ -277,6 +277,6 @@ public class ScrollActivityNFT : MonoBehaviour
         nftAttributes.defence = _OwnedNFTDataObj._Attributes[_NFTIndex].defence;
         nftAttributes.special_move = _OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
         string attributesJson = JsonUtility.ToJson(nftAttributes);
-        File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
+        File.WriteAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

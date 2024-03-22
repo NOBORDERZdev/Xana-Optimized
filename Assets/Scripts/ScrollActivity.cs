@@ -55,15 +55,15 @@ public class ScrollActivity : MonoBehaviour
             ScrollController.movementType = ScrollRect.MovementType.Elastic;
             if ((Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)) && lastindex == 0 && ScrollController.verticalNormalizedPosition < 0.99f && ScrollController.verticalNormalizedPosition > 0)
             {
-                XanaConstants.isDescriptionFullPage = false;
-                WorldItemPreviewTab.OndescriptionPanelSizeChange?.Invoke(false);
+                XanaConstantsHolder.isDescriptionFullPage = false;
+                WorldDetailsPopupPreview.OndescriptionPanelSizeChange?.Invoke(false);
                 DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear);
                 lastindex = 1;
             }
             else if ((Input.GetMouseButtonUp(0) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended)) && lastindex == 1 && ScrollController.verticalNormalizedPosition < 0.99f && ScrollController.verticalNormalizedPosition > 0)
             {
-                XanaConstants.isDescriptionFullPage = true;
-                WorldItemPreviewTab.OndescriptionPanelSizeChange?.Invoke(true);
+                XanaConstantsHolder.isDescriptionFullPage = true;
+                WorldDetailsPopupPreview.OndescriptionPanelSizeChange?.Invoke(true);
                 DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear);
                 lastindex = 0;
             }
@@ -106,7 +106,7 @@ public class ScrollActivity : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
-        UIManager.Instance.ShowFooter(true);
+        UIHandler.Instance.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
     {

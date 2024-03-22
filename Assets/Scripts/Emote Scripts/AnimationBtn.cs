@@ -26,12 +26,12 @@ public class AnimationBtn : MonoBehaviour
         btn.onClick.AddListener(OnAnimationClick);
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimsPanelUpdate += AllAnimsPanelUpdate;
 
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStarted += OnAnimationPlay;
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStopped += OnAnimationStoped;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted += OnAnimationPlay;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped += OnAnimationStoped;
 
-        if (EmoteAnimationPlay.Instance.clearAnimation == null)
+        if (EmoteAnimationHandler.Instance.clearAnimation == null)
         {
-            EmoteAnimationPlay.Instance.clearAnimation += ClearAnimations;
+            EmoteAnimationHandler.Instance.clearAnimation += ClearAnimations;
         }
 
     }
@@ -42,9 +42,9 @@ public class AnimationBtn : MonoBehaviour
         btn.onClick.RemoveListener(OnAnimationClick);
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimsPanelUpdate -= AllAnimsPanelUpdate;
 
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStarted -= OnAnimationPlay;
-        if (GamePlayButtonEvents.inst != null) EmoteAnimationPlay.AnimationStopped -= OnAnimationStoped;
-        EmoteAnimationPlay.Instance.clearAnimation -= ClearAnimations;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted -= OnAnimationPlay;
+        if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped -= OnAnimationStoped;
+        EmoteAnimationHandler.Instance.clearAnimation -= ClearAnimations;
     }
 
     private void AllAnimsPanelUpdate(bool value)
@@ -52,7 +52,7 @@ public class AnimationBtn : MonoBehaviour
         if (isClose)
         {
             gameObject.SetActive(value);
-            if (!EmoteAnimationPlay.Instance.isAnimRunning && !EmoteAnimationPlay.Instance.isFetchingAnim)
+            if (!EmoteAnimationHandler.Instance.isAnimRunning && !EmoteAnimationHandler.Instance.isFetchingAnim)
             {
                 gameObject.SetActive(false);
             }
@@ -115,11 +115,11 @@ public class AnimationBtn : MonoBehaviour
             ReactScreen.Instance.ClosePanel();
             ReactScreen.Instance.HideEmoteScreen();
 
-            EmoteAnimationPlay.Instance.isEmoteActive = false;         // AH working
-            EmoteAnimationPlay.Instance.lastAnimClickButton = null; // WaqasAhmad
+            EmoteAnimationHandler.Instance.isEmoteActive = false;         // AH working
+            EmoteAnimationHandler.Instance.lastAnimClickButton = null; // WaqasAhmad
             highlightButton.SetActive(false);
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
-            EmoteAnimationPlay.Instance.StopAnimation(); // stoping animation is any action is performing.
+            EmoteAnimationHandler.Instance.StopAnimation(); // stoping animation is any action is performing.
 
             if (ChangeOrientation_waqas._instance.isPotrait)
             {
@@ -155,7 +155,7 @@ public class AnimationBtn : MonoBehaviour
 
     public void OnAnimationStoped(string s)
     {
-        if (!EmoteAnimationPlay.Instance.isEmoteActive)
+        if (!EmoteAnimationHandler.Instance.isEmoteActive)
         {
             if (highlightButton != null && highlightButton.activeInHierarchy)
             {
@@ -169,7 +169,7 @@ public class AnimationBtn : MonoBehaviour
     void ClearAnimations()
     {
         //isClose = true;
-        EmoteAnimationPlay.Instance.StopAnimation();
+        EmoteAnimationHandler.Instance.StopAnimation();
 
         highlightButton.SetActive(false);
         GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();

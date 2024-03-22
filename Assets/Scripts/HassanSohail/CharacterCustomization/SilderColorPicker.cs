@@ -11,7 +11,7 @@ public class SilderColorPicker : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] Image output;
     [SerializeField] TMP_Text outputTxt;
-    CharcterBodyParts bodyParts;
+    AvatarBodyParts bodyParts;
     Button saveBtn;
     bool itemAlreadySaved = false;
 
@@ -27,8 +27,8 @@ public class SilderColorPicker : MonoBehaviour
     public void Awake()
     {
 
-        //bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        //bodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
         saveBtn = InventoryManager.instance.saveButton.GetComponent<Button>();
 
         //Int();
@@ -42,7 +42,7 @@ public class SilderColorPicker : MonoBehaviour
     {
         SetRelatedData();
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply += ChangeSliderColor;
+            AvatarBodyParts.OnSkinColorApply += ChangeSliderColor;
         slider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
         if (saveBtn.interactable)
@@ -55,7 +55,7 @@ public class SilderColorPicker : MonoBehaviour
     private void OnDisable()
     {
         if (sliderCategory.Equals(SliderType.Skin))
-            CharcterBodyParts.OnSkinColorApply -= ChangeSliderColor;
+            AvatarBodyParts.OnSkinColorApply -= ChangeSliderColor;
         slider.onValueChanged.RemoveAllListeners();
         isSaveBtnEnable = false;
     }
@@ -99,7 +99,7 @@ public class SilderColorPicker : MonoBehaviour
             tempColor = Color.HSVToRGB(slider.value, saturation, brightness);
             output.color = Color.HSVToRGB(slider.value, saturation + .2f, brightness);
 
-            //CharcterBodyParts.instance.ChangeSkinColor(tempColor);
+            //AvatarBodyParts.instance.ChangeSkinColor(tempColor);
 
             ChangeColor(tempColor);
 

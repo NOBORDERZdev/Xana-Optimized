@@ -34,7 +34,7 @@ public class ButtonScript : MonoBehaviour
         //// AR changes end
 
 
-        if (XanaConstants.xanaConstants.currentButtonIndex == Index)
+        if (XanaConstantsHolder.xanaConstants.currentButtonIndex == Index)
         {
             //    if (Index == 0)                                                  // AR Changes
             //        InventoryManager.instance.ForcellySetLastClickedBtnOfHair();     // AR Changes
@@ -78,17 +78,17 @@ public class ButtonScript : MonoBehaviour
         }
 
 
-        XanaConstants.xanaConstants.currentButtonIndex = Index;
+        XanaConstantsHolder.xanaConstants.currentButtonIndex = Index;
         InventoryManager.instance.UpdateXanaConstants();
         InventoryManager.instance.DisableColorPanels();
 
         if (Index == 7 && InventoryManager.instance.panelIndex == 1)
-            InventoryManager.instance.OnColorButtonClicked(XanaConstants.xanaConstants.currentButtonIndex);
+            InventoryManager.instance.OnColorButtonClicked(XanaConstantsHolder.xanaConstants.currentButtonIndex);
         else
             InventoryManager.instance.UpdateStoreSelection(Index);
 
-        if (LoadingHandler.Instance)
-            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
+        if (LoadingController.Instance)
+            LoadingController.Instance.storeLoadingScreen.SetActive(false);
         //if (this.gameObject.activeInHierarchy)
         GetComponentInParent<SubBottons>().ClickBtnFtn(Index);
     }

@@ -22,10 +22,10 @@ public class BodyCustomizationTrigger : MonoBehaviour
     public float m_BlendTime;
     public AnimationCurve m_AnimCurve;
 
-    CharcterBodyParts charBodyParts;
+    AvatarBodyParts charBodyParts;
     private void Start()
     {
-        charBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        charBodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
     }
 
 
@@ -47,7 +47,7 @@ public class BodyCustomizationTrigger : MonoBehaviour
         }
         if (m_FaceMorphFeature == FaceMorphFeature.EyeBrows)
         {
-            BodyCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
+            FaceBodyCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
 
         }
 
@@ -105,11 +105,11 @@ public class BodyCustomizationTrigger : MonoBehaviour
 
     void ResetBlendShapeForFace()
     {
-        SkinnedMeshRenderer _head = BlendShapeController.instance.blendHolder;
+        SkinnedMeshRenderer _head = BlendShapesHolder.instance.blendHolder;
         // Face blend References [0-9]
         for (int i = 0; i < 10; i++)
         {
-            _head.SetBlendShapeWeight(BlendShapeController.instance.allBlendShapes[i].index, 0);
+            _head.SetBlendShapeWeight(BlendShapesHolder.instance.allBlendShapes[i].index, 0);
         }
     }
 }

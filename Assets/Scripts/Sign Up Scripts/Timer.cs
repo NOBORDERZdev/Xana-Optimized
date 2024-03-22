@@ -19,7 +19,7 @@ public class Timer : MonoBehaviour
         // Starts the timer automatically
         timerIsRunning = true;
         // timerText
-        sendAgainText = TextLocalization.GetLocaliseTextByKey(sendAgainText);
+        sendAgainText = UITextLocalization.GetLocaliseTextByKey(sendAgainText);
     }
 
     private void OnEnable()

@@ -70,7 +70,7 @@ public class ChracterPosition : MonoBehaviour
     IEnumerator DelayInEnterRoom()
     {
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
-        yield return StartCoroutine(LoadingHandler.Instance.FadeIn());
+        yield return StartCoroutine(LoadingController.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
         yield return new WaitForSeconds(.5f);
@@ -111,7 +111,7 @@ public class ChracterPosition : MonoBehaviour
       
         yield return new WaitForSeconds(.5f);
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = tempSpawn;
-        yield return StartCoroutine(LoadingHandler.Instance.FadeOut());
+        yield return StartCoroutine(LoadingController.Instance.FadeOut());
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);
@@ -121,7 +121,7 @@ public class ChracterPosition : MonoBehaviour
     IEnumerator DelayForOutSide()
     {
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
-        yield return StartCoroutine(LoadingHandler.Instance.FadeIn());
+        yield return StartCoroutine(LoadingController.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
         yield return new WaitForSeconds(.1f);
@@ -150,7 +150,7 @@ public class ChracterPosition : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = spawnPos;
         LoadFromFile.instance.SetAxis();
-        yield return StartCoroutine(LoadingHandler.Instance.FadeOut());
+        yield return StartCoroutine(LoadingController.Instance.FadeOut());
         ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);

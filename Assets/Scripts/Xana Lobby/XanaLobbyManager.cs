@@ -94,7 +94,7 @@ public class XanaLobbyManager : MonoBehaviour
                         xlWorldInfo.InitData(placedWorldsCount, worldsData[j].thumbnail, JjRatio.OneXOneWithDes, MediaType.Image);
                         placedWorldsCount++;
                         xlWorldInfo.worldChanger.WorldName = worldsData[j].world_name;
-                        if(APIBaseUrlChange.instance.IsXanaLive)
+                        if(ServerBaseURlHandler.instance.IsXanaLive)
                             xlWorldInfo.worldChanger.MainNet = worldsData[j].world_id;
                         else
                             xlWorldInfo.worldChanger.testNet = worldsData[j].world_id;

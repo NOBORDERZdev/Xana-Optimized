@@ -30,7 +30,7 @@ public class JjWorldInfo : MonoBehaviour
         {
             //OpenWorldInfo();
             //  PublishLog();
-            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            if (WorldItem.m_EnvName.Contains("XANA Lobby"))
                 OpenWorldInfo();
             tempTimer = 0;
         }
@@ -43,11 +43,11 @@ public class JjWorldInfo : MonoBehaviour
 
         if (JjInfoManager.Instance != null)
         {
-            if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
             {
                 JjInfoManager.Instance.SetInfoForXanaLobby(NftRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].Texture, JjInfoManager.Instance.worldInfos[id].Type);
             }
-            else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 JjInfoManager.Instance.SetInfoForXanaLobby(NftRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].Texture, JjInfoManager.Instance.worldInfos[id].Type);
             }
@@ -57,7 +57,7 @@ public class JjWorldInfo : MonoBehaviour
     void PublishLog()
     {
         // for firebase analytics
-        int languageMode = CustomLocalization.forceJapanese ? 1 : 0;
+        int languageMode = LocalizationManager.forceJapanese ? 1 : 0;
         //Debug.Log("<color=red> LanguageMode: " + languageMode + "</color>");
         if (JjInfoManager.Instance.worldInfos[id].Title[languageMode].IsNullOrEmpty())
         {

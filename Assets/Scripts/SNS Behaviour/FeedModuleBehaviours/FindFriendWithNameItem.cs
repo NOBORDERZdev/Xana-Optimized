@@ -309,21 +309,21 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (isFollowing)
         {
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Following");
             followFollowingImage.color = followingColor;
             followFollowingText.color= followingTextColor;
             UpdateBfBtn(false);
         }
         else
         {
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingImage.color = followColor;
             followFollowingText.color= followTextColor;
             MakeBfBtn.SetActive(false);
             RemoveBfBtn.SetActive(false);
         }
         //  GameManager.Instance.LocalizeTextText(followFollowingText);
-        //followFollowingText.GetComponent<TextLocalization>().LocalizeTextText();
+        //followFollowingText.GetComponent<UITextLocalization>().LocalizeTextText();
     }
 
     #region Follow Following Button click and follow and unfollowing api.......

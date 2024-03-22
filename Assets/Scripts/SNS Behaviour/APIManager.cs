@@ -10,7 +10,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class APIManager : MonoBehaviour
 {
@@ -188,11 +188,11 @@ public class APIManager : MonoBehaviour
                 // OLD FEED UI
                 //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 // END OLD FEED UI
             }
@@ -250,7 +250,7 @@ public class APIManager : MonoBehaviour
                 // OLD FEED UI
                 //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
                 //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
                 //}
                 // END OLD FEED UI
             }
@@ -1270,7 +1270,7 @@ public class APIManager : MonoBehaviour
         scrollToTop = false;
         checkText = text.ToString();
         // fitertextDropdown.text = text;
-        FeedUIController.Instance.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
+        FeedUIController.Instance.commentFitertextDropdown.text = UITextLocalization.GetLocaliseTextByKey(text);
 
         if (checkText.Equals("Oldest"))
         {
@@ -1386,13 +1386,13 @@ public class APIManager : MonoBehaviour
     {
         lastCommentTotalCount = count;
         //Debug.Log("Comment Count:" + count);
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+        if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
         {
-            FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
+            FeedUIController.Instance.CommentCount.text = UITextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + UITextLocalization.GetLocaliseTextByKey("s");
         }
         else
         {
-            FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
+            FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + UITextLocalization.GetLocaliseTextByKey("Comments");
         }
     }
     //End comment.......
@@ -1449,9 +1449,9 @@ public class APIManager : MonoBehaviour
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
             yield return www.SendWebRequest();
-            if (AWSHandler.Instance.currentSNSApiLoaderController != null)
+            if (AWSDataHandler.Instance.currentSNSApiLoaderController != null)
             {
-                AWSHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
+                AWSDataHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
             }
             switch (callingFrom)
             {
@@ -2020,9 +2020,9 @@ public class APIManager : MonoBehaviour
         }
         else
         {
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
-            UIManager.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FeedUIController.Instance.BestFriendFull.SetActive(true);
             //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }
@@ -2160,7 +2160,7 @@ public class APIManager : MonoBehaviour
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(XanaConstants.xanaConstants.userProfileLink) || XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("userProfile"))
+                    if (string.IsNullOrEmpty(XanaConstantsHolder.xanaConstants.userProfileLink) || XanaConstantsHolder.xanaConstants.userProfileLink.Contains("Profil") || XanaConstantsHolder.xanaConstants.userProfileLink.Contains("userProfile"))
                     {
                         // Profile is not Modified by User
                             ProfilePictureManager.instance.MakeProfilePicture(setName_name);
@@ -2468,7 +2468,7 @@ public class APIManager : MonoBehaviour
             {
                 if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
                 {
-                    MessageController.Instance.StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
+                    MessageController.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
                 }
                 Debug.Log(www.error);
             }

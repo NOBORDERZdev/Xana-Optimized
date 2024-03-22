@@ -29,18 +29,18 @@ public class LoginPageManager : MonoBehaviour
         if (scrollActivity.gameObject.activeInHierarchy)
         {
             scrollActivity.BottomToTop();
-           // m_WorldPlayPanel.transform.SetParent(WorldManager.instance.DescriptionParentPanel.transform);
+           // m_WorldPlayPanel.transform.SetParent(WorldsHandler.instance.DescriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIHandler.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIHandler.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_WorldPlayPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             m_WorldPlayPanel.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
+        UIHandler.Instance.HomePage.SetActive(true);
         this.GetComponent<FeedEventPrefab>().m_FadeImage = this.GetComponent<FeedEventPrefab>().worldIcon;
         this.GetComponent<FeedEventPrefab>().UpdateWorldPanel();
         if (!gameObject.GetComponent<PointerDown>().tapAndHolded)
@@ -90,7 +90,7 @@ public class LoginPageManager : MonoBehaviour
                 }
             }
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             GetComponent<PointerDown>().tapAndHolded = false;
             m_MuseumIsClicked = false;
@@ -99,17 +99,17 @@ public class LoginPageManager : MonoBehaviour
         {
             m_TapAndHoldPanel.SetActive(true);
             m_TapAndHoldPanel.GetComponent<OnPanel>().rectInterpolate = true;
-            m_TapAndHoldPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_TapAndHoldPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = UIHandler.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = UIHandler.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_TapAndHoldPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             tapholdloadre();
             this.GetComponent<PointerDown>().tapAndHolded = false;
             GetComponent<PointerDown>().timer = 0;
         }
-        UIManager.Instance.ShowFooter(false);//rik
+        UIHandler.Instance.ShowFooter(false);//rik
 
         GameManager.Instance.WorldBool = true;
         m_WorldIsClicked = true;
@@ -138,18 +138,18 @@ public class LoginPageManager : MonoBehaviour
                 world_name.text = _world_name[0];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
 
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("GekkoSan"):
                 CreaterName.text = _CreaterName[1];
                 museum_description.text = _description[1];
                 world_name.text = _world_name[1];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
 
                 break;
             case ("Hokusai"):
@@ -157,45 +157,45 @@ public class LoginPageManager : MonoBehaviour
                 museum_description.text = _description[2];
                 world_name.text = _world_name[2];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("Yukinori"):
                 CreaterName.text = _CreaterName[3];
                 museum_description.text = _description[3];
                 world_name.text = _world_name[3];
                 profileIcon.gameObject.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("Museum"):
                 CreaterName.text = _CreaterName[4];
                 museum_description.text = _description[4];
                 world_name.text = _world_name[4];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("GOZMuseum"):
                 CreaterName.text = _CreaterName[5];
                 museum_description.text = _description[5];
                 world_name.text = _world_name[5];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
             case ("NFTMuseum"):
                 CreaterName.text = _CreaterName[6];
                 museum_description.text = _description[6];
                 world_name.text = _world_name[6];
                 profileIcon.transform.GetComponent<Image>().sprite = creatorPic;
-                world_name.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                museum_description.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
-                CreaterName.gameObject.GetComponent<TextLocalization>().LocalizeTextText();
+                world_name.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                museum_description.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
+                CreaterName.gameObject.GetComponent<UITextLocalization>().LocalizeTextText();
                 break;
         }
 
@@ -211,15 +211,15 @@ public class LoginPageManager : MonoBehaviour
 
     public void CheckWorldOnClick()
     {
-        if (m_WorldIsClicked || m_isSignUpPassed || XanaConstants.loggedIn)
+        if (m_WorldIsClicked || m_isSignUpPassed || XanaConstantsHolder.loggedIn)
         {
-            UIManager.Instance.LoginRegisterScreen.SetActive(false);
-            UIManager.Instance.HomePage.SetActive(true);
+            UIHandler.Instance.LoginRegisterScreen.SetActive(false);
+            UIHandler.Instance.HomePage.SetActive(true);
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             m_WorldIsClicked = false;
-            UIManager.Instance.ShowFooter(false);//rik
+            UIHandler.Instance.ShowFooter(false);//rik
         }
     }
 

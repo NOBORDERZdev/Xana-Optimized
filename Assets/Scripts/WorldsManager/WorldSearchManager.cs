@@ -21,13 +21,13 @@ public class WorldSearchManager : MonoBehaviour
     }
     public void UserInputUpdate(string UserInput)
     {
-        WorldManager.instance.SearchWorldCall(UserInput);
+        WorldsHandler.instance.SearchWorldCall(UserInput);
     }
     public void ClearInputField()
     {
         searchWorldInput.Clear();
-        WorldManager.instance.AllWorldTabReference.BackToPreviousScreen();
-        FlexibleRect.OnAdjustSize?.Invoke(false);
+        WorldsHandler.instance.AllWorldTabReference.BackToPreviousScreen();
+        RectModifire.OnAdjustSize?.Invoke(false);
     }
     public void GetSearchBarStatus()
     {
@@ -42,8 +42,8 @@ public class WorldSearchManager : MonoBehaviour
         searchWorldInput.Clear();
         searchWorldInput.SetText(tagName);
         searchWorldInput.ManualDeselect();
-        WorldManager.instance.previousSearchKey = string.Empty;
+        WorldsHandler.instance.previousSearchKey = string.Empty;
         //searchWorldInput.ReadOnly = true;
-        WorldManager.instance.SearchWorldCall(tagName,true);
+        WorldsHandler.instance.SearchWorldCall(tagName,true);
     }
 }

@@ -92,12 +92,12 @@ public class ProfilePictureManager : MonoBehaviour
             savePath = Application.persistentDataPath + "/Profile/userProfile.png";
 
             byte[] fileData = File.ReadAllBytes(savePath);
-            while (string.IsNullOrEmpty(XanaConstants.xanaToken) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
+            while (string.IsNullOrEmpty(XanaConstantsHolder.xanaToken) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
             {
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
+            AWSDataHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
             
             Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
@@ -122,7 +122,7 @@ public class ProfilePictureManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
         {
-            string tempToken = XanaConstants.xanaToken;
+            string tempToken = XanaConstantsHolder.xanaToken;
 
             if (string.IsNullOrEmpty(tempToken))
                 tempToken = ConstantsGod.AUTH_TOKEN;

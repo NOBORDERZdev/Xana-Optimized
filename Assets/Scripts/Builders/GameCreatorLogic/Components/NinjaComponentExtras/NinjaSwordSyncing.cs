@@ -33,7 +33,7 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         this.transform.localPosition = Vector3.zero;
         this.transform.localScale = Vector3.one;
         swordhandHook = GetComponentInParent<IKMuseum>().m_SelfieStick.transform.parent;
-        swordHook = GetComponentInParent<CharcterBodyParts>().pelvisBoneNewCharacter.transform;
+        swordHook = GetComponentInParent<AvatarBodyParts>().pelvisBoneNewCharacter.transform;
         anim = GetComponentInParent<IKMuseum>().GetComponent<Animator>();
         this.transform.SetParent(swordHook, false);
         this.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
@@ -113,7 +113,7 @@ public class NinjaSwordSyncing : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 this.player = _photonView.Owner;
                 return playerObject;

@@ -60,7 +60,7 @@ public class SoundManagerSettings : MonoBehaviour
         NewSliderRange = (NewSliderMax - NewSliderMin);
 
         
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
+        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);

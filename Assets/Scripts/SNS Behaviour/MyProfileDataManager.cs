@@ -442,14 +442,14 @@ public class MyProfileDataManager : MonoBehaviour
                 seeMoreBioButton.SetActive(false);
                 _alignment_space.SetActive(false);
                 // Currently No place holder for bio
-                //textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+                //textUserBio.text = UITextLocalization.GetLocaliseTextByKey("You have no bio yet.");
             }
         }
         else
         {
             //textUserBio.text = "You have no bio yet.";
             seeMoreBioButton.SetActive(false);
-            textUserBio.text = TextLocalization.GetLocaliseTextByKey("You have no bio yet.");
+            textUserBio.text = UITextLocalization.GetLocaliseTextByKey("You have no bio yet.");
         }
 
         //Debug.Log("isSetTempSpriteAfterUpdateAvatar:" + isSetTempSpriteAfterUpdateAvatar);
@@ -504,14 +504,14 @@ public class MyProfileDataManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
-                        XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                        XanaConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
-                XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                XanaConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
         //else
@@ -743,12 +743,12 @@ public class MyProfileDataManager : MonoBehaviour
         ////{
         ////    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
         ////    {
-        ////        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        ////        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         ////    }
         ////    else
         ////    {
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
         ////    }
         ////}
         //// END OLD FEED UI
@@ -795,11 +795,11 @@ public class MyProfileDataManager : MonoBehaviour
         //        }
         //        if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
         //        {
-        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //        }
         //        else
         //        {
-        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
         //        }
         //        if (IsNew)
         //        {
@@ -912,12 +912,12 @@ public class MyProfileDataManager : MonoBehaviour
         //{
         //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
         //    {
-        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //    }
         //    else
         //    {
-        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
         //    }
         //}
         // END OLD FEED UI
@@ -989,11 +989,11 @@ public class MyProfileDataManager : MonoBehaviour
                     //}
                     //if (APIManager.Instance.allTextPostWithUserIdRoot.data.rows.Count == 0)
                     //{
-                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, UITextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
                     //}
                     //else
                     //{
-                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, UITextLocalization.GetLocaliseTextByKey(""));
                     //}
                     if (IsNew)
                     {
@@ -1194,14 +1194,14 @@ public class MyProfileDataManager : MonoBehaviour
         {
             followButtonImage.sprite = followingSprite;
             //followFollowingText.text = "Following";
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Following");
             followFollowingText.color = FollowingTextColor;
         }
         else
         {
             followButtonImage.sprite = followSprite;
             //followFollowingText.text = "Follow";
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+            followFollowingText.text = UITextLocalization.GetLocaliseTextByKey("Follow");
             followFollowingText.color = followTextColor;
         }
     }
@@ -1536,7 +1536,7 @@ public class MyProfileDataManager : MonoBehaviour
             Debug.Log("call hua else data");
             NftDataScript.Instance.NftLoadingPenal.SetActive(true);
             NftDataScript.Instance.NoNftyet.SetActive(true);
-            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
+            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey("NFT data not found");
             NftDataScript.Instance.nftloading.SetActive(false);
         }
         // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb++;
@@ -1749,7 +1749,7 @@ public class MyProfileDataManager : MonoBehaviour
                 tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
 
                 // Currently Not Use Localize Tag As its Search hot showing Any result
-                //tempTag.GetComponent<TagPrefabInfo>().tagName.GetComponent<TextLocalization>().LocalizeTextText(availableTagsAtServer[generatedTagCount]);
+                //tempTag.GetComponent<TagPrefabInfo>().tagName.GetComponent<UITextLocalization>().LocalizeTextText(availableTagsAtServer[generatedTagCount]);
 
                 //tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
 
@@ -2340,12 +2340,12 @@ public class MyProfileDataManager : MonoBehaviour
         {
             isEditProfileNameAlreadyExists = true;
         }
-        nameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
+        nameErrorMessageObj.GetComponent<Text>().text = UITextLocalization.GetLocaliseTextByKey(msg);
         EditProfileErrorMessageShow(nameErrorMessageObj);
     }
     public void ShowEditProfileUniqueNameErrorMessage(string msg)
     {
-        uniqueNameErrorMessageObj.GetComponent<Text>().text = TextLocalization.GetLocaliseTextByKey(msg);
+        uniqueNameErrorMessageObj.GetComponent<Text>().text = UITextLocalization.GetLocaliseTextByKey(msg);
         EditProfileErrorMessageShow(uniqueNameErrorMessageObj);
     }
 
@@ -2362,7 +2362,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             Debug.Log("=========Uploading profile pic :" + setImageAvatarTempPath);
             //Debug.Log("=========Uploading profile pic Temp name :" + setImageAvatarTempFilename);
-            AWSHandler.Instance.PostAvatarObject(setImageAvatarTempPath, setImageAvatarTempFilename, "EditProfileAvatar");//upload avatar image on AWS.
+            AWSDataHandler.Instance.PostAvatarObject(setImageAvatarTempPath, setImageAvatarTempFilename, "EditProfileAvatar");//upload avatar image on AWS.
         }
     }
 
@@ -3085,7 +3085,7 @@ public class MyProfileDataManager : MonoBehaviour
                // Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
-                //XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
+                //XanaConstantsHolder.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
         }
@@ -3100,7 +3100,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileMakedFlag = true;
             ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
         }
-        else if (XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        else if (XanaConstantsHolder.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
         {
             UpdateProfilePic();
         }

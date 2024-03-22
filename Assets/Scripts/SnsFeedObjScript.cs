@@ -5,7 +5,7 @@ using UnityEngine;
 public class SnsFeedObjScript : MonoBehaviour
 {
     public GameObject sns1;
-    private AdditiveScenesManager additiveSceneManger;
+    private AdditiveScenesController additiveSceneManger;
 
     public bool isTest;
     public GameObject testingObj;
@@ -19,9 +19,9 @@ public class SnsFeedObjScript : MonoBehaviour
             return;
         }
 
-        //additiveSceneManger = FindObjectOfType<AdditiveScenesManager>();
+        //additiveSceneManger = FindObjectOfType<AdditiveScenesController>();
         GameManager.Instance.additiveScenesManager.SNSmodule = this.sns1;
 
-       // FindObjectOfType<BottomTabManager>().LoaderShow(false);
+       // FindObjectOfType<HomeFooterTabCanvas>().LoaderShow(false);
     }
 }

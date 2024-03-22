@@ -163,7 +163,7 @@ public class NFTtypeClass : MonoBehaviour
         scrollActivityNFTRef._NFTIndex = _indexNumber;
 
         //  if(CollectionAddress)
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (ServerBaseURlHandler.instance.IsXanaLive)
         {
             if (NftDataScript.Instance.EquipCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {

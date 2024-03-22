@@ -85,7 +85,7 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
             usedLinks[linkIndex] = true;
 
             // For Analatics URL Clicked = true;
-            UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, true, false);
+            UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, false, true, false);
             CallFirebaseEventForLinkClicked();
             Application.OpenURL(linkInfo.GetLinkID());
         }
@@ -106,21 +106,21 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
         //}
 
-        string eventName = XanaConstants.xanaConstants.EnviornmentName;
+        string eventName = XanaConstantsHolder.xanaConstants.EnviornmentName;
         if (linkType.Equals(LinkType.JJ_Link))
         {
-            if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
             {
                 // we don't have this museum yet
                 ////worldName = "1F_Mainloby_NFTclick";
             }
-            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+            else if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
             {
                 //// we don't have this museum yet
                 //worldName = "1F_ZoneX_NFTclick";
                 eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
             }
-            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+            else if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
             {
                 //// worldName = "1F_FiveElement_NFTclick";
                 // we don't have this museum yet

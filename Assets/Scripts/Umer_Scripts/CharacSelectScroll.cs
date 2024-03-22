@@ -33,7 +33,7 @@ public class CharacSelectScroll : MonoBehaviour
         {
             hssRef.enabled = true;
         }
-        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        if (UIHandler.Instance.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
         }
@@ -84,7 +84,7 @@ public class CharacSelectScroll : MonoBehaviour
             //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
-            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
 
         }
     }

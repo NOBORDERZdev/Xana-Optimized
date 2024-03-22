@@ -82,7 +82,7 @@ public class YoutubeStreamController : MonoBehaviour
         if (NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer != null)
             NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 #if UNITY_EDITOR && !UNITY_IOS
-        if (!WorldItemView.m_EnvName.Contains("BreakingDown Arena") && !WorldItemView.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItemView.m_EnvName.Contains("DJ Event"))
+        if (!WorldItem.m_EnvName.Contains("BreakingDown Arena") && !WorldItem.m_EnvName.Contains("XANA FESTIVAL STAGE in Dubai.") && !WorldItem.m_EnvName.Contains("DJ Event"))
         {
             Vector3 scale = NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.transform.localScale;
             scale.y *= -1;
@@ -184,7 +184,7 @@ public class YoutubeStreamController : MonoBehaviour
                 player.GetLivestreamUrl(APIHandler.Data.URL);
             }
 
-            if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+            if (!WorldItem.m_EnvName.Contains("Xana Festival") || !WorldItem.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.SetActive(false);
             }

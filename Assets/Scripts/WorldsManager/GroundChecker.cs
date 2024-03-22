@@ -16,7 +16,7 @@ public class GroundChecker : MonoBehaviour
     PhotonAnimatorView animatorView;
     private void Start()
     {
-        isBuilderScene = XanaConstants.xanaConstants.isBuilderScene;
+        isBuilderScene = XanaConstantsHolder.xanaConstants.isBuilderScene;
         if (isBuilderScene)
             SyncAnimatorParams();
     }

@@ -98,7 +98,7 @@ public class ActionSelectionPanelHandler : MonoBehaviour
                 errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Animation".ToString();
             else
                 errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Reaction".ToString();
-            errorObj.GetComponent<TextLocalization>().LocalizeTextText();
+            errorObj.GetComponent<UITextLocalization>().LocalizeTextText();
         }
         for (int i = 0; i < animations.Count; i++)
         {

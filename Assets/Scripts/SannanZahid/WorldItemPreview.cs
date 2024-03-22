@@ -19,22 +19,22 @@ public class WorldItemPreview : MonoBehaviour
         if (scrollActivity.gameObject.activeInHierarchy)
         {
             scrollActivity.BottomToTop();
-            m_WorldPlayPanel.transform.SetParent(WorldManager.instance.descriptionParentPanel.transform);
+            m_WorldPlayPanel.transform.SetParent(WorldsHandler.instance.descriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIManager.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIManager.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
+            m_WorldPlayPanel.GetComponent<RectTransform>().sizeDelta = UIHandler.Instance.HomePage.GetComponent<RectTransform>().sizeDelta;
+            m_WorldPlayPanel.GetComponent<RectTransform>().anchoredPosition = UIHandler.Instance.HomePage.GetComponent<RectTransform>().anchoredPosition;
             m_WorldPlayPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
             m_WorldPlayPanel.GetComponent<RectTransform>().localScale = Vector3.one;
         }
     }
     public void CheckWorld()
     {
-        UIManager.Instance.HomePage.SetActive(true);
-        this.GetComponent<WorldItemView>().m_FadeImage = this.GetComponent<WorldItemView>().worldIcon;
-        this.GetComponent<WorldItemView>().UpdateWorldPanel();
-            string EnvironmentName = this.GetComponent<WorldItemView>().m_EnvironmentName;
-            bool isBuilderScene = this.GetComponent<WorldItemView>().isBuilderScene;
+        UIHandler.Instance.HomePage.SetActive(true);
+        this.GetComponent<WorldItem>().m_FadeImage = this.GetComponent<WorldItem>().worldIcon;
+        this.GetComponent<WorldItem>().UpdateWorldPanel();
+            string EnvironmentName = this.GetComponent<WorldItem>().m_EnvironmentName;
+            bool isBuilderScene = this.GetComponent<WorldItem>().isBuilderScene;
 
             if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
             {
@@ -78,10 +78,10 @@ public class WorldItemPreview : MonoBehaviour
                 }
             }
             m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(UIManager.Instance.HomePage.transform);
+            m_WorldPlayPanel.transform.SetParent(UIHandler.Instance.HomePage.transform);
             m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
             m_MuseumIsClicked = false;
-        UIManager.Instance.ShowFooter(false);
+        UIHandler.Instance.ShowFooter(false);
 
         GameManager.Instance.WorldBool = true;
         m_WorldIsClicked = true;

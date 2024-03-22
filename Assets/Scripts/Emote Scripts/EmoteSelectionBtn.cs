@@ -98,16 +98,16 @@ public class EmoteSelectionBtn : MonoBehaviour
 
     void OnResetBtnClick()
     {
-        //EmoteAnimationPlay.Instance.StopAnimation();
+        //EmoteAnimationHandler.Instance.StopAnimation();
 
         if (animData.animationName != null)                                         // AH working
         {
-            if (animData.animationName == EmoteAnimationPlay.remoteUrlAnimationName)            
+            if (animData.animationName == EmoteAnimationHandler.remoteUrlAnimationName)            
             {
                 CanvasButtonsHandler.inst.stopCurrentPlayingAnim = true;
                 GamePlayButtonEvents.inst.OnEmoteAnimationStop();
             }
-           // Debug.Log(animData.animationName + "  is playing  " + EmoteAnimationPlay.remoteUrlAnimationName);
+           // Debug.Log(animData.animationName + "  is playing  " + EmoteAnimationHandler.remoteUrlAnimationName);
         }
 
         PlayerPrefsUtility.SetEncryptedString(ConstantsGod.ANIMATION_DATA + transform.GetSiblingIndex(), "");

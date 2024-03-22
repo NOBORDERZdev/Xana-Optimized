@@ -578,11 +578,11 @@ public class DefaultBattleGUI : BattleGUI
             //this.player2GUI.name.text = cPlayer2.myInfo.characterName.ToString().ToUpper();	
             if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                this.player2GUI.name.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
+                this.player2GUI.name.text = GetFirstNameOfPlayer(XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper());
             }
             else if (UFE.gameMode == GameMode.VersusMode)
             {
-                this.player2GUI.name.text = GetFirstNameOfPlayer(XanaConstants.xanaConstants.defaultFightingName.ToUpper());
+                this.player2GUI.name.text = GetFirstNameOfPlayer(XanaConstantsHolder.xanaConstants.defaultFightingName.ToUpper());
             }
             else
             {
@@ -605,11 +605,11 @@ public class DefaultBattleGUI : BattleGUI
                 this.player1GUI.portrait.gameObject.SetActive(true);
                 /*if (UFE.gameMode == GameMode.TrainingRoom)
 				{
-					setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
+					setPlayerIcon(XanaConstantsHolder.xanaConstants.NFTUrl, this.player1GUI.portrait);
                 }
                 else if (UFE.gameMode==GameMode.VersusMode)
                 {
-					setPlayerIcon(XanaConstants.xanaConstants.NFTUrl, this.player1GUI.portrait);
+					setPlayerIcon(XanaConstantsHolder.xanaConstants.NFTUrl, this.player1GUI.portrait);
 				}
 				else
 				{
@@ -645,11 +645,11 @@ public class DefaultBattleGUI : BattleGUI
                 this.player2GUI.portrait.gameObject.SetActive(true);
                 /*if (UFE.gameMode == GameMode.TrainingRoom)
 				{
-					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
+					setPlayerIcon(XanaConstantsHolder.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
 				}
                 else if (UFE.gameMode==GameMode.VersusMode)
                 {
-					setPlayerIcon(XanaConstants.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
+					setPlayerIcon(XanaConstantsHolder.xanaConstants.defaultFightingNFTUrl, this.player2GUI.portrait);
 				}
 				else
 				{
@@ -750,7 +750,7 @@ public class DefaultBattleGUI : BattleGUI
         //if (this.timer != null)				this.timer.text = string.Empty;
         Debug.Log("Winner: " + winner.name);
         Debug.Log("loser: " + loser.name);
-        FightingGameManager.instance.winnerClothJson = winner.GetComponentInChildren<AvatarController>().clothJson;
+        FightingGameManager.instance.winnerClothJson = winner.GetComponentInChildren<AvatarSetupController>().clothJson;
         TimeLineManager.instance.StartOutroCutScene();
     }
 

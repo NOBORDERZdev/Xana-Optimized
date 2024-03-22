@@ -21,7 +21,7 @@ namespace NPC {
 
         private void Awake()
         {
-            spawnCharacterObjectRemote = EmoteAnimationPlay.Instance.spawnCharacterObjectRemote;
+            spawnCharacterObjectRemote = EmoteAnimationHandler.Instance.spawnCharacterObjectRemote;
         }
 
         public IEnumerator PlayEmote()
@@ -31,23 +31,23 @@ namespace NPC {
                 //AssetBundle.UnloadAllAssetBundles(false);
                 //Resources.UnloadUnusedAssets();
                 int rand;
-                rand = UnityEngine.Random.Range(0, (EmoteAnimationPlay.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationPlay.Instance.emoteAnim.Count)); // EmoteAnimationPlay.Instance.emoteAnim.Count
+                rand = UnityEngine.Random.Range(0, (EmoteAnimationHandler.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationHandler.Instance.emoteAnim.Count)); // EmoteAnimationHandler.Instance.emoteAnim.Count
                 //Debug.Log("<color=red> rand: " + rand + "</color>");
-                if (EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Dance") || EmoteAnimationPlay.Instance.emoteAnim[rand].group.Contains("Moves"))
+                if (EmoteAnimationHandler.Instance.emoteAnim[rand].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[rand].group.Contains("Moves"))
                 {
                     string BundleUrl;
-                    string name = EmoteAnimationPlay.Instance.emoteAnim[rand].name;
+                    string name = EmoteAnimationHandler.Instance.emoteAnim[rand].name;
 #if UNITY_ANDROID
-                    BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
+                    BundleUrl = EmoteAnimationHandler.Instance.emoteAnim[rand].android_file;
 #elif UNITY_IOS
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].ios_file;
 #elif UNITY_EDITOR
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
 #endif
-                    string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
-                    if (EmoteAnimationPlay.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")))
+                    string bundlePath = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
+                    if (EmoteAnimationHandler.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")))
                     {
-                        emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
+                        emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
                     }
                     else
                     {
@@ -204,7 +204,7 @@ namespace NPC {
         void SaveAssetBundle(byte[] data, string name)
         {
             //Create the Directory if it does not exist
-            string path = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
+            string path = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
             if (!Directory.Exists(Path.GetDirectoryName(path)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(path));

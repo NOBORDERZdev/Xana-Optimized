@@ -16,7 +16,7 @@ public class StepsManager : MonoBehaviour
         {
             StepAudio.volume = StepsVolume;
         }
-        //if (XanaConstants.xanaConstants.isBuilderScene)
+        //if (XanaConstantsHolder.xanaConstants.isBuilderScene)
         //        distance = 0.2f;
     }
 

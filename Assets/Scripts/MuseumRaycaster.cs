@@ -45,7 +45,7 @@ public class MuseumRaycaster : MonoBehaviour
 
     public void Update()
     {
-        //if (EmoteAnimationPlay.Instance.isEmoteActive) return;
+        //if (EmoteAnimationHandler.Instance.isEmoteActive) return;
 
 //        if (Input.GetMouseButtonUp(0) && canOpenPicture)
 //        {

@@ -15,7 +15,7 @@ public class MicControllerButtons : MonoBehaviour
 
     private void Start()
     {
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+        if (WorldItem.m_EnvName.Contains("Xana Festival") || WorldItem.m_EnvName.Contains("NFTDuel Tournament"))
         {
             if (OnStateUI)
                 OnStateUI.SetActive(false);
@@ -31,7 +31,7 @@ public class MicControllerButtons : MonoBehaviour
     private void OnEnable()
     {
 
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (XanaConstantsHolder.xanaConstants.mic == 1)
         {
             if (this.gameObject.name == "OffButton")
             {
@@ -62,16 +62,16 @@ public class MicControllerButtons : MonoBehaviour
 
     public void ClickMicMain()
     {
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (XanaConstantsHolder.xanaConstants.mic == 1)
         {
-            XanaConstants.xanaConstants.StopMic();
+            XanaConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
             micOnButtonGameplay.SetActive(false);
             micOffButtonGameplay.SetActive(true);
         }
         else
         {
-            XanaConstants.xanaConstants.PlayMic();
+            XanaConstantsHolder.xanaConstants.PlayMic();
             XanaVoiceChat.instance.TurnOnMic();
             micOnButtonGameplay.SetActive(true);
             micOffButtonGameplay.SetActive(false);

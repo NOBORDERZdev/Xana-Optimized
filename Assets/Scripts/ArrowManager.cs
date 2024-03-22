@@ -62,7 +62,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     void Start()
     {
 
-        //if (XanaConstants.xanaConstants.userName == 1)
+        //if (XanaConstantsHolder.xanaConstants.userName == 1)
         //{
         //    PhotonUserName.enabled = true;
         //}
@@ -87,7 +87,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (XanaConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
@@ -108,7 +108,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
 
                 AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().animator = this.GetComponent<Animator>();
-                //AvatarManager.Instance.spawnPoint.GetComponent<EmoteAnimationPlay>().animatorremote = this.GetComponent<Animator>();
+                //AvatarManager.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
                 AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
 
                 AvatarManager.Instance.Defaultanimator = AvatarManager.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
@@ -358,7 +358,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         if (gameObject.GetComponent<PhotonView>().ViewID == id)
         {
-            //Debug.Log("USERNAME VALUE:" + XanaConstants.xanaConstants.userName);
+            //Debug.Log("USERNAME VALUE:" + XanaConstantsHolder.xanaConstants.userName);
             if (ToggleConstant == 0)
             {
                 Debug.Log("Onbtn:" + ReferrencesForDynamicMuseum.instance.onBtnUsername);
@@ -462,9 +462,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
             go.transform.localScale = new Vector3(6.0f, 5.25f, 1);
 
-            //EmoteAnimationPlay.Instance.controller = (AnimatorController)EmoteAnimationPlay.Instance.animator.runtimeAnimatorController;
+            //EmoteAnimationHandler.Instance.controller = (AnimatorController)EmoteAnimationHandler.Instance.animator.runtimeAnimatorController;
             //// var state = controller.layers[0].stateMachine.defaultState;
-            //var state = EmoteAnimationPlay.Instance.controller.layers[0].stateMachine.states.FirstOrDefault(s => s.state.name.Equals("Animation")).state;
+            //var state = EmoteAnimationHandler.Instance.controller.layers[0].stateMachine.states.FirstOrDefault(s => s.state.name.Equals("Animation")).state;
             //Debug.Log("states===" + state.name);
             //if (state == null)
             //{
@@ -475,7 +475,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             //{
 
             //}catch()
-            //EmoteAnimationPlay.Instance.controller.SetStateEffectiveMotion(state, EmoteAnimationPlay.Instance.spawnCharacterObject.transform.GetComponent<Animation>().clip);
+            //EmoteAnimationHandler.Instance.controller.SetStateEffectiveMotion(state, EmoteAnimationHandler.Instance.spawnCharacterObject.transform.GetComponent<Animation>().clip);
         }
 
         if (isOtherPlayer)
@@ -497,9 +497,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
 
         //LoadingManager.Instance.HideLoading();
-        //LoadingHandler.Instance.HideLoading();
+        //LoadingController.Instance.HideLoading();
 
-        if (XanaConstants.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5"))
+        if (XanaConstantsHolder.xanaConstants.IsMuseum && WorldItem.m_EnvName.Contains("J & J WORLD_5"))
             go.SetActive(false);
         if (SoundManager.Instance)
         {

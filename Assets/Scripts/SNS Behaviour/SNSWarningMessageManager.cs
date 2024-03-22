@@ -19,7 +19,7 @@ public class SNSWarningMessageManager : MonoBehaviour
     public void ShowWarningMessage(string warningMessage)
     {
         warningMessageText.text = "";
-        warningMessageText.text = TextLocalization.GetLocaliseTextByKey(warningMessage);
+        warningMessageText.text = UITextLocalization.GetLocaliseTextByKey(warningMessage);
         warningMessageScreen.SetActive(true);
     }
 }

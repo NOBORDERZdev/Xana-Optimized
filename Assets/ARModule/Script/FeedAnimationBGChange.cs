@@ -93,7 +93,7 @@ public class FeedAnimationBGChange : MonoBehaviour
         Debug.Log("All BG Base url:" + ConstantsGod.API_BASEURL);
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + ServerBaseURlHandler.instance.apiversion);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -147,7 +147,7 @@ public class FeedAnimationBGChange : MonoBehaviour
                     categoryObject.transform.localScale = Vector3.one;
                     categoryObject.transform.localRotation = Quaternion.identity;
                     categoryObject.name = animationGroup[i];
-                    categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey(animationGroup[i]);
+                    categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey(animationGroup[i]);
                     categoryObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
                     categoryObject.transform.GetChild(0).gameObject.SetActive(true);
                     int x = i + 1;

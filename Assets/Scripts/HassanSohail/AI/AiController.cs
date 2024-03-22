@@ -18,7 +18,7 @@ namespace XanaAi
         [SerializeField] AiReaction aiReaction;
         [SerializeField] AIJump aIJump;
         [SerializeField] AiFreeCam freeCam;
-        //[SerializeField] EyesBlinking blinking;
+        //[SerializeField] EyesBlinkController blinking;
         bool isNewlySpwaned =true;
         Coroutine emoteCoroutine;
         [HideInInspector]
@@ -77,7 +77,7 @@ namespace XanaAi
         /// <param name="applyOn">AI that are going to wear the dress</param>
         public void StichItem(int itemId, GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
         {
-            CharcterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharcterBodyParts>();
+            AvatarBodyParts tempBodyParts = applyOn.gameObject.GetComponent<AvatarBodyParts>();
             UnStichItem(type);
             if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)
             {
