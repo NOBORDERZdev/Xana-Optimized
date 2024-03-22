@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using System.Text.RegularExpressions;
+
 public class PostScreenInput : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
@@ -22,6 +24,21 @@ public class PostScreenInput : MonoBehaviour
     TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
     bool bubbleHeightCheck = false;
+    
+    string emojiRegexPattern = @"[\uD83C-\uDBFF\uDC00-\uDFFF]+";
+    public bool ContainsEmoji(string _text)
+    {
+        try
+        {
+            Regex regex = new Regex(emojiRegexPattern);
+            return regex.IsMatch(_text);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error in ContainsEmoji " + e);
+            return false;
+        }
+    }
     private void OnEnable()
     {
         if (GameManager.currentLanguage.Equals("en"))
@@ -49,6 +66,18 @@ public class PostScreenInput : MonoBehaviour
         {
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
+
+            // Check if the text contains an Emoji
+            if (ContainsEmoji(ShowText.text))
+            {
+                ShowText.lineSpacing = 1.0f;
+                //Debug.LogError("Emoji Found " + ShowText.lineSpacing);
+            }
+            else
+            {
+                ShowText.lineSpacing = 0.5f;
+                //Debug.LogError("No Emoji Found " + ShowText.lineSpacing);
+            }
         }
         else
         {
