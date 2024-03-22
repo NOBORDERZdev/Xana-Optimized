@@ -109,8 +109,8 @@ public class ProfileUIHandler : MonoBehaviour
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
 
         GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
-        //Destroy(AvatarRef.GetComponent<AvatarController>());
-        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
+        //Destroy(AvatarRef.GetComponent<AvatarSetupController>());
+        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>()._PCharacterData;
         //SetUserAvatarClothing();
     }
 

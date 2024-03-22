@@ -130,7 +130,7 @@ public class ScrollActivityNFT : MonoBehaviour
             PlayerPrefs.DeleteKey("nftID");
             XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+            EquipShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);

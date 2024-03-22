@@ -66,8 +66,8 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         yield return new WaitForSeconds(0.1f);
         if (playerObj != null)
         {
-            AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            AvatarSetupController ac = playerObj.GetComponent<AvatarSetupController>();
+            AvatarBodyParts charcterBodyParts = playerObj.GetComponent<AvatarBodyParts>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornPant)
@@ -177,7 +177,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 return playerObject;
             }

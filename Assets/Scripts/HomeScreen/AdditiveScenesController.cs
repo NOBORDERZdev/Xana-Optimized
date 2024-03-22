@@ -56,7 +56,7 @@ public class AdditiveScenesController : MonoBehaviour
         {
             yield return null;
         }
-        //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        //GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
         if (XanaConstantsHolder.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();

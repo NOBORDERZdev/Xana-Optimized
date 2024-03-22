@@ -576,7 +576,7 @@ public class WorldsHandler : MonoBehaviour
     {
         CloseFightingModulePopUp();
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        FightingModuleManager.Instance.OnClickMainMenu();
+        FightingModuleHandler.Instance.OnClickMainMenu();
     }
     public void OnClickEnterAsSpectator()
     {

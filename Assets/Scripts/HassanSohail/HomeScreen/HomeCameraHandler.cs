@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using static UserPostFeature;
 using UnityEngine.Networking;
 
-public class HomeCameraController : MonoBehaviour
+public class HomeCameraHandler : MonoBehaviour
 {
     float PanSpeed = 2.5f;
     float ZoomSpeedTouch = 0.1f;

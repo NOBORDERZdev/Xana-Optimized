@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject ShadowPlane;
     public SavaAvatarProperties SaveCharacterProperties;
     public EquipUI EquipUiObj;
-    public BlendShapeImporter BlendShapeObj;
+    public BlendShapesManager BlendShapeObj;
     public bool UserStatus_;   //if its true user is logged in else its as a guest
     public static string currentLanguage = "";
     public bool isStoreAssetDownloading = false;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     }
     public void HomeCameraInputHandler(bool flag)
     {
-        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
+        HomeCamera.GetComponent<HomeCameraHandler>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {

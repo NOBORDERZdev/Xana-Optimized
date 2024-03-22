@@ -74,7 +74,7 @@ public class AddressableDownloader : MonoBehaviour
     /// To Download Addressable object. with call back from coroutine
     /// </summary>
     /// <param name="name">tag or key of a addressable object</param>
-    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
+    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarSetupController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
         while (!XanaConstantsHolder.isAddressableCatalogDownload)
@@ -103,7 +103,7 @@ public class AddressableDownloader : MonoBehaviour
                 if (!flag)
                     loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
-                SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
+                EquipShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
@@ -183,7 +183,7 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
-    IEnumerator ApplyPresetItems(AvatarController applyOn)
+    IEnumerator ApplyPresetItems(AvatarSetupController applyOn)
     {
         for (int i = 0; i < presetsItem.Count; i++)
         {
@@ -267,7 +267,7 @@ public class AddressableDownloader : MonoBehaviour
             if (key == "eye_color_texture")
             {
                 // This Texture Store in Reference no need to download this texture
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Color_Texture, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<AvatarBodyParts>().Eye_Color_Texture, applyOn);
                 GameManager.Instance.isStoreAssetDownloading = false;
                 yield return null;
             }
@@ -296,7 +296,7 @@ public class AddressableDownloader : MonoBehaviour
                         GameManager.Instance.isStoreAssetDownloading = false;
                         DisableLoadingPanel();
                     }
-                    applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
+                    applyOn.GetComponent<AvatarBodyParts>().SetTextureDefault(type, applyOn);
                     yield break;
                 }
                 else if (loadOp.Status == AsyncOperationStatus.Succeeded)
@@ -311,7 +311,7 @@ public class AddressableDownloader : MonoBehaviour
                         }
                         else
                         {
-                            applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(type, applyOn);
+                            applyOn.GetComponent<AvatarBodyParts>().SetTextureDefault(type, applyOn);
                             yield break;
                         }
                     }
@@ -323,38 +323,38 @@ public class AddressableDownloader : MonoBehaviour
                             case CurrentTextureType.Null:
                                 break;
                             case CurrentTextureType.FaceTattoo:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.FaceTattoo);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.FaceTattoo);
                                 break;
                             case CurrentTextureType.ChestTattoo:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ChestTattoo);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ChestTattoo);
                                 break;
                             case CurrentTextureType.LegsTattoo:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.LegsTattoo);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.LegsTattoo);
                                 break;
                             case CurrentTextureType.ArmTattoo:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ArmTattoo);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyTattoo(loadOp.Result as Texture, applyOn, CurrentTextureType.ArmTattoo);
                                 break;
                             case CurrentTextureType.Mustache:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyMustacheTexture(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyMustacheTexture(loadOp.Result as Texture, applyOn);
                                 break;
                             case CurrentTextureType.EyeLid:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLidTexture(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLidTexture(loadOp.Result as Texture, applyOn);
                                 break;
                             case CurrentTextureType.EyeLense:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLenTexture(loadOp.Result as Texture, applyOn);
                                 break;
                             case CurrentTextureType.EyeLashes:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLashes(loadOp.Result as Texture, applyOn);
                                 break;
                             case CurrentTextureType.EyeBrows:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrow(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeBrow(loadOp.Result as Texture, applyOn);
                                 break;
                             case CurrentTextureType.Skin:
                                 break;
                             case CurrentTextureType.Lip:
                                 break;
                             case CurrentTextureType.Makeup:
-                                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(loadOp.Result as Texture, applyOn);
+                                applyOn.GetComponent<AvatarBodyParts>().ApplyMakeup(loadOp.Result as Texture, applyOn);
                                 break;
                             default:
                                 break;
@@ -388,7 +388,7 @@ public class AddressableDownloader : MonoBehaviour
 
             if (loadOp.Status == AsyncOperationStatus.Failed)
             {
-                applyOn.GetComponent<CharcterBodyParts>().SetTextureDefault(nFTOjectType, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().SetTextureDefault(nFTOjectType, applyOn);
                 yield break;
             }
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
@@ -397,10 +397,10 @@ public class AddressableDownloader : MonoBehaviour
                 switch (nFTOjectType)
                 {
                     case CurrentTextureType.Skin:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(loadOp.Result as Texture, applyOn);
+                        applyOn.GetComponent<AvatarBodyParts>().ApplyBodyTexture(loadOp.Result as Texture, applyOn);
                         break;
                     case CurrentTextureType.Face:
-                        applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(loadOp.Result as Texture, applyOn);
+                        applyOn.GetComponent<AvatarBodyParts>().ApplyFaceTexture(loadOp.Result as Texture, applyOn);
                         break;
                     default:
                         break;

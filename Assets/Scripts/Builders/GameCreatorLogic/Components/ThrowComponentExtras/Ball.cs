@@ -28,7 +28,7 @@ public class Ball : MonoBehaviourPun
         foreach (GameObject playerObject in Launcher.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
-            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarSetupController>())
             {
                 return _photonView.Owner;
             }

@@ -601,7 +601,7 @@ public class AvatarBtn : MonoBehaviour
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
                         if (GameManager.Instance)
                         {
-                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, XanaConstantsHolder.xanaConstants.bodyNumber);
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, XanaConstantsHolder.xanaConstants.bodyNumber);
                         }
                         break;
                     }
@@ -616,11 +616,11 @@ public class AvatarBtn : MonoBehaviour
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
 
-                        //BlendShapeImporter.Instance.MorphTypeSelected("Head");
-                        BlendShapeImporter.Instance.MorphTypeSelected("FaceMorph");
+                        //BlendShapesManager.Instance.MorphTypeSelected("Head");
+                        BlendShapesManager.Instance.MorphTypeSelected("FaceMorph");
 
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Face");
-                        BlendShapeImporter.Instance.TurnOnPoints("FaceMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("FaceMorph");
                         break;
                     }
                 case "EyeBrowMorph":
@@ -629,22 +629,22 @@ public class AvatarBtn : MonoBehaviour
                         UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("EyeBrow");
+                        BlendShapesManager.Instance.MorphTypeSelected("EyeBrow");
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyebrow");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyeBrowMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("EyeBrowMorph");
                         break;
                     }
                 case "EyesMorph":
                     {
-                        EyesBlinking.instance.isBlinking = false;       // Added by Ali Hamza
+                        EyesBlinkController.instance.isBlinking = false;       // Added by Ali Hamza
 
                         AvatarCustomizationManager.Instance.OnFrontSide();
                         UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("eye");
+                        BlendShapesManager.Instance.MorphTypeSelected("eye");
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Eyes");
-                        BlendShapeImporter.Instance.TurnOnPoints("EyesMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("EyesMorph");
                         break;
                     }
                 case "NoseMorph":
@@ -653,9 +653,9 @@ public class AvatarBtn : MonoBehaviour
                         UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Nose");
+                        BlendShapesManager.Instance.MorphTypeSelected("Nose");
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Nose");
-                        BlendShapeImporter.Instance.TurnOnPoints("NoseMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("NoseMorph");
                         break;
                     }
                 case "LipsMorph":
@@ -664,9 +664,9 @@ public class AvatarBtn : MonoBehaviour
                         UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Lips");
+                        BlendShapesManager.Instance.MorphTypeSelected("Lips");
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Lips");
-                        BlendShapeImporter.Instance.TurnOnPoints("LipsMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("LipsMorph");
                         break;
                     }
                 case "HeadMorph":
@@ -675,9 +675,9 @@ public class AvatarBtn : MonoBehaviour
                         UIHandler.Instance._footerCan.SetActive(false);
                         GameManager.Instance.mainCharacter.transform.localEulerAngles = new Vector3(0f, 180f, 0f);
                         SetCameraPosForFaceCustomization.instance.ChangeCameraToIsometric();
-                        BlendShapeImporter.Instance.MorphTypeSelected("Head");
+                        BlendShapesManager.Instance.MorphTypeSelected("Head");
                         AvatarCustomizationUIHandler.Instance.LoadCustomBlendShapePanel("Head");
-                        BlendShapeImporter.Instance.TurnOnPoints("HeadMorph");
+                        BlendShapesManager.Instance.TurnOnPoints("HeadMorph");
                     }
                     break;
             }

@@ -21,7 +21,7 @@ public class UGCUIManager : MonoBehaviour
     public bool isRecording;
     public float holdTimeForPhoto;
 
-    public AvatarController UGCCharacter;
+    public AvatarSetupController UGCCharacter;
     public VideoPlayer videoPlayer;
     public RenderTexture characterRT;
     public Camera characterRenderCamera;

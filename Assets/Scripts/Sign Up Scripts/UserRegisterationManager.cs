@@ -512,13 +512,13 @@ public class UserRegisterationManager : MonoBehaviour
     //    {
 
     //        LoggedInAsGuest = true;
-    //        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+    //        GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
     //        SavaAvatarProperties.instance.LoadMorphsfromFile();
     //        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
     //    }
 
-    //    EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-    //    StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+    //    EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+    //    StartCoroutine(EyesBlinkController.instance.BlinkingStartRoutine());
     //    if (PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("IsLoggedIn") == 0)
     //        welcomeScreen.SetActive(true);
     //}
@@ -675,7 +675,7 @@ public class UserRegisterationManager : MonoBehaviour
     {
         if (GameManager.Instance.mainCharacter)
         {
-            GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
+            GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().DefaultTexture();
         }
         SavaAvatarProperties.instance.LoadMorphsfromFile();
         float t = 0;
@@ -1290,7 +1290,7 @@ public class UserRegisterationManager : MonoBehaviour
 
     void resetClothstoGuest()
     {
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
         SavaAvatarProperties.instance.LoadMorphsfromFile();
     }
 

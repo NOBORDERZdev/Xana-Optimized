@@ -6,9 +6,9 @@ using Photon.Pun;
 using System;
 using System.IO;
 
-public class CharcterBodyParts : MonoBehaviour
+public class AvatarBodyParts : MonoBehaviour
 {
-    public static CharcterBodyParts instance;
+    public static AvatarBodyParts instance;
     [Tooltip("Default Texture for pent and shirt")]
     public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_Texture, TattooDefaultTexture;
     // For Eye Color Slider Require Some new Textures
@@ -78,7 +78,7 @@ public class CharcterBodyParts : MonoBehaviour
     private Material characterHeadMat, characterBodyMat;
 
 
-    public AvatarController avatarController;
+    public AvatarSetupController avatarController;
 
     //public AvatarGender avatarGender;
     public AvatarMeshes maleAvatarMeshes;
@@ -150,8 +150,8 @@ public class CharcterBodyParts : MonoBehaviour
 
     private void Start()
     {
-        blend = BlendShapeImporter.Instance;
-        //avatarController = GetComponent<AvatarController>();
+        blend = BlendShapesManager.Instance;
+        //avatarController = GetComponent<AvatarSetupController>();
         head = maleAvatarMeshes.avatar_head;
         body = maleAvatarMeshes.avatar_body;
         characterHeadMat = head.materials[2];
@@ -365,7 +365,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
 
 
-    BlendShapeImporter blend;
+    BlendShapesManager blend;
     public void ValuesForSliderXY(List<int> morphsList)
     {
         float min = 0;
@@ -374,17 +374,17 @@ public class CharcterBodyParts : MonoBehaviour
         int blendIndex = 0;
 
         #region Comment Section 
-        //if (BlendShapeController.instance.allBlendShapes[morphsList[0]].boneAvailable)
+        //if (BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneAvailable)
         //{
         //    print("Yes Bone");
-        //    foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[0]].boneData)
+        //    foreach (var item in BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneData)
         //    {
         //        print("---- AxesDetails : " + item.workingAxes);
 
 
         //        if (item.workingAxes == AxesDetails.z)
         //        {
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapesHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // X-Slider
         //                if (item.workingAxes == AxesDetails.x)
@@ -394,7 +394,7 @@ public class CharcterBodyParts : MonoBehaviour
         //                    blend.SliderX.minValue = item.minValue;
 
         //                    // Setting Slider Value
-        //                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //                    Transform bone = BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //                    blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
         //                }
         //            }
@@ -408,7 +408,7 @@ public class CharcterBodyParts : MonoBehaviour
         //            blend.SliderX.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderX.onValueChanged.AddListener(delegate { BoneSliderCallBack('x', item.workingTransform, bone, blend.SliderX.value); });
@@ -423,7 +423,7 @@ public class CharcterBodyParts : MonoBehaviour
         //            blend.SliderY.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderY.onValueChanged.AddListener(delegate { BoneSliderCallBack('y', item.workingTransform, bone, blend.SliderY.value); });
@@ -434,12 +434,12 @@ public class CharcterBodyParts : MonoBehaviour
         //        else if (item.workingAxes == AxesDetails.xy)
         //        {
         //            // Get Bone Reference
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapesHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
 
-        //            print("Sub Axis :" + BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType);
+        //            print("Sub Axis :" + BlendShapesHolder.instance.allBlendShapes[morphsList[0]].AxisType);
         //            // Check which slider require 
         //            // X Slider or Y Slider
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapesHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // Set Min Max Values
         //                blend.SliderX.maxValue = item.maxValue;
@@ -462,7 +462,7 @@ public class CharcterBodyParts : MonoBehaviour
 
         //                // all axis has same value so use anyone of them
         //                blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
-        //                print("Assigning Listners : " + BlendShapeController.instance.allBlendShapes[morphsList[0]].itemName);
+        //                print("Assigning Listners : " + BlendShapesHolder.instance.allBlendShapes[morphsList[0]].itemName);
         //                blend.SliderY.onValueChanged.AddListener(delegate
         //                {
         //                    // Need to modify values for all axis
@@ -478,14 +478,14 @@ public class CharcterBodyParts : MonoBehaviour
         //    //Blend Shape Working
         //    foreach (var item in morphsList)
         //    {
-        //        min = BlendShapeController.instance.allBlendShapes[item].minValue;
-        //        max = BlendShapeController.instance.allBlendShapes[item].maxValue;
-        //        blendIndex = BlendShapeController.instance.allBlendShapes[item].index;
+        //        min = BlendShapesHolder.instance.allBlendShapes[item].minValue;
+        //        max = BlendShapesHolder.instance.allBlendShapes[item].maxValue;
+        //        blendIndex = BlendShapesHolder.instance.allBlendShapes[item].index;
 
         //        currentValue = Head.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(blendIndex);
 
         //        // X-Slider
-        //        if (BlendShapeController.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
+        //        if (BlendShapesHolder.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
         //        {
         //            // Set Min Max Values
         //            blend.SliderX.maxValue = max;
@@ -524,19 +524,19 @@ public class CharcterBodyParts : MonoBehaviour
 
         for (int i = 0; i < morphsList.Count; i++)
         {
-            if (BlendShapeController.instance.allBlendShapes[morphsList[i]].boneAvailable)
+            if (BlendShapesHolder.instance.allBlendShapes[morphsList[i]].boneAvailable)
             {
                 print("Yes Bone");
-                foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[i]].boneData)
+                foreach (var item in BlendShapesHolder.instance.allBlendShapes[morphsList[i]].boneData)
                 {
                     print("---- AxesDetails : " + item.workingAxes);
 
-                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].boneObj.transform;
+                    Transform bone = BlendShapesHolder.instance.allBlendShapes[morphsList[i]].boneObj.transform;
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)
                     {
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapesHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'z', 'z', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'z', 'z', item, bone);
@@ -559,7 +559,7 @@ public class CharcterBodyParts : MonoBehaviour
                     else if (item.workingAxes == AxesDetails.xy)
                     {
                         // char 'a' stand for All Axis
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapesHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'x', 'a', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'x', 'a', item, bone);
@@ -570,15 +570,15 @@ public class CharcterBodyParts : MonoBehaviour
             {
                 print("No Bone");
                 //Blend Shape Working
-                min = BlendShapeController.instance.allBlendShapes[morphsList[i]].minValue;
-                max = BlendShapeController.instance.allBlendShapes[morphsList[i]].maxValue;
-                blendIndex = BlendShapeController.instance.allBlendShapes[morphsList[i]].index;
+                min = BlendShapesHolder.instance.allBlendShapes[morphsList[i]].minValue;
+                max = BlendShapesHolder.instance.allBlendShapes[morphsList[i]].maxValue;
+                blendIndex = BlendShapesHolder.instance.allBlendShapes[morphsList[i]].index;
 
                 currentValue = head.GetBlendShapeWeight(blendIndex);
-                bool localReverse = BlendShapeController.instance.allBlendShapes[morphsList[i]].reverseMyValue;
+                bool localReverse = BlendShapesHolder.instance.allBlendShapes[morphsList[i]].reverseMyValue;
 
                 // X-Slider
-                if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                if (BlendShapesHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                 {
                     if (!localReverse)
                     {
@@ -780,13 +780,13 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void ApplyGredientColor(Color gredientColor, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(GredientColorName, gredientColor);
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(GredientColorName, gredientColor);
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(GredientColorName, gredientColor);
+        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(GredientColorName, gredientColor);
     }
     public void ApplyGredientDefault(GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(GredientColorName, DefaultGredientColor);
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(GredientColorName, DefaultGredientColor);
+        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
     }
 
 
@@ -1022,22 +1022,22 @@ public class CharcterBodyParts : MonoBehaviour
         yield return new WaitForSeconds(0f);
         if (new Vector3(SkinColor.r, SkinColor.b, SkinColor.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         }
 
         if (new Vector3(LipColor.r, LipColor.b, LipColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
         }
 
     }
@@ -1047,49 +1047,49 @@ public class CharcterBodyParts : MonoBehaviour
         yield return new WaitForSeconds(0f);
         if (new Vector3(SkinColor.r, SkinColor.b, SkinColor.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, SkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, SkinColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-            applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+            applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
         }
 
         if (new Vector3(LipColor.r, LipColor.b, LipColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, LipColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
         }
 
         // Hair
         if (new Vector3(HairColor.r, HairColor.b, HairColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            if (applyOn.GetComponent<CharcterBodyParts>().avatarController.wornHair != null)
-                applyOn.GetComponent<CharcterBodyParts>().avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, HairColor);
+            if (applyOn.GetComponent<AvatarBodyParts>().avatarController.wornHair != null)
+                applyOn.GetComponent<AvatarBodyParts>().avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, HairColor);
         }
 
         // EyeBrow
         if (new Vector3(EyebrowColor.r, EyebrowColor.b, EyebrowColor.g) != new Vector3(0.00f, 0.00f, 0.00f) && EyebrowColor != Color.white)
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, EyebrowColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, EyebrowColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
         }
 
         // Eyes
         if (new Vector3(EyeColor.r, EyeColor.b, EyeColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, EyeColor);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, EyeColor);
         }
         else
         {
-            applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+            applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
         }
     }
 
@@ -1103,20 +1103,20 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.Skin:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
-                    applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
+                    applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-                    applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+                    applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
                 }
                 break;
 
             case SliderType.HairColor:
                 //if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 //{
-                AvatarController ac = applyOn.GetComponent<AvatarController>();
+                AvatarSetupController ac = applyOn.GetComponent<AvatarSetupController>();
                 if (ac.wornHair != null)
                 {
                     //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
@@ -1148,33 +1148,33 @@ public class CharcterBodyParts : MonoBehaviour
             case SliderType.EyeBrowColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) && _color != Color.white)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, _color);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[1].SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
                 }
                 break;
 
             case SliderType.EyesColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
                 }
                 break;
 
             case SliderType.LipsColor:
                 if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, _color);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, _color);
                 }
                 else
                 {
-                    applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+                    applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
                 }
                 break;
 
@@ -1197,39 +1197,39 @@ public class CharcterBodyParts : MonoBehaviour
     //    yield return new WaitForSeconds(0);
     //    if (new Vector3(SkinColor.r, SkinColor.b, SkinColor.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Skin_ColorName, SkinColor);
-    //        //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0);
-    //        applyOn.GetComponent<CharcterBodyParts>().Body.materials[0].SetColor(Skin_ColorName, SkinColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Skin_ColorName, SkinColor);
+    //        //applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0);
+    //        applyOn.GetComponent<AvatarBodyParts>().Body.materials[0].SetColor(Skin_ColorName, SkinColor);
 
     //    }
     //    else
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-    //        //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0);
-    //        applyOn.GetComponent<CharcterBodyParts>().Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+    //        //applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0);
+    //        applyOn.GetComponent<AvatarBodyParts>().Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
 
 
     //    }
 
     //    if (new Vector3(LipColor.r, LipColor.b, LipColor.g) != new Vector3(0.00f, 0.00f, 0.00f))
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Lip_ColorName, LipColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Lip_ColorName, LipColor);
     //    }
     //    else
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Lip_ColorName, DefaultLipColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(Lip_ColorName, DefaultLipColor);
     //    }
 
     //    if (new Vector3(gredientColor.r, gredientColor.b, gredientColor.g) != new Vector3(0.00f, 0.00f, 0.00f) )
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, gredientColor);
-    //        applyOn.GetComponent<CharcterBodyParts>().Body.materials[0].SetColor(GredientColorName, gredientColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, gredientColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Body.materials[0].SetColor(GredientColorName, gredientColor);
     //    }
     //    else
     //    {
-    //        applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, DefaultGredientColor);
-    //        applyOn.GetComponent<CharcterBodyParts>().Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
-    //        //applyOn.GetComponent<CharcterBodyParts>().Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
+    //        applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetColor(GredientColorName, DefaultGredientColor);
+    //        applyOn.GetComponent<AvatarBodyParts>().Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
+    //        //applyOn.GetComponent<AvatarBodyParts>().Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
     //    }
 
     //}
@@ -1300,29 +1300,29 @@ public class CharcterBodyParts : MonoBehaviour
         //    DefaultBones.Add(new  BoneDataContainer(item.Name,item.Obj, item.Obj.transform.position, item.Obj.transform.localScale));
         //}
 
-        // EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        //StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        // EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        //StartCoroutine(EyesBlinkController.instance.BlinkingStartRoutine());
     }
 
     public void ApplyMaskTexture(string type, Texture texture, GameObject applyOn)
     {
         if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForShirt(texture);
+            applyOn.GetComponent<AvatarBodyParts>().TextureForShirt(texture);
 
-            //CharcterBodyParts.instance.TextureForShirt(texture);
+            //AvatarBodyParts.instance.TextureForShirt(texture);
         }
         else if (type.Contains("Legs") || type.Contains("pant") || type.Contains("Pants"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForPant(texture);
+            applyOn.GetComponent<AvatarBodyParts>().TextureForPant(texture);
         }
         else if (type.Contains("Feet") || type.Contains("Shose", System.StringComparison.CurrentCultureIgnoreCase) || type.Contains("Plain_mask", System.StringComparison.CurrentCultureIgnoreCase))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForShoes(texture);
+            applyOn.GetComponent<AvatarBodyParts>().TextureForShoes(texture);
         }
         else if (type.Contains("Glove"))
         {
-            applyOn.GetComponent<CharcterBodyParts>().TextureForGlove(texture);
+            applyOn.GetComponent<AvatarBodyParts>().TextureForGlove(texture);
         }
     }
 
@@ -1330,22 +1330,22 @@ public class CharcterBodyParts : MonoBehaviour
     //{
     //    if (name.Contains("shirt", System.StringComparison.CurrentCultureIgnoreCase))
     //    {
-    //        CharcterBodyParts.instance.TextureForShirt(texture);
+    //        AvatarBodyParts.instance.TextureForShirt(texture);
 
     //    }
     //    else if (name.Contains("pant", System.StringComparison.CurrentCultureIgnoreCase))
     //    {
-    //        CharcterBodyParts.instance.GetComponent<CharcterBodyParts>().TextureForPant(texture);
+    //        AvatarBodyParts.instance.GetComponent<AvatarBodyParts>().TextureForPant(texture);
     //    }
     //    else if (name.Contains("shoes") || name.Contains("Shoes") || name.Contains("Shose", System.StringComparison.CurrentCultureIgnoreCase))
     //    {
-    //        CharcterBodyParts.instance.TextureForShoes(texture);
+    //        AvatarBodyParts.instance.TextureForShoes(texture);
     //    }
     //}
     public void ApplyEyeLenTexture(Texture texture, GameObject applyOn)
     {
 
-        Material mainMaterial = applyOn.GetComponent<CharcterBodyParts>().head.materials[0];
+        Material mainMaterial = applyOn.GetComponent<AvatarBodyParts>().head.materials[0];
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
@@ -1371,13 +1371,13 @@ public class CharcterBodyParts : MonoBehaviour
             mainMaterial.SetTexture("_EmissionMap", texture);
         }
         // After EyeShader update need to pass this texture to another property
-        //applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
+        //applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[0].SetTexture("_Emission_Texture", texture);
     }
     public void ApplyEyeBrowTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
-        if (BlendShapeController.instance != null)
-            BlendShapeController.instance.ResetEyeBrowBlendValues();
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
+        if (BlendShapesHolder.instance != null)
+            BlendShapesHolder.instance.ResetEyeBrowBlendValues();
     }
 
     public void ApplyEyeBrow(Texture texture, GameObject applyOn)
@@ -1386,11 +1386,11 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ApplyBodyTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
     }
     public void ApplyFaceTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
     }
     public void ApplyTattoo(Texture texture, GameObject applyOn, CurrentTextureType nFTOjectType)
     {
@@ -1529,7 +1529,7 @@ public class CharcterBodyParts : MonoBehaviour
 
     public void DefaultBlendShapes(GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().head;
+        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<AvatarBodyParts>().head;
         //blend shapes
 
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount; i++)
@@ -1539,7 +1539,7 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void LoadBlendShapes(SavingCharacterDataClass data, GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharcterBodyParts>().head;
+        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<AvatarBodyParts>().head;
         //blend shapes
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
@@ -1570,7 +1570,7 @@ public class CharcterBodyParts : MonoBehaviour
                 }
             }
         }
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
     public void ApplyBlendShapeEyesValues(GameObject applyOn, List<BlendShapeContainer> data, Vector3 eyesPos, float rotationz)
     {
@@ -1583,7 +1583,7 @@ public class CharcterBodyParts : MonoBehaviour
                 blendRender.SetBlendShapeWeight(data[i].blendShapeind, data[i].blendShapeValue);
             }
         }
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
 
         // ***** Reset to Default If Custom chance made
         BothEyes[0].transform.localPosition = new Vector3(-0.052f, 0.1106f, 0.122f);
@@ -1631,12 +1631,12 @@ public class CharcterBodyParts : MonoBehaviour
     }
     public void ApplyEyeLashes(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[3].SetTexture(eyeLashes_TextureName, texture);
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[3].SetTexture(eyeLashes_TextureName, texture);
     }
 
     public void ApplyMakeup(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetTexture(Makeup_TextureName, texture);
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetTexture(Makeup_TextureName, texture);
     }
 
 
@@ -1647,16 +1647,16 @@ public class CharcterBodyParts : MonoBehaviour
     /// <param name="applyOn"> player gameobject on which apply value</param>
     public void SetSssIntensity(float value, GameObject applyOn)
     {
-        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetFloat(SssIntensity, value);
-        //print("HEAD shader SSs for gmaeplay is " + applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].GetFloat(SssIntensity));
-        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetFloat(SssIntensity, value);
-        //print("BODY shader SSs for gmaeplay is " + applyOn.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().materials[0].GetFloat(SssIntensity));
+        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetFloat(SssIntensity, value);
+        //print("HEAD shader SSs for gmaeplay is " + applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[2].GetFloat(SssIntensity));
+        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetFloat(SssIntensity, value);
+        //print("BODY shader SSs for gmaeplay is " + applyOn.GetComponent<AvatarBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().materials[0].GetFloat(SssIntensity));
 
     }
 
     //public string GetEyeLashesName(GameObject applyOn) {
     //    string name;
-    //    name = applyOn.GetComponent<CharcterBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture(eyeLashes_TextureName);
+    //    name = applyOn.GetComponent<AvatarBodyParts>().Head.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture(eyeLashes_TextureName);
     //}
 
 
@@ -1747,36 +1747,36 @@ public class CharcterBodyParts : MonoBehaviour
             case CurrentTextureType.ArmTattoo:
                 break;
             case CurrentTextureType.Mustache:
-                applyOn.GetComponent<CharcterBodyParts>().RemoveMustacheTexture(null, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().RemoveMustacheTexture(null, applyOn);
                 break;
             case CurrentTextureType.EyeLid:
                 break;
             case CurrentTextureType.EyeLense:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<CharcterBodyParts>().Eye_Texture, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLenTexture(applyOn.GetComponent<AvatarBodyParts>().Eye_Texture, applyOn);
                 break;
             case CurrentTextureType.EyeLashes:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeLashes(applyOn.GetComponent<CharcterBodyParts>().defaultEyelashes, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeLashes(applyOn.GetComponent<AvatarBodyParts>().defaultEyelashes, applyOn);
                 break;
             case CurrentTextureType.EyeBrows:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharcterBodyParts>().defaultEyebrow, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<AvatarBodyParts>().defaultEyebrow, applyOn);
                 break;
             case CurrentTextureType.Skin:
                 if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
+                    applyOn.GetComponent<AvatarBodyParts>().ApplyBodyTexture(applyOn.GetComponent<AvatarBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
                 else
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
+                    applyOn.GetComponent<AvatarBodyParts>().ApplyBodyTexture(applyOn.GetComponent<AvatarBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
                 break;
             case CurrentTextureType.Face:
                 if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
+                    applyOn.GetComponent<AvatarBodyParts>().ApplyFaceTexture(applyOn.GetComponent<AvatarBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
                 else
-                    applyOn.GetComponent<CharcterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharcterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
+                    applyOn.GetComponent<AvatarBodyParts>().ApplyFaceTexture(applyOn.GetComponent<AvatarBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
-                applyOn.GetComponent<CharcterBodyParts>().RemoveEyeLidTexture(null, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().RemoveEyeLidTexture(null, applyOn);
                 break;
             case CurrentTextureType.Makeup:
-                applyOn.GetComponent<CharcterBodyParts>().ApplyMakeup(applyOn.GetComponent<CharcterBodyParts>().defaultMakeup, applyOn);
+                applyOn.GetComponent<AvatarBodyParts>().ApplyMakeup(applyOn.GetComponent<AvatarBodyParts>().defaultMakeup, applyOn);
                 break;
             default:
                 break;

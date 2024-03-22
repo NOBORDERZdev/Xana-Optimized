@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class XanaFightingPlayer : MonoBehaviour
 {
-    public AvatarController avatarController;
+    public AvatarSetupController avatarController;
     public string cloth;
     void Start()
     {

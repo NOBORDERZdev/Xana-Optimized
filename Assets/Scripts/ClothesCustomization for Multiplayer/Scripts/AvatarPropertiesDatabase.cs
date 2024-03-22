@@ -166,11 +166,11 @@ public class AvatarPropertiesDatabase : MonoBehaviour
         //                        //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
         //                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
         //                        {
-        //                            downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID,_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarController>()));
+        //                            downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID,_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>()));
         //                        }
         //                        else
         //                        {
-        //                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject);
+        //                            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject);
         //                        }
 
         //                    }
@@ -197,9 +197,9 @@ public class AvatarPropertiesDatabase : MonoBehaviour
 
         //            // Commented By Talha Now use texture for Body
         //            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-        //            // GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+        //            // GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
         //            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-        //            //GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+        //            //GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
 
 
         //            //-------------------------------------
@@ -210,10 +210,10 @@ public class AvatarPropertiesDatabase : MonoBehaviour
         //            // GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[0].mainTexture = DefaultSkin;
 
         //            // Commented By Talha Now use texture for Body
-        //            //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
+        //            //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts.Count; i++)
         //            //{
-        //            //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
-        //            //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
+        //            //    if (GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
+        //            //        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
         //            //}
         //        }
         // Commented By WaqasAhmad
@@ -374,7 +374,7 @@ public class AvatarPropertiesDatabase : MonoBehaviour
                     // Commented By Talha Now use texture for Body
                     //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDpant"), "naked_legs", "Legs", _getItem.Slug, 0);
                     //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-                    //  GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+                    //  GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
                     break;
                 }
             case "Outer":
@@ -385,7 +385,7 @@ public class AvatarPropertiesDatabase : MonoBehaviour
 
                     // Commented By Talha Now use texture for Body
                     //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
-                    //                               GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
+                    //                               GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
                     break;
                 }
 
@@ -422,10 +422,10 @@ public class AvatarPropertiesDatabase : MonoBehaviour
                     GameManager.Instance.m_ChHead.GetComponent<Renderer>().materials[2].mainTexture = DefaultSkin;
 
                     // Commented By Talha Now use texture for Body
-                    //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
+                    //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts.Count; i++)
                     //{
-                    //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
-                    //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
+                    //    if (GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
+                    //        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.mainTexture = DefaultSkin;
                     //}
                     break;
                 }

@@ -16,8 +16,8 @@ public class SavaAvatarProperties : MonoBehaviour
 
 
     //private Equipment equipment;
-    private CharcterBodyParts charcterBodyParts;
-    public AvatarController characterController;
+    private AvatarBodyParts charcterBodyParts;
+    public AvatarSetupController characterController;
 
     private void Awake()
     {
@@ -26,8 +26,8 @@ public class SavaAvatarProperties : MonoBehaviour
     }
     public void Start()
     {
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
+        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>();
         StartLocal();
 
         SaveItemList.faceMorphed = false;
@@ -87,20 +87,20 @@ public class SavaAvatarProperties : MonoBehaviour
             AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);// Implementing Save Skin Color
             if (_CharacterData.Skin != null && _CharacterData.SssIntensity != null)
             {
-                CharcterBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin, _CharacterData.SssIntensity);
+                AvatarBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin, _CharacterData.SssIntensity);
             }
             else
             {
-                CharcterBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin);
+                AvatarBodyParts.instance.ImplementSavedSkinColor(_CharacterData.Skin);
             }
 
             if (_CharacterData.SkinGerdientColor != null)
             {
-                CharcterBodyParts.instance.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
+                AvatarBodyParts.instance.ApplyGredientColor(_CharacterData.SkinGerdientColor, GameManager.Instance.mainCharacter);
             }
             else
             {
-                CharcterBodyParts.instance.ApplyGredientDefault(GameManager.Instance.mainCharacter);
+                AvatarBodyParts.instance.ApplyGredientDefault(GameManager.Instance.mainCharacter);
             }
 
         }

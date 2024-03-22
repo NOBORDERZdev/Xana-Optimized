@@ -4,7 +4,7 @@ using NPC;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AvatarControllerHome : MonoBehaviour
+public class HomeAvatarHandler : MonoBehaviour
 {
     #region Editor_Wandering
     [SerializeField] GameObject worldObj;

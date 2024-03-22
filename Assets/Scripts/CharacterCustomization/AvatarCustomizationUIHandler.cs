@@ -175,12 +175,12 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
         //Comment because file is rewriting the vale here again...(Abdullah)
         //SavaAvatarProperties.instance.AssignCustomSlidersData();
         InventoryManager.instance.ResetMorphBooleanValues();
-        BlendShapeImporter.Instance.TurnOffAllObjects();
+        BlendShapesManager.Instance.TurnOffAllObjects();
 
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        if (!EyesBlinking.instance.isCoroutineRunning)
+        EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (!EyesBlinkController.instance.isCoroutineRunning)
         {
-            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+            StartCoroutine(EyesBlinkController.instance.BlinkingStartRoutine());
         }
 
         //  SavaAvatarProperties.instance.AssignCustomsliderNewData();

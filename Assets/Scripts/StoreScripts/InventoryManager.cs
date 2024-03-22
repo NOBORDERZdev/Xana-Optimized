@@ -233,7 +233,7 @@ public class InventoryManager : MonoBehaviour
         //  Invoke("Character_DefaultReset",2.0f);
 
         //WaqasAhmad
-        //CharcterBodyParts.instance.BindSkinListner();
+        //AvatarBodyParts.instance.BindSkinListner();
 
         if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
         {
@@ -354,25 +354,25 @@ public class InventoryManager : MonoBehaviour
         {
             if (MultipleSave)
             {
-                if (AvatarSelfie.instance != null)
-                    saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+                if (AvatarSelfieHandler.instance != null)
+                    saveStoreBtnButton.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
                 if (LoadPlayerAvatar.instance_loadplayer != null)
                     saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
 
-                if (AvatarSelfie.instance != null)
-                    newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+                if (AvatarSelfieHandler.instance != null)
+                    newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
                 if (LoadPlayerAvatar.instance_loadplayer != null)
                     newAvatarPresetBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
 
                 saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
 
-                ////saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShoot());
+                ////saveStoreBtnButton.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShoot());
                 //saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
                 ////saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
-                //newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData(false));
+                //newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShootAndSaveData(false));
                 ////newAvatarPresetBtn.onClick.AddListener(() => OnSaveBtnClicked());
                 //// newAvatarPresetBtn.onClick.AddListener(()=> LoadPlayerAvatar.instance_loadplayer.ClosePlayerNamePanel());
-                //LoadPlayerAvatar.instance_loadplayer.PlayerPanelSaveButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData(true));
+                //LoadPlayerAvatar.instance_loadplayer.PlayerPanelSaveButton.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShootAndSaveData(true));
                 ////  LoadPlayerAvatar.instance_loadplayer.PlayerPanelSaveButton.onClick.AddListener(OnSaveBtnClicked);
                 ////newAvatarPresetBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             }
@@ -397,8 +397,8 @@ public class InventoryManager : MonoBehaviour
         //SaveStoreBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
         {
-            if (AvatarSelfie.instance != null)
-                saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+            if (AvatarSelfieHandler.instance != null)
+                saveStoreBtnButton.onClick.AddListener(() => AvatarSelfieHandler.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             if (LoadPlayerAvatar.instance_loadplayer != null)
                 saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -444,20 +444,20 @@ public class InventoryManager : MonoBehaviour
         ClearingLists(7);
         if (clearData)
             ResetSaveFile();
-        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornEyewearable != null)
+        if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornEyewearable != null)
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().UnStichItem("EyeWearable");
+            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().UnStichItem("EyeWearable");
         }
         UndoSelection();
         XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
         XanaConstantsHolder.xanaConstants._curretClickedBtn = null;
         if (GameManager.Instance) // reseting body type
         {
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, 0);
+            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, 0);
         }
 
-        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().DefaultTexture();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
 
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().SaveDefaultValues();
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().UpdateStoreList();
@@ -471,8 +471,8 @@ public class InventoryManager : MonoBehaviour
         UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
         //XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
 
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (EyesBlinkController.instance)
+            EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
     void Character_ResettoLastSaved()
     {
@@ -482,11 +482,11 @@ public class InventoryManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("presetPanel") == 1)
             PlayerPrefs.SetInt("presetPanel", 0);
-        //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().ResetForLastSaved();
+        //GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResetForLastSaved();
         // DefaultEnteriesforManican.instance.ResetForPresets();
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().DefaultTexture();
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().DefaultTexture();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
 
         //On merging from Release getting this error
         //GameManager.Instance.mainCharacter.GetComponent<DefaultEnteriesforManican>().DefaultReset_HAck();
@@ -534,8 +534,8 @@ public class InventoryManager : MonoBehaviour
         else
             UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
 
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (EyesBlinkController.instance)
+            EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
 
 
@@ -1286,7 +1286,7 @@ public class InventoryManager : MonoBehaviour
         GreyRibbonImage.SetActive(true);
         WhiteRibbonImage.SetActive(false);
         SaveStoreBtn.GetComponent<Image>().color = Color.white;
-        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
         saveButtonPressed = true;
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         GameManager.Instance.ShadowPlane.GetComponent<Renderer>().material.SetColor("_Color", new Color(1f, 1f, 1f, 0.7843f));
@@ -1350,7 +1350,7 @@ public class InventoryManager : MonoBehaviour
 
     public void OnClickHomeButton()
     {
-        //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+        //  GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(false);
 
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
@@ -1365,8 +1365,8 @@ public class InventoryManager : MonoBehaviour
         ReturnHomePopUp.GetComponent<ReturnHomeLoader>().saveButton.enabled = false;
         ReturnHomePopUp.GetComponent<ReturnHomeLoader>().closeButton.enabled = false;
         ReturnHomePopUp.GetComponent<ReturnHomeLoader>().homeButton.enabled = false;
-        if (AvatarSelfie.instance != null) //this will take screenshot of character and automatically save avatar to server.
-            AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) =>
+        if (AvatarSelfieHandler.instance != null) //this will take screenshot of character and automatically save avatar to server.
+            AvatarSelfieHandler.instance.TakeScreenShootAndSaveData((IsSucess) =>
             {
                 if (IsSucess)
                     OnSaveBtnClicked();
@@ -3224,7 +3224,7 @@ public class InventoryManager : MonoBehaviour
             if (TempEnumVar == EnumClass.CategoryEnum.SkinToneAvatar)
             {
                 int loopStart = GetDownloadedNumber(TempEnumVar);
-                for (int i = loopStart; i < CharcterBodyParts.instance.skinColor.Count; i++)
+                for (int i = loopStart; i < AvatarBodyParts.instance.skinColor.Count; i++)
                 {
                     yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
@@ -3236,7 +3236,7 @@ public class InventoryManager : MonoBehaviour
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
                     abc.isPurchased = "true";
-                    abc.name = CharcterBodyParts.instance.skinColor[i].ToString();
+                    abc.name = AvatarBodyParts.instance.skinColor[i].ToString();
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
@@ -3259,7 +3259,7 @@ public class InventoryManager : MonoBehaviour
             else if (TempEnumVar == EnumClass.CategoryEnum.HairAvatarColor)
             {
                 int loopStart = GetDownloadedNumber(TempEnumVar);
-                for (int i = loopStart; i < CharcterBodyParts.instance.hairColor.Count; i++)
+                for (int i = loopStart; i < AvatarBodyParts.instance.hairColor.Count; i++)
                 {
                     yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
@@ -3271,7 +3271,7 @@ public class InventoryManager : MonoBehaviour
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
                     abc.isPurchased = "true";
-                    abc.name = CharcterBodyParts.instance.hairColor[i].ToString();
+                    abc.name = AvatarBodyParts.instance.hairColor[i].ToString();
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
@@ -3294,7 +3294,7 @@ public class InventoryManager : MonoBehaviour
             else if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatarColor)
             {
                 int loopStart = GetDownloadedNumber(TempEnumVar);
-                for (int i = loopStart; i < CharcterBodyParts.instance.eyeBrowsColor.Count; i++)
+                for (int i = loopStart; i < AvatarBodyParts.instance.eyeBrowsColor.Count; i++)
                 {
                     yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
@@ -3306,7 +3306,7 @@ public class InventoryManager : MonoBehaviour
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
                     abc.isPurchased = "true";
-                    abc.name = CharcterBodyParts.instance.eyeBrowsColor[i].ToString();
+                    abc.name = AvatarBodyParts.instance.eyeBrowsColor[i].ToString();
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
@@ -3330,7 +3330,7 @@ public class InventoryManager : MonoBehaviour
             else if (TempEnumVar == EnumClass.CategoryEnum.EyesAvatarColor)
             {
                 int loopStart = GetDownloadedNumber(TempEnumVar);
-                for (int i = loopStart; i < CharcterBodyParts.instance.eyeColor.Count; i++)
+                for (int i = loopStart; i < AvatarBodyParts.instance.eyeColor.Count; i++)
                 {
                     yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
@@ -3342,7 +3342,7 @@ public class InventoryManager : MonoBehaviour
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
                     abc.isPurchased = "true";
-                    abc.name = CharcterBodyParts.instance.eyeColor[i].ToString();
+                    abc.name = AvatarBodyParts.instance.eyeColor[i].ToString();
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
@@ -3366,7 +3366,7 @@ public class InventoryManager : MonoBehaviour
             else if (TempEnumVar == EnumClass.CategoryEnum.LipsAvatarColor)
             {
                 int loopStart = GetDownloadedNumber(TempEnumVar);
-                for (int i = loopStart; i < CharcterBodyParts.instance.lipColorPalette.Count; i++)
+                for (int i = loopStart; i < AvatarBodyParts.instance.lipColorPalette.Count; i++)
                 {
                     yield return new WaitForEndOfFrame();
                     GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, TempSubcategoryParent.transform);
@@ -3378,7 +3378,7 @@ public class InventoryManager : MonoBehaviour
                     abc.isOccupied = "False";
                     abc.isPaid = "False";
                     abc.isPurchased = "true";
-                    abc.name = CharcterBodyParts.instance.lipColorPalette[i].ToString();
+                    abc.name = AvatarBodyParts.instance.lipColorPalette[i].ToString();
                     abc.price = "0";
                     abc.categoryId = "2";
                     abc.subCategory = "16";
@@ -3976,7 +3976,7 @@ public class InventoryManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (XanaConstantsHolder.xanaConstants.hair != "")
                 {
-                    if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornHair.name == "MDhairs")
+                    if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornHair.name == "MDhairs")
                     {
                         // //Debug.Log("Hairs list------"+ ParentOfBtnsAvatarHairs.transform.childCount);
                         ////Debug.Log("<color=blue>Store Selection if</color>");
@@ -4193,7 +4193,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (XanaConstantsHolder.xanaConstants.shirt != "")
                     {
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShirt.name == "MDshirt")
+                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornShirt.name == "MDshirt")
                         {
                             for (int i = 0; i < ParentOfBtnsForOuter.transform.childCount; i++)
                             {
@@ -4353,7 +4353,7 @@ public class InventoryManager : MonoBehaviour
                     if (XanaConstantsHolder.xanaConstants.pants != "")
                     {
                         ////Debug.Log(ParentOfBtnsForOuter.transform.childCount);
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornPant.name == "MDpant")
+                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornPant.name == "MDpant")
                         {
                             for (int i = 0; i < ParentOfBtnsForBottom.transform.childCount; i++)
                             {
@@ -4409,7 +4409,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (XanaConstantsHolder.xanaConstants.shoes != "")
                     {
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShose.name == "MDshoes")
+                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornShose.name == "MDshoes")
                         {
                             for (int i = 0; i < ParentOfBtnsForShoes.transform.childCount; i++)
                             {
@@ -4713,7 +4713,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
-            CharcterBodyParts bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+            AvatarBodyParts bodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
             _CharacterData.myItemObj.Clear();
@@ -4795,8 +4795,8 @@ public class InventoryManager : MonoBehaviour
     {
         //print("undo call");
         UndoClicked = true;
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (EyesBlinkController.instance)
+            EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
 
     /// <summary>
@@ -4806,8 +4806,8 @@ public class InventoryManager : MonoBehaviour
     {
         //print("redo call");
         RedoClicked = true;
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (EyesBlinkController.instance)
+            EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
     public void UpdateXanaConstants()
     {
@@ -4865,7 +4865,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void ApplyUGCValueOnCharacter(string _gender)
     {
-        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        AvatarBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
        // _charcterBodyParts.head.materials[2].SetColor("_BaseColor", itemData.skin_color);
         _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.lips_color);
        // _charcterBodyParts.body.materials[0].SetColor("_BaseColor", itemData.skin_color);
@@ -4884,11 +4884,11 @@ public class InventoryManager : MonoBehaviour
         if (itemData._hairItemData != null)
         {
             if(!itemData._hairItemData.Contains("No hair"))
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), itemData.hair_color, true));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemData._hairItemData, "Hair", _gender, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>(), itemData.hair_color, true));
         }
         if (itemData._eyeItemData != null)
         {
-            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.EyeLense));
+            StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(itemData._eyeItemData, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().gameObject, CurrentTextureType.EyeLense));
         }
         if (itemData.skin_color != null)
         {
@@ -4896,19 +4896,19 @@ public class InventoryManager : MonoBehaviour
             //string cleanString = itemData.skin_color.TrimStart(charsToTrim);
             if (itemData.gender == "male")
             {//itemData.skin_color
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Face_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Boy_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().gameObject, CurrentTextureType.Skin));
             }
             else
             {
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Face));
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarController>().gameObject, CurrentTextureType.Skin));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Face_Textures", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().gameObject, CurrentTextureType.Face));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTextureByName("Assets/Store Items Addressables/1k_Girl_Body_Texture", itemData.skin_color, GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().gameObject, CurrentTextureType.Skin));
             }
         }
     }
     public void ApplyDefaultValueOnCharacter(string _gender)
     {
-        CharcterBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        AvatarBodyParts _charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
         if (_gender == AvatarGender.Male.ToString())
         {
             _charcterBodyParts.head.materials[2].SetTexture("_Base_Texture", itemData.default_male_face_color);
@@ -4932,7 +4932,7 @@ public class InventoryManager : MonoBehaviour
     public void BackToMain()
     {
         GameManager.Instance.HomeCameraInputHandler(true);
-        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
     }
 }
 public class RequestedData

@@ -524,7 +524,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             ReferrencesForDynamicMuseum.instance.FirstPersonCam.gameObject.SetActive(false);
             XanaConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
-            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
+            //ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<AvatarBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
         }
         LoadingController.Instance.manualRoomController.HideRoomList();
 
@@ -654,8 +654,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
-            GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
-            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
+            GamificationComponentData.instance.avatarController = player.GetComponent<AvatarSetupController>();
+            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<AvatarBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
 
             //Post Process enable for Builder Scene

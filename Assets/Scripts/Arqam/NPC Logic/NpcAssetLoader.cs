@@ -272,13 +272,13 @@ public class NpcAssetLoader : MonoBehaviour
                 {
                     if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                     {
-                        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
-                        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
+                        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
+                        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
                     }
                     else
                     {
-                        applyOn.GetComponent<CharcterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
-                        applyOn.GetComponent<CharcterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+                        applyOn.GetComponent<AvatarBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+                        applyOn.GetComponent<AvatarBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
                     }
                 }
                 break;
@@ -287,7 +287,7 @@ public class NpcAssetLoader : MonoBehaviour
                 {
                     if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
                     {
-                        AvatarController ac = applyOn.GetComponent<AvatarController>();
+                        AvatarSetupController ac = applyOn.GetComponent<AvatarSetupController>();
                         if (ac.wornHair != null)
                         {
                             if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
@@ -313,11 +313,11 @@ public class NpcAssetLoader : MonoBehaviour
                 {
                     if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
                     {
-                        applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
+                        applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
                     }
                     else
                     {
-                        applyOn.GetComponent<CharcterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+                        applyOn.GetComponent<AvatarBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
                     }
                 }
                 break;

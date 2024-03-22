@@ -21,8 +21,8 @@ public class PresetData_Jsons : MonoBehaviour
     //public static GameObject lastSelectedPreset=null;
     //public static string lastSelectedPresetName=null;
     [SerializeField] Texture eyeTex;
-    AvatarController avatarController;
-    CharcterBodyParts charcterBodyParts;
+    AvatarSetupController avatarController;
+    AvatarBodyParts charcterBodyParts;
 
     public AvatarGender avatarGender;
 
@@ -62,8 +62,8 @@ public class PresetData_Jsons : MonoBehaviour
 
     public void GetScriptRef()
     {
-        avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
+        avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>();
+        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>();
     }
 
 
@@ -149,7 +149,7 @@ public class PresetData_Jsons : MonoBehaviour
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
-            GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().SetAvatarByGender(_CharacterData.gender);
+            GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
             if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf || InventoryManager.instance.selfiePanel.activeSelf)

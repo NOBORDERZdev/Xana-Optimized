@@ -168,7 +168,7 @@ public class FightingGameManager : MonoBehaviour
         
         SoundChanger soundChanger = FindObjectOfType<SoundChanger>();
         winnerAvatar = soundChanger.WinnerAvatar;
-        winnerAvatar.GetComponent<AvatarController>().staticClothJson = winnerClothJson;
+        winnerAvatar.GetComponent<AvatarSetupController>().staticClothJson = winnerClothJson;
 
         player1.SetActive(false);
         player2.SetActive(false);

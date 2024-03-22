@@ -22,7 +22,7 @@ public class ActorManager : MonoBehaviour
     void Start()
     {
         Transform defaultPoint = GameManager.Instance.avatarPathSystemManager.GetGridCenterPoint();
-        //GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().worldCam.GetComponent<HomeCameraController>().ViewPlayer();
+        //GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().worldCam.GetComponent<HomeCameraHandler>().ViewPlayer();
         _previousPos = defaultPoint.position;
         _previousRot = defaultPoint.eulerAngles;
         

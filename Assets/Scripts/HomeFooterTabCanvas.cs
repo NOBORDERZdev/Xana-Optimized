@@ -207,7 +207,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
                     additiveScenesManager.SNSmodule.SetActive(false);
                     additiveScenesManager.SNSMessage.SetActive(false);
                 }
-                //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
+                //  GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(false);
                 GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
                 if (UIHandler.Instance != null)
                 {
@@ -232,7 +232,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 }
             }
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(false);
-            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            GameManager.Instance.HomeCamera.GetComponent<HomeCameraHandler>().CenterAlignCam();
             DisableSubScreen();
         }
         GameManager.Instance.HomeCameraInputHandler(true);
@@ -253,7 +253,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         {
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
             GameManager.Instance.defaultSelection = 1;
-            //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+            //  GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
             //OnSelectedClick(0);
             if (additiveScenesManager != null)
             {
@@ -305,7 +305,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
             Debug.Log("World button onclick");
             if (GameManager.Instance.defaultSelection != 1)
             {
-               // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+               // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
                 OnSelectedClick(1);
                 if (FindObjectOfType<AdditiveScenesController>() != null)
                 {
@@ -334,7 +334,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
     {
         if (GameManager.Instance.defaultSelection != 0)
         {
-            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+            // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
             OnSelectedClick(1);
             if (additiveScenesManager != null)
             {
@@ -370,7 +370,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         if (GameManager.Instance.defaultSelection != 1)
         {
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
-            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+            // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
@@ -455,7 +455,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         if (GameManager.Instance.defaultSelection != 3)
         {
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);
-            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+            // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
             // LoaderShow(true);
             OnSelectedClick(3);
             GameManager.Instance.defaultSelection = 3;
@@ -647,7 +647,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
         if (/*GameManager.Instance.defaultSelection != 4*/ true)
         {
-            // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+            // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
             //---->>>Sannan OnSelectedClick(4);
             if (GlobalVeriableClass.callingScreen == "Profile")
                 return;
@@ -724,7 +724,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
             }
             ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
             ProfileUIHandler.instance.SetMainScrolRefs();
-            ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
+            ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);
 
@@ -747,7 +747,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
         }
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
-        // GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+        // GameManager.Instance.mainCharacter.GetComponent<HomeAvatarHandler>().UpdateState(true);
         UIHandler.Instance.HomeWorldScreen.SetActive(false);
     }
     public void SetDefaultButtonSelection(int index)

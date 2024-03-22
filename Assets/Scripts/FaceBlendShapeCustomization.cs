@@ -44,15 +44,15 @@ public class FaceBlendShapeCustomization : MonoBehaviour
         //  }
 
         // }
-        // print(BlendShapeImporter.Instance.SelectedMorph);
+        // print(BlendShapesManager.Instance.SelectedMorph);
         for (int i = 0; i < characterHead.sharedMesh.blendShapeCount; i++)
         {
-            if (characterHead.sharedMesh.GetBlendShapeName(i).Contains(BlendShapeImporter.Instance.SelectedPart) && i < _CharacterData.FaceBlendsShapes.Length)
+            if (characterHead.sharedMesh.GetBlendShapeName(i).Contains(BlendShapesManager.Instance.SelectedPart) && i < _CharacterData.FaceBlendsShapes.Length)
                 characterHead.SetBlendShapeWeight(i, _CharacterData.FaceBlendsShapes[i]);
         }
-        BlendShapeImporter.Instance.SliderY.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SliderX.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SetAllColors(false);
+        BlendShapesManager.Instance.SliderY.gameObject.SetActive(false);
+        BlendShapesManager.Instance.SliderX.gameObject.SetActive(false);
+        BlendShapesManager.Instance.SetAllColors(false);
     }
     public void savingIndex()
     {
@@ -114,9 +114,9 @@ public class FaceBlendShapeCustomization : MonoBehaviour
             for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
                 characterHead.SetBlendShapeWeight(i, red1[count].indx[i]);//                                                                     
         }
-        BlendShapeImporter.Instance.SliderY.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SliderX.gameObject.SetActive(false);
-        BlendShapeImporter.Instance.SetAllColors(false);
+        BlendShapesManager.Instance.SliderY.gameObject.SetActive(false);
+        BlendShapesManager.Instance.SliderX.gameObject.SetActive(false);
+        BlendShapesManager.Instance.SetAllColors(false);
     }
 
 

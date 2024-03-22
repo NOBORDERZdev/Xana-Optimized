@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EyesBlinking : MonoBehaviour
+public class EyesBlinkController : MonoBehaviour
 {
-    public static EyesBlinking instance;
+    public static EyesBlinkController instance;
     public SkinnedMeshRenderer blendHolder;
     public List<float> EyeBlendShapeValues = new List<float>();
 

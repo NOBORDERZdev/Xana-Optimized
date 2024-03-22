@@ -750,7 +750,7 @@ public class DefaultBattleGUI : BattleGUI
         //if (this.timer != null)				this.timer.text = string.Empty;
         Debug.Log("Winner: " + winner.name);
         Debug.Log("loser: " + loser.name);
-        FightingGameManager.instance.winnerClothJson = winner.GetComponentInChildren<AvatarController>().clothJson;
+        FightingGameManager.instance.winnerClothJson = winner.GetComponentInChildren<AvatarSetupController>().clothJson;
         TimeLineManager.instance.StartOutroCutScene();
     }
 

@@ -29,7 +29,7 @@ namespace XanaAi
         [SerializeField] AiAppearance apperance;
         [SerializeField] List<string> aiNames;
         //[SerializeField] List<int> aiIds;
-        private CharcterBodyParts charcterBody;
+        private AvatarBodyParts charcterBody;
         [SerializeField]
         private GameObject[] aiPrefabs;
         //private List<GameObject> spawnedNpc;
@@ -195,7 +195,7 @@ namespace XanaAi
         public IEnumerator DownloadAddressableTexture(string key, string ObjectType, AiController ai)
         {
             //Resources.UnloadUnusedAssets();
-            CharcterBodyParts charcterBody = ai.GetComponent<CharcterBodyParts>();
+            AvatarBodyParts charcterBody = ai.GetComponent<AvatarBodyParts>();
             if (Application.internetReachability != NetworkReachability.NotReachable)
             {
                 try

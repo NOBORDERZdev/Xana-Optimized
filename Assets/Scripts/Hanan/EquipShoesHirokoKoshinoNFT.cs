@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchToShoesHirokoKoshinoNFT : MonoBehaviour
+public class EquipShoesHirokoKoshinoNFT : MonoBehaviour
 {
-    public static SwitchToShoesHirokoKoshinoNFT Instance;
+    public static EquipShoesHirokoKoshinoNFT Instance;
 
     public GameObject KintDressLight;
     public GameObject KintPulloverLight;

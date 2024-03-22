@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-public class FightingModuleManager : MonoBehaviour
+public class FightingModuleHandler : MonoBehaviour
 {
     public bool isUserHaveAlphaPass;
     public bool isEnvLoaded;
@@ -15,7 +15,7 @@ public class FightingModuleManager : MonoBehaviour
     public string environmentLabel;
     public string player1Icon;
     public string player2Icon;
-    public static FightingModuleManager Instance;
+    public static FightingModuleHandler Instance;
 
     private void Awake()
     {

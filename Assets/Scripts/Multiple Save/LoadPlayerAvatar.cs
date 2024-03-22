@@ -401,10 +401,10 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
 
 
         // Commented By Talha Now use texture for Body
-        //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts.Count; i++)
+        //for (int i = 0; i < GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts.Count; i++)
         //{
-        //    if (GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
-        //        GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.SetTexture("_BaseMap", tex);
+        //    if (GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>())
+        //        GameManager.Instance.mainCharacter.GetComponent<AvatarBodyParts>().m_BodyParts[i].GetComponent<Renderer>().material.SetTexture("_BaseMap", tex);
         //}
     }
 
@@ -433,7 +433,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
             SavaAvatarProperties.instance.LoadMorphsfromFile();
             loadprevious();
             StartCoroutine(AvatarPropertiesDatabase.instance.WaitAndDownloadFromRevert(0));
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
             //InventoryManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
@@ -524,11 +524,11 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                             if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
+                                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>(), Color.clear));
                             }
                             else
                             {
-                                GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
+                                GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                             }
 
                             //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);

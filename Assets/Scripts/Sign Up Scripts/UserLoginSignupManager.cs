@@ -81,8 +81,8 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        EyesBlinking.instance.StoreBlendShapeValues();
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        EyesBlinkController.instance.StoreBlendShapeValues();
+        StartCoroutine(EyesBlinkController.instance.BlinkingStartRoutine());
     }
 
     private void OnDisable()

@@ -65,7 +65,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
 
                     loadprevious();
 
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().IntializeAvatar();
                 }
             }
         }
@@ -77,9 +77,9 @@ public class ServerSideUserDataHandler : MonoBehaviour
             loadAllAvatar?.Invoke(1, 20);
         }
 
-        if (EyesBlinking.instance)
+        if (EyesBlinkController.instance)
         {
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+            EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
         }
         //LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 20);
 
