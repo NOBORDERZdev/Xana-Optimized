@@ -56,22 +56,22 @@ public class FeedCommentItemController : MonoBehaviour
                 profileImage.sprite = null;
                 //Resources.UnloadUnusedAssets();//every clear.......
                 //Caching.ClearCache();
-                APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
             }
         }
     }
 
     public void OnClickCommentUserProfile()
     {
-        FeedUIController.Instance.commentPanel.SetActive(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(false);
-        if (MyProfileDataManager.Instance != null && MyProfileDataManager.Instance.myProfileData.id == commentRow.user.id)
+        FeedsManager.Instance.commentPanel.SetActive(false);
+        FeedsManager.Instance.feedVideoScreen.SetActive(false);
+        if (MyProfileManager.Instance != null && MyProfileManager.Instance.myProfileData.id == commentRow.user.id)
         {
-            FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+            FeedsManager.Instance.bottomTabManager.OnClickProfileButton();
         }
         else
         {
-            OtherPlayerProfileData.Instance.RequestGetUserDetails(commentRow.user.id);
+            OtherUserProfileManager.Instance.RequestGetUserDetails(commentRow.user.id);
         }
     }
     public void SetupData(CommentRow commentRowData)
@@ -83,7 +83,7 @@ public class FeedCommentItemController : MonoBehaviour
             userNameText.text = commentRow.user.name;
             if (!string.IsNullOrEmpty(commentRow.user.avatar))
             {
-                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(commentRow.user.avatar);
+                bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(commentRow.user.avatar);
                 if (isUrlContainsHttpAndHttps)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(commentRow.user.avatar, commentRow.user.avatar, (success) =>
@@ -100,10 +100,10 @@ public class FeedCommentItemController : MonoBehaviour
                 }
             }
         }
-        descriptionText.text = APIManager.DecodedString(commentRow.comment);
+        descriptionText.text = SNS_APIResponseManager.DecodedString(commentRow.comment);
         //timeText.text = commentRow.updatedAt.ToString();
-        timeText.text = FeedUIController.Instance.GetConvertedTimeString(commentRow.updatedAt);
-        //timeText.text = FeedUIController.Instance.GetConvertedTimeStringSpecifyKind(commentRow.updatedAt);
+        timeText.text = FeedsManager.Instance.GetConvertedTimeString(commentRow.updatedAt);
+        //timeText.text = FeedsManager.Instance.GetConvertedTimeStringSpecifyKind(commentRow.updatedAt);
     }
 
 

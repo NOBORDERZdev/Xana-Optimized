@@ -154,11 +154,11 @@ namespace PullToRefresh
             //Debug.Log("Distance:" + distance + ":Ypos:" + Ypos);
             /*if (loaderObj.activeSelf)
             {
-                FeedUIController.Instance.fingerTouch.SetActive(false);
+                FeedsManager.Instance.fingerTouch.SetActive(false);
             }
             else
             {
-                FeedUIController.Instance.fingerTouch.SetActive(true);
+                FeedsManager.Instance.fingerTouch.SetActive(true);
             }*/
 
             if (distance > 0.05f)
@@ -222,8 +222,8 @@ namespace PullToRefresh
                 m_IsRefreshing = true;
                 //m_OnRefresh.Invoke();
                Debug.Log("gggg name:" + this.gameObject.name);
-                LoaderController.Instance.m_UIRefreshControl = this;
-                LoaderController.Instance.RefreshItems();
+                LoaderHandler.Instance.m_UIRefreshControl = this;
+                LoaderHandler.Instance.RefreshItems();
             }
         }
 

@@ -28,16 +28,16 @@ public class TagPrefabInfo : MonoBehaviour
             GetComponent<UnityEngine.UI.Image>().color = new Color(0.15f, 0.15f, 0.15f, 1);// Color.black;
             tagName.color = Color.white;
 
-            if(!MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
-                MyProfileDataManager.Instance.userSelectedTags.Add(tagName.text);
+            if(!MyProfileManager.Instance.userSelectedTags.Contains(tagName.text))
+                MyProfileManager.Instance.userSelectedTags.Add(tagName.text);
         }
         else
         {
             GetComponent<UnityEngine.UI.Image>().color = Color.white;
             tagName.color = Color.black; 
 
-            if (MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
-                MyProfileDataManager.Instance.userSelectedTags.Remove(tagName.text);
+            if (MyProfileManager.Instance.userSelectedTags.Contains(tagName.text))
+                MyProfileManager.Instance.userSelectedTags.Remove(tagName.text);
         }   
     }
     private void OnEnable()

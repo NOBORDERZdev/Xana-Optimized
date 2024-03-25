@@ -15,7 +15,7 @@ public class FeedScreenOff : MonoBehaviour
 
     void check()
     {
-        if (FeedUIController.Instance.AddFriendPanel.activeInHierarchy)
+        if (FeedsManager.Instance.AddFriendPanel.activeInHierarchy)
         {
             gameObject.SetActive(false);
         }

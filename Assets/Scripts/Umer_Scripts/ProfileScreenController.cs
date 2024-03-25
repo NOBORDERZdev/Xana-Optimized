@@ -152,7 +152,7 @@ public class ProfileScreenController : MonoBehaviour
 
     public void SetMainScrolRefs()
     {
-        if (MyProfileDataManager.Instance.gameObject.activeSelf)
+        if (MyProfileManager.Instance.gameObject.activeSelf)
         {
             mainscrollControllerRef.TopFixedObj = myProfileImitateTopPartButton;
             mainscrollControllerRef.headerObj = myProfileTopPartButton;

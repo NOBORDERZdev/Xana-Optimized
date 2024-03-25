@@ -121,7 +121,7 @@ public class AllConversationData : MonoBehaviour
             profileImage.sprite = null;
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -142,7 +142,7 @@ public class AllConversationData : MonoBehaviour
             if (!string.IsNullOrEmpty(allChatGetConversationDatum.group.avatar))//rik Get and set Avatar From AWS.......
             {
                 avatarUrl = allChatGetConversationDatum.group.avatar;
-                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.group.avatar);
+                bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.group.avatar);
                 if (isUrlContainsHttpAndHttps)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.group.avatar, allChatGetConversationDatum.group.avatar, (success) =>
@@ -165,7 +165,7 @@ public class AllConversationData : MonoBehaviour
             defaultSP = circleSP;
             profileImage.sprite = defaultSP;
 
-            if (allChatGetConversationDatum.ConReceiver != null && allChatGetConversationDatum.ConReceiver.id == APIManager.Instance.userId)
+            if (allChatGetConversationDatum.ConReceiver != null && allChatGetConversationDatum.ConReceiver.id == SNS_APIResponseManager.Instance.userId)
             {
                 //Debug.LogError("ConReciver:" + allChatGetConversationDatum.ConSender.name);
                 if (!string.IsNullOrEmpty(allChatGetConversationDatum.ConSender.name))
@@ -180,7 +180,7 @@ public class AllConversationData : MonoBehaviour
                 {
                     avatarUrl = allChatGetConversationDatum.ConSender.avatar;
                     //Debug.LogError("AllConversation ConSender:" + allChatGetConversationDatum.ConSender.name);
-                    bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
+                    bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
                     if (isUrlContainsHttpAndHttps)
                     {
                         AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConSender.avatar, allChatGetConversationDatum.ConSender.avatar, (success) =>
@@ -212,7 +212,7 @@ public class AllConversationData : MonoBehaviour
                 {
                     avatarUrl = allChatGetConversationDatum.ConReceiver.avatar;
                     //Debug.LogError("AllConversation ConR1:" + allChatGetConversationDatum.ConReceiver.name);
-                    bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
+                    bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
                     if (isUrlContainsHttpAndHttps)
                     {
                         AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConReceiver.avatar, allChatGetConversationDatum.ConReceiver.avatar, (success) =>
@@ -232,8 +232,8 @@ public class AllConversationData : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(allChatGetConversationDatum.lastMsg))
         {
-            //allChatGetConversationDatum.lastMsg = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
-            string lastMSG = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
+            //allChatGetConversationDatum.lastMsg = SNS_APIResponseManager.DecodedString(allChatGetConversationDatum.lastMsg);
+            string lastMSG = SNS_APIResponseManager.DecodedString(allChatGetConversationDatum.lastMsg);
             //Debug.LogError("LastMSG:" + lastMSG + " :DataLastMSG:" + allChatGetConversationDatum.lastMsg);
             if (lastMSG.Contains("Left"))
             {
@@ -250,7 +250,7 @@ public class AllConversationData : MonoBehaviour
         }
         else
         {
-            textLastMessage.text = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
+            textLastMessage.text = SNS_APIResponseManager.DecodedString(allChatGetConversationDatum.lastMsg);
         }
 
         DateTime timeUtc = allChatGetConversationDatum.updatedAt;
@@ -311,7 +311,7 @@ public class AllConversationData : MonoBehaviour
             textTime.text = today.Date.ToString("yyyy/MM/dd");
             //textTime.text ="long time ago";
         }
-        APIController.Instance.allConversationList.Add(textTitle.text);
+        SNS_APIController.Instance.allConversationList.Add(textTitle.text);
     }
 
     //this method is used to reset message unread count.......
@@ -350,8 +350,8 @@ public class AllConversationData : MonoBehaviour
 
         MessageController.Instance.chatPrefabParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
-        APIController.Instance.allChatMessageId.Clear();
-        APIController.Instance.chatTimeList.Clear();
+        SNS_APIController.Instance.allChatMessageId.Clear();
+        SNS_APIController.Instance.chatTimeList.Clear();
         MessageController.Instance.currentConversationData = this;
         MessageController.Instance.currentChatPage = 1;
         MessageController.Instance.isChatDataLoaded = false;
@@ -368,13 +368,13 @@ public class AllConversationData : MonoBehaviour
             MessageController.Instance.LoaderShow(true);//rik loader active.......
 
             //Debug.LogError("receiverId" + allChatGetConversationDatum.receiverId);
-            if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+            if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
             {
-                APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "Conversation");
+                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "Conversation");
             }
             else
             {
-                APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "Conversation");
+                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "Conversation");
             }
             MessageController.Instance.chatTitleText.text = textTitle.text;
         }
@@ -383,7 +383,7 @@ public class AllConversationData : MonoBehaviour
             MessageController.Instance.LoaderShow(true);//rik loader active.......
 
             //Debug.LogError("receivedGroupId" + allChatGetConversationDatum.receivedGroupId);
-            APIManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "Conversation");
+            SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "Conversation");
             if (!string.IsNullOrEmpty(allChatGetConversationDatum.group.name))
             {
                 MessageController.Instance.chatTitleText.text = allChatGetConversationDatum.group.name;
@@ -570,7 +570,7 @@ public class AllConversationData : MonoBehaviour
             MessageController.Instance.deleteConfirmationCurrentConversationDataScript = this;
             if (allChatGetConversationDatum.group != null && allChatGetConversationDatum.receivedGroupId != 0)
             {
-                if (allChatGetConversationDatum.group.createdBy == APIManager.Instance.userId)//group admin is this user.......
+                if (allChatGetConversationDatum.group.createdBy == SNS_APIResponseManager.Instance.userId)//group admin is this user.......
                 {
                     MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete group?");
                 }

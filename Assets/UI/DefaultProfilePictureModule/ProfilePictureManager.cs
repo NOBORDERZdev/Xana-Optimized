@@ -101,8 +101,8 @@ public class ProfilePictureManager : MonoBehaviour
             
             Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
-            if (MyProfileDataManager.Instance)
-                MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
+            if (MyProfileManager.Instance)
+                MyProfileManager.Instance.profileImage.sprite = profileImage.sprite;
         }
     }
     public UploadFileRoot uploadFileRoot=new UploadFileRoot();
@@ -115,7 +115,7 @@ public class ProfilePictureManager : MonoBehaviour
     public IEnumerator UpdateUserAvatar()
     {
         yield return new WaitForSeconds(2f);
-        //APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
+        //SNS_APIResponseManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
         WWWForm form = new WWWForm();
 
         form.AddField("avatar", uploadFileRoot.cdn_link);
@@ -153,8 +153,8 @@ public class ProfilePictureManager : MonoBehaviour
 
     void ChangeProfileAfterUploading()
     {
-        //MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;    
-        MyProfileDataManager.Instance.UpdateProfilePic();
+        //MyProfileManager.Instance.profileImage.sprite = profileImage.sprite;    
+        MyProfileManager.Instance.UpdateProfilePic();
     }
     Sprite CreateSpriteFromTexture(Texture2D texture)
     {

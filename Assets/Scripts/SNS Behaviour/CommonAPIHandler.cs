@@ -28,7 +28,7 @@ public class CommonAPIHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("SNS_APIResponseManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         SetUpBottomUnReadCount(0);//default message footer message unread count set false.......
         ConnetSocketManagerAndListener();
     }

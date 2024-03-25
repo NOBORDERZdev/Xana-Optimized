@@ -52,7 +52,7 @@ public class FeedForYouItemController : MonoBehaviour
                 AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
                 profileImage.sprite = null;
             }
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -84,7 +84,7 @@ public class FeedForYouItemController : MonoBehaviour
 
     private void Update()//delete image after object out of screen
     {
-        /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+        /*if (SNS_APIResponseManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
         {
             return;
         }*/
@@ -163,7 +163,7 @@ public class FeedForYouItemController : MonoBehaviour
                     }
                     //Resources.UnloadUnusedAssets();//every clear.......
                     //Caching.ClearCache();
-                    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                    SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                 }
             }
         }
@@ -185,11 +185,11 @@ public class FeedForYouItemController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FeedData.image) || !string.IsNullOrEmpty(FeedData.thumbnail))//Feed For You Items Initiate Total Count Set.......
         {
-            FeedUIController.Instance.hotForYouFeedInitiateTotalCount += 1;
+            FeedsManager.Instance.hotForYouFeedInitiateTotalCount += 1;
         }
 
         isVisible = true;
-        /*if (!APIManager.Instance.isTestDefaultToken)
+        /*if (!SNS_APIResponseManager.Instance.isTestDefaultToken)
         {
             isVisible = true;
         }
@@ -203,7 +203,7 @@ public class FeedForYouItemController : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(FeedRawData.avatar))//set avatar image.......
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
+            bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
             //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedRawData.name);
             if (isAvatarUrlFromDropbox)
             {
@@ -221,7 +221,7 @@ public class FeedForYouItemController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FeedData.image))//FeedForYou image
         {
-            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
+            bool isImageUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
             //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
@@ -232,10 +232,10 @@ public class FeedForYouItemController : MonoBehaviour
                         AssetCache.Instance.LoadSpriteIntoImage(imgFeed, FeedData.image, changeAspectRatio: true);
                         isImageSuccessDownloadAndSave = true;
                         CheckAndSetResolutionOfImage(imgFeed.sprite);
-                        if (FeedUIController.Instance.hotForYouFeedInitiateTotalCount > 0)
+                        if (FeedsManager.Instance.hotForYouFeedInitiateTotalCount > 0)
                         {
-                            FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
-                            //FeedUIController.Instance.hotForYouFeedImageLoadedCount += 1;//Feed Hot For You items image loaded count increase
+                            FeedsManager.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
+                            //FeedsManager.Instance.hotForYouFeedImageLoadedCount += 1;//Feed Hot For You items image loaded count increase
                         }
                     }
                 });
@@ -255,7 +255,7 @@ public class FeedForYouItemController : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(FeedData.thumbnail))
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.thumbnail);
+                bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedData.thumbnail);
                 if (isVideoUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(FeedData.thumbnail, FeedData.thumbnail, (success) =>
@@ -265,9 +265,9 @@ public class FeedForYouItemController : MonoBehaviour
                             AssetCache.Instance.LoadSpriteIntoImage(imgFeed, FeedData.thumbnail, changeAspectRatio: true);
                             isImageSuccessDownloadAndSave = true;
                             CheckAndSetResolutionOfImage(imgFeed.sprite);
-                            if (FeedUIController.Instance.hotForYouFeedInitiateTotalCount > 0)
+                            if (FeedsManager.Instance.hotForYouFeedInitiateTotalCount > 0)
                             {
-                                FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
+                                FeedsManager.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
                             }
                         }
                     });
@@ -284,7 +284,7 @@ public class FeedForYouItemController : MonoBehaviour
             }
             else
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
+                bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
 
                 cameraIcon.gameObject.SetActive(true);
                 //  Debug.LogError("FeedData.video " + FeedData.video);
@@ -309,39 +309,39 @@ public class FeedForYouItemController : MonoBehaviour
 
     public void OnClickCheckOtherPlayerProfile()
     {
-        //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
+        //FeedsManager.Instance.OnClickCheckOtherPlayerProfile();
     }
 
     public void OnClickFeedItem()
     {
-        FeedUIController.Instance.feedFullViewScreenCallingFrom = "DiscoverTab";
+        FeedsManager.Instance.feedFullViewScreenCallingFrom = "DiscoverTab";
         StartCoroutine(loadVideoFeed());
     }
     IEnumerator loadVideoFeed()
     {
-        foreach (Transform item in FeedUIController.Instance.videofeedParent)
+        foreach (Transform item in FeedsManager.Instance.videofeedParent)
         {
             Destroy(item.gameObject);
         }
         int index = 0;
         //int pageIndex = 0;
         bool isMatch = false;
-        //FeedUIController.Instance.ShowLoader(true);
-        for (int i = 0; i < APIManager.Instance.allUserRootList.Count; i++)
+        //FeedsManager.Instance.ShowLoader(true);
+        for (int i = 0; i < SNS_APIResponseManager.Instance.allUserRootList.Count; i++)
         {
-            for (int j = 0; j < APIManager.Instance.allUserRootList[i].feeds.Count; j++)
+            for (int j = 0; j < SNS_APIResponseManager.Instance.allUserRootList[i].feeds.Count; j++)
             {
-                GameObject videofeedObject = Instantiate(APIController.Instance.videofeedPrefab, FeedUIController.Instance.videofeedParent);
+                GameObject videofeedObject = Instantiate(SNS_APIController.Instance.videofeedPrefab, FeedsManager.Instance.videofeedParent);
                 FeedVideoItem feedVideoItem = videofeedObject.GetComponent<FeedVideoItem>();
-                feedVideoItem.FeedRawData = APIManager.Instance.allUserRootList[i];
-                feedVideoItem.FeedData = APIManager.Instance.allUserRootList[i].feeds[j];
+                feedVideoItem.FeedRawData = SNS_APIResponseManager.Instance.allUserRootList[i];
+                feedVideoItem.FeedData = SNS_APIResponseManager.Instance.allUserRootList[i].feeds[j];
                 feedVideoItem.LoadFeed();
-                if (APIManager.Instance.allUserRootList[i].id == FeedRawData.id && !isMatch)
+                if (SNS_APIResponseManager.Instance.allUserRootList[i].id == FeedRawData.id && !isMatch)
                 {
-                    if (APIManager.Instance.allUserRootList[i].feeds[j].id == FeedData.id)
+                    if (SNS_APIResponseManager.Instance.allUserRootList[i].feeds[j].id == FeedData.id)
                     {
                         //pageIndex = index;
-                        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
+                        FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
                         isMatch = true;
                     }
                 }
@@ -349,17 +349,17 @@ public class FeedForYouItemController : MonoBehaviour
             }
         }
         yield return new WaitForSeconds(0.1f);
-        //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(true);
-        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
+        //FeedsManager.Instance.ShowLoader(false);
+        FeedsManager.Instance.feedVideoScreen.SetActive(true);
+        FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
 
-        // Debug.LogError("name : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        // Debug.LogError("name : " + SNS_APIController.Instance.videofeedParent.name);
+        FeedsManager.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.1f);
-        //  Debug.LogError("name1111 : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        // FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
-        FeedUIController.Instance.feedUiScreen.SetActive(false);
+        //  Debug.LogError("name1111 : " + SNS_APIController.Instance.videofeedParent.name);
+        FeedsManager.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        // FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
+        FeedsManager.Instance.feedUiScreen.SetActive(false);
     }
 
     #region Get Image And Video From AWS
@@ -424,12 +424,12 @@ public class FeedForYouItemController : MonoBehaviour
         {
             //Debug.LogError("Image Available on Disk discover item");
             AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
-            if (mainImage == imgFeed && FeedUIController.Instance.hotForYouFeedInitiateTotalCount > 0)//Feed Hot For You items image loaded count increase
+            if (mainImage == imgFeed && FeedsManager.Instance.hotForYouFeedInitiateTotalCount > 0)//Feed Hot For You items image loaded count increase
             {
                 CheckAndSetResolutionOfImage(mainImage.sprite);
                 isImageSuccessDownloadAndSave = true;
-                FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
-                //FeedUIController.Instance.hotForYouFeedImageLoadedCount += 1;
+                FeedsManager.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
+                //FeedsManager.Instance.hotForYouFeedImageLoadedCount += 1;
             }
             return;
         }
@@ -448,9 +448,9 @@ public class FeedForYouItemController : MonoBehaviour
                         isImageSuccessDownloadAndSave = true;
                     }
                 }
-                if (mainImage == imgFeed && FeedUIController.Instance.hotForYouFeedInitiateTotalCount > 0)//Feed Hot For You items image loaded count increase
+                if (mainImage == imgFeed && FeedsManager.Instance.hotForYouFeedInitiateTotalCount > 0)//Feed Hot For You items image loaded count increase
                 {
-                    FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
+                    FeedsManager.Instance.hotForYouFeedInitiateTotalCount -= 1;//Feed Hot For You items image loaded count Deincrease
                 }
             });
         }

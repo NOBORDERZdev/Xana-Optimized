@@ -30,7 +30,7 @@ public class FeedRawItemController : MonoBehaviour
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -49,7 +49,7 @@ public class FeedRawItemController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FeedRawData.avatar))
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
+            bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
             //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
@@ -81,7 +81,7 @@ public class FeedRawItemController : MonoBehaviour
 
         for (int i = 0; i < tottlehotFeeditem; i++)
         {
-            GameObject hotFeedFeedObject = Instantiate(APIController.Instance.hotItemPrefab, hotItemPrefabParent);
+            GameObject hotFeedFeedObject = Instantiate(SNS_APIController.Instance.hotItemPrefab, hotItemPrefabParent);
             hotFeedFeedObject.GetComponent<FeedItemController>().FeedData = FeedRawData.feeds[i];
             hotFeedFeedObject.GetComponent<FeedItemController>().FeedRawData = FeedRawData;
             hotFeedFeedObject.GetComponent<FeedItemController>().LoadFeed();
@@ -92,17 +92,17 @@ public class FeedRawItemController : MonoBehaviour
     public void OnClickCheckOtherPlayerProfile()
     {
         //Debug.LogError("id ;" + FeedRawData.id + "count :" + FeedRawData.feedCount);
-        //FeedUIController.Instance.ShowLoader(true);
+        //FeedsManager.Instance.ShowLoader(true);
 
-        APIController.Instance.currentFeedRawItemController = this;
+        SNS_APIController.Instance.currentFeedRawItemController = this;
 
-        OtherPlayerProfileData.Instance.FeedRawData = FeedRawData;
-        //OtherPlayerProfileData.Instance.OnSetUserUi(isFollow);
-        //OtherPlayerProfileData.Instance.LoadData();
+        OtherUserProfileManager.Instance.FeedRawData = FeedRawData;
+        //OtherUserProfileManager.Instance.OnSetUserUi(isFollow);
+        //OtherUserProfileManager.Instance.LoadData();
 
-        OtherPlayerProfileData.Instance.backKeyManageList.Add("HotTabScreen");//For back mamages.......
+        OtherUserProfileManager.Instance.backKeyManageList.Add("HotTabScreen");//For back mamages.......
 
-        //APIManager.Instance.RequestGetFeedsByUserId(FeedRawData.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIResponseManager.Instance.RequestGetFeedsByUserId(FeedRawData.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -127,7 +127,7 @@ public class FeedRawItemController : MonoBehaviour
             singleUserProfileData.userProfile.bio = FeedRawData.UserProfile.bio;
         }
 
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OtherUserProfileManager.Instance.RequestGetUserDetails(singleUserProfileData);
     }
 
     public void OnClickFollowUserButton()
@@ -135,10 +135,10 @@ public class FeedRawItemController : MonoBehaviour
         //Debug.LogError("OnClickFollowUser id" + FeedRawData.id.ToString() + " :FollowText:" + followText.text);
         if (followText.text == "Follow" || followText.text == "フォロー")
         {
-            FeedUIController.Instance.ShowLoader(true);
+            FeedsManager.Instance.ShowLoader(true);
 
-            APIController.Instance.currentFeedRawItemController = this;
-            APIManager.Instance.RequestFollowAUser(FeedRawData.id.ToString(), "Feed");
+            SNS_APIController.Instance.currentFeedRawItemController = this;
+            SNS_APIResponseManager.Instance.RequestFollowAUser(FeedRawData.id.ToString(), "Feed");
         }
     }
 
@@ -148,7 +148,7 @@ public class FeedRawItemController : MonoBehaviour
         followText.text = UITextLocalization.GetLocaliseTextByKey("Following");
         followText.color = FollowingTextColor;
 
-        APIController.Instance.RemoveFollowedUserFromHot(FeedRawData.id);
+        SNS_APIController.Instance.RemoveFollowedUserFromHot(FeedRawData.id);
     }
 
     #region Get Image From AWS

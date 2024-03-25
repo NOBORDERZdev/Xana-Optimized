@@ -15,7 +15,7 @@ using UnityEngine.UI;
 
 public class FeedHandler : MonoBehaviour
 {
-    [SerializeField] private FeedUIController feedUIController;
+    [SerializeField] private FeedsManager feedUIController;
     [SerializeField] private GameObject feedPostPrefab;
     [SerializeField] private GameObject emptyPrefab;
     [SerializeField] private Transform feedContentParent;
@@ -48,7 +48,7 @@ public class FeedHandler : MonoBehaviour
         searchInputField.Text = "";
         XanaSocketHandler.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
-        feedUIController = FeedUIController.Instance;
+        feedUIController = FeedsManager.Instance;
         if (!isFeedInitialized)
         {
            Invoke(nameof( IntFeedPage),0.01f);
@@ -64,17 +64,17 @@ public class FeedHandler : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
-         FeedUIController.Instance.feedUiScreen.SetActive(true);
+         FeedsManager.Instance.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
-        //FeedUIController.Instance.ShowLoader(true);
+        //FeedsManager.Instance.ShowLoader(true);
         FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
-        if (APIManager.Instance.userId == 0)
+        if (SNS_APIResponseManager.Instance.userId == 0)
         {
-           APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
+           SNS_APIResponseManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
         }
-        await GetFeedData(APIManager.Instance.userId);
+        await GetFeedData(SNS_APIResponseManager.Instance.userId);
     }
 
     async Task GetFeedData(int userId)
@@ -144,7 +144,7 @@ public class FeedHandler : MonoBehaviour
 
     public void PullNewPlayerPost(){ 
         FeedLoader.SetActive(true);
-        GetPlayerNewPosts(APIManager.Instance.userId);
+        GetPlayerNewPosts(SNS_APIResponseManager.Instance.userId);
     }
 
     async void GetPlayerNewPosts(int userId){ 
@@ -162,7 +162,7 @@ public class FeedHandler : MonoBehaviour
             {
                 noFeedsScreen.gameObject.SetActive(false);
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
-                //FeedUIController.Instance.ShowLoader(false);
+                //FeedsManager.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
                 bool _isNameChanged = false;
                 foreach (var item1 in feedResponseData.data.rows)
@@ -230,7 +230,7 @@ public class FeedHandler : MonoBehaviour
     /// To get next page player post
     /// </summary>
     public void GetPlayerNextPostPage(){ 
-        GetFeedDataByPage(APIManager.Instance.userId);
+        GetFeedDataByPage(SNS_APIResponseManager.Instance.userId);
     }
 
     async void GetFeedDataByPage(int userId)
@@ -355,7 +355,7 @@ public class FeedHandler : MonoBehaviour
 
     IEnumerator FeedSearch(string input)
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+APIManager.Instance.userId +"/"+ input +"/1/20";
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+SNS_APIResponseManager.Instance.userId +"/"+ input +"/1/20";
         UnityWebRequest response = UnityWebRequest.Get(url);
         yield return response.SendWebRequest();
         if (response.isNetworkError)
@@ -461,7 +461,7 @@ public class FeedHandler : MonoBehaviour
             noFeedSerach.gameObject.SetActive(false);
             noFeedsScreen.gameObject.SetActive(false);
             FeedLoader.gameObject.SetActive(false);
-            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickHomeButton();
+            FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickHomeButton();
         }
      }
     private void OnDisable()

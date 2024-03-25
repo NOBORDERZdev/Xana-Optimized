@@ -1435,9 +1435,9 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         UserPassManager.Instance.testing = false;
-        if (SNSSettingController.Instance != null)
+        if (SNSSettingManager.Instance != null)
         {
-            SNSSettingController.Instance.LogoutSuccess();
+            SNSSettingManager.Instance.LogoutSuccess();
         }
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (InventoryManager.instance.MultipleSave)

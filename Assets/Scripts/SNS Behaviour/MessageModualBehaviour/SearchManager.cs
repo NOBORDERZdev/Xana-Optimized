@@ -54,14 +54,14 @@ public class SearchManager : MonoBehaviour
             List<string> tmpList2 = new List<string>();
             if (isSearchForSelectFriend)
             {
-                for (int i = 0; i < APIController.Instance.allFollowingUserList.Count; i++)
+                for (int i = 0; i < SNS_APIController.Instance.allFollowingUserList.Count; i++)
                 {
-                    if (!string.IsNullOrEmpty(APIController.Instance.allFollowingUserList[i]))
+                    if (!string.IsNullOrEmpty(SNS_APIController.Instance.allFollowingUserList[i]))
                     {
-                        string nameStr = APIController.Instance.allFollowingUserList[i].ToLower();
+                        string nameStr = SNS_APIController.Instance.allFollowingUserList[i].ToLower();
                         if (nameStr.Contains(userInput.ToLower()))
                         {
-                            tmpList.Add(APIController.Instance.allFollowingUserList[i]);
+                            tmpList.Add(SNS_APIController.Instance.allFollowingUserList[i]);
                         }
                     }
                 }
@@ -109,14 +109,14 @@ public class SearchManager : MonoBehaviour
             }
             else if (isSearschForConversationList)
             {
-                for (int i = 0; i < APIController.Instance.allConversationList.Count; i++)
+                for (int i = 0; i < SNS_APIController.Instance.allConversationList.Count; i++)
                 {
-                    if (!string.IsNullOrEmpty(APIController.Instance.allConversationList[i]))
+                    if (!string.IsNullOrEmpty(SNS_APIController.Instance.allConversationList[i]))
                     {
-                        string nameStr = APIController.Instance.allConversationList[i].ToLower();
+                        string nameStr = SNS_APIController.Instance.allConversationList[i].ToLower();
                         if (nameStr.Contains(userInput.ToLower()))
                         {
-                            tmpList.Add(APIController.Instance.allConversationList[i]);
+                            tmpList.Add(SNS_APIController.Instance.allConversationList[i]);
                         }
                     }
                 }

@@ -50,7 +50,7 @@ public class ChatDataScript : MonoBehaviour
             attechmentImage.sprite = null;
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -60,7 +60,7 @@ public class ChatDataScript : MonoBehaviour
         double minuts = (System.DateTime.Now - MessageRow.createdAt).TotalMinutes;
         if (!string.IsNullOrEmpty(MessageRow.message.msg))
         {
-            chatMessageText.text = APIManager.DecodedString(MessageRow.message.msg);
+            chatMessageText.text = SNS_APIResponseManager.DecodedString(MessageRow.message.msg);
             //CheckAndSetTextMinWidth();
             Invoke("CheckAndSetTextMinWidth", 0.013f);
         }
@@ -77,7 +77,7 @@ public class ChatDataScript : MonoBehaviour
             {
                 senderName.gameObject.SetActive(true);
             }
-            if (MessageRow.senderId != APIManager.Instance.userId)
+            if (MessageRow.senderId != SNS_APIResponseManager.Instance.userId)
             {
                 senderName.text = MessageRow.sender.name;
             }
@@ -212,7 +212,7 @@ public class ChatDataScript : MonoBehaviour
         //Debug.LogError("currentExtention:   " + currentExtention);
         if (currentExtention == ExtentionType.Image)
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(key);
+            bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(key);
             //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 
             if (isAvatarUrlFromDropbox)

@@ -130,7 +130,7 @@ public class MessageController : MonoBehaviour
     public SearchManager searchManagerFindFriends;
 
     [Header("ApiLoader Reference")]
-    public SNSAPILoaderController apiLoaderController;
+    public SNSLoaderHandler apiLoaderController;
     //public TextMeshProUGUI postUploadProgressText;
 
     public bool isNeedToRefreshConversationAPI = false;
@@ -153,23 +153,23 @@ public class MessageController : MonoBehaviour
             Directory.CreateDirectory(saveDir);
         }
 
-        //if (!APIManager.Instance.isTestDefaultToken)
+        //if (!SNS_APIResponseManager.Instance.isTestDefaultToken)
         //{
             //set token screen check.......
             /*if (string.IsNullOrEmpty(PlayerPrefs.GetString("LoginToken")) || string.IsNullOrEmpty(PlayerPrefs.GetString("UserName")))//new comment.......
             {
-                APIManager.Instance.userAuthorizeToken = "";
+                SNS_APIResponseManager.Instance.userAuthorizeToken = "";
                 setTokenScreen.SetActive(true);
                 return;
             }
             else
             {
-                APIManager.Instance.userAuthorizeToken = PlayerPrefs.GetString("LoginToken");
-                APIManager.Instance.userId = int.Parse(PlayerPrefs.GetString("UserName"));
+                SNS_APIResponseManager.Instance.userAuthorizeToken = PlayerPrefs.GetString("LoginToken");
+                SNS_APIResponseManager.Instance.userId = int.Parse(PlayerPrefs.GetString("UserName"));
                 setTokenScreen.SetActive(false);
             }*/
-            APIManager.Instance.userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-            APIManager.Instance.userId = int.Parse(PlayerPrefs.GetString("UserName"));
+            SNS_APIResponseManager.Instance.userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
+            SNS_APIResponseManager.Instance.userId = int.Parse(PlayerPrefs.GetString("UserName"));
         //}
 
         //rik for start of the Message scene default api calling....... 
@@ -195,17 +195,17 @@ public class MessageController : MonoBehaviour
     {
         bool isGroupChatRefresh = false;
         bool isTempNeedToRefreshConversation = false;
-        if (OtherPlayerProfileData.Instance != null)
+        if (OtherUserProfileManager.Instance != null)
         {
            Debug.Log("MessageDetailScreen :" + MessageDetailScreen.activeSelf + " :isChatDetailsScreenDeactive:" + isChatDetailsScreenDeactive);
             if (MessageDetailScreen.activeSelf && isChatDetailsScreenDeactive)
             {
                 isChatDetailsScreenDeactive = false;
-                /*if (OtherPlayerProfileData.Instance.backKeyManageList.Contains("GroupDetailsScreen"))
+                /*if (OtherUserProfileManager.Instance.backKeyManageList.Contains("GroupDetailsScreen"))
                 {
-                    OtherPlayerProfileData.Instance.backKeyManageList.Remove("GroupDetailsScreen");
+                    OtherUserProfileManager.Instance.backKeyManageList.Remove("GroupDetailsScreen");
                 }*/
-                if (!OtherPlayerProfileData.Instance.isProfiletranzistFromMessage)
+                if (!OtherUserProfileManager.Instance.isProfiletranzistFromMessage)
                 {
                     MessageDetailScreen.SetActive(false);
                     MessageListScreen.SetActive(true);
@@ -214,7 +214,7 @@ public class MessageController : MonoBehaviour
                 {
                     isGroupChatRefresh = true;                    
                 }
-                OtherPlayerProfileData.Instance.isProfiletranzistFromMessage = false;
+                OtherUserProfileManager.Instance.isProfiletranzistFromMessage = false;
             }
             else
             {
@@ -226,13 +226,13 @@ public class MessageController : MonoBehaviour
             isTempNeedToRefreshConversation = true;
         }
         yield return new WaitForSeconds(0.1f);
-       Debug.Log("MessageController isLoginFromDifferentId:" + APIManager.Instance.isLoginFromDifferentId);
-        if (APIManager.Instance.isLoginFromDifferentId)
+       Debug.Log("MessageController isLoginFromDifferentId:" + SNS_APIResponseManager.Instance.isLoginFromDifferentId);
+        if (SNS_APIResponseManager.Instance.isLoginFromDifferentId)
         {
-            APIController.Instance.allFollowingUserList.Clear();
-            APIController.Instance.allChatMemberList.Clear();
-            APIController.Instance.allConversationList.Clear();
-            APIController.Instance.chatTimeList.Clear();
+            SNS_APIController.Instance.allFollowingUserList.Clear();
+            SNS_APIController.Instance.allChatMemberList.Clear();
+            SNS_APIController.Instance.allConversationList.Clear();
+            SNS_APIController.Instance.chatTimeList.Clear();
 
             foreach (Transform item in conversationPrefabParent)
             {
@@ -258,7 +258,7 @@ public class MessageController : MonoBehaviour
                     if (allChatGetConversationDatum.receivedGroupId != 0)
                     {
                        Debug.Log("Group then refresh group message");
-                        SocketHandler.Instance.RequestChatGetMessagesSocket(1, 50, 0, allChatGetConversationDatum.receivedGroupId);
+                        SNSSocketHandler.Instance.RequestChatGetMessagesSocket(1, 50, 0, allChatGetConversationDatum.receivedGroupId);
                     }
                 }
             }
@@ -267,7 +267,7 @@ public class MessageController : MonoBehaviour
         if (isTempNeedToRefreshConversation && isNeedToRefreshConversationAPI)
         {
            Debug.Log("Need To Refresh Conversation APi.......");
-            APIManager.Instance.RequestChatGetConversation();
+            SNS_APIResponseManager.Instance.RequestChatGetConversation();
         }
         isTempNeedToRefreshConversation = false;
         isNeedToRefreshConversationAPI = false;
@@ -283,8 +283,8 @@ public class MessageController : MonoBehaviour
     {
         /*if (!string.IsNullOrEmpty(tokenInput.text))
         {
-            APIManager.Instance.userAuthorizeToken = tokenInput.text;
-            APIManager.Instance.userId = int.Parse(userIdInput.text);
+            SNS_APIResponseManager.Instance.userAuthorizeToken = tokenInput.text;
+            SNS_APIResponseManager.Instance.userId = int.Parse(userIdInput.text);
 
             setTokenScreen.SetActive(false);
 
@@ -301,13 +301,13 @@ public class MessageController : MonoBehaviour
     {
         if (allChatGetConversationDatum != null)
         {
-            if (APIManager.Instance.allChatGetConversationRoot.data.Contains(allChatGetConversationDatum))
+            if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Contains(allChatGetConversationDatum))
             {
-                int index = APIManager.Instance.allChatGetConversationRoot.data.IndexOf(allChatGetConversationDatum);
-                APIManager.Instance.allChatGetConversationRoot.data.Remove(allChatGetConversationDatum);
+                int index = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.IndexOf(allChatGetConversationDatum);
+                SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Remove(allChatGetConversationDatum);
                 if (index >= 0)
                 {
-                    APIController.Instance.allConversationList.RemoveAt(index);
+                    SNS_APIController.Instance.allConversationList.RemoveAt(index);
                     DestroyImmediate(searchManagerAllConversation.searchContainer.transform.GetChild(index).gameObject);
                     DestroyImmediate(conversationPrefabParent.GetChild(index).gameObject);
                 }
@@ -349,7 +349,7 @@ public class MessageController : MonoBehaviour
     #region Get User Details api and set user avatar
     public void GetUserDetailsAPI()
     {
-        APIManager.Instance.RequestGetUserDetails("messageScreen");//Get My Profile data 
+        SNS_APIResponseManager.Instance.RequestGetUserDetails("messageScreen");//Get My Profile data 
     }
 
     public void GetSuccessUserDetails(GetUserDetailData userdata)
@@ -357,7 +357,7 @@ public class MessageController : MonoBehaviour
         myUserData = userdata;
         if (!string.IsNullOrEmpty(myUserData.avatar))//set avatar image.......
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(myUserData.avatar);
+            bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(myUserData.avatar);
             //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
@@ -365,13 +365,13 @@ public class MessageController : MonoBehaviour
                 {
                     if (success)
                         AssetCache.Instance.LoadSpriteIntoImage(TopUserProfileImage, myUserData.avatar, changeAspectRatio: true);
-                    // FeedUIController.Instance.ShowLoader(false);
+                    // FeedsManager.Instance.ShowLoader(false);
                 });
             }
             else
             {
                 GetImageFromAWS(myUserData.avatar, TopUserProfileImage);//Get image from aws and save/load into asset cache.......
-                                                                        // FeedUIController.Instance.ShowLoader(false);
+                                                                        // FeedsManager.Instance.ShowLoader(false);
             }
         }
     }
@@ -404,7 +404,7 @@ public class MessageController : MonoBehaviour
         SelectFriendScreen.SetActive(true);
         CreateNewMessageUserList.Clear();
         createNewMessageUserAvatarSPList.Clear();
-        APIController.Instance.allChatMemberList.Clear();
+        SNS_APIController.Instance.allChatMemberList.Clear();
 
         LoaderShow(true);//active api loader.
 
@@ -420,7 +420,7 @@ public class MessageController : MonoBehaviour
 
         GetAllFollowingForSelectFriends();//request Get All Following api call.......
         //MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
-        //APIManager.Instance.RequestGetAllFollowing(1, 100, "message");
+        //SNS_APIResponseManager.Instance.RequestGetAllFollowing(1, 100, "message");
     }
 
     //this method are used to Add Friends Close Button Click...
@@ -446,7 +446,7 @@ public class MessageController : MonoBehaviour
         searchManagerFindFriends.allMessageUserDataList.Clear();
         searchManagerFindFriends.searchHistoryAllMessageUserData.Clear();
 
-        APIController.Instance.allFollowingUserList.Clear();
+        SNS_APIController.Instance.allFollowingUserList.Clear();
         foreach (Transform item in followingUserParent)
         {
             Destroy(item.gameObject);
@@ -455,7 +455,7 @@ public class MessageController : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        APIController.Instance.allChatMemberList.Clear();
+        SNS_APIController.Instance.allChatMemberList.Clear();
         ActiveSelectionScroll();
     }
 
@@ -463,7 +463,7 @@ public class MessageController : MonoBehaviour
     {
         StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("please wait"));//start and wait message text show.......
         MessageListScreen.SetActive(true);
-        APIManager.Instance.RequestChatGetConversation();
+        SNS_APIResponseManager.Instance.RequestChatGetConversation();
     }
 
     public void StartAndWaitMessageTextActive(bool isActive, string message)
@@ -517,7 +517,7 @@ public class MessageController : MonoBehaviour
     public void GetAllFollowingForSelectFriends()
     {
         SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
-        APIManager.Instance.RequestGetAllFollowing(1, 100, "Message");
+        SNS_APIResponseManager.Instance.RequestGetAllFollowing(1, 100, "Message");
     }
 
     //this method is used to select friend screen scroll pagination apis.......
@@ -527,12 +527,12 @@ public class MessageController : MonoBehaviour
         //Debug.Log("Scrollview verticalNormalPos:" + scrollRect.verticalNormalizedPosition);
         if (scrollRect.verticalNormalizedPosition <= 0.01f && isSelectFriendDataLoaded)
         {
-            if (APIManager.Instance.allFollowingRoot.data.rows.Count > 0)
+            if (SNS_APIResponseManager.Instance.allFollowingRoot.data.rows.Count > 0)
             {
                 //Debug.Log("Select friend following pagination api call.......");
                 isSelectFriendDataLoaded = false;
                 selectFriendPaginationPageNum += 1;
-                APIManager.Instance.RequestGetAllFollowing(selectFriendPaginationPageNum, 100, "Message");
+                SNS_APIResponseManager.Instance.RequestGetAllFollowing(selectFriendPaginationPageNum, 100, "Message");
             }
         }
     }
@@ -556,22 +556,22 @@ public class MessageController : MonoBehaviour
         ChatScreen.SetActive(false);        
         MessageListScreen.SetActive(true);
         isDirectMessage = false;
-        if (OtherPlayerProfileData.Instance != null)
+        if (OtherUserProfileManager.Instance != null)
         {
-            if (OtherPlayerProfileData.Instance.isDirectMessageScreenOpen)
+            if (OtherUserProfileManager.Instance.isDirectMessageScreenOpen)
             {
                 MessageController.Instance.isDirectMessageFirstTimeRecivedID = "";
-                OtherPlayerProfileData.Instance.isDirectMessageScreenOpen = false;
+                OtherUserProfileManager.Instance.isDirectMessageScreenOpen = false;
                 footerCan.GetComponent<HomeFooterTabCanvas>().OnClickFeedButton();
             }
             else
             {
-                APIManager.Instance.RequestChatGetConversation();
+                SNS_APIResponseManager.Instance.RequestChatGetConversation();
             }
         }
         else
         {
-            APIManager.Instance.RequestChatGetConversation();
+            SNS_APIResponseManager.Instance.RequestChatGetConversation();
         }
     }
 
@@ -609,11 +609,11 @@ public class MessageController : MonoBehaviour
     public IEnumerator IEActiveSelectionScroll()    //.......selectfriendscreen.........
     {
         yield return new WaitForSeconds(0.01f);
-        // Debug.Log("looggggg :" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
+        // Debug.Log("looggggg :" + SNS_APIController.Instance.selectedFriendItemPrefabParent.childCount);
 
         if (selectedFriendItemPrefabParent.childCount > 0)
         {
-            //Debug.Log("looggggg" + APIController.Instance.selectedFriendItemPrefabParent.childCount);
+            //Debug.Log("looggggg" + SNS_APIController.Instance.selectedFriendItemPrefabParent.childCount);
             if (!selectionScrollView.gameObject.activeSelf)
             {
                 //Debug.Log("enable");
@@ -650,7 +650,7 @@ public class MessageController : MonoBehaviour
 
     public void OnClickSelectFriendScreenOkButton()
     {
-        CreateChatTitleString(APIController.Instance.allChatMemberList);
+        CreateChatTitleString(SNS_APIController.Instance.allChatMemberList);
         if (selectedFriendItemPrefabParent.childCount > 0)
         {
             if (addFrindCallingScreenIndex != 1)
@@ -659,7 +659,7 @@ public class MessageController : MonoBehaviour
                 {
                     Destroy(item.gameObject);
                 }
-                APIController.Instance.chatTimeList.Clear();
+                SNS_APIController.Instance.chatTimeList.Clear();
             }
             if (CreateNewMessageUserList.Count > 0)
             {
@@ -678,19 +678,19 @@ public class MessageController : MonoBehaviour
                 }
                 else
                 {
-                    APIController.Instance.allChatMessageId.Clear();
-                    for (int i = 0; i < APIManager.Instance.allChatGetConversationRoot.data.Count; i++)
+                    SNS_APIController.Instance.allChatMessageId.Clear();
+                    for (int i = 0; i < SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Count; i++)
                     {
-                        if (APIManager.Instance.allChatGetConversationRoot.data[i].receivedGroupId == 0)
+                        if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receivedGroupId == 0)
                         {
                             //Debug.Log("id" + int.Parse(CreateNewMessageUserList[0]));
-                            if (APIManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(CreateNewMessageUserList[0]))
+                            if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(CreateNewMessageUserList[0]))
                             {
-                                APIManager.Instance.RequestChatGetMessages(1, 50, APIManager.Instance.allChatGetConversationRoot.data[i].receiverId, 0, "");
+                                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId, 0, "");
                             }
-                            else if (APIManager.Instance.allChatGetConversationRoot.data[i].senderId == int.Parse(CreateNewMessageUserList[0]))
+                            else if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].senderId == int.Parse(CreateNewMessageUserList[0]))
                             {
-                                APIManager.Instance.RequestChatGetMessages(1, 50, APIManager.Instance.allChatGetConversationRoot.data[i].senderId, 0, "");
+                                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].senderId, 0, "");
                             }
                         }
                     }
@@ -726,8 +726,8 @@ public class MessageController : MonoBehaviour
         CreateNewMessageUserList.Clear();
         createNewMessageUserAvatarSPList.Clear();
 
-        APIController.Instance.allChatMessageId.Clear();
-        APIController.Instance.chatTimeList.Clear();
+        SNS_APIController.Instance.allChatMessageId.Clear();
+        SNS_APIController.Instance.chatTimeList.Clear();
         currentChatPage = 1;
         isChatDataLoaded = false;
 
@@ -738,11 +738,11 @@ public class MessageController : MonoBehaviour
 
         CreateNewMessageUserList.Add(userID.ToString());
         createNewMessageUserAvatarSPList.Add(avatarSP);
-        APIController.Instance.allChatMemberList.Add(userName);
-        CreateChatTitleString(APIController.Instance.allChatMemberList);
+        SNS_APIController.Instance.allChatMemberList.Add(userName);
+        CreateChatTitleString(SNS_APIController.Instance.allChatMemberList);
 
         isDirectMessageFirstTimeRecivedID = CreateNewMessageUserList[0];
-        APIManager.Instance.RequestChatGetMessages(1, 50, userID, 0, "Conversation");
+        SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, userID, 0, "Conversation");
 
         if (createNewMessageUserAvatarSPList.Count > 0)
         {
@@ -762,23 +762,23 @@ public class MessageController : MonoBehaviour
             OnChatVoiceOrSendButtonEnable();
         }
 
-        APIController.Instance.allChatMemberList.Clear();
+        SNS_APIController.Instance.allChatMemberList.Clear();
 
         allChatGetConversationDatum = null;
-        if (APIManager.Instance.allChatGetConversationRoot.data != null)
+        if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data != null)
         {
-            for (int i = 0; i < APIManager.Instance.allChatGetConversationRoot.data.Count; i++)
+            for (int i = 0; i < SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Count; i++)
             {
-                if (APIManager.Instance.allChatGetConversationRoot.data[i].receiverId == userID || APIManager.Instance.allChatGetConversationRoot.data[i].senderId == userID)
+                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId == userID || SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].senderId == userID)
                 {
-                    allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[i];
+                    allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
                     break;
                 }
             }
-            /*int index = APIManager.Instance.allChatGetConversationRoot.data.FindIndex(x => x.receiverId == userID);
-            if(index >= 0 && index < APIManager.Instance.allChatGetConversationRoot.data.Count)
+            /*int index = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.FindIndex(x => x.receiverId == userID);
+            if(index >= 0 && index < SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Count)
             {
-                allChatGetConversationDatum = APIManager.Instance.allChatGetConversationRoot.data[index];
+                allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[index];
             }*/
         }
     }
@@ -877,7 +877,7 @@ public class MessageController : MonoBehaviour
         CreateMemberString(CreateNewMessageUserList);
        Debug.Log("Create New Group:" + setGroupNameInputField.text + " :GroupID:" + groupMembersStr + "   :AvatarUrl:" + avatarUrl);
         isDirectCreateFirstTimeGroupName = setGroupNameInputField.text;
-        APIManager.Instance.RequestChatCreateGroup(setGroupNameInputField.text, groupMembersStr, avatarUrl);
+        SNS_APIResponseManager.Instance.RequestChatCreateGroup(setGroupNameInputField.text, groupMembersStr, avatarUrl);
 
         isDirectMessage = true;
         setGroupNameScreen.SetActive(false);
@@ -929,7 +929,7 @@ public class MessageController : MonoBehaviour
             LoaderShow(true);//active api loader.
             setGroupNameScreen.SetActive(false);
             groupAvatarImage.sprite = defaultGroupAvatarSP;
-            APIManager.Instance.RequestUpdateGroupInfo(allChatGetConversationDatum.group.id.ToString(), setGroupNameInputField.text, avatarUrl);
+            SNS_APIResponseManager.Instance.RequestUpdateGroupInfo(allChatGetConversationDatum.group.id.ToString(), setGroupNameInputField.text, avatarUrl);
             chatTitleText.text = setGroupNameInputField.text;
             setGroupNameScreenIndex = 0;
         }
@@ -1053,7 +1053,7 @@ public class MessageController : MonoBehaviour
         findFriendNextBtn.SetActive(false);
 
         CreateMemberString(CreateNewMessageUserList);
-        APIManager.Instance.RequestAddGroupMember(allChatGetConversationDatum.group.id.ToString(), allChatGetConversationDatum.id.ToString(), groupMembersStr);
+        SNS_APIResponseManager.Instance.RequestAddGroupMember(allChatGetConversationDatum.group.id.ToString(), allChatGetConversationDatum.id.ToString(), groupMembersStr);
     }
 
     public string setGroupAvatarTempPath = "";
@@ -1258,7 +1258,7 @@ public class MessageController : MonoBehaviour
             return;
         }
         OnClcikSendMessageButtonbool = true;
-        APIManager.Instance.r_isCreateMessage = true;
+        SNS_APIResponseManager.Instance.r_isCreateMessage = true;
        Debug.Log("isDirectMessage : " + isDirectMessage);
         if (isDirectMessage)
         {
@@ -1270,19 +1270,19 @@ public class MessageController : MonoBehaviour
                 {
                    Debug.Log("counts : " + CreateNewMessageUserList.Count);
                     CreateMemberString(CreateNewMessageUserList);
-                   Debug.Log("id : " + APIManager.Instance.ChatCreateGroupRoot.data.id);
-                    // APIManager.Instance.RequestChatCreateGroup("New Group", groupMembersStr);
-                   Debug.Log("group iD" + APIManager.Instance.ChatCreateGroupRoot.data.id);
-                    //APIManager.Instance.RequestChatCreateMessage(0, APIManager.Instance.ChatCreateGroupRoot.data.id, typeMessageText.text, "", "");
-                    APIManager.Instance.RequestChatCreateMessage(0, APIManager.Instance.ChatCreateGroupRoot.data.id, chatTypeMessageInputfield.RichText, "", "");
+                   Debug.Log("id : " + SNS_APIResponseManager.Instance.ChatCreateGroupRoot.data.id);
+                    // SNS_APIResponseManager.Instance.RequestChatCreateGroup("New Group", groupMembersStr);
+                   Debug.Log("group iD" + SNS_APIResponseManager.Instance.ChatCreateGroupRoot.data.id);
+                    //SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, SNS_APIResponseManager.Instance.ChatCreateGroupRoot.data.id, typeMessageText.text, "", "");
+                    SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, SNS_APIResponseManager.Instance.ChatCreateGroupRoot.data.id, chatTypeMessageInputfield.RichText, "", "");
                     OnClcikSendMessageButtonbool = true;
-                    //APIManager.Instance.RequestChatGetMessages(1, 50, 0, APIManager.Instance.ChatCreateGroupRoot.data.id);
+                    //SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, 0, SNS_APIResponseManager.Instance.ChatCreateGroupRoot.data.id);
                 }
                 else
                 {
                     isDirectMessageFirstTimeRecivedID = CreateNewMessageUserList[0];
-                    //APIManager.Instance.RequestChatCreateMessage(int.Parse(CreateNewMessageUserList[0]), 0, typeMessageText.text, "", "");
-                    APIManager.Instance.RequestChatCreateMessage(int.Parse(CreateNewMessageUserList[0]), 0, chatTypeMessageInputfield.RichText, "", "");
+                    //SNS_APIResponseManager.Instance.RequestChatCreateMessage(int.Parse(CreateNewMessageUserList[0]), 0, typeMessageText.text, "", "");
+                    SNS_APIResponseManager.Instance.RequestChatCreateMessage(int.Parse(CreateNewMessageUserList[0]), 0, chatTypeMessageInputfield.RichText, "", "");
                     OnClcikSendMessageButtonbool = true;
                 }
                 SelectFriendScreen.SetActive(false);
@@ -1295,20 +1295,20 @@ public class MessageController : MonoBehaviour
             {
                Debug.Log("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + chatTypeMessageInputfield.RichText);
                 //Debug.Log("id : " + allChatGetConversationDatum.receivedGroupId + "msg: " + typeMessageText.text + "string :" + "");
-                //APIManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, typeMessageText.text, "", "");
-                APIManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, chatTypeMessageInputfield.RichText, "", "");
+                //SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, typeMessageText.text, "", "");
+                SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, allChatGetConversationDatum.receivedGroupId, chatTypeMessageInputfield.RichText, "", "");
             }
             else
             {
-                if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+                if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                 {
-                    //APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.senderId, 0, typeMessageText.text, "", "");
-                    APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.senderId, 0, chatTypeMessageInputfield.RichText, "", "");
+                    //SNS_APIResponseManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.senderId, 0, typeMessageText.text, "", "");
+                    SNS_APIResponseManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.senderId, 0, chatTypeMessageInputfield.RichText, "", "");
                 }
                 else
                 {
-                    APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, chatTypeMessageInputfield.RichText, "", "");
-                    //APIManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, typeMessageText.text, "", "");
+                    SNS_APIResponseManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, chatTypeMessageInputfield.RichText, "", "");
+                    //SNS_APIResponseManager.Instance.RequestChatCreateMessage(allChatGetConversationDatum.receiverId, 0, typeMessageText.text, "", "");
                 }
                 //Debug.Log("id : " + allChatGetConversationDatum.receiverId + "msg: " + typeMessageText.text + "string :" + "");
                Debug.Log("id : " + allChatGetConversationDatum.receiverId + "msg: " + chatTypeMessageInputfield.RichText);
@@ -1325,25 +1325,25 @@ public class MessageController : MonoBehaviour
             //if (currentConversationData.allChatGetConversationDatum.receivedGroupId != 0)//rik
             if (allChatGetConversationDatum.receivedGroupId != 0)
             {
-                //  Debug.Log("receivedGroupId" + APIManager.Instance.AllChatCreateMessageRoot.data.receivedGroupId);
-                //APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, currentConversationData.allChatGetConversationDatum.receivedGroupId);//rik
-                APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, allChatGetConversationDatum.receivedGroupId, "");
+                //  Debug.Log("receivedGroupId" + SNS_APIResponseManager.Instance.AllChatCreateMessageRoot.data.receivedGroupId);
+                //SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, currentConversationData.allChatGetConversationDatum.receivedGroupId);//rik
+                SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, 0, allChatGetConversationDatum.receivedGroupId, "");
             }
             else
             {
                 //Debug.Log("currentChatPage " + currentChatPage);
                 // Debug.Log("receiverId " + currentConversationData.allChatGetConversationDatum.receiverId);
                 // Debug.Log("senderId " + currentConversationData.allChatGetConversationDatum.senderId);
-                //if (currentConversationData.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)//rik
-                if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+                //if (currentConversationData.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)//rik
+                if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                 {
-                    //APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, currentConversationData.allChatGetConversationDatum.senderId, 0);//rik
-                    APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, allChatGetConversationDatum.senderId, 0, "");
+                    //SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, currentConversationData.allChatGetConversationDatum.senderId, 0);//rik
+                    SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, allChatGetConversationDatum.senderId, 0, "");
                 }
                 else
                 {
-                    //APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, currentConversationData.allChatGetConversationDatum.receiverId, 0);//rik
-                    APIManager.Instance.RequestChatGetMessages(currentChatPage, 50, allChatGetConversationDatum.receiverId, 0, "");
+                    //SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, currentConversationData.allChatGetConversationDatum.receiverId, 0);//rik
+                    SNS_APIResponseManager.Instance.RequestChatGetMessages(currentChatPage, 50, allChatGetConversationDatum.receiverId, 0, "");
                 }
             }
         }
@@ -1414,7 +1414,7 @@ public class MessageController : MonoBehaviour
                 }
                Debug.Log("ImagePath : " + path);
                 attechmentstr = "[" + attechmentArraystr + path + attechmentArraystr + "]";
-                APIManager.Instance.r_isCreateMessage = true;
+                SNS_APIResponseManager.Instance.r_isCreateMessage = true;
 
                 //string[] pathArry = path.Split('/');
 
@@ -1453,7 +1453,7 @@ public class MessageController : MonoBehaviour
                            Debug.Log("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
                             if (fileSizeibMbs > 100)//check video file size and upload upto 50MG only.......
                             {
-                                SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 100MB");
+                                SNSWarningsHandler.Instance.ShowWarningMessage("Please upload video upto 100MB");
                                 return;
                             }
                             Debug.Log("Picked video");
@@ -1483,7 +1483,7 @@ public class MessageController : MonoBehaviour
 #endif
                     }
                     attechmentstr = "[" + attechmentArraystr + path + attechmentArraystr + "]";
-                    APIManager.Instance.r_isCreateMessage = true;
+                    SNS_APIResponseManager.Instance.r_isCreateMessage = true;
 
                     //string[] pathArry = path.Split('/');
 
@@ -1547,7 +1547,7 @@ public class MessageController : MonoBehaviour
 
                 //Debug.Log("Camera ImagePath : " + path);
                 attechmentstr = "[" + attechmentArraystr + path + attechmentArraystr + "]";
-                APIManager.Instance.r_isCreateMessage = true;
+                SNS_APIResponseManager.Instance.r_isCreateMessage = true;
 
                 //string[] pathArry = path.Split('/');
                 //string fileName = pathArry[pathArry.Length - 1];
@@ -1609,23 +1609,23 @@ public class MessageController : MonoBehaviour
         {
            Debug.Log("Attachment Data Is null");
             chatShareAttechmentparent.gameObject.SetActive(false);
-            APIController.Instance.SetChatMember();
+            SNS_APIController.Instance.SetChatMember();
         }
         else
         {
             if (allChatGetConversationDatum.receivedGroupId != 0)
             {
-                APIManager.Instance.RequestChatGetAttachments(1, 50, 0, allChatGetConversationDatum.receivedGroupId, 0);
+                SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, 0, allChatGetConversationDatum.receivedGroupId, 0);
             }
             else
             {
-                if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+                if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                 {
-                    APIManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.senderId, 0, 0);
+                    SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.senderId, 0, 0);
                 }
                 else
                 {
-                    APIManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.receiverId, 0, 0);
+                    SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.receiverId, 0, 0);
                 }
             }
         }        
@@ -1654,7 +1654,7 @@ public class MessageController : MonoBehaviour
                     messageDetailsLeaveGroupFalseObjList[i].SetActive(true);
                 }
 
-                if (allChatGetConversationDatum.group.createdBy != APIManager.Instance.userId)
+                if (allChatGetConversationDatum.group.createdBy != SNS_APIResponseManager.Instance.userId)
                 {
                     messageDetailsLeaveGroupFalseObjList[1].SetActive(false);//select member button
                     messageDetailsLeaveGroupFalseObjList[5].SetActive(false);//update group info button
@@ -1683,7 +1683,7 @@ public class MessageController : MonoBehaviour
         {
             if (MessageDetailScreen.activeSelf)
             {
-                APIManager.Instance.RequestChatMuteUnMuteConversation(allChatGetConversationDatum.id);
+                SNS_APIResponseManager.Instance.RequestChatMuteUnMuteConversation(allChatGetConversationDatum.id);
             }
             else
             {
@@ -1715,24 +1715,24 @@ public class MessageController : MonoBehaviour
         {
             for (int i = 0; i < allChatGetConversationDatum.group.groupUsers.Count; i++)
             {
-                if (allChatGetConversationDatum.group.groupUsers[i].user.id == APIManager.Instance.userId)
+                if (allChatGetConversationDatum.group.groupUsers[i].user.id == SNS_APIResponseManager.Instance.userId)
                 {
                 }
                 else
                 {
-                    APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.group.groupUsers[i].user.name);
+                    SNS_APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.group.groupUsers[i].user.name);
                 }
             }
         }
         else
         {
-            if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+            if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
             {
-                APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.ConSender.name);
+                SNS_APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.ConSender.name);
             }
             else
             {
-                APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.ConReceiver.name);
+                SNS_APIController.Instance.allChatMemberList.Add(allChatGetConversationDatum.ConReceiver.name);
             }
         }
     }
@@ -1745,7 +1745,7 @@ public class MessageController : MonoBehaviour
     {
        Debug.Log("OnLeaveChat calling.......:" + allChatGetConversationDatum.group.id);
         //calling leave the api here.......
-        APIManager.Instance.RequestLeaveTheChat(allChatGetConversationDatum.group.id.ToString(), "DetailsScreen");
+        SNS_APIResponseManager.Instance.RequestLeaveTheChat(allChatGetConversationDatum.group.id.ToString(), "DetailsScreen");
     }
 
     public void LeaveGroupAfterRemoveMemberFromCurrentConversation(GroupLeaveResponceRoot groupLeaveResponceRoot)
@@ -1783,17 +1783,17 @@ public class MessageController : MonoBehaviour
         {
             if (allChatGetConversationDatum.receivedGroupId != 0)
             {
-                APIManager.Instance.RequestChatGetAttachments(1, 50, 0, allChatGetConversationDatum.receivedGroupId, 1);
+                SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, 0, allChatGetConversationDatum.receivedGroupId, 1);
             }
             else
             {
-                if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+                if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                 {
-                    APIManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.senderId, 0, 1);
+                    SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.senderId, 0, 1);
                 }
                 else
                 {
-                    APIManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.receiverId, 0, 1);
+                    SNS_APIResponseManager.Instance.RequestChatGetAttachments(1, 50, allChatGetConversationDatum.receiverId, 0, 1);
                 }
             }
         }
@@ -1828,8 +1828,8 @@ public class MessageController : MonoBehaviour
     public void SaveAttachmentDetailsSetup(int index)
     {
         //Debug.Log("SaveAttachmentDetailsSetup.......:" + index);
-        saveAttachmentSenderNameText.text = APIManager.Instance.AllChatAttachmentsRoot.data.rows[index].message.messageRecipient.sender.name;
-        DateTime today = TimeZoneInfo.ConvertTimeFromUtc(APIManager.Instance.AllChatAttachmentsRoot.data.rows[index].updatedAt, TimeZoneInfo.Local);
+        saveAttachmentSenderNameText.text = SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[index].message.messageRecipient.sender.name;
+        DateTime today = TimeZoneInfo.ConvertTimeFromUtc(SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[index].updatedAt, TimeZoneInfo.Local);
         //Debug.Log("Uploaded Time" + today.Day + " " + today.ToString("MMM") + " " + today.Year);
         string dateSTR = today.Day + " " + today.ToString("MMM") + " " + today.Year;
         saveAttachmentDateTimeText.text = dateSTR;
@@ -1841,7 +1841,7 @@ public class MessageController : MonoBehaviour
     public void OnClickRemoveMemberConfirmationOkButton()
     {
         removeGroupmemberConfirmationScreen.SetActive(false);
-        APIManager.Instance.RequestRemoveGroupMember(currentSelectedGroupMemberDataScript.chatGetConversationUser.groupId, currentSelectedGroupMemberDataScript.chatGetConversationUser.userId);
+        SNS_APIResponseManager.Instance.RequestRemoveGroupMember(currentSelectedGroupMemberDataScript.chatGetConversationUser.groupId, currentSelectedGroupMemberDataScript.chatGetConversationUser.userId);
     }
 
     //this method is used to remove member api response success.......
@@ -1858,7 +1858,7 @@ public class MessageController : MonoBehaviour
 
             SNSNotificationHandler.Instance.ShowNotificationMsg("Removed success");//this method is used to show SNS notification.......
 
-            StartCoroutine(APIController.Instance.WaitToSetDetailsScreen());
+            StartCoroutine(SNS_APIController.Instance.WaitToSetDetailsScreen());
         }
     }
 
@@ -1888,21 +1888,21 @@ public class MessageController : MonoBehaviour
         {
             if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group != null && deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId != 0)
             {
-                if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group.createdBy == APIManager.Instance.userId)//group admin is this user.......
+                if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group.createdBy == SNS_APIResponseManager.Instance.userId)//group admin is this user.......
                 {
                    Debug.Log("delete group chat calling.......");
-                    APIManager.Instance.RequestDeleteChatGroup(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId, "ConversationScreen");
+                    SNS_APIResponseManager.Instance.RequestDeleteChatGroup(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId, "ConversationScreen");
                 }
                 else//group admin is not this user.......
                 {
                    Debug.Log("Leave Group calling.......");
-                    APIManager.Instance.RequestLeaveTheChat(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId.ToString(), "ConversationScreen");
+                    SNS_APIResponseManager.Instance.RequestLeaveTheChat(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.receivedGroupId.ToString(), "ConversationScreen");
                 }
             }
             else//one to one conversation.......
             {
                Debug.Log("delete one to one conversation calling.......");
-                APIManager.Instance.RequestDeleteConversation(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.id);
+                SNS_APIResponseManager.Instance.RequestDeleteConversation(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.id);
             }
         }
     }
@@ -1916,14 +1916,14 @@ public class MessageController : MonoBehaviour
             if (deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum != null)
             {
                 searchManagerAllConversation.allConversationDatasList.Remove(deleteConfirmationCurrentConversationDataScript);
-                if (APIManager.Instance.allChatGetConversationRoot.data.Contains(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum))
+                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Contains(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum))
                 {
-                    int index = APIManager.Instance.allChatGetConversationRoot.data.IndexOf(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
-                    APIManager.Instance.allChatGetConversationRoot.data.Remove(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
+                    int index = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.IndexOf(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
+                    SNS_APIResponseManager.Instance.allChatGetConversationRoot.data.Remove(deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum);
                    Debug.Log("Index:" + index);
                     if (index >= 0)
                     {
-                        APIController.Instance.allConversationList.RemoveAt(index);
+                        SNS_APIController.Instance.allConversationList.RemoveAt(index);
                         DestroyImmediate(searchManagerAllConversation.searchContainer.transform.GetChild(index).gameObject);
                     }
                 }
@@ -1941,14 +1941,14 @@ public class MessageController : MonoBehaviour
     {
         if (deleteConfirmationCurrentConversationDataScript != null)
         {
-            ChatGetConversationGroupUser etc = deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group.groupUsers.Find((x) => x.userId == APIManager.Instance.userId);
+            ChatGetConversationGroupUser etc = deleteConfirmationCurrentConversationDataScript.allChatGetConversationDatum.group.groupUsers.Find((x) => x.userId == SNS_APIResponseManager.Instance.userId);
 
             isLeaveGroup = true;
             //after leave group then create leave user msg on this group.......
-            APIManager.Instance.r_isCreateMessage = true;
+            SNS_APIResponseManager.Instance.r_isCreateMessage = true;
            Debug.Log("DeleteConversationWithLeaveGroupApiResponseSuccess removed User Name:" + etc.user.name);
             string messageStr = etc.user.name + " Left";
-            APIManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");
+            SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");
 
             DeleteConversationApiResponseSuccess("Leaved Group");
         }
@@ -1968,7 +1968,7 @@ public class MessageController : MonoBehaviour
     public void OnClickDeleteGroupChatButton()
     {
        Debug.Log("Detele group button click.......");
-        APIManager.Instance.RequestDeleteChatGroup(allChatGetConversationDatum.receivedGroupId, "DetailsScreen");
+        SNS_APIResponseManager.Instance.RequestDeleteChatGroup(allChatGetConversationDatum.receivedGroupId, "DetailsScreen");
     }
 
     public void DeleteGroupChatApiResponseSuccess()
@@ -1983,10 +1983,10 @@ public class MessageController : MonoBehaviour
         //if user fire message then create message with group deleted no longer you send message
         /*MessageController.Instance.isLeaveGroup = true;
         //after leave group then create leave user msg on this group.......
-        APIManager.Instance.r_isCreateMessage = true;
+        SNS_APIResponseManager.Instance.r_isCreateMessage = true;
        Debug.Log("removed User Name:" + etc.user.name);
         string messageStr = etc.user.name + " Left";
-        APIManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");*/
+        SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, int.Parse(groupId), messageStr, "LeaveGroup", "");*/
     }
     #endregion
 

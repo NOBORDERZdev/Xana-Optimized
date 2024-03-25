@@ -656,7 +656,7 @@ public class ARFaceModuleManager : MonoBehaviour
                Debug.Log("File size:" + fileSizeibMbs + " :long:" + fileSizeibBytes);
                 if (fileSizeibMbs > 15)//check video file size and upload upto 15MG only.......
                 {
-                    SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 15MB");
+                    SNSWarningsHandler.Instance.ShowWarningMessage("Please upload video upto 15MB");
                     return;
                 }*/
 
@@ -954,7 +954,7 @@ public class ARFaceModuleManager : MonoBehaviour
     #endregion
 
     #region API Loader Screen
-    public SNSAPILoaderController apiLoaderController;
+    public SNSLoaderHandler apiLoaderController;
 
     public void ShowLoader(bool isActive)
     {
@@ -1061,7 +1061,7 @@ public class ARFaceModuleManager : MonoBehaviour
             case "Image":
                 //string s1 = createFeedTitle.text;
                 //string s1 = createFeedTitleAdvance.RichText;
-                string s1 = APIManager.Instance.userName;
+                string s1 = SNS_APIResponseManager.Instance.userName;
                 //string s2 = createFeedDescription.text;
                 string s2 = createFeedDescriptionAdvance.RichText;
 
@@ -1079,12 +1079,12 @@ public class ARFaceModuleManager : MonoBehaviour
                     s2 = "  ";
                 }
 
-                APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s1), APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
+                SNS_APIResponseManager.Instance.RequestCreateFeed(SNS_APIResponseManager.EncodedString(s1), SNS_APIResponseManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
                 break;
             case "Video":
                 //string s11 = createFeedTitle.text;
                 //string s11 = createFeedTitleAdvance.RichText;
-                string s11 = APIManager.Instance.userName;
+                string s11 = SNS_APIResponseManager.Instance.userName;
                 //string s22 = createFeedDescription.text;
                 string s22 = createFeedDescriptionAdvance.RichText;
 
@@ -1101,7 +1101,7 @@ public class ARFaceModuleManager : MonoBehaviour
                 {
                     s22 = "  ";
                 }
-                APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s11), APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
+                SNS_APIResponseManager.Instance.RequestCreateFeed(SNS_APIResponseManager.EncodedString(s11), SNS_APIResponseManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
                 break;
             default:
                 break;

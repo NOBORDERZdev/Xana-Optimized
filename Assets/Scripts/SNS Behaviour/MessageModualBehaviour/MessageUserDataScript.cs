@@ -22,7 +22,7 @@ public class MessageUserDataScript : MonoBehaviour
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -32,7 +32,7 @@ public class MessageUserDataScript : MonoBehaviour
 
         if (!string.IsNullOrEmpty(allFollowingRow.following.avatar))
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(allFollowingRow.following.avatar);
+            bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(allFollowingRow.following.avatar);
             //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {
@@ -61,14 +61,14 @@ public class MessageUserDataScript : MonoBehaviour
     {
         if (!selectionToggle.isOn)
         {
-            GameObject friendItemObject = Instantiate(APIController.Instance.selectedFriendItemPrefab, MessageController.Instance.selectedFriendItemPrefabParent);
+            GameObject friendItemObject = Instantiate(SNS_APIController.Instance.selectedFriendItemPrefab, MessageController.Instance.selectedFriendItemPrefabParent);
             //friendItemObject.GetComponent<MessageUserDataScript>().allFollowingRow = allFollowingRow;
             friendItemObject.GetComponent<MessageUserDataScript>().LoadFeed(allFollowingRow);
             selectionToggle.isOn = true;
             MessageController.Instance.CreateNewMessageUserList.Add(allFollowingRow.userId.ToString());
             MessageController.Instance.createNewMessageUserAvatarSPList.Add(profileImage.sprite);
-            // APIController.Instance.allFollowingUserList.Remove(allFollowingRow.following.name);
-            APIController.Instance.allChatMemberList.Add(allFollowingRow.following.name);
+            // SNS_APIController.Instance.allFollowingUserList.Remove(allFollowingRow.following.name);
+            SNS_APIController.Instance.allChatMemberList.Add(allFollowingRow.following.name);
 
             if (MessageController.Instance.searchManagerFindFriends.searchScrollView.activeSelf)
             {
@@ -82,8 +82,8 @@ public class MessageUserDataScript : MonoBehaviour
             {
                 if (MessageController.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
                 {
-                    // APIController.Instance.allFollowingUserList.Add(allFollowingRow.following.name);
-                    APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
+                    // SNS_APIController.Instance.allFollowingUserList.Add(allFollowingRow.following.name);
+                    SNS_APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
                     MessageController.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
                     MessageController.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
                     Destroy(MessageController.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject);
@@ -102,7 +102,7 @@ public class MessageUserDataScript : MonoBehaviour
             if (MessageController.Instance.followingUserParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
             {
                 //Debug.LogError("aaaaaaaaaaaaaaaaa");
-                APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
+                SNS_APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
                 MessageController.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
                 MessageController.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
                 MessageController.Instance.ActiveSelectionScroll();

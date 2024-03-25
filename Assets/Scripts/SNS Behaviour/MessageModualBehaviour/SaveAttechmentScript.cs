@@ -20,7 +20,7 @@ public class SaveAttechmentScript : MonoBehaviour
         attechmentImage.sprite = null;
         //Resources.UnloadUnusedAssets();//every clear.......
         //Caching.ClearCache();
-        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+        SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     }
 
     public void LoadData()
@@ -55,7 +55,7 @@ public class SaveAttechmentScript : MonoBehaviour
         //Debug.LogError("currentExtention:   " + currentExtention);
         if (currentExtention == ExtentionType.Image)
         {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(key);
+            bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(key);
             if (isUrlContainsHttpAndHttps)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(key, key, (success) =>

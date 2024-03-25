@@ -134,7 +134,7 @@ public class LiveVideoRoomManager : MonoBehaviour
         if (videoLength > 15 && isPickVideo)
         {
             ARFaceModuleManager.Instance.ShowLoader(false);
-            SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 15 seconds");
+            SNSWarningsHandler.Instance.ShowWarningMessage("Please upload video upto 15 seconds");
         }
         else
         {

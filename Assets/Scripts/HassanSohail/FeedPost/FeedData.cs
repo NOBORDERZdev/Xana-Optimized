@@ -89,32 +89,32 @@ public class FeedData : MonoBehaviour
         if (isProfileScene)
             return;
         //print("Getting Click here" + _data.user_id);
-        APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
+        SNS_APIResponseManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
     }
 
     public void SetupFeedUserProfile(SearchUserRow _feedUserData)
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
-        if (MyProfileDataManager.Instance)
+        SNS_APIResponseManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
+        if (MyProfileManager.Instance)
         {
-            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
-            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-            MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
-            MyProfileDataManager.Instance.gameObject.SetActive(false);
-            FeedUIController.Instance.AddFriendPanel.SetActive(false);
+            MyProfileManager.Instance.OtherPlayerdataObj.SetActive(true);
+            OtherUserProfileManager.Instance.ResetMainScrollDefaultTopPos();
+            MyProfileManager.Instance.myProfileScreen.SetActive(true);
+            FeedsManager.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            MyProfileManager.Instance.gameObject.SetActive(false);
+            FeedsManager.Instance.AddFriendPanel.SetActive(false);
         }
         else
         {
-            OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
-            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(true);
-            //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-            FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
-            FeedUIController.Instance.AddFriendPanel.SetActive(false);
-            //MyProfileDataManager.Instance.gameObject.SetActive(false);
+            OtherUserProfileManager.Instance.myPlayerdataObj.SetActive(false);
+            OtherUserProfileManager.Instance.ResetMainScrollDefaultTopPos();
+            OtherUserProfileManager.Instance.myPlayerdataObj.GetComponent<MyProfileManager>().myProfileScreen.SetActive(true);
+            //MyProfileManager.Instance.myProfileScreen.SetActive(true);
+            FeedsManager.Instance.profileFollowerFollowingListScreen.SetActive(false);
+            FeedsManager.Instance.AddFriendPanel.SetActive(false);
+            //MyProfileManager.Instance.gameObject.SetActive(false);
         }
         ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(false);
         ProfileScreenController.instance.SetMainScrolRefs();
@@ -139,18 +139,18 @@ public class FeedData : MonoBehaviour
         feedRawData.FollowingCount = _feedUserData.followingCount;
         feedRawData.feedCount = _feedUserData.feedCount;
 
-        //FeedUIController.Instance.ShowLoader(true);
+        //FeedsManager.Instance.ShowLoader(true);
 
-        //OtherPlayerProfileData.Instance.currentFindFriendWithNameItemScript = this;
+        //OtherUserProfileManager.Instance.currentFindFriendWithNameItemScript = this;
 
-        //OtherPlayerProfileData.Instance.FeedRawData = feedRawData;
-        ////OtherPlayerProfileData.Instance.OnSetUserUi(_feedUserData.isFollowing);
-        ////OtherPlayerProfileData.Instance.LoadData();
+        //OtherUserProfileManager.Instance.FeedRawData = feedRawData;
+        ////OtherUserProfileManager.Instance.OnSetUserUi(_feedUserData.isFollowing);
+        ////OtherUserProfileManager.Instance.LoadData();
 
-        //OtherPlayerProfileData.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
+        //OtherUserProfileManager.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
 
-        //APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
-        //APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIResponseManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
+        //SNS_APIResponseManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -178,15 +178,15 @@ public class FeedData : MonoBehaviour
             singleUserProfileData.userProfile.website = _feedUserData.userProfile.website;
             singleUserProfileData.userProfile.bio = _feedUserData.userProfile.bio;
         }
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData, true);
+        OtherUserProfileManager.Instance.RequestGetUserDetails(singleUserProfileData, true);
     }
 
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIResponseManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileScreenController.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileScreenController.instance.SetUserAvatarClothing(SNS_APIResponseManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
@@ -263,7 +263,7 @@ public class FeedData : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (!string.IsNullOrEmpty(url))
         {
-           // bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
+           // bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(url);
              AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
              {
                     if (success)

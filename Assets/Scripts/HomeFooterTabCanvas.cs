@@ -223,11 +223,11 @@ public class HomeFooterTabCanvas : MonoBehaviour
                     UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = true;
                     UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-                    if (FeedUIController.Instance)
+                    if (FeedsManager.Instance)
                     {
-                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
-                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
-                        FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                        FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
+                        FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                        FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
                 }
             }
@@ -275,11 +275,11 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 UIHandler.Instance.HomeWorldScreen.SetActive(true);
                 UIHandler.Instance.HomePage.SetActive(false);
                 UIHandler.Instance.SwitchToScreen(0);
-                if (FeedUIController.Instance)
+                if (FeedsManager.Instance)
                 {
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
-                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 0;
+                    FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().interactable = false;
+                    FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
                 }
 
             }
@@ -467,17 +467,17 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                 additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 3;
-                FeedUIController.Instance.feedUiScreen.SetActive(true);
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(3);
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedsManager.Instance.feedUiScreen.SetActive(true);
+                FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(3);
+                FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 UIHandler.Instance.HomeWorldScreen.SetActive(false);
                 UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().alpha = 0;
                 UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
                 UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             }
             else
             {
@@ -487,26 +487,26 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 }
 
             }
-            if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            if (MyProfileManager.Instance.myProfileScreen.activeSelf)
             {
-                //FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
-                FeedUIController.Instance.ResetAllFeedScreen(true);
-                MyProfileDataManager.Instance.MyProfileSceenShow(false);//false my profile screen
+                //FeedsManager.Instance.FadeInOutScreenShow();//show fade in out.......
+                FeedsManager.Instance.ResetAllFeedScreen(true);
+                MyProfileManager.Instance.MyProfileSceenShow(false);//false my profile screen
             }
             //else
             //{
-            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //    SNS_APIResponseManager.Instance.RequestGetUserDetails("myProfile");
             //}
 
-            if (FeedUIController.Instance != null)
+            if (FeedsManager.Instance != null)
             {
-                FeedUIController.Instance.SetAddFriendScreen(false);
-                FeedUIController.Instance.feedUiScreen.SetActive(true);
-                FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(false);
+                FeedsManager.Instance.SetAddFriendScreen(false);
+                FeedsManager.Instance.feedUiScreen.SetActive(true);
+                FeedsManager.Instance.profileFollowerFollowingListScreen.SetActive(false);
                 // OLD FEED UI
-                ////if (FeedUIController.Instance.feedUiScreen.activeSelf)
+                ////if (FeedsManager.Instance.feedUiScreen.activeSelf)
                 ////{
-                ////    FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+                ////    FeedsManager.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
                 ////}
                 // End Old Feed UI
             }
@@ -564,33 +564,33 @@ public class HomeFooterTabCanvas : MonoBehaviour
             }
             //below camera line was Commented before but i uncommented it in order to make profile 2.0 work ------- UMER
             GameManager.Instance.m_MainCamera.gameObject.SetActive(true);
-            FeedUIController.Instance.SetAddFriendScreen(true);
-            APIManager.Instance.SetHotFriend();
-            FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
-            FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
+            FeedsManager.Instance.SetAddFriendScreen(true);
+            SNS_APIResponseManager.Instance.SetHotFriend();
+            FeedsManager.Instance.findFriendInputFieldAdvanced.Text = "";
+            FeedsManager.Instance.findFriendScreen.gameObject.SetActive(false);
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-            FeedUIController.Instance.OnClickHotFrnd();
-            FeedUIController.Instance.ResetAllFeedScreen(true);
-            FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            FeedsManager.Instance.OnClickHotFrnd();
+            FeedsManager.Instance.ResetAllFeedScreen(true);
+            FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
 
 
             //Invoke(nameof(InvokeDisableFeed),1f);
-            //if (MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //if (MyProfileManager.Instance.myProfileScreen.activeSelf)
             //{
-            //    //FeedUIController.Instance.FadeInOutScreenShow();//show fade in out.......
-            //    FeedUIController.Instance.ResetAllFeedScreen(true);
-            //    MyProfileDataManager.Instance.MyProfileSceenShow(false);//false my profile screen
+            //    //FeedsManager.Instance.FadeInOutScreenShow();//show fade in out.......
+            //    FeedsManager.Instance.ResetAllFeedScreen(true);
+            //    MyProfileManager.Instance.MyProfileSceenShow(false);//false my profile screen
             //}
             //else
             //{
-            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //    SNS_APIResponseManager.Instance.RequestGetUserDetails("myProfile");
             //}
 
-            //if (FeedUIController.Instance != null)
+            //if (FeedsManager.Instance != null)
             //{
-            //    if (FeedUIController.Instance.feedUiScreen.activeSelf)
+            //    if (FeedsManager.Instance.feedUiScreen.activeSelf)
             //    {
-            //        FeedUIController.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
+            //        FeedsManager.Instance.SetUpFeedTabDefaultTop();//set default scroll top.......
             //    }
             //}
             UIHandler.Instance.HomeWorldScreen.SetActive(false);
@@ -598,9 +598,9 @@ public class HomeFooterTabCanvas : MonoBehaviour
             UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().interactable = false;
             UIHandler.Instance._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
 
-            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
-            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
-            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+            FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+            FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
             if (UIHandler.Instance.Canvas.activeSelf)
             {
                 // UIHandler.Instance.Canvas.SetActive(false);
@@ -609,35 +609,35 @@ public class HomeFooterTabCanvas : MonoBehaviour
 
             DisableSubScreen();
         }
-        if (MyProfileDataManager.Instance)
+        if (MyProfileManager.Instance)
         {
-            MyProfileDataManager.Instance.MyProfileSceenShow(false);
-            MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
-            FeedUIController.Instance.AddFriendPanel.SetActive(true);
-            MyProfileDataManager.Instance.gameObject.SetActive(false);
+            MyProfileManager.Instance.MyProfileSceenShow(false);
+            MyProfileManager.Instance.OtherPlayerdataObj.SetActive(true);
+            FeedsManager.Instance.AddFriendPanel.SetActive(true);
+            MyProfileManager.Instance.gameObject.SetActive(false);
         }
         else
         {
-            FeedUIController.Instance.AddFriendPanel.SetActive(true);
-            OtherPlayerProfileData.Instance.myPlayerdataObj.GetComponent<MyProfileDataManager>().myProfileScreen.SetActive(false);
-            OtherPlayerProfileData.Instance.myPlayerdataObj.gameObject.SetActive(false);
+            FeedsManager.Instance.AddFriendPanel.SetActive(true);
+            OtherUserProfileManager.Instance.myPlayerdataObj.GetComponent<MyProfileManager>().myProfileScreen.SetActive(false);
+            OtherUserProfileManager.Instance.myPlayerdataObj.gameObject.SetActive(false);
         }
-        FeedUIController.Instance.feedUiScreen.SetActive(false);
+        FeedsManager.Instance.feedUiScreen.SetActive(false);
 
     }
 
     void DisableSubScreen ()
     {
-        if (FeedUIController.Instance != null)
+        if (FeedsManager.Instance != null)
         {
-            SNSSettingController.Instance.settingScreen.SetActive(false);
-            SNSSettingController.Instance.myAccountScreen.SetActive(false);
+            SNSSettingManager.Instance.settingScreen.SetActive(false);
+            SNSSettingManager.Instance.myAccountScreen.SetActive(false);
         }
     }   
 
 
     //void InvokeDisableFeed(){ 
-    //    FeedUIController.Instance.feedUiScreen.SetActive(false);
+    //    FeedsManager.Instance.feedUiScreen.SetActive(false);
     //}
 
     //this method is used to Profile button click.......
@@ -651,9 +651,9 @@ public class HomeFooterTabCanvas : MonoBehaviour
             //---->>>Sannan OnSelectedClick(4);
             if (GlobalVeriableClass.callingScreen == "Profile")
                 return;
-            if (FeedUIController.Instance)
+            if (FeedsManager.Instance)
             {
-                FeedUIController.Instance.feedUiScreen.SetActive(false);
+                FeedsManager.Instance.feedUiScreen.SetActive(false);
             }
 
             if (ProfileScreenController.instance)
@@ -676,7 +676,7 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                 additiveScenesManager.SNSMessage.SetActive(false);
                 GameManager.Instance.defaultSelection = 4;
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
+                FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
             }
             else
             {
@@ -686,17 +686,17 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 }
             }
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-            //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+            //if (!MyProfileManager.Instance.myProfileScreen.activeSelf)
             //{
-            //MyProfileDataManager.Instance.ProfileTabButtonClick();
-            //FeedUIController.Instance.ResetAllFeedScreen(false);
+            //MyProfileManager.Instance.ProfileTabButtonClick();
+            //FeedsManager.Instance.ResetAllFeedScreen(false);
             //}
-            if (MyProfileDataManager.Instance)
+            if (MyProfileManager.Instance)
             {
-                MyProfileDataManager.Instance.ProfileTabButtonClick();
-                FeedUIController.Instance.ResetAllFeedScreen(false);
-                FeedUIController.Instance.AddFriendPanel.SetActive(false);
-                FeedUIController.Instance.ShowLoader(true);
+                MyProfileManager.Instance.ProfileTabButtonClick();
+                FeedsManager.Instance.ResetAllFeedScreen(false);
+                FeedsManager.Instance.AddFriendPanel.SetActive(false);
+                FeedsManager.Instance.ShowLoader(true);
             }
             if (UIHandler.Instance.Canvas.activeSelf)
             {
@@ -706,21 +706,21 @@ public class HomeFooterTabCanvas : MonoBehaviour
                 UIHandler.Instance.Canvas.SetActive(false);
 
                 UIHandler.Instance.HomeWorldScreen.SetActive(false);
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                FeedsManager.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 Invoke("ClearUnloadAssetData", 0.2f);
             }
             //GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(true);
-            if (OtherPlayerProfileData.Instance)
+            if (OtherUserProfileManager.Instance)
             {
-                OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
-                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
+                OtherUserProfileManager.Instance.myPlayerdataObj.SetActive(true);
+                MyProfileManager.Instance.ResetMainScrollDefaultTopPos();
             }
-            if (MyProfileDataManager.Instance)
+            if (MyProfileManager.Instance)
             {
-                MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
+                MyProfileManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
             ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(true);
             ProfileScreenController.instance.SetMainScrolRefs();
@@ -742,8 +742,8 @@ public class HomeFooterTabCanvas : MonoBehaviour
         {
             additiveScenesManager.SNSmodule.SetActive(false);
             additiveScenesManager.SNSMessage.SetActive(false);
-            // FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().GameManager.Instance.defaultSelection = 4;
-            //  FeedUIController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
+            // FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().GameManager.Instance.defaultSelection = 4;
+            //  FeedsManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(4);
         }
         // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
         //  GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);

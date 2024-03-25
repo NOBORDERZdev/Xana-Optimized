@@ -17,23 +17,23 @@ public class ChatScreenDataScript : MonoBehaviour
 
     public void OnRefereshGetMessageApi()
     {
-        APIManager.Instance.r_isCreateMessage = true;
+        SNS_APIResponseManager.Instance.r_isCreateMessage = true;
         if (allChatGetConversationDatum.receiverId != 0)
         {
-            if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+            if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
             {
-                APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "");
+                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "");
             }
             else
             {
-                APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "");
+                SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "");
             }
             //Debug.LogError("receiverId" + allChatGetConversationDatum.receiverId);
         }
         else if (allChatGetConversationDatum.receivedGroupId != 0)
         {
             //Debug.LogError("receivedGroupId" + allChatGetConversationDatum.receivedGroupId);
-            APIManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "");
+            SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "");
         }
         MessageController.Instance.allChatGetConversationDatum = allChatGetConversationDatum;
     }
