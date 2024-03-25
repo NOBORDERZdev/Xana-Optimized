@@ -35,18 +35,15 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void Mute_UnMute_Sound(bool flag)
     {
+        audioSource.mute = flag;
         if (flag)
         {
-            audioSource.Stop();
             if (volumeCoroutine != null)
                 StopCoroutine(volumeCoroutine);
             activePlayer.AudioVolume = 0f;
         }
         else
-        {
-            audioSource.Play();
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
-        }
     }
 
 
@@ -55,7 +52,6 @@ public class AvProDirectionalSound : MonoBehaviour
         if (activePlayer.gameObject.activeSelf)
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
-
 
     IEnumerator AdjustScreenVolume()
     {

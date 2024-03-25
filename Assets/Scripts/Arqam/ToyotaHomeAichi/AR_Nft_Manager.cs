@@ -17,27 +17,6 @@ namespace Toyota
 {
     public class AR_Nft_Manager : MonoBehaviour
     {
-        //[SerializeField] bool worldPlayingVideos;
-        //[NonReorderable]
-        //public List<RatioRef> ratioReferences;
-
-        //[Space(10)]
-        //[Header("PDF Data Refrences")]
-        //public GameObject pdfPanel_L;
-        //public GameObject pdfPanel_P;
-        //public PDFViewer pdfViewer_L; 
-        //public PDFViewer pdfViewer_P;
-
-        //[NonReorderable]
-        //[SerializeField] List<VideoPlayer> VideoPlayers;
-        //[SerializeField] GameObject LandscapeObj;
-        //[SerializeField] GameObject PotraiteObj;
-
-        ////public static AR_Nft_Manager Instance { get; private set; }
-        //public RenderTexture renderTexture_16x9;
-        //public RenderTexture renderTexture_9x16;
-        //public RenderTexture renderTexture_1x1;
-        //public RenderTexture renderTexture_4x3;
         [SerializeField] int RetryChances = 3;
         [SerializeField] int PMY_RoomId_test;
         [SerializeField] int PMY_RoomId_main;
@@ -45,7 +24,6 @@ namespace Toyota
         [HideInInspector]
         public int PMY_RoomId;
 
-        //public string analyticMuseumID;
         int ratioId;
         int videoRetry = 0;
 
@@ -85,18 +63,6 @@ namespace Toyota
         [Space(5)]
         public UnityEvent allDataLoaded;
 
-        //private void Awake()
-        //{
-        //    if (Instance != null && Instance != this)
-        //    {
-        //        Destroy(this);
-        //    }
-        //    else
-        //    {
-        //        Instance = this;
-        //    }
-        //}
-
         private void OnEnable()
         {
             if (NFT_Holder_Manager.instance.VideoPlayers.Count > 0)
@@ -112,20 +78,11 @@ namespace Toyota
         private void Start()
         {
             if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
-            {
-                //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Main;
-                //else
-                    PMY_RoomId = PMY_RoomId_main;
-            }
+                PMY_RoomId = PMY_RoomId_main;
             else
-            {
-                //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstants.xanaConstants.pmy_classRoomID_Test;
-                //else
-                    PMY_RoomId = PMY_RoomId_test;
-            }
-                Int_PMY_Nft_Manager();
+                PMY_RoomId = PMY_RoomId_test;
+
+            Int_PMY_Nft_Manager();
         }
 
         /// <summary>
@@ -265,11 +222,11 @@ namespace Toyota
                                 worldInfos[i].url = worldData[j].descriptionHyperlink;
                             }
                         }
-                        else if(worldData[j].media_type == "PDF")
+                        else if (worldData[j].media_type == "PDF")
                         {
                             worldInfos[i].Type = PMY_DataType.PDF;
                             worldInfos[i].pdfURL = worldData[j].pdf_url;
-                            worldInfos[i].thumbnail= worldData[j].thumbnail;
+                            worldInfos[i].thumbnail = worldData[j].thumbnail;
                             NftPlaceholderList[i].GetComponent<AR_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.PDF, PMY_VideoTypeRes.none);
                         }
                         //else if (worldData[j].media_type == "QUIZ")
@@ -315,39 +272,7 @@ namespace Toyota
             obj.GetComponent<AR_VideoAndImage>().InitData(null, url, worldInfos[obj.GetComponent<AR_VideoAndImage>().id].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
         }
 
-        IEnumerator GetSprite(string path, int index, System.Action<Sprite, int> callback)
-        {
-            while (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                yield return new WaitForEndOfFrame();
-                print("Internet Not Reachable");
-            }
-
-            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(path))
-            {
-                yield return www.SendWebRequest();
-
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log("ERror in loading sprite" + www.error);
-                }
-                else
-                {
-                    if (www.isDone)
-                    {
-                        Texture2D loadedTexture = DownloadHandlerTexture.GetContent(www);
-                        var rect = new Rect(1, 1, 1, 1);
-                        var tempTex = ((DownloadHandlerTexture)www.downloadHandler).texture;
-                        Sprite sprite = Sprite.Create(loadedTexture, new Rect(0f, 0f, loadedTexture.width, loadedTexture.height), new Vector2(.5f, 0f));
-                        print("Texture is " + sprite);
-                        callback(sprite, index);
-                    }
-                }
-            }
-        }
-
-
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Stage, int roomNum = 1)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData, int nftId = 0, AR_VideoAndImage.RoomType roomType = AR_VideoAndImage.RoomType.Stage, int roomNum = 1)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -366,7 +291,7 @@ namespace Toyota
 
             if (type == PMY_DataType.PDF)
             {
-                NFT_Holder_Manager.instance.pdfViewer_L.FileURL= pdfURL;
+                NFT_Holder_Manager.instance.pdfViewer_L.FileURL = pdfURL;
                 NFT_Holder_Manager.instance.pdfViewer_P.FileURL = pdfURL;
                 Enable_PDF_Panel();
             }
@@ -519,7 +444,7 @@ namespace Toyota
             {
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
             }
-
+            NFT_Holder_Manager.instance.currentRoom = this;
             #region For firebase analytics
             SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
             clickedNftInd = nftId;
@@ -570,7 +495,6 @@ namespace Toyota
             {
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
-
         }
 
         private void ErrorOnVideo(VideoPlayer source, string message)
@@ -578,7 +502,7 @@ namespace Toyota
             if (videoRetry <= RetryChances)
             {
                 videoRetry++;
-                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType, _pdfURL,_quiz_data);
+                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType, _pdfURL, _quiz_data);
             }
             else
             {
@@ -586,23 +510,14 @@ namespace Toyota
                 CloseInfoPop();
             }
         }
+
         private void VideoReady(VideoPlayer source)
         {
             NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Loader.SetActive(false);
             NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Loader.SetActive(false);
             videoRetry = 0;
         }
-        //public async void EnableQuizPanel()
-        //{
-        //    if (!ChangeOrientation_waqas._instance.isPotrait)
-        //    {
-        //        quizPanel_L.SetActive(true);
-        //    }
-        //    else
-        //    {
-        //        quizPanel_P.SetActive(true);
-        //    }
-        //}
+
         public void Enable_PDF_Panel()
         {
             if (!ChangeOrientation_waqas._instance.isPotrait)
@@ -657,14 +572,12 @@ namespace Toyota
         public PMY_Ratio pmyRatio;
         public PMY_VideoTypeRes videoType;
     }
-
     public enum PMY_DataType
     {
         Image,
         Video,
         PDF
     }
-
     public enum PMY_VideoTypeRes
     {
         none,
@@ -672,7 +585,6 @@ namespace Toyota
         prerecorded,
         aws
     }
-
     public enum PMY_Ratio
     {
         OneXOneWithDes,
@@ -711,14 +623,12 @@ namespace Toyota
         public GameObject p_PrerecordedPlayer;
         public GameObject p_Loader;
     }
-
     public class PMY_Json
     {
         public bool success;
         public List<PMY_Asset> data;
         public string msg;
     }
-
     public class PMY_Asset
     {
         public int id;
@@ -744,12 +654,11 @@ namespace Toyota
         public DateTime updatedAt;
         public string event_env_class;
     }
-
-
     public class QuizData
     {
         public string question;
         public List<string> answer;
         public string correct;
     }
+
 }

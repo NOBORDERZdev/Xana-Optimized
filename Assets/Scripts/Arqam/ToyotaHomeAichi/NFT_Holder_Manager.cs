@@ -1,9 +1,7 @@
 using Paroxe.PdfRenderer;
-using System.Collections;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Video;
 
 public class NFT_Holder_Manager : MonoBehaviour
@@ -25,14 +23,31 @@ public class NFT_Holder_Manager : MonoBehaviour
     public GameObject LandscapeObj;
     public GameObject PotraiteObj;
 
-    //public static AR_Nft_Manager Instance { get; private set; }
     public RenderTexture renderTexture_16x9;
     public RenderTexture renderTexture_9x16;
     public RenderTexture renderTexture_1x1;
     public RenderTexture renderTexture_4x3;
-    private void Start()
+    [Space(5)]
+    public AR_Nft_Manager currentRoom;
+
+    private void Awake()
     {
-        instance = this;
+        if (instance is null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
     }
-     
+
+    public void CloseBtnClicked()
+    {
+        currentRoom.CloseInfoPop();
+        if (currentRoom != null) currentRoom = null;
+    }
+
+    public void PdfClosed()
+    {
+        currentRoom.EnableControlls();
+        if (currentRoom != null) currentRoom = null;
+    }
+
 }
