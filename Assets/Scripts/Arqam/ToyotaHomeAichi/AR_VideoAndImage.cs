@@ -348,7 +348,7 @@ namespace Toyota
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
             {
-                RenderTexture renderTexture = new RenderTexture(nftMAnager.renderTexture_16x9);
+                RenderTexture renderTexture = new RenderTexture(NFT_Holder_Manager.instance.renderTexture_16x9);
 
                 SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
                 SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
