@@ -271,7 +271,6 @@ public class WorldItemView : EnhancedScrollerCellView
     }
     public IEnumerator DownloadAndLoadFeed(int worlditemcount, int _loopcount)
     {
-        yield return null;
         if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
@@ -297,6 +296,7 @@ public class WorldItemView : EnhancedScrollerCellView
             /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
+        yield return null;
     }
     void GetEventType(string entityType)
     {
