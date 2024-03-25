@@ -105,18 +105,18 @@ public class SNSSocketHandler : MonoBehaviour
         //Debug.Log("Group delete response:" + s);
         DeleteGroupRoot deleteGroupResponce = JsonConvert.DeserializeObject<DeleteGroupRoot>(s);
 
-        if (MessageController.Instance.allChatGetConversationDatum != null)//user in chat or details screen show popup and ok press goto conversation screen and clear data 
+        if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum != null)//user in chat or details screen show popup and ok press goto conversation screen and clear data 
         {
-            //Debug.Log("GroupDeleted:" + MessageController.Instance.allChatGetConversationDatum.group.createdBy);
-            if(MessageController.Instance.allChatGetConversationDatum.receivedGroupId == deleteGroupResponce.groupId && MessageController.Instance.allChatGetConversationDatum.group.createdBy != SNS_APIResponseManager.Instance.userId)
+            //Debug.Log("GroupDeleted:" + SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.createdBy);
+            if(SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId == deleteGroupResponce.groupId && SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.createdBy != SNS_APIResponseManager.Instance.userId)
             {
-                MessageController.Instance.groupDeletedShowPopupForOtherUser.SetActive(true);
+                SNS_SMSModuleManager.Instance.groupDeletedShowPopupForOtherUser.SetActive(true);
             }
         }
         else
         {
             //check group id on conversation list is available then clear require data and destroy object.......
-            MessageController.Instance.ResetAndRefreshMessageModule();
+            SNS_SMSModuleManager.Instance.ResetAndRefreshMessageModule();
         }
     }
 
@@ -128,7 +128,7 @@ public class SNSSocketHandler : MonoBehaviour
 
         //Debug.Log("Group Leave Responce Data:" + s);
         leaveGroupResponce = JsonConvert.DeserializeObject<GroupLeaveResponceRoot>(s);
-        MessageController.Instance.LeaveGroupAfterRemoveMemberFromCurrentConversation(leaveGroupResponce);
+        SNS_SMSModuleManager.Instance.LeaveGroupAfterRemoveMemberFromCurrentConversation(leaveGroupResponce);
     }
 
     public void GroupCreatedResponse(string s)
@@ -152,32 +152,32 @@ public class SNSSocketHandler : MonoBehaviour
     void OnGetMessageAfterReconnectSocket()
     {
         //Debug.Log("OnGetMessageAfterReconnectSocket0000000.......:"+ isReconnectGetmessage);
-        if (!isReconnectGetmessage && MessageController.Instance != null && MessageController.Instance.allChatGetConversationDatum != null)
+        if (!isReconnectGetmessage && SNS_SMSModuleManager.Instance != null && SNS_SMSModuleManager.Instance.allChatGetConversationDatum != null)
         {
-            if (!MessageController.Instance.ChatScreen.activeSelf)
+            if (!SNS_SMSModuleManager.Instance.ChatScreen.activeSelf)
             {
                 //Debug.Log("Refresh  Conversation call.......");
                 return;
             }
             //Debug.Log("OnGetMessageAfterReconnectSocket1111111.......");
             //Debug.Log("2");
-            if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
+            if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId != 0)
             {
                 //Debug.Log("3");
-                RequestChatGetMessagesSocket(1, 50, 0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId);
+                RequestChatGetMessagesSocket(1, 50, 0, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId);
             }
-            else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
+            else if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId != 0)
             {
                 //Debug.Log("4");
-                if (MessageController.Instance.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
+                if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                 {
                     //Debug.Log("5");
-                    RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.senderId, 0);
+                    RequestChatGetMessagesSocket(1, 50, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.senderId, 0);
                 }
                 else
                 {
                     //  Debug.Log("6");
-                    RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.receiverId, 0);
+                    RequestChatGetMessagesSocket(1, 50, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId, 0);
                 }
             }
         }
@@ -199,7 +199,7 @@ public class SNSSocketHandler : MonoBehaviour
             //Debug.Log("MessageReceivedResponce:"+msgResponce.userList[i]);
             if (int.Parse(msgResponce.userList[i]) == SNS_APIResponseManager.Instance.userId)
             {
-                if (MessageController.Instance != null && !MessageController.Instance.ChatScreen.activeSelf)
+                if (SNS_SMSModuleManager.Instance != null && !SNS_SMSModuleManager.Instance.ChatScreen.activeSelf)
                 {
                     //Debug.Log("Refresh  Conversation call.......");
                     SNS_APIResponseManager.Instance.RequestChatGetConversation();
@@ -208,26 +208,26 @@ public class SNSSocketHandler : MonoBehaviour
                 if (!this.gameObject.activeInHierarchy)
                     return;
 
-                if (MessageController.Instance.allChatGetConversationDatum != null)
+                if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum != null)
                 {
                     //Debug.Log("2");
-                    if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
+                    if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId != 0)
                     {
                         //Debug.Log("3");
-                        RequestChatGetMessagesSocket(1, 50, 0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId);
+                        RequestChatGetMessagesSocket(1, 50, 0, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId);
                     }
-                    else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
+                    else if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId != 0)
                     {
                         //Debug.Log("4");
-                        if (MessageController.Instance.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
+                        if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                         {
                             //Debug.Log("5");
-                            RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.senderId, 0);
+                            RequestChatGetMessagesSocket(1, 50, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.senderId, 0);
                         }
                         else
                         {
                             //  Debug.Log("6");
-                            RequestChatGetMessagesSocket(1, 50, MessageController.Instance.allChatGetConversationDatum.receiverId, 0);
+                            RequestChatGetMessagesSocket(1, 50, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId, 0);
                         }
                     }
                 }

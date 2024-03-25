@@ -156,7 +156,7 @@ public class ChatDataScript : MonoBehaviour
             entryBegin.callback.AddListener((data) =>
             {
                 pressed = false;
-                MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnBeginDrag((PointerEventData)data);
+                SNS_SMSModuleManager.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnBeginDrag((PointerEventData)data);
             });
             trigger.triggers.Add(entryBegin);
 
@@ -164,28 +164,28 @@ public class ChatDataScript : MonoBehaviour
             entryDrag.callback.AddListener((data) =>
             {
                 pressed = false;
-                MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnDrag((PointerEventData)data);
+                SNS_SMSModuleManager.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnDrag((PointerEventData)data);
             });
             trigger.triggers.Add(entryDrag);
 
             entryEnd.eventID = EventTriggerType.EndDrag;
             entryEnd.callback.AddListener((data) =>
             {
-                MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnEndDrag((PointerEventData)data);
+                SNS_SMSModuleManager.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnEndDrag((PointerEventData)data);
             });
             trigger.triggers.Add(entryEnd);
 
             entrypotential.eventID = EventTriggerType.InitializePotentialDrag;
             entrypotential.callback.AddListener((data) =>
             {
-                MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnInitializePotentialDrag((PointerEventData)data);
+                SNS_SMSModuleManager.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnInitializePotentialDrag((PointerEventData)data);
             });
             trigger.triggers.Add(entrypotential);
 
             entryScroll.eventID = EventTriggerType.Scroll;
             entryScroll.callback.AddListener((data) =>
             {
-                MessageController.Instance.chatScrollMain.GetComponent<ScrollRectEx>().OnScroll((PointerEventData)data);
+                SNS_SMSModuleManager.Instance.chatScrollMain.GetComponent<ScrollRectEx>().OnScroll((PointerEventData)data);
             });
             trigger.triggers.Add(entryScroll);
         }
@@ -196,11 +196,11 @@ public class ChatDataScript : MonoBehaviour
     {
         if (isVideo)
         {
-            MessageController.Instance.OnShowChatVideoOrImage(null, mediaPlayer.GetComponent<MediaPlayer>());
+            SNS_SMSModuleManager.Instance.OnShowChatVideoOrImage(null, mediaPlayer.GetComponent<MediaPlayer>());
         }
         else
         {
-            MessageController.Instance.OnShowChatVideoOrImage(attechmentImage.sprite, null);
+            SNS_SMSModuleManager.Instance.OnShowChatVideoOrImage(attechmentImage.sprite, null);
         }
     } 
 

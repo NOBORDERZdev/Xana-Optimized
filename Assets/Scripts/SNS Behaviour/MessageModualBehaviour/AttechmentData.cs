@@ -80,7 +80,7 @@ public class AttechmentData : MonoBehaviour
 
     public void OnClickSeeFullImage()
     {        
-        foreach (Transform item in MessageController.Instance.saveAttechmentParent)
+        foreach (Transform item in SNS_SMSModuleManager.Instance.saveAttechmentParent)
         {
             Destroy(item.gameObject);
         }
@@ -89,7 +89,7 @@ public class AttechmentData : MonoBehaviour
         bool isMatch = false;
         for (int i = 0; i < SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
         {
-            GameObject attechment = Instantiate(SNS_APIController.Instance.saveAttechmentPrefab, MessageController.Instance.saveAttechmentParent);
+            GameObject attechment = Instantiate(SNS_APIController.Instance.saveAttechmentPrefab, SNS_SMSModuleManager.Instance.saveAttechmentParent);
             attechment.GetComponent<SaveAttechmentScript>().attachmentsRow = SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[i];
             attechment.GetComponent<SaveAttechmentScript>().LoadData();
 
@@ -98,8 +98,8 @@ public class AttechmentData : MonoBehaviour
             if (SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[i].id == attachmentsRow.id && !isMatch)
             {
                 pageIndex = index;
-                MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().startingPage = pageIndex;
-                MessageController.Instance.SaveAttachmentDetailsSetup(pageIndex);
+                SNS_SMSModuleManager.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().startingPage = pageIndex;
+                SNS_SMSModuleManager.Instance.SaveAttachmentDetailsSetup(pageIndex);
                 isMatch = true;
             }
             else
@@ -108,8 +108,8 @@ public class AttechmentData : MonoBehaviour
                 index += 1;
             }
         }
-        MessageController.Instance.AttechmentDownloadScreen.SetActive(true);
-        MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().StartScrollSnap();
+        SNS_SMSModuleManager.Instance.AttechmentDownloadScreen.SetActive(true);
+        SNS_SMSModuleManager.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().StartScrollSnap();
     }
 
     public void SetVideoUi(bool isVideo)

@@ -930,7 +930,7 @@ public class OtherUserProfileManager : MonoBehaviour
         if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
         {
             //Debug.Log("OnClickMessageButtonClick000000");
-            if (MessageController.Instance != null)
+            if (SNS_SMSModuleManager.Instance != null)
             {
                 isDirectMessageScreenOpen = true;
                 if (backKeyManageList.Contains("GroupDetailsScreen"))
@@ -939,7 +939,7 @@ public class OtherUserProfileManager : MonoBehaviour
                     //RemoveAndCheckBackKey();
                 }
                 //Debug.Log("OnClickMessageButtonClick");
-                MessageController.Instance.OnDirectMessageFromOtherUserProfile(singleUserProfileData.id, singleUserProfileData.name, profileImage.sprite);
+                SNS_SMSModuleManager.Instance.OnDirectMessageFromOtherUserProfile(singleUserProfileData.id, singleUserProfileData.name, profileImage.sprite);
             }
         }
         isTempDirectMessageScreenOpen = false;

@@ -234,11 +234,11 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
                 FeedsManager.Instance.ProfileFFSelectionOnValueChange();
             }
         }
-        else if (MessageController.Instance != null && MessageController.Instance.gameObject.activeSelf)
+        else if (SNS_SMSModuleManager.Instance != null && SNS_SMSModuleManager.Instance.gameObject.activeSelf)
         {
-            if (MessageController.Instance.AttechmentDownloadScreen.activeSelf)
+            if (SNS_SMSModuleManager.Instance.AttechmentDownloadScreen.activeSelf)
             {
-                MessageController.Instance.SaveAttachmentDetailsSetup(_currentPage);
+                SNS_SMSModuleManager.Instance.SaveAttachmentDetailsSetup(_currentPage);
             }
         }
     }

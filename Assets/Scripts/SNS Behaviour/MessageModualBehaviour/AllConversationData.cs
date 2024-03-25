@@ -45,10 +45,10 @@ public class AllConversationData : MonoBehaviour
     {
         defaultSP = profileImage.sprite;
 
-        currentScrollRect = MessageController.Instance.searchManagerAllConversation.mainScrollView.GetComponent<ScrollRect>();
+        currentScrollRect = SNS_SMSModuleManager.Instance.searchManagerAllConversation.mainScrollView.GetComponent<ScrollRect>();
         if (this.transform.parent.name== "searchContainer")
         {
-            currentScrollRect = MessageController.Instance.searchManagerAllConversation.searchScrollView.GetComponent<ScrollRect>();
+            currentScrollRect = SNS_SMSModuleManager.Instance.searchManagerAllConversation.searchScrollView.GetComponent<ScrollRect>();
         }
 
         EventTrigger trigger = GetComponent<EventTrigger>();
@@ -340,7 +340,7 @@ public class AllConversationData : MonoBehaviour
     public void OnClickStartMessage()
     {
         //Debug.LogError(currentScrollRect.velocity);
-        if (MessageController.Instance.deleteConfirmationScreen.activeSelf || currentScrollRect.velocity != Vector2.zero)
+        if (SNS_SMSModuleManager.Instance.deleteConfirmationScreen.activeSelf || currentScrollRect.velocity != Vector2.zero)
         {
             //Debug.LogError("Do not open Chat screen.......");
             return;
@@ -348,24 +348,24 @@ public class AllConversationData : MonoBehaviour
         pressed = false;
         StopCountDownCo();//this is used to stop countdown coroutine if is started.......
 
-        MessageController.Instance.chatPrefabParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        SNS_SMSModuleManager.Instance.chatPrefabParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
         SNS_APIController.Instance.allChatMessageId.Clear();
         SNS_APIController.Instance.chatTimeList.Clear();
-        MessageController.Instance.currentConversationData = this;
-        MessageController.Instance.currentChatPage = 1;
-        MessageController.Instance.isChatDataLoaded = false;
+        SNS_SMSModuleManager.Instance.currentConversationData = this;
+        SNS_SMSModuleManager.Instance.currentChatPage = 1;
+        SNS_SMSModuleManager.Instance.isChatDataLoaded = false;
 
-        string TempChatTitle = MessageController.Instance.chatTitleText.text.ToString();
+        string TempChatTitle = SNS_SMSModuleManager.Instance.chatTitleText.text.ToString();
 
-        foreach (Transform item in MessageController.Instance.chatPrefabParent)
+        foreach (Transform item in SNS_SMSModuleManager.Instance.chatPrefabParent)
         {
             Destroy(item.gameObject);
         }
 
         if (allChatGetConversationDatum.receiverId != 0)
         {
-            MessageController.Instance.LoaderShow(true);//rik loader active.......
+            SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
 
             //Debug.LogError("receiverId" + allChatGetConversationDatum.receiverId);
             if (allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
@@ -376,17 +376,17 @@ public class AllConversationData : MonoBehaviour
             {
                 SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "Conversation");
             }
-            MessageController.Instance.chatTitleText.text = textTitle.text;
+            SNS_SMSModuleManager.Instance.chatTitleText.text = textTitle.text;
         }
         else if (allChatGetConversationDatum.receivedGroupId != 0)
         {
-            MessageController.Instance.LoaderShow(true);//rik loader active.......
+            SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
 
             //Debug.LogError("receivedGroupId" + allChatGetConversationDatum.receivedGroupId);
             SNS_APIResponseManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "Conversation");
             if (!string.IsNullOrEmpty(allChatGetConversationDatum.group.name))
             {
-                MessageController.Instance.chatTitleText.text = allChatGetConversationDatum.group.name;
+                SNS_SMSModuleManager.Instance.chatTitleText.text = allChatGetConversationDatum.group.name;
             }
             else
             {
@@ -395,41 +395,41 @@ public class AllConversationData : MonoBehaviour
                     groupName.Add(allChatGetConversationDatum.group.groupUsers[i].user.name);
                 }
                 CreateChatTitleString(groupName);
-                MessageController.Instance.chatTitleText.text = chatTitlestr;
+                SNS_SMSModuleManager.Instance.chatTitleText.text = chatTitlestr;
             }
         }
-        MessageController.Instance.allChatGetConversationDatum = allChatGetConversationDatum;
+        SNS_SMSModuleManager.Instance.allChatGetConversationDatum = allChatGetConversationDatum;
 
-        if (MessageController.Instance.chatTitleText.text != TempChatTitle)
+        if (SNS_SMSModuleManager.Instance.chatTitleText.text != TempChatTitle)
         {
-            //MessageController.Instance.typeMessageText.text = "";
-            MessageController.Instance.chatTypeMessageInputfield.Text = "";
-            MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+            //SNS_SMSModuleManager.Instance.typeMessageText.text = "";
+            SNS_SMSModuleManager.Instance.chatTypeMessageInputfield.Text = "";
+            SNS_SMSModuleManager.Instance.OnChatVoiceOrSendButtonEnable();
         }
 
         bool isGroup = false;
         if (allChatGetConversationDatum.group != null && allChatGetConversationDatum.receivedGroupId != 0)
         {
             isGroup = true;
-            MessageController.Instance.defaultChatScreenTopUserImage = MessageController.Instance.defaultUserImageSquare;
+            SNS_SMSModuleManager.Instance.defaultChatScreenTopUserImage = SNS_SMSModuleManager.Instance.defaultUserImageSquare;
         }
         else
         {
             isGroup = false;
-            MessageController.Instance.defaultChatScreenTopUserImage = MessageController.Instance.defaultUserImageRound;
+            SNS_SMSModuleManager.Instance.defaultChatScreenTopUserImage = SNS_SMSModuleManager.Instance.defaultUserImageRound;
         }
 
-        MessageController.Instance.ChatScreenTopUserProfileBGSetUp(isGroup);//set default bg for user profile(round or square)
+        SNS_SMSModuleManager.Instance.ChatScreenTopUserProfileBGSetUp(isGroup);//set default bg for user profile(round or square)
         
         if (!string.IsNullOrEmpty(avatarUrl))
         {
-            AssetCache.Instance.LoadSpriteIntoImage(MessageController.Instance.chatScreenTopUserImage, avatarUrl, changeAspectRatio: true);
+            AssetCache.Instance.LoadSpriteIntoImage(SNS_SMSModuleManager.Instance.chatScreenTopUserImage, avatarUrl, changeAspectRatio: true);
         }
         else
         {            
-            MessageController.Instance.ChatScreenTopUserProfileSetUp(MessageController.Instance.defaultChatScreenTopUserImage, isGroup);
+            SNS_SMSModuleManager.Instance.ChatScreenTopUserProfileSetUp(SNS_SMSModuleManager.Instance.defaultChatScreenTopUserImage, isGroup);
         }
-        MessageController.Instance.isDirectMessage = false;
+        SNS_SMSModuleManager.Instance.isDirectMessage = false;
     }
 
     public string chatTitlestr;
@@ -567,21 +567,21 @@ public class AllConversationData : MonoBehaviour
             }
 
             //Debug.LogError("conversation item seleted for delete and enable delete conversation popup");
-            MessageController.Instance.deleteConfirmationCurrentConversationDataScript = this;
+            SNS_SMSModuleManager.Instance.deleteConfirmationCurrentConversationDataScript = this;
             if (allChatGetConversationDatum.group != null && allChatGetConversationDatum.receivedGroupId != 0)
             {
                 if (allChatGetConversationDatum.group.createdBy == SNS_APIResponseManager.Instance.userId)//group admin is this user.......
                 {
-                    MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete group?");
+                    SNS_SMSModuleManager.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete group?");
                 }
                 else//group admin is not this user.......
                 {
-                    MessageController.Instance.ShowSetupDeleteConfirmationScreen("Leave", "Are you sure you want to leave group?");
+                    SNS_SMSModuleManager.Instance.ShowSetupDeleteConfirmationScreen("Leave", "Are you sure you want to leave group?");
                 }
             }
             else//one to one conversation.......
             {
-                MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete conversation?");
+                SNS_SMSModuleManager.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete conversation?");
             }
         }
     }

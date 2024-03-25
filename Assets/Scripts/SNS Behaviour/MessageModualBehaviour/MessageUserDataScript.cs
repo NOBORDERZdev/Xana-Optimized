@@ -61,52 +61,52 @@ public class MessageUserDataScript : MonoBehaviour
     {
         if (!selectionToggle.isOn)
         {
-            GameObject friendItemObject = Instantiate(SNS_APIController.Instance.selectedFriendItemPrefab, MessageController.Instance.selectedFriendItemPrefabParent);
+            GameObject friendItemObject = Instantiate(SNS_APIController.Instance.selectedFriendItemPrefab, SNS_SMSModuleManager.Instance.selectedFriendItemPrefabParent);
             //friendItemObject.GetComponent<MessageUserDataScript>().allFollowingRow = allFollowingRow;
             friendItemObject.GetComponent<MessageUserDataScript>().LoadFeed(allFollowingRow);
             selectionToggle.isOn = true;
-            MessageController.Instance.CreateNewMessageUserList.Add(allFollowingRow.userId.ToString());
-            MessageController.Instance.createNewMessageUserAvatarSPList.Add(profileImage.sprite);
+            SNS_SMSModuleManager.Instance.CreateNewMessageUserList.Add(allFollowingRow.userId.ToString());
+            SNS_SMSModuleManager.Instance.createNewMessageUserAvatarSPList.Add(profileImage.sprite);
             // SNS_APIController.Instance.allFollowingUserList.Remove(allFollowingRow.following.name);
             SNS_APIController.Instance.allChatMemberList.Add(allFollowingRow.following.name);
 
-            if (MessageController.Instance.searchManagerFindFriends.searchScrollView.activeSelf)
+            if (SNS_SMSModuleManager.Instance.searchManagerFindFriends.searchScrollView.activeSelf)
             {
-                MessageUserDataScript ddd = MessageController.Instance.searchManagerFindFriends.allMessageUserDataList.Find(x => x.allFollowingRow.id == allFollowingRow.id);
+                MessageUserDataScript ddd = SNS_SMSModuleManager.Instance.searchManagerFindFriends.allMessageUserDataList.Find(x => x.allFollowingRow.id == allFollowingRow.id);
                 ddd.selectionToggle.isOn = selectionToggle.isOn;
             }
         }
         else
         {
-            for (int i = 0; i < MessageController.Instance.selectedFriendItemPrefabParent.childCount; i++)
+            for (int i = 0; i < SNS_SMSModuleManager.Instance.selectedFriendItemPrefabParent.childCount; i++)
             {
-                if (MessageController.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
+                if (SNS_SMSModuleManager.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
                 {
                     // SNS_APIController.Instance.allFollowingUserList.Add(allFollowingRow.following.name);
                     SNS_APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
-                    MessageController.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
-                    MessageController.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
-                    Destroy(MessageController.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject);
+                    SNS_SMSModuleManager.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
+                    SNS_SMSModuleManager.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
+                    Destroy(SNS_SMSModuleManager.Instance.selectedFriendItemPrefabParent.GetChild(i).gameObject);
                     break;
                 }
             }
             selectionToggle.isOn = false;
         }
-        MessageController.Instance.ActiveSelectionScroll();
+        SNS_SMSModuleManager.Instance.ActiveSelectionScroll();
     }
 
     public void OnClickDeleteFriend()
     {
-        for (int i = 0; i < MessageController.Instance.followingUserParent.childCount; i++)
+        for (int i = 0; i < SNS_SMSModuleManager.Instance.followingUserParent.childCount; i++)
         {
-            if (MessageController.Instance.followingUserParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
+            if (SNS_SMSModuleManager.Instance.followingUserParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().allFollowingRow.userId == allFollowingRow.userId)
             {
                 //Debug.LogError("aaaaaaaaaaaaaaaaa");
                 SNS_APIController.Instance.allChatMemberList.Remove(allFollowingRow.following.name);
-                MessageController.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
-                MessageController.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
-                MessageController.Instance.ActiveSelectionScroll();
-                MessageController.Instance.followingUserParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().selectionToggle.isOn = false;
+                SNS_SMSModuleManager.Instance.CreateNewMessageUserList.Remove(allFollowingRow.userId.ToString());
+                SNS_SMSModuleManager.Instance.createNewMessageUserAvatarSPList.Remove(profileImage.sprite);
+                SNS_SMSModuleManager.Instance.ActiveSelectionScroll();
+                SNS_SMSModuleManager.Instance.followingUserParent.GetChild(i).gameObject.GetComponent<MessageUserDataScript>().selectionToggle.isOn = false;
                 Destroy(this.gameObject);
                 break;
             }
@@ -115,8 +115,8 @@ public class MessageUserDataScript : MonoBehaviour
 
     public void ResetScrollView()
     {
-        MessageController.Instance.selectionScrollView.transform.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        MessageController.Instance.selectionScrollView.transform.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.selectionScrollView.transform.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.selectionScrollView.transform.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     #region Get Image From AWS

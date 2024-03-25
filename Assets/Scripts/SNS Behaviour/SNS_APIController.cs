@@ -708,17 +708,17 @@ public class SNS_APIController : MonoBehaviour
         if (pageNum == 1)
         {
             allFollowingUserList.Clear();
-            foreach (Transform item in MessageController.Instance.followingUserParent)
+            foreach (Transform item in SNS_SMSModuleManager.Instance.followingUserParent)
             {
                 Destroy(item.gameObject);
             }
-            foreach (Transform item in MessageController.Instance.selectedFriendItemPrefabParent)
+            foreach (Transform item in SNS_SMSModuleManager.Instance.selectedFriendItemPrefabParent)
             {
                 Destroy(item.gameObject);
             }
-            //MessageController.Instance.ActiveSelectionScroll();
+            //SNS_SMSModuleManager.Instance.ActiveSelectionScroll();
 
-            MessageController.Instance.tottleFollowing = 0;
+            SNS_SMSModuleManager.Instance.tottleFollowing = 0;
         }
 
         bool isMatch = false;
@@ -726,11 +726,11 @@ public class SNS_APIController : MonoBehaviour
         {
             for (int j = 0; j < SNS_APIResponseManager.Instance.allFollowingRoot.data.rows.Count; j++)
             {
-                if (MessageController.Instance.addFrindCallingScreenIndex == 1)
+                if (SNS_SMSModuleManager.Instance.addFrindCallingScreenIndex == 1)
                 {
-                    for (int k = 0; k < MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count; k++)
+                    for (int k = 0; k < SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers.Count; k++)
                     {
-                        if (SNS_APIResponseManager.Instance.allFollowingRoot.data.rows[j].userId == MessageController.Instance.allChatGetConversationDatum.group.groupUsers[k].userId)
+                        if (SNS_APIResponseManager.Instance.allFollowingRoot.data.rows[j].userId == SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers[k].userId)
                         {
                             isMatch = true;
                             break;
@@ -744,28 +744,28 @@ public class SNS_APIController : MonoBehaviour
                 //Debug.Log("Ismatch:" + isMatch);
                 if (!isMatch)
                 {
-                    GameObject followingUserObject = Instantiate(followingUser, MessageController.Instance.followingUserParent);
+                    GameObject followingUserObject = Instantiate(followingUser, SNS_SMSModuleManager.Instance.followingUserParent);
                     //followingUserObject.GetComponent<MessageUserDataScript>().allFollowingRow = SNS_APIResponseManager.Instance.allFollowingRoot.data.rows[j];
                     followingUserObject.GetComponent<MessageUserDataScript>().LoadFeed(SNS_APIResponseManager.Instance.allFollowingRoot.data.rows[j]);
                     allFollowingUserList.Add(SNS_APIResponseManager.Instance.allFollowingRoot.data.rows[j].following.name);
-                    MessageController.Instance.tottleFollowing += 1;
+                    SNS_SMSModuleManager.Instance.tottleFollowing += 1;
                 }
             }
 
-            MessageController.Instance.searchManagerFindFriends.SetUpAllMessageUserData(pageNum);
+            SNS_SMSModuleManager.Instance.searchManagerFindFriends.SetUpAllMessageUserData(pageNum);
         }
 
-        MessageController.Instance.isSelectFriendDataLoaded = true;
+        SNS_SMSModuleManager.Instance.isSelectFriendDataLoaded = true;
 
-        //MessageController.Instance.LoaderShow(false);//False api loader.
-        //MessageController.Instance.tottleFollowingText.text = ("Following " + MessageController.Instance.tottleFollowing);
+        //SNS_SMSModuleManager.Instance.LoaderShow(false);//False api loader.
+        //SNS_SMSModuleManager.Instance.tottleFollowingText.text = ("Following " + SNS_SMSModuleManager.Instance.tottleFollowing);
     }
 
     //this method is used to instantiate conversation user.......
     public void GetAllConversation()
     {
         allConversationList.Clear();
-        foreach (Transform item in MessageController.Instance.conversationPrefabParent)
+        foreach (Transform item in SNS_SMSModuleManager.Instance.conversationPrefabParent)
         {
             //Debug.Log("dgfg");
             Destroy(item.gameObject);
@@ -774,62 +774,62 @@ public class SNS_APIController : MonoBehaviour
         {
             //if (!conversationUserList.Contains(SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].id))
             //  {
-            GameObject ChatGetConversationObject = Instantiate(conversationPrefab, MessageController.Instance.conversationPrefabParent);
+            GameObject ChatGetConversationObject = Instantiate(conversationPrefab, SNS_SMSModuleManager.Instance.conversationPrefabParent);
             //Debug.Log("here");
             ChatGetConversationObject.GetComponent<AllConversationData>().allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
             ChatGetConversationObject.GetComponent<AllConversationData>().LoadFeed();
             //  conversationUserList.Add(SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].id);
             // }
 
-            if (!string.IsNullOrEmpty(MessageController.Instance.isDirectCreateFirstTimeGroupName) && SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group != null)//rik first time create group assign current data
+            if (!string.IsNullOrEmpty(SNS_SMSModuleManager.Instance.isDirectCreateFirstTimeGroupName) && SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group != null)//rik first time create group assign current data
             {
-               Debug.Log("for first time group:" + MessageController.Instance.isDirectCreateFirstTimeGroupName + "   :Id:" + SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.name);
-                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.name == MessageController.Instance.isDirectCreateFirstTimeGroupName)
+               Debug.Log("for first time group:" + SNS_SMSModuleManager.Instance.isDirectCreateFirstTimeGroupName + "   :Id:" + SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.name);
+                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.name == SNS_SMSModuleManager.Instance.isDirectCreateFirstTimeGroupName)
                 {
-                    MessageController.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
-                    MessageController.Instance.isDirectCreateFirstTimeGroupName = "";
+                    SNS_SMSModuleManager.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
+                    SNS_SMSModuleManager.Instance.isDirectCreateFirstTimeGroupName = "";
                 }
             }
-            else if (!string.IsNullOrEmpty(MessageController.Instance.isDirectMessageFirstTimeRecivedID))//rik first time create one to one message to assign current data
+            else if (!string.IsNullOrEmpty(SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID))//rik first time create one to one message to assign current data
             {
-               Debug.Log("for first time message:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID + "   :Id:" + SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId);
-                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(MessageController.Instance.isDirectMessageFirstTimeRecivedID) || SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].senderId == int.Parse(MessageController.Instance.isDirectMessageFirstTimeRecivedID))
+               Debug.Log("for first time message:" + SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID + "   :Id:" + SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId);
+                if (SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].receiverId == int.Parse(SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID) || SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].senderId == int.Parse(SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID))
                 {
-                    MessageController.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
-                    MessageController.Instance.isDirectMessageFirstTimeRecivedID = "";
-                    MessageController.Instance.isDirectMessage = false;
+                    SNS_SMSModuleManager.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
+                    SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID = "";
+                    SNS_SMSModuleManager.Instance.isDirectMessage = false;
                 }
             }
 
-            if (MessageController.Instance.addFrindCallingScreenIndex == 1 && SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group != null)//added member then after refresh details screen.
+            if (SNS_SMSModuleManager.Instance.addFrindCallingScreenIndex == 1 && SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group != null)//added member then after refresh details screen.
             {
-                if (MessageController.Instance.allChatGetConversationDatum.group.id == SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.id)
+                if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.id == SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i].group.id)
                 {
                    Debug.Log("Add meber after refresh details screen");
-                    MessageController.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
+                    SNS_SMSModuleManager.Instance.allChatGetConversationDatum = SNS_APIResponseManager.Instance.allChatGetConversationRoot.data[i];
                     SetChatMember();
-                    MessageController.Instance.addFrindCallingScreenIndex = 0;
-                    MessageController.Instance.LoaderShow(false);//false api loader.
+                    SNS_SMSModuleManager.Instance.addFrindCallingScreenIndex = 0;
+                    SNS_SMSModuleManager.Instance.LoaderShow(false);//false api loader.
                 }
             }
         }
-        // MessageController.Instance.CreateNewMessageUserList.Clear();
-        if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
+        // SNS_SMSModuleManager.Instance.CreateNewMessageUserList.Clear();
+        if (SNS_SMSModuleManager.Instance.startAndWaitMessageText.gameObject.activeSelf)
         {
-            MessageController.Instance.StartAndWaitMessageTextActive(false, UITextLocalization.GetLocaliseTextByKey(""));//start and wait message text show.......
+            SNS_SMSModuleManager.Instance.StartAndWaitMessageTextActive(false, UITextLocalization.GetLocaliseTextByKey(""));//start and wait message text show.......
         }
-        if (MessageController.Instance.conversationPrefabParent.childCount <= 0)
+        if (SNS_SMSModuleManager.Instance.conversationPrefabParent.childCount <= 0)
         {
-            MessageController.Instance.startConversationPopup.SetActive(true);
-            //MessageController.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("start conversation"));//start and wait message text show.......
+            SNS_SMSModuleManager.Instance.startConversationPopup.SetActive(true);
+            //SNS_SMSModuleManager.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("start conversation"));//start and wait message text show.......
         }
         else
         {
-            MessageController.Instance.startConversationPopup.SetActive(false);
+            SNS_SMSModuleManager.Instance.startConversationPopup.SetActive(false);
         }
 
-        //Debug.Log("befor calling.......:" + MessageController.Instance.conversationPrefabParent.childCount);
-        StartCoroutine(MessageController.Instance.searchManagerAllConversation.SetUpAllConversationData());//rik
+        //Debug.Log("befor calling.......:" + SNS_SMSModuleManager.Instance.conversationPrefabParent.childCount);
+        StartCoroutine(SNS_SMSModuleManager.Instance.searchManagerAllConversation.SetUpAllConversationData());//rik
     }
 
     //this method is used to instantiate chat message.......
@@ -858,7 +858,7 @@ public class SNS_APIController : MonoBehaviour
                     //Debug.Log("message type:" + SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.type);
                     if (SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.type == "LeaveGroup")
                     {
-                        GameObject leaveUserMsg = Instantiate(chatTimePrefab, MessageController.Instance.chatPrefabParent);
+                        GameObject leaveUserMsg = Instantiate(chatTimePrefab, SNS_SMSModuleManager.Instance.chatPrefabParent);
 
                         string newSTR = SNS_APIResponseManager.DecodedString(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.msg);
                         newSTR = newSTR.Replace("Left", UITextLocalization.GetLocaliseTextByKey("Left"));
@@ -884,9 +884,9 @@ public class SNS_APIController : MonoBehaviour
                         if (SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments.Count > 0)
                         {
                             //Debug.Log("urllllll " + SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments[0].url);
-                            // MessageController.Instance.ChatScreen.SetActive(true);
+                            // SNS_SMSModuleManager.Instance.ChatScreen.SetActive(true);
                             //SetChetDay(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
-                            GameObject ChatPhotoObject = Instantiate(chatPhotoPrefabUser, MessageController.Instance.chatPrefabParent);
+                            GameObject ChatPhotoObject = Instantiate(chatPhotoPrefabUser, SNS_SMSModuleManager.Instance.chatPrefabParent);
                             ChatPhotoObject.GetComponent<ChatDataScript>().MessageRow = SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i];
                             ChatPhotoObject.GetComponent<ChatDataScript>().LoadFeed();
 
@@ -903,7 +903,7 @@ public class SNS_APIController : MonoBehaviour
                         else if (!string.IsNullOrEmpty(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.msg))
                         {
                             //SetChetDay(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
-                            GameObject ChatObject = Instantiate(chatPrefabUser, MessageController.Instance.chatPrefabParent);
+                            GameObject ChatObject = Instantiate(chatPrefabUser, SNS_SMSModuleManager.Instance.chatPrefabParent);
                             ChatObject.GetComponent<ChatDataScript>().MessageRow = SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i];
                             ChatObject.GetComponent<ChatDataScript>().LoadFeed();
                             if (pageNumber == 1 && SNS_APIResponseManager.Instance.r_isCreateMessage)
@@ -920,9 +920,9 @@ public class SNS_APIController : MonoBehaviour
                     {
                         if (SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.attachments.Count > 0)
                         {
-                            // MessageController.Instance.ChatScreen.SetActive(true);
+                            // SNS_SMSModuleManager.Instance.ChatScreen.SetActive(true);
                             //SetChetDay(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
-                            GameObject ChatPhotoObject = Instantiate(chatPhotoPrefabOther, MessageController.Instance.chatPrefabParent);
+                            GameObject ChatPhotoObject = Instantiate(chatPhotoPrefabOther, SNS_SMSModuleManager.Instance.chatPrefabParent);
                             ChatPhotoObject.GetComponent<ChatDataScript>().MessageRow = SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i];
                             ChatPhotoObject.GetComponent<ChatDataScript>().LoadFeed();
                             if (pageNumber == 1 && SNS_APIResponseManager.Instance.r_isCreateMessage)
@@ -937,7 +937,7 @@ public class SNS_APIController : MonoBehaviour
                         else if (!string.IsNullOrEmpty(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].message.msg))
                         {
                             //SetChetDay(SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i].updatedAt, pageNumber);
-                            GameObject ChatObject = Instantiate(chatPrefabOther, MessageController.Instance.chatPrefabParent);
+                            GameObject ChatObject = Instantiate(chatPrefabOther, SNS_SMSModuleManager.Instance.chatPrefabParent);
                             ChatObject.GetComponent<ChatDataScript>().MessageRow = SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows[i];
                             ChatObject.GetComponent<ChatDataScript>().LoadFeed();
                             if (pageNumber == 1 && SNS_APIResponseManager.Instance.r_isCreateMessage)
@@ -961,14 +961,14 @@ public class SNS_APIController : MonoBehaviour
             }
         }
 
-        MessageController.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        SNS_SMSModuleManager.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         if (callingFrom != "SNSSocketHandler")
         {
-            MessageController.Instance.ChatScreen.SetActive(true);
-            MessageController.Instance.MessageListScreen.SetActive(false);
+            SNS_SMSModuleManager.Instance.ChatScreen.SetActive(true);
+            SNS_SMSModuleManager.Instance.MessageListScreen.SetActive(false);
         }
         SNS_APIResponseManager.Instance.r_isCreateMessage = false;
-        ChatScreenDataScript.Instance.allChatGetConversationDatum = MessageController.Instance.allChatGetConversationDatum;
+        ChatScreenData.Instance.allChatGetConversationDatum = SNS_SMSModuleManager.Instance.allChatGetConversationDatum;
         //Invoke("SetChatScreen", 0.1f);
         if (setChatScreenCo != null)
         {
@@ -990,11 +990,11 @@ public class SNS_APIController : MonoBehaviour
     public IEnumerator SetChatScreen()
     {
         yield return new WaitForSeconds(0.1f);
-        MessageController.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatPrefabParent.gameObject.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         if (SNS_APIResponseManager.Instance.allChatMessagesRoot.data.rows.Count > 0)
         {
             //Debug.Log("here");
-            MessageController.Instance.isChatDataLoaded = false;
+            SNS_SMSModuleManager.Instance.isChatDataLoaded = false;
         }
     }
 
@@ -1002,7 +1002,7 @@ public class SNS_APIController : MonoBehaviour
     IEnumerator ResetScrollEndPosition()
     {
         yield return new WaitForSeconds(0.15f);
-        MessageController.Instance.sNSChatView.ResetContainerPosition();
+        SNS_SMSModuleManager.Instance.sNSChatView.ResetContainerPosition();
     }
 
     //this method is used to instantiate chat date tiem message.......
@@ -1016,7 +1016,7 @@ public class SNS_APIController : MonoBehaviour
             if (!chatTimeList.Contains("TODAY"))
             {
                Debug.Log("TODAY");
-                chatTimeObject1 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
+                chatTimeObject1 = Instantiate(chatTimePrefab, SNS_SMSModuleManager.Instance.chatTimeParent);
                 chatTimeObject1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey("TODAY");
                 //chatTimeObject1.transform.GetChild(0).GetComponent<UITextLocalization>().LocalizeTextText();
                 chatTimeList.Add("TODAY");
@@ -1049,7 +1049,7 @@ public class SNS_APIController : MonoBehaviour
                 if (!chatTimeList.Contains("YESTERDAY"))
                 {
                     //Debug.Log("YESTERDAY");
-                    chatTimeObject2 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
+                    chatTimeObject2 = Instantiate(chatTimePrefab, SNS_SMSModuleManager.Instance.chatTimeParent);
                     chatTimeObject2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = UITextLocalization.GetLocaliseTextByKey("YESTERDAY");
                     //chatTimeObject2.transform.GetChild(0).GetComponent<UITextLocalization>().LocalizeTextText();
                     chatTimeList.Add("YESTERDAY");
@@ -1079,7 +1079,7 @@ public class SNS_APIController : MonoBehaviour
                 if (!chatTimeList.Contains(msgDateStr))
                 {
                     //Debug.Log("DATE" + converTime.Date + "days" + converTime.DayOfWeek);
-                    chatTimeObject3 = Instantiate(chatTimePrefab, MessageController.Instance.chatTimeParent);
+                    chatTimeObject3 = Instantiate(chatTimePrefab, SNS_SMSModuleManager.Instance.chatTimeParent);
                     chatTimeObject3.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = msgDateStr;
                     chatTimeList.Add(msgDateStr);
 
@@ -1111,31 +1111,31 @@ public class SNS_APIController : MonoBehaviour
         if (index == 0)
         {
             //Debug.Log("herwer");
-            foreach (Transform item in MessageController.Instance.chatShareAttechmentparent)
+            foreach (Transform item in SNS_SMSModuleManager.Instance.chatShareAttechmentparent)
             {
                 Destroy(item.gameObject);
             }
 
             if (SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows.Count > 0)
             {
-                MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(true);
+                SNS_SMSModuleManager.Instance.chatShareAttechmentparent.gameObject.SetActive(true);
             }
             else
             {
-                MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
+                SNS_SMSModuleManager.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
             }
 
-            /*MessageController.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-            MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-            MessageController.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-            MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;*/
+            /*SNS_SMSModuleManager.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+            SNS_SMSModuleManager.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+            SNS_SMSModuleManager.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+            SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;*/
 
             for (int i = 0; i < SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
             {
                 // Debug.Log("herwer");
                 if (i < 4)
                 {
-                    GameObject attechmentObject = Instantiate(chatShareAttechmentPrefab, MessageController.Instance.chatShareAttechmentparent);
+                    GameObject attechmentObject = Instantiate(chatShareAttechmentPrefab, SNS_SMSModuleManager.Instance.chatShareAttechmentparent);
                     attechmentObject.GetComponent<AttechmentData>().attachmentsRow = SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[i];
 
                     attechmentObject.GetComponent<AttechmentData>().LoadData(false);
@@ -1145,18 +1145,18 @@ public class SNS_APIController : MonoBehaviour
         }
         else if (index == 1)
         {
-            foreach (Transform item in MessageController.Instance.chooseAttechmentparent)
+            foreach (Transform item in SNS_SMSModuleManager.Instance.chooseAttechmentparent)
             {
                 Destroy(item.gameObject);
             }
 
             for (int i = 0; i < SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
             {
-                GameObject chooseattechmentObject = Instantiate(chooseAttechmentprefab, MessageController.Instance.chooseAttechmentparent);
+                GameObject chooseattechmentObject = Instantiate(chooseAttechmentprefab, SNS_SMSModuleManager.Instance.chooseAttechmentparent);
                 chooseattechmentObject.GetComponent<AttechmentData>().attachmentsRow = SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows[i];
                 chooseattechmentObject.GetComponent<AttechmentData>().LoadData(true);
             }
-            MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(true);
+            SNS_SMSModuleManager.Instance.chatShareAttechmentparent.gameObject.SetActive(true);
         }
 
         /* if (SNS_APIResponseManager.Instance.AllChatAttachmentsRoot.data.rows.Count > 0)
@@ -1186,9 +1186,9 @@ public class SNS_APIController : MonoBehaviour
                  chooseattechmentObject.GetComponent<AttechmentData>().LoadData();
              }
          }*/
-        MessageController.Instance.NoAttechmentScreen.SetActive(false);
+        SNS_SMSModuleManager.Instance.NoAttechmentScreen.SetActive(false);
 
-        MessageController.Instance.LoaderShow(false);//False api loader.
+        SNS_SMSModuleManager.Instance.LoaderShow(false);//False api loader.
 
         // Invoke("SetDetailScreen", 0.03f);
     }
@@ -1196,47 +1196,47 @@ public class SNS_APIController : MonoBehaviour
     //this method is used to instantiate group member in chat details screen.......
     public void SetChatMember()
     {
-        //MessageController.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        //MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        //MessageController.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        //MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //SNS_SMSModuleManager.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
        Debug.Log("SetChatMember calling.......");
-        foreach (Transform item in MessageController.Instance.chatMemberParent)
+        foreach (Transform item in SNS_SMSModuleManager.Instance.chatMemberParent)
         {
             Destroy(item.gameObject);
         }
 
-        if (MessageController.Instance.allChatGetConversationDatum != null)
+        if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum != null)
         {
-            if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
+            if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId != 0)
             {
-                for (int i = 0; i < MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count; i++)
+                for (int i = 0; i < SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers.Count; i++)
                 {
-                    if (MessageController.Instance.allChatGetConversationDatum.group.groupUsers[i].user.id != SNS_APIResponseManager.Instance.userId)
+                    if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers[i].user.id != SNS_APIResponseManager.Instance.userId)
                     {
-                        GameObject chatMemberObject = Instantiate(chatMemberPrefab, MessageController.Instance.chatMemberParent);
+                        GameObject chatMemberObject = Instantiate(chatMemberPrefab, SNS_SMSModuleManager.Instance.chatMemberParent);
                         ChatMemberData chatMemberData = chatMemberObject.GetComponent<ChatMemberData>();
-                        chatMemberData.chatGetConversationUser = MessageController.Instance.allChatGetConversationDatum.group.groupUsers[i];
-                        chatMemberData.createdGroupId = MessageController.Instance.allChatGetConversationDatum.group.createdBy;
+                        chatMemberData.chatGetConversationUser = SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers[i];
+                        chatMemberData.createdGroupId = SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.createdBy;
                         chatMemberData.LoadData(0);
                     }
                 }
             }
             else
             {
-                GameObject chatMemberObject = Instantiate(chatMemberPrefab, MessageController.Instance.chatMemberParent);
+                GameObject chatMemberObject = Instantiate(chatMemberPrefab, SNS_SMSModuleManager.Instance.chatMemberParent);
                 ChatMemberData chatMemberData = chatMemberObject.GetComponent<ChatMemberData>();
-                chatMemberData.allChatGetConversationDatum = MessageController.Instance.allChatGetConversationDatum;
-                chatMemberData.createdGroupId = MessageController.Instance.allChatGetConversationDatum.group.createdBy;
+                chatMemberData.allChatGetConversationDatum = SNS_SMSModuleManager.Instance.allChatGetConversationDatum;
+                chatMemberData.createdGroupId = SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.createdBy;
                 chatMemberData.LoadData(1);
             }
         }
-        MessageController.Instance.chatShareAttechmentPanel.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
 
-        MessageController.Instance.OnClickChatDetailsScreenAllowNotification();
-        MessageController.Instance.MessageDetailScreen.SetActive(true);
-        MessageController.Instance.ChatScreen.SetActive(false);
-        MessageController.Instance.MessageDetailsSceenLeaveChatActive();
+        SNS_SMSModuleManager.Instance.OnClickChatDetailsScreenAllowNotification();
+        SNS_SMSModuleManager.Instance.MessageDetailScreen.SetActive(true);
+        SNS_SMSModuleManager.Instance.ChatScreen.SetActive(false);
+        SNS_SMSModuleManager.Instance.MessageDetailsSceenLeaveChatActive();
         // Invoke("SetDetailScreen",5f);
         //StartCoroutine(SetDetailScreen());
         StartCoroutine(WaitToSetDetailsScreen());
@@ -1244,41 +1244,41 @@ public class SNS_APIController : MonoBehaviour
 
     public IEnumerator WaitToSetDetailsScreen()
     {
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        //MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.15f);
-        //MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().enabled = false;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().enabled = false;
         yield return new WaitForSeconds(0.05f);
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().enabled = true;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().enabled = true;
     }
 
 
     public IEnumerator SetDetailScreen()
     {
         yield return new WaitForSeconds(0.03f);
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        MessageController.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPhotoPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         //yield return new WaitForSeconds(0.01f);
-        //MessageController.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //SNS_SMSModuleManager.Instance.chatShareAttechmentMainPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         yield return new WaitForSeconds(0.01f);
-        MessageController.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatMemberParent.parent.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
         yield return new WaitForSeconds(0.01f);
-        MessageController.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        SNS_SMSModuleManager.Instance.chatShareAttechmentPanel.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     //this method is used to leave the chat callback.......
     public void LeaveTheChatCallBack(string groupId)
     {
-        ChatGetConversationGroupUser etc = MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Find((x) => x.userId == SNS_APIResponseManager.Instance.userId);
+        ChatGetConversationGroupUser etc = SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers.Find((x) => x.userId == SNS_APIResponseManager.Instance.userId);
 
-        MessageController.Instance.allChatGetConversationDatum = null;
-        MessageController.Instance.currentConversationData = null;
-        MessageController.Instance.MessageDetailScreen.SetActive(false);
-        MessageController.Instance.OnClickMessageButton();//active message list screen and refreshing list api
+        SNS_SMSModuleManager.Instance.allChatGetConversationDatum = null;
+        SNS_SMSModuleManager.Instance.currentConversationData = null;
+        SNS_SMSModuleManager.Instance.MessageDetailScreen.SetActive(false);
+        SNS_SMSModuleManager.Instance.OnClickMessageButton();//active message list screen and refreshing list api
 
-        MessageController.Instance.isLeaveGroup = true;
+        SNS_SMSModuleManager.Instance.isLeaveGroup = true;
         //after leave group then create leave user msg on this group.......
         SNS_APIResponseManager.Instance.r_isCreateMessage = true;
        Debug.Log("removed User Name:" + etc.user.name);

@@ -148,11 +148,11 @@ public class ChatMemberData : MonoBehaviour
     //this method is user to Update main messagecontroller conversation data groupuser follow, following.......
     void GroupUserResponceUpdateAfterFollowOrUnFollow(bool isFollow)
     {
-        int index = MessageController.Instance.allChatGetConversationDatum.group.groupUsers.IndexOf(chatGetConversationUser);
+        int index = SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers.IndexOf(chatGetConversationUser);
         //Debug.Log("GroupUserResponceUpdateAfterFollowOrUnFollow Index:" + index);
-        if (index < MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count)
+        if (index < SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers.Count)
         {
-            MessageController.Instance.allChatGetConversationDatum.group.groupUsers[index].isFollowing = isFollow;
+            SNS_SMSModuleManager.Instance.allChatGetConversationDatum.group.groupUsers[index].isFollowing = isFollow;
         }
     }
 
@@ -160,14 +160,14 @@ public class ChatMemberData : MonoBehaviour
     public void OnClickMenuButton()
     {
        Debug.Log("Menu button click.......");
-        MessageController.Instance.currentSelectedGroupMemberDataScript = this;
-        MessageController.Instance.removeGroupmemberConfirmationScreen.SetActive(true);
+        SNS_SMSModuleManager.Instance.currentSelectedGroupMemberDataScript = this;
+        SNS_SMSModuleManager.Instance.removeGroupmemberConfirmationScreen.SetActive(true);
     }
 
     //this method is used to follow following button click
     public void OnClickFollowFollowingBtn()
     {
-        MessageController.Instance.LoaderShow(true);//active loader.......
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//active loader.......
         if (isFollowFollowing)
         {
            Debug.Log("UnFollow User Id:"+ chatGetConversationUser.user.id);
@@ -197,7 +197,7 @@ public class ChatMemberData : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//false loader.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//false loader.......
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -211,8 +211,8 @@ public class ChatMemberData : MonoBehaviour
                 GroupUserResponceUpdateAfterFollowOrUnFollow(true);
 
                 //Refresh Get following api.......
-                MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
-                //MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
+                SNS_SMSModuleManager.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
+                //SNS_SMSModuleManager.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
                 //SNS_APIResponseManager.Instance.RequestGetAllFollowing(1, 100, "message");
             }
         }
@@ -233,7 +233,7 @@ public class ChatMemberData : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//false loader.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//false loader.......
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -246,8 +246,8 @@ public class ChatMemberData : MonoBehaviour
                 SetFolloButton(false);
                 GroupUserResponceUpdateAfterFollowOrUnFollow(false);
                 //Refresh Get following api.......
-                MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
-                //MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
+                SNS_SMSModuleManager.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
+                //SNS_SMSModuleManager.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
                 //SNS_APIResponseManager.Instance.RequestGetAllFollowing(1, 100, "message");
             }
         }
@@ -324,7 +324,7 @@ public class ChatMemberData : MonoBehaviour
        Debug.Log("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
         if (callingIndex == 0)
         {
-            MessageController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickFeedButton();
+            SNS_SMSModuleManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnClickFeedButton();
             if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
             {
                 if (OtherUserProfileManager.Instance != null)

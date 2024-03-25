@@ -374,14 +374,14 @@ public class HomeFooterTabCanvas : MonoBehaviour
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
-                if (MessageController.Instance != null)
+                if (SNS_SMSModuleManager.Instance != null)
                 {
-                    MessageController.Instance.isChatDetailsScreenDeactive = true;
+                    SNS_SMSModuleManager.Instance.isChatDetailsScreenDeactive = true;
                 }
                 additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 GameManager.Instance.defaultSelection = 1;
-                MessageController.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
+                SNS_SMSModuleManager.Instance.footerCan.GetComponent<HomeFooterTabCanvas>().OnSelectedClick(1);
             }
             else
             {

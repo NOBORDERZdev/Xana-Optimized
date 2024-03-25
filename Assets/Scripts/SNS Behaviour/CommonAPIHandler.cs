@@ -85,16 +85,16 @@ public class CommonAPIHandler : MonoBehaviour
     public void MessageReceivedResponse(string s)
     {
        Debug.Log("Common Socket Handler MessageReceivedResponce.......");
-        if (MessageController.Instance != null)
+        if (SNS_SMSModuleManager.Instance != null)
         {
-            if (MessageController.Instance.ChatScreen.activeInHierarchy)
+            if (SNS_SMSModuleManager.Instance.ChatScreen.activeInHierarchy)
             {
                 return;
             }
 
-            if (!MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
+            if (!SNS_SMSModuleManager.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
             {
-                MessageController.Instance.isNeedToRefreshConversationAPI = true;
+                SNS_SMSModuleManager.Instance.isNeedToRefreshConversationAPI = true;
             }
         }
        Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");

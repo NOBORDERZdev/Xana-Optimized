@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace AdvancedInputFieldSamples
 {
-	public class ChatController: MonoBehaviour
+	public class ChatHandler: MonoBehaviour
 	{
 		[SerializeField]
 		private ChatView view;

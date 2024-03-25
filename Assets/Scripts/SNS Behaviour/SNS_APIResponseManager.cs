@@ -741,7 +741,7 @@ public class SNS_APIResponseManager : MonoBehaviour
             switch (getFollowingFor)
             {
                 case "Message"://chat scene loader false
-                    MessageController.Instance.LoaderShow(false);//False api loader.
+                    SNS_SMSModuleManager.Instance.LoaderShow(false);//False api loader.
                     break;
                 default:
                     break;
@@ -2223,7 +2223,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                         MyProfileManager.Instance.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......
                         break;
                     case "messageScreen":
-                        MessageController.Instance.GetSuccessUserDetails(myProfileDataRoot.data);
+                        SNS_SMSModuleManager.Instance.GetSuccessUserDetails(myProfileDataRoot.data);
                         break;
                     case "MyAccount":
                         MyProfileManager.Instance.myProfileData = myProfileDataRoot.data;
@@ -2466,9 +2466,9 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
+                if (SNS_SMSModuleManager.Instance.startAndWaitMessageText.gameObject.activeSelf)
                 {
-                    MessageController.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
+                    SNS_SMSModuleManager.Instance.StartAndWaitMessageTextActive(true, UITextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
                 }
                 Debug.Log(www.error);
             }
@@ -2512,7 +2512,7 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//false api loader 
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//false api loader 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
@@ -2528,11 +2528,11 @@ public class SNS_APIResponseManager : MonoBehaviour
                 {
                     if (chatMuteUnMuteRoot.msg == "conversation muted successfully")
                     {
-                        MessageController.Instance.allChatGetConversationDatum.isMutedConversations = true;
+                        SNS_SMSModuleManager.Instance.allChatGetConversationDatum.isMutedConversations = true;
                     }
                     else
                     {
-                        MessageController.Instance.allChatGetConversationDatum.isMutedConversations = false;
+                        SNS_SMSModuleManager.Instance.allChatGetConversationDatum.isMutedConversations = false;
                     }
                 }
             }
@@ -2564,15 +2564,15 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
 
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
                 if (message_receivedGroupId != 0)
                 {
-                    MessageController.Instance.ChatScreen.SetActive(true);
-                    MessageController.Instance.MessageListScreen.SetActive(false);
+                    SNS_SMSModuleManager.Instance.ChatScreen.SetActive(true);
+                    SNS_SMSModuleManager.Instance.MessageListScreen.SetActive(false);
                     r_isCreateMessage = false;
                 }
             }
@@ -2608,7 +2608,7 @@ public class SNS_APIResponseManager : MonoBehaviour
     //this api is used to send attachments.......
     public void RequestChatGetAttachments(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, int index)
     {
-        MessageController.Instance.LoaderShow(true);//active api loader.
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//active api loader.
 
         StartCoroutine(IERequestChatAttachments(message_pageNumber, message_pageSize, message_receiverId, message_receivedGroupId, index));
     }
@@ -2638,7 +2638,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 //Debug.Log("data" + www.downloadHandler);
                 // Debug.Log("data" + www.downloadHandler.text);
 
-                MessageController.Instance.LoaderShow(false);//False api loader.
+                SNS_SMSModuleManager.Instance.LoaderShow(false);//False api loader.
 
                 string data = www.downloadHandler.text;
                 Debug.Log("Get Attachment Error:" + data);
@@ -2649,7 +2649,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                     {
                         if (index == 0)
                         {
-                            foreach (Transform item in MessageController.Instance.chatShareAttechmentparent)
+                            foreach (Transform item in SNS_SMSModuleManager.Instance.chatShareAttechmentparent)
                             {
                                 Destroy(item.gameObject);
                             }
@@ -2657,8 +2657,8 @@ public class SNS_APIResponseManager : MonoBehaviour
                         }
                         else if (index == 1)
                         {
-                            MessageController.Instance.NoAttechmentScreen.SetActive(true);
-                            MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
+                            SNS_SMSModuleManager.Instance.NoAttechmentScreen.SetActive(true);
+                            SNS_SMSModuleManager.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
                         }
                     }
                 }
@@ -2716,14 +2716,14 @@ public class SNS_APIResponseManager : MonoBehaviour
                 };
                 ChatCreateGroupRoot = JsonConvert.DeserializeObject<ChatCreateGroupRoot>(data, settings);
 
-                //Debug.Log("msg : " + MessageController.Instance.typeMessageText.text);
-                //Debug.Log("msg : " + MessageController.Instance.chatTypeMessageInputfield.Text);
+                //Debug.Log("msg : " + SNS_SMSModuleManager.Instance.typeMessageText.text);
+                //Debug.Log("msg : " + SNS_SMSModuleManager.Instance.chatTypeMessageInputfield.Text);
                 yield return new WaitForSeconds(0.1f);
 
-                // RequestChatCreateMessage(0, ChatCreateGroupRoot.data.id,MessageController.Instance.typeMessageText.text,"");
+                // RequestChatCreateMessage(0, ChatCreateGroupRoot.data.id,SNS_SMSModuleManager.Instance.typeMessageText.text,"");
                 // RequestChatGetConversation();
                 // RequestChatGetMessages(1, 50, 0,ChatCreateGroupRoot.data.id);
-                // MessageController.Instance.typeMessageText.text = "";
+                // SNS_SMSModuleManager.Instance.typeMessageText.text = "";
                 // SNS_APIController.Instance.GetAllChat();
                 // Debug.Log(root.data.count);
             }
@@ -2752,7 +2752,7 @@ public class SNS_APIResponseManager : MonoBehaviour
             {
                 Debug.Log(www.error);
 
-                MessageController.Instance.LoaderShow(false);//false api loader 
+                SNS_SMSModuleManager.Instance.LoaderShow(false);//false api loader 
             }
             else
             {
@@ -2782,7 +2782,7 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//false loader screen.
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//false loader screen.
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -2793,7 +2793,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 // Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
                 Debug.Log("Update Success Group Info: " + data);
-                MessageController.Instance.UpdateGroupInFoSuccessResponce();
+                SNS_SMSModuleManager.Instance.UpdateGroupInFoSuccessResponce();
             }
         }
     }
@@ -2847,10 +2847,10 @@ public class SNS_APIResponseManager : MonoBehaviour
                 Debug.Log(www.error);
                 r_isCreateMessage = false;
 
-                MessageController.Instance.isLeaveGroup = false;//if create message is failed  then false LeaveGroup bool.
+                SNS_SMSModuleManager.Instance.isLeaveGroup = false;//if create message is failed  then false LeaveGroup bool.
 
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-                MessageController.Instance.OnClcikSendMessageButtonbool = false;
+                SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
+                SNS_SMSModuleManager.Instance.OnClcikSendMessageButtonbool = false;
             }
             else
             {
@@ -2867,14 +2867,14 @@ public class SNS_APIResponseManager : MonoBehaviour
 
                 yield return new WaitForSeconds(0f);
 
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-                Debug.Log("Chat CreateMessage success:" + MessageController.Instance.isLeaveGroup + "  :Data:" + data);
-                if (!MessageController.Instance.isLeaveGroup)//not get message api call after leave group.......
+                SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
+                Debug.Log("Chat CreateMessage success:" + SNS_SMSModuleManager.Instance.isLeaveGroup + "  :Data:" + data);
+                if (!SNS_SMSModuleManager.Instance.isLeaveGroup)//not get message api call after leave group.......
                 {
                     if (AllChatCreateMessageRoot.data.receivedGroupId != 0)
                     {
                         //Debug.Log("receivedGroupId" + AllChatCreateMessageRoot.data.receivedGroupId);
-                        //MessageController.Instance.LoaderShow(true);//rik loader active.......
+                        //SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
                         RequestChatGetMessages(1, 50, 0, AllChatCreateMessageRoot.data.receivedGroupId, "Conversation");
                     }
                     else
@@ -2882,31 +2882,31 @@ public class SNS_APIResponseManager : MonoBehaviour
                         //Debug.Log("user id:" + userId + "    :receiverId:" + AllChatCreateMessageRoot.data.receiverId);
                         if (AllChatCreateMessageRoot.data.receiverId == userId)
                         {
-                            //MessageController.Instance.LoaderShow(true);//rik loader active.......
+                            //SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
                             RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.senderId, 0, "Conversation");
                         }
                         else
                         {
-                            //MessageController.Instance.LoaderShow(true);//rik loader active.......
+                            //SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
                             RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0, "Conversation");
                         }
                         //  RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0);
                     }
-                    //MessageController.Instance.typeMessageText.text = "";
-                    MessageController.Instance.chatTypeMessageInputfield.Text = "";
-                    MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+                    //SNS_SMSModuleManager.Instance.typeMessageText.text = "";
+                    SNS_SMSModuleManager.Instance.chatTypeMessageInputfield.Text = "";
+                    SNS_SMSModuleManager.Instance.OnChatVoiceOrSendButtonEnable();
                     // Debug.Log(root.data.count);
 
-                    if (!string.IsNullOrEmpty(MessageController.Instance.isDirectMessageFirstTimeRecivedID))
+                    if (!string.IsNullOrEmpty(SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID))
                     {
                         RequestChatGetConversation();
                     }
                 }
                 else
                 {
-                    MessageController.Instance.isLeaveGroup = false;//set leave group bool false.......
+                    SNS_SMSModuleManager.Instance.isLeaveGroup = false;//set leave group bool false.......
                 }
-                MessageController.Instance.OnClcikSendMessageButtonbool = false;
+                SNS_SMSModuleManager.Instance.OnClcikSendMessageButtonbool = false;
             }
         }
     }
@@ -2940,7 +2940,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "ConversationScreen":
-                        MessageController.Instance.DeleteConversationWithLeaveGroupApiResponseSuccess(groupId);
+                        SNS_SMSModuleManager.Instance.DeleteConversationWithLeaveGroupApiResponseSuccess(groupId);
                         break;
                     case "DetailsScreen":
                         SNS_APIController.Instance.LeaveTheChatCallBack(groupId);
@@ -2955,7 +2955,7 @@ public class SNS_APIResponseManager : MonoBehaviour
     //this api is used to Remove member from group chat.......
     public void RequestRemoveGroupMember(int groupId, int userId)
     {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader false.......
         StartCoroutine(IERequestRemoveGroupMember(groupId, userId));
     }
     public IEnumerator IERequestRemoveGroupMember(int groupId, int userId)
@@ -2971,7 +2971,7 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -2982,7 +2982,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 Debug.Log("Remove group member from Group Chat success!");
                 string data = www.downloadHandler.text;
                 Debug.Log("Remove group member data: " + data);
-                MessageController.Instance.RemoveMemberApiResponseSuccess();
+                SNS_SMSModuleManager.Instance.RemoveMemberApiResponseSuccess();
             }
         }
     }
@@ -2990,7 +2990,7 @@ public class SNS_APIResponseManager : MonoBehaviour
     //this api is used to Delete Conversation.......
     public void RequestDeleteConversation(int conversationId)
     {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader false.......
         StartCoroutine(IERequestDeleteConversation(conversationId));
     }
     public IEnumerator IERequestDeleteConversation(int conversationId)
@@ -3005,7 +3005,7 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -3016,7 +3016,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 Debug.Log("Delete conversation success!");
                 string data = www.downloadHandler.text;
                 Debug.Log("Delete conversation data: " + data);
-                MessageController.Instance.DeleteConversationApiResponseSuccess("Conversation Deleted");
+                SNS_SMSModuleManager.Instance.DeleteConversationApiResponseSuccess("Conversation Deleted");
             }
         }
     }
@@ -3024,7 +3024,7 @@ public class SNS_APIResponseManager : MonoBehaviour
     //this api is used to Delete Conversation.......
     public void RequestDeleteChatGroup(int groupId, string callingFrom)
     {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader false.......
         StartCoroutine(IERequestDeleteChatGroup(groupId, callingFrom));
     }
     public IEnumerator IERequestDeleteChatGroup(int groupId, string callingFrom)
@@ -3039,7 +3039,7 @@ public class SNS_APIResponseManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
+            SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -3053,10 +3053,10 @@ public class SNS_APIResponseManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "ConversationScreen":
-                        MessageController.Instance.DeleteConversationApiResponseSuccess("Group Deleted");
+                        SNS_SMSModuleManager.Instance.DeleteConversationApiResponseSuccess("Group Deleted");
                         break;
                     case "DetailsScreen":
-                        MessageController.Instance.DeleteGroupChatApiResponseSuccess();
+                        SNS_SMSModuleManager.Instance.DeleteGroupChatApiResponseSuccess();
                         break;
                     default:
                         break;
