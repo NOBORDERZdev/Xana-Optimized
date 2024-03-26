@@ -74,7 +74,7 @@ public class FeedData : MonoBehaviour
                 }
                 else
                 {
-                    PostHieghtUpdateForProfileVisit();
+                    Invoke(nameof(SetProfileFeedWithWait), 0.08f);
                 }
             }
             else
@@ -83,7 +83,13 @@ public class FeedData : MonoBehaviour
             }
         }
     }
-   
+
+    void SetProfileFeedWithWait()
+    {
+         PostHieghtUpdateForProfileVisit();
+    }
+
+
     public void onclickFeedUserProfileButton()
     {
         if (isProfileScene)

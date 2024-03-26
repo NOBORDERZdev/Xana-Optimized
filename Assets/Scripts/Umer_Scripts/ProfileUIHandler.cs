@@ -73,8 +73,12 @@ public class ProfileUIHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        _renderTexCamera.GetComponent<Camera>().targetTexture = null;
-        _renderTexCamera.gameObject.SetActive(false);
+        if (_renderTexCamera != null)
+        {
+            _renderTexCamera.GetComponent<Camera>().targetTexture = null;
+            _renderTexCamera.gameObject.SetActive(false);
+        }
+        
         Object.Destroy(newRenderTexture);
 
         //newRenderTexture.Release();

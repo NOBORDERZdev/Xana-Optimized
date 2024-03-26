@@ -618,27 +618,23 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to Refresh my profile main content size fitter.......
     public IEnumerator WaitToRefreshProfileScreen()
     {
-        yield return new WaitForSeconds(0.04f);
         Debug.Log("Enter in Content Size Filter Section");
-        textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
-        bioTxtParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        bioTxtParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        var components = new List<ContentSizeFitter>
+        {
+            textUserBio.GetComponent<ContentSizeFitter>(),
+            bioTxtParent.GetComponent<ContentSizeFitter>(),
+            bioDetailPart.GetComponent<ContentSizeFitter>(),
+            mainProfileDetailPart.GetComponent<ContentSizeFitter>(),
+            mainFullScreenContainer.GetComponent<ContentSizeFitter>()
+        };
 
-        bioDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        bioDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-
-        mainProfileDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        mainProfileDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-
-        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        foreach (var component in components)
+        {
+            component.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+            yield return new WaitForSeconds(0.01f);
+            component.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        }
     }
 
     string tempBioOnly10LineStr = "";
@@ -1104,7 +1100,7 @@ public class MyProfileDataManager : MonoBehaviour
                 allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
             }
         }
-
+        
         if (allPhotoContainer.childCount > currentPageAllTextPostWithUserIdRoot.data.rows.Count)
         {
             int _diff = allPhotoContainer.childCount - currentPageAllTextPostWithUserIdRoot.data.rows.Count;
@@ -1126,13 +1122,15 @@ public class MyProfileDataManager : MonoBehaviour
 
             }
         }
-
+        
         Invoke(nameof(DisableFadderWithDelay),0.3f);
     }
 
     void DisableFadderWithDelay()
     {
         FeedUIController.Instance.ShowLoader(false);
+        allPhotoContainer.gameObject.SetActive(false);
+        allPhotoContainer.gameObject.SetActive(true);
     }
 
 
