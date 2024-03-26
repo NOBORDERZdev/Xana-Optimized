@@ -7,7 +7,7 @@ using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CameraLook : MonoBehaviour
+public class PlayerCameraController : MonoBehaviour
 {
     public enum OrientationType { Landscape, Portrait };
     public OrientationType orientationType;
@@ -21,7 +21,7 @@ public class CameraLook : MonoBehaviour
     private Controls controls;
     public RectTransform freelookup;
     public bool gyroCheck = false;
-    public static CameraLook instance;
+    public static PlayerCameraController instance;
 
     private float zoomScrollVal = 0;                // for editor testing only
     public float editorSensitivity = 0.05f;          // for editor testing only
@@ -43,7 +43,7 @@ public class CameraLook : MonoBehaviour
     //** Temp Variables
     float m_TempDistance;
     private Vector2 delta;
-    public PlayerControllerNew playerController;
+    public PlayerController playerController;
 
     public Transform cameraPos;
 
@@ -93,7 +93,7 @@ public class CameraLook : MonoBehaviour
     {
         lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
         lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
-        playerController = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
+        playerController = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>();
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
         cinemachine.m_BindingMode = CinemachineTransposer.BindingMode.LockToTargetOnAssign;
@@ -112,7 +112,7 @@ public class CameraLook : MonoBehaviour
             lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
-        camRender = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        camRender = ReferrencesForGameplay.instance.randerCamera.gameObject;
     }
 
     void SwitchOrientation()
@@ -192,9 +192,9 @@ public class CameraLook : MonoBehaviour
     {
         if (charcterBody == null || pointObj == null)
         {
-            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            if (ReferrencesForGameplay.instance.m_34player)
             {
-                charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<AvatarBodyParts>();
+                charcterBody = ReferrencesForGameplay.instance.m_34player.GetComponent<AvatarBodyParts>();
                 // pointObj = charcterBody.Body.gameObject;
             }
             else
@@ -230,7 +230,7 @@ public class CameraLook : MonoBehaviour
 
         gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
         delta = Vector2.zero;
-        if (!gyroCheck && SelfieController.Instance.disablecamera && Input.touchCount > 0
+        if (!gyroCheck && PlayerSelfieController.Instance.disablecamera && Input.touchCount > 0
             && !playerController.sprint)
         {
             if (!isJoystickPressed)

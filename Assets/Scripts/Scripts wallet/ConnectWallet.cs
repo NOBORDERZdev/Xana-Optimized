@@ -455,8 +455,8 @@ public class ConnectWallet : MonoBehaviour
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
-                XanaConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
-                XanaConstantsHolder.loggedIn = true;
+                ConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
+                ConstantsHolder.loggedIn = true;
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
 
                 UserLoginSignupManager.instance.LoginWithWallet();
@@ -649,7 +649,7 @@ public class ConnectWallet : MonoBehaviour
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
-        XanaConstantsHolder.xanaConstants.LoginasGustprofile = true;
+        ConstantsHolder.xanaConstants.LoginasGustprofile = true;
     }
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)

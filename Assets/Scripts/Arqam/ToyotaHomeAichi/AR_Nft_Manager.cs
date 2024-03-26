@@ -114,14 +114,14 @@ namespace Toyota
             if (ServerBaseURlHandler.instance && ServerBaseURlHandler.instance.IsXanaLive)
             {
                 //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstantsHolder.xanaConstants.pmy_classRoomID_Main;
+                //    PMY_RoomId = ConstantsHolder.xanaConstants.pmy_classRoomID_Main;
                 //else
                     PMY_RoomId = PMY_RoomId_main;
             }
             else
             {
                 //if (PMY_RoomIdFromXanaConstant)
-                //    PMY_RoomId = XanaConstantsHolder.xanaConstants.pmy_classRoomID_Test;
+                //    PMY_RoomId = ConstantsHolder.xanaConstants.pmy_classRoomID_Test;
                 //else
                     PMY_RoomId = PMY_RoomId_test;
             }
@@ -610,8 +610,8 @@ namespace Toyota
             else
                 pdfPanel_P.SetActive(true);
 
-            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
-            CameraLook.instance.isReturn = true;
+            ReferrencesForGameplay.instance.eventSystemObj.SetActive(false);
+            PlayerCameraController.instance.isReturn = true;
         }
 
         public void EnableControlls()
@@ -622,8 +622,8 @@ namespace Toyota
                 GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
-            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
-            CameraLook.instance.isReturn = false;
+            ReferrencesForGameplay.instance.eventSystemObj.SetActive(true);
+            PlayerCameraController.instance.isReturn = false;
         }
 
         private void OnDisable()

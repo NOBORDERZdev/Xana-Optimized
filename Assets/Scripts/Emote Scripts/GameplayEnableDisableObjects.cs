@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Enable_DisableObjects : MonoBehaviour
+public class GameplayEnableDisableObjects : MonoBehaviour
 {
     //public Button SwitchCameraObject;
     //public Button CameraSnapObject;
@@ -17,7 +17,7 @@ public class Enable_DisableObjects : MonoBehaviour
     public GameObject ReactionPanel;
     public GameObject ActionPanel;
     public GameObject EmotePanel;
-    public static Enable_DisableObjects Instance;
+    public static GameplayEnableDisableObjects Instance;
 
     private void Awake()
     {
@@ -26,14 +26,14 @@ public class Enable_DisableObjects : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        PlayerControllerNew.PlayerIsWalking += OnPlayerWalking;
-        PlayerControllerNew.PlayerIsIdle += OnPlayerIdle;
+        PlayerController.PlayerIsWalking += OnPlayerWalking;
+        PlayerController.PlayerIsIdle += OnPlayerIdle;
 
     }
     private void OnDisable()
     {
-        PlayerControllerNew.PlayerIsWalking -= OnPlayerWalking;
-        PlayerControllerNew.PlayerIsIdle -= OnPlayerIdle;
+        PlayerController.PlayerIsWalking -= OnPlayerWalking;
+        PlayerController.PlayerIsIdle -= OnPlayerIdle;
     }
 
     private void OnPlayerWalking()

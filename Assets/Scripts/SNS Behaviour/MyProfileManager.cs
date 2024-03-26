@@ -504,14 +504,14 @@ public class MyProfileManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
-                        XanaConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
+                        ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
-                XanaConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
+                ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
         //else
@@ -3085,7 +3085,7 @@ public class MyProfileManager : MonoBehaviour
                // Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data);
                 tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 myProfileData = tempMyProfileDataRoot.data;
-                //XanaConstantsHolder.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
+                //ConstantsHolder.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
         }
@@ -3100,7 +3100,7 @@ public class MyProfileManager : MonoBehaviour
             profileMakedFlag = true;
             ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
         }
-        else if (XanaConstantsHolder.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        else if (ConstantsHolder.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
         {
             UpdateProfilePic();
         }

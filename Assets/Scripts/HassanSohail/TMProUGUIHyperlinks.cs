@@ -106,21 +106,21 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
         //}
 
-        string eventName = XanaConstantsHolder.xanaConstants.EnviornmentName;
+        string eventName = ConstantsHolder.xanaConstants.EnviornmentName;
         if (linkType.Equals(LinkType.JJ_Link))
         {
-            if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
             {
                 // we don't have this museum yet
                 ////worldName = "1F_Mainloby_NFTclick";
             }
-            else if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
             {
                 //// we don't have this museum yet
                 //worldName = "1F_ZoneX_NFTclick";
                 eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
             }
-            else if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
             {
                 //// worldName = "1F_FiveElement_NFTclick";
                 // we don't have this museum yet

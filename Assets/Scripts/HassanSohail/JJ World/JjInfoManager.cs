@@ -81,12 +81,12 @@ public class JjInfoManager : MonoBehaviour
             Instance = this;
         }
 
-        if (SoundManager.Instance)
+        if (SoundController.Instance)
         {
-            SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-            SoundManager.Instance.livePlayerSource = livePlayerSource;
-            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.videoPlayerSource = videoPlayerSource;
+            SoundController.Instance.livePlayerSource = livePlayerSource;
+            SoundSettings.soundManagerSettings.videoSource = videoPlayerSource;
+            SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
@@ -152,7 +152,7 @@ public class JjInfoManager : MonoBehaviour
         //}
         //catch
         //{
-        //    //Debug.Log("<color=red>jj APi not call in " + XanaConstantsHolder.xanaConstants.EnviornmentName + "</color>");
+        //    //Debug.Log("<color=red>jj APi not call in " + ConstantsHolder.xanaConstants.EnviornmentName + "</color>");
         //}
         //finally
         //{
@@ -600,7 +600,7 @@ public class JjInfoManager : MonoBehaviour
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
-        string worldName = XanaConstantsHolder.xanaConstants.EnviornmentName;
+        string worldName = ConstantsHolder.xanaConstants.EnviornmentName;
         //if (!string.IsNullOrEmpty(firebaseEventName))
         //{
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);

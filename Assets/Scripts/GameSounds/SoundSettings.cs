@@ -6,9 +6,9 @@ using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
-public class SoundManagerSettings : MonoBehaviour
+public class SoundSettings : MonoBehaviour
 {
-    public static SoundManagerSettings soundManagerSettings;
+    public static SoundSettings soundManagerSettings;
     [Header("Audio Sources")]
     public AudioSource bgmSource;
     public AudioSource effectsSource;
@@ -47,12 +47,12 @@ public class SoundManagerSettings : MonoBehaviour
         {
             soundManagerSettings = this;
         }
-        if (SoundManager.Instance)
+        if (SoundController.Instance)
         {
 
-            bgmSource = SoundManager.Instance.MusicSource;
-            effectsSource = SoundManager.Instance.EffectsSource;
-            videoSource = SoundManager.Instance.videoPlayerSource;
+            bgmSource = SoundController.Instance.MusicSource;
+            effectsSource = SoundController.Instance.EffectsSource;
+            videoSource = SoundController.Instance.videoPlayerSource;
             StartCoroutine(LiveVideoInstancs(5f));
         }
         //To Clamp AudioSource Volume Slider Range from 0 to 0.7 Rather Than 0 to 1 Range
@@ -60,7 +60,7 @@ public class SoundManagerSettings : MonoBehaviour
         NewSliderRange = (NewSliderMax - NewSliderMin);
 
         
-        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
@@ -83,7 +83,7 @@ public class SoundManagerSettings : MonoBehaviour
     IEnumerator LiveVideoInstancs(float value)
     {
         yield return new WaitForSeconds(value);
-        liveVideoSource = SoundManager.Instance.livePlayerSource;
+        liveVideoSource = SoundController.Instance.livePlayerSource;
     }
     private void OnEnable()
     {
@@ -116,7 +116,7 @@ public class SoundManagerSettings : MonoBehaviour
     void AddingDeley()
     {
         if (videoSource == null)
-            videoSource = SoundManager.Instance.videoPlayerSource;
+            videoSource = SoundController.Instance.videoPlayerSource;
         YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
         YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
         if (Videoplayer != null)
@@ -274,7 +274,7 @@ public class SoundManagerSettings : MonoBehaviour
     {
         if (!liveVideoSource)
         {
-            liveVideoSource = SoundManager.Instance.livePlayerSource;
+            liveVideoSource = SoundController.Instance.livePlayerSource;
         }
         PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, Vol);
        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, Vol);
@@ -321,13 +321,13 @@ public class SoundManagerSettings : MonoBehaviour
   
             if (cameraSensitivitySliderPotrait.value >= sensitivity)
             {
-                CameraLook.instance.lookSpeed = sensitivity;
-                CameraLook.instance.lookSpeedd = sensitivity;
+                PlayerCameraController.instance.lookSpeed = sensitivity;
+                PlayerCameraController.instance.lookSpeedd = sensitivity;
             }
             else
             {
-                CameraLook.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
-                CameraLook.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
+                PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
+                PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
             }
         
        
@@ -352,7 +352,7 @@ public class SoundManagerSettings : MonoBehaviour
         UserSlider.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
         UserSliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.MIC);
 
-        foreach (var gameobject in Launcher.instance.playerobjects)
+        foreach (var gameobject in MutliplayerController.instance.playerobjects)
         {
             if (!gameobject.GetComponent<PhotonView>().IsMine) 
             {
@@ -362,7 +362,7 @@ public class SoundManagerSettings : MonoBehaviour
 
         //else
         //{
-        //    foreach (var gameobject in Launcher.instance.playerobjects)
+        //    foreach (var gameobject in MutliplayerController.instance.playerobjects)
         //    {
         //        if (!gameobject.GetComponent<PhotonView>().IsMine)
         //            gameobject.GetComponent<AudioSource>().volume = totalVolumeSlider.value;

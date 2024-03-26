@@ -148,9 +148,9 @@ public class FollowingItemController : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-        //if (XanaConstantsHolder.xanaConstants != null)
+        //if (ConstantsHolder.xanaConstants != null)
         //{
-        //    if (XanaConstantsHolder.xanaConstants.r_isSNSComingSoonActive)
+        //    if (ConstantsHolder.xanaConstants.r_isSNSComingSoonActive)
         //    {
         //        print("sns features coming soon.......");
         //        return;

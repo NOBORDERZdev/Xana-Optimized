@@ -60,7 +60,7 @@ public class RandomNumberComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
+        ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
 
         BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
         GenerateNumber();

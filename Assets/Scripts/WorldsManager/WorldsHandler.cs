@@ -183,20 +183,20 @@ public class WorldsHandler : MonoBehaviour
     }
     void SetAutoSwtichStreaming()
     {
-        if (XanaConstantsHolder.xanaConstants.isCameraMan)
+        if (ConstantsHolder.xanaConstants.isCameraMan)
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
 
-            XanaConstantsHolder.xanaConstants.JjWorldSceneChange = true;
-            XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
-            XanaConstantsHolder.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
+            ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+            ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = AutoSwtichWorldList[AutoSwtichIndex].name;
+            ConstantsHolder.xanaConstants.IsMuseum = AutoSwtichWorldList[AutoSwtichIndex].isMussuem;
             if (ServerBaseURlHandler.instance.IsXanaLive)
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].mainnetId.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].mainnetId.ToString();
             }
             else
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = AutoSwtichWorldList[AutoSwtichIndex].testnetId.ToString();
             }
             if (AutoSwtichIndex < AutoSwtichWorldList.Count - 1)
             {
@@ -599,13 +599,13 @@ public class WorldsHandler : MonoBehaviour
         if (WorldItem.m_EnvName == "D + Infinity Labo" || WorldItem.m_EnvName == "D +  Infinity Labo") 
         {
             WorldItem.m_EnvName = "D_Infinity_Labo";
-            Launcher.sceneName = WorldItem.m_EnvName;
-            XanaConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
+            MutliplayerController.sceneName = WorldItem.m_EnvName;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
         }
         
         
         _callSingleTime = true;
-        if (!XanaConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItem.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
@@ -614,7 +614,7 @@ public class WorldsHandler : MonoBehaviour
             }
             else
             {
-                if (!XanaConstantsHolder.xanaConstants.IsDeemoNFT)
+                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
                 {
                     Debug.Log("YOU DONT HAVE DEEMO NFT");
                     GameManager.Instance.RequiredNFTPopUP.SetActive(true);
@@ -632,7 +632,7 @@ public class WorldsHandler : MonoBehaviour
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
-                    XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
+                    ConstantsHolder.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     SNS_NFTHandler.Instance.NftWorldEquipPanel.SetActive(true);
                     return;
@@ -659,7 +659,7 @@ public class WorldsHandler : MonoBehaviour
             }
             if (WorldItem.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                if (!XanaConstantsHolder.xanaConstants.IsDeemoNFT)
+                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
                 {
                     GameManager.Instance.RequiredNFTPopUP.SetActive(true);
                     return;
@@ -668,21 +668,21 @@ public class WorldsHandler : MonoBehaviour
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
-            XanaConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             //LoadingController.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingController.Instance.ShowLoading();
             LoadingController.Instance.UpdateLoadingSlider(0);
             LoadingController.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingController.Instance.LoadSceneByIndex("AddressableScene");
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingController.Instance.LoadSceneByIndex("GamePlayScene");
         }
         if (WorldItem.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
     public async void JoinBuilderWorld()
     {
-        if (!XanaConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItem.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
@@ -691,7 +691,7 @@ public class WorldsHandler : MonoBehaviour
             }
             else
             {
-                if (!XanaConstantsHolder.xanaConstants.IsDeemoNFT)
+                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
                 {
                     Debug.Log("YOU DONT HAVE DEEMO NFT");
                     GameManager.Instance.RequiredNFTPopUP.SetActive(true);
@@ -709,7 +709,7 @@ public class WorldsHandler : MonoBehaviour
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
-                    XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
+                    ConstantsHolder.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     SNS_NFTHandler.Instance.NftWorldEquipPanel.SetActive(true);
                     return;
@@ -720,14 +720,14 @@ public class WorldsHandler : MonoBehaviour
                 }
                 if (WorldItem.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
                 {
-                    if (!XanaConstantsHolder.xanaConstants.IsDeemoNFT)
+                    if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
                     {
                         GameManager.Instance.RequiredNFTPopUP.SetActive(true);
                         return;
                     }
                 }
             }
-            XanaConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             //LoadingController.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingController.Instance.ShowLoading();
             LoadingController.Instance.UpdateLoadingSlider(0);
@@ -742,7 +742,7 @@ public class WorldsHandler : MonoBehaviour
     {
     CheckAgain:
         yield return new WaitForSeconds(.2f);
-        if (Screen.orientation == ScreenOrientation.LandscapeLeft || XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
+        if (Screen.orientation == ScreenOrientation.LandscapeLeft || ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             orientationchanged = true;
         }
@@ -763,31 +763,31 @@ public class WorldsHandler : MonoBehaviour
         if (!_callSingleTime)
         {
             string worldType = "";
-            if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+            if (ConstantsHolder.xanaConstants.isBuilderScene)
                 worldType = "USER";
-            else if (XanaConstantsHolder.xanaConstants.IsMuseum)
+            else if (ConstantsHolder.xanaConstants.IsMuseum)
                 worldType = "MUSEUM";
             else
                 worldType = "ENVIRONMENT";
 
-            if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("Lobby"))
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("Lobby"))
             {
                 if ((ConstantsGod.API_BASEURL.Contains("test")))
-                    XanaConstantsHolder.xanaConstants.customWorldId = 163;
+                    ConstantsHolder.xanaConstants.customWorldId = 163;
                 else
-                    XanaConstantsHolder.xanaConstants.customWorldId = 77;
+                    ConstantsHolder.xanaConstants.customWorldId = 77;
 
                 worldType = "ENVIRONMENT";
             }
-            UserAnalyticsManager.onGetWorldId?.Invoke(XanaConstantsHolder.xanaConstants.customWorldId, worldType);
+            UserAnalyticsManager.onGetWorldId?.Invoke(ConstantsHolder.xanaConstants.customWorldId, worldType);
         }
-        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
-            //if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
+            //if (!ConstantsHolder.xanaConstants.JjWorldSceneChange)
             //{
             //    LoadingController.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             //}
-            XanaConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             LoadingController.Instance.ShowLoading();
             LoadingController.Instance.UpdateLoadingSlider(0);
             LoadingController.Instance.UpdateLoadingStatusText("Loading World");
@@ -796,17 +796,17 @@ public class WorldsHandler : MonoBehaviour
         }
         else
         {
-            //if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
+            //if (!ConstantsHolder.xanaConstants.JjWorldSceneChange)
             //{
             //    LoadingController.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             //}
-            XanaConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItem.m_EnvName;
             LoadingController.Instance.ShowLoading();
             LoadingController.Instance.UpdateLoadingSlider(0);
             LoadingController.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingController.Instance.LoadSceneByIndex("AddressableScene");
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingController.Instance.LoadSceneByIndex("GamePlayScene");
         }
     }
 
@@ -820,7 +820,7 @@ public class WorldsHandler : MonoBehaviour
     public void LoadJjworld()
     {
         SetAutoSwtichStreaming();
-        if (XanaConstantsHolder.xanaConstants.JjWorldSceneChange)
+        if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             LoadingController.Instance.characterLoading.SetActive(false);
             LoadingController.Instance.presetCharacterLoading.SetActive(false);
@@ -829,24 +829,24 @@ public class WorldsHandler : MonoBehaviour
             LoadingController.Instance.loadingPanel.SetActive(false);
             LoadingController.Instance.nftLoadingScreen.SetActive(false);
             LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
-            XanaConstantsHolder.xanaConstants.EnviornmentName = XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
-            WorldItem.m_EnvName = XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
-            if (XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
+            ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
+            WorldItem.m_EnvName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
+            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
-                XanaConstantsHolder.xanaConstants.userLimit = "16";
+                ConstantsHolder.xanaConstants.userLimit = "16";
             }
             else
             {
-                if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+                if (ConstantsHolder.xanaConstants.isBuilderScene)
                 {
-                    XanaConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.xanaConstants.userLimit = "15";
                 }
                 else
                 {
-                    XanaConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.xanaConstants.userLimit = "15";
                 }
             }
-            Launcher.sceneName = XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
+            MutliplayerController.sceneName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
     }

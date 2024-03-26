@@ -264,7 +264,7 @@ public class ARAnimationManager : MonoBehaviour
         {
             alreadyRuning = false;
 
-            string bundlePath = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
+            string bundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, bundleName + ".unity3d");
 
             if (CheckForIsAssetBundleAvailable(bundlePath))
             {

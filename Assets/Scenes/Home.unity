@@ -4341,7 +4341,7 @@ GameObject:
   - component: {fileID: 454488015}
   - component: {fileID: 454488014}
   m_Layer: 0
-  m_Name: XanaConstants
+  m_Name: Constants Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4368,8 +4368,8 @@ MonoBehaviour:
   defaultFightingName: 
   mic: 0
   minimap: 0
-  userName: 0
-  userId: 
+  userNameVisibilty: 0
+  profileImageModifedByUser: 0
   userProfileLink: 
   CurrentSceneName: 
   EnviornmentName: 
@@ -7982,6 +7982,14 @@ PrefabInstance:
       propertyPath: m_overflowMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1558925941223772646, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -65.49988
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558925941223772646, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 68.39099
+      objectReference: {fileID: 0}
     - target: {fileID: 1558925941328440567, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -58.29785
@@ -10693,7 +10701,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0da5874752d2e9741aa112b557bf6c06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderTexture: {fileID: 0}
 --- !u!114 &1203579133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22555,7 +22562,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder

@@ -30,7 +30,7 @@ public class Reaction_EmotePanel : MonoBehaviour
     private Canvas reactScreenCanvas;//riken
     private GraphicRaycaster graphicRaycaster;//riken
 
-    public ReactScreen reactScreenInstance;
+    public UserReactionsHandler reactScreenInstance;
 
     public static Reaction_EmotePanel instance;
     private void Awake()
@@ -64,7 +64,7 @@ public class Reaction_EmotePanel : MonoBehaviour
 
         reactScreenInstance.CheckForInstantiation();
 
-        //if (SoundManager.Instance.name.Contains("potrait"))
+        //if (SoundController.Instance.name.Contains("potrait"))
         //{
         //    JyosticksObject.gameObject.transform.DOLocalMoveY(29.1f, 1);
         //    JumpObject.gameObject.transform.DOLocalMoveY(29.1f, 1);
@@ -106,7 +106,7 @@ public class Reaction_EmotePanel : MonoBehaviour
     public void EmoteOn()
     {
 
-        //if (SoundManager.Instance.name.Contains("potrait"))
+        //if (SoundController.Instance.name.Contains("potrait"))
         //{
         //    JyosticksObject.gameObject.transform.DOLocalMoveY(29.1f, 1);
         //    JumpObject.gameObject.transform.DOLocalMoveY(29.1f, 1);
@@ -153,14 +153,14 @@ public class Reaction_EmotePanel : MonoBehaviour
         else
         {
             Debug.Log("Close hua=== Call");
-            if (SoundManager.Instance.name.Contains("potrait"))
+            if (SoundController.Instance.name.Contains("potrait"))
             {
-               // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+               // ReferrencesForGameplay.instance.RotateBtn.interactable = false;
                 JyosticksObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
                 JumpObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
                 BottomObject.SetActive(false);
                 XanaChatObject.SetActive(false);
-              //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+              //  ReferrencesForGameplay.instance.RotateBtn.interactable = true;
             }
 
             m_EmotePanel.SetActive(true);

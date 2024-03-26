@@ -50,7 +50,7 @@ public class UserPassManager : MonoBehaviour
     public bool CheckSpecificItem(string getName, bool enablePopupHere = true)
     {
 
-        if (testing || XanaConstantsHolder.isAdmin)
+        if (testing || ConstantsHolder.isAdmin)
             return true;
 
         getName = getName.Trim();

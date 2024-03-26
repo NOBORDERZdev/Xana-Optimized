@@ -1,33 +1,15 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using Metaverse;
 
-[System.Serializable]
-public class Btn
+public class TopMenuButtonController : MonoBehaviour
 {
-    public Sprite normal;
-    public Sprite pressed;
-    //public Image image;
-    public GameObject[] screens;
-
-
-}
-
-public class ButtonsPressController : MonoBehaviour
-{
-    public static ButtonsPressController Instance;
+    public static TopMenuButtonController Instance;
 
     [SerializeField] public List<Btn> btns;
 
     public bool Settings_pressed = false;
 
     bool IsHelpPanelOpen = false;
-
-
-
 
     private void Awake()
     {
@@ -84,10 +66,10 @@ public class ButtonsPressController : MonoBehaviour
     void OnSettingClick()
     {
         SetPress(0);
-        if (ReferrencesForDynamicMuseum.instance.playerControllerNew.isFirstPerson)
+        if (ReferrencesForGameplay.instance.playerControllerNew.isFirstPerson)
         {
-            ReferrencesForDynamicMuseum.instance.playerControllerNew.gyroButton.SetActive(true);
-            ReferrencesForDynamicMuseum.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
+            ReferrencesForGameplay.instance.playerControllerNew.gyroButton.SetActive(true);
+            ReferrencesForGameplay.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
         }
     }
     void OnInviteClick()
@@ -129,4 +111,14 @@ public class ButtonsPressController : MonoBehaviour
             return false;
         }
     }
+}
+[System.Serializable]
+public class Btn
+{
+    public Sprite normal;
+    public Sprite pressed;
+    //public Image image;
+    public GameObject[] screens;
+
+
 }

@@ -16,7 +16,7 @@ public class StepsManager : MonoBehaviour
         {
             StepAudio.volume = StepsVolume;
         }
-        //if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        //if (ConstantsHolder.xanaConstants.isBuilderScene)
         //        distance = 0.2f;
     }
 
@@ -27,11 +27,11 @@ public class StepsManager : MonoBehaviour
             Ray ray = new Ray(gameObject.transform.position, Vector3.down);
             if (Physics.Raycast(ray, out RaycastHit footRay, distance))
             {
-                float actualSpeed = ReferrencesForDynamicMuseum.instance.playerControllerNew.animationBlendValue;
+                float actualSpeed = ReferrencesForGameplay.instance.playerControllerNew.animationBlendValue;
 
                 if (GetMovementState(targetWalkSpeed) == GetMovementState(actualSpeed))
                 {
-                    if (StepAudio && ReferrencesForDynamicMuseum.instance.playerControllerNew._IsGrounded)
+                    if (StepAudio && ReferrencesForGameplay.instance.playerControllerNew._IsGrounded)
                     {
                         //Debug.LogError(footRay.collider.name+" ==> "+ footRay.collider.tag);
                         switch (footRay.collider.tag)

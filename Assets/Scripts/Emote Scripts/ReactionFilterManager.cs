@@ -72,8 +72,8 @@ public class ReactionFilterManager : MonoBehaviour
     public void HideReactionPanel()
     {
         gameObject.SetActive(false);
-        ReactScreen.Instance.HideReactionScreen();
-        //EmojiBtn.image.sprite = ReactScreen.Instance.react_disable;
+        UserReactionsHandler.Instance.HideReactionScreen();
+        //EmojiBtn.image.sprite = UserReactionsHandler.Instance.react_disable;
     }
 
     public void seeAllClick()

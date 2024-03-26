@@ -9,7 +9,7 @@ public class MiniMapOnOff : MonoBehaviour
 
     private void OnEnable()
     {
-        if (XanaConstantsHolder.xanaConstants.minimap == 1)
+        if (ConstantsHolder.xanaConstants.minimap == 1)
         {
             if (this.gameObject.name == "OffButton")
             {
@@ -35,22 +35,22 @@ public class MiniMapOnOff : MonoBehaviour
                 this.gameObject.SetActive(false);
             }
         }
-        //XanaVoiceChat.instance.UpdateMicButton();
+        //GameplayVoiceChat.instance.UpdateMicButton();
     }
 
     public void ClickMicMain()
     {
-        if (XanaConstantsHolder.xanaConstants.minimap == 1)
+        if (ConstantsHolder.xanaConstants.minimap == 1)
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
+            ReferrencesForGameplay.instance.minimap.SetActive(false);
             PlayerPrefs.SetInt("minimap", 0);
-            XanaConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
         }
         else
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+            ReferrencesForGameplay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
-            XanaConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
+            ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
         }
         OnEnable();
     }

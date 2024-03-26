@@ -10,11 +10,11 @@ public class LookAtScript : MonoBehaviour
     public float x;
     public float y;
     public float z;
-    PlayerControllerNew player; // Player script
+    PlayerController player; // Player script
     private void Awake()
     {
-        player = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerControllerNew>();
-        //cameraObject = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        player = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>();
+        //cameraObject = ReferrencesForGameplay.instance.randerCamera.gameObject;
         //SetCam();
     }
 

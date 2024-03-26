@@ -18,7 +18,7 @@ public class GamePlayUIHandler : MonoBehaviour
         }
     }
 
-    public PlayerControllerNew ref_PlayerControllerNew;
+    public PlayerController ref_PlayerControllerNew;
 
     [Header("GamePlay ui")]
     public GameObject gamePlayUIParent;
@@ -48,7 +48,7 @@ public class GamePlayUIHandler : MonoBehaviour
     {
         if (rotateOrientationLand)
             rotateOrientationLand.onClick.AddListener(ChangeOrientation);
-        ref_PlayerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
+        ref_PlayerControllerNew = ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>();
     }
 
     private void OnEnable()
@@ -182,7 +182,7 @@ public class GamePlayUIHandler : MonoBehaviour
             ReactionFilterManager.Instance.HideReactionPanel();
 
 
-        ReactScreen.Instance.HideEmoteScreen();
+        UserReactionsHandler.Instance.HideEmoteScreen();
         // GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
         GamePlayButtonEvents.inst.selectionPanelOpen = false;
 

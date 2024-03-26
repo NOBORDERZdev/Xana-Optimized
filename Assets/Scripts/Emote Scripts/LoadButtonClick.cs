@@ -92,7 +92,7 @@ public class LoadButtonClick : MonoBehaviour
     public bool danceAnim;
     public void OnButtonClick() //add by kamran
     {
-        if (PlayerControllerNew.isJoystickDragging == true)
+        if (PlayerController.isJoystickDragging == true)
         {
             return;
         }

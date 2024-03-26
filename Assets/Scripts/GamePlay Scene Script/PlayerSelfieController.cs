@@ -8,9 +8,9 @@ using System;
 using Metaverse;
 using UnityEngine.Rendering.Universal;
 
-public class SelfieController : MonoBehaviour
+public class PlayerSelfieController : MonoBehaviour
 {
-    public static SelfieController Instance;
+    public static PlayerSelfieController Instance;
 
     [HideInInspector]
     public GameObject m_SelfieStick;
@@ -56,7 +56,7 @@ public class SelfieController : MonoBehaviour
     public void SwitchFromSelfieControl()
     {
 
-        SelfieController.Instance.DisableSelfieFeature();
+        PlayerSelfieController.Instance.DisableSelfieFeature();
         for (int i = 0; i < OnFeatures.Length; i++)
         {
             if (OnFeatures[i] != null)
@@ -249,14 +249,14 @@ public class SelfieController : MonoBehaviour
             float xInput = Input.GetAxis("Mouse X");
             float yInput = Input.GetAxis("Mouse Y");
             //Main Character Rotation
-            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
+            if (ConstantsHolder.xanaConstants.SelfiMovement)
                 m_CharacterParent.transform.rotation *= Quaternion.Euler(Vector3.up * xInput * m_Speed);
 
             if (m_IKObject == null)
                 return;
             // Avatar Clamped Hand Movement In Y-Axis Only
 
-            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
+            if (ConstantsHolder.xanaConstants.SelfiMovement)
                 m_IKObject.transform.localPosition += Vector3.up * yInput * (Time.deltaTime * 2); //0.01f
 
             float l_Y = Mathf.Clamp(m_IKObject.transform.localPosition.y, m_Ymin, m_YMax);
@@ -267,7 +267,7 @@ public class SelfieController : MonoBehaviour
             float l_XRot = Mathf.Clamp(m_IKObject.transform.localRotation.x, avatarMin, avatarMax);
             m_IKObject.transform.localRotation = Quaternion.Euler(new Vector3(l_XRot * (360 / 3.14f), 0, 0));
 
-            if (XanaConstantsHolder.xanaConstants.SelfiMovement)
+            if (ConstantsHolder.xanaConstants.SelfiMovement)
                 m_IKLookAt.transform.localPosition += Vector3.up * yInput * (Time.deltaTime * 2.5f); //0.01f
 
             float l_YLookat = Mathf.Clamp(m_IKLookAt.transform.localPosition.y, avatarMin, avatarMax);
@@ -350,7 +350,7 @@ public class SelfieController : MonoBehaviour
     {
         yield return new WaitForSeconds(.3f);
         
-        m_PlayerController.GetComponent<PlayerControllerNew>().SwitchToSelfieMode();
+        m_PlayerController.GetComponent<PlayerController>().SwitchToSelfieMode();
 #if UNITY_EDITOR
         m_IsSelfieFeatureActive = true;
         m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
@@ -360,10 +360,10 @@ public class SelfieController : MonoBehaviour
         ChangeCloseObjectsState(false);
 
         m_SelfieStick.SetActive(true);
-        m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
+        m_PlayerController.GetComponent<PlayerController>().m_IsMovementActive = false;
 
         //WaqasAhmad
-        XanaConstantsHolder.xanaConstants.SelfiMovement = true;
+        ConstantsHolder.xanaConstants.SelfiMovement = true;
 
         for (int i = 0; i < OnFeatures.Length; i++)
         {
@@ -388,8 +388,8 @@ public class SelfieController : MonoBehaviour
 
             ChangeCloseObjectsState(false);
             m_SelfieStick.SetActive(true);
-            m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
-            XanaConstantsHolder.xanaConstants.SelfiMovement = true;
+            m_PlayerController.GetComponent<PlayerController>().m_IsMovementActive = false;
+            ConstantsHolder.xanaConstants.SelfiMovement = true;
 
             for (int i = 0; i < OnFeatures.Length; i++)
             {
@@ -462,15 +462,15 @@ public class SelfieController : MonoBehaviour
     IEnumerator InputDelay()
     {
         yield return new WaitForSeconds(0.05f);
-        m_PlayerController.GetComponent<PlayerControllerNew>().vertical = 0;
+        m_PlayerController.GetComponent<PlayerController>().vertical = 0;
 
     }
 
     public void DisableSelfieFeature()
     {
 
-        m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton.SetActive(false);
-        m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton_Portait.SetActive(false);
+        m_PlayerController.GetComponent<PlayerController>().gyroButton.SetActive(false);
+        m_PlayerController.GetComponent<PlayerController>().gyroButton_Portait.SetActive(false);
 
 #if UNITY_EDITOR
 
@@ -485,8 +485,8 @@ public class SelfieController : MonoBehaviour
 
         m_CapturedImage.gameObject.SetActive(false);
         m_CapturedImage.texture = null;
-        m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
-        m_PlayerController.GetComponent<PlayerControllerNew>().vertical = -1;
+        m_PlayerController.GetComponent<PlayerController>().m_IsMovementActive = true;
+        m_PlayerController.GetComponent<PlayerController>().vertical = -1;
         StartCoroutine(InputDelay());
         IsinAG = false;
         inSPRoom = false;
@@ -506,7 +506,7 @@ public class SelfieController : MonoBehaviour
         selfiePanel.SetActive(false);
 
         //WaqasAhmad
-        //XanaConstantsHolder.xanaConstants.SelfiMovement = true;
+        //ConstantsHolder.xanaConstants.SelfiMovement = true;
 
 
         StartCoroutine(SetMuseumRaycasterBoolean());
@@ -532,8 +532,8 @@ public class SelfieController : MonoBehaviour
 
             m_CapturedImage.gameObject.SetActive(false);
             m_CapturedImage.texture = null;
-            m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
-            m_PlayerController.GetComponent<PlayerControllerNew>().vertical = -1;
+            m_PlayerController.GetComponent<PlayerController>().m_IsMovementActive = true;
+            m_PlayerController.GetComponent<PlayerController>().vertical = -1;
             StartCoroutine(InputDelay());
             IsinAG = false;
             inSPRoom = false;
@@ -562,10 +562,10 @@ public class SelfieController : MonoBehaviour
         //    FindObjectOfType<MuseumRaycaster>().SelfieClose();
         }
 #endif
-        if (m_PlayerController.GetComponent<PlayerControllerNew>().isFirstPerson)
+        if (m_PlayerController.GetComponent<PlayerController>().isFirstPerson)
         {
-            m_PlayerController.GetComponent<PlayerControllerNew>().DisablePlayerOnFPS();
-            m_PlayerController.GetComponent<PlayerControllerNew>().firstPersonCameraObj.SetActive(true);
+            m_PlayerController.GetComponent<PlayerController>().DisablePlayerOnFPS();
+            m_PlayerController.GetComponent<PlayerController>().firstPersonCameraObj.SetActive(true);
         }
 
         BuilderEventManager.UIToggle?.Invoke(false);
@@ -607,13 +607,13 @@ public class SelfieController : MonoBehaviour
     public bool IsinAG, inSPRoom;
     public void TakeScreenShoot()
     {
-        //XanaConstantsHolder.xanaConstants.SelfiMovement = false;
+        //ConstantsHolder.xanaConstants.SelfiMovement = false;
         if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
-            //XanaConstantsHolder.xanaConstants.SelfiMovement = false;
+            //ConstantsHolder.xanaConstants.SelfiMovement = false;
             m_CapturedImage.gameObject.SetActive(false);
             if (m_CapturedImage2)
                 m_CapturedImage2.gameObject.SetActive(false);
@@ -837,7 +837,7 @@ public class SelfieController : MonoBehaviour
     {
         t_nftMuseums = false;
 
-        m_PlayerController.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
+        m_PlayerController.GetComponent<PlayerController>().m_IsMovementActive = true;
         m_CapturedImage.gameObject.SetActive(false);
         m_captureImage2.gameObject.SetActive(false);
         m_CapturedImage.texture = null;

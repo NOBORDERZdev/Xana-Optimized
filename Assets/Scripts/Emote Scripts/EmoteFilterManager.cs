@@ -301,7 +301,7 @@ public class EmoteFilterManager : MonoBehaviour
         //{
         if (ScreenOrientationManager._instance.isPotrait)
         {
-           // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+           // ReferrencesForGameplay.instance.RotateBtn.interactable = false;
             BottomObject.SetActive(true);
             
 
@@ -312,7 +312,7 @@ public class EmoteFilterManager : MonoBehaviour
             JumpObject.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             
                BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
-         //   ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+         //   ReferrencesForGameplay.instance.RotateBtn.interactable = true;
         }
         else
         {

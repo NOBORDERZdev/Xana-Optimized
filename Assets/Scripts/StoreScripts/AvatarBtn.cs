@@ -43,7 +43,7 @@ public class AvatarBtn : MonoBehaviour
         {
             case "Face":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.faceIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.faceIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -58,7 +58,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "EyeBrow":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.eyeBrowIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeBrowIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -73,7 +73,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "EyeLashes":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.eyeLashesIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeLashesIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -88,7 +88,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Makeup":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.makeupIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.makeupIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -103,7 +103,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Eyes":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.eyeIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.eyeIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -118,7 +118,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Nose":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.noseIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.noseIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -133,7 +133,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Lips":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.lipIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.lipIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -148,7 +148,7 @@ public class AvatarBtn : MonoBehaviour
                 break;
             case "Body":
                 {
-                    if (StoreStackHandler.obj.IsCallByBtn() && XanaConstantsHolder.xanaConstants.bodyNumber == _Bodyint)   //!isAddedInUndoRedo && // check if image is selected
+                    if (StoreStackHandler.obj.IsCallByBtn() && ConstantsHolder.xanaConstants.bodyNumber == _Bodyint)   //!isAddedInUndoRedo && // check if image is selected
                     {
 
                         if (!StoreUndoRedo.obj.addToList)
@@ -351,12 +351,12 @@ public class AvatarBtn : MonoBehaviour
             {
                 case "Face":
                     {
-                        XanaConstantsHolder.xanaConstants.faceIndex = AvatarBtnId;
-                        XanaConstantsHolder.xanaConstants.isFaceMorphed = false;
+                        ConstantsHolder.xanaConstants.faceIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isFaceMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.FaceValue == XanaConstantsHolder.xanaConstants.faceIndex && !_CharacterData.faceMorphed)
+                            if (_CharacterData.FaceValue == ConstantsHolder.xanaConstants.faceIndex && !_CharacterData.faceMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -366,12 +366,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "EyeBrow":
                     {
-                        XanaConstantsHolder.xanaConstants.eyeBrowIndex = AvatarBtnId;
-                        XanaConstantsHolder.xanaConstants.isEyebrowMorphed = false;
+                        ConstantsHolder.xanaConstants.eyeBrowIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isEyebrowMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeBrowValue == XanaConstantsHolder.xanaConstants.eyeBrowIndex && !_CharacterData.eyeBrowMorphed)
+                            if (_CharacterData.EyeBrowValue == ConstantsHolder.xanaConstants.eyeBrowIndex && !_CharacterData.eyeBrowMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -381,11 +381,11 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "EyeLashes":
                     {
-                        XanaConstantsHolder.xanaConstants.eyeLashesIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.eyeLashesIndex = AvatarBtnId;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeLashesValue == XanaConstantsHolder.xanaConstants.eyeLashesIndex /*&& !_CharacterData.EyeLashesValue*/)
+                            if (_CharacterData.EyeLashesValue == ConstantsHolder.xanaConstants.eyeLashesIndex /*&& !_CharacterData.EyeLashesValue*/)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -395,10 +395,10 @@ public class AvatarBtn : MonoBehaviour
                 case "Makeup":
                     {
                         print("makeup");
-                        XanaConstantsHolder.xanaConstants.makeupIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.makeupIndex = AvatarBtnId;
                         if (isExist)
                         {
-                            if (_CharacterData.MakeupValue == XanaConstantsHolder.xanaConstants.makeupIndex /*&& !_CharacterData.EyeLashesValue*/)
+                            if (_CharacterData.MakeupValue == ConstantsHolder.xanaConstants.makeupIndex /*&& !_CharacterData.EyeLashesValue*/)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -407,12 +407,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Eyes":
                     {
-                        XanaConstantsHolder.xanaConstants.eyeIndex = AvatarBtnId;
-                        XanaConstantsHolder.xanaConstants.isEyeMorphed = false;
+                        ConstantsHolder.xanaConstants.eyeIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isEyeMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.EyeValue == XanaConstantsHolder.xanaConstants.eyeIndex && !_CharacterData.eyeMorphed)
+                            if (_CharacterData.EyeValue == ConstantsHolder.xanaConstants.eyeIndex && !_CharacterData.eyeMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -422,12 +422,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Nose":
                     {
-                        XanaConstantsHolder.xanaConstants.noseIndex = AvatarBtnId;
-                        XanaConstantsHolder.xanaConstants.isNoseMorphed = false;
+                        ConstantsHolder.xanaConstants.noseIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isNoseMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.NoseValue == XanaConstantsHolder.xanaConstants.noseIndex && !_CharacterData.noseMorphed)
+                            if (_CharacterData.NoseValue == ConstantsHolder.xanaConstants.noseIndex && !_CharacterData.noseMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -437,12 +437,12 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Lips":
                     {
-                        XanaConstantsHolder.xanaConstants.lipIndex = AvatarBtnId;
-                        XanaConstantsHolder.xanaConstants.isLipMorphed = false;
+                        ConstantsHolder.xanaConstants.lipIndex = AvatarBtnId;
+                        ConstantsHolder.xanaConstants.isLipMorphed = false;
 
                         if (isExist)
                         {
-                            if (_CharacterData.LipsValue == XanaConstantsHolder.xanaConstants.lipIndex && !_CharacterData.lipMorphed)
+                            if (_CharacterData.LipsValue == ConstantsHolder.xanaConstants.lipIndex && !_CharacterData.lipMorphed)
                             {
                                 itemAlreadySaved = true;
                             }
@@ -452,13 +452,13 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "Body":
                     {
-                        XanaConstantsHolder.xanaConstants.bodyNumber = _Bodyint;
+                        ConstantsHolder.xanaConstants.bodyNumber = _Bodyint;
 
                         if (isExist)
                         {
-                            if (_CharacterData.BodyFat == XanaConstantsHolder.xanaConstants.bodyNumber)
+                            if (_CharacterData.BodyFat == ConstantsHolder.xanaConstants.bodyNumber)
                             {
-                                if (XanaConstantsHolder.xanaConstants.PresetValueString == PlayerPrefs.GetString("PresetValue"))
+                                if (ConstantsHolder.xanaConstants.PresetValueString == PlayerPrefs.GetString("PresetValue"))
                                     itemAlreadySaved = true;
                             }
                         }
@@ -467,27 +467,27 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "FaceMorph":
                     {
-                        XanaConstantsHolder.xanaConstants.isFaceMorphed = true;
+                        ConstantsHolder.xanaConstants.isFaceMorphed = true;
                         break;
                     }
                 case "EyesMorph":
                     {
-                        XanaConstantsHolder.xanaConstants.isEyeMorphed = true;
+                        ConstantsHolder.xanaConstants.isEyeMorphed = true;
                         break;
                     }
                 case "EyeBrowMorph":
                     {
-                        XanaConstantsHolder.xanaConstants.isEyebrowMorphed = true;
+                        ConstantsHolder.xanaConstants.isEyebrowMorphed = true;
                         break;
                     }
                 case "NoseMorph":
                     {
-                        XanaConstantsHolder.xanaConstants.isNoseMorphed = true;
+                        ConstantsHolder.xanaConstants.isNoseMorphed = true;
                         break;
                     }
                 case "LipsMorph":
                     {
-                        XanaConstantsHolder.xanaConstants.isLipMorphed = true;
+                        ConstantsHolder.xanaConstants.isLipMorphed = true;
                         break;
                     }
                 case "HeadMorph":
@@ -499,18 +499,18 @@ public class AvatarBtn : MonoBehaviour
             if (CurrentString != "Morphs")
             {
                 PatchForStore.isCustomizationPanelOpen = false;
-                XanaConstantsHolder.xanaConstants._curretClickedBtn = this.gameObject;
-                XanaConstantsHolder.xanaConstants.avatarStoreSelection[XanaConstantsHolder.xanaConstants.currentButtonIndex] = gameObject;
+                ConstantsHolder.xanaConstants._curretClickedBtn = this.gameObject;
+                ConstantsHolder.xanaConstants.avatarStoreSelection[ConstantsHolder.xanaConstants.currentButtonIndex] = gameObject;
 
-                if (XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn && XanaConstantsHolder.xanaConstants._curretClickedBtn == XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn)
+                if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn && ConstantsHolder.xanaConstants._curretClickedBtn == ConstantsHolder.xanaConstants._lastAvatarClickedBtn)
                     return;
 
-                XanaConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
+                ConstantsHolder.xanaConstants._curretClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
 
-                if (XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn)
+                if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn)
                 {
-                    if (XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
-                        XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                    if (ConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<AvatarBtn>())
+                        ConstantsHolder.xanaConstants._lastAvatarClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
             }
             else
@@ -518,7 +518,7 @@ public class AvatarBtn : MonoBehaviour
                 PatchForStore.isCustomizationPanelOpen = true;
             }
             //Debug.Log("<color=red>AvatarBtn AssignLastClickedBtnHere</color>");
-            XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = this.gameObject;
+            ConstantsHolder.xanaConstants._lastAvatarClickedBtn = this.gameObject;
 
             switch (isBtnString)
             {
@@ -601,7 +601,7 @@ public class AvatarBtn : MonoBehaviour
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
                         if (GameManager.Instance)
                         {
-                            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, XanaConstantsHolder.xanaConstants.bodyNumber);
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, ConstantsHolder.xanaConstants.bodyNumber);
                         }
                         break;
                     }
