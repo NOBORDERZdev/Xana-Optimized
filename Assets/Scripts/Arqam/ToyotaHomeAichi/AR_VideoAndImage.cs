@@ -20,7 +20,7 @@ namespace Toyota
         public GameObject imgVideo4x3;
 
         public GameObject liveVideoPlayer;
-        public GameObject preRecordedPlayer;
+        //public GameObject preRecordedPlayer;
 
 
         public string videoLink;
@@ -64,7 +64,7 @@ namespace Toyota
         public AR_Nft_Manager nftMAnager;
         [Range(1, 5)]
         public int roomNumber = 1;
-
+        private StreamYoutubeVideo streamYoutubeVideo;
         private void Start()
         {
             imgVideo16x9.AddComponent<Button>();
@@ -80,7 +80,11 @@ namespace Toyota
             imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
             //if (nftMAnager.PMY_RoomIdFromXanaConstant)
-            //    StartCoroutine(UpdateRoomType()); 
+            //    StartCoroutine(UpdateRoomType());
+            if (this.GetComponent<StreamYoutubeVideo>() != null)
+            {
+                streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+            }
         }
 
         //IEnumerator UpdateRoomType()
@@ -126,8 +130,8 @@ namespace Toyota
                 imgVideo4x3.SetActive(false);
             if (liveVideoPlayer)
                 liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (preRecordedPlayer)
+            //    preRecordedPlayer.SetActive(false);
 
             SetThumbail(imageLink);
         }
@@ -144,8 +148,8 @@ namespace Toyota
                 imgVideo4x3.SetActive(false);
             if (liveVideoPlayer)
                 liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (preRecordedPlayer)
+            //    preRecordedPlayer.SetActive(false);
 
             SetThumbail(imageLink);
         }
@@ -270,13 +274,13 @@ namespace Toyota
             imgVideo1x1.SetActive(false);
             imgVideo4x3.SetActive(false);
             liveVideoPlayer.SetActive(false);
-            preRecordedPlayer.SetActive(false);
+            //preRecordedPlayer.SetActive(false);
             imgVideo16x9.SetActive(false);
             imgVideo9x16.SetActive(false);
             imgVideo1x1.SetActive(false);
             imgVideo4x3.SetActive(false);
             liveVideoPlayer.SetActive(false);
-            preRecordedPlayer.SetActive(false);
+            //preRecordedPlayer.SetActive(false);
         }
 
         IEnumerator GetSprite(string path, System.Action<Texture> callback)
@@ -326,22 +330,23 @@ namespace Toyota
                 imgVideo4x3.SetActive(false);
             if (liveVideoPlayer)
                 liveVideoPlayer.SetActive(false);
-            if (preRecordedPlayer)
-                preRecordedPlayer.SetActive(false);
+            //if (preRecordedPlayer)
+            //    preRecordedPlayer.SetActive(false);
 
             if (_videoType == PMY_VideoTypeRes.islive && liveVideoPlayer)
             {
                 nftMAnager.videoRenderObject = liveVideoPlayer;
                 if (liveVideoPlayer)
                     liveVideoPlayer.SetActive(true);
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                if (streamYoutubeVideo != null)
+                    streamYoutubeVideo.StreamYtVideo(videoLink, true);
                 SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
                 SoundManagerSettings.soundManagerSettings.setNewSliderValues();
             }
-            else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
+            else if (_videoType == PMY_VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
             {
                 RenderTexture renderTexture = new RenderTexture(nftMAnager.renderTexture_16x9);
 
@@ -361,7 +366,7 @@ namespace Toyota
                         imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     }
                 }
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
                 VideoPlayer tempVideoPlayer;
                 if (applyVideoMesh)
                 {
@@ -372,12 +377,14 @@ namespace Toyota
                     tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
                 }
 
-                preRecordedPlayer.SetActive(true);
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                //preRecordedPlayer.SetActive(true);
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                if (streamYoutubeVideo != null)
+                    streamYoutubeVideo.StreamYtVideo(videoLink, false);
                 imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
                 imgVideo16x9.SetActive(true);
                 if (imgVideoFrame16x9)
