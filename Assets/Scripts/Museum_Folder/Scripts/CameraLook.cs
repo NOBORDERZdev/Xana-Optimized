@@ -324,7 +324,7 @@ public class CameraLook : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.LogError($"Delta: {delta}, !isJoystickPressed:{!isJoystickPressed}, _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}");
+        //Debug.LogError($"Delta: {delta}, !isJoystickPressed:{!isJoystickPressed}, _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}");
         //MoveCamera(delta);
         //fix_txt.text = $"{f}: _allowSyncedControl:{_allowSyncedControl}, _allowRotation:{_allowRotation}, !playerController.isFirstPerson:{!playerController.isFirstPerson}";
         if (_allowSyncedControl && _allowRotation && !playerController.isFirstPerson)
