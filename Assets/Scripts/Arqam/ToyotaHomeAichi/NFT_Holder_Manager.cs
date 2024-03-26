@@ -32,7 +32,7 @@ public class NFT_Holder_Manager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance is null)
+        if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
