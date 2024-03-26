@@ -12,10 +12,4 @@ public class SetScreenRotation : MonoBehaviour
         this.transform.localRotation = Quaternion.Euler(screenRotation);
 #endif
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
