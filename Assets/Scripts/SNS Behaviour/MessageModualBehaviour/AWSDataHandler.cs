@@ -171,9 +171,9 @@ public class AWSDataHandler : MonoBehaviour
     {
         Debug.Log("Retrieving the file from message");
         isCompress = compress;
-        MessageController.Instance.LoaderShow(true);//rik loader active.......
+        SNS_SMSModuleManager.Instance.LoaderShow(true);//rik loader active.......
 
-        currentSNSApiLoaderController = MessageController.Instance.apiLoaderController;
+        currentSNSApiLoaderController = SNS_SMSModuleManager.Instance.apiLoaderController;
         if (currentSNSApiLoaderController != null)
         {
             currentSNSApiLoaderController.ShowUploadStatusImage(true);
@@ -192,54 +192,54 @@ public class AWSDataHandler : MonoBehaviour
                     currentSNSApiLoaderController.ShowUploadStatusImage(false);
                 }
 
-                string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + callback.cdn_link + MessageController.Instance.attechmentArraystr + "]";
-                //   string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
+                string attechmentstr = "[" + SNS_SMSModuleManager.Instance.attechmentArraystr + callback.cdn_link + SNS_SMSModuleManager.Instance.attechmentArraystr + "]";
+                //   string attechmentstr = "[" + SNS_SMSModuleManager.Instance.attechmentArraystr + key + SNS_SMSModuleManager.Instance.attechmentArraystr + "]";
 
                 //Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
-                //Debug.Log($"<color=red> attechmentStr {MessageController.Instance.attechmentstr}</color>");
+                //Debug.Log($"<color=red> attechmentStr {SNS_SMSModuleManager.Instance.attechmentstr}</color>");
 
                 string fileUrl = callback.cdn_link;
                Debug.Log("attachment str:" + fileUrl + "  :Message:" + callback.msg);
 
                 if (!string.IsNullOrEmpty(fileUrl))
                 {
-                    if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
+                    if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId != 0)
                     {
-                        APIManager.Instance.RequestChatCreateMessage(0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId, "", "", attechmentstr);
+                        SNS_APIResponseManager.Instance.RequestChatCreateMessage(0, SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receivedGroupId, "", "", attechmentstr);
                     }
-                    else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
+                    else if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId != 0)
                     {
-                        if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+                        if (SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId == SNS_APIResponseManager.Instance.userId)
                         {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.senderId, 0, "", "", attechmentstr);
+                            SNS_APIResponseManager.Instance.RequestChatCreateMessage(SNS_SMSModuleManager.Instance.allChatGetConversationDatum.senderId, 0, "", "", attechmentstr);
                         }
                         else
                         {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.receiverId, 0, "", "", attechmentstr);
+                            SNS_APIResponseManager.Instance.RequestChatCreateMessage(SNS_SMSModuleManager.Instance.allChatGetConversationDatum.receiverId, 0, "", "", attechmentstr);
                         }
                     }
                     else
                     {
-                        if (MessageController.Instance.isDirectMessage)
+                        if (SNS_SMSModuleManager.Instance.isDirectMessage)
                         {
-                            if (MessageController.Instance.CreateNewMessageUserList.Count > 0)
+                            if (SNS_SMSModuleManager.Instance.CreateNewMessageUserList.Count > 0)
                             {
-                                MessageController.Instance.isDirectMessageFirstTimeRecivedID += MessageController.Instance.CreateNewMessageUserList[0];
-                               Debug.Log("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
-                                APIManager.Instance.RequestChatCreateMessage(int.Parse(MessageController.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
+                                SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID += SNS_SMSModuleManager.Instance.CreateNewMessageUserList[0];
+                               Debug.Log("Direct One To One Image Share:" + SNS_SMSModuleManager.Instance.isDirectMessageFirstTimeRecivedID);
+                                SNS_APIResponseManager.Instance.RequestChatCreateMessage(int.Parse(SNS_SMSModuleManager.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
                             }
                         }
                     }
                 }
                 else
                 {
-                    MessageController.Instance.LoaderShow(false);//rik loader false.......
+                    SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
                    Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
                 }
             }
             else
             {
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
+                SNS_SMSModuleManager.Instance.LoaderShow(false);//rik loader false.......
                Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
             }
         });
@@ -257,7 +257,7 @@ public class AWSDataHandler : MonoBehaviour
             //Debug.Log("callback.success:" + callback.success);
             if (callback.success)
             {
-                //  string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
+                //  string attechmentstr = "[" + SNS_SMSModuleManager.Instance.attechmentArraystr + key + SNS_SMSModuleManager.Instance.attechmentArraystr + "]";
                 //  Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
                 string fileUrl = callback.cdn_link;
                Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
@@ -267,13 +267,13 @@ public class AWSDataHandler : MonoBehaviour
                     switch (CallingFrom)
                     {
                         case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup(fileUrl);
+                            SNS_SMSModuleManager.Instance.CreateNewGroup(fileUrl);
                             break;
                         case "UpdateUserAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
                         case "EditProfileAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
                         default:
                             break;
@@ -285,10 +285,10 @@ public class AWSDataHandler : MonoBehaviour
                     switch (CallingFrom)
                     {
                         case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup("");
+                            SNS_SMSModuleManager.Instance.CreateNewGroup("");
                             break;
                         case "EditProfileAvatar":
-                            APIManager.Instance.RequestGetUserDetails(CallingFrom);
+                            SNS_APIResponseManager.Instance.RequestGetUserDetails(CallingFrom);
                             break;
                         default:
                             break;
@@ -300,7 +300,7 @@ public class AWSDataHandler : MonoBehaviour
     }
 
     [HideInInspector]
-    public SNSAPILoaderController currentSNSApiLoaderController;
+    public SNSLoaderHandler currentSNSApiLoaderController;
     //this method is used to post object in feed.
     public void PostObjectFeed(string fileName, string key, string callingFrom, string compress = "")
     {
@@ -308,14 +308,14 @@ public class AWSDataHandler : MonoBehaviour
         switch (callingFrom)
         {
             case "CreateFeed":
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
+                currentSNSApiLoaderController = FeedsManager.Instance.apiLoaderController;
                 break;
             case "CreateFeedRoom":
                 currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
                 break;
             default:
                Debug.Log("Default case");
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
+                currentSNSApiLoaderController = FeedsManager.Instance.apiLoaderController;
                 break;
         }
 
@@ -344,7 +344,7 @@ public class AWSDataHandler : MonoBehaviour
                     switch (callingFrom)
                     {
                         case "CreateFeed":
-                            FeedUIController.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
+                            FeedsManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
                             break;
                         case "CreateFeedRoom":
                             ARFaceModuleManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
@@ -354,7 +354,7 @@ public class AWSDataHandler : MonoBehaviour
                             {
                                 currentSNSApiLoaderController.ShowUploadStatusImage(false);
                             }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+                            FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                             break;
                     }
                     //Debug.Log(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
@@ -369,11 +369,11 @@ public class AWSDataHandler : MonoBehaviour
                     switch (callingFrom)
                     {
                         case "CreateFeed":
-                            if (FeedUIController.Instance.imageOrVideo == "Video")
+                            if (FeedsManager.Instance.imageOrVideo == "Video")
                             {
-                                FeedUIController.Instance.createFeedMediaPlayer.Play();
+                                FeedsManager.Instance.createFeedMediaPlayer.Play();
                             }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+                            FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                             break;
                         case "CreateFeedRoom":
                             if(ARFaceModuleManager.Instance.imageOrVideo == "Video")
@@ -383,7 +383,7 @@ public class AWSDataHandler : MonoBehaviour
                             ARFaceModuleManager.Instance.ShowLoader(false);
                             break;
                         default:
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+                            FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                             break;
                     }
                    Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
@@ -399,11 +399,11 @@ public class AWSDataHandler : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "CreateFeed":
-                        if (FeedUIController.Instance.imageOrVideo == "Video")
+                        if (FeedsManager.Instance.imageOrVideo == "Video")
                         {
-                            FeedUIController.Instance.createFeedMediaPlayer.Play();
+                            FeedsManager.Instance.createFeedMediaPlayer.Play();
                         }
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+                        FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                         break;
                     case "CreateFeedRoom":
                         if (ARFaceModuleManager.Instance.imageOrVideo == "Video")
@@ -413,7 +413,7 @@ public class AWSDataHandler : MonoBehaviour
                         ARFaceModuleManager.Instance.ShowLoader(false);
                         break;
                     default:
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+                        FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                         break;
                 }
 

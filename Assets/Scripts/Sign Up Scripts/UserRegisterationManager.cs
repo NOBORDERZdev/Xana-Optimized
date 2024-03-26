@@ -180,7 +180,7 @@ public class UserRegisterationManager : MonoBehaviour
     public int btnClickedNo = 0;
     public void ShowCommingsoonPopup()
     {
-        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 
     #region WelcomeScreen
@@ -1128,9 +1128,9 @@ public class UserRegisterationManager : MonoBehaviour
     }
     IEnumerator WaitAndLogout()
     {
-        if (SNSSettingController.Instance != null)
+        if (SNSSettingManager.Instance != null)
         {
-            SNSSettingController.Instance.LogoutSuccess();
+            SNSSettingManager.Instance.LogoutSuccess();
         }
         yield return null;
     }

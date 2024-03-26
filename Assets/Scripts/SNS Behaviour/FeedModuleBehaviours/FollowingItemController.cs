@@ -59,7 +59,7 @@ public class FollowingItemController : MonoBehaviour
             profileImage.sprite = null;
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -74,7 +74,7 @@ public class FollowingItemController : MonoBehaviour
                 //BioText.text = followingRawData.following.userProfile.bio;
                 if (followingRawData.following != null && followingRawData.following.userProfile != null && !string.IsNullOrEmpty(followingRawData.following.userProfile.bio))
                 {
-                    BioText.text = APIManager.DecodedString(followingRawData.following.userProfile.bio);
+                    BioText.text = SNS_APIResponseManager.DecodedString(followingRawData.following.userProfile.bio);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ public class FollowingItemController : MonoBehaviour
             }
             if (!string.IsNullOrEmpty(followingRawData.following.avatar))
             {
-                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(followingRawData.following.avatar);
+                bool isUrlContainsHttpAndHttps = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(followingRawData.following.avatar);
                 if (isUrlContainsHttpAndHttps)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(followingRawData.following.avatar, followingRawData.following.avatar, (success) =>
@@ -118,25 +118,25 @@ public class FollowingItemController : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         print("Follower id :" + followingRawData.following.id);
-        FeedUIController.Instance.ShowLoader(true);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FollowingItemController>(followingRawData.following.id.ToString(), this);
-        MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
-        OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-        MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-        OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
-        ProfileUIHandler.instance.editProfileBtn.SetActive(false);
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
-        ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        FeedsManager.Instance.ShowLoader(true);
+        SNS_APIResponseManager.Instance.RequestGetUserLatestAvatarData<FollowingItemController>(followingRawData.following.id.ToString(), this);
+        MyProfileManager.Instance.OtherPlayerdataObj.SetActive(true);
+        OtherUserProfileManager.Instance.ResetMainScrollDefaultTopPos();
+        MyProfileManager.Instance.myProfileScreen.SetActive(true);
+        OtherUserProfileManager.Instance.myPlayerdataObj.SetActive(false);
+        ProfileScreenController.instance.SwitchBetwenUserAndOtherProfileUI(false);
+        ProfileScreenController.instance.SetMainScrolRefs();
+        ProfileScreenController.instance.editProfileBtn.SetActive(false);
+            ProfileScreenController.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+        ProfileScreenController.instance.followProfileBtn.SetActive(true);
+        ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         //if ( followingRawData.userOccupiedAssets.Count > 0 )
         //{
-        //    ProfileUIHandler.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
+        //    ProfileScreenController.instance.SetUserAvatarClothing(followingRawData.userOccupiedAssets[0].json);
         //}
         //else
         //{
-        //    ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //    ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         //}
         if (!UserPassManager.Instance.CheckSpecificItem("sns_feed", false))
         {
@@ -168,18 +168,18 @@ public class FollowingItemController : MonoBehaviour
         feedRawData.FollowingCount = followingRawData.followingCount;
         feedRawData.feedCount = followingRawData.feedCount;
 
-        //FeedUIController.Instance.ShowLoader(true);
+        //FeedsManager.Instance.ShowLoader(true);
 
-       OtherPlayerProfileData.Instance.currentFollowingItemScript = this;
-        //OtherPlayerProfileData.Instance.currentFollowingItemScript = this;//assign current following item script for other player profile
+       OtherUserProfileManager.Instance.currentFollowingItemScript = this;
+        //OtherUserProfileManager.Instance.currentFollowingItemScript = this;//assign current following item script for other player profile
 
-        OtherPlayerProfileData.Instance.FeedRawData = feedRawData;
-        //OtherPlayerProfileData.Instance.OnSetUserUi(followingRawData.isFollowing);
-        //OtherPlayerProfileData.Instance.LoadData();       
+        OtherUserProfileManager.Instance.FeedRawData = feedRawData;
+        //OtherUserProfileManager.Instance.OnSetUserUi(followingRawData.isFollowing);
+        //OtherUserProfileManager.Instance.LoadData();       
 
-        OtherPlayerProfileData.Instance.backKeyManageList.Add("FollowerFollowingListScreen");//For back mamages.......
+        OtherUserProfileManager.Instance.backKeyManageList.Add("FollowerFollowingListScreen");//For back mamages.......
 
-        //APIManager.Instance.RequestGetFeedsByUserId(followingRawData.following.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIResponseManager.Instance.RequestGetFeedsByUserId(followingRawData.following.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -205,19 +205,19 @@ public class FollowingItemController : MonoBehaviour
             singleUserProfileData.userProfile.bio = followingRawData.following.userProfile.bio;
         }
 
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OtherUserProfileManager.Instance.RequestGetUserDetails(singleUserProfileData);
     }
 
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIResponseManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileScreenController.instance.SetUserAvatarClothing(SNS_APIResponseManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+            ProfileScreenController.instance.SetUserAvatarDefaultClothing();
         }
     }
 
@@ -250,14 +250,14 @@ public class FollowingItemController : MonoBehaviour
             if (searchUserRow.isFollowing)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                FeedsManager.Instance.ShowLoader(true);//active api loader
                 //unfollow
                 RequestUnFollowAUser(searchUserRow.id.ToString());
             }
             else
             {
                Debug.Log("Follow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                FeedsManager.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
             }
@@ -275,11 +275,11 @@ public class FollowingItemController : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIResponseManager.Instance.userAuthorizeToken);
 
             yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);//false api loader
+            FeedsManager.Instance.ShowLoader(false);//false api loader
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -294,7 +294,7 @@ public class FollowingItemController : MonoBehaviour
                 FollowFollowingSetUp(true);
 
                 //refresh Feed API.......
-                APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
+                SNS_APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
             }
         }
     }
@@ -311,11 +311,11 @@ public class FollowingItemController : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UnFollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIResponseManager.Instance.userAuthorizeToken);
 
             yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);//false api loader
+            FeedsManager.Instance.ShowLoader(false);//false api loader
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -400,7 +400,7 @@ public class FollowingItemController : MonoBehaviour
     /// To Add Following in BFF list
     /// </summary>
     public void AddBff(){ 
-        APIManager.Instance.AddBestFriend(followingRawData.userId,gameObject);
+        SNS_APIResponseManager.Instance.AddBestFriend(followingRawData.userId,gameObject);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().AddFriendToHome();
     }
 
@@ -408,7 +408,7 @@ public class FollowingItemController : MonoBehaviour
     /// To Remove BFF that already are in BFF
     /// </summary>
     public void RemoveBff(){ 
-          APIManager.Instance.RemoveBestFriend(followingRawData.userId,gameObject);
+          SNS_APIResponseManager.Instance.RemoveBestFriend(followingRawData.userId,gameObject);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(followingRawData.userId);
     }
 

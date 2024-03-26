@@ -44,8 +44,8 @@ public class UserPassManager : MonoBehaviour
 
     public void OpenComingSoonPopUp()
     {
-        if (SNSNotificationManager.Instance != null)
-            SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");
+        if (SNSNotificationHandler.Instance != null)
+            SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");
     }
     public bool CheckSpecificItem(string getName, bool enablePopupHere = true)
     {
@@ -66,8 +66,8 @@ public class UserPassManager : MonoBehaviour
                     EnabledFeaturebool = comingSoonFeatures[getName];
                     if (EnabledFeaturebool)
                     {
-                        if (SNSNotificationManager.Instance != null && enablePopupHere)
-                            SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
+                        if (SNSNotificationHandler.Instance != null && enablePopupHere)
+                            SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
                         return false;
                     }
                 }
@@ -79,14 +79,14 @@ public class UserPassManager : MonoBehaviour
                 EnabledFeaturebool = comingSoonFeatures[getName];
                 if (EnabledFeaturebool)
                 {
-                    if (SNSNotificationManager.Instance != null && enablePopupHere)
-                        SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
+                    if (SNSNotificationHandler.Instance != null && enablePopupHere)
+                        SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
                 }
                 else
                 {
                     //not showing alpha pass pop to any user as it is removed or completed.
-                    if (SNSNotificationManager.Instance != null && enablePopupHere)
-                        SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
+                    if (SNSNotificationHandler.Instance != null && enablePopupHere)
+                        SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");    //this method is used to show Coming Soon notification.......  
                     //if (enablePopupHere)
                     //    ShowNotAvailablePanel(PremiumUserUI);
                 }

@@ -634,7 +634,7 @@ public class WorldsHandler : MonoBehaviour
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
+                    SNS_NFTHandler.Instance.NftWorldEquipPanel.SetActive(true);
                     return;
                 }
                 else
@@ -711,7 +711,7 @@ public class WorldsHandler : MonoBehaviour
                     PlayerPrefs.DeleteKey("nftID");
                     XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
+                    SNS_NFTHandler.Instance.NftWorldEquipPanel.SetActive(true);
                     return;
                 }
                 else

@@ -46,8 +46,8 @@ public class FollowingUserFeedItem : MonoBehaviour
 
     private void Start()
     {
-        float value0 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.width;
-        float value1 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.height;
+        float value0 = FeedsManager.Instance.feedVideoButtonPanelImage.rect.width;
+        float value1 = FeedsManager.Instance.feedVideoButtonPanelImage.rect.height;
         //Debug.Log("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:" + value1);
         this.GetComponent<RectTransform>().sizeDelta = new Vector2(value0, value1);
     }
@@ -76,12 +76,12 @@ public class FollowingUserFeedItem : MonoBehaviour
                 profileImage.sprite = null;
             }
         }
-        APIManager.Instance.ResourcesUnloadAssetFile();
+        SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();
     }
 
     private void Update()//delete image after object out of screen
     {
-        /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+        /*if (SNS_APIResponseManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
         {
             return;
         }*/
@@ -162,7 +162,7 @@ public class FollowingUserFeedItem : MonoBehaviour
                         Resources.UnloadUnusedAssets();//Every clear
                         //Caching.ClearCache();
                         //GC.Collect();
-                        //APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                        //SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                     }
                     else
                     {
@@ -184,7 +184,7 @@ public class FollowingUserFeedItem : MonoBehaviour
             feedUserData.Email = FollowingUserFeedData.User.Email;
             feedUserData.Avatar = FollowingUserFeedData.User.Avatar;
 
-            userName.text = APIManager.DecodedString(FollowingUserFeedData.User.Name);
+            userName.text = SNS_APIResponseManager.DecodedString(FollowingUserFeedData.User.Name);
             Invoke("UserNameSizeSetUp", 0.2f);
         }
 
@@ -196,7 +196,7 @@ public class FollowingUserFeedItem : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FollowingUserFeedData.Descriptions))//new
         {
-            descriptionText.text = APIManager.DecodedString(FollowingUserFeedData.Descriptions);
+            descriptionText.text = SNS_APIResponseManager.DecodedString(FollowingUserFeedData.Descriptions);
             SetupDecPart(descriptionText.text);
         }
         else
@@ -207,7 +207,7 @@ public class FollowingUserFeedItem : MonoBehaviour
 
         if (FollowingUserFeedData.UpdatedAt != null)
         {
-            timeText.text = FeedUIController.Instance.GetConvertedTimeString(FollowingUserFeedData.UpdatedAt);
+            timeText.text = FeedsManager.Instance.GetConvertedTimeString(FollowingUserFeedData.UpdatedAt);
         }
         //  feedTitle.text = FeedData.title;
         // feedLike.text = FeedData.likeCount.ToString();
@@ -215,7 +215,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         GetShareURL();
 
         isVisible = true;
-        /*if (!APIManager.Instance.isTestDefaultToken)
+        /*if (!SNS_APIResponseManager.Instance.isTestDefaultToken)
         {
             isVisible = true;
         }
@@ -239,7 +239,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(FollowingUserFeedData.User.Avatar))//set avatar image.......
             {
-                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.User.Avatar);
+                bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.User.Avatar);
                 //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedRawData.name);
                 if (isAvatarUrlFromDropbox)
                 {
@@ -258,7 +258,7 @@ public class FollowingUserFeedItem : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FollowingUserFeedData.Image))
         {
-            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Image);
+            bool isImageUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Image);
             //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
@@ -282,7 +282,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         }
         else if (!string.IsNullOrEmpty(FollowingUserFeedData.Video))
         {
-            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Video);
+            bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Video);
             isVideoOrImage = true;
 
             //Debug.Log("FeedData.video " + FollowingUserFeedData.Video);
@@ -311,7 +311,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     {
        Debug.Log("Feed Id :" + FollowingUserFeedData.Id + "   :User Id :" + FollowingUserFeedData.User.Id);
 
-        OtherPlayerProfileData.Instance.backKeyManageList.Add("FollowingTabScreen");//For back mamages.......
+        OtherUserProfileManager.Instance.backKeyManageList.Add("FollowingTabScreen");//For back mamages.......
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -326,7 +326,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         SingleUserProfile singleUserProfile = new SingleUserProfile();
         singleUserProfileData.userProfile = singleUserProfile;
 
-        OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OtherUserProfileManager.Instance.RequestGetUserDetails(singleUserProfileData);
     }
 
 
@@ -476,7 +476,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     {
         if (seeMoreButtonTextObj.activeSelf)
         {
-            descriptionText.text = APIManager.DecodedString(FollowingUserFeedData.Descriptions);
+            descriptionText.text = SNS_APIResponseManager.DecodedString(FollowingUserFeedData.Descriptions);
             SeeMoreLessBioTextSetup(false);
         }
         else
@@ -553,7 +553,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(FollowingUserFeedData.Image))
         {
-            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Image);
+            bool isImageUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Image);
             if (isImageUrlFromDropbox)
             {
                 shareMediaUrl = FollowingUserFeedData.Image;
@@ -565,7 +565,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         }
         else if (!string.IsNullOrEmpty(FollowingUserFeedData.Video))
         {
-            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Video);
+            bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FollowingUserFeedData.Video);
             if (isVideoUrlFromDropbox)
             {
                 shareMediaUrl = FollowingUserFeedData.Video;
@@ -623,7 +623,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     //this method is used to Set Comment count on text....... 
     public void CommentCountUISetup(int commentCount)
     {        
-        string commentCountSTR = FeedUIController.Instance.GetAbreviation(commentCount);
+        string commentCountSTR = FeedsManager.Instance.GetAbreviation(commentCount);
         if (commentCountSTR != "0")
         {
             commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
@@ -639,10 +639,10 @@ public class FollowingUserFeedItem : MonoBehaviour
     public void OnClickCommentButton(bool isRefresh)
     {
         //this method is get comment list and check if current feed this on multiple time not get comment list.......
-        APIManager.Instance.CommentListGetAndClickFeedCommentButton(FollowingUserFeedData.Id, isRefresh, FollowingUserFeedData.commentCount);
+        SNS_APIResponseManager.Instance.CommentListGetAndClickFeedCommentButton(FollowingUserFeedData.Id, isRefresh, FollowingUserFeedData.commentCount);
         if (!isRefresh)
         {
-            FeedUIController.Instance.OpenCommentPanel();
+            FeedsManager.Instance.OpenCommentPanel();
         }
     }
     #endregion
@@ -651,7 +651,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     //this method is setup likeCount text and image.......
     public void LikeCountAndUISetup(int likeCount)
     {
-        string likeCountSTR = FeedUIController.Instance.GetAbreviation(likeCount);
+        string likeCountSTR = FeedsManager.Instance.GetAbreviation(likeCount);
         if (likeCountSTR != "0")
         {
             likeCountBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = likeCountSTR;
@@ -675,7 +675,7 @@ public class FollowingUserFeedItem : MonoBehaviour
     //this method is used to like or dislike button click.......
     public void OnClickLikeOrDisLikeButton()
     {
-        APIManager.Instance.RequestLikeOrDisLikeFeed(FollowingUserFeedData.Id.ToString(), likeCountBtn.GetComponent<Button>());
+        SNS_APIResponseManager.Instance.RequestLikeOrDisLikeFeed(FollowingUserFeedData.Id.ToString(), likeCountBtn.GetComponent<Button>());
     }
     #endregion
 }

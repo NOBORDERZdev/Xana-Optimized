@@ -11,11 +11,11 @@ public class OwnedNftLoadButton : MonoBehaviour
     [HideInInspector] public string des;
     [HideInInspector] public string type;
     [HideInInspector] public string _NftDetailsopen;
-    [HideInInspector] public NftDataScript controller;
+    [HideInInspector] public SNS_NFTHandler controller;
     public GameObject nftDeatilsPage;
     public static Sprite nftImage;
     
-    public void Initializ(string _thumb, string _owner, string _creator, string _description, string _type, string NftDetailsopen, NftDataScript ctrlr, GameObject nftDetails)
+    public void Initializ(string _thumb, string _owner, string _creator, string _description, string _type, string NftDetailsopen, SNS_NFTHandler ctrlr, GameObject nftDetails)
     {
         thumb = _thumb;
         owner = _owner;

@@ -25,7 +25,7 @@ public class UserPostFeature : MonoBehaviour
     {
         if (_postInputField.text == "" && GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
             return;
         }
         UIHandler.Instance.SwitchToPostScreen(false);

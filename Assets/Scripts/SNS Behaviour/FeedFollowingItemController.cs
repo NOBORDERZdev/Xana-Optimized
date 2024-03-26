@@ -54,7 +54,7 @@ public class FeedFollowingItemController : MonoBehaviour
                 AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
                 profileImage.sprite = null;
             }
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -85,7 +85,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
     private void Update()//delete image after object out of screen
     {
-        /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+        /*if (SNS_APIResponseManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
         {
             return;
         }*/
@@ -172,7 +172,7 @@ public class FeedFollowingItemController : MonoBehaviour
                     }
                     //Resources.UnloadUnusedAssets();//every clear.......
                     //Caching.ClearCache();
-                    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                    SNS_APIResponseManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                 }
             }
         }
@@ -181,15 +181,15 @@ public class FeedFollowingItemController : MonoBehaviour
     public void LoadFeed()
     {
         feedLike.text = FeedsByFollowingUserRowData.LikeCount.ToString();
-        feedTitle.text = APIManager.DecodedString(FeedsByFollowingUserRowData.Title);
+        feedTitle.text = SNS_APIResponseManager.DecodedString(FeedsByFollowingUserRowData.Title);
 
         if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.Image) || !string.IsNullOrEmpty(FeedsByFollowingUserRowData.thumbnail))//Feed Following Items Initiate Total Count Set.......
         {
-            FeedUIController.Instance.followingFeedInitiateTotalCount += 1;
+            FeedsManager.Instance.followingFeedInitiateTotalCount += 1;
         }
 
         isVisible = true;
-        /*if (!APIManager.Instance.isTestDefaultToken)
+        /*if (!SNS_APIResponseManager.Instance.isTestDefaultToken)
         {
             isVisible = true;
         }
@@ -207,7 +207,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
             if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.User.Avatar))//set avatar image.......
             {
-                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.User.Avatar);
+                bool isAvatarUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.User.Avatar);
                 //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isAvatarUrlFromDropbox)
                 {
@@ -226,7 +226,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.Image))//Feed Following Image
         {
-            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Image);
+            bool isImageUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Image);
             //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
@@ -235,10 +235,10 @@ public class FeedFollowingItemController : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(imgFeed, FeedsByFollowingUserRowData.Image, changeAspectRatio: true);
-                        if (FeedUIController.Instance.followingFeedInitiateTotalCount > 0)
+                        if (FeedsManager.Instance.followingFeedInitiateTotalCount > 0)
                         {
-                            //FeedUIController.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
-                            FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
+                            //FeedsManager.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
+                            FeedsManager.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
                         }
                         CheckAndSetResolutionOfImage(imgFeed.sprite);
                         isImageSuccessDownloadAndSave = true;
@@ -261,7 +261,7 @@ public class FeedFollowingItemController : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.thumbnail))
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.thumbnail);
+                bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.thumbnail);
                 if (isVideoUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(FeedsByFollowingUserRowData.thumbnail, FeedsByFollowingUserRowData.thumbnail, (success) =>
@@ -269,9 +269,9 @@ public class FeedFollowingItemController : MonoBehaviour
                         if (success)
                         {
                             AssetCache.Instance.LoadSpriteIntoImage(imgFeed, FeedsByFollowingUserRowData.thumbnail, changeAspectRatio: true);
-                            if (FeedUIController.Instance.followingFeedInitiateTotalCount > 0)
+                            if (FeedsManager.Instance.followingFeedInitiateTotalCount > 0)
                             {
-                                FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
+                                FeedsManager.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
                             }
                             CheckAndSetResolutionOfImage(imgFeed.sprite);
                             isImageSuccessDownloadAndSave = true;
@@ -290,7 +290,7 @@ public class FeedFollowingItemController : MonoBehaviour
             }
             else
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Video);
+                bool isVideoUrlFromDropbox = SNS_APIResponseManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Video);
 
                 cameraIcon.gameObject.SetActive(true);
                 videoDisplay.gameObject.SetActive(true);
@@ -315,56 +315,56 @@ public class FeedFollowingItemController : MonoBehaviour
 
     public void OnClickCheckOtherPlayerProfile()
     {
-        //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
+        //FeedsManager.Instance.OnClickCheckOtherPlayerProfile();
     }
 
     public void OnClickFeedItem()
     {
-        FeedUIController.Instance.feedFullViewScreenCallingFrom = "FollowingTab";
+        FeedsManager.Instance.feedFullViewScreenCallingFrom = "FollowingTab";
         StartCoroutine(loadVideoFeed());
     }
 
     IEnumerator loadVideoFeed()
     {
-        foreach (Transform item in FeedUIController.Instance.videofeedParent)
+        foreach (Transform item in FeedsManager.Instance.videofeedParent)
         {
             Destroy(item.gameObject);
         }
 
         int index = 0;
         //int pageIndex = 0;
-        //FeedUIController.Instance.ShowLoader(true);
-        for (int i = 0; i < APIManager.Instance.allFollowingUserRootList.Count; i++)
+        //FeedsManager.Instance.ShowLoader(true);
+        for (int i = 0; i < SNS_APIResponseManager.Instance.allFollowingUserRootList.Count; i++)
         {
-            GameObject videofeedObject = Instantiate(APIController.Instance.FollowingUserVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
+            GameObject videofeedObject = Instantiate(SNS_APIController.Instance.FollowingUserVideoFeedPrefab, FeedsManager.Instance.videofeedParent);
 
             FollowingUserFeedItem followingUserFeedItem = videofeedObject.GetComponent<FollowingUserFeedItem>();
 
-            followingUserFeedItem.FollowingUserFeedData = APIManager.Instance.allFollowingUserRootList[i];
-            // followingUserFeedItem.FeedData = APIManager.Instance.saveRootList[i].feeds[j];
+            followingUserFeedItem.FollowingUserFeedData = SNS_APIResponseManager.Instance.allFollowingUserRootList[i];
+            // followingUserFeedItem.FeedData = SNS_APIResponseManager.Instance.saveRootList[i].feeds[j];
             followingUserFeedItem.LoadFeed();
 
-            if (APIManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
+            if (SNS_APIResponseManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
             {
                 //pageIndex = index;
                 //Debug.LogError("pageIndex :" + pageIndex);
-                FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
+                FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
             }
 
             index += 1;
         }
         yield return new WaitForSeconds(0.1f);
-        //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(true);
-        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
+        //FeedsManager.Instance.ShowLoader(false);
+        FeedsManager.Instance.feedVideoScreen.SetActive(true);
+        FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
 
-        //FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
-        //Debug.LogError("name : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //FeedsManager.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
+        //Debug.LogError("name : " + SNS_APIController.Instance.videofeedParent.name);
+        FeedsManager.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.1f);
-        //Debug.LogError("name11 : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        FeedUIController.Instance.feedUiScreen.SetActive(false);
+        //Debug.LogError("name11 : " + SNS_APIController.Instance.videofeedParent.name);
+        FeedsManager.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        FeedsManager.Instance.feedUiScreen.SetActive(false);
     }
 
     #region Get Image And Video From AWS
@@ -430,10 +430,10 @@ public class FeedFollowingItemController : MonoBehaviour
             if (mainImage == imgFeed)//Feed Following items image loaded count increase
             {
                 CheckAndSetResolutionOfImage(mainImage.sprite);
-                if (FeedUIController.Instance.followingFeedInitiateTotalCount > 0)
+                if (FeedsManager.Instance.followingFeedInitiateTotalCount > 0)
                 {
-                    //FeedUIController.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
-                    FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
+                    //FeedsManager.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
+                    FeedsManager.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
                 }
                 isImageSuccessDownloadAndSave = true;
             }
@@ -456,10 +456,10 @@ public class FeedFollowingItemController : MonoBehaviour
                 }
                 if (mainImage == imgFeed)//Feed Following items image loaded count increase
                 {
-                    if (FeedUIController.Instance.followingFeedInitiateTotalCount > 0)
+                    if (FeedsManager.Instance.followingFeedInitiateTotalCount > 0)
                     {
-                        //FeedUIController.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
-                        FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
+                        //FeedsManager.Instance.followingFeedImageLoadedCount += 1;//Feed Following items image loaded count increase
+                        FeedsManager.Instance.followingFeedInitiateTotalCount -= 1;//Feed Following items image loaded count increase
                     }
                 }
             });

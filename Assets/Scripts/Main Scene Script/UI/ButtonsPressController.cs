@@ -92,8 +92,8 @@ public class ButtonsPressController : MonoBehaviour
     }
     void OnInviteClick()
     {
-        if (SNSNotificationManager.Instance != null)
-            SNSNotificationManager.Instance.ShowNotificationMsg("This features is coming soon");
+        if (SNSNotificationHandler.Instance != null)
+            SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");
     }
     public void CloseAllScreens()
     {

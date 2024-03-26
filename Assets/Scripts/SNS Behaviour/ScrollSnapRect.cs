@@ -206,10 +206,10 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         _container.anchoredPosition = _pagePositions[aPageIndex];
         _currentPage = aPageIndex;
 
-        if (FeedUIController.Instance != null)//vishal
+        if (FeedsManager.Instance != null)//vishal
         {
             //Debug.Log("SetPage:" + _currentPage);
-            StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
+            StartCoroutine(FeedsManager.Instance.ActiveFeedUi(_currentPage, 0));
         }        
     }
 
@@ -222,23 +222,23 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         _lerp = true;
         _currentPage = aPageIndex;
 
-        if (FeedUIController.Instance != null && FeedUIController.Instance.gameObject.activeSelf)//vishal
+        if (FeedsManager.Instance != null && FeedsManager.Instance.gameObject.activeSelf)//vishal
         {
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            if (!FeedsManager.Instance.profileFollowerFollowingListScreen.activeSelf)
             {
-                FeedUIController.Instance.OnSetSelectionLine();//vishal
-                StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
+                FeedsManager.Instance.OnSetSelectionLine();//vishal
+                StartCoroutine(FeedsManager.Instance.ActiveFeedUi(_currentPage, 0));
             }
-            else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+            else if (FeedsManager.Instance.profileFollowerFollowingListScreen.activeSelf)
             {
-                FeedUIController.Instance.ProfileFFSelectionOnValueChange();
+                FeedsManager.Instance.ProfileFFSelectionOnValueChange();
             }
         }
-        else if (MessageController.Instance != null && MessageController.Instance.gameObject.activeSelf)
+        else if (SNS_SMSModuleManager.Instance != null && SNS_SMSModuleManager.Instance.gameObject.activeSelf)
         {
-            if (MessageController.Instance.AttechmentDownloadScreen.activeSelf)
+            if (SNS_SMSModuleManager.Instance.AttechmentDownloadScreen.activeSelf)
             {
-                MessageController.Instance.SaveAttachmentDetailsSetup(_currentPage);
+                SNS_SMSModuleManager.Instance.SaveAttachmentDetailsSetup(_currentPage);
             }
         }
     }
@@ -344,9 +344,9 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         // not dragging yet
         _dragging = false;
 
-        if (FeedUIController.Instance != null)//vishal
+        if (FeedsManager.Instance != null)//vishal
         {
-            FeedUIController.Instance.CloseAllFeed(true);
+            FeedsManager.Instance.CloseAllFeed(true);
         }
     }
 
@@ -407,9 +407,9 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             }
         }
 
-        if (FeedUIController.Instance != null)//vishal
+        if (FeedsManager.Instance != null)//vishal
         {
-            FeedUIController.Instance.CloseAllFeed(true);
+            FeedsManager.Instance.CloseAllFeed(true);
         }
     }
 }

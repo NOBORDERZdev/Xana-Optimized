@@ -172,8 +172,8 @@ public class PlayerPortal : MonoBehaviour
         }
         else
         {
-            if (SNSNotificationManager.Instance != null)
-                SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+            if (SNSNotificationHandler.Instance != null)
+                SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
             yield return null;
         }
     }
