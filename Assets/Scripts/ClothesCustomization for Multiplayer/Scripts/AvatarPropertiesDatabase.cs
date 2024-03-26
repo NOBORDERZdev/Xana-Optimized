@@ -237,7 +237,7 @@ public class AvatarPropertiesDatabase : MonoBehaviour
             //}
         }
 
-        //if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
+        //if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
         //{
         //    Debug.LogError("~~~~~ Waqas_ ItemDataBase ~~~~~~~~~~~");
         //    //Screen.orientation = ScreenOrientation.Portrait;

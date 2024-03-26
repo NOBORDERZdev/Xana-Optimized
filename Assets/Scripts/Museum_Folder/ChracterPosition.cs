@@ -43,14 +43,14 @@ public class ChracterPosition : MonoBehaviour
             
             if ((other.gameObject.tag == "PhotonLocalPlayer" || other.gameObject.tag == "Player") && other.GetComponent<PhotonView>().IsMine)
             {
-                if (ReferrencesForDynamicMuseum.instance.m_34player)
+                if (ReferrencesForGameplay.instance.m_34player)
                 {
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                    ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 }
                 if (!UserPassManager.Instance.CheckSpecificItem("idol_Villa", false))
                 {
                     UserPassManager.Instance.vipPassUI.SetActive(true);
-                    CameraLook.instance.DisAllowControl();
+                    PlayerCameraController.instance.DisAllowControl();
                     return;
                 }
                 isAlreadyRunning = false;
@@ -69,7 +69,7 @@ public class ChracterPosition : MonoBehaviour
 
     IEnumerator DelayInEnterRoom()
     {
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
+        ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
         yield return StartCoroutine(LoadingController.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
@@ -105,14 +105,14 @@ public class ChracterPosition : MonoBehaviour
         yield return new WaitForSeconds(.4f);
 
 
-        ReferrencesForDynamicMuseum.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = tempSpawn;
+        ReferrencesForGameplay.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = tempSpawn;
       
         yield return new WaitForSeconds(.5f);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = tempSpawn;
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = tempSpawn;
         yield return StartCoroutine(LoadingController.Instance.FadeOut());
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
+        ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);
     }
@@ -120,7 +120,7 @@ public class ChracterPosition : MonoBehaviour
 
     IEnumerator DelayForOutSide()
     {
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
+        ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
         yield return StartCoroutine(LoadingController.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
@@ -143,15 +143,15 @@ public class ChracterPosition : MonoBehaviour
         }
         yield return new WaitForSeconds(.4f);
 
-        ReferrencesForDynamicMuseum.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = spawnPos;
+        ReferrencesForGameplay.instance.PlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = new Vector3(0, 0, 0);
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = spawnPos;
 
         yield return new WaitForSeconds(.5f);
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.transform.position = spawnPos;
+        ReferrencesForGameplay.instance.MainPlayerParent.transform.position = spawnPos;
         GameplayEntityLoader.instance.SetAxis();
         yield return StartCoroutine(LoadingController.Instance.FadeOut());
-        ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
+        ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);
     }

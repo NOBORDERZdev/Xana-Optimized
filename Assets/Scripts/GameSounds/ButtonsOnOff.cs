@@ -11,14 +11,14 @@ public class ButtonsOnOff : MonoBehaviour
     {
        otherButton.SetActive(true);
        this.gameObject.SetActive(false);
-        ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
+        ReferrencesForGameplay.instance.hiddenButtonDisable();
         BuilderEventManager.UIToggle?.Invoke(true);
     }
     public void ClickHidebtnOff()
     {
         this.gameObject.SetActive(true);
         otherButton.SetActive(false);
-        ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
+        ReferrencesForGameplay.instance.hiddenButtonEnable();
         BuilderEventManager.UIToggle?.Invoke(false);
     }
 
@@ -35,23 +35,23 @@ public class ButtonsOnOff : MonoBehaviour
         if (b)
         {
             // Getting Btn status
-            if (ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha > 0)
-                ReferrencesForDynamicMuseum.instance.isHidebtn = true;
+            if (ReferrencesForGameplay.instance.JoyStick.GetComponent<CanvasGroup>().alpha > 0)
+                ReferrencesForGameplay.instance.isHidebtn = true;
             else
-                ReferrencesForDynamicMuseum.instance.isHidebtn = false;
+                ReferrencesForGameplay.instance.isHidebtn = false;
 
            
             //ClickHidebtnOn();
-            ReferrencesForDynamicMuseum.instance.hiddenButtonDisable();
-            ReferrencesForDynamicMuseum.instance.JoyStick.SetActive(true);
-            ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 0;
+            ReferrencesForGameplay.instance.hiddenButtonDisable();
+            ReferrencesForGameplay.instance.JoyStick.SetActive(true);
+            ReferrencesForGameplay.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 0;
         }
         else
         {
-            if (ReferrencesForDynamicMuseum.instance.isHidebtn) {
+            if (ReferrencesForGameplay.instance.isHidebtn) {
                 //ClickHidebtnOff();
-                ReferrencesForDynamicMuseum.instance.hiddenButtonEnable();
-                ReferrencesForDynamicMuseum.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
+                ReferrencesForGameplay.instance.hiddenButtonEnable();
+                ReferrencesForGameplay.instance.JoyStick.GetComponent<CanvasGroup>().alpha = 1f;
             }
         }
     }

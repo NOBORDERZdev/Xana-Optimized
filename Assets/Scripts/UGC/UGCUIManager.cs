@@ -232,7 +232,7 @@ public class UGCUIManager : MonoBehaviour
     public void BackToHomeScreen()
     {
         //Initiate.Fade("Main", Color.black, 1.0f);
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Home");
     }
     public IEnumerator PlayRecordedVideo()
     {

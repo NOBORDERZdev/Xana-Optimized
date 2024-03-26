@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MouseLook : MonoBehaviour
+public class FP_CamController : MonoBehaviour
 {
 
     public float mouseSensitivity = 100f;
@@ -12,7 +12,7 @@ public class MouseLook : MonoBehaviour
    
     private float xRotation = 0f;
     
-    public PlayerControllerNew playerController;
+    public PlayerController playerController;
     [Header("Gyro")]
     private float x;
     private float y;
@@ -38,7 +38,7 @@ public class MouseLook : MonoBehaviour
         onToggal_Port.SetActive(false);
 
         gyroEnabled = EnableGyro();
-        playerBody = transform.GetComponentInParent<PlayerControllerNew>().gameObject.transform;
+        playerBody = transform.GetComponentInParent<PlayerController>().gameObject.transform;
         
     }
     // Update is called once per frame
@@ -238,10 +238,10 @@ public class MouseLook : MonoBehaviour
     }
     private void MoveCamera(Vector2 delta)
     {
-        xRotation -= delta.y * 10 * CameraLook.instance.lookSpeedd * Time.deltaTime;
+        xRotation -= delta.y * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime;
         xRotation = Mathf.Clamp(xRotation, -90f, 55f);
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * (delta.x * 10 * CameraLook.instance.lookSpeedd * Time.deltaTime));
+        playerBody.Rotate(Vector3.up * (delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime));
     }
 
     public void OnToggle()

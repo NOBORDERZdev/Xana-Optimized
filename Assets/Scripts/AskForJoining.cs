@@ -18,13 +18,13 @@ public class AskForJoining : MonoBehaviour
 
     void LoadMain()
     {
-        XanaConstantsHolder.xanaConstants.isFromXanaLobby =false;
-        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = false;
+        ConstantsHolder.xanaConstants.isFromXanaLobby =false;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingController.Instance.randCurrentValue = _rand;
         StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
-        XanaConstantsHolder.xanaConstants.isBackFromWorld = true;  
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;  
         LoadingController.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = UITextLocalization.GetLocaliseTextByKey("Going Back to Home");
@@ -78,8 +78,8 @@ public class AskForJoining : MonoBehaviour
         }
         else
         {
-            if (ReferrencesForDynamicMuseum.instance != null)
-                ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+            if (ReferrencesForGameplay.instance != null)
+                ReferrencesForGameplay.instance.workingCanvas.SetActive(false);
 
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingController.Instance.randCurrentValue = _rand;
@@ -92,7 +92,7 @@ public class AskForJoining : MonoBehaviour
             }
 
             //LoadingController.Instance.UpdateLoadingSlider(0.5f);
-            Launcher.instance.Connect(Launcher.instance.lastLobbyName);
+            MutliplayerController.instance.Connect(MutliplayerController.instance.lastLobbyName);
             AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
@@ -106,11 +106,11 @@ public class AskForJoining : MonoBehaviour
     {
         if (active)
         {
-            CameraLook.instance.AllowControl();
+            PlayerCameraController.instance.AllowControl();
         }
         else
         {
-            CameraLook.instance.DisAllowControl();
+            PlayerCameraController.instance.DisAllowControl();
         }
     }
 }

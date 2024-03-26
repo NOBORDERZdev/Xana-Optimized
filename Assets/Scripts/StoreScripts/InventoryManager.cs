@@ -235,7 +235,7 @@ public class InventoryManager : MonoBehaviour
         //WaqasAhmad
         //AvatarBodyParts.instance.BindSkinListner();
 
-        if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
+        if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
         {
             for (int i = 0; i < panelsLayoutGroups.Count; i++)
             {
@@ -309,7 +309,7 @@ public class InventoryManager : MonoBehaviour
         //     button.transform.parent = contentparent.transform;
 
         if (PlayerPrefs.GetString("PresetValue") != "")
-            XanaConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
+            ConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
     }
 
 
@@ -449,8 +449,8 @@ public class InventoryManager : MonoBehaviour
             GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().UnStichItem("EyeWearable");
         }
         UndoSelection();
-        XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-        XanaConstantsHolder.xanaConstants._curretClickedBtn = null;
+        ConstantsHolder.xanaConstants._lastClickedBtn = null;
+        ConstantsHolder.xanaConstants._curretClickedBtn = null;
         if (GameManager.Instance) // reseting body type
         {
             GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().ResizeClothToBodyFat(GameManager.Instance.mainCharacter.gameObject, 0);
@@ -464,12 +464,12 @@ public class InventoryManager : MonoBehaviour
         //Comented By Talha For Default cloth showing
         Default_LastSaved_PanelDisabler();
         //PlayerPrefs.SetString("PresetValue", "");
-        XanaConstantsHolder.xanaConstants.PresetValueString = null;
+        ConstantsHolder.xanaConstants.PresetValueString = null;
         PresetData_Jsons.clickname = "";
         UpdateXanaConstants();
         //AvatarPropertiesDatabase.instance.GetComponent<SavaAvatarProperties>().SavePlayerProperties();
-        UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
-        //XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
+        UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
+        //ConstantsHolder.xanaConstants._lastClickedBtn = null;
 
         if (EyesBlinkController.instance)
             EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
@@ -505,7 +505,7 @@ public class InventoryManager : MonoBehaviour
         }// null;
          // DefaultEnteriesforManican.instance.LastSaved_Reset();
          // Default_LastSaved_PanelDisabler();
-        XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
+        ConstantsHolder.xanaConstants._lastClickedBtn = null;
 
         if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar)
         {
@@ -530,9 +530,9 @@ public class InventoryManager : MonoBehaviour
 
         UpdateXanaConstants();
         if (ParentOfBtnsCustomEyes.gameObject.activeInHierarchy || ParentOfBtnsCustomLips.gameObject.activeInHierarchy || ParentOfBtnsCustomSkin.gameObject.activeInHierarchy)
-            UpdateColor(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            UpdateColor(ConstantsHolder.xanaConstants.currentButtonIndex);
         else
-            UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
 
         if (EyesBlinkController.instance)
             EyesBlinkController.instance.StoreBlendShapeValues();          // Added by Ali Hamza
@@ -675,7 +675,7 @@ public class InventoryManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-        UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+        UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
     }
     void Default_LastSaved_PanelDisabler()
     {
@@ -698,7 +698,7 @@ public class InventoryManager : MonoBehaviour
             //if (PresetData_Jsons.lastSelectedPreset)
             //{
             //    PlayerPrefs.SetString("PresetValue", PresetData_Jsons.lastSelectedPreset.name);
-            //    XanaConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
+            //    ConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
             //}
             PlayerPrefs.SetInt("Loaded", 1);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
@@ -819,7 +819,7 @@ public class InventoryManager : MonoBehaviour
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SetRequestHeader("Content-Type", "application/json");
-        if (XanaConstantsHolder.loggedIn)
+        if (ConstantsHolder.loggedIn)
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
@@ -1123,7 +1123,7 @@ public class InventoryManager : MonoBehaviour
         BtnsPanelAvatar.GetComponent<SubBottons>().AvatarBool = true;
         // When Comming form home then set last panel to -1
         PreviousSelectionCount = -1;
-        XanaConstantsHolder.xanaConstants.currentButtonIndex = 0;
+        ConstantsHolder.xanaConstants.currentButtonIndex = 0;
         BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
         ////Debug.Log("Store hair data call====");
         SelectPanel(1);
@@ -1140,7 +1140,7 @@ public class InventoryManager : MonoBehaviour
     {
         // When Comming form home then set last panel to -1
         PreviousSelectionCount = -1;
-        XanaConstantsHolder.xanaConstants.currentButtonIndex = 0;
+        ConstantsHolder.xanaConstants.currentButtonIndex = 0;
 
         if (!GameManager.Instance.BottomAvatarButtonBool)
         {
@@ -1278,7 +1278,7 @@ public class InventoryManager : MonoBehaviour
 
         }
         //PresetData_Jsons.lastSelectedPresetName = null;
-        //XanaConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
+        //ConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
 
         GameManager.Instance.mainCharacter.GetComponent<Animator>().SetBool("Customization", false);
 
@@ -1398,7 +1398,7 @@ public class InventoryManager : MonoBehaviour
             //Resources.UnloadUnusedAssets();
             // CLoth
             buttonIndex = 3;
-            XanaConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
+            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(true);
             MainPanelAvatar.SetActive(false);
             //OpenClothContainerPanel(0);
@@ -1413,7 +1413,7 @@ public class InventoryManager : MonoBehaviour
         {
             ////Debug.LogError("<color=red> Panel Index:" + TakeIndex + "</color>");
             buttonIndex = 0;
-            XanaConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
+            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(false);
             MainPanelAvatar.SetActive(true);
             //OpenAvatarContainerPanel(0);
@@ -1750,21 +1750,21 @@ public class InventoryManager : MonoBehaviour
         switch (_index)
         {
             case 0:
-                if (XanaConstantsHolder.xanaConstants.hairColoPalette != "" && ParentOfBtnsCustomHair.transform.childCount != 0)
+                if (ConstantsHolder.xanaConstants.hairColoPalette != "" && ParentOfBtnsCustomHair.transform.childCount != 0)
                 {
                     for (int i = 0; i < ParentOfBtnsCustomHair.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomHair.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.hairColoPalette)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.hairColoPalette)
                         {
                             //Debug.Log("ID = " + childObject.GetComponent<ItemDetail>().id);
 
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[2] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[2] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.eyeColorPalette, 2);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.eyeColorPalette, 2);
 
                             break;
                         }
@@ -1772,19 +1772,19 @@ public class InventoryManager : MonoBehaviour
                 }
                 break;
             case 2:
-                if (XanaConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex != -1 && ParentOfBtnsCustomEyeBrows.transform.childCount != 0)
+                if (ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex != -1 && ParentOfBtnsCustomEyeBrows.transform.childCount != 0)
                 {
                     for (int i = 0; i < ParentOfBtnsCustomEyeBrows.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomEyeBrows.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex.ToString())
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex.ToString())
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[3] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[3] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.eyeColorPalette, 3);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.eyeColorPalette, 3);
 
                             break;
                         }
@@ -1792,37 +1792,37 @@ public class InventoryManager : MonoBehaviour
                 }
                 break;
             case 3:
-                if (XanaConstantsHolder.xanaConstants.eyeColor != "")
+                if (ConstantsHolder.xanaConstants.eyeColor != "")
                 {
                     for (int i = 0; i < ParentOfBtnsCustomEyes.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomEyes.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.eyeColor)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.eyeColor)
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[0] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[0] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.eyeColor, 4);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.eyeColor, 4);
 
                             break;
                         }
                     }
                 }
-                if (XanaConstantsHolder.xanaConstants.eyeColorPalette != "" && ParentOfBtnsCustomEyesPalette.transform.childCount != 0)
+                if (ConstantsHolder.xanaConstants.eyeColorPalette != "" && ParentOfBtnsCustomEyesPalette.transform.childCount != 0)
                 {
                     for (int i = 0; i < ParentOfBtnsCustomEyesPalette.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomEyesPalette.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.eyeColorPalette)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.eyeColorPalette)
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[4] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[4] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.eyeColorPalette, 4);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.eyeColorPalette, 4);
 
                             break;
                         }
@@ -1831,37 +1831,37 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case 5:
-                if (XanaConstantsHolder.xanaConstants.lipColor != "")
+                if (ConstantsHolder.xanaConstants.lipColor != "")
                 {
                     for (int i = 0; i < ParentOfBtnsCustomLips.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomLips.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.lipColor)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.lipColor)
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[1] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[1] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.lipColor, 5);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.lipColor, 5);
 
                             break;
                         }
                     }
                 }
-                if (XanaConstantsHolder.xanaConstants.lipColorPalette != "" && ParentOfBtnsCustomLipsPalette.transform.childCount != 0)
+                if (ConstantsHolder.xanaConstants.lipColorPalette != "" && ParentOfBtnsCustomLipsPalette.transform.childCount != 0)
                 {
                     for (int i = 0; i < ParentOfBtnsCustomLipsPalette.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomLipsPalette.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.lipColorPalette)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.lipColorPalette)
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.colorSelection[5] = childObject;
+                            ConstantsHolder.xanaConstants.colorSelection[5] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.lipColorPalette, 5);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.lipColorPalette, 5);
 
                             break;
                         }
@@ -1870,19 +1870,19 @@ public class InventoryManager : MonoBehaviour
                 break;
 
             case 7:
-                if (XanaConstantsHolder.xanaConstants.skinColor != "")
+                if (ConstantsHolder.xanaConstants.skinColor != "")
                 {
                     for (int i = 0; i < ParentOfBtnsCustomSkin.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsCustomSkin.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<ItemDetail>().MyIndex.ToString() == XanaConstantsHolder.xanaConstants.skinColor)
+                        if (childObject.GetComponent<ItemDetail>().MyIndex.ToString() == ConstantsHolder.xanaConstants.skinColor)
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[7] = childObject;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[7] = childObject;
 
-                            CheckForItemDetail(XanaConstantsHolder.xanaConstants.skinColor, 6);
+                            CheckForItemDetail(ConstantsHolder.xanaConstants.skinColor, 6);
 
                             break;
                         }
@@ -3723,24 +3723,24 @@ public class InventoryManager : MonoBehaviour
 
     //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
 
     //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
 
     //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
     //    //}
     //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "BodyFat")
     //    //{
 
     //    //    AvatarCustomizationManager.Instance.UpdateChBodyShape(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID);
-    //    //    XanaConstantsHolder.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
+    //    //    ConstantsHolder.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
     //    //}
     //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Preset")
     //    //{
@@ -3764,41 +3764,41 @@ public class InventoryManager : MonoBehaviour
     //    //        if (tmp.transform.IsChildOf(ParentOfBtnsAvatarFace))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.faceIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.faceIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyeBrows))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.eyeBrowIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.eyeBrowIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyes))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.eyeIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.eyeIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarNose))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.noseIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.noseIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarLips))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.lipIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.lipIndex = 0;
     //    //        }
     //    //    }
 
@@ -3814,10 +3814,10 @@ public class InventoryManager : MonoBehaviour
     //    //}
 
     //    //if (!ParentOfBtnsCustomEyes.gameObject.activeSelf && !ParentOfBtnsCustomLips.gameObject.activeSelf && !ParentOfBtnsCustomSkin.gameObject.activeSelf)
-    //    //    UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+    //    //    UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
 
     //    //else
-    //    //    UpdateColor(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+    //    //    UpdateColor(ConstantsHolder.xanaConstants.currentButtonIndex);
     //}
     //public void RedoFunc()
     //{
@@ -3846,23 +3846,23 @@ public class InventoryManager : MonoBehaviour
 
     //    //    if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Lip")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.lipColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
 
     //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Eyes")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.eyeColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
 
     //    //    else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Skin")
     //    //    {
-    //    //        XanaConstantsHolder.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
+    //    //        ConstantsHolder.xanaConstants.skinColor = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID.ToString();
     //    //    }
     //    //}
     //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "BodyFat")
     //    //{
     //    //    AvatarCustomizationManager.Instance.UpdateChBodyShape(UndoRedoList[CurrentIndex].ClothTex_Item.ItemID);
-    //    //    XanaConstantsHolder.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
+    //    //    ConstantsHolder.xanaConstants.bodyNumber = UndoRedoList[CurrentIndex].ClothTex_Item.ItemID;
     //    //}
     //    //else if (UndoRedoList[CurrentIndex].ClothTex_Item.ItemType == "Preset")
     //    //{
@@ -3887,41 +3887,41 @@ public class InventoryManager : MonoBehaviour
     //    //        if (tmp.transform.IsChildOf(ParentOfBtnsAvatarFace))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.faceIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.faceIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.faceIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyeBrows))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.eyeBrowIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.eyeBrowIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.eyeBrowIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarEyes))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.eyeIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.eyeIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.eyeIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarNose))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.noseIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.noseIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.noseIndex = 0;
     //    //        }
 
     //    //        else if (tmp.transform.IsChildOf(ParentOfBtnsAvatarLips))
     //    //        {
     //    //            if (tmp.GetComponent<BodyCustomizationTrigger>())
-    //    //                XanaConstantsHolder.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+    //    //                ConstantsHolder.xanaConstants.lipIndex = tmp.GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
     //    //            else
-    //    //                XanaConstantsHolder.xanaConstants.lipIndex = 0;
+    //    //                ConstantsHolder.xanaConstants.lipIndex = 0;
     //    //        }
     //    //    }
     //    //}
@@ -3938,10 +3938,10 @@ public class InventoryManager : MonoBehaviour
     //    //UndoBtn.GetComponent<Button>().interactable = true;
 
     //    //if (!ParentOfBtnsCustomEyes.gameObject.activeSelf && !ParentOfBtnsCustomLips.gameObject.activeSelf && !ParentOfBtnsCustomSkin.gameObject.activeSelf)
-    //    //    UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+    //    //    UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
 
     //    //else
-    //    //    UpdateColor(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+    //    //    UpdateColor(ConstantsHolder.xanaConstants.currentButtonIndex);
     //}
     private void OnApplicationQuit()
     {
@@ -3954,14 +3954,14 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < ParentOfBtnsAvatarHairs.transform.childCount; i++)
         {
             childObject = ParentOfBtnsAvatarHairs.transform.GetChild(i).gameObject;
-            if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.hair)
+            if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.hair)
             {
                 childObject.GetComponent<Image>().enabled = true;
-                XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                 //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                XanaConstantsHolder.xanaConstants.avatarStoreSelection[0] = childObject;
+                ConstantsHolder.xanaConstants.avatarStoreSelection[0] = childObject;
 
-                CheckForItemDetail(XanaConstantsHolder.xanaConstants.hair, 3);
+                CheckForItemDetail(ConstantsHolder.xanaConstants.hair, 3);
             }
         }
     }
@@ -3974,7 +3974,7 @@ public class InventoryManager : MonoBehaviour
         {
             case 0:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
-                if (XanaConstantsHolder.xanaConstants.hair != "")
+                if (ConstantsHolder.xanaConstants.hair != "")
                 {
                     if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornHair.name == "MDhairs")
                     {
@@ -3997,15 +3997,15 @@ public class InventoryManager : MonoBehaviour
                         for (int i = 0; i < ParentOfBtnsAvatarHairs.transform.childCount; i++)
                         {
                             childObject = ParentOfBtnsAvatarHairs.transform.GetChild(i).gameObject;
-                            if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.hair)
+                            if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.hair)
                             {
                                 //  //Debug.Log("<color=blue>Enabled Selection</color>");
                                 childObject.GetComponent<Image>().enabled = true;
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                                 // //Debug.Log("<color=red>InventoryManager AssignLastClickedBtnHere</color>");
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[0] = childObject;
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[0] = childObject;
 
-                                CheckForItemDetail(XanaConstantsHolder.xanaConstants.hair, 3);
+                                CheckForItemDetail(ConstantsHolder.xanaConstants.hair, 3);
 
                                 break;
                             }
@@ -4020,19 +4020,19 @@ public class InventoryManager : MonoBehaviour
 
             case 1:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
-                if (!XanaConstantsHolder.xanaConstants.isFaceMorphed)
+                if (!ConstantsHolder.xanaConstants.isFaceMorphed)
                 {
-                    if (XanaConstantsHolder.xanaConstants.faceIndex != -1)
+                    if (ConstantsHolder.xanaConstants.faceIndex != -1)
                     {
                         for (int i = 0; i < faceAvatarButton.Length; i++)
                         {
-                            if (faceAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.faceIndex)
+                            if (faceAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.faceIndex)
                             {
                                 faceAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = faceAvatarButton[i];
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[1] = faceAvatarButton[i];
+                                ConstantsHolder.xanaConstants._lastAvatarClickedBtn = faceAvatarButton[i];
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[1] = faceAvatarButton[i];
 
-                                CheckForAvatarBtn(XanaConstantsHolder.xanaConstants.faceIndex, "face");
+                                CheckForAvatarBtn(ConstantsHolder.xanaConstants.faceIndex, "face");
                                 break;
                             }
                         }
@@ -4044,8 +4044,8 @@ public class InventoryManager : MonoBehaviour
                     //    int childNumber = ParentOfBtnsAvatarFace.transform.childCount - 1;
 
                     //    ParentOfBtnsAvatarFace.transform.GetChild(childNumber).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                    //    XanaConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarFace.transform.GetChild(childNumber).gameObject;
-                    //    XanaConstantsHolder.xanaConstants.avatarStoreSelection[1] = ParentOfBtnsAvatarFace.transform.GetChild(childNumber).gameObject;
+                    //    ConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarFace.transform.GetChild(childNumber).gameObject;
+                    //    ConstantsHolder.xanaConstants.avatarStoreSelection[1] = ParentOfBtnsAvatarFace.transform.GetChild(childNumber).gameObject;
 
                     //    CheckForAvatarBtn(0, "face");
                     //}
@@ -4055,12 +4055,12 @@ public class InventoryManager : MonoBehaviour
                 {
                     faceTapButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-                    if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+                    if (ConstantsHolder.xanaConstants._lastClickedBtn)
                     {
-                        if (XanaConstantsHolder.xanaConstants._lastClickedBtn.name == faceTapButton.name)
+                        if (ConstantsHolder.xanaConstants._lastClickedBtn.name == faceTapButton.name)
                         {
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[1] = null;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = null;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[1] = null;
                         }
                     }
 
@@ -4071,19 +4071,19 @@ public class InventoryManager : MonoBehaviour
 
             case 2:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
-                if (!XanaConstantsHolder.xanaConstants.isEyebrowMorphed)
+                if (!ConstantsHolder.xanaConstants.isEyebrowMorphed)
                 {
-                    if (XanaConstantsHolder.xanaConstants.eyeBrowIndex != -1)
+                    if (ConstantsHolder.xanaConstants.eyeBrowIndex != -1)
                     {
                         for (int i = 0; i < eyeBrowsAvatarButton.Length; i++)
                         {
-                            if (eyeBrowsAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.eyeBrowIndex)
+                            if (eyeBrowsAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.eyeBrowIndex)
                             {
                                 eyeBrowsAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = eyeBrowsAvatarButton[i];
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[2] = eyeBrowsAvatarButton[i];
+                                ConstantsHolder.xanaConstants._lastAvatarClickedBtn = eyeBrowsAvatarButton[i];
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[2] = eyeBrowsAvatarButton[i];
 
-                                CheckForAvatarBtn(XanaConstantsHolder.xanaConstants.eyeBrowIndex, "eyeBrow");
+                                CheckForAvatarBtn(ConstantsHolder.xanaConstants.eyeBrowIndex, "eyeBrow");
 
                                 break;
                             }
@@ -4094,7 +4094,7 @@ public class InventoryManager : MonoBehaviour
                             if (childObject.GetComponent<ItemDetail>().id.ParseToInt() == SavaAvatarProperties.instance.characterController.eyeBrowId)
                             {
                                 childObject.GetComponent<Image>().enabled = true;
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             }
                             else
                                 childObject.GetComponent<Image>().enabled = false;
@@ -4111,8 +4111,8 @@ public class InventoryManager : MonoBehaviour
                     //    int childNumber = ParentOfBtnsAvatarEyeBrows.transform.childCount - 1;
                     //    print("child number is = " + childNumber);
                     //    ParentOfBtnsAvatarEyeBrows.transform.GetChild(childNumber).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                    //    XanaConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarEyeBrows.transform.GetChild(childNumber).gameObject;
-                    //    XanaConstantsHolder.xanaConstants.avatarStoreSelection[2] = ParentOfBtnsAvatarEyeBrows.transform.GetChild(childNumber).gameObject;
+                    //    ConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarEyeBrows.transform.GetChild(childNumber).gameObject;
+                    //    ConstantsHolder.xanaConstants.avatarStoreSelection[2] = ParentOfBtnsAvatarEyeBrows.transform.GetChild(childNumber).gameObject;
 
                     //    CheckForAvatarBtn(0, "eyeBrow");
                     //}
@@ -4122,12 +4122,12 @@ public class InventoryManager : MonoBehaviour
                 {
                     eyeBrowTapButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-                    if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+                    if (ConstantsHolder.xanaConstants._lastClickedBtn)
                     {
-                        if (XanaConstantsHolder.xanaConstants._lastClickedBtn.name == eyeBrowTapButton.name)
+                        if (ConstantsHolder.xanaConstants._lastClickedBtn.name == eyeBrowTapButton.name)
                         {
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[2] = null;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = null;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[2] = null;
                         }
                     }
 
@@ -4140,19 +4140,19 @@ public class InventoryManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
-                    if (!XanaConstantsHolder.xanaConstants.isEyeMorphed)
+                    if (!ConstantsHolder.xanaConstants.isEyeMorphed)
                     {
-                        if (XanaConstantsHolder.xanaConstants.eyeIndex != -1)
+                        if (ConstantsHolder.xanaConstants.eyeIndex != -1)
                         {
                             for (int i = 0; i < eyeAvatarButton.Length; i++)
                             {
-                                if (eyeAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.eyeIndex)
+                                if (eyeAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.eyeIndex)
                                 {
                                     eyeAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = eyeAvatarButton[i];
-                                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[3] = eyeAvatarButton[i];
+                                    ConstantsHolder.xanaConstants._lastAvatarClickedBtn = eyeAvatarButton[i];
+                                    ConstantsHolder.xanaConstants.avatarStoreSelection[3] = eyeAvatarButton[i];
 
-                                    CheckForAvatarBtn(XanaConstantsHolder.xanaConstants.eyeIndex, "eye");
+                                    CheckForAvatarBtn(ConstantsHolder.xanaConstants.eyeIndex, "eye");
 
                                     break;
                                 }
@@ -4165,8 +4165,8 @@ public class InventoryManager : MonoBehaviour
                         //    int childNumber = ParentOfBtnsAvatarEyes.transform.childCount - 1;
 
                         //    ParentOfBtnsAvatarEyes.transform.GetChild(childNumber).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                        //    XanaConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarEyes.transform.GetChild(childNumber).gameObject;
-                        //    XanaConstantsHolder.xanaConstants.avatarStoreSelection[3] = ParentOfBtnsAvatarEyes.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarEyes.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants.avatarStoreSelection[3] = ParentOfBtnsAvatarEyes.transform.GetChild(childNumber).gameObject;
 
                         //    CheckForAvatarBtn(0, "eye");
                         //}
@@ -4176,12 +4176,12 @@ public class InventoryManager : MonoBehaviour
                     {
                         eyeTapButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-                        if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+                        if (ConstantsHolder.xanaConstants._lastClickedBtn)
                         {
-                            if (XanaConstantsHolder.xanaConstants._lastClickedBtn.name == eyeTapButton.name)
+                            if (ConstantsHolder.xanaConstants._lastClickedBtn.name == eyeTapButton.name)
                             {
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[3] = null;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = null;
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[3] = null;
                             }
                         }
 
@@ -4191,7 +4191,7 @@ public class InventoryManager : MonoBehaviour
 
                 else
                 {
-                    if (XanaConstantsHolder.xanaConstants.shirt != "")
+                    if (ConstantsHolder.xanaConstants.shirt != "")
                     {
                         if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornShirt.name == "MDshirt")
                         {
@@ -4207,13 +4207,13 @@ public class InventoryManager : MonoBehaviour
                             for (int i = 0; i < ParentOfBtnsForOuter.transform.childCount; i++)
                             {
                                 childObject = ParentOfBtnsForOuter.transform.GetChild(i).gameObject;
-                                if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.shirt)
+                                if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.shirt)
                                 {
                                     childObject.GetComponent<Image>().enabled = true;
-                                    XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
-                                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[0] = childObject;
+                                    ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                    ConstantsHolder.xanaConstants.wearableStoreSelection[0] = childObject;
 
-                                    CheckForItemDetail(XanaConstantsHolder.xanaConstants.shirt, 1);
+                                    CheckForItemDetail(ConstantsHolder.xanaConstants.shirt, 1);
 
                                     break;
                                 }
@@ -4228,19 +4228,19 @@ public class InventoryManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
-                    if (!XanaConstantsHolder.xanaConstants.isNoseMorphed)
+                    if (!ConstantsHolder.xanaConstants.isNoseMorphed)
                     {
-                        if (XanaConstantsHolder.xanaConstants.noseIndex != -1)
+                        if (ConstantsHolder.xanaConstants.noseIndex != -1)
                         {
                             for (int i = 0; i < noseAvatarButton.Length; i++)
                             {
-                                if (noseAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.noseIndex)
+                                if (noseAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.noseIndex)
                                 {
                                     noseAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = noseAvatarButton[i];
-                                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[4] = noseAvatarButton[i];
+                                    ConstantsHolder.xanaConstants._lastAvatarClickedBtn = noseAvatarButton[i];
+                                    ConstantsHolder.xanaConstants.avatarStoreSelection[4] = noseAvatarButton[i];
 
-                                    CheckForAvatarBtn(XanaConstantsHolder.xanaConstants.noseIndex, "nose");
+                                    CheckForAvatarBtn(ConstantsHolder.xanaConstants.noseIndex, "nose");
 
                                     break;
                                 }
@@ -4253,8 +4253,8 @@ public class InventoryManager : MonoBehaviour
                         //    int childNumber = ParentOfBtnsAvatarNose.transform.childCount - 1;
 
                         //    ParentOfBtnsAvatarNose.transform.GetChild(childNumber).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                        //    XanaConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarNose.transform.GetChild(childNumber).gameObject;
-                        //    XanaConstantsHolder.xanaConstants.avatarStoreSelection[4] = ParentOfBtnsAvatarNose.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarNose.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants.avatarStoreSelection[4] = ParentOfBtnsAvatarNose.transform.GetChild(childNumber).gameObject;
 
                         //    CheckForAvatarBtn(0, "nose");
                         //}
@@ -4264,12 +4264,12 @@ public class InventoryManager : MonoBehaviour
                     {
                         noseTapButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-                        if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+                        if (ConstantsHolder.xanaConstants._lastClickedBtn)
                         {
-                            if (XanaConstantsHolder.xanaConstants._lastClickedBtn.name == noseTapButton.name)
+                            if (ConstantsHolder.xanaConstants._lastClickedBtn.name == noseTapButton.name)
                             {
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[4] = null;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = null;
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[4] = null;
                             }
                         }
 
@@ -4278,17 +4278,17 @@ public class InventoryManager : MonoBehaviour
                 }
                 else
                 {
-                    if (XanaConstantsHolder.xanaConstants.PresetValueString != "")
+                    if (ConstantsHolder.xanaConstants.PresetValueString != "")
                     {
                         for (int i = 0; i < ParentOfBtnsForAccesary.transform.childCount; i++)
                         {
                             childObject = ParentOfBtnsForAccesary.transform.GetChild(i).gameObject;
                             childObject.transform.GetChild(0).gameObject.SetActive(false);
-                            if (childObject.name == XanaConstantsHolder.xanaConstants.PresetValueString)
+                            if (childObject.name == ConstantsHolder.xanaConstants.PresetValueString)
                             {
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                                 childObject.transform.GetChild(0).gameObject.SetActive(true);
-                                XanaConstantsHolder.xanaConstants.wearableStoreSelection[3] = childObject;
+                                ConstantsHolder.xanaConstants.wearableStoreSelection[3] = childObject;
                             }
                         }
                     }
@@ -4299,19 +4299,19 @@ public class InventoryManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
                 if (panelIndex == 1)
                 {
-                    if (!XanaConstantsHolder.xanaConstants.isLipMorphed)
+                    if (!ConstantsHolder.xanaConstants.isLipMorphed)
                     {
-                        if (XanaConstantsHolder.xanaConstants.lipIndex != -1)
+                        if (ConstantsHolder.xanaConstants.lipIndex != -1)
                         {
                             for (int i = 0; i < lipAvatarButton.Length; i++)
                             {
-                                if (lipAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.lipIndex)
+                                if (lipAvatarButton[i].GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.lipIndex)
                                 {
                                     lipAvatarButton[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                                    XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = lipAvatarButton[i];
-                                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[5] = lipAvatarButton[i];
+                                    ConstantsHolder.xanaConstants._lastAvatarClickedBtn = lipAvatarButton[i];
+                                    ConstantsHolder.xanaConstants.avatarStoreSelection[5] = lipAvatarButton[i];
 
-                                    CheckForAvatarBtn(XanaConstantsHolder.xanaConstants.lipIndex, "lip");
+                                    CheckForAvatarBtn(ConstantsHolder.xanaConstants.lipIndex, "lip");
 
                                     break;
                                 }
@@ -4324,8 +4324,8 @@ public class InventoryManager : MonoBehaviour
                         //    int childNumber = ParentOfBtnsAvatarLips.transform.childCount - 1;
 
                         //    ParentOfBtnsAvatarLips.transform.GetChild(childNumber).GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                        //    XanaConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarLips.transform.GetChild(childNumber).gameObject;
-                        //    XanaConstantsHolder.xanaConstants.avatarStoreSelection[5] = ParentOfBtnsAvatarLips.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants._lastClickedBtn = ParentOfBtnsAvatarLips.transform.GetChild(childNumber).gameObject;
+                        //    ConstantsHolder.xanaConstants.avatarStoreSelection[5] = ParentOfBtnsAvatarLips.transform.GetChild(childNumber).gameObject;
 
                         //    CheckForAvatarBtn(0, "lip");
                         //}
@@ -4335,12 +4335,12 @@ public class InventoryManager : MonoBehaviour
                     {
                         lipTapButton.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-                        if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+                        if (ConstantsHolder.xanaConstants._lastClickedBtn)
                         {
-                            if (XanaConstantsHolder.xanaConstants._lastClickedBtn.name == lipTapButton.name)
+                            if (ConstantsHolder.xanaConstants._lastClickedBtn.name == lipTapButton.name)
                             {
-                                XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
-                                XanaConstantsHolder.xanaConstants.avatarStoreSelection[5] = null;
+                                ConstantsHolder.xanaConstants._lastClickedBtn = null;
+                                ConstantsHolder.xanaConstants.avatarStoreSelection[5] = null;
                             }
                         }
 
@@ -4350,7 +4350,7 @@ public class InventoryManager : MonoBehaviour
 
                 else
                 {
-                    if (XanaConstantsHolder.xanaConstants.pants != "")
+                    if (ConstantsHolder.xanaConstants.pants != "")
                     {
                         ////Debug.Log(ParentOfBtnsForOuter.transform.childCount);
                         if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornPant.name == "MDpant")
@@ -4367,13 +4367,13 @@ public class InventoryManager : MonoBehaviour
                             for (int i = 0; i < ParentOfBtnsForBottom.transform.childCount; i++)
                             {
                                 childObject = ParentOfBtnsForBottom.transform.GetChild(i).gameObject;
-                                if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.pants)
+                                if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.pants)
                                 {
                                     childObject.GetComponent<Image>().enabled = true;
-                                    XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
-                                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[1] = childObject;
+                                    ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                    ConstantsHolder.xanaConstants.wearableStoreSelection[1] = childObject;
 
-                                    CheckForItemDetail(XanaConstantsHolder.xanaConstants.pants, 0);
+                                    CheckForItemDetail(ConstantsHolder.xanaConstants.pants, 0);
 
                                     break;
                                 }
@@ -4386,16 +4386,16 @@ public class InventoryManager : MonoBehaviour
 
             case 6:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
-                if (XanaConstantsHolder.xanaConstants.bodyNumber != -1)
+                if (ConstantsHolder.xanaConstants.bodyNumber != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarBody.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsAvatarBody.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<AvatarBtn>()._Bodyint == XanaConstantsHolder.xanaConstants.bodyNumber)
+                        if (childObject.GetComponent<AvatarBtn>()._Bodyint == ConstantsHolder.xanaConstants.bodyNumber)
                         {
                             childObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                            XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = childObject;
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[6] = childObject;
+                            ConstantsHolder.xanaConstants._lastAvatarClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[6] = childObject;
                             break;
                         }
                     }
@@ -4407,7 +4407,7 @@ public class InventoryManager : MonoBehaviour
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
                 if (panelIndex == 0)
                 {
-                    if (XanaConstantsHolder.xanaConstants.shoes != "")
+                    if (ConstantsHolder.xanaConstants.shoes != "")
                     {
                         if (GameManager.Instance.mainCharacter.GetComponent<AvatarSetupController>().wornShose.name == "MDshoes")
                         {
@@ -4423,13 +4423,13 @@ public class InventoryManager : MonoBehaviour
                             for (int i = 0; i < ParentOfBtnsForShoes.transform.childCount; i++)
                             {
                                 childObject = ParentOfBtnsForShoes.transform.GetChild(i).gameObject;
-                                if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.shoes)
+                                if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.shoes)
                                 {
                                     childObject.GetComponent<Image>().enabled = true;
-                                    XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
-                                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[2] = childObject;
+                                    ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                                    ConstantsHolder.xanaConstants.wearableStoreSelection[2] = childObject;
 
-                                    CheckForItemDetail(XanaConstantsHolder.xanaConstants.shoes, 2);
+                                    CheckForItemDetail(ConstantsHolder.xanaConstants.shoes, 2);
 
                                     break;
                                 }
@@ -4441,7 +4441,7 @@ public class InventoryManager : MonoBehaviour
                 break;
             case 8:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
-                if (XanaConstantsHolder.xanaConstants.eyeLashesIndex != -1)
+                if (ConstantsHolder.xanaConstants.eyeLashesIndex != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarEyeLashes.transform.childCount; i++)
                     {
@@ -4452,12 +4452,12 @@ public class InventoryManager : MonoBehaviour
                         //else
                         //    childObject.GetComponent<Image>().enabled = false;
 
-                        //if (childObject.GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.eyeLashesIndex)
-                        if (childObject.GetComponent<ItemDetail>().id == XanaConstantsHolder.xanaConstants.eyeLashesIndex.ToString())
+                        //if (childObject.GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.eyeLashesIndex)
+                        if (childObject.GetComponent<ItemDetail>().id == ConstantsHolder.xanaConstants.eyeLashesIndex.ToString())
                         {
                             childObject.GetComponent<Image>().enabled = true;
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[8] = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[8] = childObject;
                             break;
                         }
                     }
@@ -4465,16 +4465,16 @@ public class InventoryManager : MonoBehaviour
                 break;
             case 9:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
-                if (XanaConstantsHolder.xanaConstants.makeupIndex != -1)
+                if (ConstantsHolder.xanaConstants.makeupIndex != -1)
                 {
                     for (int i = 0; i < ParentOfBtnsAvatarMakeup.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsAvatarMakeup.transform.GetChild(i).gameObject;
-                        if (childObject.GetComponent<AvatarBtn>().AvatarBtnId == XanaConstantsHolder.xanaConstants.makeupIndex)
+                        if (childObject.GetComponent<AvatarBtn>().AvatarBtnId == ConstantsHolder.xanaConstants.makeupIndex)
                         {
                             childObject.GetComponent<Image>().color = new Color(1f, 1f, 1f, 1f);
-                            XanaConstantsHolder.xanaConstants._lastAvatarClickedBtn = childObject;
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[9] = childObject;
+                            ConstantsHolder.xanaConstants._lastAvatarClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[9] = childObject;
                             break;
                         }
                     }
@@ -4482,18 +4482,18 @@ public class InventoryManager : MonoBehaviour
                 break;
             case 10:
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
-                if (XanaConstantsHolder.xanaConstants.PresetValueString != "")
+                if (ConstantsHolder.xanaConstants.PresetValueString != "")
                 {
 
                     for (int i = 0; i < ParentOfBtnsAvatarAccessary.transform.childCount; i++)
                     {
                         childObject = ParentOfBtnsAvatarAccessary.transform.GetChild(i).gameObject;
                         childObject.transform.GetChild(0).gameObject.SetActive(false);
-                        if (childObject.name == XanaConstantsHolder.xanaConstants.PresetValueString)
+                        if (childObject.name == ConstantsHolder.xanaConstants.PresetValueString)
                         {
-                            XanaConstantsHolder.xanaConstants._lastClickedBtn = childObject;
+                            ConstantsHolder.xanaConstants._lastClickedBtn = childObject;
                             childObject.transform.GetChild(0).gameObject.SetActive(true);
-                            XanaConstantsHolder.xanaConstants.avatarStoreSelection[XanaConstantsHolder.xanaConstants.currentButtonIndex] = childObject;
+                            ConstantsHolder.xanaConstants.avatarStoreSelection[ConstantsHolder.xanaConstants.currentButtonIndex] = childObject;
                         }
                     }
                 }
@@ -4502,94 +4502,94 @@ public class InventoryManager : MonoBehaviour
     }
     public void UndoSelection()
     {
-        for (int i = 0; i < XanaConstantsHolder.xanaConstants.avatarStoreSelection.Length; i++)
+        for (int i = 0; i < ConstantsHolder.xanaConstants.avatarStoreSelection.Length; i++)
         {
-            if (XanaConstantsHolder.xanaConstants.avatarStoreSelection[i])
+            if (ConstantsHolder.xanaConstants.avatarStoreSelection[i])
             {
-                if (XanaConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<ItemDetail>())
+                if (ConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<ItemDetail>())
                 {
-                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<Image>().enabled = false;
+                    ConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<Image>().enabled = false;
                 }
-                else if (XanaConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<PresetData_Jsons>())
+                else if (ConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<PresetData_Jsons>())
                 {
-                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[i].transform.GetChild(0).gameObject.SetActive(false);
+                    ConstantsHolder.xanaConstants.avatarStoreSelection[i].transform.GetChild(0).gameObject.SetActive(false);
                 }
                 else
                 {
-                    XanaConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                    ConstantsHolder.xanaConstants.avatarStoreSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
 
-                XanaConstantsHolder.xanaConstants.avatarStoreSelection[i] = null;
+                ConstantsHolder.xanaConstants.avatarStoreSelection[i] = null;
             }
         }
 
-        for (int i = 0; i < XanaConstantsHolder.xanaConstants.wearableStoreSelection.Length; i++)
+        for (int i = 0; i < ConstantsHolder.xanaConstants.wearableStoreSelection.Length; i++)
         {
-            if (XanaConstantsHolder.xanaConstants.wearableStoreSelection[i])
+            if (ConstantsHolder.xanaConstants.wearableStoreSelection[i])
             {
-                if (XanaConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<ItemDetail>())
+                if (ConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<ItemDetail>())
                 {
-                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<Image>().enabled = false;
+                    ConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<Image>().enabled = false;
                 }
-                else if (XanaConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<PresetData_Jsons>())
+                else if (ConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<PresetData_Jsons>())
                 {
-                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[i].transform.GetChild(0).gameObject.SetActive(false);
+                    ConstantsHolder.xanaConstants.wearableStoreSelection[i].transform.GetChild(0).gameObject.SetActive(false);
                 }
                 else
                 {
-                    XanaConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                    ConstantsHolder.xanaConstants.wearableStoreSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
 
-                XanaConstantsHolder.xanaConstants.wearableStoreSelection[i] = null;
+                ConstantsHolder.xanaConstants.wearableStoreSelection[i] = null;
             }
         }
 
-        for (int i = 0; i < XanaConstantsHolder.xanaConstants.colorSelection.Length; i++)
+        for (int i = 0; i < ConstantsHolder.xanaConstants.colorSelection.Length; i++)
         {
-            if (XanaConstantsHolder.xanaConstants.colorSelection[i])
+            if (ConstantsHolder.xanaConstants.colorSelection[i])
             {
-                if (XanaConstantsHolder.xanaConstants.colorSelection[i].GetComponent<ItemDetail>())
+                if (ConstantsHolder.xanaConstants.colorSelection[i].GetComponent<ItemDetail>())
                 {
-                    XanaConstantsHolder.xanaConstants.colorSelection[i].GetComponent<Image>().enabled = false;
+                    ConstantsHolder.xanaConstants.colorSelection[i].GetComponent<Image>().enabled = false;
                 }
 
                 else
                 {
-                    XanaConstantsHolder.xanaConstants.colorSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+                    ConstantsHolder.xanaConstants.colorSelection[i].GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
                 }
 
-                XanaConstantsHolder.xanaConstants.colorSelection[i] = null;
+                ConstantsHolder.xanaConstants.colorSelection[i] = null;
             }
         }
     }
 
     public void ResetMorphBooleanValues()
     {
-        XanaConstantsHolder.xanaConstants.isFaceMorphed = SavaAvatarProperties.instance.SaveItemList.faceMorphed;
-        XanaConstantsHolder.xanaConstants.isEyebrowMorphed = SavaAvatarProperties.instance.SaveItemList.eyeBrowMorphed;
-        XanaConstantsHolder.xanaConstants.isEyeMorphed = SavaAvatarProperties.instance.SaveItemList.eyeMorphed;
-        XanaConstantsHolder.xanaConstants.isNoseMorphed = SavaAvatarProperties.instance.SaveItemList.noseMorphed;
-        XanaConstantsHolder.xanaConstants.isLipMorphed = SavaAvatarProperties.instance.SaveItemList.lipMorphed;
+        ConstantsHolder.xanaConstants.isFaceMorphed = SavaAvatarProperties.instance.SaveItemList.faceMorphed;
+        ConstantsHolder.xanaConstants.isEyebrowMorphed = SavaAvatarProperties.instance.SaveItemList.eyeBrowMorphed;
+        ConstantsHolder.xanaConstants.isEyeMorphed = SavaAvatarProperties.instance.SaveItemList.eyeMorphed;
+        ConstantsHolder.xanaConstants.isNoseMorphed = SavaAvatarProperties.instance.SaveItemList.noseMorphed;
+        ConstantsHolder.xanaConstants.isLipMorphed = SavaAvatarProperties.instance.SaveItemList.lipMorphed;
 
-        if (XanaConstantsHolder.xanaConstants._lastClickedBtn)
+        if (ConstantsHolder.xanaConstants._lastClickedBtn)
         {
-            if (XanaConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<AvatarBtn>())
-                XanaConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
+            if (ConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<AvatarBtn>())
+                ConstantsHolder.xanaConstants._lastClickedBtn.GetComponent<Image>().color = new Color(1f, 1f, 1f, 0f);
 
-            XanaConstantsHolder.xanaConstants._lastClickedBtn = null;
+            ConstantsHolder.xanaConstants._lastClickedBtn = null;
 
-            if (XanaConstantsHolder.xanaConstants.currentButtonIndex >= 0 && XanaConstantsHolder.xanaConstants.currentButtonIndex < XanaConstantsHolder.xanaConstants.avatarStoreSelection.Length)
-                XanaConstantsHolder.xanaConstants.avatarStoreSelection[XanaConstantsHolder.xanaConstants.currentButtonIndex] = null;
+            if (ConstantsHolder.xanaConstants.currentButtonIndex >= 0 && ConstantsHolder.xanaConstants.currentButtonIndex < ConstantsHolder.xanaConstants.avatarStoreSelection.Length)
+                ConstantsHolder.xanaConstants.avatarStoreSelection[ConstantsHolder.xanaConstants.currentButtonIndex] = null;
         }
 
         if (ParentOfBtnsCustomEyes.gameObject.activeInHierarchy)
-            OnColorButtonClicked(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            OnColorButtonClicked(ConstantsHolder.xanaConstants.currentButtonIndex);
         else if (ParentOfBtnsCustomLips.gameObject.activeInHierarchy)
-            OnColorButtonClicked(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            OnColorButtonClicked(ConstantsHolder.xanaConstants.currentButtonIndex);
         else if (ParentOfBtnsCustomSkin.gameObject.activeInHierarchy)
-            OnColorButtonClicked(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            OnColorButtonClicked(ConstantsHolder.xanaConstants.currentButtonIndex);
         else
-            UpdateStoreSelection(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
 
         ////Debug.Log("IsLoggedIn " + PlayerPrefs.GetInt("IsLoggedIn"));
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -4814,53 +4814,53 @@ public class InventoryManager : MonoBehaviour
         ////Debug.Log("<color=red> Update Xana Constant </color>");
         //if (SavaAvatarProperties.instance.SaveItemList.SavedBones.Count == 0)
         //{
-        //    XanaConstantsHolder.xanaConstants.hair = SavaAvatarProperties.instance.characterController.wornHairId.ToString();
-        //    XanaConstantsHolder.xanaConstants.hairColoPalette = SavaAvatarProperties.instance.characterController.hairColorPaletteId.ToString();
-        //    XanaConstantsHolder.xanaConstants.shirt = SavaAvatarProperties.instance.characterController.wornShirtId.ToString();
-        //    XanaConstantsHolder.xanaConstants.pants = SavaAvatarProperties.instance.characterController.wornPantId.ToString();
-        //    XanaConstantsHolder.xanaConstants.shoes = SavaAvatarProperties.instance.characterController.wornShoesId.ToString();
-        //    XanaConstantsHolder.xanaConstants.eyeWearable = SavaAvatarProperties.instance.characterController.wornEyewearableId.ToString();
+        //    ConstantsHolder.xanaConstants.hair = SavaAvatarProperties.instance.characterController.wornHairId.ToString();
+        //    ConstantsHolder.xanaConstants.hairColoPalette = SavaAvatarProperties.instance.characterController.hairColorPaletteId.ToString();
+        //    ConstantsHolder.xanaConstants.shirt = SavaAvatarProperties.instance.characterController.wornShirtId.ToString();
+        //    ConstantsHolder.xanaConstants.pants = SavaAvatarProperties.instance.characterController.wornPantId.ToString();
+        //    ConstantsHolder.xanaConstants.shoes = SavaAvatarProperties.instance.characterController.wornShoesId.ToString();
+        //    ConstantsHolder.xanaConstants.eyeWearable = SavaAvatarProperties.instance.characterController.wornEyewearableId.ToString();
 
-        //    XanaConstantsHolder.xanaConstants.PresetValueString = SavaAvatarProperties.instance.characterController.presetValue;
-        //    XanaConstantsHolder.xanaConstants.skinColor = SavaAvatarProperties.instance.characterController.skinId.ToString();
-        //    XanaConstantsHolder.xanaConstants.faceIndex = SavaAvatarProperties.instance.characterController.faceId;
-        //    XanaConstantsHolder.xanaConstants.eyeBrowIndex = SavaAvatarProperties.instance.characterController.eyeBrowId;
-        //    XanaConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex = SavaAvatarProperties.instance.characterController.eyeBrowColorPaletteId;
-        //    XanaConstantsHolder.xanaConstants.eyeLashesIndex = SavaAvatarProperties.instance.characterController.eyeLashesId;
-        //    XanaConstantsHolder.xanaConstants.eyeIndex = SavaAvatarProperties.instance.characterController.eyesId;
-        //    XanaConstantsHolder.xanaConstants.eyeColor = SavaAvatarProperties.instance.characterController.eyesColorId.ToString();
-        //    XanaConstantsHolder.xanaConstants.eyeColorPalette = SavaAvatarProperties.instance.characterController.eyesColorPaletteId.ToString();
-        //    XanaConstantsHolder.xanaConstants.noseIndex = SavaAvatarProperties.instance.characterController.noseId;
-        //    XanaConstantsHolder.xanaConstants.lipIndex = SavaAvatarProperties.instance.characterController.lipsId;
-        //    XanaConstantsHolder.xanaConstants.lipColor = SavaAvatarProperties.instance.characterController.lipsColorId.ToString();
-        //    XanaConstantsHolder.xanaConstants.lipColorPalette = SavaAvatarProperties.instance.characterController.lipsColorPaletteId.ToString();
-        //    XanaConstantsHolder.xanaConstants.bodyNumber = SavaAvatarProperties.instance.characterController.bodyFat;
-        //    XanaConstantsHolder.xanaConstants.makeupIndex = SavaAvatarProperties.instance.characterController.makeupId;
+        //    ConstantsHolder.xanaConstants.PresetValueString = SavaAvatarProperties.instance.characterController.presetValue;
+        //    ConstantsHolder.xanaConstants.skinColor = SavaAvatarProperties.instance.characterController.skinId.ToString();
+        //    ConstantsHolder.xanaConstants.faceIndex = SavaAvatarProperties.instance.characterController.faceId;
+        //    ConstantsHolder.xanaConstants.eyeBrowIndex = SavaAvatarProperties.instance.characterController.eyeBrowId;
+        //    ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex = SavaAvatarProperties.instance.characterController.eyeBrowColorPaletteId;
+        //    ConstantsHolder.xanaConstants.eyeLashesIndex = SavaAvatarProperties.instance.characterController.eyeLashesId;
+        //    ConstantsHolder.xanaConstants.eyeIndex = SavaAvatarProperties.instance.characterController.eyesId;
+        //    ConstantsHolder.xanaConstants.eyeColor = SavaAvatarProperties.instance.characterController.eyesColorId.ToString();
+        //    ConstantsHolder.xanaConstants.eyeColorPalette = SavaAvatarProperties.instance.characterController.eyesColorPaletteId.ToString();
+        //    ConstantsHolder.xanaConstants.noseIndex = SavaAvatarProperties.instance.characterController.noseId;
+        //    ConstantsHolder.xanaConstants.lipIndex = SavaAvatarProperties.instance.characterController.lipsId;
+        //    ConstantsHolder.xanaConstants.lipColor = SavaAvatarProperties.instance.characterController.lipsColorId.ToString();
+        //    ConstantsHolder.xanaConstants.lipColorPalette = SavaAvatarProperties.instance.characterController.lipsColorPaletteId.ToString();
+        //    ConstantsHolder.xanaConstants.bodyNumber = SavaAvatarProperties.instance.characterController.bodyFat;
+        //    ConstantsHolder.xanaConstants.makeupIndex = SavaAvatarProperties.instance.characterController.makeupId;
         //}
         //else
         //{
-        XanaConstantsHolder.xanaConstants.hair = SavaAvatarProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
-        XanaConstantsHolder.xanaConstants.hairColoPalette = SavaAvatarProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
-        XanaConstantsHolder.xanaConstants.shirt = SavaAvatarProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
-        XanaConstantsHolder.xanaConstants.pants = SavaAvatarProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
-        XanaConstantsHolder.xanaConstants.shoes = SavaAvatarProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
-        XanaConstantsHolder.xanaConstants.eyeWearable = SavaAvatarProperties.instance.SaveItemList.EyeValue.ToString();
+        ConstantsHolder.xanaConstants.hair = SavaAvatarProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
+        ConstantsHolder.xanaConstants.hairColoPalette = SavaAvatarProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
+        ConstantsHolder.xanaConstants.shirt = SavaAvatarProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();
+        ConstantsHolder.xanaConstants.pants = SavaAvatarProperties.instance.SaveItemList.myItemObj[0].ItemID.ToString();
+        ConstantsHolder.xanaConstants.shoes = SavaAvatarProperties.instance.SaveItemList.myItemObj[3].ItemID.ToString();
+        ConstantsHolder.xanaConstants.eyeWearable = SavaAvatarProperties.instance.SaveItemList.EyeValue.ToString();
 
-        XanaConstantsHolder.xanaConstants.PresetValueString = SavaAvatarProperties.instance.SaveItemList.PresetValue;
-        XanaConstantsHolder.xanaConstants.skinColor = SavaAvatarProperties.instance.SaveItemList.SkinId.ToString();
-        XanaConstantsHolder.xanaConstants.faceIndex = SavaAvatarProperties.instance.SaveItemList.FaceValue;
-        XanaConstantsHolder.xanaConstants.eyeBrowIndex = SavaAvatarProperties.instance.SaveItemList.EyeBrowValue;
-        XanaConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex = SavaAvatarProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
-        XanaConstantsHolder.xanaConstants.eyeLashesIndex = SavaAvatarProperties.instance.SaveItemList.EyeLashesValue;
-        XanaConstantsHolder.xanaConstants.eyeIndex = SavaAvatarProperties.instance.SaveItemList.EyeValue;
-        XanaConstantsHolder.xanaConstants.eyeColor = SavaAvatarProperties.instance.SaveItemList.EyesColorValue.ToString();
-        XanaConstantsHolder.xanaConstants.eyeColorPalette = SavaAvatarProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
-        XanaConstantsHolder.xanaConstants.noseIndex = SavaAvatarProperties.instance.SaveItemList.NoseValue;
-        XanaConstantsHolder.xanaConstants.lipIndex = SavaAvatarProperties.instance.SaveItemList.LipsValue;
-        XanaConstantsHolder.xanaConstants.lipColor = SavaAvatarProperties.instance.SaveItemList.LipsColorValue.ToString();
-        XanaConstantsHolder.xanaConstants.lipColorPalette = SavaAvatarProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
-        XanaConstantsHolder.xanaConstants.bodyNumber = SavaAvatarProperties.instance.SaveItemList.BodyFat;
-        XanaConstantsHolder.xanaConstants.makeupIndex = SavaAvatarProperties.instance.SaveItemList.MakeupValue;
+        ConstantsHolder.xanaConstants.PresetValueString = SavaAvatarProperties.instance.SaveItemList.PresetValue;
+        ConstantsHolder.xanaConstants.skinColor = SavaAvatarProperties.instance.SaveItemList.SkinId.ToString();
+        ConstantsHolder.xanaConstants.faceIndex = SavaAvatarProperties.instance.SaveItemList.FaceValue;
+        ConstantsHolder.xanaConstants.eyeBrowIndex = SavaAvatarProperties.instance.SaveItemList.EyeBrowValue;
+        ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex = SavaAvatarProperties.instance.SaveItemList.EyeBrowColorPaletteValue;
+        ConstantsHolder.xanaConstants.eyeLashesIndex = SavaAvatarProperties.instance.SaveItemList.EyeLashesValue;
+        ConstantsHolder.xanaConstants.eyeIndex = SavaAvatarProperties.instance.SaveItemList.EyeValue;
+        ConstantsHolder.xanaConstants.eyeColor = SavaAvatarProperties.instance.SaveItemList.EyesColorValue.ToString();
+        ConstantsHolder.xanaConstants.eyeColorPalette = SavaAvatarProperties.instance.SaveItemList.EyesColorPaletteValue.ToString();
+        ConstantsHolder.xanaConstants.noseIndex = SavaAvatarProperties.instance.SaveItemList.NoseValue;
+        ConstantsHolder.xanaConstants.lipIndex = SavaAvatarProperties.instance.SaveItemList.LipsValue;
+        ConstantsHolder.xanaConstants.lipColor = SavaAvatarProperties.instance.SaveItemList.LipsColorValue.ToString();
+        ConstantsHolder.xanaConstants.lipColorPalette = SavaAvatarProperties.instance.SaveItemList.LipsColorPaletteValue.ToString();
+        ConstantsHolder.xanaConstants.bodyNumber = SavaAvatarProperties.instance.SaveItemList.BodyFat;
+        ConstantsHolder.xanaConstants.makeupIndex = SavaAvatarProperties.instance.SaveItemList.MakeupValue;
         //}
     }
     public void ApplyUGCValueOnCharacter(string _gender)

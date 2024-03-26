@@ -47,10 +47,10 @@ namespace XanaAi
 #elif UNITY_EDITOR
                     BundleUrl = EmoteAnimationPlay.Instance.emoteAnim[rand].android_file;
 #endif
-                    string bundlePath = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
-                    if (EmoteAnimationHandler.Instance.CheckForIsAssetBundleAvailable(Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")))
+                    string bundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, BundleUrl + ".unity3d");
+                    if (EmoteAnimationHandler.Instance.CheckForIsAssetBundleAvailable(Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")))
                     {
-                        emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
+                        emotCoroutine = StartCoroutine(LoadAssetBundleFromStorage(Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d")));
                     }
                     else
                     {
@@ -187,7 +187,7 @@ namespace XanaAi
         void SaveAssetBundle(byte[] data, string name)
         {
             //Create the Directory if it does not exist
-            string path = Path.Combine(XanaConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
+            string path = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, name + ".unity3d");
             if (!Directory.Exists(Path.GetDirectoryName(path)))
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(path));

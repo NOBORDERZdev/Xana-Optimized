@@ -71,8 +71,8 @@ public class FriendAvatarController : MonoBehaviour
         // .Reset BodyFat
         // .Read Data From Json & load its Properties
 
-        XanaConstantsHolder.xanaConstants.isNFTEquiped = true;
-        XanaConstantsHolder.xanaConstants.isHoldCharacterNFT = true;
+        ConstantsHolder.xanaConstants.isNFTEquiped = true;
+        ConstantsHolder.xanaConstants.isHoldCharacterNFT = true;
 
         ResetBonesDefault(bodyParts);
         bodyParts.DefaultBlendShapes(this.gameObject);
@@ -98,7 +98,7 @@ public class FriendAvatarController : MonoBehaviour
     }
     public void UnequipNFT()
     {
-        XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
+        ConstantsHolder.xanaConstants.isNFTEquiped = false;
         ResetBonesDefault(bodyParts);
         bodyParts.DefaultBlendShapes(this.gameObject);
 
@@ -210,7 +210,7 @@ public class FriendAvatarController : MonoBehaviour
                         }
                         else
                         {
-                            if (PlayerPrefs.HasKey("Equiped") || XanaConstantsHolder.xanaConstants.isNFTEquiped)
+                            if (PlayerPrefs.HasKey("Equiped") || ConstantsHolder.xanaConstants.isNFTEquiped)
                             {
                                 if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                 {
@@ -315,7 +315,7 @@ public class FriendAvatarController : MonoBehaviour
                                     }
                                     else
                                     {
-                                        if (PlayerPrefs.HasKey("Equiped") || XanaConstantsHolder.xanaConstants.isNFTEquiped)
+                                        if (PlayerPrefs.HasKey("Equiped") || ConstantsHolder.xanaConstants.isNFTEquiped)
                                         {
                                             if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                             {
@@ -382,7 +382,7 @@ public class FriendAvatarController : MonoBehaviour
                             }
                             else // wear the default item of that specific part.
                             {
-                                if (XanaConstantsHolder.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+                                if (ConstantsHolder.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
                                 {
                                     if (wornShirt)
                                         UnStichItem("Chest");
@@ -479,7 +479,7 @@ public class FriendAvatarController : MonoBehaviour
                     //if (_CharacterData.Skin != null)
                     //{
                     //    StartCoroutine(bodyParts.ImplementColors(_CharacterData.Skin, SliderType.Skin, this.gameObject));
-                    //    if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+                    //    if (ConstantsHolder.xanaConstants.isNFTEquiped)
                     //    {
                     //        BoxerNFTEventManager._lightPresetNFT = GetLightPresetValue(_CharacterData.Skin);
                     //        BoxerNFTEventManager.NFTLightUpdate?.Invoke(BoxerNFTEventManager._lightPresetNFT);
@@ -553,7 +553,7 @@ public class FriendAvatarController : MonoBehaviour
             //                            }
             //                            else
             //                            {
-            //                                if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+            //                                if (ConstantsHolder.xanaConstants.isNFTEquiped)
             //                                {
             //                                    if (_CharacterData.myItemObj[i].ItemType.Contains("Chest"))
             //                                    {
@@ -619,7 +619,7 @@ public class FriendAvatarController : MonoBehaviour
             //                    }
             //                    else // wear the default item of that specific part.
             //                    {
-            //                        if (XanaConstantsHolder.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
+            //                        if (ConstantsHolder.xanaConstants.isNFTEquiped && _CharacterData.myItemObj[i].ItemType.Contains("Chest"))
             //                        {
             //                            if (wornShirt)
             //                                UnStichItem("Chest");
@@ -725,7 +725,7 @@ public class FriendAvatarController : MonoBehaviour
             //}
             #endregion
         }
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             LoadingController.Instance.nftLoadingScreen.SetActive(false);
     }
 
@@ -767,11 +767,11 @@ public class FriendAvatarController : MonoBehaviour
             _CharacterData1.LipsColorValue = this.lipsColorId;
             _CharacterData1.BodyFat = this.bodyFat;
             _CharacterData1.MakeupValue = this.makeupId;
-            _CharacterData1.faceMorphed = XanaConstantsHolder.xanaConstants.isFaceMorphed;
-            _CharacterData1.eyeBrowMorphed = XanaConstantsHolder.xanaConstants.isEyebrowMorphed;
-            _CharacterData1.eyeMorphed = XanaConstantsHolder.xanaConstants.isEyeMorphed;
-            _CharacterData1.noseMorphed = XanaConstantsHolder.xanaConstants.isNoseMorphed;
-            _CharacterData1.lipMorphed = XanaConstantsHolder.xanaConstants.isLipMorphed;
+            _CharacterData1.faceMorphed = ConstantsHolder.xanaConstants.isFaceMorphed;
+            _CharacterData1.eyeBrowMorphed = ConstantsHolder.xanaConstants.isEyebrowMorphed;
+            _CharacterData1.eyeMorphed = ConstantsHolder.xanaConstants.isEyeMorphed;
+            _CharacterData1.noseMorphed = ConstantsHolder.xanaConstants.isNoseMorphed;
+            _CharacterData1.lipMorphed = ConstantsHolder.xanaConstants.isLipMorphed;
 
             _CharacterData1.SavedBones = new List<BoneDataContainer>();
             for (int i = 0; i < charcterBodyParts.BonesData.Count; i++)
@@ -1002,7 +1002,7 @@ public class FriendAvatarController : MonoBehaviour
         }
 
         string updatedBoxerData = JsonUtility.ToJson(_CharacterData1);
-        File.WriteAllText((Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson), updatedBoxerData);
+        File.WriteAllText((Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson), updatedBoxerData);
     }
 
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
@@ -1221,7 +1221,7 @@ public class FriendAvatarController : MonoBehaviour
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
                 StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
             }
-            else if (type == "Hair" && XanaConstantsHolder.xanaConstants.isPresetHairColor && presetHairColor != null)
+            else if (type == "Hair" && ConstantsHolder.xanaConstants.isPresetHairColor && presetHairColor != null)
             {
                 //getHairColorFormFile = false;
                 StartCoroutine(tempBodyParts.ImplementColors(presetHairColor, SliderType.HairColor, applyOn));
@@ -1236,7 +1236,7 @@ public class FriendAvatarController : MonoBehaviour
         else
         {
 
-            if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
             {
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 1)
                 {

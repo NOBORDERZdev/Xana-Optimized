@@ -19,14 +19,14 @@ public class PostProcessManager : MonoBehaviour
     public void SetPostProcessing() {
         if (selfieCam == null)
         {
-            selfieCam = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<MyBeachSelfieCam>();
+            selfieCam = ReferrencesForGameplay.instance.m_34player.GetComponent<MyBeachSelfieCam>();
         }
-        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-            if (ReferrencesForDynamicMuseum.instance.m_34player != null)
+            if (ReferrencesForGameplay.instance.m_34player != null)
             {
                 selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -43,7 +43,7 @@ public class PostProcessManager : MonoBehaviour
                 firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 freeCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
-                if (ReferrencesForDynamicMuseum.instance.m_34player != null)
+                if (ReferrencesForGameplay.instance.m_34player != null)
                 {
                     selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                     selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -58,7 +58,7 @@ public class PostProcessManager : MonoBehaviour
     void OnSelfieOpen()
     {
         Debug.Log("on selfie open ");
-        if (ReferrencesForDynamicMuseum.instance.m_34player != null)
+        if (ReferrencesForGameplay.instance.m_34player != null)
         {
             SetPostProcessing();
             //if (FeedEventPrefab.m_EnvName.Contains("Xana Festival") || FeedEventPrefab.m_EnvName.Contains("NFTDuel Tournament"))
@@ -71,7 +71,7 @@ public class PostProcessManager : MonoBehaviour
             //    selfieCam.SelfieCapture_CamRender.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture_CamRenderPotraiat.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //}
-            //else if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+            //else if (ConstantsHolder.xanaConstants.isBuilderScene)
             //{
             //    selfieCam.Selfie.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
             //    selfieCam.SelfieCapture.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;

@@ -38,10 +38,10 @@ public class AiTextCamRot : MonoBehaviour
             {
                 if (selfieCam== null)
                 {
-                    selfieCam = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<MyBeachSelfieCam>().Selfie.transform;
+                    selfieCam = ReferrencesForGameplay.instance.m_34player.GetComponent<MyBeachSelfieCam>().Selfie.transform;
                 }
                  localTrans.LookAt(2 * localTrans.position - selfieCam.position);
-                //GameObject[] objects = Photon.Pun.Demo.PunBasics.Launcher.instance.playerobjects.ToArray();
+                //GameObject[] objects = Photon.Pun.Demo.PunBasics.MutliplayerController.instance.playerobjects.ToArray();
 
                 //for (int i = 0; i < objects.Length; i++)
                 //{

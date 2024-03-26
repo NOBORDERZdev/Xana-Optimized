@@ -38,16 +38,16 @@ public class NFTFromServer : MonoBehaviour
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
 
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if (EventDetails.eventDetails.DataIsInitialized)
         {
-            eventid = XanaEventDetails.eventDetails.id.ToString();
-            MussuemLink = dynamicEventFeedApi + XanaEventDetails.eventDetails.museumId + "/" + XanaEventDetails.eventDetails.id;
+            eventid = EventDetails.eventDetails.id.ToString();
+            MussuemLink = dynamicEventFeedApi + EventDetails.eventDetails.museumId + "/" + EventDetails.eventDetails.id;
             Debug.Log("Event Lunching");
             Debug.Log("MussuemLink"+ MussuemLink);
         }
         else 
         {
-            MussuemLink = dynamicMusuemApi + XanaConstantsHolder.xanaConstants.MuseumID;
+            MussuemLink = dynamicMusuemApi + ConstantsHolder.xanaConstants.MuseumID;
             Debug.Log("Openning Mussuem");
         }
 
@@ -79,7 +79,7 @@ public class NFTFromServer : MonoBehaviour
         }
     }
 
-    XanaNftDetails nftDetails;
+    NftDetails nftDetails;
     S3NftDetail s3NftDetail;
     IEnumerator GetNftData()
     {
@@ -178,10 +178,10 @@ public class NFTFromServer : MonoBehaviour
         }
     }
 
-    public XanaNftDetails GetAllData(string m_JsonData)
+    public NftDetails GetAllData(string m_JsonData)
     {
-        XanaNftDetails JsonDataObj = new XanaNftDetails();
-        JsonDataObj = JsonUtility.FromJson<XanaNftDetails>(m_JsonData);
+        NftDetails JsonDataObj = new NftDetails();
+        JsonDataObj = JsonUtility.FromJson<NftDetails>(m_JsonData);
         return JsonDataObj;
     }
 
@@ -381,7 +381,7 @@ public class NFTFromServer : MonoBehaviour
             data.landscapeSize = dynamicManager.landscapeSize;
            
             // if user is joining through event then video square size should be this 
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (EventDetails.eventDetails.DataIsInitialized)
             {
                 data.squareSize = dynamicManager.VideosquarSize;
                 

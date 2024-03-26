@@ -40,11 +40,11 @@ public class TutorialHandler : MonoBehaviour
     }
     public void ShowTutorials()
     {
-       /* if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaConstantsHolder.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
+       /* if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !ConstantsHolder.xanaConstants.isTutorialLoaded && !EventDetails.eventDetails.DataIsInitialized)
         {
             this.transform.GetChild(0).gameObject.SetActive(true);
             DisplayPanel(currentPanelIndex);
-            XanaConstantsHolder.xanaConstants.isTutorialLoaded = true;
+            ConstantsHolder.xanaConstants.isTutorialLoaded = true;
         }*/
     }
     private void HandleButtons(int index)

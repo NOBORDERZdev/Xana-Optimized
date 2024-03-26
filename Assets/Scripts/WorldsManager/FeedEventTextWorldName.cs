@@ -28,12 +28,12 @@ public class FeedEventTextWorldName : MonoBehaviour
     {
         if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
         {
-            if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
+            if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
                 PreferredLength = 40;
             else
                 PreferredLength = 12;
         }
-        else if(XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
+        else if(ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
             PreferredLength = 40;
         _myText = GetComponent<Text>();
         //Length = _myText.text.Length;

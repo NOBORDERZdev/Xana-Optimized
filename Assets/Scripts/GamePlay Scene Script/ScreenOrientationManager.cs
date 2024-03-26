@@ -36,16 +36,16 @@ public class ScreenOrientationManager : MonoBehaviour
 
     void CheckOrienataionWhenComeFromLobby()
     {
-        if (XanaConstantsHolder.xanaConstants.isFromXanaLobby && XanaConstantsHolder.xanaConstants.orientationchanged)
+        if (ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.orientationchanged)
         {
             MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.orientationchanged = false;
+            ConstantsHolder.xanaConstants.orientationchanged = false;
         }
 
-        isPotrait = XanaConstantsHolder.xanaConstants.orientationchanged;
+        isPotrait = ConstantsHolder.xanaConstants.orientationchanged;
     }
 
     private void OnEnable()
@@ -80,7 +80,7 @@ public class ScreenOrientationManager : MonoBehaviour
     IEnumerator ChangeOrientation(bool orientation)
     {
         isPotrait = orientation;
-        XanaConstantsHolder.xanaConstants.orientationchanged = isPotrait;
+        ConstantsHolder.xanaConstants.orientationchanged = isPotrait;
         BuilderEventManager.BuilderSceneOrientationChange?.Invoke(orientation);
         landscapeCanvas.DOKill();
         landscapeCanvas.alpha = 0;
@@ -121,7 +121,7 @@ public class ScreenOrientationManager : MonoBehaviour
             potraitObj[i].SetActive(isPotrait);
         }
 
-       ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().restJoyStick();
+       ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
     }
 
     public void ChangeOrientation_editor()

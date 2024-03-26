@@ -7,6 +7,6 @@ public class CameraComtrolOnBadgeScreen : MonoBehaviour
 
     public void pressedenablecamera() {
 
-        CameraLook.instance.AllowControl();
+        PlayerCameraController.instance.AllowControl();
     }
 }

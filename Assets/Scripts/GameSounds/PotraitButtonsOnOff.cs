@@ -10,13 +10,13 @@ public class PotraitButtonsOnOff : MonoBehaviour
     {
        myOtherButton.SetActive(true);
        this.gameObject.SetActive(false);
-       ReferrencesForDynamicMuseum.instance.potraithiddenButtonDisable();
+       ReferrencesForGameplay.instance.potraithiddenButtonDisable();
     }
     public void ClickHidebtnOff()
     {
         this.gameObject.SetActive(false);
         myOtherButton.SetActive(true);
-        ReferrencesForDynamicMuseum.instance.potraithiddenButtonEnable();
+        ReferrencesForGameplay.instance.potraithiddenButtonEnable();
        
     }
 }

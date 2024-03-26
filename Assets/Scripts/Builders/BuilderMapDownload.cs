@@ -70,7 +70,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
-        BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
 
@@ -283,7 +283,7 @@ public class BuilderMapDownload : MonoBehaviour
                 GetObject(_async, levelData.otherItems[i]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
-            //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
+            //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
             //    LoadingController.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
             //}
@@ -826,11 +826,11 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstantsHolder.xanaConstants.isFromXanaLobby)
+        //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
         //    LoadingController.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
         //}
-        if (!XanaConstantsHolder.xanaConstants.isFromXanaLobby)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
             // LoadingController.Instance.UpdateLoadingSlider(.8f);
             LoadingController.Instance.UpdateLoadingStatusText("Getting World Ready....");

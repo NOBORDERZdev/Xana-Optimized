@@ -47,7 +47,7 @@ public class FaceCameraUI : MonoBehaviour
                     selficamOtherAssign = selfieCamOther;
                     oneTimeCall = false;
                     //GameObject[] objects = GameObject.FindGameObjectsWithTag("PhotonLocalPlayer");
-                    GameObject[] objects = Photon.Pun.Demo.PunBasics.Launcher.instance.playerobjects.ToArray();
+                    GameObject[] objects = Photon.Pun.Demo.PunBasics.MutliplayerController.instance.playerobjects.ToArray();
 
                     for (int i = 0; i < objects.Length; i++)
                     {

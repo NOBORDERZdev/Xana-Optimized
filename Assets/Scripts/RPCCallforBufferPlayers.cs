@@ -33,9 +33,9 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
         {
-            if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
             {
-                return File.ReadAllText(Application.persistentDataPath + XanaConstantsHolder.xanaConstants.NFTBoxerJson);
+                return File.ReadAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson);
             }
             else
             {
@@ -53,7 +53,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
-            _mydatatosend[2] = XanaConstantsHolder.xanaConstants.isNFTEquiped;
+            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
             Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
             //CallRpcInvoke();
         }
@@ -71,7 +71,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        Launcher.instance.playerobjects.Add(info.photonView.gameObject);
+        MutliplayerController.instance.playerobjects.Add(info.photonView.gameObject);
     }
 
     //Equipment otherEquip;
@@ -87,11 +87,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
 
-        for (int j = 0; j < Launcher.instance.playerobjects.Count; j++)
+        for (int j = 0; j < MutliplayerController.instance.playerobjects.Count; j++)
         {
-            if (Launcher.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
+            if (MutliplayerController.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
             {
-                otherPlayer = Launcher.instance.playerobjects[j].GetComponent<AvatarSetupController>();
+                otherPlayer = MutliplayerController.instance.playerobjects[j].GetComponent<AvatarSetupController>();
                 AvatarBodyParts bodyparts = otherPlayer.GetComponent<AvatarBodyParts>();
             
             //otherPlayer._CharData = _CharacterData;

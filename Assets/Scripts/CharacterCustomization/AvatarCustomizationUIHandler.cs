@@ -148,7 +148,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
         //    {
         //        InventoryManager.instance.ParentOfBtnsAvatarEyeBrows.transform.GetChild(i).gameObject.SetActive(false);
         //    }
-        //    InventoryManager.instance.SubmitAllItemswithSpecificSubCategory(InventoryManager.instance.SubCategoriesList[XanaConstantsHolder.xanaConstants.currentButtonIndex + 8].id, true);
+        //    InventoryManager.instance.SubmitAllItemswithSpecificSubCategory(InventoryManager.instance.SubCategoriesList[ConstantsHolder.xanaConstants.currentButtonIndex + 8].id, true);
         //}
         UIHandler.Instance.faceMorphPanel.SetActive(false);
         GameManager.Instance.faceMorphCam.SetActive(false);
@@ -216,7 +216,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
 
         InventoryManager.instance.saveStoreBtnButton.onClick.Invoke();
         Debug.Log("<color=red>CustomizationManager AssignLastClickedBtnHere</color>");
-        XanaConstantsHolder.xanaConstants._lastClickedBtn = gameObject;
+        ConstantsHolder.xanaConstants._lastClickedBtn = gameObject;
         //  SavaAvatarProperties.instance.AssignCustomsliderNewData();
 
     }

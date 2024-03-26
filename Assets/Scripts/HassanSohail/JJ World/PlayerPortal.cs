@@ -19,8 +19,8 @@ public class PlayerPortal : MonoBehaviour
     public float cam_XValue = -50f;
     #endregion
     #region PrivateVar
-    // private PlayerControllerNew player;
-    private ReferrencesForDynamicMuseum referrencesForDynamicMuseum;
+    // private PlayerController player;
+    private ReferrencesForGameplay referrencesForDynamicMuseum;
     Collider colider;
     string firebaseEventName = "";
 
@@ -31,9 +31,9 @@ public class PlayerPortal : MonoBehaviour
 
     private void Start()
     {
-        referrencesForDynamicMuseum = ReferrencesForDynamicMuseum.instance;
+        referrencesForDynamicMuseum = ReferrencesForGameplay.instance;
         FindScriptAttchedObject();
-       // player = referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>();
+       // player = referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>();
     }
 
     void FindScriptAttchedObject()
@@ -127,7 +127,7 @@ public class PlayerPortal : MonoBehaviour
                 UnloadPreviousData();
                 JjInfoManager.Instance.IntJjInfoManager();
             }
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
             LoadingController.Instance.JJLoadingSlider.fillAmount = 0;
             //LoadingController.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
             LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
@@ -162,7 +162,7 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
             yield return new WaitForSeconds(.8f);
             referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
             GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));

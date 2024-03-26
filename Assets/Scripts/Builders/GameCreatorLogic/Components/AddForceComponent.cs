@@ -59,7 +59,7 @@ public class AddForceComponent : ItemComponent
     private void StartComponent()
     {
         ApplyAddForce();
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
+        ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
 
     }
     private void StopComponent()

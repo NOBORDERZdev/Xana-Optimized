@@ -5,7 +5,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerControllerNew : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 
 
@@ -159,13 +159,13 @@ public class PlayerControllerNew : MonoBehaviour
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt += JumpNotAllowed;
         }
         //if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnJumpBtnUpEvnt += JumpNotAllowed;
-        ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+        ActiveCamera = ReferrencesForGameplay.instance.randerCamera.gameObject;
 
 
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
@@ -201,16 +201,16 @@ public class PlayerControllerNew : MonoBehaviour
             Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 1;
             //Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
 
-            //SoundManager.Instance.MusicSource.volume = 0;
-            //  SoundManager.Instance.MusicSource.mute = false;
+            //SoundController.Instance.MusicSource.volume = 0;
+            //  SoundController.Instance.MusicSource.mute = false;
         }
 
         if (other.tag == "YoutubeVideo")
         {
             Gamemanager._InstanceGM.ytVideoPlayer.SetDirectAudioVolume(0, 1);
             Gamemanager._InstanceGM.ytVideoPlayer.SetDirectAudioMute(0, false);
-            SoundManager.Instance.MusicSource.volume = 0;
-            SoundManager.Instance.MusicSource.mute = false;
+            SoundController.Instance.MusicSource.volume = 0;
+            SoundController.Instance.MusicSource.mute = false;
         }
 
         if (other.CompareTag("message"))
@@ -237,14 +237,14 @@ public class PlayerControllerNew : MonoBehaviour
             //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
             //Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 0f;
-            SoundManager.Instance.MusicSource.volume = 0.19f;
+            SoundController.Instance.MusicSource.volume = 0.19f;
         }
 
         if (other.tag == "YoutubeVideo")
         {
             Gamemanager._InstanceGM.ytVideoPlayer.SetDirectAudioVolume(0, 0);
             Gamemanager._InstanceGM.ytVideoPlayer.SetDirectAudioMute(0, true);
-            SoundManager.Instance.MusicSource.mute = false;
+            SoundController.Instance.MusicSource.mute = false;
         }
 
         if (other.CompareTag("message"))
@@ -309,9 +309,9 @@ public class PlayerControllerNew : MonoBehaviour
 
             //Debug.Log("1");
             //Debug.Log("first person call ");
-            //Enable_DisableObjects.Instance.ActionsObject.GetComponent<Button>().interactable = true;
-            //Enable_DisableObjects.Instance.EmoteObject.GetComponent<Button>().interactable = true;
-            //Enable_DisableObjects.Instance.ReactionObject.GetComponent<Button>().interactable = true;
+            //GameplayEnableDisableObjects.Instance.ActionsObject.GetComponent<Button>().interactable = true;
+            //GameplayEnableDisableObjects.Instance.EmoteObject.GetComponent<Button>().interactable = true;
+            //GameplayEnableDisableObjects.Instance.ReactionObject.GetComponent<Button>().interactable = true;
             //  UpdateSefieBtn(false);
             gyroButton.SetActive(true);
             gyroButton_Portait.SetActive(true);
@@ -330,18 +330,18 @@ public class PlayerControllerNew : MonoBehaviour
         else
         {
             //Debug.Log("2");
-            //MuseumRaycaster.instance.playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
+            //MuseumRaycaster.instance.playerCamera = ReferrencesForGameplay.instance.randerCamera;
             gyroButton.SetActive(false);
             gyroButton_Portait.SetActive(false);
 
             firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
             StartCoroutine(FadeImage(true));
-            OnInvokeCameraChange(ReferrencesForDynamicMuseum.instance.randerCamera);
+            OnInvokeCameraChange(ReferrencesForGameplay.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
             controllerCamera.SetActive(true);
             EnablePlayerOnThirdPerson();
-            ActiveCamera = ReferrencesForDynamicMuseum.instance.randerCamera.gameObject;
+            ActiveCamera = ReferrencesForGameplay.instance.randerCamera.gameObject;
             //animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters[animator.gameObject.GetComponent<PhotonAnimatorView>().m_SynchronizeParameters.Count - 1].SynchronizeType = PhotonAnimatorView.SynchronizeType.Disabled;
         }
 
@@ -386,7 +386,7 @@ public class PlayerControllerNew : MonoBehaviour
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
         }
 
-        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (GamificationComponentData.instance.isAvatarChanger ||
                 GamificationComponentData.instance.isBlindfoldedFootPrinting)
@@ -439,7 +439,7 @@ public class PlayerControllerNew : MonoBehaviour
             {
                 if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
+                    if (ReferrencesForGameplay.instance.moveWhileDanceCheck == 0)
                     {
                         EmoteAnimationHandler.Instance.StopAnimation();
                         EmoteAnimationHandler.Instance.StopAllCoroutines();
@@ -475,7 +475,7 @@ public class PlayerControllerNew : MonoBehaviour
             animator.SetBool("IsFalling", false);
         }
 
-        //if (!SelfieController.Instance.m_IsSelfieFeatureActive)
+        //if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
         //{
         //    
         //}
@@ -801,7 +801,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (isFirstPerson)
         {
-            if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
+            if (!ConstantsHolder.xanaConstants.isBuilderScene)
                 animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
             else if (!b)
             {
@@ -813,7 +813,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void StopBuilderComponent()
     {
-        if (XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (isNinjaMotion)
             {
@@ -895,9 +895,9 @@ public class PlayerControllerNew : MonoBehaviour
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))
         {
-            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            if (ReferrencesForGameplay.instance.m_34player)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+                ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
             }
             allowJump = false;
             IsJumpButtonPress = false;
@@ -982,7 +982,7 @@ public class PlayerControllerNew : MonoBehaviour
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
                 //checking moving platform
-                if (movedPosition.sqrMagnitude != 0 && XanaConstantsHolder.xanaConstants.isBuilderScene)
+                if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                 {
                     characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                 }
@@ -1017,7 +1017,7 @@ public class PlayerControllerNew : MonoBehaviour
                         animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime); // applying values to animator.
                     }
                     //checking moving platform
-                    if (movedPosition.sqrMagnitude != 0 && XanaConstantsHolder.xanaConstants.isBuilderScene)
+                    if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                     {
                         characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                     }
@@ -1037,7 +1037,7 @@ public class PlayerControllerNew : MonoBehaviour
                     if (!_IsGrounded) // is in jump
                     {
                         //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && XanaConstantsHolder.xanaConstants.isBuilderScene)
+                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                         {
                             characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                         }
@@ -1048,7 +1048,7 @@ public class PlayerControllerNew : MonoBehaviour
                     else // walk start state
                     {
                         //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && XanaConstantsHolder.xanaConstants.isBuilderScene)
+                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                         {
                             characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                         }
@@ -1064,7 +1064,7 @@ public class PlayerControllerNew : MonoBehaviour
             PlayerIsIdle?.Invoke();
             UpdateSefieBtn(!LoadEmoteAnimations.animClick);
             //checking moving platform
-            if (movedPosition.sqrMagnitude != 0 && XanaConstantsHolder.xanaConstants.isBuilderScene)
+            if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {
                 characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
             }
@@ -1160,12 +1160,12 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
 
-        if (EmoteAnimationHandler.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
+        if (EmoteAnimationHandler.Instance.animatorremote != null && ReferrencesForGameplay.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
+            ReferrencesForGameplay.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
-        if (ReferrencesForDynamicMuseum.instance.m_34player)
+        if (ReferrencesForGameplay.instance.m_34player)
         {
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
+            ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.JumpSound);
         }
     }
 
@@ -1186,7 +1186,7 @@ public class PlayerControllerNew : MonoBehaviour
                 StartCoroutine(Jump(diff));
                 //...
                 velocity.y = JumpVelocity;
-                CameraLook.instance.DisAllowControl();
+                PlayerCameraController.instance.DisAllowControl();
                 //Invoke(nameof(JumpNotAllowed), 0.1f);
             }
         }
@@ -1197,7 +1197,7 @@ public class PlayerControllerNew : MonoBehaviour
                 allowJump = false;
                 jumpNow = true;
                 //tpsJumpAnim();
-                CameraLook.instance.DisAllowControl();
+                PlayerCameraController.instance.DisAllowControl();
                 if (isFirstPerson)
                 {
                     //Debug.Log("JumpAllowed1111111");
@@ -1234,7 +1234,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         animator.SetBool("IsJumping", false);
         //animator.SetBool("standJump", false);
-        CameraLook.instance.AllowControl();
+        PlayerCameraController.instance.AllowControl();
     }
 
     public void PlayerSprint(bool sprint)
@@ -1266,7 +1266,7 @@ public class PlayerControllerNew : MonoBehaviour
         {
             if (animator != null)
             {
-                if (SelfieController.Instance != null && !SelfieController.Instance.m_IsSelfieFeatureActive)
+                if (PlayerSelfieController.Instance != null && !PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
                     DisablePlayerOnFPS();
             }
             else
@@ -1360,7 +1360,7 @@ public class PlayerControllerNew : MonoBehaviour
     bool canDoubleJump = false;
     void SpecialItemDoubleJump()
     {
-        if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
             return;
 
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
@@ -2011,7 +2011,7 @@ public class PlayerControllerNew : MonoBehaviour
     internal bool isOnMovingPlatform;
     private void CalculateMovingPlatformSpeed()
     {
-        if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
             return;
 
         if (!characterController.isGrounded)

@@ -90,7 +90,7 @@ public class UIHandler : MonoBehaviour
     }
     public void IsWorldClicked()
     {
-        if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || XanaConstantsHolder.loggedIn)
+        if(WorldDetailsPopupPreview.m_WorldIsClicked || WorldDetailsPopupPreview.m_MuseumIsClicked || ConstantsHolder.loggedIn)
             WorldsHandler.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)

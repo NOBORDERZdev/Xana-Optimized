@@ -2,23 +2,15 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using TMPro;
-using System.Net.Http;
-using System.Threading.Tasks;
-
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
-using Newtonsoft.Json;
 using System.Collections.Generic;
-using UnityEngine.Networking;
 using System.Text;
 
 public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc};
-public class XanaChatSocket : MonoBehaviour
+public class ChatSocketManager : MonoBehaviour
 {
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
 
@@ -61,7 +53,7 @@ public class XanaChatSocket : MonoBehaviour
     public ChatUserData receivedMsgForTesting;
     bool isJoinRoom = false;
 
-    public static XanaChatSocket instance;
+    public static ChatSocketManager instance;
 
     #region Summery
 
@@ -116,9 +108,9 @@ public class XanaChatSocket : MonoBehaviour
         Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
 
 
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if (EventDetails.eventDetails.DataIsInitialized)
         {
-            eventId = XanaEventDetails.eventDetails.id;
+            eventId = EventDetails.eventDetails.id;
         }
         
 
@@ -149,7 +141,7 @@ public class XanaChatSocket : MonoBehaviour
     {
         socketId = resp.sid;
         //Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
+        //GameplayChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
 
         //socket.Off("event", listener);
         //Manager.Socket.Off();
@@ -162,7 +154,7 @@ public class XanaChatSocket : MonoBehaviour
             // Socket ID Update After Reconnect 
             // Need To Emit joinRoom again with new Socket Id
 
-            onJoinRoom?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID);
+            onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         }
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -171,7 +163,7 @@ public class XanaChatSocket : MonoBehaviour
     void OnError(CustomError args)
     {
         //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        //GameplayChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
     void Onresult(CustomError args)
     {
@@ -180,14 +172,14 @@ public class XanaChatSocket : MonoBehaviour
     void OnSocketDisconnect(CustomError args)
     {
         //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        //GameplayChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
     }
 
 
     void UserJoinRoom(string _worldId)
     {
         worldId = int.Parse(_worldId);
-        string userId = XanaConstantsHolder.userId;
+        string userId = ConstantsHolder.userId;
         var data = new { username = userId, room = _worldId };
         //Debug.Log("<color=blue> XanaChat -- JoinRoom : " + userId + " - " + _worldId + "</color>");
 
@@ -208,13 +200,13 @@ public class XanaChatSocket : MonoBehaviour
             return;
         }
 
-        string userId = XanaConstantsHolder.userId;
+        string userId = ConstantsHolder.userId;
         string event_Id = "1";
 
         // Checking For Event
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if (EventDetails.eventDetails.DataIsInitialized)
         {
-            event_Id = XanaEventDetails.eventDetails.id.ToString();
+            event_Id = EventDetails.eventDetails.id.ToString();
         }
         eventId = int.Parse(event_Id);
 
@@ -248,7 +240,7 @@ public class XanaChatSocket : MonoBehaviour
             //tempUser = msg.socket_id;
             tempUser = "XanaUser-(" + msg.socket_id + ")";//XanaUser-(userId)
         }
-        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
+        GameplayChatSystem.instance.DisplayMsg_FromSocket(tempUser, msg.message);
     }
     bool CheckUserNameIsValid(string _UserName)
     {
@@ -279,7 +271,7 @@ public class XanaChatSocket : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        string api = fetchAllMsgApi + XanaConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
+        string api = fetchAllMsgApi + ConstantsHolder.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
         //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
@@ -325,7 +317,7 @@ public class XanaChatSocket : MonoBehaviour
         //        else
         //            tempUserName = myChat.data[i].username;
 
-        //        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, myChat.data[i].message);
+        //        GameplayChatSystem.instance.DisplayMsg_FromSocket(tempUserName, myChat.data[i].message);
         //    }
         //}
 
@@ -346,7 +338,7 @@ public class XanaChatSocket : MonoBehaviour
                     tempUser = tempUser = "XanaUser-(" + socketId + ")";//XanaUser-(userId)
                 }
 
-                XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
+                GameplayChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
             }
         }
 
@@ -360,7 +352,7 @@ public class XanaChatSocket : MonoBehaviour
         string tempUserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         if (string.IsNullOrEmpty(tempUserName))
         {
-            tempUserName = XanaChatSystem.instance.UserName;
+            tempUserName = GameplayChatSystem.instance.UserName;
         }
 
 

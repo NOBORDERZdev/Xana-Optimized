@@ -59,7 +59,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
                     LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
-                    XanaConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
+                    ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
 

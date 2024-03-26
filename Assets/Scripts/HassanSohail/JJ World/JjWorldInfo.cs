@@ -25,7 +25,7 @@ public class JjWorldInfo : MonoBehaviour
     private void OnMouseUp()
     {
         //Debug.LogError("onmouse up");
-        if (CameraLook.IsPointerOverUIObject()) return;
+        if (PlayerCameraController.IsPointerOverUIObject()) return;
         if ((Time.time - tempTimer) < clickTime)
         {
             //OpenWorldInfo();
@@ -39,7 +39,7 @@ public class JjWorldInfo : MonoBehaviour
 
     public void OpenWorldInfo()
     {
-        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+        if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
 
         if (JjInfoManager.Instance != null)
         {

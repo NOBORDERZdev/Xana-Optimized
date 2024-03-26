@@ -56,8 +56,8 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
 
     private void Awake()
     {
-        XanaEventDetails.eventDetails = new XanaEventDetails();
-        XanaEventDetails.eventDetails.DataIsInitialized = false;
+        EventDetails.eventDetails = new EventDetails();
+        EventDetails.eventDetails.DataIsInitialized = false;
     }
 
     private void Start()
@@ -86,7 +86,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
                 // Set a flag here for indicating that your project is ready to use Firebase.
                 
                 BindAfterInitilization();
-                XanaConstantsHolder.xanaConstants.isFirebaseInit = true;
+                ConstantsHolder.xanaConstants.isFirebaseInit = true;
                 InvokeDeepLink("focus");
             }
             else
@@ -136,7 +136,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
 
     private void OnDynamicLink(object sender, EventArgs args)
     {
-        if (StartFocusCounter == 0 && XanaConstantsHolder.xanaConstants.isFirebaseInit)
+        if (StartFocusCounter == 0 && ConstantsHolder.xanaConstants.isFirebaseInit)
         {
             return;
         }
@@ -215,23 +215,23 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
             //Debug.Log("Event data is here :  " + request.downloadHandler.text);
             EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(request.downloadHandler.text);
 
-            //  XanaEventDetails JsonDataObj1 = JsonUtility.FromJson<XanaEventDetails>(_jsonData);
-            XanaEventDetails.eventDetails = eventDetails.data;
+            //  EventDetails JsonDataObj1 = JsonUtility.FromJson<EventDetails>(_jsonData);
+            EventDetails.eventDetails = eventDetails.data;
 
             //EventUserRoles JsonDataObj2 = JsonUtility.FromJson<EventUserRoles>(eventDetails.data.eventsUserRoles);  
-            //XanaEventDetails.eventDetails.eventsUserRoles.Add(eventDetails.data.eventsUserRoles);
+            //EventDetails.eventDetails.eventsUserRoles.Add(eventDetails.data.eventsUserRoles);
 
             if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
             else if (eventDetails.data.environmentId != 0)
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
             }
             else if (eventDetails.data.museumId != 0)
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
 
 
@@ -245,13 +245,13 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
                         //  GetEventJsonData(request.downloadHandler.text);
 
                         //print("~~~~~~~~~ json" + request.downloadHandler.text);
-                        XanaEventDetails.eventDetails.DataIsInitialized = true;
+                        EventDetails.eventDetails.DataIsInitialized = true;
                         yield return new WaitForEndOfFrame();
-                        if (!XanaEventDetails.eventDetails.name.Equals(""))
+                        if (!EventDetails.eventDetails.name.Equals(""))
                         {
                             //print("===============Checking event date time");
                             CheckEventDateTime();
-                            //XanaEventDetails.eventDetails.eventType = "dj";
+                            //EventDetails.eventDetails.eventType = "dj";
                         }
                         else
                         {
@@ -281,7 +281,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
                         if (eventDetails.success == false)
                         {
                             yield return StartCoroutine(HitGetEventJson(url));
-                            if (!XanaEventDetails.eventDetails.name.Equals(""))
+                            if (!EventDetails.eventDetails.name.Equals(""))
                             {
                                 //print("==============Checking JSON data");
                             }
@@ -299,12 +299,12 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
 
     public void GetEventJsonData(string _jsonData)
     {
-        XanaEventDetails JsonDataObj1 = JsonUtility.FromJson<XanaEventDetails>(_jsonData);
-        XanaEventDetails.eventDetails = JsonDataObj1;
+        EventDetails JsonDataObj1 = JsonUtility.FromJson<EventDetails>(_jsonData);
+        EventDetails.eventDetails = JsonDataObj1;
 
         EventUserRoles JsonDataObj2 = JsonUtility.FromJson<EventUserRoles>(_jsonData);
-        XanaEventDetails.eventDetails.eventsUserRoles.Add(JsonDataObj2);
-        //XanaEventDetails.eventDetails.eventsUserRoles.RemoveAt(XanaEventDetails.eventDetails.eventsUserRoles.Count - 1);
+        EventDetails.eventDetails.eventsUserRoles.Add(JsonDataObj2);
+        //EventDetails.eventDetails.eventsUserRoles.RemoveAt(EventDetails.eventDetails.eventsUserRoles.Count - 1);
     }
 
     //Extracting environments data from backend through API
@@ -386,28 +386,28 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
         //univStartDateTime = DateTime.Parse(OrdinaryUTCdateOfSystem);
         //OrdinarySystemDateTime = univStartDateTime.ToLocalTime();
         //Getting Event and System Date Time
-        if (XanaEventDetails.eventDetails.recurrence)
+        if (EventDetails.eventDetails.recurrence)
         {
-            for (int i = 0; i < XanaEventDetails.eventDetails.recurrence_dates.Length; i++)
+            for (int i = 0; i < EventDetails.eventDetails.recurrence_dates.Length; i++)
             {
-                if (ConvertStringToDateFormate(XanaEventDetails.eventDetails.recurrence_dates[i]))
+                if (ConvertStringToDateFormate(EventDetails.eventDetails.recurrence_dates[i]))
                 {
-                    ////print("Actuall date found at index " + i /*+ XanaEventDetails.eventDetails.recurrence_dates[i]*/);
-                    XanaEventDetails.eventDetails.startTime = XanaEventDetails.eventDetails.recurrence_dates[i];
+                    ////print("Actuall date found at index " + i /*+ EventDetails.eventDetails.recurrence_dates[i]*/);
+                    EventDetails.eventDetails.startTime = EventDetails.eventDetails.recurrence_dates[i];
                     break;
                 }
             }
-            //EventStartDateTime = XanaEventDetails.eventDetails.startTime;
-            //EventEndDateTime = XanaEventDetails.eventDetails.endTime;
-            //eventLocalStartDateTime = ConvertStringToDateFormate(XanaEventDetails.eventDetails.startTime);
-            //eventlocalEndDateTime = ConvertStringToDateFormate(XanaEventDetails.eventDetails.endTime);
+            //EventStartDateTime = EventDetails.eventDetails.startTime;
+            //EventEndDateTime = EventDetails.eventDetails.endTime;
+            //eventLocalStartDateTime = ConvertStringToDateFormate(EventDetails.eventDetails.startTime);
+            //eventlocalEndDateTime = ConvertStringToDateFormate(EventDetails.eventDetails.endTime);
         }
         else
         {
-            //EventStartDateTime = XanaEventDetails.eventDetails.startTime;
-            //EventEndDateTime = XanaEventDetails.eventDetails.endTime;
-            ConvertStringToDateFormate(XanaEventDetails.eventDetails.startTime);
-            //ConvertStringToDateFormate(XanaEventDetails.eventDetails.endTime);
+            //EventStartDateTime = EventDetails.eventDetails.startTime;
+            //EventEndDateTime = EventDetails.eventDetails.endTime;
+            ConvertStringToDateFormate(EventDetails.eventDetails.startTime);
+            //ConvertStringToDateFormate(EventDetails.eventDetails.endTime);
         }
 
         //eventUnivStartDateTime = DateTime.Parse(EventStartDateTime);
@@ -442,7 +442,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
         {
             if (TimeSpan.FromMinutes(_eventStartSystemDateTimediff).Days > 0)
             {
-                XanaEventDetails.eventDetails.DataIsInitialized = false;
+                EventDetails.eventDetails.DataIsInitialized = false;
                 SetEventPopUpDialog("Not Event Day yet", "Will Start After:", dayTimeFormat, true);
             }
             else
@@ -455,7 +455,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
                 }
                 else
                 {
-                    XanaEventDetails.eventDetails.DataIsInitialized = false;
+                    EventDetails.eventDetails.DataIsInitialized = false;
                     SetEventPopUpDialog("Event Time not started yet", "Will Start After:", hourTimeFormat, true);
                 }
             }
@@ -472,7 +472,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
         if (_eventEndSystemDateTimediff < 0)
         {
             ////print("Event Ended");
-            XanaEventDetails.eventDetails.DataIsInitialized = false;
+            EventDetails.eventDetails.DataIsInitialized = false;
             SetEventPopUpDialog("Event is Ended", "", "", true);
         }
     }
@@ -482,7 +482,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
         ////print("Event start time in new function" + _eventDatetime);
         eventUnivStartDateTime = DateTime.Parse(_eventDatetime);
         eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
-        eventlocalEndDateTime = eventLocalStartDateTime.Add(TimeSpan.FromSeconds(XanaEventDetails.eventDetails.duration));
+        eventlocalEndDateTime = eventLocalStartDateTime.Add(TimeSpan.FromSeconds(EventDetails.eventDetails.duration));
         ////print("Event start local time in new function" + eventLocalStartDateTime);
         ////print("Event end local time in new function" + eventlocalEndDateTime);
         ////print("System date here is" + OrdinarySystemDateTime);
@@ -493,7 +493,7 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
                 ////print("Date found");
                 //print("Start date turns out to be " + eventLocalStartDateTime);
                 //print("End date turns out to be " + eventlocalEndDateTime);
-                XanaEventDetails.eventDetails.startTime = _eventDatetime;
+                EventDetails.eventDetails.startTime = _eventDatetime;
                 return true;
             }
             else
@@ -523,49 +523,49 @@ public class DynamicEventHandler : Singleton<DynamicEventHandler>
     //Loading scene for event after checking date time and event data
     public void SetSceneData()
     {
-        if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
+        if (EventDetails.eventDetails.environmentName.Contains("Xana Festival"))
         {
-            XanaConstantsHolder.xanaConstants.userLimit = "16";
+            ConstantsHolder.xanaConstants.userLimit = "16";
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.userLimit = "15";
+            ConstantsHolder.xanaConstants.userLimit = "15";
         }
         //Set These Settings after loading Json Data
         
-        if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
+        if (EventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
             WorldItem.m_EnvName = "Builder";
-            XanaConstantsHolder.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
-            XanaConstantsHolder.xanaConstants.isBuilderScene = true;
-            //print("***Scene is loading from deep linking***" + XanaConstantsHolder.xanaConstants.EnviornmentName);
+            ConstantsHolder.xanaConstants.builderMapID = int.Parse(EventDetails.eventDetails.xana_world_id);
+            ConstantsHolder.xanaConstants.isBuilderScene = true;
+            //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingController.Instance.worldLoadingScreen.SetActive(false);
-            //SceneManager.LoadScene("AddressableScene");
+            //SceneManager.LoadScene("GamePlayScene");
             LoadingController.Instance.LoadSceneByIndex("Builder", true);
         }
         else
         {
-            if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
+            if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             {
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             }
-            if (XanaEventDetails.eventDetails.museumId.Equals(0))
+            if (EventDetails.eventDetails.museumId.Equals(0))
             {
-                XanaConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
-                WorldItem.m_EnvName = XanaEventDetails.eventDetails.environmentName;
-                //XanaConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                ConstantsHolder.xanaConstants.EnviornmentName = EventDetails.eventDetails.environmentName;
+                WorldItem.m_EnvName = EventDetails.eventDetails.environmentName;
+                //ConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             else
             {
-                XanaConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
-                WorldItem.m_EnvName = XanaEventDetails.eventDetails.museumName;
-                //XanaConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                ConstantsHolder.xanaConstants.EnviornmentName = EventDetails.eventDetails.museumName;
+                WorldItem.m_EnvName = EventDetails.eventDetails.museumName;
+                //ConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
-            //print("***Scene is loading from deep linking***" + XanaConstantsHolder.xanaConstants.EnviornmentName);
+            //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingController.Instance.worldLoadingScreen.SetActive(false); 
-            SceneManager.LoadScene("AddressableScene");
+            SceneManager.LoadScene("GamePlayScene");
         }
 
     }

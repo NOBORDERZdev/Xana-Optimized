@@ -6,7 +6,7 @@ using UnityEngine.Video;
 using DG.Tweening;
 using RenderHeads.Media.AVProVideo;
 
-public class SoundManager : MonoBehaviour
+public class SoundController : MonoBehaviour
 {
     // Audio players components.
     public AudioSource EffectsSource;
@@ -22,7 +22,7 @@ public class SoundManager : MonoBehaviour
     public float HighPitchRange = 1.05f;
 
     // Singleton instance.
-    public static SoundManager Instance = null;
+    public static SoundController Instance = null;
 
     public VideoPlayer videoPlayer1, videoPlayer2;
     public VideoClip videoClip;
@@ -62,7 +62,7 @@ public class SoundManager : MonoBehaviour
         {
             if (SoundManagerPotrait.activeInHierarchy)
             {
-                SoundManagerPotrait.GetComponent<SoundManagerSettings>().enabled = true;
+                SoundManagerPotrait.GetComponent<SoundSettings>().enabled = true;
             } 
         }
     }

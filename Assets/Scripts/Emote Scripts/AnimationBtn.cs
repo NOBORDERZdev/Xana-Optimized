@@ -77,16 +77,16 @@ public class AnimationBtn : MonoBehaviour
 
             highlightButton.SetActive(true);
             GamePlayButtonEvents.inst.OpenAllAnims();
-            //ReactScreen.Instance.HideReactionScreen();
-            if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
-                ReactScreen.Instance.HideReactionScreen();
+            //UserReactionsHandler.Instance.HideReactionScreen();
+            if (UserReactionsHandler.Instance.reactionScreenParent.activeInHierarchy)
+                UserReactionsHandler.Instance.HideReactionScreen();
 
             if (ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
                 //if (ScreenOrientationManager._instance.isPotrait)
                 //    ScreenOrientationManager._instance.joystickInitPosY = JyosticksObject.transform.localPosition.y;
-                // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+                // ReferrencesForGameplay.instance.RotateBtn.interactable = false;
                 BottomObject.SetActive(false);
               
                 m_EmotePanel.SetActive(true);
@@ -98,7 +98,7 @@ public class AnimationBtn : MonoBehaviour
 
                 JumpObject.transform.DOKill();
                 JumpObject.transform.DOLocalMoveY(-30f, 0.1f);
-                //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                //  ReferrencesForGameplay.instance.RotateBtn.interactable = true;
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225,true);
             }
             else
@@ -108,12 +108,12 @@ public class AnimationBtn : MonoBehaviour
         }
         else
         {
-            if (ReactScreen.Instance.reactionScreenParent.activeInHierarchy)
-                ReactScreen.Instance.HideReactionScreen();
-            //ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            if (UserReactionsHandler.Instance.reactionScreenParent.activeInHierarchy)
+                UserReactionsHandler.Instance.HideReactionScreen();
+            //ReferrencesForGameplay.instance.RotateBtn.interactable = false;
             Debug.Log("this is else close  :----");
-            ReactScreen.Instance.ClosePanel();
-            ReactScreen.Instance.HideEmoteScreen();
+            UserReactionsHandler.Instance.ClosePanel();
+            UserReactionsHandler.Instance.HideEmoteScreen();
 
             EmoteAnimationHandler.Instance.isEmoteActive = false;         // AH working
             EmoteAnimationHandler.Instance.lastAnimClickButton = null; // WaqasAhmad
@@ -131,7 +131,7 @@ public class AnimationBtn : MonoBehaviour
             {
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(165,false);
             }
-            //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            //  ReferrencesForGameplay.instance.RotateBtn.interactable = true;
         }
 
         //StartCoroutine(DelayToOnInteractable());
