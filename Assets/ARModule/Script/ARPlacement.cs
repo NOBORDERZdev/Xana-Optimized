@@ -29,7 +29,7 @@ public class ARPlacement : MonoBehaviour
 
     //void Start()
     //{
-    //    arObjectToSpawn = ARFaceModuleManager.Instance.mainAvatar;
+    //    arObjectToSpawn = ARFaceModuleHandler.Instance.mainAvatar;
     //    aRRaycastManager = FindObjectOfType<ARRaycastManager>();
     //    aRPlanDetectionInfoScreen.SetActive(true);
     //}
@@ -128,12 +128,12 @@ public class ARPlacement : MonoBehaviour
     //    spawnedObject.SetActive(true);
     //    Debug.LogError("Scale:" + spawnedObject.transform.localScale);
     //    //new changes.......
-    //    spawnedObject.GetComponent<AvatarBorderSelectionManager>().isMainAvatarOnActionScreen = true;
-    //    ARFaceModuleManager.Instance.addAvtarItem.Add(spawnedObject);
+    //    spawnedObject.GetComponent<AvatarOutlineHandler>().isMainAvatarOnActionScreen = true;
+    //    ARFaceModuleHandler.Instance.addAvtarItem.Add(spawnedObject);
 
-    //    /*if (spawnedObject.GetComponent<AvatarScript>().avatarShadowPlanObj != null)
+    //    /*if (spawnedObject.GetComponent<ARAvatarController>().avatarShadowPlanObj != null)
     //    {
-    //        spawnedObject.GetComponent<AvatarScript>().avatarShadowPlanObj.SetActive(true);
+    //        spawnedObject.GetComponent<ARAvatarController>().avatarShadowPlanObj.SetActive(true);
     //    }*/
     //}
 }

@@ -1463,11 +1463,11 @@ public class SNS_APIResponseManager : MonoBehaviour
                     }
                     break;
                 case "RoomCreateFeed":
-                    if (ARFaceModuleManager.Instance != null)//this condition disable loader of Room screen if avtive....... 
+                    if (ARFaceModuleHandler.Instance != null)//this condition disable loader of Room screen if avtive....... 
                     {
-                        if (ARFaceModuleManager.Instance.apiLoaderController.mainLoaderObj.activeSelf)
+                        if (ARFaceModuleHandler.Instance.apiLoaderController.mainLoaderObj.activeSelf)
                         {
-                            ARFaceModuleManager.Instance.ShowLoader(false);
+                            ARFaceModuleHandler.Instance.ShowLoader(false);
                         }
                     }
                     break;
@@ -1496,9 +1496,9 @@ public class SNS_APIResponseManager : MonoBehaviour
                         }
                         break;
                     case "RoomCreateFeed":
-                        if (ARFaceModuleManager.Instance != null)
+                        if (ARFaceModuleHandler.Instance != null)
                         {
-                            ARFaceModuleManager.Instance.CreateFeedSuccess();
+                            ARFaceModuleHandler.Instance.CreateFeedSuccess();
                         }
                         break;
                     default:

@@ -12,7 +12,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     public static bool callRemove;
     public bool isAddressableScene = true;
     public GameObject EventEndedPanel;
-    private string mainScene = "Main";
+    private string mainScene = "Home";
     bool exitOnce = true;
     private void OnEnable()
     {
@@ -156,7 +156,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             LoadingController.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingController.Instance.IncrementSliderValue(_rand, true));
             yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Home");
         }
         else
         {

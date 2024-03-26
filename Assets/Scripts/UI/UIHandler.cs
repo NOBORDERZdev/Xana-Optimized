@@ -23,7 +23,7 @@ public class UIHandler : MonoBehaviour
     public Transform SearchHomeHolder;
     public Transform SearchWorldHolder, 
         SearchWorldScreenHolder,
-        AvatarWindowHolder,
+        AvatarWindowHolder, 
         HomeWorldTabsHolder, 
         WorldWorldTabsHolder, 
         WorldScrollerHolder,

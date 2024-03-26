@@ -311,7 +311,7 @@ public class AWSDataHandler : MonoBehaviour
                 currentSNSApiLoaderController = FeedsManager.Instance.apiLoaderController;
                 break;
             case "CreateFeedRoom":
-                currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
+                currentSNSApiLoaderController = ARFaceModuleHandler.Instance.apiLoaderController;
                 break;
             default:
                Debug.Log("Default case");
@@ -347,7 +347,7 @@ public class AWSDataHandler : MonoBehaviour
                             FeedsManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
                             break;
                         case "CreateFeedRoom":
-                            ARFaceModuleManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
+                            ARFaceModuleHandler.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
                             break;
                         default:
                             if (currentSNSApiLoaderController != null)
@@ -376,11 +376,11 @@ public class AWSDataHandler : MonoBehaviour
                             FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                             break;
                         case "CreateFeedRoom":
-                            if(ARFaceModuleManager.Instance.imageOrVideo == "Video")
+                            if(ARFaceModuleHandler.Instance.imageOrVideo == "Video")
                             {
-                                ARFaceModuleManager.Instance.feedMediaPlayer.Play();
+                                ARFaceModuleHandler.Instance.feedMediaPlayer.Play();
                             }
-                            ARFaceModuleManager.Instance.ShowLoader(false);
+                            ARFaceModuleHandler.Instance.ShowLoader(false);
                             break;
                         default:
                             FeedsManager.Instance.ShowLoader(false);//active Loader false.......
@@ -406,11 +406,11 @@ public class AWSDataHandler : MonoBehaviour
                         FeedsManager.Instance.ShowLoader(false);//active Loader false.......
                         break;
                     case "CreateFeedRoom":
-                        if (ARFaceModuleManager.Instance.imageOrVideo == "Video")
+                        if (ARFaceModuleHandler.Instance.imageOrVideo == "Video")
                         {
-                            ARFaceModuleManager.Instance.feedMediaPlayer.Play();
+                            ARFaceModuleHandler.Instance.feedMediaPlayer.Play();
                         }
-                        ARFaceModuleManager.Instance.ShowLoader(false);
+                        ARFaceModuleHandler.Instance.ShowLoader(false);
                         break;
                     default:
                         FeedsManager.Instance.ShowLoader(false);//active Loader false.......

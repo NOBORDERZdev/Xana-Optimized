@@ -31,7 +31,7 @@ public class DeletObjectBehaviour : MonoBehaviour
             {
                Debug.Log("destory");
                 isPointerOverButton = false;
-                Destroy(ARFaceModuleManager.Instance.mainAvatar);
+                Destroy(ARFaceModuleHandler.Instance.mainAvatar);
             }
            
         }
@@ -41,7 +41,7 @@ public class DeletObjectBehaviour : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position), Vector2.zero);
             if (hit.collider != null)
             {
-                Destroy(ARFaceModuleManager.Instance.mainAvatar);
+                Destroy(ARFaceModuleHandler.Instance.mainAvatar);
                // Destroy(hit.transform.gameObject);
             }
         }*/

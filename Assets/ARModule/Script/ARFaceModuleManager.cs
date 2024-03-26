@@ -11,9 +11,9 @@ using AdvancedInputFieldPlugin;
 using System;
 //using UnityEngine.XR.ARFoundation;
 
-public class ARFaceModuleManager : MonoBehaviour
+public class ARFaceModuleHandler : MonoBehaviour
 {
-    public static ARFaceModuleManager Instance;
+    public static ARFaceModuleHandler Instance;
 
     public string xanaRoomSavePath;
 
@@ -77,7 +77,7 @@ public class ARFaceModuleManager : MonoBehaviour
     [Header("Delete item reference")]
     public GameObject currentSelectedItemObj;
     public GameObject deleteItemScreen;
-    public DeleteItemWithDragScript deleteItemWithDragScript;
+    public ExpandObjOnHover deleteItemWithDragScript;
 
     [Header("Avatar Selection Outline Default Setup")]
     public Color outlineColor = Color.red;
@@ -91,7 +91,7 @@ public class ARFaceModuleManager : MonoBehaviour
     public GameObject photoVideoPanel;
     public GameObject captureButtonObj;
     public List<GameObject> photoVideoButtonList = new List<GameObject>();
-    public VideoRecordingButton videoCaptureButton;
+    public CaptureButton videoCaptureButton;
     public bool r_IsCapturingVideoBack = false;
  
     private void Awake()
@@ -491,7 +491,7 @@ public class ARFaceModuleManager : MonoBehaviour
         uiCan.SetActive(false);
         if (captureId == 1)
         {
-            LiveVideoRoomManager.Instance.ImageSelectionAllUIDisable(false);
+            VideoRoomHandler.Instance.ImageSelectionAllUIDisable(false);
         }
         if (SNSNotificationHandler.Instance != null)
         {
@@ -560,7 +560,7 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 ShowNotificationMsg("Save Photo success");
             }
-            LiveVideoRoomManager.Instance.ImageSelectionAllUIDisable(true);
+            VideoRoomHandler.Instance.ImageSelectionAllUIDisable(true);
         }
 
         lastCapturedByteData = screenshot.EncodeToPNG();
@@ -606,20 +606,20 @@ public class ARFaceModuleManager : MonoBehaviour
                     if (index == 0)//for bg
                     {
                         albumSelectionScreen.SetActive(false);
-                        LiveVideoRoomManager.Instance.BackgroundImage.gameObject.SetActive(true);
-                        LiveVideoRoomManager.Instance.BackgroundImage.sprite = bg;
-                        LiveVideoRoomManager.Instance.BackgroundImage.color = Color.white;
+                        VideoRoomHandler.Instance.BackgroundImage.gameObject.SetActive(true);
+                        VideoRoomHandler.Instance.BackgroundImage.sprite = bg;
+                        VideoRoomHandler.Instance.BackgroundImage.color = Color.white;
                     }
                     else if (index == 1)
                     {
                         DisableBottomMainPanel(false);
                         albumSelectionScreen.SetActive(false);
-                        LiveVideoRoomManager.Instance.imageSelectionScreen.SetActive(true);
-                        LiveVideoRoomManager.Instance.imageSelectionUIScreen.SetActive(true);
-                        LiveVideoRoomManager.Instance.GetLastAvatarListCount(); 
+                        VideoRoomHandler.Instance.imageSelectionScreen.SetActive(true);
+                        VideoRoomHandler.Instance.imageSelectionUIScreen.SetActive(true);
+                        VideoRoomHandler.Instance.GetLastAvatarListCount(); 
 
-                        LiveVideoRoomManager.Instance.GalleryImage.gameObject.SetActive(true);
-                        LiveVideoRoomManager.Instance.GalleryImage.sprite = bg;
+                        VideoRoomHandler.Instance.GalleryImage.gameObject.SetActive(true);
+                        VideoRoomHandler.Instance.GalleryImage.sprite = bg;
                         if (mainAvatar != null)
                         {
                           mainAvatar.SetActive(false);
@@ -672,7 +672,7 @@ public class ARFaceModuleManager : MonoBehaviour
                 ShowLoader(true);
                 // Play the selected video
                 //Handheld.PlayFullScreenMovie("file://" + path);               //Riken
-                LiveVideoRoomManager.Instance.OnStartVideoPlay(path, true, true);
+                VideoRoomHandler.Instance.OnStartVideoPlay(path, true, true);
             }
         }, "Select a video");
 
@@ -692,7 +692,7 @@ public class ARFaceModuleManager : MonoBehaviour
     #region Screen Transection Click Event.......
     public void OnBackGroundSelectionBtnClick()
     {
-        FeedAnimationBGChange.instance.GetAllBackGroundImages();
+        ARAnimationThumbnailHandler.instance.GetAllBackGroundImages();
         backGroundSelectionScreen.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -2000);
         backGroundSelectionScreen.SetActive(true);
         backGroundSelectionScreen.GetComponent<RectTransform>().DOAnchorPosY(0, 0.1f).SetEase(Ease.Linear);
@@ -849,14 +849,14 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             captureViewScreen.SetActive(false);
         }
-        else if (LiveVideoRoomManager.Instance.videoPlayerUIScreen.activeSelf)
+        else if (VideoRoomHandler.Instance.videoPlayerUIScreen.activeSelf)
         {
-            LiveVideoRoomManager.Instance.CloseVideoScreenBtnClick();
+            VideoRoomHandler.Instance.CloseVideoScreenBtnClick();
             createFeedFilePath = "";
         } 
-        else if (LiveVideoRoomManager.Instance.imageSelectionUIScreen.activeSelf)
+        else if (VideoRoomHandler.Instance.imageSelectionUIScreen.activeSelf)
         {
-            LiveVideoRoomManager.Instance.CloseImageScreenBtnClick();
+            VideoRoomHandler.Instance.CloseImageScreenBtnClick();
         }
 
         switch (imageOrVideo)
@@ -873,7 +873,7 @@ public class ARFaceModuleManager : MonoBehaviour
                 }
                 break;
             case "Video":
-                if (File.Exists(createFeedFilePath) && !LiveVideoRoomManager.Instance.isPickVideoFromGellary)
+                if (File.Exists(createFeedFilePath) && !VideoRoomHandler.Instance.isPickVideoFromGellary)
                 {
                     File.Delete(createFeedFilePath);
                 }
@@ -902,7 +902,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnMainButtomMenuDisableForDelete(bool isDisable)
     {
-        if (!LiveVideoRoomManager.Instance.videoPlayScreen.activeSelf && !LiveVideoRoomManager.Instance.imageSelectionScreen.activeSelf)
+        if (!VideoRoomHandler.Instance.videoPlayScreen.activeSelf && !VideoRoomHandler.Instance.imageSelectionScreen.activeSelf)
         {
             bottomUiPanel.SetActive(isDisable);
             bottomMainTypePanelScrollView.SetActive(isDisable);
@@ -1015,7 +1015,7 @@ public class ARFaceModuleManager : MonoBehaviour
                 break;
             case "Video":
 
-                createFeedFilePath= LiveVideoRoomManager.Instance.videoPath;
+                createFeedFilePath= VideoRoomHandler.Instance.videoPath;
 
                 string[] pathArry = createFeedFilePath.Split('/');
 

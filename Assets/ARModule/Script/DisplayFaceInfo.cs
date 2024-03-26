@@ -23,15 +23,15 @@
 
 //        ARFaceManager m_FaceManager;
 
-//        ARFaceModuleManager aRFaceModuleManager;
-//        LiveVideoRoomManager liveVideoRoomManager;
+//        ARFaceModuleHandler aRFaceModuleManager;
+//        VideoRoomHandler liveVideoRoomManager;
 
 //        void Start()
 //        {
 //            m_FaceManager = GetComponent<ARFaceManager>();
 
-//            aRFaceModuleManager = ARFaceModuleManager.Instance;
-//            liveVideoRoomManager = LiveVideoRoomManager.Instance;
+//            aRFaceModuleManager = ARFaceModuleHandler.Instance;
+//            liveVideoRoomManager = VideoRoomHandler.Instance;
 //        }
 
 //        void CheckTrakingState()

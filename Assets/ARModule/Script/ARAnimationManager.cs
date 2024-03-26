@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using TMPro;
 using System.IO;
 
-public class FeedAnimationController : MonoBehaviour
+public class ARAnimationManager : MonoBehaviour
 {
     public AnimationDetails bean;
     [Space]

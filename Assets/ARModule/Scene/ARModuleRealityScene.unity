@@ -285,7 +285,7 @@ PrefabInstance:
       objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
     - target: {fileID: 1835148883358587935, guid: d291f7dcf3344a646bf291513dc36e36, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -199.99997
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 2377023631149834829, guid: d291f7dcf3344a646bf291513dc36e36, type: 3}
       propertyPath: filterMainVolume
@@ -1826,22 +1826,6 @@ PrefabInstance:
       objectReference: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43bd69045186e3a4e8a0af0879565887, type: 3}
---- !u!1 &1340408851 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1413887562483397099, guid: 43bd69045186e3a4e8a0af0879565887, type: 3}
-  m_PrefabInstance: {fileID: 1340408850}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1340408852 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: -7694812944359609229, guid: 43bd69045186e3a4e8a0af0879565887, type: 3}
-  m_PrefabInstance: {fileID: 1340408850}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1340408860 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3351489311579450748, guid: 43bd69045186e3a4e8a0af0879565887, type: 3}
@@ -2234,8 +2218,6 @@ GameObject:
   - component: {fileID: 1533795163}
   - component: {fileID: 1533795167}
   - component: {fileID: 1533795166}
-  - component: {fileID: 1533795165}
-  - component: {fileID: 1533795164}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -2259,41 +2241,6 @@ Transform:
   m_Father: {fileID: 1510930847}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1533795164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533795162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 207ec26fd0e0b5443a2e283397287694, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_FaceInfoText: {fileID: 1340408852}
-  InfoPanel: {fileID: 1340408851}
-  isTracking: 0
-  lastState: 0
---- !u!114 &1533795165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533795162}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7ecc858de0958b4a8bcf5869d5ff47c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _aRPoseDriver: {fileID: 1430147671}
-  playerHead: {fileID: 933166711}
-  m_SkinnedMeshRenderer: {fileID: 0}
-  RootAnimTargetObj: {fileID: 6906617}
-  moveTargetObj: {fileID: 728945340}
-  isTracking: 0
-  isVideoOpen: 0
 --- !u!114 &1533795166
 MonoBehaviour:
   m_ObjectHideFlags: 0

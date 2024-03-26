@@ -380,7 +380,7 @@ public class UserNFTlistClass : MonoBehaviour
 
         //  ******* //   
         AllDataFetchedfromServer?.Invoke();
-        //   SceneManager.LoadScene("Main");  
+        //   SceneManager.LoadScene("Home");  
     }
 
     */
