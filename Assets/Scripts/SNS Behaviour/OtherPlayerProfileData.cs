@@ -74,7 +74,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     public TextMeshProUGUI jobText;
     public TextMeshProUGUI textUserBio;
     public TextMeshProUGUI WebsiteText;
-    public TextMeshProUGUI textHeaderUserName;
+    //public TextMeshProUGUI textHeaderUserName;
 
     public GameObject seeMoreBioButton;
     public GameObject seeMoreButtonTextObj;
@@ -160,24 +160,24 @@ public class OtherPlayerProfileData : MonoBehaviour
             }*/
             //Debug.Log("OnDisable OtherPlayerProfileData feed screen enable");
             RemoveAndCheckBackKey();
-            FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
+            //FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
             FeedUIController.Instance.feedUiScreen.SetActive(true);
         }
     }
 
     private void Update()
     {
-        if (FeedUIController.Instance.otherPlayerProfileScreen.activeSelf)
-        {
-            ProfileAPiPagination();
-        }
+        //if (FeedUIController.Instance.otherPlayerProfileScreen.activeSelf)
+        //{
+        //    ProfileAPiPagination();
+        //}
     }
 
     //this method is used to clear the dummy data.......
     public void ClearDummyData()
     {
         textPlayerName.text = "";
-        textHeaderUserName.text = "";
+        //textHeaderUserName.text = "";
         jobText.text = "";
         WebsiteText.text = "";
         jobText.gameObject.SetActive(false);
@@ -210,7 +210,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         OnSetUserUi(singleUserProfileData.isFollowing);
 
         textPlayerName.text = singleUserProfileData.name;
-        textHeaderUserName.text = singleUserProfileData.name;
+        //textHeaderUserName.text = singleUserProfileData.name;
         textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
         textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
         //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
@@ -478,7 +478,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             profileFeedAPiCurrentPageIndex = 1;
             isFeedLoaded = false;
 
-            userRolesView.ResetBadges();//clear data and reset user roles.......
+           // userRolesView.ResetBadges();//clear data and reset user roles.......
         }
     }
 
@@ -1046,7 +1046,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         else
         {
             textPlayerName.text = singleUserProfileData.name;
-            textHeaderUserName.text = singleUserProfileData.name;
+            //textHeaderUserName.text = singleUserProfileData.name;
             textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
             textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
             //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();

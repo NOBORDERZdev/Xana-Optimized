@@ -71,7 +71,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Button click.......
     public void OnClickMyAccountButton()
     {
-        MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(true);
+       // MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(true);
 
         OnClickSettingClose();
         myAccountScreen.SetActive(true);

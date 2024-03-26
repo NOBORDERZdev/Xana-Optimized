@@ -37,8 +37,8 @@ public class ProfileUIHandler : MonoBehaviour
 
     [Space]
     [Header("User Data Tabs Immitating Buttons")]
-    public GameObject myProfileImitateTopPartButton;
-    public GameObject OtherProfileImitateTopPartButton;
+    //public GameObject myProfileImitateTopPartButton;
+    //public GameObject OtherProfileImitateTopPartButton;
 
     [Space]
     [Header("Script References")]
@@ -155,13 +155,13 @@ public class ProfileUIHandler : MonoBehaviour
     {
         if (MyProfileDataManager.Instance.gameObject.activeSelf)
         {
-            mainscrollControllerRef.TopFixedObj = myProfileImitateTopPartButton;
+            //mainscrollControllerRef.TopFixedObj = myProfileImitateTopPartButton;
             mainscrollControllerRef.headerObj = myProfileTopPartButton;
             mainscrollControllerRef.containerobj = myProfileUserPostPartObj.GetComponent<RectTransform>();
         }
         else
         {
-            mainscrollControllerRef.TopFixedObj = OtherProfileImitateTopPartButton;
+           // mainscrollControllerRef.TopFixedObj = OtherProfileImitateTopPartButton;
             mainscrollControllerRef.headerObj = OtherProfileTopPartButton;
             mainscrollControllerRef.containerobj = OtherProfileUserPostPartObj.GetComponent<RectTransform>();
         }
@@ -173,19 +173,19 @@ public class ProfileUIHandler : MonoBehaviour
         {
             myProfileTopPartButton.SetActive(_state);
             myProfileUserPostPartObj.SetActive(_state);
-            myProfileImitateTopPartButton.SetActive(_state);
+            //myProfileImitateTopPartButton.SetActive(_state);
             OtherProfileTopPartButton.SetActive(!_state);
             OtherProfileUserPostPartObj.SetActive(!_state);
-            OtherProfileImitateTopPartButton.SetActive(!_state);
+            //OtherProfileImitateTopPartButton.SetActive(!_state);
         }
         else
         {
             myProfileTopPartButton.SetActive(_state);
             myProfileUserPostPartObj.SetActive(_state);
-            myProfileImitateTopPartButton.SetActive(_state);
+            //myProfileImitateTopPartButton.SetActive(_state);
             OtherProfileTopPartButton.SetActive(!_state);
             OtherProfileUserPostPartObj.SetActive(!_state);
-            OtherProfileImitateTopPartButton.SetActive(!_state);
+            //OtherProfileImitateTopPartButton.SetActive(!_state);
         }
     }
 }

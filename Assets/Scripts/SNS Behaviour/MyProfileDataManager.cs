@@ -57,7 +57,7 @@ public class MyProfileDataManager : MonoBehaviour
 
     [Space]
     [Header("Player info References")]
-    public TextMeshProUGUI topHaderUserNameText;
+    //public TextMeshProUGUI topHaderUserNameText;
     public Image profileImage;
     public TextMeshProUGUI totalPostText;
     public TextMeshProUGUI totalFollowerText;
@@ -363,17 +363,17 @@ public class MyProfileDataManager : MonoBehaviour
             ProfileUIHandler.instance.followingBtn.interactable = true;
         }
 
-        userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
+        //userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
 
-        topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
+        //topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
 
         playerNameText.text = myProfileData.name;
-        topHaderUserNameText.text = myProfileData.name;
+        //topHaderUserNameText.text = myProfileData.name;
 
-        if (lastTopUserText != myProfileData.name)
-        {
-            topHaderUserNameText.GetComponent<ResetPrefferedWidthScript>().SetupObjectWidth();
-        }
+        //if (lastTopUserText != myProfileData.name)
+        //{
+        //    topHaderUserNameText.GetComponent<ResetPrefferedWidthScript>().SetupObjectWidth();
+        //}
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -487,7 +487,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         mainProfileDetailPart.GetComponent<VerticalLayoutGroup>().spacing = 0.01f;
 
-        //StartCoroutine(WaitToRefreshProfileScreen());
+        StartCoroutine(WaitToRefreshProfileScreen());
     }
 
 
@@ -618,6 +618,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to Refresh my profile main content size fitter.......
     public IEnumerator WaitToRefreshProfileScreen()
     {
+        yield return new WaitForSeconds(0.04f);
         Debug.Log("Enter in Content Size Filter Section");
         textUserBio.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         yield return new WaitForSeconds(0.01f);
@@ -1126,8 +1127,14 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
 
-        //FeedUIController.Instance.ShowLoader(false);
+        Invoke(nameof(DisableFadderWithDelay),0.3f);
     }
+
+    void DisableFadderWithDelay()
+    {
+        FeedUIController.Instance.ShowLoader(false);
+    }
+
 
     //public void RefreshHieght()
     //{
@@ -1584,14 +1591,14 @@ public class MyProfileDataManager : MonoBehaviour
         // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
         //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
         parentHeightResetScript.OnHeightReset(index);
-        if (index == 2)
-        {
-            CheckAndDisableFirstFeedPopupForMyNFT(true);//for Create First Feed Popup Auto hide if nft list available.......
-        }
-        else
-        {
-            CheckAndDisableFirstFeedPopupForMyNFT(false);//for Create First Feed Popup Auto hide if nft list available.......
-        }
+        //if (index == 2)
+        //{
+        //    CheckAndDisableFirstFeedPopupForMyNFT(true);//for Create First Feed Popup Auto hide if nft list available.......
+        //}
+        //else
+        //{
+        //    CheckAndDisableFirstFeedPopupForMyNFT(false);//for Create First Feed Popup Auto hide if nft list available.......
+        //}
         switch (index)
         {
             case 0:

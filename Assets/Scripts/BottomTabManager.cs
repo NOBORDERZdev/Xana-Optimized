@@ -730,7 +730,6 @@ public class BottomTabManager : MonoBehaviour
             ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);
-
             DisableSubScreen();
         }
 

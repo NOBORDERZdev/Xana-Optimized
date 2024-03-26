@@ -653,16 +653,16 @@ public class FeedUIController : MonoBehaviour
                     profileFollowerFollowingListScreen.SetActive(false);
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     break;
-                case "HotTabScreen":
+                //case "HotTabScreen":
                     //Debug.Log("Comes from Hot or Discover tab full feed screen");
                     //disable feed full screen after click on profile button and open other user profile.......
-                    OnClickVideoItemBackButton();
-                    break;
-                case "FollowingTabScreen":
+                    //OnClickVideoItemBackButton();
+                   // break;
+                //case "FollowingTabScreen":
                     //Debug.Log("Comes from Following tab full feed screen");
                     //disable feed full screen after click on profile button and open other user profile.......
-                    OnClickVideoItemBackButton();
-                    break;
+                    //OnClickVideoItemBackButton();
+                    //break;
                 default:
                     feedUiScreen.SetActive(false);
                     break;
@@ -949,7 +949,7 @@ public class FeedUIController : MonoBehaviour
     {
         DateTime timeUtc = dateTime;
         //DateTime today = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, TimeZoneInfo.Local);
-        DateTime today = DateTime.SpecifyKind(timeUtc, DateTimeKind.Local); ;
+        DateTime today = DateTime.SpecifyKind(timeUtc, DateTimeKind.Local);
 
         TimeSpan timeDiff = (DateTime.Now - today);
 
@@ -983,77 +983,77 @@ public class FeedUIController : MonoBehaviour
         return timestr;
     }
 
-    public void OnClickVideoItemBackButton()
-    {
-       //  feedVideoScreen.SetActive(false);
-        switch (feedFullViewScreenCallingFrom)
-        {
-            case "MyProfile":
-               Debug.Log("Full Video Screen back calling from MyProfile");
-                MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
-                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
-                MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-                break;
-            case "OtherProfile":
-                OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
-                OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-               Debug.Log("Full Video Screen back calling from OtherProfile");
-                break;
-            case "FeedPage":
-               Debug.Log("Full Video Screen back calling from MyPostFed");
-                break;
-            default:
-                feedUiScreen.SetActive(true);
-                break;
-        }
-        feedFullViewScreenCallingFrom = "";
+    //public void OnClickVideoItemBackButton()
+    //{
+    //   //  feedVideoScreen.SetActive(false);
+    //    switch (feedFullViewScreenCallingFrom)
+    //    {
+    //        case "MyProfile":
+    //           Debug.Log("Full Video Screen back calling from MyProfile");
+    //            MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
+    //            MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
+    //            MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
+    //            break;
+    //        case "OtherProfile":
+    //            OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
+    //            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+    //           Debug.Log("Full Video Screen back calling from OtherProfile");
+    //            break;
+    //        case "FeedPage":
+    //           Debug.Log("Full Video Screen back calling from MyPostFed");
+    //            break;
+    //        default:
+    //            feedUiScreen.SetActive(true);
+    //            break;
+    //    }
+    //    feedFullViewScreenCallingFrom = "";
 
-        foreach (Transform item in videofeedParent)
-        {
-            Destroy(item.gameObject);
-        }
-    }
-    public void OnClickVideoItemBackButton(bool ComeFromBackButton)
-    {
-        //feedVideoScreen.SetActive(false);
-        switch (feedFullViewScreenCallingFrom)
-        {
-            case "MyProfile":
-               Debug.Log("Full Video Screen back calling from MyProfile");
-                MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
-                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
-                MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-                break;
-            case "OtherProfile":
-                OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
-                OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-               Debug.Log("Full Video Screen back calling from OtherProfile");
-                break;
-            case "FeedPage":
-               Debug.Log("Full Video Screen back calling from MyPostFed");
-                if (!ComeFromBackButton)
-                {
-                    bottomTabManager.OnClickProfileButton();
-                }
-                bottomTabManager.OnClickProfileButton();
-                break;
-            default:
-                feedUiScreen.SetActive(true);
-                break;
-        }
-        feedFullViewScreenCallingFrom = "";
+    //    foreach (Transform item in videofeedParent)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //}
+    //public void OnClickVideoItemBackButton(bool ComeFromBackButton)
+    //{
+    //    //feedVideoScreen.SetActive(false);
+    //    switch (feedFullViewScreenCallingFrom)
+    //    {
+    //        case "MyProfile":
+    //           Debug.Log("Full Video Screen back calling from MyProfile");
+    //            MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
+    //            MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
+    //            //MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
+    //            break;
+    //        case "OtherProfile":
+    //            OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
+    //            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
+    //           Debug.Log("Full Video Screen back calling from OtherProfile");
+    //            break;
+    //        case "FeedPage":
+    //           Debug.Log("Full Video Screen back calling from MyPostFed");
+    //            if (!ComeFromBackButton)
+    //            {
+    //                bottomTabManager.OnClickProfileButton();
+    //            }
+    //            bottomTabManager.OnClickProfileButton();
+    //            break;
+    //        default:
+    //            feedUiScreen.SetActive(true);
+    //            break;
+    //    }
+    //    feedFullViewScreenCallingFrom = "";
 
-        foreach (Transform item in videofeedParent)
-        {
-            Destroy(item.gameObject);
-        }
-    }
+    //    foreach (Transform item in videofeedParent)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //}
 
-    public void OnClickGiftScreenBackButton()
-    {
-      //  giftItemScreens.SetActive(false);
-        otherPlayerProfileScreen.SetActive(true);
-    }
+    //public void OnClickGiftScreenBackButton()
+    //{
+    //  //  giftItemScreens.SetActive(false);
+    //    otherPlayerProfileScreen.SetActive(true);
+    //}
 
     //this method is used to Find Friend Button click.......
     public void OnClickSearchUserButton()
