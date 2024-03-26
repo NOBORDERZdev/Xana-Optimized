@@ -52,7 +52,7 @@ public class AvatarSetupController : MonoBehaviour
     IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
     {
         yield return new WaitForEndOfFrame();  //WaitForSeconds(0.1f);
-        if (SceneManager.GetActiveScene().name != "Main" && !isWearOrNot)
+        if (SceneManager.GetActiveScene().name != "Home" && !isWearOrNot)
         {
             //Debug.LogError(_obj.GetComponent<PhotonView>().ViewID + ":Wear Default cloth manually");
             SetAvatarClothDefault(_obj, _gender);
@@ -81,7 +81,7 @@ public class AvatarSetupController : MonoBehaviour
         string currScene = SceneManager.GetActiveScene().name;//Riken Add Condition for Set Default cloths on AR scene so.......
         if (ConstantsHolder.xanaConstants != null)
         {
-            if (!currScene.Contains("Main")) // call for worlds only
+            if (!currScene.Contains("Home")) // call for worlds only
             {
                 Invoke(nameof(Custom_IntializeAvatar), 0.5f);
 
@@ -373,7 +373,7 @@ public class AvatarSetupController : MonoBehaviour
             clothJson = File.ReadAllText(GameManager.Instance.GetStringFolderPath());
 
 
-            if (SceneManager.GetActiveScene().name.Contains("Main")) // for store/ main menu
+            if (SceneManager.GetActiveScene().name.Contains("Home")) // for store/ main menu
             {
                 if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                 {
@@ -1540,7 +1540,7 @@ public class AvatarSetupController : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (SceneManager.GetActiveScene().name != "Home")
         {
             item.layer = 22;
         }
