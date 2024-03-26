@@ -693,36 +693,36 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    //this api is used to get tagged feed for user.......
-    public void RequesturlGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
-    {
-        //  FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
-        StartCoroutine(IERequestGetTaggedFeedsByUserId(userId, pageNum, pageSize));
-    }
-    public IEnumerator IERequestGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetTaggedFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    ////this api is used to get tagged feed for user.......
+    //public void RequesturlGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
+    //{
+    //    //  FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
+    //    StartCoroutine(IERequestGetTaggedFeedsByUserId(userId, pageNum, pageSize));
+    //}
+    //public IEnumerator IERequestGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetTaggedFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                //  FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
-                Debug.Log("taggedFeedsByUserIdRoot" + data);
-                taggedFeedsByUserIdRoot = JsonConvert.DeserializeObject<TaggedFeedsByUserIdRoot>(data);
-                StartCoroutine(OtherPlayerProfileData.Instance.AllTagFeed());
-                // Debug.Log(root.data.count);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            //  FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //            Debug.Log("taggedFeedsByUserIdRoot" + data);
+    //            taggedFeedsByUserIdRoot = JsonConvert.DeserializeObject<TaggedFeedsByUserIdRoot>(data);
+    //            StartCoroutine(OtherPlayerProfileData.Instance.AllTagFeed());
+    //            // Debug.Log(root.data.count);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Follower And Following.......
@@ -1109,241 +1109,241 @@ public class APIManager : MonoBehaviour
     #region Feed Comment.......
     int lastCommentTotalCount;
     //this method is used to Comment button click and get comment list for current feed.......
-    public void CommentListGetAndClickFeedCommentButton(int currentId, bool isRefresh, int commentCount)
-    {
-        Debug.Log("CommentListGetAndClickFeedCommentButton CurrentId:" + currentId + "   :FeedIdTemp:" + feedIdTemp + "    :IsRefresh:" + isRefresh + "    :CommentCount:" + commentCount);
+    //public void CommentListGetAndClickFeedCommentButton(int currentId, bool isRefresh, int commentCount)
+    //{
+    //    Debug.Log("CommentListGetAndClickFeedCommentButton CurrentId:" + currentId + "   :FeedIdTemp:" + feedIdTemp + "    :IsRefresh:" + isRefresh + "    :CommentCount:" + commentCount);
 
-        if (!isRefresh && lastCommentTotalCount != commentCount)
-        {
-            isRefresh = true;
-            //Debug.Log("CommentListGetAndClickFeedCommentButton1111111");
-        }
+    //    if (!isRefresh && lastCommentTotalCount != commentCount)
+    //    {
+    //        isRefresh = true;
+    //        //Debug.Log("CommentListGetAndClickFeedCommentButton1111111");
+    //    }
 
-        if (feedIdTemp != currentId || isRefresh)
-        {
-            isCommentDataLoaded = false;
-            commentPageCount = 1;
-            scrollToTop = false;
-            Debug.Log("FeedIdTemp change: " + isRefresh + " not same :" + (feedIdTemp != currentId));
-            feedIdTemp = currentId;
-            RequestFeedCommentList(feedIdTemp, 1, 1, commnetFeedPagesize);
-        }
-    }
+    //    if (feedIdTemp != currentId || isRefresh)
+    //    {
+    //        isCommentDataLoaded = false;
+    //        commentPageCount = 1;
+    //        scrollToTop = false;
+    //        Debug.Log("FeedIdTemp change: " + isRefresh + " not same :" + (feedIdTemp != currentId));
+    //        feedIdTemp = currentId;
+    //        RequestFeedCommentList(feedIdTemp, 1, 1, commnetFeedPagesize);
+    //    }
+    //}
 
     //for Feed Commnet.......
-    public void SendComment(InputField text)
-    {
-        RequestCommentFeed(feedIdTemp.ToString(), text.text.ToString());
-    }
+    //public void SendComment(InputField text)
+    //{
+    //    RequestCommentFeed(feedIdTemp.ToString(), text.text.ToString());
+    //}
 
-    public void OnClickSendCommentButton(AdvancedInputField advancedInputField)
-    {
-        //Debug.Log("On Send comment buttonClick");
-        string message = advancedInputField.RichText;
-        if (!string.IsNullOrEmpty(message))
-        {
-            advancedInputField.Clear();
-            RequestCommentFeed(feedIdTemp.ToString(), message);
-            advancedInputField.transform.GetChild(5).gameObject.GetComponent<InputFieldButton>().interactable = false;
-        }
-    }
+    //public void OnClickSendCommentButton(AdvancedInputField advancedInputField)
+    //{
+    //    //Debug.Log("On Send comment buttonClick");
+    //    string message = advancedInputField.RichText;
+    //    if (!string.IsNullOrEmpty(message))
+    //    {
+    //        advancedInputField.Clear();
+    //        RequestCommentFeed(feedIdTemp.ToString(), message);
+    //        advancedInputField.transform.GetChild(5).gameObject.GetComponent<InputFieldButton>().interactable = false;
+    //    }
+    //}
 
     //this api is used to create comment for feed.......
-    public void RequestCommentFeed(string feed_feedId, string feed_comment)
-    {
-        StartCoroutine(IERequestCommentFeed(feed_feedId, EncodedString(feed_comment)));
-    }
-    public IEnumerator IERequestCommentFeed(string feed_feedId, string feed_comment)
-    {
-        //Debug.Log("Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment);
-        WWWForm form = new WWWForm();
-        form.AddField("feedId", feed_feedId);
-        form.AddField("comment", feed_comment);
+    //public void RequestCommentFeed(string feed_feedId, string feed_comment)
+    //{
+    //    StartCoroutine(IERequestCommentFeed(feed_feedId, EncodedString(feed_comment)));
+    //}
+    //public IEnumerator IERequestCommentFeed(string feed_feedId, string feed_comment)
+    //{
+    //    //Debug.Log("Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("feedId", feed_feedId);
+    //    form.AddField("comment", feed_comment);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-            Debug.Log("Comment API:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //        Debug.Log("Comment API:" + ConstantsGod.API_BASEURL + ConstantsGod.r_url_CommentFeed);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string data = www.downloadHandler.text;
-                Debug.Log("<color = red> IERequestCommentFeed success data:" + data + "  :Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment + "</color>");
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color = red> IERequestCommentFeed success data:" + data + "  :Feed Id:" + feed_feedId + "   :Feed_Comment:" + feed_comment + "</color>");
 
-                //CommentPostDetail bean = Gods.DeserializeJSON<CommentPostDetail>(data.Trim());
-                CommentPostDetail bean = JsonConvert.DeserializeObject<CommentPostDetail>(data);
+    //            //CommentPostDetail bean = Gods.DeserializeJSON<CommentPostDetail>(data.Trim());
+    //            CommentPostDetail bean = JsonConvert.DeserializeObject<CommentPostDetail>(data);
 
-                //if (!bean.Equals("") || !bean.Equals(null))
-                if (bean.data != null)
-                {
-                    CommentCountTextSetup(bean.data.count);//set comment count on commet panel.......
+    //            //if (!bean.Equals("") || !bean.Equals(null))
+    //            if (bean.data != null)
+    //            {
+    //                CommentCountTextSetup(bean.data.count);//set comment count on commet panel.......
 
-                    if (bean.data.commentPost != null)
-                    {
-                        GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
+    //                if (bean.data.commentPost != null)
+    //                {
+    //                    GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
 
-                        if (!checkText.Equals("Oldest"))
-                        {
-                            CommentObject.transform.SetAsFirstSibling();
-                            FeedUIController.Instance.commentContentPanel.transform.GetChild(1).SetAsFirstSibling();
-                        }
+    //                    if (!checkText.Equals("Oldest"))
+    //                    {
+    //                        CommentObject.transform.SetAsFirstSibling();
+    //                        FeedUIController.Instance.commentContentPanel.transform.GetChild(1).SetAsFirstSibling();
+    //                    }
 
-                        //FeedUIController.Instance.CommentCount.text = bean.data.count.ToString();
+    //                    //FeedUIController.Instance.CommentCount.text = bean.data.count.ToString();
 
-                        CommentRow commentRow = new CommentRow();
-                        commentRow.id = bean.data.commentPost.id;
-                        commentRow.feedId = bean.data.commentPost.feedId;
-                        commentRow.comment = bean.data.commentPost.comment;
-                        commentRow.createdBy = bean.data.commentPost.createdBy;
-                        commentRow.createdAt = bean.data.commentPost.createdAt;
-                        commentRow.updatedAt = bean.data.commentPost.updatedAt;
-                        commentRow.user = bean.data.commentPost.user;
+    //                    CommentRow commentRow = new CommentRow();
+    //                    commentRow.id = bean.data.commentPost.id;
+    //                    commentRow.feedId = bean.data.commentPost.feedId;
+    //                    commentRow.comment = bean.data.commentPost.comment;
+    //                    commentRow.createdBy = bean.data.commentPost.createdBy;
+    //                    commentRow.createdAt = bean.data.commentPost.createdAt;
+    //                    commentRow.updatedAt = bean.data.commentPost.updatedAt;
+    //                    commentRow.user = bean.data.commentPost.user;
 
 
-                        FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
-                        feedCommentItemController.SetupData(commentRow);
+    //                    FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
+    //                    feedCommentItemController.SetupData(commentRow);
 
-                        if (checkText.Equals("Oldest"))
-                        {
-                            FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 0f;
-                        }
-                        else if (checkText.Equals("Newest"))
-                        {
-                            FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 1f;
-                        }
+    //                    if (checkText.Equals("Oldest"))
+    //                    {
+    //                        FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 0f;
+    //                    }
+    //                    else if (checkText.Equals("Newest"))
+    //                    {
+    //                        FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 1f;
+    //                    }
 
-                        FeedUIController.Instance.CommentSuccessAfterUpdateRequireFeedResponse();
-                    }
-                }
-            }
-        }
-    }
+    //                    FeedUIController.Instance.CommentSuccessAfterUpdateRequireFeedResponse();
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void ScrollToTop(ScrollRect scrollRect)
-    {
-        //Debug.Log("comment ScrollToTop:" + scrollRect.verticalNormalizedPosition);
-        if (scrollRect.verticalNormalizedPosition <= 0f && isCommentDataLoaded)
-        {
-            if (commentFeedList.data.rows.Count > 0)
-            {
-                //Debug.Log("Comment pagination api call.......");
-                isCommentDataLoaded = false;
-                if (checkText.Equals("Oldest"))
-                {
-                    scrollToTop = true;
-                    commentPageCount++;
-                    RequestFeedCommentList(feedIdTemp, 2, commentPageCount, commnetFeedPagesize);
-                }
-                else if (checkText.Equals("Newest"))
-                {
-                    scrollToTop = true;
-                    commentPageCount++;
-                    RequestFeedCommentList(feedIdTemp, 1, commentPageCount, commnetFeedPagesize);
-                }
-            }
-        }
-    }
+    //public void ScrollToTop(ScrollRect scrollRect)
+    //{
+    //    //Debug.Log("comment ScrollToTop:" + scrollRect.verticalNormalizedPosition);
+    //    if (scrollRect.verticalNormalizedPosition <= 0f && isCommentDataLoaded)
+    //    {
+    //        if (commentFeedList.data.rows.Count > 0)
+    //        {
+    //            //Debug.Log("Comment pagination api call.......");
+    //            isCommentDataLoaded = false;
+    //            if (checkText.Equals("Oldest"))
+    //            {
+    //                scrollToTop = true;
+    //                commentPageCount++;
+    //                RequestFeedCommentList(feedIdTemp, 2, commentPageCount, commnetFeedPagesize);
+    //            }
+    //            else if (checkText.Equals("Newest"))
+    //            {
+    //                scrollToTop = true;
+    //                commentPageCount++;
+    //                RequestFeedCommentList(feedIdTemp, 1, commentPageCount, commnetFeedPagesize);
+    //            }
+    //        }
+    //    }
+    //}
 
-    public void resetObject()
-    {
-        if (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
-        {
-            foreach (Transform child in FeedUIController.Instance.commentContentPanel.transform)
-            {
-                if (!child.transform.name.Equals("HeaderCommentCount"))
-                {
-                    GameObject.Destroy(child.gameObject);
-                }
-                //Invoke("resetObject", 1f);
-            }
-            //Invoke("callobjects", 1f);
-        }
-    }
+    //public void resetObject()
+    //{
+    //    if (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
+    //    {
+    //        foreach (Transform child in FeedUIController.Instance.commentContentPanel.transform)
+    //        {
+    //            if (!child.transform.name.Equals("HeaderCommentCount"))
+    //            {
+    //                GameObject.Destroy(child.gameObject);
+    //            }
+    //            //Invoke("resetObject", 1f);
+    //        }
+    //        //Invoke("callobjects", 1f);
+    //    }
+    //}
 
-    public void dropdownFilterComment(string text)
-    {
-        scrollToTop = false;
-        checkText = text.ToString();
-        // fitertextDropdown.text = text;
-        FeedUIController.Instance.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
+    //public void dropdownFilterComment(string text)
+    //{
+    //    scrollToTop = false;
+    //    checkText = text.ToString();
+    //    // fitertextDropdown.text = text;
+    //    FeedUIController.Instance.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
 
-        if (checkText.Equals("Oldest"))
-        {
-            RequestFeedCommentList(feedIdTemp, 2, 1, commnetFeedPagesize);
-        }
-        else if (checkText.Equals("Newest"))
-        {
-            RequestFeedCommentList(feedIdTemp, 1, 1, commnetFeedPagesize);
-        }
-    }
+    //    if (checkText.Equals("Oldest"))
+    //    {
+    //        RequestFeedCommentList(feedIdTemp, 2, 1, commnetFeedPagesize);
+    //    }
+    //    else if (checkText.Equals("Newest"))
+    //    {
+    //        RequestFeedCommentList(feedIdTemp, 1, 1, commnetFeedPagesize);
+    //    }
+    //}
 
-    //this api is used to get comment list for feed.......
-    public void RequestFeedCommentList(int feedId, int sortOrder, int pageNumber, int pageSize)
-    {
-        //Debug.Log("RequestFeedCommentList:" + feedId + "   :sortOrder:" + sortOrder + "    :pageNum:" + pageNumber + "   :PageSize:" + pageSize);
-        StartCoroutine(IERequestFeedCommentList(feedId, sortOrder, pageNumber, pageSize));
-    }
+    ////this api is used to get comment list for feed.......
+    //public void RequestFeedCommentList(int feedId, int sortOrder, int pageNumber, int pageSize)
+    //{
+    //    //Debug.Log("RequestFeedCommentList:" + feedId + "   :sortOrder:" + sortOrder + "    :pageNum:" + pageNumber + "   :PageSize:" + pageSize);
+    //    StartCoroutine(IERequestFeedCommentList(feedId, sortOrder, pageNumber, pageSize));
+    //}
 
-    public IEnumerator IERequestFeedCommentList(int feedId, int sortOrder, int pageNumber, int pageSize)
-    {
-        if (!scrollToTop)
-        {
-            while (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
-            {
-                resetObject();
-                yield return null;
-            }
-        }
+    //public IEnumerator IERequestFeedCommentList(int feedId, int sortOrder, int pageNumber, int pageSize)
+    //{
+    //    if (!scrollToTop)
+    //    {
+    //        while (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
+    //        {
+    //            resetObject();
+    //            yield return null;
+    //        }
+    //    }
 
-        //Debug.Log("feedid===" + feedId);
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedCommentList + "/" + feedId + "/" + sortOrder + "/" + pageNumber + "/" + pageSize)))
-        {
-            Debug.Log("CommentList API Request: " + ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedCommentList + "/" + feedId + "/" + sortOrder + "/" + pageNumber + "/" + pageSize);
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    //Debug.Log("feedid===" + feedId);
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedCommentList + "/" + feedId + "/" + sortOrder + "/" + pageNumber + "/" + pageSize)))
+    //    {
+    //        Debug.Log("CommentList API Request: " + ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedCommentList + "/" + feedId + "/" + sortOrder + "/" + pageNumber + "/" + pageSize);
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string data = www.downloadHandler.text;
-                Debug.Log("IERequestFeedCommentList success data:" + data);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("IERequestFeedCommentList success data:" + data);
 
-                //commentFeedList = Gods.DeserializeJSON<CommentDetails>(data.Trim());
-                commentFeedList = JsonConvert.DeserializeObject<CommentDetails>(data);
+    //            //commentFeedList = Gods.DeserializeJSON<CommentDetails>(data.Trim());
+    //            commentFeedList = JsonConvert.DeserializeObject<CommentDetails>(data);
 
-                //if (!commentFeedList.Equals("") || !commentFeedList.Equals(null))
-                if (commentFeedList.data != null)
-                {
-                    //FeedUIController.Instance.CommentCount.text = commentFeedList.data.count.ToString();
-                    CommentCountTextSetup(commentFeedList.data.count);//set comment count on commet panel.......
+    //            //if (!commentFeedList.Equals("") || !commentFeedList.Equals(null))
+    //            if (commentFeedList.data != null)
+    //            {
+    //                //FeedUIController.Instance.CommentCount.text = commentFeedList.data.count.ToString();
+    //                CommentCountTextSetup(commentFeedList.data.count);//set comment count on commet panel.......
 
-                    for (int i = 0; i < commentFeedList.data.rows.Count; i++)
-                    {
-                        GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
+    //                for (int i = 0; i < commentFeedList.data.rows.Count; i++)
+    //                {
+    //                    GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
 
-                        FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
-                        feedCommentItemController.SetupData(commentFeedList.data.rows[i]);
-                    }
+    //                    FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
+    //                    feedCommentItemController.SetupData(commentFeedList.data.rows[i]);
+    //                }
 
-                    if (commentDataLoadedCoroutine != null)//for comment data loaded.......
-                    {
-                        StopCoroutine(commentDataLoadedCoroutine);
-                    }
-                    commentDataLoadedCoroutine = StartCoroutine(waitToSetCommentDataLoaded());
-                }
-            }
-        }
-    }
+    //                if (commentDataLoadedCoroutine != null)//for comment data loaded.......
+    //                {
+    //                    StopCoroutine(commentDataLoadedCoroutine);
+    //                }
+    //                commentDataLoadedCoroutine = StartCoroutine(waitToSetCommentDataLoaded());
+    //            }
+    //        }
+    //    }
+    //}
 
     Coroutine commentDataLoadedCoroutine;
     IEnumerator waitToSetCommentDataLoaded()
@@ -1383,264 +1383,264 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    public void CommentCountTextSetup(int count)
-    {
-        lastCommentTotalCount = count;
-        //Debug.Log("Comment Count:" + count);
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
-        {
-            FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
-        }
-        else
-        {
-            FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
-        }
-    }
+    //public void CommentCountTextSetup(int count)
+    //{
+    //    lastCommentTotalCount = count;
+    //    //Debug.Log("Comment Count:" + count);
+    //    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+    //    {
+    //        FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
+    //    }
+    //    else
+    //    {
+    //        FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
+    //    }
+    //}
     //End comment.......
     #endregion
 
     #region Feed............
     //this api is used to get all feed.......
-    public void RequestGetAllFeed(int pageNum, int pageSize)
-    {
-        StartCoroutine(IERequestGetAllFeed(pageNum, pageSize));
-    }
-    public IEnumerator IERequestGetAllFeed(int pageNum, int pageSize)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AllFeed + "/" + pageNum + "/" + pageSize)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //public void RequestGetAllFeed(int pageNum, int pageSize)
+    //{
+    //    StartCoroutine(IERequestGetAllFeed(pageNum, pageSize));
+    //}
+    //public IEnumerator IERequestGetAllFeed(int pageNum, int pageSize)
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AllFeed + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log(" <color = red> GetAllFeed data:" + data + "</color>");
-                //   root = JsonUtility.FromJson<AllFeedRoot>(data);
-                // Debug.Log(root.data.count);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log(" <color = red> GetAllFeed data:" + data + "</color>");
+    //            //   root = JsonUtility.FromJson<AllFeedRoot>(data);
+    //            // Debug.Log(root.data.count);
+    //        }
+    //    }
+    //}
 
     //this api is used to create feed api.......
-    public void RequestCreateFeed(string feed_title, string feed_descriptions, string feed_image, string feed_video, string thumbnail, string feed_isAllowComment, string feed_tagUserIds, string callingFrom)
-    {
-        StartCoroutine(IERequestCreateFeed(feed_title, feed_descriptions, feed_image, feed_video, thumbnail, feed_isAllowComment, feed_tagUserIds, callingFrom));
-    }
-    public IEnumerator IERequestCreateFeed(string feed_title, string feed_descriptions, string feed_image, string feed_video, string thumbnail, string feed_isAllowComment, string feed_tagUserIds, string callingFrom)
-    {
-        //Debug.Log("Create Feed API Calling from:" + callingFrom);
-        WWWForm form = new WWWForm();
-        form.AddField("title", feed_title);
-        form.AddField("descriptions", feed_descriptions);
-        form.AddField("image", feed_image);
-        form.AddField("video", feed_video);
-        form.AddField("thumbnail", thumbnail);
-        form.AddField("isAllowComment", feed_isAllowComment);
-        form.AddField("tagUserIds", feed_tagUserIds);
+    //public void RequestCreateFeed(string feed_title, string feed_descriptions, string feed_image, string feed_video, string thumbnail, string feed_isAllowComment, string feed_tagUserIds, string callingFrom)
+    //{
+    //    StartCoroutine(IERequestCreateFeed(feed_title, feed_descriptions, feed_image, feed_video, thumbnail, feed_isAllowComment, feed_tagUserIds, callingFrom));
+    //}
+    //public IEnumerator IERequestCreateFeed(string feed_title, string feed_descriptions, string feed_image, string feed_video, string thumbnail, string feed_isAllowComment, string feed_tagUserIds, string callingFrom)
+    //{
+    //    //Debug.Log("Create Feed API Calling from:" + callingFrom);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("title", feed_title);
+    //    form.AddField("descriptions", feed_descriptions);
+    //    form.AddField("image", feed_image);
+    //    form.AddField("video", feed_video);
+    //    form.AddField("thumbnail", thumbnail);
+    //    form.AddField("isAllowComment", feed_isAllowComment);
+    //    form.AddField("tagUserIds", feed_tagUserIds);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CreateFeed), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_CreateFeed), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
-            if (AWSHandler.Instance.currentSNSApiLoaderController != null)
-            {
-                AWSHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
-            }
-            switch (callingFrom)
-            {
-                case "MyProfileCreateFeed":
-                    if (FeedUIController.Instance != null)
-                    {
-                        FeedUIController.Instance.ShowLoader(false);//false api loader.......
-                        FeedUIController.Instance.OnClickCreateFeedBackBtn(true);
-                    }
-                    break;
-                case "RoomCreateFeed":
-                    if (ARFaceModuleManager.Instance != null)//this condition disable loader of Room screen if avtive....... 
-                    {
-                        if (ARFaceModuleManager.Instance.apiLoaderController.mainLoaderObj.activeSelf)
-                        {
-                            ARFaceModuleManager.Instance.ShowLoader(false);
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
+    //        yield return www.SendWebRequest();
+    //        if (AWSHandler.Instance.currentSNSApiLoaderController != null)
+    //        {
+    //            AWSHandler.Instance.currentSNSApiLoaderController.ShowUploadStatusImage(false);
+    //        }
+    //        switch (callingFrom)
+    //        {
+    //            case "MyProfileCreateFeed":
+    //                if (FeedUIController.Instance != null)
+    //                {
+    //                    FeedUIController.Instance.ShowLoader(false);//false api loader.......
+    //                    FeedUIController.Instance.OnClickCreateFeedBackBtn(true);
+    //                }
+    //                break;
+    //            case "RoomCreateFeed":
+    //                if (ARFaceModuleManager.Instance != null)//this condition disable loader of Room screen if avtive....... 
+    //                {
+    //                    if (ARFaceModuleManager.Instance.apiLoaderController.mainLoaderObj.activeSelf)
+    //                    {
+    //                        ARFaceModuleManager.Instance.ShowLoader(false);
+    //                    }
+    //                }
+    //                break;
+    //            default:
+    //                break;
+    //        }
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Debug.Log("Create Feed complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("CreateFeed data:" + data + "    :Calling from:" + callingFrom);
-                // root = JsonUtility.FromJson<AllCreateFeedRoot>(data);
-                switch (callingFrom)
-                {
-                    case "MyProfileCreateFeed":
-                        if (MyProfileDataManager.Instance != null)
-                        {
-                            MyProfileDataManager.Instance.ProfileTabButtonClick();
-                            Invoke(nameof(LoadMyPost), 0);
-                            //RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
-                        }
-                        break;
-                    case "RoomCreateFeed":
-                        if (ARFaceModuleManager.Instance != null)
-                        {
-                            ARFaceModuleManager.Instance.CreateFeedSuccess();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Create Feed complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("CreateFeed data:" + data + "    :Calling from:" + callingFrom);
+    //            // root = JsonUtility.FromJson<AllCreateFeedRoot>(data);
+    //            switch (callingFrom)
+    //            {
+    //                case "MyProfileCreateFeed":
+    //                    if (MyProfileDataManager.Instance != null)
+    //                    {
+    //                        MyProfileDataManager.Instance.ProfileTabButtonClick();
+    //                        Invoke(nameof(LoadMyPost), 0);
+    //                        //RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+    //                    }
+    //                    break;
+    //                case "RoomCreateFeed":
+    //                    if (ARFaceModuleManager.Instance != null)
+    //                    {
+    //                        ARFaceModuleManager.Instance.CreateFeedSuccess();
+    //                    }
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
-    //this api is used to delete feed.......
-    public void RequestDeleteFeed(string feed_Id, string callingFrom)
-    {
-        SNSNotificationManager.Instance.DeleteLoaderShow(true);//delete loader active
+    ////this api is used to delete feed.......
+    //public void RequestDeleteFeed(string feed_Id, string callingFrom)
+    //{
+    //    SNSNotificationManager.Instance.DeleteLoaderShow(true);//delete loader active
 
-        StartCoroutine(IERequestDeleteFeed(feed_Id, callingFrom));
-    }
-    public IEnumerator IERequestDeleteFeed(string feed_Id, string callingFrom)
-    {
-        Debug.Log("Delete Feed Id:" + feed_Id + "  :" + (ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed + "/" + feed_Id));
-        WWWForm form = new WWWForm();
-        form.AddField("feedId", feed_Id);
+    //    StartCoroutine(IERequestDeleteFeed(feed_Id, callingFrom));
+    //}
+    //public IEnumerator IERequestDeleteFeed(string feed_Id, string callingFrom)
+    //{
+    //    Debug.Log("Delete Feed Id:" + feed_Id + "  :" + (ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed + "/" + feed_Id));
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("feedId", feed_Id);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteFeed), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            SNSNotificationManager.Instance.DeleteLoaderShow(false);//delete loader disable
-            //FeedUIController.Instance.ShowLoader(false);
+    //        SNSNotificationManager.Instance.DeleteLoaderShow(false);//delete loader disable
+    //        //FeedUIController.Instance.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Feed Delete Success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color = red> DeleteFeed data:" + data + "</color>");
-                switch (callingFrom)
-                {
-                    case "DeleteFeed":
-                        FeedUIController.Instance.OnSuccessDeleteFeed();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Feed Delete Success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color = red> DeleteFeed data:" + data + "</color>");
+    //            switch (callingFrom)
+    //            {
+    //                case "DeleteFeed":
+    //                    FeedUIController.Instance.OnSuccessDeleteFeed();
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
-    //this api is used to edit feed.......
-    public void RequestEditFeed(string feedID, string description, string image, string video)
-    {
-        StartCoroutine(IERequestEdit(feedID, description, image, video));
-    }
-    public IEnumerator IERequestEdit(string feedID, string description, string image, string video)
-    {
-        Debug.Log("IERequestEdit Post API Calling feedId:" + feedID);
+    ////this api is used to edit feed.......
+    //public void RequestEditFeed(string feedID, string description, string image, string video)
+    //{
+    //    StartCoroutine(IERequestEdit(feedID, description, image, video));
+    //}
+    //public IEnumerator IERequestEdit(string feedID, string description, string image, string video)
+    //{
+    //    Debug.Log("IERequestEdit Post API Calling feedId:" + feedID);
 
-        WWWForm form = new WWWForm();
+    //    WWWForm form = new WWWForm();
 
-        form.AddField("feedId", feedID);
-        form.AddField("descriptions", description);
-        form.AddField("image", image);
-        form.AddField("video", video);
+    //    form.AddField("feedId", feedID);
+    //    form.AddField("descriptions", description);
+    //    form.AddField("image", image);
+    //    form.AddField("video", video);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_EditFeed), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_EditFeed), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            FeedUIController.Instance.ShowLoader(false);
+    //        FeedUIController.Instance.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                //Debug.Log("data" + form);
-            }
-            else
-            {
-                //Debug.Log("feed update complete!");
-                string data = www.downloadHandler.text;
-                // Debug.Log("Edit Feed data:" + data);
-                FeedUIController.Instance.OnSuccessFeedEdit();
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            //Debug.Log("data" + form);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("feed update complete!");
+    //            string data = www.downloadHandler.text;
+    //            // Debug.Log("Edit Feed data:" + data);
+    //            FeedUIController.Instance.OnSuccessFeedEdit();
+    //        }
+    //    }
+    //}
 
-    //this api is used to Like or DisLike Feed.......
-    public void RequestLikeOrDisLikeFeed(string feedId, Button likeButton)
-    {
-        // Debug.Log("RequestLikeOrDisLikeFeed feedId:" + feedId);
-        likeButton.interactable = false;//like button interactable false untill response.......
+    ////this api is used to Like or DisLike Feed.......
+    //public void RequestLikeOrDisLikeFeed(string feedId, Button likeButton)
+    //{
+    //    // Debug.Log("RequestLikeOrDisLikeFeed feedId:" + feedId);
+    //    likeButton.interactable = false;//like button interactable false untill response.......
 
-        if (IERequestLikeOrDisLikeFeedCo != null)
-        {
-            StopCoroutine(IERequestLikeOrDisLikeFeedCo);
-        }
-        IERequestLikeOrDisLikeFeedCo = StartCoroutine(IERequestLikeOrDisLikeFeed(feedId, likeButton));
-    }
-    Coroutine IERequestLikeOrDisLikeFeedCo;
-    public IEnumerator IERequestLikeOrDisLikeFeed(string feedId, Button likeButton)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("feedId", feedId);
+    //    if (IERequestLikeOrDisLikeFeedCo != null)
+    //    {
+    //        StopCoroutine(IERequestLikeOrDisLikeFeedCo);
+    //    }
+    //    IERequestLikeOrDisLikeFeedCo = StartCoroutine(IERequestLikeOrDisLikeFeed(feedId, likeButton));
+    //}
+    //Coroutine IERequestLikeOrDisLikeFeedCo;
+    //public IEnumerator IERequestLikeOrDisLikeFeed(string feedId, Button likeButton)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("feedId", feedId);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedLikeDisLike), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FeedLikeDisLike), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            likeButton.interactable = true;//like button interactable true.......
+    //        likeButton.interactable = true;//like button interactable true.......
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                //Debug.Log("data" + form);
-            }
-            else
-            {
-                //Debug.Log("Feed Like or DisLike success!");
-                string data = www.downloadHandler.text;
-                // Debug.Log("LikeOrDisLikeFeed data:" + data);
-                FeedLikeDisLikeRoot feedLikeDisLikeRoot = JsonConvert.DeserializeObject<FeedLikeDisLikeRoot>(data);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            //Debug.Log("data" + form);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Feed Like or DisLike success!");
+    //            string data = www.downloadHandler.text;
+    //            // Debug.Log("LikeOrDisLikeFeed data:" + data);
+    //            FeedLikeDisLikeRoot feedLikeDisLikeRoot = JsonConvert.DeserializeObject<FeedLikeDisLikeRoot>(data);
 
-                //if (feedLikeDisLikeRoot.data == null)
-                if (feedLikeDisLikeRoot.msg.Equals("Feed disLike successfully"))
-                {
-                    FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(false, feedLikeDisLikeRoot.data.likeCount);
-                }
-                else
-                {
-                    FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(true, feedLikeDisLikeRoot.data.likeCount);
-                }
-            }
-        }
-    }
+    //            //if (feedLikeDisLikeRoot.data == null)
+    //            if (feedLikeDisLikeRoot.msg.Equals("Feed disLike successfully"))
+    //            {
+    //                FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(false, feedLikeDisLikeRoot.data.likeCount);
+    //            }
+    //            else
+    //            {
+    //                FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(true, feedLikeDisLikeRoot.data.likeCount);
+    //            }
+    //        }
+    //    }
+    //}
 
     //this api is used to delete avatar.......
     public void DeleteAvatarDataFromServer(string token, string UserId)

@@ -101,11 +101,11 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject photoPrefabInMyPostFeed;
     public GameObject NFTImagePrefab;
 
-    [Header("post empty message reference")]
-    public GameObject createYourFirstPostMsgObj;
-    public GameObject emptyPhotoPostMsgObj;
-    public GameObject emptyMoviePostMsgObj;
-    public GameObject FooterCreateIcon;
+    //[Header("post empty message reference")]
+    //public GameObject createYourFirstPostMsgObj;
+    //public GameObject emptyPhotoPostMsgObj;
+    //public GameObject emptyMoviePostMsgObj;
+    //public GameObject FooterCreateIcon;
 
     [Space]
     public GameObject tabPrivateObject;
@@ -188,19 +188,19 @@ public class MyProfileDataManager : MonoBehaviour
         {
             profileMainScrollRectFasterEx.GetComponent<Mask>().enabled = false;
         }
-        if (tempOPCount == 0)
-        {
-            userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
-            tempOPCount++;
-        }
-        else
-        {
-            if (tempLogout)
-            {
-                tempLogout = false;
-                StartCoroutine(WaitToRefreshProfileScreen());
-            }
-        }
+        //if (tempOPCount == 0)
+        //{
+        //    userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
+        //    tempOPCount++;
+        //}
+        //else
+        //{
+        //    if (tempLogout)
+        //    {
+        //        tempLogout = false;
+        //        StartCoroutine(WaitToRefreshProfileScreen());
+        //    }
+        //}
         settingsButton.SetActive(true);
     }
 
@@ -234,8 +234,8 @@ public class MyProfileDataManager : MonoBehaviour
     public void ClearDummyData()
     {
         playerNameText.text = "";
-        topHaderUserNameText.text = "";
-        topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
+       // topHaderUserNameText.text = "";
+       // topHaderUserNameText.GetComponent<LayoutElement>().enabled = false;
         jobText.text = "";
         jobText.gameObject.SetActive(false);
         textUserBio.text = "";
@@ -268,10 +268,10 @@ public class MyProfileDataManager : MonoBehaviour
     public void MyProfileSceenShow(bool isShow)
     {
         myProfileScreen.SetActive(isShow);
-        if (!isShow)
-        {
-            SetupEmptyMsgForPhotoTab(true);//check for empty message.......
-        }
+        //if (!isShow)
+        //{
+        //    SetupEmptyMsgForPhotoTab(true);//check for empty message.......
+        //}
     }
 
     //this method is used to setup data after get api response.......
@@ -1114,15 +1114,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         Debug.Log("Pagenmub bar");
-        if (pageNumb == 1)
-        {
-            Debug.Log("Pagenmub");
-            Invoke(nameof(RefreshHieght), 1f);
-        }
-        if (gameObject.activeSelf)
-        {
-            StartCoroutine(WaitToFeedLoadedUpdate(pageNumb, IsMyProfileFeed));
-        }
+
 
         if (allMyTextPostFeedImageRootDataList.Count >= 2)
         {
@@ -1137,56 +1129,56 @@ public class MyProfileDataManager : MonoBehaviour
         //FeedUIController.Instance.ShowLoader(false);
     }
 
-    public void RefreshHieght()
-    {
-        OnClickPhotoTabButtonMain(0);
-    }
-    IEnumerator WaitToFeedLoadedUpdate(int pageNum, bool IsMyProfileFeed)
-    {
-        yield return new WaitForSeconds(0.1f);
-        //if (IsMyProfileFeed)
-        //{
-        //    userPostPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
-        //}
+    //public void RefreshHieght()
+    //{
+    //    OnClickPhotoTabButtonMain(0);
+    //}
+    //IEnumerator WaitToFeedLoadedUpdate(int pageNum, bool IsMyProfileFeed)
+    //{
+    //    yield return new WaitForSeconds(0.1f);
+    //    //if (IsMyProfileFeed)
+    //    //{
+    //    //    userPostPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
+    //    //}
 
-        SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-        userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
-        yield return new WaitForSeconds(1f);
-        FeedUIController.Instance.ShowLoader(false);
-        isFeedLoaded = true;
-        if (pageNum > 1 && currentPageAllTextPostWithUserIdRoot.data.rows.Count > 0)
-        {
-            profileFeedAPiCurrentPageIndex += 1;
-        }
-        //Debug.Log("my profile AllFeedWithUserId:" + isFeedLoaded);
-    }
+    //    SetupEmptyMsgForPhotoTab(false);//check for empty message.......
+    //    userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
+    //    yield return new WaitForSeconds(1f);
+    //    FeedUIController.Instance.ShowLoader(false);
+    //    isFeedLoaded = true;
+    //    if (pageNum > 1 && currentPageAllTextPostWithUserIdRoot.data.rows.Count > 0)
+    //    {
+    //        profileFeedAPiCurrentPageIndex += 1;
+    //    }
+    //    //Debug.Log("my profile AllFeedWithUserId:" + isFeedLoaded);
+    //}
 
     //this mehtod is used to load All Tab feed.......
-    public IEnumerator AllTagFeed()
-    {
-        foreach (Transform item in allTagContainer)
-        {
-            Destroy(item.gameObject);
-        }
-        yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
-        {
-            GameObject userPostObject = Instantiate(photoPrefab, allTagContainer);
-            //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
-            UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
-            userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
+    //public IEnumerator AllTagFeed()
+    //{
+    //    foreach (Transform item in allTagContainer)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //    yield return new WaitForSeconds(0.5f);
+    //    for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
+    //    {
+    //        GameObject userPostObject = Instantiate(photoPrefab, allTagContainer);
+    //        //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
+    //        UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
+    //        userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
 
-            FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
-            feedUserData.Id = FeedRawData.id;
-            feedUserData.Name = FeedRawData.name;
-            feedUserData.Email = FeedRawData.email;
-            feedUserData.Avatar = FeedRawData.avatar;
-            userPostItem.feedUserData = feedUserData;
+    //        FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+    //        feedUserData.Id = FeedRawData.id;
+    //        feedUserData.Name = FeedRawData.name;
+    //        feedUserData.Email = FeedRawData.email;
+    //        feedUserData.Avatar = FeedRawData.avatar;
+    //        userPostItem.feedUserData = feedUserData;
 
-            userPostItem.avtarUrl = FeedRawData.avatar;
-            userPostItem.LoadFeed();
-        }
-    }
+    //        userPostItem.avtarUrl = FeedRawData.avatar;
+    //        userPostItem.LoadFeed();
+    //    }
+    //}
 
     public void OnSetUserUi(bool isFollow)
     {
@@ -1221,92 +1213,92 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     //this method is used to check and setup ui for Empty photo tab message.......
-    public void SetupEmptyMsgForPhotoTab(bool isReset)
-    {
-        // check for photo.......
-        // No need to check from 1 As we are not creating empty object at end of posts
-        if (allPhotoContainer.childCount > 0 || isReset)
-        {
-            allPhotoContainer.gameObject.SetActive(true);
-            emptyPhotoPostMsgObj.SetActive(false);
-        }
-        else
-        {
-            allPhotoContainer.gameObject.SetActive(false);
-            emptyPhotoPostMsgObj.SetActive(true);
-        }
+    //public void SetupEmptyMsgForPhotoTab(bool isReset)
+    //{
+    //    // check for photo.......
+    //    // No need to check from 1 As we are not creating empty object at end of posts
+    //    if (allPhotoContainer.childCount > 0 || isReset)
+    //    {
+    //        allPhotoContainer.gameObject.SetActive(true);
+    //        emptyPhotoPostMsgObj.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        allPhotoContainer.gameObject.SetActive(false);
+    //        emptyPhotoPostMsgObj.SetActive(true);
+    //    }
 
-        //check for movie.......
-        if (allMovieContainer.childCount > 0 || isReset)
-        {
-            allMovieContainer.gameObject.SetActive(true);
-            emptyMoviePostMsgObj.SetActive(false);
-        }
-        else
-        {
-            allMovieContainer.gameObject.SetActive(false);
-            emptyMoviePostMsgObj.SetActive(true);
-        }
+    //    //check for movie.......
+    //    if (allMovieContainer.childCount > 0 || isReset)
+    //    {
+    //        allMovieContainer.gameObject.SetActive(true);
+    //        emptyMoviePostMsgObj.SetActive(false);
+    //    }
+    //    else
+    //    {
+    //        allMovieContainer.gameObject.SetActive(false);
+    //        emptyMoviePostMsgObj.SetActive(true);
+    //    }
 
-        //check for create first message.......
-        if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0 || isReset)
-        {
-            createYourFirstPostMsgObj.SetActive(false);
-            FooterCreateIcon.GetComponent<Animator>().enabled = false;
-            FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-        }
-        else
-        {
-            //createYourFirstPostMsgObj.SetActive(true);
-            FooterCreateIcon.GetComponent<Animator>().enabled = true;
-        }
-    }
+    //    //check for create first message.......
+    //    if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0 || isReset)
+    //    {
+    //        createYourFirstPostMsgObj.SetActive(false);
+    //        FooterCreateIcon.GetComponent<Animator>().enabled = false;
+    //        FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    //    }
+    //    else
+    //    {
+    //        //createYourFirstPostMsgObj.SetActive(true);
+    //        FooterCreateIcon.GetComponent<Animator>().enabled = true;
+    //    }
+    //}
 
     //this method is used to check if my nft list is available the auto hide create first feed popup.......
-    public void CheckAndDisableFirstFeedPopupForMyNFT(bool isMyNFTScreen)
-    {
-        //check for create first message.......
-        if (isMyNFTScreen)
-        {
-            if (NftDataScript.Instance.ContentPanel.transform.childCount > 0)
-            {
-                createYourFirstPostMsgObj.SetActive(false);
-                FooterCreateIcon.GetComponent<Animator>().enabled = false;
-                FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
-        }
-        else
-        {
-            if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0)
-            {
-                createYourFirstPostMsgObj.SetActive(false);
-                FooterCreateIcon.GetComponent<Animator>().enabled = false;
-                FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
-            else
-            {
-                //createYourFirstPostMsgObj.SetActive(true);
-                FooterCreateIcon.GetComponent<Animator>().enabled = true;
-            }
-        }
-    }
+    //public void CheckAndDisableFirstFeedPopupForMyNFT(bool isMyNFTScreen)
+    //{
+    //    //check for create first message.......
+    //    if (isMyNFTScreen)
+    //    {
+    //        if (NftDataScript.Instance.ContentPanel.transform.childCount > 0)
+    //        {
+    //            createYourFirstPostMsgObj.SetActive(false);
+    //            FooterCreateIcon.GetComponent<Animator>().enabled = false;
+    //            FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0)
+    //        {
+    //            createYourFirstPostMsgObj.SetActive(false);
+    //            FooterCreateIcon.GetComponent<Animator>().enabled = false;
+    //            FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    //        }
+    //        else
+    //        {
+    //            //createYourFirstPostMsgObj.SetActive(true);
+    //            FooterCreateIcon.GetComponent<Animator>().enabled = true;
+    //        }
+    //    }
+    //}
 
     //this method is used to Stop or play bottom create plus icon.......
-    public void CreateFirstFeedPlusAnimStop(bool isDisableAnim)
-    {
-        if (myProfileScreen.activeSelf)
-        {
-            if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0 || isDisableAnim)
-            {
-                FooterCreateIcon.GetComponent<Animator>().enabled = false;
-                FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-            }
-            else
-            {
-                FooterCreateIcon.GetComponent<Animator>().enabled = true;
-            }
-        }
-    }
+    //public void CreateFirstFeedPlusAnimStop(bool isDisableAnim)
+    //{
+    //    if (myProfileScreen.activeSelf)
+    //    {
+    //        if (allPhotoContainer.childCount > 0 || allMovieContainer.childCount > 0 || isDisableAnim)
+    //        {
+    //            FooterCreateIcon.GetComponent<Animator>().enabled = false;
+    //            FooterCreateIcon.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+    //        }
+    //        else
+    //        {
+    //            FooterCreateIcon.GetComponent<Animator>().enabled = true;
+    //        }
+    //    }
+    //}
 
     //this method is used to other player profile back button.......
     public void OnClickOtherPalyerProfileBackButton()
@@ -1321,11 +1313,11 @@ public class MyProfileDataManager : MonoBehaviour
         APIManager.Instance.RequestFollowAUser(FeedRawData.id.ToString(), "MyProfile");
     }
 
-    //this method is used to Create post Button Click.......
-    public void OnClickCreatePostButton()
-    {
-        FeedUIController.Instance.OnClickCreateFeedPickImageOrVideo();
-    }
+    ////this method is used to Create post Button Click.......
+    //public void OnClickCreatePostButton()
+    //{
+    //    FeedUIController.Instance.OnClickCreateFeedPickImageOrVideo();
+    //}
 
     //this method is used to website button click.......
     public void OnClickWebsiteButtonClick()

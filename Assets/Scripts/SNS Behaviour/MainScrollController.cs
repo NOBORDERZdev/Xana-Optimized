@@ -48,14 +48,14 @@ public class MainScrollController : MonoBehaviour
     {
         if (isProfileScreen)
         {
-            if ((headerObj.transform.position.y + 2) >= TopFixedObj.transform.position.y)
-            {
-                TopFixedObj.SetActive(true);
-            }
-            else
-            {
-                TopFixedObj.SetActive(false);
-            }
+            //if ((headerObj.transform.position.y + 2) >= TopFixedObj.transform.position.y)
+            //{
+            //    TopFixedObj.SetActive(true);
+            //}
+            //else
+            //{
+            //    TopFixedObj.SetActive(false);
+            //}
         }
         else
         {

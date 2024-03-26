@@ -302,125 +302,125 @@ public class AWSHandler : MonoBehaviour
     [HideInInspector]
     public SNSAPILoaderController currentSNSApiLoaderController;
     //this method is used to post object in feed.
-    public void PostObjectFeed(string fileName, string key, string callingFrom, string compress = "")
-    {
-        isCompress = compress;
-        switch (callingFrom)
-        {
-            case "CreateFeed":
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
-                break;
-            case "CreateFeedRoom":
-                currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
-                break;
-            default:
-               Debug.Log("Default case");
-                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
-                break;
-        }
+//    public void PostObjectFeed(string fileName, string key, string callingFrom, string compress = "")
+//    {
+//        isCompress = compress;
+//        switch (callingFrom)
+//        {
+//            case "CreateFeed":
+//                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
+//                break;
+//            case "CreateFeedRoom":
+//                currentSNSApiLoaderController = ARFaceModuleManager.Instance.apiLoaderController;
+//                break;
+//            default:
+//               Debug.Log("Default case");
+//                currentSNSApiLoaderController = FeedUIController.Instance.apiLoaderController;
+//                break;
+//        }
 
-        if (currentSNSApiLoaderController != null)
-        {
-            currentSNSApiLoaderController.ShowUploadStatusImage(true);
-        }
+//        if (currentSNSApiLoaderController != null)
+//        {
+//            currentSNSApiLoaderController.ShowUploadStatusImage(true);
+//        }
 
-        string fileName1 = Path.GetFileName(fileName);
-        byte[] myData = File.ReadAllBytes(fileName);
-       Debug.Log("Retrieving The file From Feed FileName:" + fileName1 + " :Data:" + myData.Length);
+//        string fileName1 = Path.GetFileName(fileName);
+//        byte[] myData = File.ReadAllBytes(fileName);
+//       Debug.Log("Retrieving The file From Feed FileName:" + fileName1 + " :Data:" + myData.Length);
 
-        PostObjectMethod(myData, fileName1, callback =>
-        {
-            if (callback.success)
-            {
-                string feedUrl = callback.cdn_link;
-               Debug.Log("Attachment url:" + feedUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + callingFrom);
+//        PostObjectMethod(myData, fileName1, callback =>
+//        {
+//            if (callback.success)
+//            {
+//                string feedUrl = callback.cdn_link;
+//               Debug.Log("Attachment url:" + feedUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + callingFrom);
 
-                if (!string.IsNullOrEmpty(feedUrl))
-                {
-                    if (string.IsNullOrEmpty(callback.thumbnail))
-                    {
-                        callback.thumbnail = "";
-                    }
-                    switch (callingFrom)
-                    {
-                        case "CreateFeed":
-                            FeedUIController.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
-                            break;
-                        case "CreateFeedRoom":
-                            ARFaceModuleManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
-                            break;
-                        default:
-                            if (currentSNSApiLoaderController != null)
-                            {
-                                currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                            }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                    }
-                    //Debug.Log(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
-                }
-                else
-                {
-                    if (currentSNSApiLoaderController != null)
-                    {
-                        currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                    }
+//                if (!string.IsNullOrEmpty(feedUrl))
+//                {
+//                    if (string.IsNullOrEmpty(callback.thumbnail))
+//                    {
+//                        callback.thumbnail = "";
+//                    }
+//                    switch (callingFrom)
+//                    {
+//                        case "CreateFeed":
+//                            FeedUIController.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
+//                            break;
+//                        case "CreateFeedRoom":
+//                            ARFaceModuleManager.Instance.CreateFeedAPICall(feedUrl, callback.thumbnail);
+//                            break;
+//                        default:
+//                            if (currentSNSApiLoaderController != null)
+//                            {
+//                                currentSNSApiLoaderController.ShowUploadStatusImage(false);
+//                            }
+//                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+//                            break;
+//                    }
+//                    //Debug.Log(string.Format("\nobject {0} posted to bucket {1}", feedUrl, callback.msg));
+//                }
+//                else
+//                {
+//                    if (currentSNSApiLoaderController != null)
+//                    {
+//                        currentSNSApiLoaderController.ShowUploadStatusImage(false);
+//                    }
 
-                    switch (callingFrom)
-                    {
-                        case "CreateFeed":
-                            if (FeedUIController.Instance.imageOrVideo == "Video")
-                            {
-                                FeedUIController.Instance.createFeedMediaPlayer.Play();
-                            }
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                        case "CreateFeedRoom":
-                            if(ARFaceModuleManager.Instance.imageOrVideo == "Video")
-                            {
-                                ARFaceModuleManager.Instance.feedMediaPlayer.Play();
-                            }
-                            ARFaceModuleManager.Instance.ShowLoader(false);
-                            break;
-                        default:
-                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                            break;
-                    }
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
-                }
-            }
-            else
-            {               
-                if (currentSNSApiLoaderController != null)
-                {
-                    currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                }
+//                    switch (callingFrom)
+//                    {
+//                        case "CreateFeed":
+//                            if (FeedUIController.Instance.imageOrVideo == "Video")
+//                            {
+//                                FeedUIController.Instance.createFeedMediaPlayer.Play();
+//                            }
+//                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+//                            break;
+//                        case "CreateFeedRoom":
+//                            if(ARFaceModuleManager.Instance.imageOrVideo == "Video")
+//                            {
+//                                ARFaceModuleManager.Instance.feedMediaPlayer.Play();
+//                            }
+//                            ARFaceModuleManager.Instance.ShowLoader(false);
+//                            break;
+//                        default:
+//                            FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+//                            break;
+//                    }
+//                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", feedUrl));
+//                }
+//            }
+//            else
+//            {               
+//                if (currentSNSApiLoaderController != null)
+//                {
+//                    currentSNSApiLoaderController.ShowUploadStatusImage(false);
+//                }
 
-                switch (callingFrom)
-                {
-                    case "CreateFeed":
-                        if (FeedUIController.Instance.imageOrVideo == "Video")
-                        {
-                            FeedUIController.Instance.createFeedMediaPlayer.Play();
-                        }
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                        break;
-                    case "CreateFeedRoom":
-                        if (ARFaceModuleManager.Instance.imageOrVideo == "Video")
-                        {
-                            ARFaceModuleManager.Instance.feedMediaPlayer.Play();
-                        }
-                        ARFaceModuleManager.Instance.ShowLoader(false);
-                        break;
-                    default:
-                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
-                        break;
-                }
+//                switch (callingFrom)
+//                {
+//                    case "CreateFeed":
+//                        if (FeedUIController.Instance.imageOrVideo == "Video")
+//                        {
+//                            FeedUIController.Instance.createFeedMediaPlayer.Play();
+//                        }
+//                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+//                        break;
+//                    case "CreateFeedRoom":
+//                        if (ARFaceModuleManager.Instance.imageOrVideo == "Video")
+//                        {
+//                            ARFaceModuleManager.Instance.feedMediaPlayer.Play();
+//                        }
+//                        ARFaceModuleManager.Instance.ShowLoader(false);
+//                        break;
+//                    default:
+//                        FeedUIController.Instance.ShowLoader(false);//active Loader false.......
+//                        break;
+//                }
 
-               Debug.Log("\nException while posting the callback:" + callback.success);                
-            }
-        });
-    }
+//               Debug.Log("\nException while posting the callback:" + callback.success);                
+//            }
+//        });
+//    }
 }
 
 //this class for File upload with converting.......

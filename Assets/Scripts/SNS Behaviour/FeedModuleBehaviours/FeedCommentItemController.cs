@@ -61,19 +61,19 @@ public class FeedCommentItemController : MonoBehaviour
         }
     }
 
-    public void OnClickCommentUserProfile()
-    {
-        FeedUIController.Instance.commentPanel.SetActive(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(false);
-        if (MyProfileDataManager.Instance != null && MyProfileDataManager.Instance.myProfileData.id == commentRow.user.id)
-        {
-            FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
-        }
-        else
-        {
-            OtherPlayerProfileData.Instance.RequestGetUserDetails(commentRow.user.id);
-        }
-    }
+    //public void OnClickCommentUserProfile()
+    //{
+    //    FeedUIController.Instance.commentPanel.SetActive(false);
+    //    //FeedUIController.Instance.feedVideoScreen.SetActive(false);
+    //    if (MyProfileDataManager.Instance != null && MyProfileDataManager.Instance.myProfileData.id == commentRow.user.id)
+    //    {
+    //        FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+    //    }
+    //    else
+    //    {
+    //        OtherPlayerProfileData.Instance.RequestGetUserDetails(commentRow.user.id);
+    //    }
+    //}
     public void SetupData(CommentRow commentRowData)
     {
         commentRow = commentRowData;

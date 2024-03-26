@@ -678,34 +678,34 @@ public class OtherPlayerProfileData : MonoBehaviour
         //tabScrollRectGiftScreen.SetPage(1);
         parentHeightResetScript.OnHeightReset(1);
     }
-    public IEnumerator AllTagFeed()
-    {
-        foreach (Transform item in userTagPostParent)
-        {
-            Destroy(item.gameObject);
-        }
-        yield return new WaitForSeconds(0.5f);
-        //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
-        //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
-        //Debug.Log("qqqq");
-        for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
-        {
-            GameObject userPostObject = Instantiate(userPostPrefab, userTagPostParent);
-            //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
-            UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
-            userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
+    //public IEnumerator AllTagFeed()
+    //{
+    //    foreach (Transform item in userTagPostParent)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //    yield return new WaitForSeconds(0.5f);
+    //    //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //    //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
+    //    //Debug.Log("qqqq");
+    //    for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
+    //    {
+    //        GameObject userPostObject = Instantiate(userPostPrefab, userTagPostParent);
+    //        //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
+    //        UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
+    //        userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
 
-            FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
-            feedUserData.Id = singleUserProfileData.id;
-            feedUserData.Name = singleUserProfileData.name;
-            feedUserData.Email = singleUserProfileData.email;
-            feedUserData.Avatar = singleUserProfileData.avatar;
-            userPostItem.feedUserData = feedUserData;
+    //        FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+    //        feedUserData.Id = singleUserProfileData.id;
+    //        feedUserData.Name = singleUserProfileData.name;
+    //        feedUserData.Email = singleUserProfileData.email;
+    //        feedUserData.Avatar = singleUserProfileData.avatar;
+    //        userPostItem.feedUserData = feedUserData;
 
-            userPostItem.avtarUrl = singleUserProfileData.avatar;
-            userPostItem.LoadFeed();
-        }
-    }
+    //        userPostItem.avtarUrl = singleUserProfileData.avatar;
+    //        userPostItem.LoadFeed();
+    //    }
+    //}
 
     //this method is used to check and setup ui for Empty photo tab message.......
     public void SetupEmptyMsgForPhotoTab(bool isReset)

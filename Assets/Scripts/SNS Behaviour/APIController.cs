@@ -381,11 +381,11 @@ public class APIController : MonoBehaviour
                    Debug.Log("allFeedsForUser id:" + allFeedsForUser[i].id + "    :FeedIndex:" + feedIndex);
                     if (feedIndex >= 0)
                     {
-                        if (!FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().isImageSuccessDownloadAndSave)
-                        {
-                            FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;
-                        }
-                        FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().ClearMemoryAfterDestroyObj();
+                        //if (!FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().isImageSuccessDownloadAndSave)
+                        //{
+                        //    FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;
+                        //}
+                        //FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().ClearMemoryAfterDestroyObj();
                         DestroyImmediate(FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).gameObject);
                         feedForYouIdList.RemoveAt(feedIndex);
                     }

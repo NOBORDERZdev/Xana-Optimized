@@ -189,7 +189,7 @@ public class FollowingUserFeedItem : MonoBehaviour
         }
 
         //for comment count.......
-        CommentCountUISetup(FollowingUserFeedData.commentCount);
+        //CommentCountUISetup(FollowingUserFeedData.commentCount);
 
         //for like count.......
         LikeCountAndUISetup(FollowingUserFeedData.LikeCount);
@@ -619,33 +619,33 @@ public class FollowingUserFeedItem : MonoBehaviour
     }
     #endregion
 
-    #region Comment Button Methods.......
-    //this method is used to Set Comment count on text....... 
-    public void CommentCountUISetup(int commentCount)
-    {        
-        string commentCountSTR = FeedUIController.Instance.GetAbreviation(commentCount);
-        if (commentCountSTR != "0")
-        {
-            commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
-            //commentBtn.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -3);
-        }
-        else
-        {
-            commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
-            //commentBtn.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -23);
-        }
-    }
+    //#region Comment Button Methods.......
+    ////this method is used to Set Comment count on text....... 
+    //public void CommentCountUISetup(int commentCount)
+    //{        
+    //    string commentCountSTR = FeedUIController.Instance.GetAbreviation(commentCount);
+    //    if (commentCountSTR != "0")
+    //    {
+    //        commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
+    //        //commentBtn.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -3);
+    //    }
+    //    else
+    //    {
+    //        commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "";
+    //        //commentBtn.transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -23);
+    //    }
+    //}
 
-    public void OnClickCommentButton(bool isRefresh)
-    {
-        //this method is get comment list and check if current feed this on multiple time not get comment list.......
-        APIManager.Instance.CommentListGetAndClickFeedCommentButton(FollowingUserFeedData.Id, isRefresh, FollowingUserFeedData.commentCount);
-        if (!isRefresh)
-        {
-            FeedUIController.Instance.OpenCommentPanel();
-        }
-    }
-    #endregion
+    //public void OnClickCommentButton(bool isRefresh)
+    //{
+    //    //this method is get comment list and check if current feed this on multiple time not get comment list.......
+    //    APIManager.Instance.CommentListGetAndClickFeedCommentButton(FollowingUserFeedData.Id, isRefresh, FollowingUserFeedData.commentCount);
+    //    if (!isRefresh)
+    //    {
+    //        FeedUIController.Instance.OpenCommentPanel();
+    //    }
+    //}
+    //#endregion
 
     #region Like or DisLike Button Methods.......
     //this method is setup likeCount text and image.......
@@ -672,10 +672,10 @@ public class FollowingUserFeedItem : MonoBehaviour
         }
     }
 
-    //this method is used to like or dislike button click.......
-    public void OnClickLikeOrDisLikeButton()
-    {
-        APIManager.Instance.RequestLikeOrDisLikeFeed(FollowingUserFeedData.Id.ToString(), likeCountBtn.GetComponent<Button>());
-    }
+    ////this method is used to like or dislike button click.......
+    //public void OnClickLikeOrDisLikeButton()
+    //{
+    //    APIManager.Instance.RequestLikeOrDisLikeFeed(FollowingUserFeedData.Id.ToString(), likeCountBtn.GetComponent<Button>());
+    //}
     #endregion
 }

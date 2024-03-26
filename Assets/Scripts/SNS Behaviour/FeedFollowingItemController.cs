@@ -355,7 +355,7 @@ public class FeedFollowingItemController : MonoBehaviour
         }
         yield return new WaitForSeconds(0.1f);
         //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(true);
+        //FeedUIController.Instance.feedVideoScreen.SetActive(true);
         FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
 
         //FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);

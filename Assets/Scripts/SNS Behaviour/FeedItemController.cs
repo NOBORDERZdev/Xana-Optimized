@@ -423,77 +423,77 @@ public class FeedItemController : MonoBehaviour
         //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
     }
 
-    public void OnClickFeedItem()
-    {
-        FeedUIController.Instance.feedFullViewScreenCallingFrom = "HotTab";
-        StartCoroutine(loadVideoFeed());
-    }
-    IEnumerator loadVideoFeed()
-    {
-        foreach (Transform item in FeedUIController.Instance.videofeedParent)
-        {
-            Destroy(item.gameObject);
-        }
-        int index = 0;
-        //int pageIndex = 0;
-        bool isMatch = false;
-        //FeedUIController.Instance.ShowLoader(true);
-        //Riken
-        /*for (int i = 0; i < APIManager.Instance.allUserRootList.Count; i++)
-        {
-            for (int j = 0; j < APIManager.Instance.allUserRootList[i].feeds.Count; j++)
-            {
-                GameObject videofeedObject = Instantiate(APIController.Instance.videofeedPrefab, FeedUIController.Instance.videofeedParent);
-                videofeedObject.GetComponent<FeedVideoItem>().FeedRawData = APIManager.Instance.allUserRootList[i];
-                videofeedObject.GetComponent<FeedVideoItem>().FeedData = APIManager.Instance.allUserRootList[i].feeds[j];
-                videofeedObject.GetComponent<FeedVideoItem>().LoadFeed();
+    //public void OnClickFeedItem()
+    //{
+    //    FeedUIController.Instance.feedFullViewScreenCallingFrom = "HotTab";
+    //    StartCoroutine(loadVideoFeed());
+    //}
+    //IEnumerator loadVideoFeed()
+    //{
+    //    foreach (Transform item in FeedUIController.Instance.videofeedParent)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
+    //    int index = 0;
+    //    //int pageIndex = 0;
+    //    bool isMatch = false;
+    //    //FeedUIController.Instance.ShowLoader(true);
+    //    //Riken
+    //    /*for (int i = 0; i < APIManager.Instance.allUserRootList.Count; i++)
+    //    {
+    //        for (int j = 0; j < APIManager.Instance.allUserRootList[i].feeds.Count; j++)
+    //        {
+    //            GameObject videofeedObject = Instantiate(APIController.Instance.videofeedPrefab, FeedUIController.Instance.videofeedParent);
+    //            videofeedObject.GetComponent<FeedVideoItem>().FeedRawData = APIManager.Instance.allUserRootList[i];
+    //            videofeedObject.GetComponent<FeedVideoItem>().FeedData = APIManager.Instance.allUserRootList[i].feeds[j];
+    //            videofeedObject.GetComponent<FeedVideoItem>().LoadFeed();
 
-                if (APIManager.Instance.allUserRootList[i].id == FeedRawData.id && !isMatch)
-                {
-                    if (APIManager.Instance.allUserRootList[i].feeds[j].id == FeedData.id)
-                    {
-                        // pageIndex = index;
-                        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
-                        isMatch = true;
-                    }
-                }
-                index += 1;
-            }
-        }*/
+    //            if (APIManager.Instance.allUserRootList[i].id == FeedRawData.id && !isMatch)
+    //            {
+    //                if (APIManager.Instance.allUserRootList[i].feeds[j].id == FeedData.id)
+    //                {
+    //                    // pageIndex = index;
+    //                    FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
+    //                    isMatch = true;
+    //                }
+    //            }
+    //            index += 1;
+    //        }
+    //    }*/
 
-        for (int i = 0; i < APIManager.Instance.allhotFeedRoot.data.rows.Count; i++)
-        {
-            GameObject videofeedObject = Instantiate(APIController.Instance.videofeedPrefab, FeedUIController.Instance.videofeedParent);
-            //Riken
-            /*videofeedObject.GetComponent<FeedVideoItem>().FeedRawData = APIManager.Instance.allUserRootList[i];
-            videofeedObject.GetComponent<FeedVideoItem>().FeedData = APIManager.Instance.allUserRootList[i].feeds[j];*/
-            videofeedObject.GetComponent<FeedVideoItem>().hotFeed = APIManager.Instance.allhotFeedRoot.data.rows[i];
-            videofeedObject.GetComponent<FeedVideoItem>().LoadFeed();
+    //    for (int i = 0; i < APIManager.Instance.allhotFeedRoot.data.rows.Count; i++)
+    //    {
+    //        GameObject videofeedObject = Instantiate(APIController.Instance.videofeedPrefab, FeedUIController.Instance.videofeedParent);
+    //        //Riken
+    //        /*videofeedObject.GetComponent<FeedVideoItem>().FeedRawData = APIManager.Instance.allUserRootList[i];
+    //        videofeedObject.GetComponent<FeedVideoItem>().FeedData = APIManager.Instance.allUserRootList[i].feeds[j];*/
+    //        videofeedObject.GetComponent<FeedVideoItem>().hotFeed = APIManager.Instance.allhotFeedRoot.data.rows[i];
+    //        videofeedObject.GetComponent<FeedVideoItem>().LoadFeed();
 
-            if (APIManager.Instance.allhotFeedRoot.data.rows[i].id == HotFeed.id && !isMatch)
-            {
-                if (APIManager.Instance.allhotFeedRoot.data.rows[i].id == HotFeed.id)
-                {
-                    // pageIndex = index;
-                   Debug.Log("Matched" + FeedData.id);
-                    FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
-                    isMatch = true;
-                }
-            }
-            index += 1;
-        }
+    //        if (APIManager.Instance.allhotFeedRoot.data.rows[i].id == HotFeed.id && !isMatch)
+    //        {
+    //            if (APIManager.Instance.allhotFeedRoot.data.rows[i].id == HotFeed.id)
+    //            {
+    //                // pageIndex = index;
+    //               Debug.Log("Matched" + FeedData.id);
+    //                FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
+    //                isMatch = true;
+    //            }
+    //        }
+    //        index += 1;
+    //    }
 
-        yield return new WaitForSeconds(0.1f);
-        //FeedUIController.Instance.ShowLoader(false);
-        FeedUIController.Instance.feedVideoScreen.SetActive(true);
-        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
-        // FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
-        //Debug.Log("name : " + FeedUIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.1f);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        FeedUIController.Instance.feedUiScreen.SetActive(false);
-    }
+    //    yield return new WaitForSeconds(0.1f);
+    //    //FeedUIController.Instance.ShowLoader(false);
+    //    //FeedUIController.Instance.feedVideoScreen.SetActive(true);
+    //    FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
+    //    // FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
+    //    //Debug.Log("name : " + FeedUIController.Instance.videofeedParent.name);
+    //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+    //    yield return new WaitForSeconds(0.1f);
+    //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //    FeedUIController.Instance.feedUiScreen.SetActive(false);
+    //}
 
     #region Get Image And Video From AWS
     public void GetVideoUrl(string key)

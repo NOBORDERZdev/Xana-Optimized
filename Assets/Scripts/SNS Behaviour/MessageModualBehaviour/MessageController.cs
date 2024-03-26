@@ -258,7 +258,7 @@ public class MessageController : MonoBehaviour
                     if (allChatGetConversationDatum.receivedGroupId != 0)
                     {
                        Debug.Log("Group then refresh group message");
-                        SocketHandler.Instance.RequestChatGetMessagesSocket(1, 50, 0, allChatGetConversationDatum.receivedGroupId);
+                       // SocketHandler.Instance.RequestChatGetMessagesSocket(1, 50, 0, allChatGetConversationDatum.receivedGroupId);
                     }
                 }
             }
