@@ -229,8 +229,8 @@ public class FindFriendWithNameItem : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
         if (searchUserRow.is_following_me)
         {

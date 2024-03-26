@@ -725,8 +725,8 @@ public class BottomTabManager : MonoBehaviour
             {
                 MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
-            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
-            ProfileUIHandler.instance.SetMainScrolRefs();
+            ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
+            ProfileUIHandler.instance.SetMainScrollRefs();
             ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);

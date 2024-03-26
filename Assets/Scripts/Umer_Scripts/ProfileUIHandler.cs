@@ -16,8 +16,6 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followingBtn;
     public GameObject editProfileBtn;
     public GameObject followProfileBtn;
-
-
     public GameObject avatarBgObject;
 
 
@@ -36,9 +34,7 @@ public class ProfileUIHandler : MonoBehaviour
     public GameObject OtherProfileUserPostPartObj;
 
     [Space]
-    [Header("User Data Tabs Immitating Buttons")]
-    //public GameObject myProfileImitateTopPartButton;
-    //public GameObject OtherProfileImitateTopPartButton;
+    [Header("User Data Tabs Imitating Buttons")]
 
     [Space]
     [Header("Script References")]
@@ -81,7 +77,6 @@ public class ProfileUIHandler : MonoBehaviour
         
         Object.Destroy(newRenderTexture);
 
-        //newRenderTexture.Release();
         if (AvatarRef)
         {
             menuLightingObj.SetActive(true);
@@ -99,42 +94,42 @@ public class ProfileUIHandler : MonoBehaviour
     public void InstantiateUserPreviewAvatar()
     {
         _renderTexCamera.parent = null;
-        //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
         _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
-        lightingObj = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().profileLightingObj;
-        menuLightingObj = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().menuLightObj;
-        AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
+
+        var friendHomeManager = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>();
+        lightingObj = friendHomeManager.profileLightingObj;
+        menuLightingObj = friendHomeManager.menuLightObj;
+
+        AvatarRef = Instantiate(friendHomeManager.FriendAvatarPrefab.gameObject);
         AvatarRef.GetComponent<FootStaticIK>().ikActive = true;
         AvatarRef.name = "UserPreviewAvatar";
         AvatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
         AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
+
         Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
         Destroy(AvatarRef.GetComponent<Actor>());
         Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
 
-        GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
-        //Destroy(AvatarRef.GetComponent<AvatarController>());
-        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
-        //SetUserAvatarClothing();
+        Instantiate(avatarBgObject, AvatarRef.transform);
     }
 
     public void SetCameraRenderTexture()
     {
-        if (!newRenderTexture)
+        if (newRenderTexture == null)
         {
-            newRenderTexture = new RenderTexture(1024, 1024, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
-            newRenderTexture.antiAliasing = 4;
-            newRenderTexture.useMipMap = true;
-            newRenderTexture.filterMode = FilterMode.Trilinear;
-            //if (Application.platform == RuntimePlatform.Android)
-            //{
-                UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();
-                _uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
-                _uaCamData.antialiasingQuality = AntialiasingQuality.High; //AntialiasingQuality.Low;
-            //}
+            newRenderTexture = new RenderTexture(1024, 1024, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm)
+            {
+                antiAliasing = 4,
+                useMipMap = true,
+                filterMode = FilterMode.Trilinear
+            };
 
-            //Graphics.Blit(m_RenderTexture, newRenderTexture);
-            _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
+            var camera = _renderTexCamera.GetComponent<Camera>();
+            var uaCamData = camera.GetComponent<UniversalAdditionalCameraData>();
+            uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+            uaCamData.antialiasingQuality = AntialiasingQuality.High;
+
+            camera.targetTexture = newRenderTexture;
             AvatarPreviewImgRef.texture = newRenderTexture;
             _renderTexCamera.gameObject.SetActive(true);
         }
@@ -144,8 +139,8 @@ public class ProfileUIHandler : MonoBehaviour
     {
         if (AvatarRef)
         {
-                _tempAvatarData = _userAvatarData;
-                AvatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,AvatarRef);
+            _tempAvatarData = _userAvatarData;
+            AvatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,AvatarRef);
         }
     }
 
@@ -155,41 +150,18 @@ public class ProfileUIHandler : MonoBehaviour
         AvatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
     }
 
-    public void SetMainScrolRefs()
+    public void SetMainScrollRefs()
     {
-        if (MyProfileDataManager.Instance.gameObject.activeSelf)
-        {
-            //mainscrollControllerRef.TopFixedObj = myProfileImitateTopPartButton;
-            mainscrollControllerRef.headerObj = myProfileTopPartButton;
-            mainscrollControllerRef.containerobj = myProfileUserPostPartObj.GetComponent<RectTransform>();
-        }
-        else
-        {
-           // mainscrollControllerRef.TopFixedObj = OtherProfileImitateTopPartButton;
-            mainscrollControllerRef.headerObj = OtherProfileTopPartButton;
-            mainscrollControllerRef.containerobj = OtherProfileUserPostPartObj.GetComponent<RectTransform>();
-        }
+        bool isMyProfileActive = MyProfileDataManager.Instance.gameObject.activeSelf;
+        mainscrollControllerRef.headerObj = isMyProfileActive ? myProfileTopPartButton : OtherProfileTopPartButton;
+        mainscrollControllerRef.containerobj = (isMyProfileActive ? myProfileUserPostPartObj : OtherProfileUserPostPartObj).GetComponent<RectTransform>();
     }
 
-    public void SwitchBetwenUserAndOtherProfileUI(bool _state)
+    public void SwitchBetweenUserAndOtherProfileUI(bool _state)
     {
-        if (_state)
-        {
-            myProfileTopPartButton.SetActive(_state);
-            myProfileUserPostPartObj.SetActive(_state);
-            //myProfileImitateTopPartButton.SetActive(_state);
-            OtherProfileTopPartButton.SetActive(!_state);
-            OtherProfileUserPostPartObj.SetActive(!_state);
-            //OtherProfileImitateTopPartButton.SetActive(!_state);
-        }
-        else
-        {
-            myProfileTopPartButton.SetActive(_state);
-            myProfileUserPostPartObj.SetActive(_state);
-            //myProfileImitateTopPartButton.SetActive(_state);
-            OtherProfileTopPartButton.SetActive(!_state);
-            OtherProfileUserPostPartObj.SetActive(!_state);
-            //OtherProfileImitateTopPartButton.SetActive(!_state);
-        }
+        myProfileTopPartButton.SetActive(_state);
+        myProfileUserPostPartObj.SetActive(_state);
+        OtherProfileTopPartButton.SetActive(!_state);
+        OtherProfileUserPostPartObj.SetActive(!_state);
     }
 }

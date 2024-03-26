@@ -124,8 +124,8 @@ public class FollowingItemController : MonoBehaviour
         OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
         MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
         OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(false);
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
