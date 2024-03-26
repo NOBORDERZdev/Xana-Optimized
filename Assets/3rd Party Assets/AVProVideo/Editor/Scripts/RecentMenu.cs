@@ -63,9 +63,12 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			SerializedProperty propMediaPathType = data.propPath.FindPropertyRelative("_pathType");
 
 			// Assign to properties
-			propMediaPath.stringValue = mediaPath.Path.Replace("\\", "/");
+			propMediaPath.stringValue = mediaPath.Path;
 			propMediaPathType.enumValueIndex = (int)mediaPath.PathType;
-			if (data.propMediaSource != null) data.propMediaSource.enumValueIndex = (int)MediaSource.Path;
+			if (data.propMediaSource != null)
+			{
+				data.propMediaSource.enumValueIndex = (int)MediaSource.Path;
+			}
 
 			// Mark as modified
 			data.propPath.serializedObject.ApplyModifiedProperties();
@@ -130,7 +133,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			if (EditorHelper.OpenMediaFileDialog(startFolder, ref mediaPath, ref fullPath, data.extensions))
 			{
 				// Assign to properties
-				propFilePath.stringValue = mediaPath.Path.Replace("\\", "/");
+				propFilePath.stringValue = mediaPath.Path;
 				propFilePathType.enumValueIndex = (int)mediaPath.PathType;
 				if (data.propMediaSource != null) data.propMediaSource.enumValueIndex = (int)MediaSource.Path;
 
@@ -220,7 +223,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			slashReplacement = " \u2215 ";
 #endif
 
-			text = text.Replace("/", slashReplacement).Replace("\\", slashReplacement);	
+			text = text.Replace("/", slashReplacement);//.Replace("\\", slashReplacement);
 
 			// Unity will place text after " _" on the right of the menu, so we replace it so this doesn't happen
 			text = text.Replace(" _", "_");
