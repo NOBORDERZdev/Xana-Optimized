@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864957042696948435}
   m_LocalRotation: {x: -0.707107, y: -0, z: -0, w: 0.707107}
-  m_LocalPosition: {x: -0.01, y: -0.14, z: -0.15}
+  m_LocalPosition: {x: -0.35, y: -0.71, z: 0.02}
   m_LocalScale: {x: 1.2563, y: 1.2563, z: 1.2563}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -601,7 +601,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -867,7 +867,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 16
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4849,16 +4849,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1864957042722691741}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0.01905632, y: 2.4664466, z: 0.023457766}
-  m_LocalScale: {x: 0.41664, y: 0.41663992, z: 0.41663992}
+  m_LocalScale: {x: 0.333312, y: 0.33331195, z: 0.41664004}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1864957042696948434}
   - {fileID: 1864957043524911972}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!198 &1864957042722691730
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -5427,7 +5427,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -9667,7 +9667,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1864957043524911972
 Transform:
   m_ObjectHideFlags: 0
