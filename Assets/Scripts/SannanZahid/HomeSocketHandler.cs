@@ -2,20 +2,18 @@ using System;
 using UnityEngine;
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
-using static UserPostFeature;
 using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
-using SimpleJSON;
-using static RestAPI;
 
-public class XanaSocketHandler : MonoBehaviour
+
+public class HomeSocketHandler : MonoBehaviour
 {
     public SocketManager Manager;
     string address;
 
     public string socketId;
-    public static XanaSocketHandler instance;
+    public static HomeSocketHandler instance;
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
@@ -92,12 +90,12 @@ public class XanaSocketHandler : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-      //  Debug.Log(" ----> OnConnected --- User ---- >  " + XanaConstantsHolder.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
+      //  Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
         WWWForm form = new WWWForm();
-        form.AddField("userId", int.Parse(XanaConstantsHolder.userId));
+        form.AddField("userId", int.Parse(ConstantsHolder.userId));
         form.AddField("socketId", socketId);
         using (UnityWebRequest www = UnityWebRequest.Post(FinalUrl, form))
         {

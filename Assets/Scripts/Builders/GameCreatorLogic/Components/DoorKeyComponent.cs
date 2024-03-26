@@ -92,7 +92,7 @@ public class DoorKeyComponent : ItemComponent
                     //Toast.Show("The keys match!");
                     BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("The keys match!");
 
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
+                    ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
 
                     return;
                 }

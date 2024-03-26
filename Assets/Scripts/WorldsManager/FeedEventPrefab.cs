@@ -525,10 +525,10 @@ public class FeedEventPrefab : MonoBehaviour
         ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
         m_CreaName = creatorName;
-        XanaConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
-        XanaConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
-        XanaConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        Launcher.sceneName = m_EnvName;
+        ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
+        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+        MutliplayerController.sceneName = m_EnvName;
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
         if (userProfile.sprite == null)
@@ -539,9 +539,9 @@ public class FeedEventPrefab : MonoBehaviour
             InstantiateWorldtags();
 
         loginPageManager.SetPanelToBottom();
-        XanaConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
-        //XanaConstantsHolder.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
-        XanaConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
+        ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
+        //ConstantsHolder.xanaConstants.museumDownloadLink = m_EnvDownloadLink;
+        ConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
             LoginPageManager.m_MuseumIsClicked = true;
 
@@ -551,14 +551,14 @@ public class FeedEventPrefab : MonoBehaviour
         m_WorldDescriptionTxt.GetComponent<UITextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
-            XanaConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.xanaConstants.userLimit = userLimit;
         }
         //tempWorldName = m_WorldName.text.ToString();
-        XanaConstantsHolder.xanaConstants.MuseumID = idOfObject;
+        ConstantsHolder.xanaConstants.MuseumID = idOfObject;
         //SetStringSize();
 
         // For Analitics & User Count

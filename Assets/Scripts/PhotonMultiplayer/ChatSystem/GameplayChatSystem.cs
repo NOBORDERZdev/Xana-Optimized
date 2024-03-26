@@ -36,9 +36,9 @@ using SimpleJSON;
 /// Note:
 /// Don't forget to call ChatClient.Service() on Update to keep the Chatclient operational.
 /// </remarks>
-public class XanaChatSystem : MonoBehaviour
+public class GameplayChatSystem : MonoBehaviour
 {
-    public static XanaChatSystem instance;
+    public static GameplayChatSystem instance;
     public GameObject chatOutPutPenal;
 
     private const string UsernamePrefs = "UsernamePref";
@@ -174,7 +174,7 @@ public class XanaChatSystem : MonoBehaviour
 
     public void LoadOldChat()
     {
-        XanaChatSocket.callApi?.Invoke();
+        ChatSocketManager.callApi?.Invoke();
         //chatConfirmationPanel.SetActive(false);
     }
     void CheckIfDeviceHasNotch()
@@ -234,9 +234,9 @@ public class XanaChatSystem : MonoBehaviour
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
-            //    if (!string.IsNullOrEmpty(XanaChatSocket.instance.oldChatResponse))
+            //    if (!string.IsNullOrEmpty(ChatSocketManager.instance.oldChatResponse))
             //    {
-            //        JSONNode jsonNode = JSON.Parse(XanaChatSocket.instance.oldChatResponse);
+            //        JSONNode jsonNode = JSON.Parse(ChatSocketManager.instance.oldChatResponse);
             //        int countValue = jsonNode["count"].AsInt;
 
             //        if (countValue > 0)
@@ -270,7 +270,7 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
+        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
         npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
@@ -301,7 +301,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-        XanaChatSocket.onSendMsg.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, inputLine, CallBy.User, "");
+        ChatSocketManager.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID, inputLine, CallBy.User, "");
     }
 
     #region Photon Chat Region
@@ -342,7 +342,7 @@ public class XanaChatSystem : MonoBehaviour
     //    PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
     //    Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-    //    XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text);
+    //    ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text);
     //    ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
     //    this.InputFieldChat.text = "";
     //}
@@ -370,7 +370,7 @@ public class XanaChatSystem : MonoBehaviour
     //            this.testBytes = new byte[this.TestLength];
     //        }
 
-    //        XanaChatSocket.onSendMsg.Invoke(XanaConstantsHolder.xanaConstants.MuseumID,inputLine);
+    //        ChatSocketManager.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID,inputLine);
     //    }
     //}
     //public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)
@@ -394,9 +394,9 @@ public class XanaChatSystem : MonoBehaviour
 
     //    //if (this.ChannelsToJoinOnConnect != null)
     //    //{
-    //    //    if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
+    //    //    if (!ConstantsHolder.xanaConstants.isBuilderScene)
     //    //    {
-    //    //        if (SceneManager.GetActiveScene().name == "AddressableScene")
+    //    //        if (SceneManager.GetActiveScene().name == "GamePlayScene")
     //    //        {
     //    //            this.ChannelsToJoinOnConnect = FeedEventPrefab.m_EnvName;// FeedEventPrefab
     //    //        }
@@ -407,7 +407,7 @@ public class XanaChatSystem : MonoBehaviour
     //    //    }
     //    //    else
     //    //    {
-    //    //        this.ChannelsToJoinOnConnect = XanaConstantsHolder.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
+    //    //        this.ChannelsToJoinOnConnect = ConstantsHolder.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
     //    //    }
     //    //  //  this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
     //    //    //Debug.Log(this.ChannelsToJoinOnConnect);

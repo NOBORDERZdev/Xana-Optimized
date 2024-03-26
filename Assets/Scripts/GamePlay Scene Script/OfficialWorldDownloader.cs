@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 
-public class XanaWorldDownloader : MonoBehaviour
+public class OfficialWorldDownloader : MonoBehaviour
 {
 
     //booleans 
@@ -94,7 +94,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;

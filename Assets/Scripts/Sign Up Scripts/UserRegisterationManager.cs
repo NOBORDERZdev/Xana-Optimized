@@ -394,7 +394,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     if (PlayerPrefs.HasKey("Equiped"))
                     {
-                        XanaConstantsHolder.xanaConstants.isNFTEquiped = true;
+                        ConstantsHolder.xanaConstants.isNFTEquiped = true;
                         BoxerNFTEventManager.OnNFTequip?.Invoke(false);
                     }
                 }
@@ -402,7 +402,7 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     PlayerPrefs.DeleteKey("Equiped");
                     PlayerPrefs.DeleteKey("nftID");
-                    XanaConstantsHolder.xanaConstants.isNFTEquiped = false;
+                    ConstantsHolder.xanaConstants.isNFTEquiped = false;
                     BoxerNFTEventManager.OnNFTUnequip?.Invoke();
                     LoadingController.Instance.nftLoadingScreen.SetActive(false);
                 }
@@ -529,12 +529,12 @@ public class UserRegisterationManager : MonoBehaviour
         LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
         if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
         {
-            XanaConstantsHolder.xanaConstants.isCameraMan = true;
+            ConstantsHolder.xanaConstants.isCameraMan = true;
 
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.isCameraMan = false;
+            ConstantsHolder.xanaConstants.isCameraMan = false;
         }
     }
 
@@ -988,7 +988,7 @@ public class UserRegisterationManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
-                    XanaConstantsHolder.xanaConstants.LoginasGustprofile = true;
+                    ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
 
@@ -1216,8 +1216,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleObj.userNftRoleSlist.Clear();
         ConstantsGod.AUTH_TOKEN = null;
-        XanaConstantsHolder.userId = null;
-        XanaConstantsHolder.xanaConstants.LoginasGustprofile = false;
+        ConstantsHolder.userId = null;
+        ConstantsHolder.xanaConstants.LoginasGustprofile = false;
 
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
@@ -1235,7 +1235,7 @@ public class UserRegisterationManager : MonoBehaviour
 
         PlayerPrefs.SetString("UserName", "");
         LoggedIn = false;
-        XanaConstantsHolder.loggedIn = false;
+        ConstantsHolder.loggedIn = false;
         // [Waqas] Store Guest Username Locally
         string tempName1 = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
         string tempName2 = PlayerPrefs.GetString(ConstantsGod.PLAYERNAME);
@@ -1263,8 +1263,8 @@ public class UserRegisterationManager : MonoBehaviour
 
         LoadingController.Instance.characterLoading.gameObject.SetActive(false);
         LoadingController.Instance.HideLoading();
-        XanaConstantsHolder.xanaConstants.isCameraMan = false;
-        XanaConstantsHolder.xanaConstants.IsDeemoNFT = false;
+        ConstantsHolder.xanaConstants.isCameraMan = false;
+        ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
     }
 
@@ -2645,7 +2645,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("UserName", L_LoginObject.id);
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
-                        XanaConstantsHolder.userId = L_LoginObject.id;
+                        ConstantsHolder.userId = L_LoginObject.id;
 
                     }
                     PlayerPrefs.Save();
@@ -3380,7 +3380,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
 
-                        XanaConstantsHolder.userId = myObject1.data.user.id.ToString();
+                        ConstantsHolder.userId = myObject1.data.user.id.ToString();
                     }
                 }
             }
@@ -3417,7 +3417,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("shownWelcome", 1);
                     PlayerPrefs.SetInt("FirstTime", 1);
 
-                    XanaConstantsHolder.userId = myObject1.data.user.id.ToString();
+                    ConstantsHolder.userId = myObject1.data.user.id.ToString();
 
                     if (!AutoLoginBool)
                     {
@@ -3507,7 +3507,7 @@ public class UserRegisterationManager : MonoBehaviour
                         PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
                         usernamePanal.SetActive(false);
                         usernamePanal.SetActive(false);
-                        XanaConstantsHolder.xanaConstants.LoginasGustprofile = true;
+                        ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                         CheckCameraMan();
                         PlayerPrefs.Save();
                         InventoryManager.instance.CheckWhenUserLogin();

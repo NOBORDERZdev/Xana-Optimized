@@ -2,7 +2,7 @@ using System.Collections.Generic;
 namespace XanaNFT{ 
 
     [System.Serializable]
-    public class XanaNftDetails
+    public class NftDetails
     {
         //private XanaNftDetails xanaNftDetails;
 

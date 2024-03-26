@@ -360,7 +360,7 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
-    PlayerControllerNew _playerControllerNew;
+    PlayerController _playerControllerNew;
     public static bool canRunCo = false;
     //public TextMeshProUGUI _remainingText;
     float _timer;
@@ -387,10 +387,10 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
+            Vector3 pos = ReferrencesForGameplay.instance.m_34player.transform.position;
             pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
-            _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            _specialEffects.transform.SetParent(ReferrencesForGameplay.instance.m_34player.transform);
             _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);

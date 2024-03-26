@@ -19,13 +19,13 @@ public class SpeakerRefrence : MonoBehaviour
     //[PunRPC]
     //void SyncSpeaker2D(int viewId)                       //Added by Ali Hamza
     //{
-    //    for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+    //    for (int i = 0; i < MutliplayerController.instance.playerobjects.Count; i++)
     //    {
-    //        if (Launcher.instance.playerobjects[i] != null)
+    //        if (MutliplayerController.instance.playerobjects[i] != null)
     //        {
-    //            if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+    //            if (MutliplayerController.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
     //            {
-    //                Launcher.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 0;
+    //                MutliplayerController.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 0;
     //            }
     //        }
     //    }
@@ -38,13 +38,13 @@ public class SpeakerRefrence : MonoBehaviour
     //[PunRPC]
     //void SyncSpeaker3D(int viewId)                       //Added by Ali Hamza
     //{
-    //    for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+    //    for (int i = 0; i < MutliplayerController.instance.playerobjects.Count; i++)
     //    {
-    //        if (Launcher.instance.playerobjects[i] != null)
+    //        if (MutliplayerController.instance.playerobjects[i] != null)
     //        {
-    //            if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+    //            if (MutliplayerController.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
     //            {
-    //                Launcher.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 1;
+    //                MutliplayerController.instance.playerobjects[i].GetComponent<SpeakerRefrence>().RangeVolSpeaker.spatialBlend = 1;
     //            }
     //        }
     //    }

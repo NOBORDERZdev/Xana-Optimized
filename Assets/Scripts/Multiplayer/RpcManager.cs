@@ -40,18 +40,18 @@ public class RpcManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdateStatsAnimClicked(int viewId, bool isEnable)
     {
-        for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+        for (int i = 0; i < MutliplayerController.instance.playerobjects.Count; i++)
         {
-            if (Launcher.instance.playerobjects[i] != null)
+            if (MutliplayerController.instance.playerobjects[i] != null)
             {
-                if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                if (MutliplayerController.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
                     if (!isEnable)
                     {
-                        Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
-                        Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
+                        MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
+                        MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
                     }
-                    Launcher.instance.playerobjects[i].GetComponent<RpcManager>().DifferentAnimClicked = isEnable;
+                    MutliplayerController.instance.playerobjects[i].GetComponent<RpcManager>().DifferentAnimClicked = isEnable;
                     break;
                 }
             }
@@ -66,18 +66,18 @@ public class RpcManager : MonoBehaviourPunCallbacks
     [PunRPC]
     void JumpAnimSitLying(int viewId)                       //Added by Ali Hamza
     {
-        for (int i = 0; i < Launcher.instance.playerobjects.Count; i++)
+        for (int i = 0; i < MutliplayerController.instance.playerobjects.Count; i++)
         {
-            if (Launcher.instance.playerobjects[i] != null)
+            if (MutliplayerController.instance.playerobjects[i] != null)
             {
-                if (Launcher.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                if (MutliplayerController.instance.playerobjects[i].GetComponent<PhotonView>().ViewID == viewId)
                 {
-                    if (Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("EtcAnimStart"))
+                    if (MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().GetBool("EtcAnimStart"))
                     {
-                        if (!Launcher.instance.playerobjects[i].GetComponent<Animator>().GetBool("Stand"))
+                        if (!MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().GetBool("Stand"))
                         {
-                            Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
-                            Launcher.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
+                            MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().SetBool("EtcAnimStart", false);
+                            MutliplayerController.instance.playerobjects[i].GetComponent<Animator>().SetBool("Stand", true);
                             break;
                         }
                     }

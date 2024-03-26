@@ -9,7 +9,7 @@ public class ControlLineWidth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (XanaConstantsHolder.xanaConstants.screenType == XanaConstantsHolder.ScreenType.TabScreen)
+        if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
         {
             line1.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 600);
             line2.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 600);

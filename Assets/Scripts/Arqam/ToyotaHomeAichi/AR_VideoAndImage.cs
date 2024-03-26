@@ -338,16 +338,16 @@ namespace Toyota
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
                 liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
 
-                SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+                SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+                SoundSettings.soundManagerSettings.setNewSliderValues();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
                 RenderTexture renderTexture = new RenderTexture(nftMAnager.renderTexture_16x9);
 
-                SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-                SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+                SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundSettings.soundManagerSettings.setNewSliderValues();
 
                 nftMAnager.videoRenderObject = imgVideo16x9;
                 renderTexture_temp = renderTexture;
@@ -396,8 +396,8 @@ namespace Toyota
 
         public void OpenWorldInfo()
         {
-            if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
-            if (PlayerControllerNew.isJoystickDragging == true)
+            if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
+            if (PlayerController.isJoystickDragging == true)
                 return;
 
             if (nftMAnager != null && _videoType != PMY_VideoTypeRes.islive)

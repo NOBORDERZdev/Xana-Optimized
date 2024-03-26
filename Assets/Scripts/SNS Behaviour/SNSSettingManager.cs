@@ -87,7 +87,7 @@ public class SNSSettingManager : MonoBehaviour
     //this method is used to terms and policy.......
     public void OpenPrivacyPolicyHyperLink()
     {
-        if (XanaConstantsHolder.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
         }
@@ -96,7 +96,7 @@ public class SNSSettingManager : MonoBehaviour
     //this method is used to Tearms and condition button click.......
     public void OpenTermsAndConditionHyperLink()
     {
-        if (XanaConstantsHolder.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
         }
@@ -189,7 +189,7 @@ public class SNSSettingManager : MonoBehaviour
     public void LogoutSuccess()
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
-        XanaConstantsHolder.xanaConstants.userProfileLink = "";
+        ConstantsHolder.xanaConstants.userProfileLink = "";
         if (FeedsManager.Instance != null)
         {
             MyProfileManager.Instance.ClearAndResetAfterLogout();

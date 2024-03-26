@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyBeachMute : MonoBehaviour
+public class GameplayMicController : MonoBehaviour
 {
     public GameObject micOn;
     public GameObject micOff;
@@ -15,10 +15,10 @@ public class MyBeachMute : MonoBehaviour
     {
         if (WorldItem.m_EnvName.Contains("Xana Festival") || WorldItem.m_EnvName.Contains("NFTDuel Tournament") || WorldItem.m_EnvName.Contains("BreakingDown Arena"))
         {
-            if (XanaConstantsHolder.xanaConstants.mic == 1)
+            if (ConstantsHolder.xanaConstants.mic == 1)
             {
-                XanaConstantsHolder.xanaConstants.StopMic();
-                XanaVoiceChat.instance.TurnOffMic();
+                ConstantsHolder.xanaConstants.StopMic();
+                GameplayVoiceChat.instance.TurnOffMic();
                 micOn.SetActive(false);
                 micOnPotrait.SetActive(false);
                 micOff.GetComponent<Button>().interactable = false;

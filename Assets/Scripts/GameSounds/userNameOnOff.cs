@@ -8,7 +8,7 @@ public class userNameOnOff : MonoBehaviour
 
     //private void OnEnable()
     //{
-        //    if (XanaConstantsHolder.xanaConstants.userName == 1)
+        //    if (ConstantsHolder.xanaConstants.userName == 1)
         //    {
         //        if (this.gameObject.name == "OffButtonName")
         //        {
@@ -34,25 +34,25 @@ public class userNameOnOff : MonoBehaviour
         //            this.gameObject.SetActive(false);
         //        }
         //    }
-        //XanaVoiceChat.instance.UpdateMicButton();
+        //GameplayVoiceChat.instance.UpdateMicButton();
     //}
 
     public void ClickUserName()
     {
-        //Debug.Log("XanaValu:"+ XanaConstantsHolder.xanaConstants.userName);
-        if (XanaConstantsHolder.xanaConstants.userNameVisibilty == 1)
+        //Debug.Log("XanaValu:"+ ConstantsHolder.xanaConstants.userName);
+        if (ConstantsHolder.xanaConstants.userNameVisibilty == 1)
         {
 
             ArrowManager.OnInvokeUsername(0);
-           XanaConstantsHolder.xanaConstants.userNameVisibilty = 0;
-           ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(false);
+           ConstantsHolder.xanaConstants.userNameVisibilty = 0;
+           ReferrencesForGameplay.instance.onBtnUsername.SetActive(false);
         }
         else
         {
             ArrowManager.OnInvokeUsername(1);
            
-            XanaConstantsHolder.xanaConstants.userNameVisibilty = 1;
-            ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(true);
+            ConstantsHolder.xanaConstants.userNameVisibilty = 1;
+            ReferrencesForGameplay.instance.onBtnUsername.SetActive(true);
         }
         //OnEnable();
     }

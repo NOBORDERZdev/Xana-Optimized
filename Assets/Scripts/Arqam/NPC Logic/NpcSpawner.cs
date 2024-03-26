@@ -47,7 +47,7 @@ public class NpcSpawner : MonoBehaviour
         //    npcCounter++;
         //    npcModel.Add(npc);
         //}
-        //StartCoroutine(ReactScreen.Instance.getAllReactions());
+        //StartCoroutine(UserReactionsHandler.Instance.getAllReactions());
     }
 
     private void UpdateNpcName(NpcChatSystem npcChatSystem)

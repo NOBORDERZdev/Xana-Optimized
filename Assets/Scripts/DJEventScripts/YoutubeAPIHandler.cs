@@ -53,14 +53,14 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (EventDetails.eventDetails.DataIsInitialized)
             {
                 if (checkEventStartTime())
                 {
-                    if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
+                    if (!EventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
-                        //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        //print("============Setting Youtube Link Data" + EventDetails.eventDetails.youtubeUrl);
+                        Data = new StreamData(EventDetails.eventDetails.youtubeUrl, EventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -69,7 +69,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         Data = null;
                     }
                 }
-                //XanaEventDetails.eventDetails.DataIsInitialized = false;
+                //EventDetails.eventDetails.DataIsInitialized = false;
             }
             else
             {
@@ -124,14 +124,14 @@ public class YoutubeAPIHandler : MonoBehaviour
                 //    }
                 //}
                 //Debug.Log("call hua kya he");
-                if (XanaEventDetails.eventDetails.DataIsInitialized)
+                if (EventDetails.eventDetails.DataIsInitialized)
                 {
                     if (checkEventStartTime())
                     {
-                        if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
+                        if (!EventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
-                            //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                            //print("============Setting Youtube Link Data" + EventDetails.eventDetails.youtubeUrl);
+                            Data = new StreamData(EventDetails.eventDetails.youtubeUrl, EventDetails.eventDetails.youtubeUrl_isActive, true);
                             _urlDataInitialized = true;
                         }
                         else
@@ -140,7 +140,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             Data = null;
                         }
                     }
-                    //XanaEventDetails.eventDetails.DataIsInitialized = false;
+                    //EventDetails.eventDetails.DataIsInitialized = false;
                 }
                 else
                 {
@@ -194,14 +194,14 @@ public class YoutubeAPIHandler : MonoBehaviour
                 //    }
                 //}
                 //Debug.Log("call hua kya he");
-                if (XanaEventDetails.eventDetails.DataIsInitialized)
+                if (EventDetails.eventDetails.DataIsInitialized)
                 {
                     if (checkEventStartTime())
                     {
-                        if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
+                        if (!EventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
-                            //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                            //print("============Setting Youtube Link Data" + EventDetails.eventDetails.youtubeUrl);
+                            Data = new StreamData(EventDetails.eventDetails.youtubeUrl, EventDetails.eventDetails.youtubeUrl_isActive, true);
                             _urlDataInitialized = true;
                         }
                         else
@@ -210,7 +210,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             Data = null;
                         }
                     }
-                    //XanaEventDetails.eventDetails.DataIsInitialized = false;
+                    //EventDetails.eventDetails.DataIsInitialized = false;
                 }
                 else
                 {
@@ -265,14 +265,14 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (EventDetails.eventDetails.DataIsInitialized)
             {
                 if (checkEventStartTime())
                 {
-                    if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
+                    if (!EventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
-                        //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        //print("============Setting Youtube Link Data" + EventDetails.eventDetails.youtubeUrl);
+                        Data = new StreamData(EventDetails.eventDetails.youtubeUrl, EventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -280,7 +280,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         //print("================No youtube link found");
                         Data = null;
                     }
-                    //XanaEventDetails.eventDetails.DataIsInitialized = false;
+                    //EventDetails.eventDetails.DataIsInitialized = false;
                 }
             }
             else
@@ -335,14 +335,14 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (EventDetails.eventDetails.DataIsInitialized)
             {
                 if (checkEventStartTime())
                 {
-                    if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
+                    if (!EventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
-                        //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        //print("============Setting Youtube Link Data" + EventDetails.eventDetails.youtubeUrl);
+                        Data = new StreamData(EventDetails.eventDetails.youtubeUrl, EventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -351,7 +351,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         Data = null;
                     }
                 }
-                //XanaEventDetails.eventDetails.DataIsInitialized = false;
+                //EventDetails.eventDetails.DataIsInitialized = false;
             }
             else
             {
@@ -403,10 +403,10 @@ public class YoutubeAPIHandler : MonoBehaviour
         //        univStartDateTime = DateTime.Parse(OrdinaryUTCdateOfSystem);
         //OrdinarySystemDateTime = univStartDateTime.ToLocalTime();
         //Debug.Log("-------------Checking video play time");
-        DateTime eventUnivStartDateTime = DateTime.Parse(XanaEventDetails.eventDetails.startTime);
+        DateTime eventUnivStartDateTime = DateTime.Parse(EventDetails.eventDetails.startTime);
         DateTime eventLocalStartDateTime = eventUnivStartDateTime.ToLocalTime();
         int _eventStartSystemDateTimediff = (int)(eventLocalStartDateTime - System.DateTime.Now).TotalMinutes;
-        //Debug.Log("-------------Event API start time is" + XanaEventDetails.eventDetails.startTime);
+        //Debug.Log("-------------Event API start time is" + EventDetails.eventDetails.startTime);
         //Debug.Log("-------------Event Converted start time is" + eventLocalStartDateTime);
         //Debug.Log("-------------Start time and system time diff" + _eventStartSystemDateTimediff);
         if (_eventStartSystemDateTimediff <= 0)

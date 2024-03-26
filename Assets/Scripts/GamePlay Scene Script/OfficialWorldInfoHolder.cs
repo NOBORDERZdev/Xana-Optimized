@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class XanaWorldInfoHolder : MonoBehaviour
+public class OfficialWorldInfoHolder : MonoBehaviour
 {
     public string worldJson;
     public Transform assetsParent;
@@ -10,7 +10,7 @@ public class XanaWorldInfoHolder : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        XanaWorldDownloader.assetParentStatic = assetsParent;
+        OfficialWorldDownloader.assetParentStatic = assetsParent;
         BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
     }
 

@@ -2160,7 +2160,7 @@ public class SNS_APIResponseManager : MonoBehaviour
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(XanaConstantsHolder.xanaConstants.userProfileLink) || XanaConstantsHolder.xanaConstants.userProfileLink.Contains("Profil") || XanaConstantsHolder.xanaConstants.userProfileLink.Contains("userProfile"))
+                    if (string.IsNullOrEmpty(ConstantsHolder.xanaConstants.userProfileLink) || ConstantsHolder.xanaConstants.userProfileLink.Contains("Profil") || ConstantsHolder.xanaConstants.userProfileLink.Contains("userProfile"))
                     {
                         // Profile is not Modified by User
                             ProfilePictureManager.instance.MakeProfilePicture(setName_name);

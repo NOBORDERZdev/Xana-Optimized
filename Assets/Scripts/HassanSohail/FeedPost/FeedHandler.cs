@@ -46,7 +46,7 @@ public class FeedHandler : MonoBehaviour
         feedContentParent.gameObject.SetActive(true);
         SerchBarObj.SetActive(false);
         searchInputField.Text = "";
-        XanaSocketHandler.instance.updateFeedLike += UpdateFeedLike;
+        HomeSocketHandler.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedsManager.Instance;
         if (!isFeedInitialized)
@@ -466,7 +466,7 @@ public class FeedHandler : MonoBehaviour
      }
     private void OnDisable()
     {
-        XanaSocketHandler.instance.updateFeedLike -= UpdateFeedLike;
+        HomeSocketHandler.instance.updateFeedLike -= UpdateFeedLike;
         ResetFeedController();
     }
 

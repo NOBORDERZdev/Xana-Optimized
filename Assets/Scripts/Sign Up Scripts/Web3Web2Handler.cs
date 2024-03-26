@@ -128,7 +128,7 @@ public class Web3Web2Handler : MonoBehaviour
                     }
                     if (NFTname.Contains("deemo"))
                     {
-                        XanaConstantsHolder.xanaConstants.IsDeemoNFT = true;
+                        ConstantsHolder.xanaConstants.IsDeemoNFT = true;
                     }
                     if (NFTname.Contains("astroboy"))
                     {

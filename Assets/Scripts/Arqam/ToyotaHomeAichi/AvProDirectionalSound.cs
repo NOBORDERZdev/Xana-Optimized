@@ -59,7 +59,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
     IEnumerator AdjustScreenVolume()
     {
-        playerCam = ReferrencesForDynamicMuseum.instance.m_34player.transform;
+        playerCam = ReferrencesForGameplay.instance.m_34player.transform;
 
         while (true)
         {

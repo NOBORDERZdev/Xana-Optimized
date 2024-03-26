@@ -8,9 +8,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class XanaLobbyManager : MonoBehaviour
+public class LobbyManager : MonoBehaviour
 {
-    public static XanaLobbyManager Instance { get; private set; }
+    public static LobbyManager Instance { get; private set; }
     [NonReorderable]
     public List<XanaLobbyWorldInfo> worldsInfo;
     public List<XanaLobbyData> worldsData;

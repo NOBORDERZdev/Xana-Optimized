@@ -35,7 +35,7 @@ public class GalleryImageDetails : MonoBehaviour
     private void OnMouseDown()
     {
         tempTimer = Time.time;
-        //if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+        //if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
 
         //if (!GalleryImageManager.Instance.m_IsDescriptionPanelActive && GalleryImageManager.Instance.CheckCanClickOnImage())
         //{
@@ -63,7 +63,7 @@ public class GalleryImageDetails : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (CameraLook.IsPointerOverUIObject()) return;
+        if (PlayerCameraController.IsPointerOverUIObject()) return;
         if ((Time.time-tempTimer) < clickTime)
         {
             OnPictureClicked();
@@ -74,7 +74,7 @@ public class GalleryImageDetails : MonoBehaviour
 
     public void OnPictureClicked()
     {
-        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+        if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
 
         if (!GalleryImageManager.Instance.m_IsDescriptionPanelActive && GalleryImageManager.Instance.CheckCanClickOnImage())
         {
@@ -123,7 +123,7 @@ public class GalleryImageDetails : MonoBehaviour
                 UserAnalyticsManager.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
             }
 
-            if(XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
+            if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
             {
                 DataType myType = DataType.Image;
                 if (m_IsVideo)

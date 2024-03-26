@@ -33,9 +33,9 @@ public class JjWorldChanger : MonoBehaviour
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            if (ReferrencesForGameplay.instance.m_34player)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
             if (isEnteringPopup)
@@ -81,69 +81,69 @@ public class JjWorldChanger : MonoBehaviour
             worldName = name;
         }
 
-        if (XanaConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstantsHolder.xanaConstants.isFromXanaLobby = true;
+            ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
 
         // LoadingController.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingController.Instance.StartCoroutine(LoadingController.Instance.TeleportFader(FadeAction.In));
-        if (!XanaConstantsHolder.xanaConstants.JjWorldSceneChange && !XanaConstantsHolder.xanaConstants.orientationchanged)
+        if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        //XanaConstantsHolder.xanaConstants.EnviornmentName = worldName;
+        //ConstantsHolder.xanaConstants.EnviornmentName = worldName;
         //FeedEventPrefab.m_EnvName = worldName;
-        //Launcher.sceneName = worldName;
+        //MutliplayerController.sceneName = worldName;
 
         // Added by WaqasAhmad
         // For Live User Count
         if (ServerBaseURlHandler.instance.IsXanaLive)
         {
-            XanaConstantsHolder.xanaConstants.customWorldId = MainNet;
+            ConstantsHolder.xanaConstants.customWorldId = MainNet;
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.customWorldId = testNet;
+            ConstantsHolder.xanaConstants.customWorldId = testNet;
         }
         //
 
         if (isMusuem)
         {
-            XanaConstantsHolder.xanaConstants.IsMuseum = true;
+            ConstantsHolder.xanaConstants.IsMuseum = true;
             if (ServerBaseURlHandler.instance.IsXanaLive)
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = MainNet.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = MainNet.ToString();
             }
             else
             {
-                XanaConstantsHolder.xanaConstants.MuseumID = testNet.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = testNet.ToString();
             }
         }
         else if (isBuilderWorld)
         {
-            XanaConstantsHolder.xanaConstants.isBuilderScene = true;
+            ConstantsHolder.xanaConstants.isBuilderScene = true;
             if (ServerBaseURlHandler.instance.IsXanaLive)
             {
-                XanaConstantsHolder.xanaConstants.builderMapID = MainNet;
+                ConstantsHolder.xanaConstants.builderMapID = MainNet;
             }
             else
             {
-                XanaConstantsHolder.xanaConstants.builderMapID = testNet;
+                ConstantsHolder.xanaConstants.builderMapID = testNet;
             }
         }
         else // FOR JJ WORLD
         {
             if (HaveMultipleSpwanPoint)
             {
-                XanaConstantsHolder.xanaConstants.mussuemEntry = mussuemEntry;
+                ConstantsHolder.xanaConstants.mussuemEntry = mussuemEntry;
             }
             else
             {
-                XanaConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                ConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
             }
         }
         yield return new WaitForSeconds(1f);
-        XanaConstantsHolder.xanaConstants.JjWorldSceneChange = true;
-        XanaConstantsHolder.xanaConstants.JjWorldTeleportSceneName = worldName;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = worldName;
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
 
 

@@ -13,7 +13,7 @@ public class ReactDataClass
     public string iconUrl;
 }
 
-public class ReactScreen : MonoBehaviour
+public class UserReactionsHandler : MonoBehaviour
 {
 
 
@@ -48,7 +48,7 @@ public class ReactScreen : MonoBehaviour
     //private GraphicRaycaster graphicRaycaster;//riken
 
 
-    public static ReactScreen Instance;
+    public static UserReactionsHandler Instance;
     private void Awake()
     {
         if (Instance == null)
@@ -87,14 +87,14 @@ public class ReactScreen : MonoBehaviour
                     ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                     //if (ScreenOrientationManager._instance.isPotrait)
                     //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                    //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+                    //  ReferrencesForGameplay.instance.RotateBtn.interactable = false;
 
                     jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
                     jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                     reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                     BottomBtnParent.SetActive(false);
                     //  XanaChatObject.SetActive(false);
-                    // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                    // ReferrencesForGameplay.instance.RotateBtn.interactable = true;
                 }
             }
 
@@ -122,14 +122,14 @@ public class ReactScreen : MonoBehaviour
                 ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
                 //if (ScreenOrientationManager._instance.isPotrait)
                 //    ScreenOrientationManager._instance.joystickInitPosY = jyostickBtn.transform.localPosition.y;
-                //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+                //  ReferrencesForGameplay.instance.RotateBtn.interactable = false;
                 reactionScreenParent.SetActive(true);
                 jyostickBtn.transform.DOLocalMoveY(-50f, 0.1f);
                 jumpBtn.transform.DOLocalMoveY(-30f, 0.1f);
                 reactionScreenParent.transform.DOLocalMoveY(-108f, 0.1f);
                 BottomBtnParent.SetActive(false);
                 // XanaChatObject.SetActive(false);
-                // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+                // ReferrencesForGameplay.instance.RotateBtn.interactable = true;
                 BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(-225, true);
                 CheckForInstantiation();
                 reactImage.sprite = react_enable;
@@ -156,13 +156,13 @@ public class ReactScreen : MonoBehaviour
     {
         if (ScreenOrientationManager._instance.isPotrait)
         {
-            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            // ReferrencesForGameplay.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
             // XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
-            //ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            //ReferrencesForGameplay.instance.RotateBtn.interactable = true;
         }
         reactionScreenParent.SetActive(false);
     }
@@ -178,14 +178,14 @@ public class ReactScreen : MonoBehaviour
         reactImage.sprite = react_disable;
         if (ScreenOrientationManager._instance.isPotrait)
         {
-            //  ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = false;
+            //  ReferrencesForGameplay.instance.RotateBtn.interactable = false;
             BottomBtnParent.SetActive(true);
             //  XanaChatObject.SetActive(true);
             reactionScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             emoteAnimationScreenParent.transform.DOLocalMoveY(-1500f, 0.1f);
             jyostickBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
             jumpBtn.transform.DOLocalMoveY(ScreenOrientationManager._instance.joystickInitPosY, 0.1f);
-            // ReferrencesForDynamicMuseum.instance.RotateBtn.interactable = true;
+            // ReferrencesForGameplay.instance.RotateBtn.interactable = true;
             BuilderEventManager.ChangeNinja_ThrowUIPosition?.Invoke(225, true);
         }
         else

@@ -141,14 +141,14 @@ public class NpcChatSystem : MonoBehaviour
     }
     private void OnEnable()
     {
-        //if (XanaChatSystem.instance)
-            //XanaChatSystem.instance.npcAlert += PlayerSendMsg;
+        //if (GameplayChatSystem.instance)
+            //GameplayChatSystem.instance.npcAlert += PlayerSendMsg;
     }
 
     private void OnDisable()
     {
-        //if (XanaChatSystem.instance)
-            //XanaChatSystem.instance.npcAlert -= PlayerSendMsg;
+        //if (GameplayChatSystem.instance)
+            //GameplayChatSystem.instance.npcAlert -= PlayerSendMsg;
     }
 
 
@@ -207,9 +207,9 @@ public class NpcChatSystem : MonoBehaviour
             else
                 responseFeed = feed.output_data.user_msg_en;
 
-            if (XanaChatSystem.instance)
+            if (GameplayChatSystem.instance)
             {
-                XanaChatSocket.onSendMsg?.Invoke(XanaConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
+                ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
                 //Debug.Log("Communication Response(UserAI): " + responseFeed);
 
                 if (NpcSpawner.npcSpawner)

@@ -34,7 +34,7 @@ public class ButtonScript : MonoBehaviour
         //// AR changes end
 
 
-        if (XanaConstantsHolder.xanaConstants.currentButtonIndex == Index)
+        if (ConstantsHolder.xanaConstants.currentButtonIndex == Index)
         {
             //    if (Index == 0)                                                  // AR Changes
             //        InventoryManager.instance.ForcellySetLastClickedBtnOfHair();     // AR Changes
@@ -78,12 +78,12 @@ public class ButtonScript : MonoBehaviour
         }
 
 
-        XanaConstantsHolder.xanaConstants.currentButtonIndex = Index;
+        ConstantsHolder.xanaConstants.currentButtonIndex = Index;
         InventoryManager.instance.UpdateXanaConstants();
         InventoryManager.instance.DisableColorPanels();
 
         if (Index == 7 && InventoryManager.instance.panelIndex == 1)
-            InventoryManager.instance.OnColorButtonClicked(XanaConstantsHolder.xanaConstants.currentButtonIndex);
+            InventoryManager.instance.OnColorButtonClicked(ConstantsHolder.xanaConstants.currentButtonIndex);
         else
             InventoryManager.instance.UpdateStoreSelection(Index);
 

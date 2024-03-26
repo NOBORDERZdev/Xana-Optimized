@@ -4,9 +4,9 @@ using UnityEngine;
 using System;
 
 [System.Serializable]
-public class XanaEventDetails
+public class EventDetails
 {
-    public static XanaEventDetails eventDetails;
+    public static EventDetails eventDetails;
     public bool DataIsInitialized = false;
     public int id;
     public string name;
@@ -77,6 +77,6 @@ public class Environment2
 public class EventDataDetails
 {
     public bool success;
-    public XanaEventDetails data;
+    public EventDetails data;
     public string msg;
  }   

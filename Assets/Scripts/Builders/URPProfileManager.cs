@@ -9,7 +9,7 @@ public class URPProfileManager : MonoBehaviour
 
     private void Start()
     {
-        if(XanaConstantsHolder.xanaConstants.isBuilderScene)
+        if(ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (QualitySettings.renderPipeline != builderProfile)
                 ApplyBuilderSetting();

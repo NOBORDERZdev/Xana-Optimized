@@ -16,7 +16,7 @@ public class WalletLoadingChecker : MonoBehaviour
 
     private void Start()
     {
-        if (XanaConstantsHolder.xanaConstants.isWalletLoadingbool)
+        if (ConstantsHolder.xanaConstants.isWalletLoadingbool)
         {
             Invoke("OpenCrossbtn", 8f);
         }
@@ -28,7 +28,7 @@ public class WalletLoadingChecker : MonoBehaviour
     }
     public void CloseCrossbtn()
     {
-        if (!XanaConstantsHolder.loggedIn)
+        if (!ConstantsHolder.loggedIn)
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         LoadingController.Instance.nftLoadingScreen.SetActive(false);
     }

@@ -26,13 +26,13 @@ public class WarpFunctionComponent : ItemComponent
 
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
+            characterControllerNew = ReferrencesForGameplay.instance.MainPlayerParent.GetComponent<CharacterController>();
             
 
             if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
             {
                 StartCoroutine(PositionUpdating());
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 isPortalUsed = true;
                 for (int i = 0; i < warpFunctionComponentData.warpPortalDataEndPoint.Count; i++)
                 {
@@ -47,7 +47,7 @@ public class WarpFunctionComponent : ItemComponent
             }
             else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 StartCoroutine(PositionUpdating());
                 isPortalUsed = true;
                 for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)

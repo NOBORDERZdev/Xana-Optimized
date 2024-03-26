@@ -25,12 +25,12 @@ namespace XanaAi
                 AssetBundle.UnloadAllAssetBundles(false);
                 Resources.UnloadUnusedAssets();
 
-                if (ReactScreen.Instance != null && ReactScreen.Instance.reactDataClass.Count > 0)
+                if (UserReactionsHandler.Instance != null && UserReactionsHandler.Instance.reactDataClass.Count > 0)
                 {
-                    int rand = Random.Range(0, (ReactScreen.Instance.reactDataClass.Count > 5 ? 5 : ReactScreen.Instance.reactDataClass.Count));
-                    if (rand < ReactScreen.Instance.reactDataClass.Count)
+                    int rand = Random.Range(0, (UserReactionsHandler.Instance.reactDataClass.Count > 5 ? 5 : UserReactionsHandler.Instance.reactDataClass.Count));
+                    if (rand < UserReactionsHandler.Instance.reactDataClass.Count)
                     {
-                        string iconUrl = ReactScreen.Instance.reactDataClass[rand].thumb;
+                        string iconUrl = UserReactionsHandler.Instance.reactDataClass[rand].thumb;
                         if (iconUrl != "")
                         {
                             AssetCache.Instance.EnqueueOneResAndWait(iconUrl, iconUrl, (success) =>

@@ -164,7 +164,7 @@ public class BlindComponent : ItemComponent
         time = blindComponentData.time + 1;
         if (playerObject != null)
         {
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
         }
         else
         {

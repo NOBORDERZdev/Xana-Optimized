@@ -45,7 +45,7 @@ namespace Metaverse
         {
             if (InternetLost == null)
             {
-                XanaConstantsHolder.xanaConstants.needToClearMemory = false;
+                ConstantsHolder.xanaConstants.needToClearMemory = false;
                 if (LoadingController.Instance)
                     LoadingController.Instance.HideLoading();
                 GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
@@ -74,18 +74,18 @@ namespace Metaverse
 
         private void OffSelfie()
         {
-            SelfieController.Instance.SwitchFromSelfieControl();
+            PlayerSelfieController.Instance.SwitchFromSelfieControl();
         }
 
         private void TurnCameras(bool active)
         {
             if (active)
             {
-                CameraLook.instance.AllowControl();
+                PlayerCameraController.instance.AllowControl();
             }
             else
             {
-                CameraLook.instance.DisAllowControl();
+                PlayerCameraController.instance.DisAllowControl();
             }
         }
         RoomOptions roomOptions;

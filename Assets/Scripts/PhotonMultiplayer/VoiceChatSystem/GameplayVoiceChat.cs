@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.XR.WSA;
 
-public class XanaVoiceChat : MonoBehaviour
+public class GameplayVoiceChat : MonoBehaviour
 {
     [Header("UI Elements")]
     public GameObject micOnBtn;
@@ -31,7 +31,7 @@ public class XanaVoiceChat : MonoBehaviour
     private bool useMic;
 
     public UnityAction MicToggleOff, MicToggleOn;
-    public static XanaVoiceChat instance;
+    public static GameplayVoiceChat instance;
 
     [Header("Mic Toast to instatiate")]
     public GameObject mictoast;
@@ -79,7 +79,7 @@ public class XanaVoiceChat : MonoBehaviour
             instance.Start();
         }
 
-        //if (XanaConstantsHolder.xanaConstants.mic == 1)
+        //if (ConstantsHolder.xanaConstants.mic == 1)
         //{
         //    TurnOnMic();
         //}
@@ -117,7 +117,7 @@ public class XanaVoiceChat : MonoBehaviour
             StopRecorder();
             Debug.Log("Its an Event Scene");
             TurnOffMic();
-            XanaConstantsHolder.xanaConstants.mic = 0;
+            ConstantsHolder.xanaConstants.mic = 0;
         }
         else
         {
@@ -139,38 +139,28 @@ public class XanaVoiceChat : MonoBehaviour
             micOffBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOff);
             micOnBtn.GetComponent<Button>().onClick.AddListener(MicToggleOn);
             micOnBtnPotrait.GetComponent<Button>().onClick.AddListener(MicToggleOn);
-            if (XanaConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
+            if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
             {
                 micOffBtn.SetActive(false);
                 micOffBtnPotrait.SetActive(false);
                 micOnBtn.SetActive(false);
                 micOnBtnPotrait.SetActive(false);
-                XanaConstantsHolder.xanaConstants.mic = 0;
+                ConstantsHolder.xanaConstants.mic = 0;
             }
             StartCoroutine(CheckVoiceConnect());
         }
     }
 
-    public void MicroPhoneName()
-    {
-        for (int i = 0; i < Microphone.devices.Length; i++)
-        {
-            Debug.Log(i + " Microphone " + Microphone.devices[i]);
-        }
-        Debug.Log("MicroPhoneDevice" + MicroPhoneDevice);
-        Debug.Log("Recorder MicroPhone Name" + recorder.MicrophoneDevice.Name);
-    }
     public void TurnOnMic()
     {
 
-        if (XanaConstantsHolder.xanaConstants.mic == 0)
+        if (ConstantsHolder.xanaConstants.mic == 0)
         {
             GameObject go = Instantiate(mictoast, placetoload);
             Destroy(go, 1.5f);
             return;
         }
 
-        print("Turn on mic");
         micOffBtn.SetActive(false);
         micOffBtnPotrait.SetActive(false);
         micOnBtn.SetActive(true);
@@ -183,7 +173,6 @@ public class XanaVoiceChat : MonoBehaviour
 
     public void StopRecorder()
     {
-        Debug.Log("StopRecorder");
         if (recorder != null)
         {
             recorder.AutoStart = recorder.TransmitEnabled = false;
@@ -194,7 +183,6 @@ public class XanaVoiceChat : MonoBehaviour
 
     public void TurnOffMic()
     {
-        print("Turn off mic");
         micOffBtn.SetActive(true);
         micOffBtnPotrait.SetActive(true);
         micOnBtn.SetActive(false);
@@ -210,15 +198,8 @@ public class XanaVoiceChat : MonoBehaviour
         StartCoroutine(CheckVoiceConnect());
     }
 
-    private void OnDisable()
-    {
-        //voiceConnection.SpeakerLinked -= OnSpeakerCreated;
-        //voiceConnection.Client.RemoveCallbackTarget(this);
-    }
-
     protected virtual void OnSpeakerCreated(Speaker _speaker)
     {
-        Debug.Log("Speaker is Created");
         speaker = _speaker;
     }
 
@@ -231,7 +212,7 @@ public class XanaVoiceChat : MonoBehaviour
         }
         //recorder.TransmitEnabled = true;
         recorder.DebugEchoMode = false;
-        if (XanaConstantsHolder.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1)
         {
             TurnOnMic();
         }

@@ -112,9 +112,9 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 mainAvatar.SetActive(true);
             }
-            if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
+            if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                GameObject mainSceneAvatar = Instantiate(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
+                GameObject mainSceneAvatar = Instantiate(ConstantsHolder.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
                // mainSceneAvatar.GetComponent<HomeAvatarHandler>().UpdateState(true);
                 mainSceneAvatar.GetComponent<HomeAvatarHandler>().SetAvatarforAR();
                 mainSceneAvatar.transform.localScale = Vector3.one;
@@ -141,10 +141,10 @@ public class ARFaceModuleManager : MonoBehaviour
 
     private void OnDisable()
     {
-        /*if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
+        /*if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar);
-            XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }*/
     }
 
@@ -229,10 +229,10 @@ public class ARFaceModuleManager : MonoBehaviour
             videoCaptureButton.CancelingVideoToBackButtonPress();
             return;
         }
-        if (XanaConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
+        if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstantsHolder.xanaConstants.r_MainSceneAvatar);
-            XanaConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }
         Initiate.Fade("Main", loadToColor, 1.0f);
     }

@@ -180,7 +180,7 @@ public class AvatarBodyParts : MonoBehaviour
             head = femaleAvatarMeshes.avatar_head;
         }
 
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
         {
             body = boxerBody;
             head = boxerHead;
@@ -190,7 +190,7 @@ public class AvatarBodyParts : MonoBehaviour
     //Set Texture For Shirt
     public void TextureForShirt(Texture texture)
     {
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(shirt_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
@@ -204,7 +204,7 @@ public class AvatarBodyParts : MonoBehaviour
     // Set texture For 
     public void TextureForPant(Texture texture)
     {
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Pent_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
@@ -215,7 +215,7 @@ public class AvatarBodyParts : MonoBehaviour
 
     public void TextureForShoes(Texture texture)
     {
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Shoes_TextureName, texture);
         else if (avatarController.avatarGender == AvatarGender.Male)
             maleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
@@ -234,7 +234,7 @@ public class AvatarBodyParts : MonoBehaviour
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask, _gender);
@@ -1349,7 +1349,7 @@ public class AvatarBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstantsHolder.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
         {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 

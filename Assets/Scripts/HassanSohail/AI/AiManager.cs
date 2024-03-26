@@ -71,7 +71,7 @@ namespace XanaAi
                 apperance.StartWandering(aiPrefabs[i].GetComponent<AiController>());      // start perform action
             }
 
-            StartCoroutine(ReactScreen.Instance.getAllReactions());
+            StartCoroutine(UserReactionsHandler.Instance.getAllReactions());
 
             yield return null;
             //yield return new WaitForSeconds(1f);

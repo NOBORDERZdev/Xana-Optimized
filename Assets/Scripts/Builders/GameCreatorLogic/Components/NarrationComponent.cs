@@ -47,7 +47,7 @@ public class NarrationComponent : ItemComponent
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Narration);
+        ReferrencesForGameplay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Narration);
 
         string msg = "";
         if (narrationComponentData.narrationsData.Length == 0)

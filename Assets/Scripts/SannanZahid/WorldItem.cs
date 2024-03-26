@@ -355,10 +355,10 @@ public class WorldItem : MonoBehaviour
     {
         m_EnvName = m_EnvironmentName;
         m_CreaName = Creator_Name;
-        XanaConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
-        XanaConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
-        XanaConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        Launcher.sceneName = m_EnvName;
+        ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
+        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+        MutliplayerController.sceneName = m_EnvName;
 
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{
@@ -373,22 +373,22 @@ public class WorldItem : MonoBehaviour
     entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
         //}
 
-        XanaConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
-        XanaConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
+        ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
+        ConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
             WorldDetailsPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
-            XanaConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
         }
         else
         {
-            XanaConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.xanaConstants.userLimit = userLimit;
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
 
-        XanaConstantsHolder.xanaConstants.MuseumID = idOfObject;
+        ConstantsHolder.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
     Sprite XanaWorldBanner;
