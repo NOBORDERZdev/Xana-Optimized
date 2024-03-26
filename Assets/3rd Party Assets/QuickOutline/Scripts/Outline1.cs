@@ -112,9 +112,9 @@ public class Outline1 : MonoBehaviour
 
     private void Start()
     {
-        /*outlineColor = ARFaceModuleManager.Instance.outlineColor;//rik
-        outlineWidth = ARFaceModuleManager.Instance.outlineWidth;
-        outlineMode = ARFaceModuleManager.Instance.outlineMode;*/
+        /*outlineColor = ARFaceModuleHandler.Instance.outlineColor;//rik
+        outlineWidth = ARFaceModuleHandler.Instance.outlineWidth;
+        outlineMode = ARFaceModuleHandler.Instance.outlineMode;*/
     }
 
     void OnEnable()

@@ -213,7 +213,7 @@ namespace DigitalRubyShared
                 //Debug.Log("gestureWorldPoint : " + gestureWorldPoint);
                 if (rigidBody != null)
                 {
-                    if (SceneManager.GetActiveScene().name == "ARModulePlanDetectionScene" && !LiveVideoRoomManager.Instance.IsVideoScreenImageScreenAvtive)
+                    if (SceneManager.GetActiveScene().name == "ARModulePlanDetectionScene" && !VideoRoomHandler.Instance.IsVideoScreenImageScreenAvtive)
                     {
                         //temp = new Vector3(gestureWorldPoint.x, gestureWorldPoint.y, tempZPos - (tempYPos - gestureWorldPoint.y));
                         //  temp = new Vector3(gestureWorldPoint.x, gestureWorldPoint.y, 0)+(camera.transform.forward*( tempZPos - (tempYPos - gestureWorldPoint.y)));
@@ -278,10 +278,10 @@ namespace DigitalRubyShared
                     if (rigidBody.gameObject.tag == "Player" && !isMove)
                     {
                         //Debug.LogError("Player : " + gameObject.name);
-                        if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                        if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                         {
                             //Debug.LogError("Player : " + gameObject.name);
-                            rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(true);
+                            rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(true);
                         }
                         isMove = true;
                     }
@@ -306,9 +306,9 @@ namespace DigitalRubyShared
                     spriteRenderer.sortingOrder = startSortOrder;
                 }
 
-                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                 {
-                    rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(false);
+                    rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(false);
                 }
 
                 isMove = false;
@@ -335,13 +335,13 @@ namespace DigitalRubyShared
         public float minscaleValue, maxScaleValue;
         private void ScaleGestureUpdated(DigitalRubyShared.GestureRecognizer scaleGesture)
         {
-            //Debug.LogError("isAllow:" + AllowScale + " :MinMaxScale X:" + MinMaxScale.x + "  :MinMaxScale Y:" + MinMaxScale.y + ":Start:" + startScale + "   :Can Rotate:" + ARFaceModuleManager.Instance.m_CanRotateCharacter);
+            //Debug.LogError("isAllow:" + AllowScale + " :MinMaxScale X:" + MinMaxScale.x + "  :MinMaxScale Y:" + MinMaxScale.y + ":Start:" + startScale + "   :Can Rotate:" + ARFaceModuleHandler.Instance.m_CanRotateCharacter);
             if (!AllowScale)
             {
                 scaleGesture.Reset();
                 return;
             }
-            else if (MinMaxScale.x < 0.0f || MinMaxScale.y < 0.0f || (startScale == null && !ARFaceModuleManager.Instance.m_CanRotateCharacter))
+            else if (MinMaxScale.x < 0.0f || MinMaxScale.y < 0.0f || (startScale == null && !ARFaceModuleHandler.Instance.m_CanRotateCharacter))
             {
                 //Debug.LogError("startScale" + startScale);
                 // no scaling
@@ -415,9 +415,9 @@ namespace DigitalRubyShared
                 }
                 if (rigidBody.gameObject.tag == "Player" && !isMove)
                 {
-                    if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                    if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                     {
-                        rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(true);
+                        rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(true);
                     }
                     isMove = true;
                 }
@@ -429,9 +429,9 @@ namespace DigitalRubyShared
             }
             else if (scaleGesture.State == GestureRecognizerState.Ended)
             {
-                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                 {
-                    rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(false);
+                    rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(false);
                 }
 
                 ClearStartState();
@@ -469,9 +469,9 @@ namespace DigitalRubyShared
                     rigidBody.MoveRotation(rigidBody.rotation * rotation);
                     if (rigidBody.gameObject.tag == "Player" && !isMove)
                     {
-                        if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                        if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                         {
-                            rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(true);
+                            rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(true);
                         }
                         isMove = true;
                     }
@@ -491,9 +491,9 @@ namespace DigitalRubyShared
             }
             else if (rotateGesture.State == GestureRecognizerState.Ended)
             {
-                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>() != null)
+                if (rigidBody != null && rigidBody.gameObject.GetComponent<AvatarOutlineHandler>() != null)
                 {
-                    rigidBody.gameObject.GetComponent<AvatarBorderSelectionManager>().AvatarSelectionBorder(false);
+                    rigidBody.gameObject.GetComponent<AvatarOutlineHandler>().AvatarSelectionBorder(false);
                 }
 
                 isMove = false;
@@ -654,7 +654,7 @@ namespace DigitalRubyShared
                 FingersScript.Instance.RemoveGesture(ScaleGesture);
                 FingersScript.Instance.RemoveGesture(RotateGesture);
                 FingersScript.Instance.RemoveGesture(DoubleTapGesture);
-                DestroyImmediate(FingersScript.Instance.gameObject);//new added ARFaceModuleManager.Instance.m_CanRotateCharacter
+                DestroyImmediate(FingersScript.Instance.gameObject);//new added ARFaceModuleHandler.Instance.m_CanRotateCharacter
             }
         }
     }

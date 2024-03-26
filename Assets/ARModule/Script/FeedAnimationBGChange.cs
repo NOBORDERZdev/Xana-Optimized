@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class FeedAnimationBGChange : MonoBehaviour
+public class ARAnimationThumbnailHandler : MonoBehaviour
 {
     public GameObject ContentPanel;
     public GameObject ListItemPrefab;
@@ -23,7 +23,7 @@ public class FeedAnimationBGChange : MonoBehaviour
     // Start is called before the first frame update
     private bool alreadyInstantiated = false;
 
-    public static FeedAnimationBGChange instance;
+    public static ARAnimationThumbnailHandler instance;
 
     void Start()
     {
@@ -208,15 +208,15 @@ public class FeedAnimationBGChange : MonoBehaviour
 
     public void Load(GameObject _gameObject)
     {
-        LiveVideoRoomManager.Instance.BackgroundImage.gameObject.SetActive(true);
-        LiveVideoRoomManager.Instance.BackgroundImage.sprite = _gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+        VideoRoomHandler.Instance.BackgroundImage.gameObject.SetActive(true);
+        VideoRoomHandler.Instance.BackgroundImage.sprite = _gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
         if (_gameObject.name == "None")
         {
-            LiveVideoRoomManager.Instance.BackgroundImage.color = new Color(243f, 243f, 243f);
+            VideoRoomHandler.Instance.BackgroundImage.color = new Color(243f, 243f, 243f);
         }
         else
         {
-            LiveVideoRoomManager.Instance.BackgroundImage.color = Color.white;
+            VideoRoomHandler.Instance.BackgroundImage.color = Color.white;
         }
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class BackGroundItem : MonoBehaviour
+public class ARBackgroundItem : MonoBehaviour
 {
     public int itemIndex;
     [HideInInspector] public byte R;
@@ -15,32 +15,32 @@ public class BackGroundItem : MonoBehaviour
     [HideInInspector] public byte A;
     public GameObject textColor;
     public GameObject selectionImage;
-    [HideInInspector] public FilterBG controller;
+    [HideInInspector] public BGFilterHandler controller;
     
     public GameObject ContentPanel;
     public void OnClickItem()
     {
         if (this.gameObject.name == "None" && SceneManager.GetActiveScene().name == "ARModuleFaceTrackingScene")
         {
-            LiveVideoRoomManager.Instance.BackgroundImage.gameObject.SetActive(false);
+            VideoRoomHandler.Instance.BackgroundImage.gameObject.SetActive(false);
         }
         else
         {
-            LiveVideoRoomManager.Instance.BackgroundImage.gameObject.SetActive(true);
-            LiveVideoRoomManager.Instance.BackgroundImage.sprite = gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
+            VideoRoomHandler.Instance.BackgroundImage.gameObject.SetActive(true);
+            VideoRoomHandler.Instance.BackgroundImage.sprite = gameObject.transform.GetChild(0).GetComponent<Image>().sprite;
             if (this.gameObject.name == "None")
             {
-                LiveVideoRoomManager.Instance.BackgroundImage.color = new Color(243f, 243f, 243f);
+                VideoRoomHandler.Instance.BackgroundImage.color = new Color(243f, 243f, 243f);
             }
             else
             {
-                LiveVideoRoomManager.Instance.BackgroundImage.color = Color.white;
+                VideoRoomHandler.Instance.BackgroundImage.color = Color.white;
             }
         }
 
-        ARFaceModuleManager.Instance.SelectionBorderOnBackgroundImage(itemIndex);
+        ARFaceModuleHandler.Instance.SelectionBorderOnBackgroundImage(itemIndex);
 
-        ARFaceModuleManager.Instance.SelectionBorderOnBackgroundColor(0);
+        ARFaceModuleHandler.Instance.SelectionBorderOnBackgroundColor(0);
         /*for (int i = 0; i < transform.parent.childCount; i++)
         {
             transform.parent.GetChild(i).GetChild(1).gameObject.SetActive(false);
@@ -49,7 +49,7 @@ public class BackGroundItem : MonoBehaviour
     }
 
 
-    public void Initializ(byte r, byte g, byte b, byte a, FilterBG ctrlr, GameObject Content)
+    public void Initializ(byte r, byte g, byte b, byte a, BGFilterHandler ctrlr, GameObject Content)
     {
         R = r;
         G = g;
@@ -64,7 +64,7 @@ public class BackGroundItem : MonoBehaviour
     {
 
         //  PlayerPrefs.Save();
-        FilterBG.instance.OnClickFilterItem(R,G,B,A);
+        BGFilterHandler.instance.OnClickFilterItem(R,G,B,A);
 
         foreach (Transform obj in ContentPanel.transform)
         {
@@ -79,16 +79,16 @@ public class BackGroundItem : MonoBehaviour
 
     public void OnClickColorItem()
     {
-        ARFaceModuleManager.Instance.SelectionBorderOnBackgroundImage(1);
+        ARFaceModuleHandler.Instance.SelectionBorderOnBackgroundImage(1);
 
-        if (!LiveVideoRoomManager.Instance.BackgroundImage.gameObject.activeSelf)
+        if (!VideoRoomHandler.Instance.BackgroundImage.gameObject.activeSelf)
         {
-            LiveVideoRoomManager.Instance.BackgroundImage.gameObject.SetActive(true);
+            VideoRoomHandler.Instance.BackgroundImage.gameObject.SetActive(true);
         }
-        LiveVideoRoomManager.Instance.BackgroundImage.sprite = null;
-        LiveVideoRoomManager.Instance.BackgroundImage.color = gameObject.transform.GetChild(0).GetComponent<Image>().color;
+        VideoRoomHandler.Instance.BackgroundImage.sprite = null;
+        VideoRoomHandler.Instance.BackgroundImage.color = gameObject.transform.GetChild(0).GetComponent<Image>().color;
 
-        ARFaceModuleManager.Instance.SelectionBorderOnBackgroundColor(itemIndex);
+        ARFaceModuleHandler.Instance.SelectionBorderOnBackgroundColor(itemIndex);
         /*for (int i = 0; i < transform.parent.childCount; i++)
         {
             transform.parent.GetChild(i).GetChild(1).gameObject.SetActive(false);
@@ -106,9 +106,9 @@ public class BackGroundItem : MonoBehaviour
         transform.GetChild(1).gameObject.SetActive(true);
         transform.GetChild(2).gameObject.GetComponent<TextMeshProUGUI>().color = Color.blue;
 
-        //LiveVideoRoomManager.Instance.mainVolume.profile = LiveVideoRoomManager.Instance.filterVolumeProfile[index];
+        //VideoRoomHandler.Instance.mainVolume.profile = VideoRoomHandler.Instance.filterVolumeProfile[index];
 
-        if (LiveVideoRoomManager.Instance.filterMainVolume.profile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out var color))
+        if (VideoRoomHandler.Instance.filterMainVolume.profile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out var color))
         {
             color.colorFilter.overrideState = true;
             color.colorFilter.value = Color.white;
@@ -117,18 +117,18 @@ public class BackGroundItem : MonoBehaviour
 
     public void OnClickSelectCharacterBtn()
     {
-        if ((SceneManager.GetActiveScene().name != "ARModuleActionScene" || LiveVideoRoomManager.Instance.IsVideoScreenImageScreenAvtive) && itemIndex != 0)
+        if ((SceneManager.GetActiveScene().name != "ARModuleActionScene" || VideoRoomHandler.Instance.IsVideoScreenImageScreenAvtive) && itemIndex != 0)
         {
             Vector3 pos = new Vector3(0, 0, 2f);
-            GameObject avatartItem = Instantiate(ARFaceModuleManager.Instance.allCharacterItemList[itemIndex]);
-            avatartItem.transform.localPosition = ARFaceModuleManager.Instance.allCharacterItemDefaultPos;
-            avatartItem.transform.localScale = ARFaceModuleManager.Instance.allCharacterItemDefaultScale;
-            ARFaceModuleManager.Instance.addAvtarItem.Add(avatartItem);
+            GameObject avatartItem = Instantiate(ARFaceModuleHandler.Instance.allCharacterItemList[itemIndex]);
+            avatartItem.transform.localPosition = ARFaceModuleHandler.Instance.allCharacterItemDefaultPos;
+            avatartItem.transform.localScale = ARFaceModuleHandler.Instance.allCharacterItemDefaultScale;
+            ARFaceModuleHandler.Instance.addAvtarItem.Add(avatartItem);
             avatartItem.GetComponent<FingersPanRotateScaleComponentScript>().SetMinScaleOfAvatar();
 
-            avatartItem.GetComponent<AvatarScript>().avatarIndexId = itemIndex;
+            avatartItem.GetComponent<ARAvatarController>().avatarIndexId = itemIndex;
 
-            if (SceneManager.GetActiveScene().name == "ARModulePlanDetectionScene" && !LiveVideoRoomManager.Instance.IsVideoScreenImageScreenAvtive)
+            if (SceneManager.GetActiveScene().name == "ARModulePlanDetectionScene" && !VideoRoomHandler.Instance.IsVideoScreenImageScreenAvtive)
             {
                 if (ARPlacement.Instance.spawnedObject != null)
                 {
@@ -138,28 +138,28 @@ public class BackGroundItem : MonoBehaviour
                     //avatartItem.transform.position = ARPlacement.Instance.spawnedObject.transform.position;
                     //Debug.LogError("AvatrItem:" + avatartItem.transform.position + "    :scale:" + avatartItem.transform.localScale);
                 }
-                /*if (avatartItem.GetComponent<AvatarScript>().avatarShadowPlanObj != null)
+                /*if (avatartItem.GetComponent<ARAvatarController>().avatarShadowPlanObj != null)
                 {
-                    avatartItem.GetComponent<AvatarScript>().avatarShadowPlanObj.SetActive(true);
+                    avatartItem.GetComponent<ARAvatarController>().avatarShadowPlanObj.SetActive(true);
                 }*/
             }
         }
         else
         {
-            if (ARFaceModuleManager.Instance.mainAvatar != null)
+            if (ARFaceModuleHandler.Instance.mainAvatar != null)
             {
-                AvatarScript avatarScript = ARFaceModuleManager.Instance.mainAvatar.GetComponent<AvatarScript>();
+                ARAvatarController avatarScript = ARFaceModuleHandler.Instance.mainAvatar.GetComponent<ARAvatarController>();
                 avatarScript.avatarIndexId = itemIndex;
                 avatarScript.ChangeAnimationClip();
 
-                ARFaceModuleManager.Instance.CharacterSelectionBoarderChange(itemIndex);
+                ARFaceModuleHandler.Instance.CharacterSelectionBoarderChange(itemIndex);
             }
         }
     }
 
     public void OnClickSelectEmojiBtn()
     {
-        GameObject emoji = Instantiate(ARFaceModuleManager.Instance.EmojiItem, ARFaceModuleManager.Instance.videoEditCanvas.transform);
-        emoji.GetComponent<Image>().sprite = ARFaceModuleManager.Instance.allEmojiSprite[itemIndex];
+        GameObject emoji = Instantiate(ARFaceModuleHandler.Instance.EmojiItem, ARFaceModuleHandler.Instance.videoEditCanvas.transform);
+        emoji.GetComponent<Image>().sprite = ARFaceModuleHandler.Instance.allEmojiSprite[itemIndex];
     }
 }

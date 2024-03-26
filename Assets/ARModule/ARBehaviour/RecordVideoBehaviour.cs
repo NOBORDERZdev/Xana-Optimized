@@ -7,9 +7,9 @@ using NatCorder.Inputs;
 using UnityEngine.UI;
 using System.IO;
 
-public class RecordVideoBehaviour : MonoBehaviour
+public class VideoRecordingController : MonoBehaviour
 {
-    public static RecordVideoBehaviour instance;
+    public static VideoRecordingController instance;
     [Header("Recording")]
     public int videoWidth ;
     public int videoHeight ;
@@ -75,9 +75,9 @@ public class RecordVideoBehaviour : MonoBehaviour
             SNSNotificationHandler.Instance.ResetAndInstantHideNotificationBar();
         }
 
-        ARFaceModuleManager.Instance.OnActiveOrDisableUiRecordingTime(false);//this method is used to false button ui video racording time.......
+        ARFaceModuleHandler.Instance.OnActiveOrDisableUiRecordingTime(false);//this method is used to false button ui video racording time.......
 
-        LiveVideoRoomManager.Instance.VideoRecordingAllUIDisable(false);
+        VideoRoomHandler.Instance.VideoRecordingAllUIDisable(false);
         // Start recording
         var frameRate = 30;
         var sampleRate = recordMicrophone ? AudioSettings.outputSampleRate : 0;
@@ -95,32 +95,32 @@ public class RecordVideoBehaviour : MonoBehaviour
                 var prefix = Application.platform == RuntimePlatform.IPhonePlayer ? "" : "";
                 // Handheld.PlayFullScreenMovie($"{prefix}{recordingPath}");
 
-                ARFaceModuleManager.Instance.OnActiveOrDisableUiRecordingTime(true);//this method is used to false button ui video racording time.......
+                ARFaceModuleHandler.Instance.OnActiveOrDisableUiRecordingTime(true);//this method is used to false button ui video racording time.......
 
-                if (!ARFaceModuleManager.Instance.r_IsCapturingVideoBack)//this is check for if user back button press video capturing time do not open video view screen.......
+                if (!ARFaceModuleHandler.Instance.r_IsCapturingVideoBack)//this is check for if user back button press video capturing time do not open video view screen.......
                 {
-                    LiveVideoRoomManager.Instance.filterMainVolume.gameObject.SetActive(false);
-                    LiveVideoRoomManager.Instance.videoPlayScreen.SetActive(true);
-                    LiveVideoRoomManager.Instance.videoPlayerUIScreen.SetActive(true);
-                    LiveVideoRoomManager.Instance.GetLastAvatarListCount();
+                    VideoRoomHandler.Instance.filterMainVolume.gameObject.SetActive(false);
+                    VideoRoomHandler.Instance.videoPlayScreen.SetActive(true);
+                    VideoRoomHandler.Instance.videoPlayerUIScreen.SetActive(true);
+                    VideoRoomHandler.Instance.GetLastAvatarListCount();
 
-                    ARFaceModuleManager.Instance.DisableBottomMainPanel(false);
+                    ARFaceModuleHandler.Instance.DisableBottomMainPanel(false);
 
 
-                    /*if (ARFaceModuleManager.Instance.mainAvatar != null)
+                    /*if (ARFaceModuleHandler.Instance.mainAvatar != null)
                     {
-                        ARFaceModuleManager.Instance.mainAvatar.SetActive(false);
+                        ARFaceModuleHandler.Instance.mainAvatar.SetActive(false);
                     }
-                    if (ARFaceModuleManager.Instance.addAvtarItem.Count != 0)
+                    if (ARFaceModuleHandler.Instance.addAvtarItem.Count != 0)
                     {
-                        for (int i = 0; i < ARFaceModuleManager.Instance.addAvtarItem.Count; i++)
+                        for (int i = 0; i < ARFaceModuleHandler.Instance.addAvtarItem.Count; i++)
                         {
-                            ARFaceModuleManager.Instance.addAvtarItem[i].gameObject.SetActive(false);
+                            ARFaceModuleHandler.Instance.addAvtarItem[i].gameObject.SetActive(false);
                         }
                     }*/
-                   Debug.Log("videoPath : " + LiveVideoRoomManager.Instance.videoPath + " :Prefix:" + prefix);
-                    LiveVideoRoomManager.Instance.OnStartVideoPlay($"{prefix}{recordingPath}", false);
-                    LiveVideoRoomManager.Instance.videoPath = $"{prefix}{recordingPath}";
+                   Debug.Log("videoPath : " + VideoRoomHandler.Instance.videoPath + " :Prefix:" + prefix);
+                    VideoRoomHandler.Instance.OnStartVideoPlay($"{prefix}{recordingPath}", false);
+                    VideoRoomHandler.Instance.videoPath = $"{prefix}{recordingPath}";
                 }
                 else
                 {//if user canceling video capture then delete file from path
@@ -130,7 +130,7 @@ public class RecordVideoBehaviour : MonoBehaviour
                         Debug.Log("Deleteing temp capture video file");
                         File.Delete(tempPath);
                     }
-                    ARFaceModuleManager.Instance.r_IsCapturingVideoBack = false;
+                    ARFaceModuleHandler.Instance.r_IsCapturingVideoBack = false;
                 }
             }
         );
@@ -143,7 +143,7 @@ public class RecordVideoBehaviour : MonoBehaviour
 
     public void StopRecording()
     {
-        LiveVideoRoomManager.Instance.VideoRecordingAllUIDisable(true);
+        VideoRoomHandler.Instance.VideoRecordingAllUIDisable(true);
         //pressed = false;
         // Stop recording
         audioInput?.Dispose();
