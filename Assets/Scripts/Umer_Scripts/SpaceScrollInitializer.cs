@@ -24,10 +24,18 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// </summary>
     public EnhancedScrollerCellView masterCellViewPrefab;
 
+    /// <summary>
+    /// Used to determine if the scroller is already loading new data.
+    /// If so, then we don't want to call again to avoid an infinite loop.
+    /// </summary>
+    public bool _loadingNew;
+
     //Custome Variables
     public bool initializeCategoryRow = false;
     public AllWorldManage allWorldManageRef;
+    public WorldSpacesHomeScreen _spaceCategDataInitializer;
     SpaceScrollRowHandler masterData;
+    public float scrollPosition;
     int instanChildCount = 0;
 
     /// <summary>
@@ -48,6 +56,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         // tell the scroller that this script will be its delegate
         masterScroller.Delegate = this;
+        masterScroller.scrollerScrolled = ScrollerScrolled;
 
         // load in a large set of data
         //LoadData();
@@ -56,40 +65,79 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// <summary>
     /// Populates the data with a lot of records
     /// </summary>
-    public void AddRowToScroller(WorldItemDetail _singleWorldItem, int _dataCount, string _categTitle)
+    public void AddRowToScroller(WorldItemDetail _singleWorldItem, int _dataCount, string _categTitle, List<TagsCategoryData> _tagsCategData = null, List<string> _categTitles = null, bool _isTagCateg = false)
     {
-        Debug.Log("Function called this much time: ");
+        //Debug.Log("Function called this much time: " + _dataCount);
         // set up some simple data. This will be a two-dimensional array,
         // specifically a list within a list.
-
-        if (initializeCategoryRow)
+        if (_isTagCateg)
         {
-            initializeCategoryRow = false;
-            instanChildCount = 0;
-            Debug.Log("Master row Initialized");
-            //for (var i = 0; i < 10; i++)
-            //{
-            masterData = new SpaceScrollRowHandler()
+            for (int i = 0; i < _tagsCategData.Count; i++)
             {
-                normalizedScrollPosition = 0,
-                _allWorldManageRef = allWorldManageRef,
-                categoryTitle = _categTitle,
-                childData = new List<WorldItemDetail>()
-            };
+                initializeCategoryRow = true;
+                for (int j = 0; j < _tagsCategData[i]._tagAsCategoryData.Count; j++)
+                {
+                    if (initializeCategoryRow)
+                    {
+                        initializeCategoryRow = false;
+                        Debug.Log("Master row Initialized" + _categTitles[i]);
+                        //for (var i = 0; i < 10; i++)
+                        //{
+                        masterData = new SpaceScrollRowHandler()
+                        {
+                            normalizedScrollPosition = 0,
+                            _allWorldManageRef = allWorldManageRef,
+                            categoryTitle = _categTitles[i],
+                            childData = new List<WorldItemDetail>()
+                        };
 
-            _data.Add(masterData);
+                        _data.Add(masterData);
+                    }
+                    masterData.childData.Add(_tagsCategData[i]._tagAsCategoryData[j]);
+                }
+            }
+            LoadDataInPool();
         }
-        masterData.childData.Add(_singleWorldItem);
-
-        instanChildCount++;
-        //}
-        //}
-        if (instanChildCount.Equals(_dataCount))
+        else
         {
-            Debug.Log("Worked once only?");
-            // tell the scroller to reload now that we have the data
-            masterScroller.ReloadData();
+            if (initializeCategoryRow)
+            {
+                initializeCategoryRow = false;
+                instanChildCount = 0;
+                Debug.Log("Master row Initialized" + _categTitle);
+                //for (var i = 0; i < 10; i++)
+                //{
+                masterData = new SpaceScrollRowHandler()
+                {
+                    normalizedScrollPosition = 0,
+                    _allWorldManageRef = allWorldManageRef,
+                    categoryTitle = _categTitle,
+                    childData = new List<WorldItemDetail>()
+                };
+
+                _data.Add(masterData);
+            }
+            masterData.childData.Add(_singleWorldItem);
+
+            instanChildCount++;
+            //}
+            //}
+
+            if (instanChildCount.Equals(_dataCount))
+            {
+                //Debug.Log("Worked once only? " + instanChildCount);
+                LoadDataInPool();
+            }
         }
+    }
+
+    public void LoadDataInPool()
+    {
+        scrollPosition = masterScroller.ScrollPosition;
+        // tell the scroller to reload now that we have the data
+        masterScroller.ReloadData();
+        masterScroller.ScrollPosition = scrollPosition;
+        _loadingNew = false;
     }
 
     #region EnhancedScroller Handlers
@@ -146,6 +194,33 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         // return the cell to the scroller
         return masterCellView;
+    }
+
+    /// <summary>
+    /// This is called when the scroller fires a scrolled event
+    /// </summary>
+    /// <param name="scroller">the scroller that fired the event</param>
+    /// <param name="val">scroll amount</param>
+    /// <param name="scrollPosition">new scroll position</param>
+    private void ScrollerScrolled(EnhancedScroller scroller, Vector2 val, float scrollPosition)
+    {
+        // if the scroller is at the end of the list and not already loading
+        if (scroller.NormalizedScrollPosition >= 1f && !_loadingNew)
+        {
+            _spaceCategDataInitializer.tagAsCategoryData.Clear();
+            _spaceCategDataInitializer.CategorytagNames.Clear();
+            // toggle on loading so that we don't get stuck in a loading loop
+            _loadingNew = true;
+
+            //Debug.Log("Scroller Scrolled Registered");
+            _spaceCategDataInitializer.GetUsersMostVisitedTags();
+            //_loadingNew = false;
+            // for this example, we fake a delay that would simulate getting new data in a real application.
+            // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
+            // 1 second delay.
+
+            //StartCoroutine(FakeDelay());
+        }
     }
 
     #endregion

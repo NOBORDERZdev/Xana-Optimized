@@ -30,6 +30,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public WorldManager worldManager;
     public ResponseHolder apiResponseHolder;
     public static List<string> mostVisitedTagList = new List<string>();
+    public int totalTagsInstCount = 0, _tagsTraversedCount = 0;
+    public List<TagsCategoryData> tagAsCategoryData = new List<TagsCategoryData>();
+    public List<string> CategorytagNames = new List<string>();
+    WorldItemDetail _event;
 
     public SpaceScrollInitializer spaceCategoryScroller;
     public bool ApiHolderContainsData = false;
@@ -37,7 +41,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
         WorldManager.ReloadFollowingSpace += FollowingSpaceLoading;
-
+        spaceCategoryScroller._spaceCategDataInitializer = this;
     }
 
     private void OnDisable()
@@ -84,7 +88,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotSpacesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo, "Featured Spaces"));
+                SetContentItem(hotSpacesContent, worldInfo, "Featured Spaces");
             }
             HotSpaceLoading();
         }));
@@ -103,7 +107,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotSpacesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotSpacesContent, worldInfo, "Hot Spaces"));
+                SetContentItem(hotSpacesContent, worldInfo, "Hot Spaces");
             }
             HotGamesLoading();
         }));
@@ -122,7 +126,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     hotGamesParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(hotGamesContent, worldInfo, "Hot Games"));
+                SetContentItem(hotGamesContent, worldInfo, "Hot Games");
             }
             FollowingSpaceLoading();
         }));
@@ -144,7 +148,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
                 FlexibleRect.OnAdjustSize?.Invoke(false);
 
-                StartCoroutine(SetContentItem(followingContent, worldInfo, "Following Spaces"));
+                SetContentItem(followingContent, worldInfo, "Following Spaces");
             }
             MySpaceLoading();
         }));
@@ -163,21 +167,11 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     mySpaceParent.SetActive(false);
                     FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(mySpaceContent, worldInfo, "My Spaces"));
+                SetContentItem(mySpaceContent, worldInfo, "My Spaces");
             }
-            GetUsersMostVisitedTags(() =>
-            {
-                //Reset page number because of getting null data 
-                WorldManager.instance.SearchTagPageNumb = 1;
-                for (int i = 0; i < mostVisitedTagList.Count; i++)
-                {
-                    CategoryLoading(i);
-                }
-            });
+            GetUsersMostVisitedTags(true);
         }));
     }
-
-
     void GetAllTags()
     {
         string finalAPIURL = ConstantsGod.API_BASEURL + ConstantsGod.USERTAGS;
@@ -196,8 +190,9 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         }));
     }
 
-    void GetUsersMostVisitedTags(Action CallBack)
+    public void GetUsersMostVisitedTags(bool _firstTimeLoad = false)
     {
+        mostVisitedTagList.Clear();
         string finalAPIURL = ConstantsGod.API_BASEURL + ConstantsGod.MOSTVISITEDTAG + "1/20";
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -213,28 +208,62 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 {
                     for (int i = 0; i < userTagInfo.data.Count; i++)
                     {
-                        //if (mostVisitedTagList.Count < 12)
-                        //{
-                            mostVisitedTagList.Add(userTagInfo.data[i].tagName);
-                        //}
-                        //else
-                        //{
-                        //    break;
-                        //}
+                        mostVisitedTagList.Add(userTagInfo.data[i].tagName);
                     }
-                    CallBack();
+
+                    //Reset page number because of getting null data 
+                    WorldManager.instance.SearchTagPageNumb = 1;
+                    //for (int i = 0; i < mostVisitedTagList.Count; i++)
+                    //{
+                    //    CategoryLoading(i);
+                    //}
+                    StartCoroutine(LoadUserTagsAsCategoriesPagination(_firstTimeLoad));
                 }
             }
         }));
     }
 
-    void CategoryLoading(int index)
+    IEnumerator LoadUserTagsAsCategoriesPagination(bool _firstTimeLoad = false)
+    {
+        //Debug.Log("User most visited tags count: " + mostVisitedTagList.Count);
+        //Initialize only 7 on first call and wait for paginated call for more data
+        if (!_tagsTraversedCount.Equals(mostVisitedTagList.Count - 1))
+        {
+            do
+            {
+                if (_tagsTraversedCount < mostVisitedTagList.Count - 1)
+                {
+                    _tagsTraversedCount++;
+                }
+                else
+                {
+                    break;
+                }
+                yield return CategoryLoading(_tagsTraversedCount, _firstTimeLoad);
+            } while (totalTagsInstCount < 7);
+            //Debug.Log("Total tags instantiated count: " + totalTagsInstCount);
+            if (!ApiHolderContainsData)
+            {
+                //Debug.Log("Adding data to scroller");
+                _event = new WorldItemDetail();
+                spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
+            }
+            //spaceCategoryScroller.scrollPosition = spaceCategoryScroller.masterScroller.ScrollPosition;
+            //spaceCategoryScroller.masterScroller.ReloadData();
+            //spaceCategoryScroller.masterScroller.ScrollPosition = spaceCategoryScroller.scrollPosition;
+            //spaceCategoryScroller._loadingNew = false;
+            totalTagsInstCount = 0;
+        }
+    }
+
+
+    IEnumerator CategoryLoading(int index, bool _firstTimeLoad = false)
     {
         worldManager.SearchKey = mostVisitedTagList[index];
         //categoryHeading[index].text = mostVisitedTagList[index];
         //categoryHeading[index].GetComponent<TextLocalization>().LocalizeTextText(categoryHeading[index].text);
         string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
-        StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
+        yield return StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
             {
@@ -250,10 +279,18 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 else
                 {
+                    if (_firstTimeLoad)
+                    {
+                        SetContentItem(gameObject, worldInfo, mostVisitedTagList[index]);
+                    }
+                    else
+                    {
+                        SetContentItem(gameObject, worldInfo, mostVisitedTagList[index], true);
+                    }
+                    totalTagsInstCount += 1;
                     //CategoryParentVisibility(index, true);
                     //FlexibleRect.OnAdjustSize?.Invoke(false);
                 }
-                StartCoroutine(SetContentItem(gameObject, worldInfo, mostVisitedTagList[index]));
             }
             else
             {
@@ -286,7 +323,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 /*else
                     apiResponseHolder.AddReponse(finalAPIURL, response);*/
-                StartCoroutine(SetContentItem(category1, worldInfo));
+                //StartCoroutine(SetContentItem(category1, worldInfo));
             }
             /* else
              {
@@ -318,7 +355,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 /*else
                     apiResponseHolder.AddReponse(finalAPIURL, response);*/
-                StartCoroutine(SetContentItem(category2, worldInfo));
+                //StartCoroutine(SetContentItem(category2, worldInfo));
             }
             /*else
             {
@@ -349,7 +386,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 /*else
                     apiResponseHolder.AddReponse(finalAPIURL, response);*/
-                StartCoroutine(SetContentItem(category3, worldInfo));
+                //StartCoroutine(SetContentItem(category3, worldInfo));
             }
             /*else
             {
@@ -380,7 +417,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 /*else
                     apiResponseHolder.AddReponse(finalAPIURL, response);*/
-                StartCoroutine(SetContentItem(category4, worldInfo));
+                //StartCoroutine(SetContentItem(category4, worldInfo));
             }
             /*else
             {
@@ -396,20 +433,25 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     }
 
 
-    IEnumerator SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo, string _categTitle = "No Title Yet")
+    void SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo, string _categTitle = "No Title Yet", bool _tagAsCategory = false)
     {
         //Hidden all child
         //foreach (Transform child in spaceContent.transform)
         //{
         //    child.gameObject.SetActive(false);
         //}
+        if (_tagAsCategory)
+        {
+            tagAsCategoryData.Add(new TagsCategoryData());
+            CategorytagNames.Add(_categTitle);
+        }
         spaceCategoryScroller.initializeCategoryRow = true;
 
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
             //if (i > (spaceContent.transform.childCount - 1))
             //    yield break;
-            WorldItemDetail _event;
+
             _event = new WorldItemDetail();
             _event.IdOfWorld = _WorldInfo.data.rows[i].id;
             _event.EnvironmentName = _WorldInfo.data.rows[i].name;
@@ -492,14 +534,22 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
             }
             _event.UserLimit = _WorldInfo.data.rows[i].user_limit;
-            if (!ApiHolderContainsData)
+
+            if (_tagAsCategory)
             {
-                spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
+                //Debug.Log("Visited indexes: " + totalTagsInstCount);
+                tagAsCategoryData[totalTagsInstCount]._tagAsCategoryData.Add(_event);
+            }
+            else
+            {
+                if (!ApiHolderContainsData)
+                {
+                    spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
+                }
             }
             //spaceContent.transform.GetChild(i).gameObject.SetActive(true);
             //spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
         }
-        yield return null;
     }
 
     IEnumerator InstantiateUsersTag(GameObject userTagParent, UserTagInfo userTagInfo)
@@ -525,7 +575,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     IEnumerator GetDataFromAPI(string apiURL, Action<bool, string> callback)
     {
-        yield return new WaitForEndOfFrame();
+        //yield return new WaitForEndOfFrame();
 
         if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
@@ -667,5 +717,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         public string tagName;
         public int tagVisits;
     }
+}
+[Serializable]
+public class TagsCategoryData
+{
+    public List<WorldItemDetail> _tagAsCategoryData = new List<WorldItemDetail>();
 }
 
