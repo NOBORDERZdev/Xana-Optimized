@@ -15,7 +15,7 @@ public class TimeLimitComponent : ItemComponent
         this.timeLimitComponentData = timeLimitComponentData;
 
         isActivated = true;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
     }
 
 

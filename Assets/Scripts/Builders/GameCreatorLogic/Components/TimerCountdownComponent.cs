@@ -13,7 +13,7 @@ public class TimerCountdownComponent : ItemComponent
     {
         this.timerCountdownComponentData = timerCountdownComponentData;
         defaultValue = (int)timerCountdownComponentData.setTimer - 1;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
     }
     private void OnCollisionEnter(Collision other)
     {

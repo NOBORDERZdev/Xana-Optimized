@@ -298,12 +298,12 @@ public class BuilderMapDownload : MonoBehaviour
     //Set Hierarchy same as builder
     private void SetObjectHirarchy()
     {
-        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        foreach (BuilderItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             if (!xanaItem.itemData.ParentID.Equals(""))
             {
                 string parentId = xanaItem.itemData.ParentID;
-                XanaItem parentItem = GamificationComponentData.instance.xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
+                BuilderItem parentItem = GamificationComponentData.instance.xanaItems.Find(x => x.itemData.RuntimeItemID == parentId);
                 if (parentItem != null)
                 {
                     xanaItem.transform.SetParent(parentItem.transform);
@@ -647,7 +647,7 @@ public class BuilderMapDownload : MonoBehaviour
         yield return StartCoroutine(DownloadAddressableGamificationObject());
         yield return StartCoroutine(GemificationObjectLoadWait(1f));
 
-        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        foreach (BuilderItem xanaItem in GamificationComponentData.instance.xanaItems)
         {
             xanaItem.SetData(xanaItem.itemData);
         }
@@ -744,7 +744,7 @@ public class BuilderMapDownload : MonoBehaviour
         //    rb = newObj.AddComponent<Rigidbody>();
         //rb.isKinematic = true;
         newObj.SetActive(true);
-        XanaItem xanaItem = newObj.GetComponent<XanaItem>();
+        BuilderItem xanaItem = newObj.GetComponent<BuilderItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
         if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
