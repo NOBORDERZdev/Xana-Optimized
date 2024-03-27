@@ -11,7 +11,7 @@ public class HyperLinkPopComponent : ItemComponent
     public void Init(HyperLinkComponentData hyperLinkComponentData)
     {
         this.hyperLinkComponentData = hyperLinkComponentData;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
 
         // Remove leading and trailing spaces
         string inputText = this.hyperLinkComponentData.titleHelpButtonText.Trim();

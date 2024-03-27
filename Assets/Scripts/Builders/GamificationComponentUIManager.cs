@@ -936,9 +936,9 @@ public class GamificationComponentUIManager : MonoBehaviour
             yield return new WaitForSeconds(0);
             isDissapearing = false;
             if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, quizComponent.GetComponent<BuilderItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
             else
-                GamificationComponentData.instance.GetObjectwithoutRPC(quizComponent.GetComponent<BuilderItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
+                GamificationComponentData.instance.GetObjectwithoutRPC(quizComponent.GetComponent<XanaItem>().itemData.RuntimeItemID, Constants.ItemComponentType.none);
         }
         quizComponent = null;
         ResetCredentials();

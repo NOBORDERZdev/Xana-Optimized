@@ -11,7 +11,7 @@ public class NinjaComponent : ItemComponent
     public void Init(NinjaComponentData ninjaComponentData)
     {
         this.ninjaComponentData = ninjaComponentData;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
 
         pc = GamificationComponentData.instance.playerControllerNew;
     }

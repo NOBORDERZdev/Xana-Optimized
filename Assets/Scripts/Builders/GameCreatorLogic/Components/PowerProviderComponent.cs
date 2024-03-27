@@ -12,7 +12,7 @@ public class PowerProviderComponent : ItemComponent
     public void InitPowerProvider(PowerProviderComponentData componentData)
     {
         this.componentData = componentData;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnTriggerEnter(Collider other)

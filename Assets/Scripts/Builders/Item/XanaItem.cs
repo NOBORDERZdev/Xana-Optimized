@@ -4,7 +4,7 @@ using UnityEngine;
 using Models;
 using System.Linq;
 
-public class BuilderItem : MonoBehaviour
+public class XanaItem : MonoBehaviour
 {
     #region PUBLIC_VAR
 

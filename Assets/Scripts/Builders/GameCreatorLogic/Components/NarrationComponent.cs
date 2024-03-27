@@ -18,7 +18,7 @@ public class NarrationComponent : ItemComponent
     public void Init(NarrationComponentData narrationComponentData)
     {
         this.narrationComponentData = narrationComponentData;
-        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)

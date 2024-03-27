@@ -11,7 +11,7 @@ public class CollectibleComponent : ItemComponent
     public void Init(CollectibleComponentData collectibleComponentData)
     {
         activateComponent = true;
-        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)

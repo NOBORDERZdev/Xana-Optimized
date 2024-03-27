@@ -14,7 +14,7 @@ public class DoorKeyComponent : ItemComponent
     {
         this.doorKeyComponentData = _doorKeyComponentData;
         activateComponent = true;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)
