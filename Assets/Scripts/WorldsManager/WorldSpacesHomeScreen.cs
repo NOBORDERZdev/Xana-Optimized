@@ -196,6 +196,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public void GetUsersMostVisitedTags(bool _firstTimeLoad = false)
     {
         mostVisitedTagList.Clear();
+        tagAsCategoryData.Clear();
+        CategorytagNames.Clear();
         string finalAPIURL = ConstantsGod.API_BASEURL + ConstantsGod.MOSTVISITEDTAG + "1/20";
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
