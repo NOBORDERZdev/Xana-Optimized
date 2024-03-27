@@ -372,7 +372,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         //    rb = newObj.AddComponent<Rigidbody>();
         //rb.isKinematic = true;
         newObj.SetActive(true);
-        XanaItem xanaItem = newObj.GetComponent<XanaItem>();
+        BuilderItem xanaItem = newObj.GetComponent<BuilderItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
         if (_itemData.spawnComponent)

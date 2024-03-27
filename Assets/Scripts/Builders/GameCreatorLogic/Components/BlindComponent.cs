@@ -36,7 +36,7 @@ public class BlindComponent : ItemComponent
     {
         this.blindComponentData = _blindComponentData;
         blindToggle = _blindComponentData.isOff;
-        RuntimeItemID = this.gameObject.GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.gameObject.GetComponent<BuilderItem>().itemData.RuntimeItemID;
         StartCoroutine(SituationChangerSkyboxScript.instance.DownloadBlindComponentSkyboxes());
         GetLightsData();
     }

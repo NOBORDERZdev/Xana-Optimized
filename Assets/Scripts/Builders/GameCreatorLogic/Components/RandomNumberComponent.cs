@@ -22,7 +22,7 @@ public class RandomNumberComponent : ItemComponent
         this.randomNumberComponentData = randomNumberComponentData;
 
         isActivated = true;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
         _minNumber = this.randomNumberComponentData.minNumber;
         _maxNumber = this.randomNumberComponentData.maxNumber;
         GenerateNumber();

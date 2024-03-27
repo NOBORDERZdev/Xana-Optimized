@@ -236,7 +236,7 @@ public class GameManager : MonoBehaviour
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            SceneManager.LoadSceneAsync("Main");
+            SceneManager.LoadSceneAsync("Home");
         }
     }
     public void UpdatePlayerName(string newName)
