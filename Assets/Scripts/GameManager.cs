@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public Transform FriendsHomeManager;
     public AdditiveScenesManager additiveScenesManager;
     public Transform HomeCamera;
+    public WorldManager SpaceWorldManagerRef;
 
     internal string selectedPresetData="";
     private void Awake()

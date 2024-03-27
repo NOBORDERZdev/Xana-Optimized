@@ -682,6 +682,19 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         Resources.UnloadUnusedAssets();
     }
 
+    public void OnLogoutClearSpaceData()
+    {
+        spaceCategoryScroller.masterScroller.ClearAll();
+        spaceCategoryScroller._data.Clear();
+        _tagsTraversedCount = 0;
+        totalTagsInstCount = 0;
+        mostVisitedTagList.Clear();
+        tagAsCategoryData.Clear();
+        CategorytagNames.Clear();
+        ApiHolderContainsData = false;
+        apiResponseHolder.apiResponses.Clear();
+    }
+
     [Serializable]
     public class Tag
     {
