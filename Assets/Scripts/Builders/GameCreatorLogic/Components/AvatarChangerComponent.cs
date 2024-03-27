@@ -11,7 +11,7 @@ public class AvatarChangerComponent : ItemComponent
     public void InitAvatarChanger(AvatarChangerComponentData componentData)
     {
         this.componentData = componentData;
-        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision _other)

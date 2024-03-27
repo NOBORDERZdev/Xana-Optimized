@@ -1475,9 +1475,9 @@ public class SNS_SMSModuleManager : MonoBehaviour
                                 return;
                             }
 #else
-                            if (SNSNotificationManager.Instance != null)
+                            if (SNSNotificationHandler.Instance != null)
                             {
-                                SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
+                                SNSNotificationHandler.Instance.ShowNotificationMsg("Please upload valid image or video file");
                             }
                             return;
 #endif

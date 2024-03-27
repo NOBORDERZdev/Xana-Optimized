@@ -20,7 +20,7 @@ public class TranslateComponent : ItemComponent
     public void InitTranslate(TranslateComponentData translateComponentData)
     {
         this.translateComponentData = translateComponentData;
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
         translatePositions = new List<Vector3>();
         translatePositions = translateComponentData.translatePoints;
         moveForward = true;

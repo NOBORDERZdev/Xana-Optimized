@@ -78,7 +78,7 @@ public class MultiplayerComponent : MonoBehaviourPun
                 }
             }
             transform.SetParent(BMD.builderAssetsParent);
-            XanaItem xanaItem = gameObject.AddComponent<XanaItem>();
+            BuilderItem xanaItem = gameObject.AddComponent<BuilderItem>();
             xanaItem.itemData = itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);

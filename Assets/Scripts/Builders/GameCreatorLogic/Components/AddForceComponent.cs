@@ -24,7 +24,7 @@ public class AddForceComponent : ItemComponent
         this.addForceComponentData = addForceComponentData;
         isActivated = addForceComponentData.isActive;
 
-        RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
+        RuntimeItemID = GetComponent<BuilderItem>().itemData.RuntimeItemID;
     }
 
     public void ApplyAddForce()
