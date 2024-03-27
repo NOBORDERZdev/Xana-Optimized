@@ -169,7 +169,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 SetContentItem(mySpaceContent, worldInfo, "My Spaces");
             }
-            GetUsersMostVisitedTags(true);
+            if (_tagsTraversedCount <= 0)
+            {
+                GetUsersMostVisitedTags(true);
+            }
         }));
     }
     void GetAllTags()
@@ -241,17 +244,13 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 yield return CategoryLoading(_tagsTraversedCount, _firstTimeLoad);
             } while (totalTagsInstCount < 7);
-            //Debug.Log("Total tags instantiated count: " + totalTagsInstCount);
+
+            //Setting tags data as category on pagination call
             if (!ApiHolderContainsData)
             {
-                //Debug.Log("Adding data to scroller");
                 _event = new WorldItemDetail();
                 spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
             }
-            //spaceCategoryScroller.scrollPosition = spaceCategoryScroller.masterScroller.ScrollPosition;
-            //spaceCategoryScroller.masterScroller.ReloadData();
-            //spaceCategoryScroller.masterScroller.ScrollPosition = spaceCategoryScroller.scrollPosition;
-            //spaceCategoryScroller._loadingNew = false;
             totalTagsInstCount = 0;
         }
     }
@@ -431,7 +430,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         categoryParent[index].SetActive(isActive);
     }
-
 
     void SetContentItem(GameObject spaceContent, WorldsInfo _WorldInfo, string _categTitle = "No Title Yet", bool _tagAsCategory = false)
     {

@@ -34,6 +34,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     public bool initializeCategoryRow = false;
     public AllWorldManage allWorldManageRef;
     public WorldSpacesHomeScreen _spaceCategDataInitializer;
+    public SNSAPILoaderController paginationLoaderRef;
     SpaceScrollRowHandler masterData;
     public float scrollPosition;
     int instanChildCount = 0;
@@ -77,58 +78,42 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                 initializeCategoryRow = true;
                 for (int j = 0; j < _tagsCategData[i]._tagAsCategoryData.Count; j++)
                 {
-                    if (initializeCategoryRow)
-                    {
-                        initializeCategoryRow = false;
-                        Debug.Log("Master row Initialized" + _categTitles[i]);
-                        //for (var i = 0; i < 10; i++)
-                        //{
-                        masterData = new SpaceScrollRowHandler()
-                        {
-                            normalizedScrollPosition = 0,
-                            _allWorldManageRef = allWorldManageRef,
-                            categoryTitle = _categTitles[i],
-                            childData = new List<WorldItemDetail>()
-                        };
-
-                        _data.Add(masterData);
-                    }
-                    masterData.childData.Add(_tagsCategData[i]._tagAsCategoryData[j]);
+                    MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
             LoadDataInPool();
         }
         else
         {
-            if (initializeCategoryRow)
-            {
-                initializeCategoryRow = false;
-                instanChildCount = 0;
-                Debug.Log("Master row Initialized" + _categTitle);
-                //for (var i = 0; i < 10; i++)
-                //{
-                masterData = new SpaceScrollRowHandler()
-                {
-                    normalizedScrollPosition = 0,
-                    _allWorldManageRef = allWorldManageRef,
-                    categoryTitle = _categTitle,
-                    childData = new List<WorldItemDetail>()
-                };
-
-                _data.Add(masterData);
-            }
-            masterData.childData.Add(_singleWorldItem);
-
+            MasterScrollRowInit(initializeCategoryRow, _categTitle, _singleWorldItem);
             instanChildCount++;
-            //}
-            //}
 
             if (instanChildCount.Equals(_dataCount))
             {
-                //Debug.Log("Worked once only? " + instanChildCount);
                 LoadDataInPool();
             }
         }
+    }
+
+    public void MasterScrollRowInit(bool _initCategRow, string _categRowTitle, WorldItemDetail _masterRowChildData)
+    {
+        if (_initCategRow)
+        {
+            initializeCategoryRow = !_initCategRow;
+            instanChildCount = 0;
+            Debug.Log("Master row Initialized" + _categRowTitle);
+
+            masterData = new SpaceScrollRowHandler()
+            {
+                normalizedScrollPosition = 0,
+                _allWorldManageRef = allWorldManageRef,
+                categoryTitle = _categRowTitle,
+                childData = new List<WorldItemDetail>()
+            };
+
+            _data.Add(masterData);
+        }
+        masterData.childData.Add(_masterRowChildData);
     }
 
     public void LoadDataInPool()
@@ -138,6 +123,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
         _loadingNew = false;
+        paginationLoaderRef.ShowApiLoader(false);
     }
 
     #region EnhancedScroller Handlers
@@ -209,19 +195,24 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         {
             _spaceCategDataInitializer.tagAsCategoryData.Clear();
             _spaceCategDataInitializer.CategorytagNames.Clear();
-            // toggle on loading so that we don't get stuck in a loading loop
-            _loadingNew = true;
+            if (!(_spaceCategDataInitializer._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
+            {
+                paginationLoaderRef.ShowApiLoader(true);
 
-            //Debug.Log("Scroller Scrolled Registered");
-            _spaceCategDataInitializer.GetUsersMostVisitedTags();
-            //_loadingNew = false;
-            // for this example, we fake a delay that would simulate getting new data in a real application.
-            // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
-            // 1 second delay.
+                // toggle on loading so that we don't get stuck in a loading loop
+                _loadingNew = true;
 
-            //StartCoroutine(FakeDelay());
+                //Debug.Log("Scroller Scrolled Registered");
+                _spaceCategDataInitializer.GetUsersMostVisitedTags();
+
+            }
+            //    // for this example, we fake a delay that would simulate getting new data in a real application.
+            //    // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
+            //    // 1 second delay.
+
+            //    //StartCoroutine(FakeDelay());
         }
     }
 
-    #endregion
-}
+        #endregion
+    }
