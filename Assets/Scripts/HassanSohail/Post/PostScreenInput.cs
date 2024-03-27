@@ -24,7 +24,7 @@ public class PostScreenInput : MonoBehaviour
     TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
     bool bubbleHeightCheck = false;
-    
+    [SerializeField] GameObject postButton;
     string emojiRegexPattern = @"[\uD83C-\uDBFF\uDC00-\uDFFF]+";
     public bool ContainsEmoji(string _text)
     {
@@ -64,6 +64,7 @@ public class PostScreenInput : MonoBehaviour
         ShowText.text = "";
         if (inputField.text.Count()>0) // if the input field is not empty
         {
+            postButton.SetActive(true);
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
 
@@ -81,6 +82,7 @@ public class PostScreenInput : MonoBehaviour
         }
         else
         {
+            postButton.SetActive(false);
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
             if (GameManager.currentLanguage.Equals("en"))
