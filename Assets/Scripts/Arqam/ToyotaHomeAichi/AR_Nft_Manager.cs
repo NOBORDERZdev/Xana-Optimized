@@ -62,21 +62,25 @@ namespace Toyota
         public string roomName;
         [Space(5)]
         public UnityEvent allDataLoaded;
+        private NFT_Holder_Manager nftHolder;
 
-        private void OnEnable()
+        private void Awake()
         {
-            if (NFT_Holder_Manager.instance.VideoPlayers.Count > 0)
+            nftHolder = NFT_Holder_Manager.instance;
+        }
+
+        private void Start()
+        {
+            // bind events
+            if (nftHolder.VideoPlayers.Count > 0)
             {
-                foreach (VideoPlayer player in NFT_Holder_Manager.instance.VideoPlayers)
+                foreach (VideoPlayer player in nftHolder.VideoPlayers)
                 {
                     player.errorReceived += ErrorOnVideo;
                     player.prepareCompleted += VideoReady;
                 }
             }
-        }
 
-        private void Start()
-        {
             if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
                 PMY_RoomId = PMY_RoomId_main;
             else
@@ -192,7 +196,7 @@ namespace Toyota
                         else if (worldData[j].media_type == "VIDEO" || worldData[j].media_type == "LIVE")
                         {
                             worldInfos[i].Type = PMY_DataType.Video;
-                            if (NFT_Holder_Manager.instance.worldPlayingVideos) // to play video's in world
+                            if (nftHolder.worldPlayingVideos) // to play video's in world
                             {
                                 if (worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  //for Live Video 
                                 {
@@ -291,8 +295,8 @@ namespace Toyota
 
             if (type == PMY_DataType.PDF)
             {
-                NFT_Holder_Manager.instance.pdfViewer_L.FileURL = pdfURL;
-                NFT_Holder_Manager.instance.pdfViewer_P.FileURL = pdfURL;
+                nftHolder.pdfViewer_L.FileURL = pdfURL;
+                nftHolder.pdfViewer_P.FileURL = pdfURL;
                 Enable_PDF_Panel();
             }
             //else if (type == PMY_DataType.Quiz)
@@ -305,133 +309,132 @@ namespace Toyota
             else
             {
                 // Setting Landscape Data
-                NFT_Holder_Manager.instance.ratioReferences[ratioId].l_image.gameObject.SetActive(true);
-                NFT_Holder_Manager.instance.ratioReferences[ratioId].p_image.gameObject.SetActive(true);
-                NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
-                NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].l_image.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].p_image.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
+                nftHolder.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
                 if (ratioId < 4)
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Title.text = title;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Aurthur.text = aurthur;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                    nftHolder.ratioReferences[ratioId].l_Title.text = title;
+                    nftHolder.ratioReferences[ratioId].l_Aurthur.text = aurthur;
+                    nftHolder.ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
                 }
                 if (type == PMY_DataType.Image)
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_image.texture = image;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].l_image.texture = image;
+                    nftHolder.ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
                 }
                 else
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                    nftHolder.ratioReferences[ratioId].l_image.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
                 }
 
                 // Setting Potraite Data
                 if (ratioId < 4)
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Title.text = title;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Aurthur.text = aurthur;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
+                    nftHolder.ratioReferences[ratioId].p_Title.text = title;
+                    nftHolder.ratioReferences[ratioId].p_Aurthur.text = aurthur;
+                    nftHolder.ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
                 }
-                NFT_Holder_Manager.instance.ratioReferences[ratioId].p_image.texture = image;
+                nftHolder.ratioReferences[ratioId].p_image.texture = image;
                 if (type == PMY_DataType.Image)
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_image.texture = image;
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].p_image.texture = image;
+                    nftHolder.ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
                 }
                 else
                 {
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                    nftHolder.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
                 }
                 if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
                 {
-                    NFT_Holder_Manager.instance.LandscapeObj.SetActive(true);
-                    NFT_Holder_Manager.instance.PotraiteObj.SetActive(false);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_obj.SetActive(true);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_obj.SetActive(false);
+                    nftHolder.LandscapeObj.SetActive(true);
+                    nftHolder.PotraiteObj.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].l_obj.SetActive(true);
+                    nftHolder.ratioReferences[ratioId].p_obj.SetActive(false);
                     if (type == PMY_DataType.Video)
                     {
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Loader.SetActive(true);
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Loader.SetActive(false);
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.Play();
+                        nftHolder.ratioReferences[ratioId].l_Loader.SetActive(true);
+                        nftHolder.ratioReferences[ratioId].p_Loader.SetActive(false);
+                        nftHolder.ratioReferences[ratioId].l_videoPlayer.Play();
 
                         if (videoType == PMY_VideoTypeRes.islive)
                         {
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.enabled = false;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer.SetActive(true);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = false;
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(true);
+                            nftHolder.ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                            nftHolder.ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
                         {
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.playOnAwake = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.enabled = true;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
+                            nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                            nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.playOnAwake = true;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = true;
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
                         {
-                            if (NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer)
-                                NFT_Holder_Manager.instance.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
+                            if (nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer)
+                                nftHolder.ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
 
-                            if (NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer)
-                                NFT_Holder_Manager.instance.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
+                            if (nftHolder.ratioReferences[ratioId].l_LivePlayer)
+                                nftHolder.ratioReferences[ratioId].l_LivePlayer.SetActive(false);
 
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_videoPlayer.Play();
-
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.enabled = true;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+                            nftHolder.ratioReferences[ratioId].l_videoPlayer.Play();
                         }
 
                         OnVideoEnlargeAction?.Invoke();
                     }
                 }
                 else // for Potraite
-                {
-                    NFT_Holder_Manager.instance.LandscapeObj.SetActive(false);
-                    NFT_Holder_Manager.instance.PotraiteObj.SetActive(true);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].l_obj.SetActive(false);
-                    NFT_Holder_Manager.instance.ratioReferences[ratioId].p_obj.SetActive(true);
+                {   
+                    nftHolder.LandscapeObj.SetActive(false);
+                    nftHolder.PotraiteObj.SetActive(true);
+                    nftHolder.ratioReferences[ratioId].l_obj.SetActive(false);
+                    nftHolder.ratioReferences[ratioId].p_obj.SetActive(true);
                     if (type == PMY_DataType.Video)
-                    {
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Loader.SetActive(false);
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Loader.SetActive(true);
-                        NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.Play();
+                    {   
+                        nftHolder.ratioReferences[ratioId].l_Loader.SetActive(false);
+                        nftHolder.ratioReferences[ratioId].p_Loader.SetActive(true);
+                        nftHolder.ratioReferences[ratioId].p_videoPlayer.Play();
 
                         if (videoType == PMY_VideoTypeRes.islive)
-                        {
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.enabled = false;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_LivePlayer.SetActive(true);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                        {   
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = false;
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(true);
+                            nftHolder.ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                            nftHolder.ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
-                        {
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                        {   
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
+                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = true;
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
-                        {
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.enabled = true;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
-                            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_videoPlayer.Play();
+                        {   
+                            nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = true;
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+                            nftHolder.ratioReferences[ratioId].p_videoPlayer.Play();
 
                         }
 
@@ -444,7 +447,7 @@ namespace Toyota
             {
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
             }
-            NFT_Holder_Manager.instance.currentRoom = this;
+            nftHolder.currentRoom = this;
             #region For firebase analytics
             SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
             clickedNftInd = nftId;
@@ -485,12 +488,12 @@ namespace Toyota
         public void CloseInfoPop()
         {
             ActionOnExitBtn();
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_obj.SetActive(false);
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_obj.SetActive(false);
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Loader.SetActive(false);
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Loader.SetActive(false);
-            NFT_Holder_Manager.instance.LandscapeObj.SetActive(false);
-            NFT_Holder_Manager.instance.PotraiteObj.SetActive(false);
+            nftHolder.ratioReferences[ratioId].l_obj.SetActive(false);
+            nftHolder.ratioReferences[ratioId].p_obj.SetActive(false);
+            nftHolder.ratioReferences[ratioId].p_Loader.SetActive(false);
+            nftHolder.ratioReferences[ratioId].l_Loader.SetActive(false);
+            nftHolder.LandscapeObj.SetActive(false);
+            nftHolder.PotraiteObj.SetActive(false);
             if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
             {
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
@@ -513,17 +516,17 @@ namespace Toyota
 
         private void VideoReady(VideoPlayer source)
         {
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].p_Loader.SetActive(false);
-            NFT_Holder_Manager.instance.ratioReferences[ratioId].l_Loader.SetActive(false);
+            nftHolder.ratioReferences[ratioId].p_Loader.SetActive(false);
+            nftHolder.ratioReferences[ratioId].l_Loader.SetActive(false);
             videoRetry = 0;
         }
 
         public void Enable_PDF_Panel()
         {
             if (!ChangeOrientation_waqas._instance.isPotrait)
-                NFT_Holder_Manager.instance.pdfPanel_L.SetActive(true);
+                nftHolder.pdfPanel_L.SetActive(true);
             else
-                NFT_Holder_Manager.instance.pdfPanel_P.SetActive(true);
+                nftHolder.pdfPanel_P.SetActive(true);
 
             ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
             CameraLook.instance.isReturn = true;
@@ -543,8 +546,8 @@ namespace Toyota
 
         private void OnDisable()
         {
-            if (NFT_Holder_Manager.instance.VideoPlayers.Count > 0)
-                foreach (VideoPlayer player in NFT_Holder_Manager.instance.VideoPlayers)
+            if (nftHolder.VideoPlayers.Count > 0)
+                foreach (VideoPlayer player in nftHolder.VideoPlayers)
                 {
                     player.errorReceived -= ErrorOnVideo;
                     player.prepareCompleted -= VideoReady;
