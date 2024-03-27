@@ -154,7 +154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1364858964670589869
 Transform:
   m_ObjectHideFlags: 0
@@ -162,9 +162,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526783706786738905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.162557, y: 0.035931, z: 0}
-  m_LocalScale: {x: 37.561806, y: 19.84413, z: 20.130604}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.162558, y: 0.035930403, z: 0}
+  m_LocalScale: {x: 37.561813, y: 19.84413, z: 20.130606}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7636855817766926325}
@@ -269,16 +269,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -397,7 +387,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -808,6 +801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6814335506907189625}
   - component: {fileID: 5058023688109305310}
+  - component: {fileID: 2773971324236733454}
   - component: {fileID: 6843660047736162874}
   m_Layer: 0
   m_Name: YoutubeVideoPlayer1
@@ -848,10 +842,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LiveStreamPlayer: {fileID: 3736579280102709630}
-  NormalPlayer: {fileID: 7633720079913867777}
+  NormalPlayer: {fileID: 7882640723549374611}
   APIHandler: {fileID: 6843660047736162874}
   videoPlayerAudioSource: {fileID: 0}
   mediaPlayerAudioSource: {fileID: 8360297193526635859}
+--- !u!114 &2773971324236733454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6814335506907189631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 8858984708357456357}
+  videoPlayer: {fileID: 7882640723549374611}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6843660047736162874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1026,16 +1038,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -1154,7 +1156,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1203,11 +1208,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 6757932183124508472}
   rotateScreen: 1
   rotateScreenValue: {x: 180, y: 180, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!1 &9135730655573776051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,11 +1349,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 8858984708357456357}
   rotateScreen: 1
   rotateScreenValue: {x: 180, y: 180, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!114 &6935865108289900056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,16 +1413,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -1532,7 +1531,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1631,9 +1633,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1346264473260158, guid: f49b1865d907dca4a807588585397534, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1572396203552944, guid: f49b1865d907dca4a807588585397534, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791327124803774, guid: f49b1865d907dca4a807588585397534, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1757,7 +1763,8 @@ PrefabInstance:
       propertyPath: m_TargetMaterialRenderer
       value: 
       objectReference: {fileID: 1049743634915183135}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114654752377565014, guid: f49b1865d907dca4a807588585397534, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f49b1865d907dca4a807588585397534, type: 3}
 --- !u!114 &7522119216219870925 stripped
 MonoBehaviour:
@@ -1770,11 +1777,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &7633720079913867777 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1346264473260158, guid: f49b1865d907dca4a807588585397534, type: 3}
-  m_PrefabInstance: {fileID: 7634907159544433279}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7636855817766926325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4271034587217290, guid: f49b1865d907dca4a807588585397534, type: 3}
