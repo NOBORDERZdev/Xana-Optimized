@@ -19,13 +19,15 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void OnEnable()
     {
-        BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
+        //BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
         InRoomSoundHandler.playerInRoom += Mute_UnMute_Sound;
     }
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= GetActivePlayer;
+        //BuilderEventManager.AfterPlayerInstantiated -= GetActivePlayer;
         InRoomSoundHandler.playerInRoom -= Mute_UnMute_Sound;
+        if (volumeCoroutine != null)
+            StopCoroutine(volumeCoroutine);
     }
 
     private void Start()
@@ -47,7 +49,7 @@ public class AvProDirectionalSound : MonoBehaviour
     }
 
 
-    private void GetActivePlayer()
+    public void ActiveDirectionalSound()
     {
         if (activePlayer.gameObject.activeSelf)
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
@@ -66,17 +68,21 @@ public class AvProDirectionalSound : MonoBehaviour
                 yield break;
             }
             // Calculate the distance between player/camera and video source
-            float distance = Vector3.Distance(playerCam.position, transform.position);
+            if (playerCam != null)
+            {
+                float distance = Vector3.Distance(playerCam.position, transform.position);
+                // Clamp the distance within the range
+                distance = Mathf.Clamp(distance, minDistance, maxDistance);
 
-            // Clamp the distance within the range
-            distance = Mathf.Clamp(distance, minDistance, maxDistance);
+                // Map the distance to the volume level (adjust this mapping based on your needs)
+                float mappedVolume = 1f - Mathf.InverseLerp(minDistance, maxDistance, distance);
 
-            // Map the distance to the volume level (adjust this mapping based on your needs)
-            float mappedVolume = 1f - Mathf.InverseLerp(minDistance, maxDistance, distance);
-
-            // Set the video volume using the third-party package's method
-            activePlayer.AudioVolume = mappedVolume;
-            yield return updateDelay;
+                // Set the video volume using the third-party package's method
+                activePlayer.AudioVolume = mappedVolume;
+                yield return updateDelay;
+            }
+            else
+                yield break;
         }
     }
 
