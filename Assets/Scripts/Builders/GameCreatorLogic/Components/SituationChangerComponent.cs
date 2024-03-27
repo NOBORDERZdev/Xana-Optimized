@@ -45,7 +45,7 @@ public class SituationChangerComponent : ItemComponent
     {
         this.situationChangerComponentData = situationChangerComponentData;
         isActivated = true;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
         defaultTimer = this.situationChangerComponentData.Timer;
         GetLightData();
         StartCoroutine(SituationChangerSkyboxScript.instance.DownloadSituatioChangerSkyboxes());

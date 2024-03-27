@@ -223,7 +223,7 @@ public class BuildingDetect : MonoBehaviour
         AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
 
         var hash = new ExitGames.Client.Photon.Hashtable();
-        hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<BuilderItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);
+        hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<XanaItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);
         PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
 
         AppearanceChange.transform.SetParent(gangsterCharacter.transform);

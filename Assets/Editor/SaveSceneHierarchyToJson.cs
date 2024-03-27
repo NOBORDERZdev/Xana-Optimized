@@ -30,8 +30,8 @@ public class SaveParentObjectsToJson : EditorWindow
 
                 if (!string.IsNullOrEmpty(jsonPath))
                 {
-                    if (AssetParent.GetComponent<OfficialWorldInfoHolder>())
-                        SaveParentObjectsToJsonFile(jsonPath, AssetParent.GetComponent<OfficialWorldInfoHolder>());
+                    if (AssetParent.GetComponent<XanaWorldInfoHolder>())
+                        SaveParentObjectsToJsonFile(jsonPath, AssetParent.GetComponent<XanaWorldInfoHolder>());
                     else
                         SaveParentObjectsToJsonFile(jsonPath);
                 }
@@ -43,7 +43,7 @@ public class SaveParentObjectsToJson : EditorWindow
         }
     }
 
-    public void SaveParentObjectsToJsonFile(string filePath, OfficialWorldInfoHolder worldJsonHolder = null)
+    public void SaveParentObjectsToJsonFile(string filePath, XanaWorldInfoHolder worldJsonHolder = null)
     {
         SceneData sceneObjectsData = new SceneData();
         Transform[] rootObjects = AssetParent.transform.GetAllChildren();//UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();

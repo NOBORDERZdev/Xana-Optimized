@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OfficialWorldInfoHolder : MonoBehaviour
+public class XanaWorldInfoHolder : MonoBehaviour
 {
     public string worldJson;
     public Transform assetsParent;

@@ -10,7 +10,7 @@ public class SpecialItemComponent : ItemComponent
     public void Init(SpecialItemComponentData componentData)
     {
         this.specialItemComponentData = componentData;
-        RuntimeItemID = this.GetComponent<BuilderItem>().itemData.RuntimeItemID;
+        RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
     private void OnCollisionEnter(Collision other)
