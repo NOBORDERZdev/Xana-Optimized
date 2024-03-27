@@ -318,54 +318,54 @@ public class FeedFollowingItemController : MonoBehaviour
         //FeedUIController.Instance.OnClickCheckOtherPlayerProfile();
     }
 
-    public void OnClickFeedItem()
-    {
-        FeedUIController.Instance.feedFullViewScreenCallingFrom = "FollowingTab";
-        StartCoroutine(loadVideoFeed());
-    }
+    //public void OnClickFeedItem()
+    //{
+    //    FeedUIController.Instance.feedFullViewScreenCallingFrom = "FollowingTab";
+    //    StartCoroutine(loadVideoFeed());
+    //}
 
-    IEnumerator loadVideoFeed()
-    {
-        foreach (Transform item in FeedUIController.Instance.videofeedParent)
-        {
-            Destroy(item.gameObject);
-        }
+    //IEnumerator loadVideoFeed()
+    //{
+    //    foreach (Transform item in FeedUIController.Instance.videofeedParent)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
 
-        int index = 0;
-        //int pageIndex = 0;
-        //FeedUIController.Instance.ShowLoader(true);
-        for (int i = 0; i < APIManager.Instance.allFollowingUserRootList.Count; i++)
-        {
-            GameObject videofeedObject = Instantiate(APIController.Instance.FollowingUserVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
+    //    int index = 0;
+    //    //int pageIndex = 0;
+    //    //FeedUIController.Instance.ShowLoader(true);
+    //    for (int i = 0; i < APIManager.Instance.allFollowingUserRootList.Count; i++)
+    //    {
+    //        GameObject videofeedObject = Instantiate(APIController.Instance.FollowingUserVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
 
-            FollowingUserFeedItem followingUserFeedItem = videofeedObject.GetComponent<FollowingUserFeedItem>();
+    //        FollowingUserFeedItem followingUserFeedItem = videofeedObject.GetComponent<FollowingUserFeedItem>();
 
-            followingUserFeedItem.FollowingUserFeedData = APIManager.Instance.allFollowingUserRootList[i];
-            // followingUserFeedItem.FeedData = APIManager.Instance.saveRootList[i].feeds[j];
-            followingUserFeedItem.LoadFeed();
+    //        followingUserFeedItem.FollowingUserFeedData = APIManager.Instance.allFollowingUserRootList[i];
+    //        // followingUserFeedItem.FeedData = APIManager.Instance.saveRootList[i].feeds[j];
+    //        followingUserFeedItem.LoadFeed();
 
-            if (APIManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
-            {
-                //pageIndex = index;
-                //Debug.LogError("pageIndex :" + pageIndex);
-                FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
-            }
+    //        if (APIManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
+    //        {
+    //            //pageIndex = index;
+    //            //Debug.LogError("pageIndex :" + pageIndex);
+    //            FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = index;
+    //        }
 
-            index += 1;
-        }
-        yield return new WaitForSeconds(0.1f);
-        //FeedUIController.Instance.ShowLoader(false);
-        //FeedUIController.Instance.feedVideoScreen.SetActive(true);
-        FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
+    //        index += 1;
+    //    }
+    //    yield return new WaitForSeconds(0.1f);
+    //    //FeedUIController.Instance.ShowLoader(false);
+    //    //FeedUIController.Instance.feedVideoScreen.SetActive(true);
+    //    FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
 
-        //FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
-        //Debug.LogError("name : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.1f);
-        //Debug.LogError("name11 : " + APIController.Instance.videofeedParent.name);
-        FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        FeedUIController.Instance.feedUiScreen.SetActive(false);
-    }
+    //    //FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
+    //    //Debug.LogError("name : " + APIController.Instance.videofeedParent.name);
+    //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+    //    yield return new WaitForSeconds(0.1f);
+    //    //Debug.LogError("name11 : " + APIController.Instance.videofeedParent.name);
+    //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //    FeedUIController.Instance.feedUiScreen.SetActive(false);
+    //}
 
     #region Get Image And Video From AWS
     public void GetVideoUrl(string key)

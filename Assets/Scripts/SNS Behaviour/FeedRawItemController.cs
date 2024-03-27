@@ -148,7 +148,7 @@ public class FeedRawItemController : MonoBehaviour
         followText.text = TextLocalization.GetLocaliseTextByKey("Following");
         followText.color = FollowingTextColor;
 
-        APIController.Instance.RemoveFollowedUserFromHot(FeedRawData.id);
+        //APIController.Instance.RemoveFollowedUserFromHot(FeedRawData.id);
     }
 
     #region Get Image From AWS

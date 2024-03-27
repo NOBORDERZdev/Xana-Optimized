@@ -776,8 +776,8 @@ public class OtherPlayerProfileData : MonoBehaviour
     //this is used to destroy user from hot tab after follow.......
     public void DestroyUserFromHotTabAfterFollow()
     {
-        APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
-        APIManager.Instance.OnFeedAPiCalling();
+        //APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
+        //APIManager.Instance.OnFeedAPiCalling();
     }
 
     //this is used to follower increase or decrease after hit follower api.......
@@ -810,7 +810,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             if (lastUserIsFollowFollowing != isFollowFollowing && isFollowFollowing)
             {
                 //DestroyUserFromHotTabAfterFollow();
-                APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
+               // APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
             }
 
             switch (backKeyManageList[backKeyManageList.Count - 1])
@@ -824,12 +824,12 @@ public class OtherPlayerProfileData : MonoBehaviour
                     break;
                 case "HotTabScreen":
                    Debug.Log("Last Comes from Hot or discover tab Screen");
-                    FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab();
+                    //FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab();
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
                     break;
                 case "FollowingTabScreen":
                    Debug.Log("Last Comes from Following tab screen");
-                    FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab("FollowingTabScreen");
+                    //FeedUIController.Instance.RemoveUnFollowedUserFromFollowingTab("FollowingTabScreen");
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
                     break;
                 case "GroupDetailsScreen":
@@ -850,7 +850,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
         RemoveAndCheckBackKey();
 
-        FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
+        //FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
 
         SetupEmptyMsgForPhotoTab(true);//check for empty message.......
     }

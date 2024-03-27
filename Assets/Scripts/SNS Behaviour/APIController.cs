@@ -91,54 +91,54 @@ public class APIController : MonoBehaviour
 
     //int objectIndex = 0;
     //this method is used to instantiate Following tab items.......
-    public void OnGetAllFeedForFollowingTab(int pageNum, string callingFrom)
-    {
-       Debug.Log("OnGetAllFeedFollowingTab:" + APIManager.Instance.followingUserRoot.Data.Rows.Count);
-        if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0)
-        {
-            //set defaut followingFeedInitiateTotalCount and followingFeedImageLoadedCount 0
-            //FeedUIController.Instance.followingFeedInitiateTotalCount = 0;
-            //FeedUIController.Instance.followingFeedImageLoadedCount = 0;
+    //public void OnGetAllFeedForFollowingTab(int pageNum, string callingFrom)
+    //{
+    //   Debug.Log("OnGetAllFeedFollowingTab:" + APIManager.Instance.followingUserRoot.Data.Rows.Count);
+    //    if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0)
+    //    {
+    //        //set defaut followingFeedInitiateTotalCount and followingFeedImageLoadedCount 0
+    //        //FeedUIController.Instance.followingFeedInitiateTotalCount = 0;
+    //        //FeedUIController.Instance.followingFeedImageLoadedCount = 0;
 
-            for (int i = 0; i < APIManager.Instance.followingUserRoot.Data.Rows.Count; i++)
-            {
-                Transform followingFeedTabContainer;
+    //        for (int i = 0; i < APIManager.Instance.followingUserRoot.Data.Rows.Count; i++)
+    //        {
+    //            Transform followingFeedTabContainer;
 
-                if (!feedFollowingIdList.Contains(APIManager.Instance.followingUserRoot.Data.Rows[i].Id))
-                {
-                    /*if (objectIndex % 2 == 0)//new cmnt
-                    {
-                        followingFeedTabContainer = FeedUIController.Instance.followingFeedTabLeftContainer;
-                    }
-                    else
-                    {
-                        followingFeedTabContainer = FeedUIController.Instance.followingFeedTabRightContainer;
-                    }*/
-                    followingFeedTabContainer = FeedUIController.Instance.followingFeedTabContainer;
+    //            if (!feedFollowingIdList.Contains(APIManager.Instance.followingUserRoot.Data.Rows[i].Id))
+    //            {
+    //                /*if (objectIndex % 2 == 0)//new cmnt
+    //                {
+    //                    followingFeedTabContainer = FeedUIController.Instance.followingFeedTabLeftContainer;
+    //                }
+    //                else
+    //                {
+    //                    followingFeedTabContainer = FeedUIController.Instance.followingFeedTabRightContainer;
+    //                }*/
+    //               // followingFeedTabContainer = FeedUIController.Instance.followingFeedTabContainer;
 
-                    //Debug.Log("prefab");
-                    GameObject followingFeedObject = Instantiate(followingFeedPrefab, followingFeedTabContainer);
-                    FeedFollowingItemController feedFollowingItemController = followingFeedObject.GetComponent<FeedFollowingItemController>();
-                    feedFollowingItemController.FeedsByFollowingUserRowData = APIManager.Instance.followingUserRoot.Data.Rows[i];
-                    //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
-                    followingFeedObject.name = "Following_" + feedFollowingItemController.FeedsByFollowingUserRowData.Id;
-                    feedFollowingItemController.LoadFeed();
-                    if (callingFrom == "PullRefresh")
-                    {
-                        feedFollowingIdList.Insert(0, feedFollowingItemController.FeedsByFollowingUserRowData.Id);
-                        followingFeedObject.transform.SetAsFirstSibling();
-                    }
-                    else
-                    {
-                        feedFollowingIdList.Add(feedFollowingItemController.FeedsByFollowingUserRowData.Id);
-                    }
-                    //objectIndex += 1;
-                }
-            }
-            //StartCoroutine(SetContentOnFeed());//new cmnt
-            //Debug.Log("isDataLoad true");
-            StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
-        }
+    //                //Debug.Log("prefab");
+    //                GameObject followingFeedObject = Instantiate(followingFeedPrefab, followingFeedTabContainer);
+    //                FeedFollowingItemController feedFollowingItemController = followingFeedObject.GetComponent<FeedFollowingItemController>();
+    //                feedFollowingItemController.FeedsByFollowingUserRowData = APIManager.Instance.followingUserRoot.Data.Rows[i];
+    //                //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
+    //                followingFeedObject.name = "Following_" + feedFollowingItemController.FeedsByFollowingUserRowData.Id;
+    //                feedFollowingItemController.LoadFeed();
+    //                if (callingFrom == "PullRefresh")
+    //                {
+    //                    feedFollowingIdList.Insert(0, feedFollowingItemController.FeedsByFollowingUserRowData.Id);
+    //                    followingFeedObject.transform.SetAsFirstSibling();
+    //                }
+    //                else
+    //                {
+    //                    feedFollowingIdList.Add(feedFollowingItemController.FeedsByFollowingUserRowData.Id);
+    //                }
+    //                //objectIndex += 1;
+    //            }
+    //        }
+    //        //StartCoroutine(SetContentOnFeed());//new cmnt
+    //        //Debug.Log("isDataLoad true");
+    //        StartCoroutine(WaitToEnableDataLoadedBool(pageNum));
+    //    }
         // OLD FEED UI
         ////if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
         ////{
@@ -152,15 +152,15 @@ public class APIController : MonoBehaviour
         ////    }
         ////}
         // END OLD FEED UI
-    }
+    //}
 
-    public IEnumerator SetContentOnFeed()
-    {
-        yield return new WaitForSeconds(0.01f);
-        FeedUIController.Instance.followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.05f);
-        FeedUIController.Instance.followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-    }
+    //public IEnumerator SetContentOnFeed()
+    //{
+    //    yield return new WaitForSeconds(0.01f);
+    //    FeedUIController.Instance.followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+    //    yield return new WaitForSeconds(0.05f);
+    //    FeedUIController.Instance.followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    //}
 
     IEnumerator WaitToEnableDataLoadedBool(int pageNum)
     {
@@ -243,185 +243,185 @@ public class APIController : MonoBehaviour
     }
 
     //this method is used to instantiate hot tab items.......
-    public void AllUsersWithHotFeeds(string callingFrom)
-    {
-        //set defaut hotFeedInitiateTotalCount and HotFeedImageLoadedCount 0
-        //FeedUIController.Instance.hotFeedInitiateTotalCount = 0;
-        //FeedUIController.Instance.HotFeedImageLoadedCount = 0;
+    //public void AllUsersWithHotFeeds(string callingFrom)
+    //{
+    //    //set defaut hotFeedInitiateTotalCount and HotFeedImageLoadedCount 0
+    //    //FeedUIController.Instance.hotFeedInitiateTotalCount = 0;
+    //    //FeedUIController.Instance.HotFeedImageLoadedCount = 0;
 
-       Debug.Log("AllUsersWithHotFeeds.......:" + APIManager.Instance.root.data.rows.Count + "    :CallingFrom:" + callingFrom);
-        /*for (int i = 0; i < APIManager.Instance.root.data.rows.Count; i++)
-        {
-            if (!feedHotIdList.Contains(APIManager.Instance.root.data.rows[i].id))
-            {
-                if (APIManager.Instance.root.data.rows[i].feeds.Count > 0)
-                {
-                    GameObject hotFeedFeedObject = Instantiate(hotFeedPrefab, FeedUIController.Instance.hotTabContainer);
-                    //hotFeedFeedObject.GetComponent<FeedRawItemController>().FeedRawData = APIManager.Instance.root.data.rows[i];
-                    hotFeedFeedObject.GetComponent<FeedRawItemController>().LoadFeed(APIManager.Instance.root.data.rows[i]);
-                    hotFeedFeedObject.name = "Hot_" + APIManager.Instance.root.data.rows[i].id.ToString();
-                    //if (callingFrom == "PullRefresh")
-                    //{
-                    //    feedHotIdList.Insert(0, APIManager.Instance.root.data.rows[i].id);
-                    //    hotFeedFeedObject.transform.SetAsFirstSibling();
-                    //}
-                    //else
-                    //{
-                    //    feedHotIdList.Add(APIManager.Instance.root.data.rows[i].id);
-                    //}
-                    for (int z = 0; z < APIManager.Instance.root.data.rows[i].feeds.Count; z++)
-                    {
-                        if (z <= 2)
-                        {
+    //   Debug.Log("AllUsersWithHotFeeds.......:" + APIManager.Instance.root.data.rows.Count + "    :CallingFrom:" + callingFrom);
+    //    /*for (int i = 0; i < APIManager.Instance.root.data.rows.Count; i++)
+    //    {
+    //        if (!feedHotIdList.Contains(APIManager.Instance.root.data.rows[i].id))
+    //        {
+    //            if (APIManager.Instance.root.data.rows[i].feeds.Count > 0)
+    //            {
+    //                GameObject hotFeedFeedObject = Instantiate(hotFeedPrefab, FeedUIController.Instance.hotTabContainer);
+    //                //hotFeedFeedObject.GetComponent<FeedRawItemController>().FeedRawData = APIManager.Instance.root.data.rows[i];
+    //                hotFeedFeedObject.GetComponent<FeedRawItemController>().LoadFeed(APIManager.Instance.root.data.rows[i]);
+    //                hotFeedFeedObject.name = "Hot_" + APIManager.Instance.root.data.rows[i].id.ToString();
+    //                //if (callingFrom == "PullRefresh")
+    //                //{
+    //                //    feedHotIdList.Insert(0, APIManager.Instance.root.data.rows[i].id);
+    //                //    hotFeedFeedObject.transform.SetAsFirstSibling();
+    //                //}
+    //                //else
+    //                //{
+    //                //    feedHotIdList.Add(APIManager.Instance.root.data.rows[i].id);
+    //                //}
+    //                for (int z = 0; z < APIManager.Instance.root.data.rows[i].feeds.Count; z++)
+    //                {
+    //                    if (z <= 2)
+    //                    {
 
-                            if (callingFrom == "PullRefresh")
-                            {
-                                feedHotIdList.Insert(0, APIManager.Instance.root.data.rows[i].feeds[z].id);
-                                hotFeedFeedObject.transform.SetAsFirstSibling();
-                            }
-                            else
-                            {
-                                feedHotIdList.Add(APIManager.Instance.root.data.rows[i].feeds[z].id);
-                            }
-                        }
+    //                        if (callingFrom == "PullRefresh")
+    //                        {
+    //                            feedHotIdList.Insert(0, APIManager.Instance.root.data.rows[i].feeds[z].id);
+    //                            hotFeedFeedObject.transform.SetAsFirstSibling();
+    //                        }
+    //                        else
+    //                        {
+    //                            feedHotIdList.Add(APIManager.Instance.root.data.rows[i].feeds[z].id);
+    //                        }
+    //                    }
 
-                    }
-                }
-            }
-        }*/
-        if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
-        {
-            for (int i = 0; i < APIManager.Instance.allhotFeedRoot.data.rows.Count; i++)
-            {
-                if (!feedHotIdList.Contains(APIManager.Instance.allhotFeedRoot.data.rows[i].id))
-                {
-                    //Debug.Log("prefab");
-                    GameObject HotFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
-                    FeedItemController HotFeedItemController = HotFeedObject.GetComponent<FeedItemController>();
-                    HotFeedItemController.HotFeed = APIManager.Instance.allhotFeedRoot.data.rows[i];
-                    //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
-                    HotFeedObject.name = "Hot_" + HotFeedItemController.HotFeed.id;
-                    HotFeedItemController.LoadFeed();
-                    //Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
-                    if (callingFrom == "PullRefresh")
-                    {
-                        feedHotIdList.Insert(0, HotFeedItemController.HotFeed.id);
-                        HotFeed hot = APIManager.Instance.allhotFeedRoot.data.rows[i];
-                        APIManager.Instance.allhotFeedRoot.data.rows.Insert(0, APIManager.Instance.allhotFeedRoot.data.rows[i]);
-                        APIManager.Instance.allhotFeedRoot.data.rows.Remove(APIManager.Instance.allhotFeedRoot.data.rows[i]);
-                        HotFeedObject.transform.SetAsFirstSibling();
-                    }
-                    else
-                    {
-                        feedHotIdList.Add(HotFeedItemController.HotFeed.id);
-                    }
-                    //objectIndex += 1;
-                }
-            }
-        }
-        //////////////////////////////////////////////////////////////////////////
-        /*for (int i = 0; i < APIManager.Instance.hotFeedRoot.data.rows.Count; i++)
-        {
-            GameObject hotFeedFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
-            hotFeedFeedObject.GetComponent<FeedItemController>().HotFeed = APIManager.Instance.hotFeedRoot.data.rows[i];
-        }*/
-        if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-        {
-            //Riken
-            //if (feedHotIdList.Count == 0)
-            if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
-            }
-        }
+    //                }
+    //            }
+    //        }
+    //    }*/
+    //    if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
+    //    {
+    //        for (int i = 0; i < APIManager.Instance.allhotFeedRoot.data.rows.Count; i++)
+    //        {
+    //            if (!feedHotIdList.Contains(APIManager.Instance.allhotFeedRoot.data.rows[i].id))
+    //            {
+    //                //Debug.Log("prefab");
+    //                GameObject HotFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
+    //                FeedItemController HotFeedItemController = HotFeedObject.GetComponent<FeedItemController>();
+    //                HotFeedItemController.HotFeed = APIManager.Instance.allhotFeedRoot.data.rows[i];
+    //                //followingFeedObject.GetComponent<FeedFollowingItemController>().FeedData = APIManager.Instance.root.data.rows[i].feeds[j];
+    //                HotFeedObject.name = "Hot_" + HotFeedItemController.HotFeed.id;
+    //                HotFeedItemController.LoadFeed();
+    //                //Debug.Log("APICONTROLLER callingFrom: " + callingFrom);
+    //                if (callingFrom == "PullRefresh")
+    //                {
+    //                    feedHotIdList.Insert(0, HotFeedItemController.HotFeed.id);
+    //                    HotFeed hot = APIManager.Instance.allhotFeedRoot.data.rows[i];
+    //                    APIManager.Instance.allhotFeedRoot.data.rows.Insert(0, APIManager.Instance.allhotFeedRoot.data.rows[i]);
+    //                    APIManager.Instance.allhotFeedRoot.data.rows.Remove(APIManager.Instance.allhotFeedRoot.data.rows[i]);
+    //                    HotFeedObject.transform.SetAsFirstSibling();
+    //                }
+    //                else
+    //                {
+    //                    feedHotIdList.Add(HotFeedItemController.HotFeed.id);
+    //                }
+    //                //objectIndex += 1;
+    //            }
+    //        }
+    //    }
+    //    //////////////////////////////////////////////////////////////////////////
+    //    /*for (int i = 0; i < APIManager.Instance.hotFeedRoot.data.rows.Count; i++)
+    //    {
+    //        GameObject hotFeedFeedObject = Instantiate(NewHotPrefab, FeedUIController.Instance.hotTabContainer);
+    //        hotFeedFeedObject.GetComponent<FeedItemController>().HotFeed = APIManager.Instance.hotFeedRoot.data.rows[i];
+    //    }*/
+    //    if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
+    //    {
+    //        //Riken
+    //        //if (feedHotIdList.Count == 0)
+    //        if (APIManager.Instance.hotFeedRoot.data.rows.Count == 0)
+    //        {
+    //            FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("no hot feed available"));
+    //        }
+    //        else
+    //        {
+    //            FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 0, TextLocalization.GetLocaliseTextByKey(""));
+    //        }
+    //    }
 
-        //Debug.Log("isDataLoad true");
-        //FeedUIController.Instance.isDataLoad = true;
-    }
+    //    //Debug.Log("isDataLoad true");
+    //    //FeedUIController.Instance.isDataLoad = true;
+    //}
 
     //this method is used to Remove items and reset data of hot and discover tab.......
-    public void RemoveFollowedUserFromHot(int id)
-    {
-       Debug.Log("RemoveFollowedUserFromHot id:" + id);
-        if (feedHotIdList.Contains(id))
-        {
-            int index = feedHotIdList.IndexOf(id);
-            //Debug.Log("Index:" + index);
-            APIManager.Instance.HotAndDiscoverSaveAndUpdateJson(id, index);//remove data from main data list and updatejson.......
+    //public void RemoveFollowedUserFromHot(int id)
+    //{
+    //   Debug.Log("RemoveFollowedUserFromHot id:" + id);
+    //    if (feedHotIdList.Contains(id))
+    //    {
+    //        int index = feedHotIdList.IndexOf(id);
+    //        //Debug.Log("Index:" + index);
+    //        APIManager.Instance.HotAndDiscoverSaveAndUpdateJson(id, index);//remove data from main data list and updatejson.......
 
-            List<AllUserWithFeed> allFeedsForUser = new List<AllUserWithFeed>();
+    //        List<AllUserWithFeed> allFeedsForUser = new List<AllUserWithFeed>();
 
-            //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.hotTabContainer.childCount);
-            if (FeedUIController.Instance.hotTabContainer.childCount > 0 && index >= 0)
-            {
-                FeedRawItemController feedRawItemController = FeedUIController.Instance.hotTabContainer.GetChild(index).GetComponent<FeedRawItemController>();
-                allFeedsForUser = feedRawItemController.FeedRawData.feeds;
-                for (int i = 0; i < feedRawItemController.hotItemPrefabParent.childCount; i++)
-                {
-                    if (!feedRawItemController.hotItemPrefabParent.GetChild(i).GetComponent<FeedItemController>().isImageSuccessDownloadAndSave)
-                    {
-                        FeedUIController.Instance.hotFeedInitiateTotalCount -= 1;
-                    }
-                    feedRawItemController.hotItemPrefabParent.GetChild(i).GetComponent<FeedItemController>().ClearMemoryAfterDestroyObj();
-                }
-                feedRawItemController.ClearMororyAfterDestroyObject();
-               Debug.Log("Delete from hot.......index:" + index);
-                DestroyImmediate(FeedUIController.Instance.hotTabContainer.GetChild(index).gameObject);
-                feedHotIdList.RemoveAt(index);
-            }
-            if (FeedUIController.Instance.forYouFeedTabContainer.childCount > 0 && allFeedsForUser != null && allFeedsForUser.Count > 0)
-            {
-                for (int i = 0; i < allFeedsForUser.Count; i++)
-                {
-                    int feedIndex = feedForYouIdList.IndexOf(allFeedsForUser[i].id);
-                   Debug.Log("allFeedsForUser id:" + allFeedsForUser[i].id + "    :FeedIndex:" + feedIndex);
-                    if (feedIndex >= 0)
-                    {
-                        //if (!FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().isImageSuccessDownloadAndSave)
-                        //{
-                        //    FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;
-                        //}
-                        //FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().ClearMemoryAfterDestroyObj();
-                        DestroyImmediate(FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).gameObject);
-                        feedForYouIdList.RemoveAt(feedIndex);
-                    }
-                }
-            }
-            //Resources.UnloadUnusedAssets();
-            //Caching.ClearCache();
-            //GC.Collect();
-            APIManager.Instance.OnFeedAPiCalling("PullRefresh");
-        }
-    }
+    //        //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.hotTabContainer.childCount);
+    //        if (FeedUIController.Instance.hotTabContainer.childCount > 0 && index >= 0)
+    //        {
+    //            FeedRawItemController feedRawItemController = FeedUIController.Instance.hotTabContainer.GetChild(index).GetComponent<FeedRawItemController>();
+    //            allFeedsForUser = feedRawItemController.FeedRawData.feeds;
+    //            for (int i = 0; i < feedRawItemController.hotItemPrefabParent.childCount; i++)
+    //            {
+    //                if (!feedRawItemController.hotItemPrefabParent.GetChild(i).GetComponent<FeedItemController>().isImageSuccessDownloadAndSave)
+    //                {
+    //                    FeedUIController.Instance.hotFeedInitiateTotalCount -= 1;
+    //                }
+    //                feedRawItemController.hotItemPrefabParent.GetChild(i).GetComponent<FeedItemController>().ClearMemoryAfterDestroyObj();
+    //            }
+    //            feedRawItemController.ClearMororyAfterDestroyObject();
+    //           Debug.Log("Delete from hot.......index:" + index);
+    //            DestroyImmediate(FeedUIController.Instance.hotTabContainer.GetChild(index).gameObject);
+    //            feedHotIdList.RemoveAt(index);
+    //        }
+    //        if (FeedUIController.Instance.forYouFeedTabContainer.childCount > 0 && allFeedsForUser != null && allFeedsForUser.Count > 0)
+    //        {
+    //            for (int i = 0; i < allFeedsForUser.Count; i++)
+    //            {
+    //                int feedIndex = feedForYouIdList.IndexOf(allFeedsForUser[i].id);
+    //               Debug.Log("allFeedsForUser id:" + allFeedsForUser[i].id + "    :FeedIndex:" + feedIndex);
+    //                if (feedIndex >= 0)
+    //                {
+    //                    //if (!FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().isImageSuccessDownloadAndSave)
+    //                    //{
+    //                    //    FeedUIController.Instance.hotForYouFeedInitiateTotalCount -= 1;
+    //                    //}
+    //                    //FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).GetComponent<FeedForYouItemController>().ClearMemoryAfterDestroyObj();
+    //                    DestroyImmediate(FeedUIController.Instance.forYouFeedTabContainer.GetChild(feedIndex).gameObject);
+    //                    feedForYouIdList.RemoveAt(feedIndex);
+    //                }
+    //            }
+    //        }
+    //        //Resources.UnloadUnusedAssets();
+    //        //Caching.ClearCache();
+    //        //GC.Collect();
+    //        APIManager.Instance.OnFeedAPiCalling("PullRefresh");
+    //    }
+    //}
 
     //this method is used to Remove items and reset data of following tab.......
-    public void RemoveFollowingItemAndResetData(int id)
-    {
-       Debug.Log("RemoveUnFollowedUserFromFollowing id:" + id);
-        if (feedFollowingIdList.Contains(id))
-        {
-            int index = feedFollowingIdList.IndexOf(id);
+    //public void RemoveFollowingItemAndResetData(int id)
+    //{
+    //   Debug.Log("RemoveUnFollowedUserFromFollowing id:" + id);
+    //    if (feedFollowingIdList.Contains(id))
+    //    {
+    //        int index = feedFollowingIdList.IndexOf(id);
 
-            //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.followingFeedTabContainer.childCount);
-            if (FeedUIController.Instance.followingFeedTabContainer.childCount > 0 && index >= 0)
-            {
-                FeedFollowingItemController feedFollowingItemController = FeedUIController.Instance.followingFeedTabContainer.GetChild(index).GetComponent<FeedFollowingItemController>();
+    //        //Debug.Log("Deleted Feed Item index:" + index + " :MainId:" + id + "    :ChildCount:" + FeedUIController.Instance.followingFeedTabContainer.childCount);
+    //        if (FeedUIController.Instance.followingFeedTabContainer.childCount > 0 && index >= 0)
+    //        {
+    //            FeedFollowingItemController feedFollowingItemController = FeedUIController.Instance.followingFeedTabContainer.GetChild(index).GetComponent<FeedFollowingItemController>();
 
-                if (!feedFollowingItemController.isImageSuccessDownloadAndSave)
-                {
-                    FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;
-                }
-                feedFollowingItemController.ClearMemoryAfterDestroyObj();
-                //Debug.Log("Delete from Following tab.......index:" + index);
-                DestroyImmediate(FeedUIController.Instance.followingFeedTabContainer.GetChild(index).gameObject);
-                feedFollowingIdList.RemoveAt(index);
-            }
-        }
-    }
+    //            if (!feedFollowingItemController.isImageSuccessDownloadAndSave)
+    //            {
+    //                FeedUIController.Instance.followingFeedInitiateTotalCount -= 1;
+    //            }
+    //            feedFollowingItemController.ClearMemoryAfterDestroyObj();
+    //            //Debug.Log("Delete from Following tab.......index:" + index);
+    //            DestroyImmediate(FeedUIController.Instance.followingFeedTabContainer.GetChild(index).gameObject);
+    //            feedFollowingIdList.RemoveAt(index);
+    //        }
+    //    }
+    //}
 
 
     //this method is used to Instantiate search user.......
@@ -571,21 +571,21 @@ public class APIController : MonoBehaviour
     }
 
     //this method is used to create feed top story panel in follower item.......
-    public void GetSetAllfollowerInTopStoryPanelUser()
-    {
-        foreach (Transform item in FeedUIController.Instance.TopPanelMainContainerObj)
-        {
-            Destroy(item.gameObject);
-        }
+    //public void GetSetAllfollowerInTopStoryPanelUser()
+    //{
+    //    foreach (Transform item in FeedUIController.Instance.TopPanelMainContainerObj)
+    //    {
+    //        Destroy(item.gameObject);
+    //    }
 
-        for (int i = 0; i < APIManager.Instance.AllFollowerRoot.data.rows.Count; i++)
-        {
-            if (APIManager.Instance.userId != APIManager.Instance.AllFollowerRoot.data.rows[i].followedBy)
-            {
-                GameObject followerObj = Instantiate(feedTopStoryFollowerPrefab, FeedUIController.Instance.TopPanelMainContainerObj);
-                followerObj.GetComponent<FeedStoryAndCategoryItem>().LoadData(APIManager.Instance.AllFollowerRoot.data.rows[i]);
-            }
-        }
+    //    for (int i = 0; i < APIManager.Instance.AllFollowerRoot.data.rows.Count; i++)
+    //    {
+    //        if (APIManager.Instance.userId != APIManager.Instance.AllFollowerRoot.data.rows[i].followedBy)
+    //        {
+    //            GameObject followerObj = Instantiate(feedTopStoryFollowerPrefab, FeedUIController.Instance.TopPanelMainContainerObj);
+    //            followerObj.GetComponent<FeedStoryAndCategoryItem>().LoadData(APIManager.Instance.AllFollowerRoot.data.rows[i]);
+    //        }
+    //    }
          //Old UI CODE
         ////if (APIManager.Instance.AllFollowerRoot.data.rows.Count > 0)
         ////{
@@ -596,7 +596,7 @@ public class APIController : MonoBehaviour
         ////    FeedUIController.Instance.SetupFollowerAndFeedScreen(false);
         ////}
         //END Old UI CODE
-    }
+    //}
 
     public void AdFrndFollowingFetch(){
         foreach (Transform item in FeedUIController.Instance.adFrndFollowingListContainer.transform)

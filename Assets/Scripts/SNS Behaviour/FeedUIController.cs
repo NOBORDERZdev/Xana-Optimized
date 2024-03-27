@@ -20,33 +20,33 @@ public class FeedUIController : MonoBehaviour
     public GameObject footerCan;
     public BottomTabManager bottomTabManager;
 
-    [Space]
-    [Header("-------API Controller Feed References-------")]
-    public Transform followingFeedTabLeftContainer;
-    public Transform followingFeedTabRightContainer;
-    public Transform followingFeedTabContainer;
-    public Transform forYouFeedTabContainer;
-    public Transform hotTabContainer;
-    public Transform videofeedParent;
-    public GameObject followingFeedMainContainer;
+    //[Space]
+    //[Header("-------API Controller Feed References-------")]
+    //public Transform followingFeedTabLeftContainer;
+    //public Transform followingFeedTabRightContainer;
+    //public Transform followingFeedTabContainer;
+    //public Transform forYouFeedTabContainer;
+    //public Transform hotTabContainer;
+    //public Transform videofeedParent;
+    //public GameObject followingFeedMainContainer;
 
     [Space]
     [Header("-------All Screens-------")]
     public GameObject feedUiScreen;
-    public GameObject otherPlayerProfileScreen;
+   // public GameObject otherPlayerProfileScreen;
     //public GameObject giftItemScreens;
    // public GameObject feedVideoScreen;
     public SNSAPILoaderController apiLoaderController;
 
-    [Space]
-    [Header("Top Story Panel")]
-    public GameObject TopPanelMainObj;
-    public GameObject TopPanelMainStoryObj;
-    public Transform TopPanelMainContainerObj;
+    //[Space]
+    //[Header("Top Story Panel")]
+    //public GameObject TopPanelMainObj;
+    //public GameObject TopPanelMainStoryObj;
+    //public Transform TopPanelMainContainerObj;
 
-    [Header("GiftScreen")]
-    //  public Transform fashionCetegoryContent;
-    public Sprite selectedSprite, unSelectedSprite;
+    //[Header("GiftScreen")]
+    ////  public Transform fashionCetegoryContent;
+    //public Sprite selectedSprite, unSelectedSprite;
 
     [Space]
     [Header("HorizontalScrollSnap")]
@@ -57,10 +57,10 @@ public class FeedUIController : MonoBehaviour
     public TextMeshProUGUI[] feedUiTabTitleText;
     public Color selectedColor, unSelectedColor;
 
-    [Space]
-    [Header("ScrollRectFaster")]
-    public ScrollRectFasterEx[] allFeedScrollRectFasterEx;
-    public ScrollRectFasterEx feedUiScrollRectFasterEx;
+    //[Space]
+    //[Header("ScrollRectFaster")]
+    //public ScrollRectFasterEx[] allFeedScrollRectFasterEx;
+    //public ScrollRectFasterEx feedUiScrollRectFasterEx;
 
     [Space]
     [Header("AllFeedScreen")]
@@ -275,39 +275,39 @@ public class FeedUIController : MonoBehaviour
         //END Old UI CODE
     }
 
-    IEnumerator WaitToSceneLoad()
-    {
-        yield return new WaitForSeconds(0);
-        // OLD FEED UI
-        ///SetupLineSelectionPosition();//move Selection Line
-        // END OLD FEED UI
-        //APIManager.Instance.RequestGetAllFollowers(1, 10, "FeedStart");//Get All Follower
-        // OLD FEED UI
-        //for (int i = 0; i < allFeedMessageTextList.Count; i++)
-        //{
-        //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
-        //}
-        // END Old UI
-        //Debug.Log("FeedUIController Start:" + Application.internetReachability);
-        //rik for start of the feed scene load data and default api calling....... 
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
-            if (File.Exists(Application.persistentDataPath + "/FeedData.json"))
-            {
-                APIManager.Instance.LoadJson();
-            }
+    //IEnumerator WaitToSceneLoad()
+    //{
+    //    yield return new WaitForSeconds(0);
+    //    // OLD FEED UI
+    //    ///SetupLineSelectionPosition();//move Selection Line
+    //    // END OLD FEED UI
+    //    //APIManager.Instance.RequestGetAllFollowers(1, 10, "FeedStart");//Get All Follower
+    //    // OLD FEED UI
+    //    //for (int i = 0; i < allFeedMessageTextList.Count; i++)
+    //    //{
+    //    //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
+    //    //}
+    //    // END Old UI
+    //    //Debug.Log("FeedUIController Start:" + Application.internetReachability);
+    //    //rik for start of the feed scene load data and default api calling....... 
+    //    if (Application.internetReachability == NetworkReachability.NotReachable)
+    //    {
+    //        if (File.Exists(Application.persistentDataPath + "/FeedData.json"))
+    //        {
+    //            //APIManager.Instance.LoadJson();
+    //        }
 
-            if (File.Exists(Application.persistentDataPath + "/FeedFollowingData.json"))
-            {
-                APIManager.Instance.LoadJsonFollowingFeed();
-            }
-        }
-        else
-        {
-            //Debug.Log("dfdfsd");
-            OnFeedButtonTabBtnClick();
-        }
-    }
+    //        if (File.Exists(Application.persistentDataPath + "/FeedFollowingData.json"))
+    //        {
+    //            APIManager.Instance.LoadJsonFollowingFeed();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //Debug.Log("dfdfsd");
+    //        OnFeedButtonTabBtnClick();
+    //    }
+    //}
 
 
     //this method are used to Message button click.......
@@ -329,7 +329,7 @@ public class FeedUIController : MonoBehaviour
     public void OnFeedButtonTabBtnClick()
     {
        Debug.Log("OnFeedButtonTabBtnClick.......");
-        APIManager.Instance.OnFeedAPiCalling();
+        //APIManager.Instance.OnFeedAPiCalling();
         feedUiScreen.SetActive(true);
     }
 
@@ -341,16 +341,16 @@ public class FeedUIController : MonoBehaviour
         // END OLD FEED UI
     }
 
-    public void OnClickFollowingTabBtnClick()
-    {
-        RemoveUnFollowedUserFromFollowingTab();
+    //public void OnClickFollowingTabBtnClick()
+    //{
+    //    RemoveUnFollowedUserFromFollowingTab();
 
-        //if (isAnyUserFollow)
-        //{
-        //isAnyUserFollow = false;
-        //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
-        //}
-    }
+    //    //if (isAnyUserFollow)
+    //    //{
+    //    //isAnyUserFollow = false;
+    //    //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
+    //    //}
+    //}
 
     public void OnClickHotAndDiscoverTabBtnClick()
     {
@@ -481,52 +481,52 @@ public class FeedUIController : MonoBehaviour
             OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Clear();
             OtherPlayerProfileData.Instance.backKeyManageList.Clear();
         }
-        if(followingFeedTabContainer)
-        {
-            foreach (Transform item in followingFeedTabContainer)
-            {
-                Destroy(item.gameObject);
-            }
-        }
+        //if(followingFeedTabContainer)
+        //{
+        //    foreach (Transform item in followingFeedTabContainer)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
         
-        if (followingFeedTabContainer)
-        {
-            foreach (Transform item in followingFeedTabLeftContainer)
-            {
-                Destroy(item.gameObject);
-            }
-        }
+        //if (followingFeedTabContainer)
+        //{
+        //    foreach (Transform item in followingFeedTabLeftContainer)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
 
-        if (followingFeedTabRightContainer)
-        {
-            foreach (Transform item in followingFeedTabRightContainer)
-            {
-                Destroy(item.gameObject);
-            }
-        }
+        //if (followingFeedTabRightContainer)
+        //{
+        //    foreach (Transform item in followingFeedTabRightContainer)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
         
-        if (forYouFeedTabContainer)
-        {
-            foreach (Transform item in forYouFeedTabContainer)
-            {
-                Destroy(item.gameObject);
-            }
-        }
-        if (hotTabContainer)
-        {
-            foreach (Transform item in hotTabContainer)
-            {
-                Destroy(item.gameObject);
-            }
-        }
+        //if (forYouFeedTabContainer)
+        //{
+        //    foreach (Transform item in forYouFeedTabContainer)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
+        //if (hotTabContainer)
+        //{
+        //    foreach (Transform item in hotTabContainer)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
         
-        if (videofeedParent)
-        {
-            foreach (Transform item in videofeedParent)
-            {
-                Destroy(item.gameObject);
-            }
-        }
+        //if (videofeedParent)
+        //{
+        //    foreach (Transform item in videofeedParent)
+        //    {
+        //        Destroy(item.gameObject);
+        //    }
+        //}
 
         if (MyProfileDataManager.Instance.allPhotoContainer)
         {
@@ -576,43 +576,43 @@ public class FeedUIController : MonoBehaviour
     }
     #endregion
 
-    #region Setup position and size Feed and Top Follower Panel.......
-    public void SetupFollowerAndFeedScreen(bool isStoryAvailable)
-    {
-        if (isStoryAvailable)
-        {
-            if (TopPanelMainStoryObj.activeSelf)
-            {
-                return;
-            }
-            TopPanelMainStoryObj.SetActive(true);
+    //#region Setup position and size Feed and Top Follower Panel.......
+    //public void SetupFollowerAndFeedScreen(bool isStoryAvailable)
+    //{
+    //    if (isStoryAvailable)
+    //    {
+    //        if (TopPanelMainStoryObj.activeSelf)
+    //        {
+    //            return;
+    //        }
+    //        TopPanelMainStoryObj.SetActive(true);
 
-            TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y - (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            }
-        }
-        else
-        {
-            //Commented in order to make profile 2.0 work after ahsan bhai removed old feedui object from scene ----- UMER
-            //if (!TopPanelMainStoryObj.activeSelf)
-            //{
-            //    return;
-            //}
-            //TopPanelMainStoryObj.SetActive(false);
+    //        TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+    //        TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y - (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
+    //        for (int i = 0; i < allFeedPanel.Length; i++)
+    //        {
+    //            allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //Commented in order to make profile 2.0 work after ahsan bhai removed old feedui object from scene ----- UMER
+    //        //if (!TopPanelMainStoryObj.activeSelf)
+    //        //{
+    //        //    return;
+    //        //}
+    //        //TopPanelMainStoryObj.SetActive(false);
 
-            //TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            //TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
+    //        //TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+    //        //TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
 
-            //for (int i = 0; i < allFeedPanel.Length; i++)
-            //{
-            //    allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-            //}
-        }
-    }
-    #endregion
+    //        //for (int i = 0; i < allFeedPanel.Length; i++)
+    //        //{
+    //        //    allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
+    //        //}
+    //    }
+    //}
+    //#endregion
 
     public void OnBackToMainXanaBtnClick()
     {
@@ -677,7 +677,7 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickProfileGiftBOxButton()
     {
-        otherPlayerProfileScreen.SetActive(false);
+        //otherPlayerProfileScreen.SetActive(false);
        // giftItemScreens.SetActive(true);
     }
 
@@ -789,10 +789,10 @@ public class FeedUIController : MonoBehaviour
         //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
-    public void SetUpFeedTabDefaultTop()
-    {
-        feedUiScrollRectFasterEx.verticalNormalizedPosition = 1;
-    }
+    //public void SetUpFeedTabDefaultTop()
+    //{
+    //    feedUiScrollRectFasterEx.verticalNormalizedPosition = 1;
+    //}
 
     public bool isChangeMainScrollRect = false;
     IEnumerator WaitChangeScrollRectFasterOnMain()
@@ -801,38 +801,38 @@ public class FeedUIController : MonoBehaviour
         isChangeMainScrollRect = false;
     }
 
-    public IEnumerator ActiveFeedUi(int index, int callingIndex)
-    {
-        if (feedUiScreen.activeSelf)
-        {
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                if (i == index)
-                {
-                    allFeedPanel[i].transform.gameObject.SetActive(true);
-                    // OLD FEED UI
-                    ////if (callingIndex == 1)//set default scroll top.......
-                    ////{
-                    ////    SetUpFeedTabDefaultTop();
-                    ////}
-                    //  End OLD FEED UI
-                }
-            }
-            yield return new WaitForSeconds(0.5f);
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                if (i != feedUiHorizontalSnap.CurrentPage)
-                {
-                    allFeedPanel[i].transform.gameObject.SetActive(false);
-                }
-            }
+    //public IEnumerator ActiveFeedUi(int index, int callingIndex)
+    //{
+    //    if (feedUiScreen.activeSelf)
+    //    {
+    //        for (int i = 0; i < allFeedPanel.Length; i++)
+    //        {
+    //            if (i == index)
+    //            {
+    //                allFeedPanel[i].transform.gameObject.SetActive(true);
+    //                // OLD FEED UI
+    //                ////if (callingIndex == 1)//set default scroll top.......
+    //                ////{
+    //                ////    SetUpFeedTabDefaultTop();
+    //                ////}
+    //                //  End OLD FEED UI
+    //            }
+    //        }
+    //        yield return new WaitForSeconds(0.5f);
+    //        for (int i = 0; i < allFeedPanel.Length; i++)
+    //        {
+    //            if (i != feedUiHorizontalSnap.CurrentPage)
+    //            {
+    //                allFeedPanel[i].transform.gameObject.SetActive(false);
+    //            }
+    //        }
 
-            if (index == 1)
-            {
-                StartCoroutine(SetContentOnFollowingItemScreen());
-            }
-        }
-    }
+    //        if (index == 1)
+    //        {
+    //            StartCoroutine(SetContentOnFollowingItemScreen());
+    //        }
+    //    }
+    //}
 
     public void CloseAllFeed(bool isActive)
     {
@@ -846,68 +846,68 @@ public class FeedUIController : MonoBehaviour
     }
 
     public float verticalNormalizedPosition;
-    public void APiPagination()
-    {
-        //Debug.Log("y pos:" + feedUiScrollRectFasterEx.verticalEndPos);
+    //public void APiPagination()
+    //{
+    //    //Debug.Log("y pos:" + feedUiScrollRectFasterEx.verticalEndPos);
 
-        if (isChangeMainScrollRect)
-        {
-            return;
-        }
-        verticalNormalizedPosition = feedUiScrollRectFasterEx.verticalNormalizedPosition;
-        //Debug.Log("verticalNormalizedPosition : " + feedUiScrollRectFasterEx.verticalNormalizedPosition + "    :verticalEndPos:" + feedUiScrollRectFasterEx.verticalEndPos + "    :isDataLoad:" + isDataLoad);
-        //if (feedUiScrollRectFasterEx.verticalEndPos <= 1 && isDataLoad)
-        if (feedUiScrollRectFasterEx.verticalNormalizedPosition <= 0.01f && isDataLoad)
-        {
-            if (feedUiScrollRectFasterEx == allFeedScrollRectFasterEx[2])
-            {
-                APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-            }
-            //Debug.Log("scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition);
-            if (feedUiHorizontalSnap.CurrentPage == 1)
-            {
-                //Debug.Log("Feed Following scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.followingUserRoot.Data.Rows.Count);
-                //if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 && followingFeedImageLoadedCount >= (followingFeedInitiateTotalCount - 1))
-                if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 /*&& followingFeedInitiateTotalCount < 2*/)
-                {
-                    isDataLoad = false;
-                   Debug.Log("isDataLoad False");
-                    APIManager.Instance.RequestGetFeedsByFollowingUser((followingUserCurrentpage + 1), 10);
-                }
-            }
-            else
-            {
-                //Debug.Log("Feed scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.root.data.rows.Count + " :current screen:" + feedUiHorizontalSnap.CurrentPage);
-                //Riken
-                //if (APIManager.Instance.root.data.rows.Count > 0)
-                if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
-                {
-                    bool isCallAPi = false;
-                    if (feedUiHorizontalSnap.CurrentPage == 0 && hotFeedInitiateTotalCount < 2)
-                    {
-                        isCallAPi = true;
-                    }
-                    else if (feedUiHorizontalSnap.CurrentPage == 2 && hotForYouFeedInitiateTotalCount < 2)
-                    {
-                        isCallAPi = true;
-                    }
-                   Debug.Log("isCalling:" + isCallAPi);
-                    if (isCallAPi)
-                    {
-                       Debug.Log("isDataLoad False APiPagination currentPage :" + allFeedCurrentpage);
-                        isDataLoad = false;
-                        APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-                    }
-                }
-            }
-            //Debug.Log("isDataLoad False");
-            //isDataLoad = false;
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-        }
-    }
+    //    if (isChangeMainScrollRect)
+    //    {
+    //        return;
+    //    }
+    //    verticalNormalizedPosition = feedUiScrollRectFasterEx.verticalNormalizedPosition;
+    //    //Debug.Log("verticalNormalizedPosition : " + feedUiScrollRectFasterEx.verticalNormalizedPosition + "    :verticalEndPos:" + feedUiScrollRectFasterEx.verticalEndPos + "    :isDataLoad:" + isDataLoad);
+    //    //if (feedUiScrollRectFasterEx.verticalEndPos <= 1 && isDataLoad)
+    //    if (feedUiScrollRectFasterEx.verticalNormalizedPosition <= 0.01f && isDataLoad)
+    //    {
+    //        if (feedUiScrollRectFasterEx == allFeedScrollRectFasterEx[2])
+    //        {
+    //            APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
+    //        }
+    //        //Debug.Log("scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition);
+    //        if (feedUiHorizontalSnap.CurrentPage == 1)
+    //        {
+    //            //Debug.Log("Feed Following scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.followingUserRoot.Data.Rows.Count);
+    //            //if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 && followingFeedImageLoadedCount >= (followingFeedInitiateTotalCount - 1))
+    //            if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 /*&& followingFeedInitiateTotalCount < 2*/)
+    //            {
+    //                isDataLoad = false;
+    //               Debug.Log("isDataLoad False");
+    //                APIManager.Instance.RequestGetFeedsByFollowingUser((followingUserCurrentpage + 1), 10);
+    //            }
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Feed scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.root.data.rows.Count + " :current screen:" + feedUiHorizontalSnap.CurrentPage);
+    //            //Riken
+    //            //if (APIManager.Instance.root.data.rows.Count > 0)
+    //            if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
+    //            {
+    //                bool isCallAPi = false;
+    //                if (feedUiHorizontalSnap.CurrentPage == 0 && hotFeedInitiateTotalCount < 2)
+    //                {
+    //                    isCallAPi = true;
+    //                }
+    //                else if (feedUiHorizontalSnap.CurrentPage == 2 && hotForYouFeedInitiateTotalCount < 2)
+    //                {
+    //                    isCallAPi = true;
+    //                }
+    //               Debug.Log("isCalling:" + isCallAPi);
+    //                if (isCallAPi)
+    //                {
+    //                   Debug.Log("isDataLoad False APiPagination currentPage :" + allFeedCurrentpage);
+    //                    isDataLoad = false;
+    //                    APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
+    //                }
+    //            }
+    //        }
+    //        //Debug.Log("isDataLoad False");
+    //        //isDataLoad = false;
+    //    }
+    //    if (Input.GetKeyDown(KeyCode.A))
+    //    {
+    //        APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
+    //    }
+    //}
 
     public string GetConvertedTimeString(DateTime dateTime)
     {
@@ -1149,7 +1149,7 @@ public class FeedUIController : MonoBehaviour
     //this method is used to back button click find friend screen.......
     public void OnClickBackFindFriendButton()
     {
-        RemoveUnFollowedUserFromFollowingTab();
+       // RemoveUnFollowedUserFromFollowingTab();
 
         //findFriendInputField.text = "";
         findFriendInputFieldAdvanced.Text = "";
@@ -1552,14 +1552,14 @@ public class FeedUIController : MonoBehaviour
     }
 
     //this method is used to Remove feed from following tab.......
-    public void RemoveUnFollowedUserFromFollowingTab(string callingFrom = "")
-    {
-        //Debug.Log("RemoveUnFollowedUserFromFollowingTab.......:" + unFollowedUserListForFollowingTab.Count);
-        if (unFollowedUserListForFollowingTab.Count > 0)
-        {
-            APIManager.Instance.FeedFollowingSaveAndUpdateJson(unFollowedUserListForFollowingTab, callingFrom);
-        }
-    }
+    //public void RemoveUnFollowedUserFromFollowingTab(string callingFrom = "")
+    //{
+    //    //Debug.Log("RemoveUnFollowedUserFromFollowingTab.......:" + unFollowedUserListForFollowingTab.Count);
+    //    if (unFollowedUserListForFollowingTab.Count > 0)
+    //    {
+    //        APIManager.Instance.FeedFollowingSaveAndUpdateJson(unFollowedUserListForFollowingTab, callingFrom);
+    //    }
+    //}
     #endregion
 
     #region Profile Follower and Following list Screen Methods
@@ -1634,7 +1634,7 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickProfileFollowerFollowingBackButton()
     {
-        RemoveUnFollowedUserFromFollowingTab();
+        //RemoveUnFollowedUserFromFollowingTab();
         MyProfileDataManager.Instance.MyProfileSceenShow(true);
         profileFollowerFollowingListScreen.SetActive(false);
     }

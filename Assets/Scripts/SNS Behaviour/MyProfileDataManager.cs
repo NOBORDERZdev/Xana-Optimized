@@ -248,7 +248,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to clear my profile data after logout.......
     public void ClearAndResetAfterLogout()
     {
-        userRolesView.ResetBadges();
+       // userRolesView.ResetBadges();
         loadedMyPostAndVideoId.Clear();  //amit-19-3-2022 onlogout clear feed id list 
         loadedMyPostAndVideoIdInFeedPage.Clear();  //Riken 
         ClearDummyData();
@@ -1022,21 +1022,21 @@ public class MyProfileDataManager : MonoBehaviour
                     //userPostItem.avtarUrl = myProfileData.avatar;
                     //userPostItem.LoadFeed();
 
-                    if (Feedparent == null)
-                    {
-                        loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    }
-                    else
-                    {
-                        if (IsNew)
-                        {
-                            loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                        }
-                        else
-                        {
-                            loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                        }
-                    }
+                    //if (Feedparent == null)
+                    //{
+                    //    loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    //}
+                    //else
+                    //{
+                    //    if (IsNew)
+                    //    {
+                    //        loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    //    }
+                    //    else
+                    //    {
+                    //        loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+                    //    }
+                    //}
                     if (pageNumb == 1 && i == 0)
                     {
                         Debug.Log("Latest Profile pic set as top");
@@ -1309,7 +1309,7 @@ public class MyProfileDataManager : MonoBehaviour
     public void OnClickOtherPalyerProfileBackButton()
     {
         FeedUIController.Instance.feedUiScreen.SetActive(true);
-        FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
+       // FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
     }
 
     //this method is used to follow user button click.......
@@ -1633,15 +1633,15 @@ public class MyProfileDataManager : MonoBehaviour
         {
             //editProfileJobInputfield.text = myProfileData.userProfile.job;
             //editProfileJobAdvanceInputfield.Text = myProfileData.userProfile.job;
-            editProfileJobAdvanceInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.job);
+            //editProfileJobAdvanceInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.job);
             //editProfileWebsiteInputfield.text = myProfileData.userProfile.website;
-            editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
+            //editProfileWebsiteAdvanceInputfield.Text = myProfileData.userProfile.website;
             editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
             if (string.IsNullOrWhiteSpace(editProfileBioInputfield.Text))
             {
                 editProfileBioInputfield.Text = "";
             }
-            editProfileGenderInputfield.text = myProfileData.userProfile.gender;
+            //editProfileGenderInputfield.text = myProfileData.userProfile.gender;
 
             if (myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
                 editProfileUniqueNameAdvanceInputfield.Text = "";
@@ -1878,7 +1878,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         EditProfileDoneButtonSetUp(false);//setup edit profile done button.......
 
-        if (!CheckForWebSite())
+        if (/*!CheckForWebSite()*/ true)
         {
             EditProfileInfoCheckAndAPICalling();
         }
@@ -1965,26 +1965,26 @@ public class MyProfileDataManager : MonoBehaviour
 
         //if (editProfileJobInputfield.text != job)
         // Job
-        if (editProfileJobAdvanceInputfield.Text != job)
-        {
-            //string tempStr = editProfileJobInputfield.text;
-            string tempStr = editProfileJobAdvanceInputfield.RichText;
-            if (tempStr.StartsWith(" "))
-            {
-                tempStr = tempStr.TrimStart(' ');
-            }
-            Debug.Log("temp Job Str:" + tempStr);
-            job = tempStr;
-            checkEditInfoUpdated = 1;
-        }
-        else
-        {
-            //if (string.IsNullOrEmpty(editProfileJobInputfield.text))
-            if (string.IsNullOrEmpty(editProfileJobAdvanceInputfield.Text))
-            {
-                job = "";
-            }
-        }
+        //if (editProfileJobAdvanceInputfield.Text != job)
+        //{
+        //    //string tempStr = editProfileJobInputfield.text;
+        //    string tempStr = editProfileJobAdvanceInputfield.RichText;
+        //    if (tempStr.StartsWith(" "))
+        //    {
+        //        tempStr = tempStr.TrimStart(' ');
+        //    }
+        //    Debug.Log("temp Job Str:" + tempStr);
+        //    job = tempStr;
+        //    checkEditInfoUpdated = 1;
+        //}
+        //else
+        //{
+        //    //if (string.IsNullOrEmpty(editProfileJobInputfield.text))
+        //    if (string.IsNullOrEmpty(editProfileJobAdvanceInputfield.Text))
+        //    {
+        //        job = "";
+        //    }
+        //}
 
         //if (editProfileWebsiteInputfield.text != website)
         /*if (editProfileWebsiteAdvanceInputfield.Text != website)
@@ -2075,14 +2075,14 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         // Gander
-        if (!string.IsNullOrEmpty(editProfileGenderInputfield.text))
-        {
-            if (editProfileGenderInputfield.text != gender)
-            {
-                gender = editProfileGenderInputfield.text;
-                checkEditInfoUpdated = 1;
-            }
-        }
+        //if (!string.IsNullOrEmpty(editProfileGenderInputfield.text))
+        //{
+        //    if (editProfileGenderInputfield.text != gender)
+        //    {
+        //        gender = editProfileGenderInputfield.text;
+        //        checkEditInfoUpdated = 1;
+        //    }
+        //}
 
         // Check for Tags   
         tempTags = userSelectedTags.ToArray();
@@ -2205,52 +2205,52 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
     bool isUrl = false;
-    public bool CheckForWebSite()
-    {
-        if (editProfileWebsiteAdvanceInputfield.Text != website)
-        {
-            //string tempStr = editProfileWebsiteInputfield.text;
-            string tempStr = editProfileWebsiteAdvanceInputfield.Text;
-            if (tempStr.StartsWith(" "))
-            {
-                tempStr = tempStr.TrimStart(' ');
-            }
-            Debug.Log("temp Web Str:" + tempStr);
-            website = tempStr;
-            checkEditInfoUpdated = 1;
+    //public bool CheckForWebSite()
+    //{
+    //    if (editProfileWebsiteAdvanceInputfield.Text != website)
+    //    {
+    //        //string tempStr = editProfileWebsiteInputfield.text;
+    //        string tempStr = editProfileWebsiteAdvanceInputfield.Text;
+    //        if (tempStr.StartsWith(" "))
+    //        {
+    //            tempStr = tempStr.TrimStart(' ');
+    //        }
+    //        Debug.Log("temp Web Str:" + tempStr);
+    //        website = tempStr;
+    //        checkEditInfoUpdated = 1;
 
-            if (!string.IsNullOrEmpty(website))
-            {
-                isUrl = false;
-                string webUrl = website;
-                if (!CheckUrlDropboxOrNot(webUrl))
-                {
-                    // webUrl = String.Concat(defaultUrl + tempStr);
-                }
-                else
-                {
-                    isUrl = true;
-                }
+    //        if (!string.IsNullOrEmpty(website))
+    //        {
+    //            isUrl = false;
+    //            string webUrl = website;
+    //            if (!CheckUrlDropboxOrNot(webUrl))
+    //            {
+    //                // webUrl = String.Concat(defaultUrl + tempStr);
+    //            }
+    //            else
+    //            {
+    //                isUrl = true;
+    //            }
 
-                //FeedUIController.Instance.ShowLoader(true);
-                RequestForWebSiteValidation(webUrl);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        else
-        {
-            //if (string.IsNullOrEmpty(editProfileWebsiteInputfield.text))
-            if (string.IsNullOrEmpty(editProfileWebsiteAdvanceInputfield.Text))
-            {
-                website = "";
-            }
-            return false;
-        }
-    }
+    //            //FeedUIController.Instance.ShowLoader(true);
+    //            RequestForWebSiteValidation(webUrl);
+    //            return true;
+    //        }
+    //        else
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //if (string.IsNullOrEmpty(editProfileWebsiteInputfield.text))
+    //        if (string.IsNullOrEmpty(editProfileWebsiteAdvanceInputfield.Text))
+    //        {
+    //            website = "";
+    //        }
+    //        return false;
+    //    }
+    //}
 
     Coroutine webValidCo;
     public void RequestForWebSiteValidation(string url)

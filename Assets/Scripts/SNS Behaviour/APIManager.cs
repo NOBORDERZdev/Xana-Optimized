@@ -105,45 +105,45 @@ public class APIManager : MonoBehaviour
         }*/
     }
 
-    public void OnFeedAPiCalling(string callingFrom = "")
-    {
-        Debug.Log("OnFeedAPiCalling");
-        RequestGetAllUsersWithFeeds(1, 10, callingFrom);
+    //public void OnFeedAPiCalling(string callingFrom = "")
+    //{
+    //    Debug.Log("OnFeedAPiCalling");
+    //    RequestGetAllUsersWithFeeds(1, 10, callingFrom);
 
-        if (followingTabCo != null)
-        {
-            StopCoroutine(followingTabCo);
-        }
-        followingTabCo = StartCoroutine(WaitToCallFollowingTabAPI(callingFrom));
-    }
+    //    if (followingTabCo != null)
+    //    {
+    //        StopCoroutine(followingTabCo);
+    //    }
+    //    followingTabCo = StartCoroutine(WaitToCallFollowingTabAPI(callingFrom));
+    //}
 
-    Coroutine followingTabCo;
-    IEnumerator WaitToCallFollowingTabAPI(string callingFrom)
-    {
-        yield return new WaitForSeconds(.5f);
-        RequestGetFeedsByFollowingUser(1, 10, callingFrom);
-    }
-    public void LoadJson()
-    {
-        using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedData.json"))
-        {
-            string json = r.ReadToEnd();
-            //Debug.Log("json " + json);
-            StartCoroutine(SaveAndLoadJson(json, 0, 1, ""));
-            //  FeedUIController.Instance.isDataLoad = true;
-        }
-    }
+    //Coroutine followingTabCo;
+    //IEnumerator WaitToCallFollowingTabAPI(string callingFrom)
+    //{
+    //    yield return new WaitForSeconds(.5f);
+    //    RequestGetFeedsByFollowingUser(1, 10, callingFrom);
+    //}
+    //public void LoadJson()
+    //{
+    //    using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedData.json"))
+    //    {
+    //        string json = r.ReadToEnd();
+    //        //Debug.Log("json " + json);
+    //        StartCoroutine(SaveAndLoadJson(json, 0, 1, ""));
+    //        //  FeedUIController.Instance.isDataLoad = true;
+    //    }
+    //}
 
-    public void LoadJsonFollowingFeed()
-    {
-        using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedFollowingData.json"))
-        {
-            string json = r.ReadToEnd();
-            //Debug.Log("json " + json);
-            StartCoroutine(SaveAndLoadJsonFollowingFeed(json, 0, 1, ""));
-            //  FeedUIController.Instance.isDataLoad = true;
-        }
-    }
+    //public void LoadJsonFollowingFeed()
+    //{
+    //    using (StreamReader r = new StreamReader(Application.persistentDataPath + "/FeedFollowingData.json"))
+    //    {
+    //        string json = r.ReadToEnd();
+    //        //Debug.Log("json " + json);
+    //        StartCoroutine(SaveAndLoadJsonFollowingFeed(json, 0, 1, ""));
+    //        //  FeedUIController.Instance.isDataLoad = true;
+    //    }
+    //}
 
     #region HotAPI..........   
     Coroutine requestGetAllUsersWithFeedsCoroutine;
@@ -204,162 +204,162 @@ public class APIManager : MonoBehaviour
                 //Debug.Log("IERequestGetAllUsersWithFeeds PageNum:" + pageNum + "    :PageSize:" + pageSize + "     :Data:" + data);
                 // FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
 
-                StartCoroutine(SaveAndLoadJson(data, 1, pageNum, callingFrom));
+                //StartCoroutine(SaveAndLoadJson(data, 1, pageNum, callingFrom));
                 //LoaderController.Instance.isLoaderGetApiResponce = true;
                 //FeedUIController.Instance.allFeedCurrentpage += 1;
             }
         }
     }
-    Coroutine requestGetFeedsByFollowingUserCoroutine;
-    public void RequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom = "")
-    {
-        if (requestGetFeedsByFollowingUserCoroutine != null)
-        {
-            StopCoroutine(requestGetFeedsByFollowingUserCoroutine);
-        }
-        //FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
-        requestGetFeedsByFollowingUserCoroutine = StartCoroutine(IERequestGetFeedsByFollowingUser(pageNum, pageSize, callingFrom));
-    }
-    public IEnumerator IERequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom)
-    {
-        //yield return new WaitForSeconds(0.5f);
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByFollowingUser + "/" + pageNum + "/" + pageSize)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //Coroutine requestGetFeedsByFollowingUserCoroutine;
+    //public void RequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom = "")
+    //{
+    //    if (requestGetFeedsByFollowingUserCoroutine != null)
+    //    {
+    //        StopCoroutine(requestGetFeedsByFollowingUserCoroutine);
+    //    }
+    //    //FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
+    //    requestGetFeedsByFollowingUserCoroutine = StartCoroutine(IERequestGetFeedsByFollowingUser(pageNum, pageSize, callingFrom));
+    //}
+    //public IEnumerator IERequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom)
+    //{
+    //    //yield return new WaitForSeconds(0.5f);
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetFeedsByFollowingUser + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            if (LoaderController.Instance != null)//main feed top loader start
-            {
-                LoaderController.Instance.isLoaderGetApiResponce = false;
-            }
+    //        if (LoaderController.Instance != null)//main feed top loader start
+    //        {
+    //            LoaderController.Instance.isLoaderGetApiResponce = false;
+    //        }
 
-            www.SendWebRequest();
+    //        www.SendWebRequest();
 
-            while (!www.isDone)
-            {
-                yield return null;
-            }
+    //        while (!www.isDone)
+    //        {
+    //            yield return null;
+    //        }
 
-            if (LoaderController.Instance != null)//main feed top loader stop
-            {
-                LoaderController.Instance.isLoaderGetApiResponce = true;
-            }
+    //        if (LoaderController.Instance != null)//main feed top loader stop
+    //        {
+    //            LoaderController.Instance.isLoaderGetApiResponce = true;
+    //        }
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
 
-                // OLD FEED UI
-                //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
-                //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                //}
-                // END OLD FEED UI
-            }
-            else
-            {
-                string data = www.downloadHandler.text;
-                Debug.Log("Form upload complete! IERequestGetFeedsByFollowingUser pageNum:" + pageNum + "   :pageSize:" + pageSize + " :Data:" + data);
-                //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
-                //  followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data);
-                // APIController.Instance.OnGetAllFeedForFollowingTab();
+    //            // OLD FEED UI
+    //            //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+    //            //{
+    //            //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+    //            //}
+    //            // END OLD FEED UI
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Form upload complete! IERequestGetFeedsByFollowingUser pageNum:" + pageNum + "   :pageSize:" + pageSize + " :Data:" + data);
+    //            //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //            //  followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data);
+    //            // APIController.Instance.OnGetAllFeedForFollowingTab();
 
-                StartCoroutine(SaveAndLoadJsonFollowingFeed(data, 1, pageNum, callingFrom));
-                //LoaderController.Instance.isLoaderGetApiResponce = true;
-                //FeedUIController.Instance.followingUserCurrentpage += 1;
-            }
-        }
-    }
+    //            StartCoroutine(SaveAndLoadJsonFollowingFeed(data, 1, pageNum, callingFrom));
+    //            //LoaderController.Instance.isLoaderGetApiResponce = true;
+    //            //FeedUIController.Instance.followingUserCurrentpage += 1;
+    //        }
+    //    }
+    //}
     public string HotdataStr;
-    public IEnumerator SaveAndLoadJson(string data, int caller, int pageNum, string callingFrom)
-    {
-        var settings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore
-        };
-        //root = JsonConvert.DeserializeObject<AllUserWithFeedRoot>(data, settings);
-        HotdataStr = data;
-        hotFeedRoot = JsonConvert.DeserializeObject<HotFeedRoot>(data, settings);
-        yield return new WaitForSeconds(.5f);
-        for (int i = 0; i < hotFeedRoot.data.rows.Count; i++)
-        {
-            if (!APIController.Instance.feedHotIdList.Contains(hotFeedRoot.data.rows[i].id))
-            {
-                //APIController.Instance.feedHotIdList.Add(hotFeedRoot.data.rows[i].id);
-                allhotFeedRoot.data.rows.Add(hotFeedRoot.data.rows[i]);
-            }
-        }
-        //Debug.Log("root data count:" + root.data.rows.Count + "    :Caller:"+caller);
-        /*if (caller == 0)
-        {
-            for (int i = 0; i < root.data.rows.Count; i++)
-            {
-                if (root.data.rows[i].feedCount != 0)
-                {
-                    allUserRootList.Add(root.data.rows[i]);
-                }
-            }
-        }
-        else
-        {
-            for (int i = 0; i < root.data.rows.Count; i++)
-            {
-                if (root.data.rows[i].feedCount != 0)
-                {
-                    List<AllUserWithFeedRow> matches = allUserRootList.Where(p => p.id == root.data.rows[i].id).ToList();
-                    for (int k = 0; k < matches.Count; k++)
-                    {
-                        allUserRootList.Remove(matches[k]);
-                        hotSaveRootList.Remove(matches[k]);
-                    }
+    //public IEnumerator SaveAndLoadJson(string data, int caller, int pageNum, string callingFrom)
+    //{
+    //    var settings = new JsonSerializerSettings
+    //    {
+    //        NullValueHandling = NullValueHandling.Ignore,
+    //        MissingMemberHandling = MissingMemberHandling.Ignore
+    //    };
+    //    //root = JsonConvert.DeserializeObject<AllUserWithFeedRoot>(data, settings);
+    //    HotdataStr = data;
+    //    hotFeedRoot = JsonConvert.DeserializeObject<HotFeedRoot>(data, settings);
+    //    yield return new WaitForSeconds(.5f);
+    //    for (int i = 0; i < hotFeedRoot.data.rows.Count; i++)
+    //    {
+    //        if (!APIController.Instance.feedHotIdList.Contains(hotFeedRoot.data.rows[i].id))
+    //        {
+    //            //APIController.Instance.feedHotIdList.Add(hotFeedRoot.data.rows[i].id);
+    //            allhotFeedRoot.data.rows.Add(hotFeedRoot.data.rows[i]);
+    //        }
+    //    }
+    //    //Debug.Log("root data count:" + root.data.rows.Count + "    :Caller:"+caller);
+    //    /*if (caller == 0)
+    //    {
+    //        for (int i = 0; i < root.data.rows.Count; i++)
+    //        {
+    //            if (root.data.rows[i].feedCount != 0)
+    //            {
+    //                allUserRootList.Add(root.data.rows[i]);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < root.data.rows.Count; i++)
+    //        {
+    //            if (root.data.rows[i].feedCount != 0)
+    //            {
+    //                List<AllUserWithFeedRow> matches = allUserRootList.Where(p => p.id == root.data.rows[i].id).ToList();
+    //                for (int k = 0; k < matches.Count; k++)
+    //                {
+    //                    allUserRootList.Remove(matches[k]);
+    //                    hotSaveRootList.Remove(matches[k]);
+    //                }
 
-                    allUserRootList.Add(root.data.rows[i]);
-                    hotSaveRootList.Add(root.data.rows[i]);
-                    if (hotSaveRootList.Count > 20)
-                    {
-                        hotSaveRootList.Remove(hotSaveRootList[0]);
-                    }
-                }
-            }
-            //hotSavejsonList.data = root.data;
-            hotSavejsonList.data.rows = hotSaveRootList;
-            hotSavejsonList.success = root.success;
-        }*/
+    //                allUserRootList.Add(root.data.rows[i]);
+    //                hotSaveRootList.Add(root.data.rows[i]);
+    //                if (hotSaveRootList.Count > 20)
+    //                {
+    //                    hotSaveRootList.Remove(hotSaveRootList[0]);
+    //                }
+    //            }
+    //        }
+    //        //hotSavejsonList.data = root.data;
+    //        hotSavejsonList.data.rows = hotSaveRootList;
+    //        hotSavejsonList.success = root.success;
+    //    }*/
 
-        yield return new WaitForSeconds(0.1f);
+    //    yield return new WaitForSeconds(0.1f);
 
-        ///////////////////////////////////////////////
-        APIController.Instance.AllUsersWithHotFeeds(callingFrom);
-        //Debug.Log("Feed Load");
-        FeedUIController.Instance.myPostCurrentPage += 1;
-        RequestGetFeedsByUserId(userId, (FeedUIController.Instance.myPostCurrentPage), 10, "FeedPage");
-        yield return new WaitForSeconds(1f);
-        MyProfileDataManager.Instance.AllFeedWithUserId((FeedUIController.Instance.myPostCurrentPage), FeedUIController.Instance.forYouFeedTabContainer);
-        //APIController.Instance.AllUserForYouFeeds(pageNum, callingFrom);
-        StartCoroutine(APIController.Instance.HotWaitToEnableDataLoadedBool(pageNum));
-        //Riken
-        /* if (hotSaveRootList.Count != 0)
-         {
-             string feedData = JsonUtility.ToJson(hotSavejsonList);
-             File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
-             //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
-             //Debug.Log("json  " + feedData);
-         }*/
-    }
+    //    ///////////////////////////////////////////////
+    //    //APIController.Instance.AllUsersWithHotFeeds(callingFrom);
+    //    //Debug.Log("Feed Load");
+    //    FeedUIController.Instance.myPostCurrentPage += 1;
+    //    RequestGetFeedsByUserId(userId, (FeedUIController.Instance.myPostCurrentPage), 10, "FeedPage");
+    //    yield return new WaitForSeconds(1f);
+    //   // MyProfileDataManager.Instance.AllFeedWithUserId((FeedUIController.Instance.myPostCurrentPage), FeedUIController.Instance.forYouFeedTabContainer);
+    //    //APIController.Instance.AllUserForYouFeeds(pageNum, callingFrom);
+    //    StartCoroutine(APIController.Instance.HotWaitToEnableDataLoadedBool(pageNum));
+    //    //Riken
+    //    /* if (hotSaveRootList.Count != 0)
+    //     {
+    //         string feedData = JsonUtility.ToJson(hotSavejsonList);
+    //         File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
+    //         //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
+    //         //Debug.Log("json  " + feedData);
+    //     }*/
+    //}
 
-    public void LoadMyPost()
-    {
-        StartCoroutine(IELoadMyPost());
-    }
+    //public void LoadMyPost()
+    //{
+    //    StartCoroutine(IELoadMyPost());
+    //}
 
-    public IEnumerator IELoadMyPost()
-    {
-        RequestGetFeedsByUserId(userId, (1), 10, "FeedPage");
-        yield return new WaitForSeconds(1f);
-        MyProfileDataManager.Instance.AllFeedWithUserId((1), FeedUIController.Instance.forYouFeedTabContainer, true);
-        yield return new WaitForSeconds(.5f);
-        APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
-    }
+    //public IEnumerator IELoadMyPost()
+    //{
+    //    RequestGetFeedsByUserId(userId, (1), 10, "FeedPage");
+    //    yield return new WaitForSeconds(1f);
+    //    MyProfileDataManager.Instance.AllFeedWithUserId((1), FeedUIController.Instance.forYouFeedTabContainer, true);
+    //    yield return new WaitForSeconds(.5f);
+    //    APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+    //}
     public void HotAndDiscoverSaveAndUpdateJson(int feedId, int index)
     {
         AllUserWithFeedRow allUserWithFeedRow = allUserRootList[index];
@@ -401,109 +401,109 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SaveAndLoadJsonFollowingFeed(string data, int caller, int pageNum, string callingFrom)
-    {
-        var settings = new JsonSerializerSettings
-        {
-            NullValueHandling = NullValueHandling.Ignore,
-            MissingMemberHandling = MissingMemberHandling.Ignore
-        };
-        followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data, settings);
-        //Debug.Log("following user root data count:" + followingUserRoot.Data.Rows.Count + "    :Caller:" + caller);
-        if (caller == 0)
-        {
-            for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
-            {
-                allFollowingUserRootList.Add(followingUserRoot.Data.Rows[i]);
-            }
-        }
-        else
-        {
-            for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
-            {
-                // Debug.Log("id :" + followingUserRootList[i].Id + "DataId" + followingUserRoot.Data.Rows[i].Id);
-                List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.Id == followingUserRoot.Data.Rows[i].Id).ToList();
-                //  Debug.Log("matches" + matches.Count);
-                for (int k = 0; k < matches.Count; k++)
-                {
-                    allFollowingUserRootList.Remove(matches[k]);
-                    followingUserTabSaveRootList.Remove(matches[k]);
-                }
+    //public IEnumerator SaveAndLoadJsonFollowingFeed(string data, int caller, int pageNum, string callingFrom)
+    //{
+    //    var settings = new JsonSerializerSettings
+    //    {
+    //        NullValueHandling = NullValueHandling.Ignore,
+    //        MissingMemberHandling = MissingMemberHandling.Ignore
+    //    };
+    //    followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data, settings);
+    //    //Debug.Log("following user root data count:" + followingUserRoot.Data.Rows.Count + "    :Caller:" + caller);
+    //    if (caller == 0)
+    //    {
+    //        for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
+    //        {
+    //            allFollowingUserRootList.Add(followingUserRoot.Data.Rows[i]);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        for (int i = 0; i < followingUserRoot.Data.Rows.Count; i++)
+    //        {
+    //            // Debug.Log("id :" + followingUserRootList[i].Id + "DataId" + followingUserRoot.Data.Rows[i].Id);
+    //            List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.Id == followingUserRoot.Data.Rows[i].Id).ToList();
+    //            //  Debug.Log("matches" + matches.Count);
+    //            for (int k = 0; k < matches.Count; k++)
+    //            {
+    //                allFollowingUserRootList.Remove(matches[k]);
+    //                followingUserTabSaveRootList.Remove(matches[k]);
+    //            }
 
-                allFollowingUserRootList.Add(followingUserRoot.Data.Rows[i]);
-                followingUserTabSaveRootList.Add(followingUserRoot.Data.Rows[i]);
+    //            allFollowingUserRootList.Add(followingUserRoot.Data.Rows[i]);
+    //            followingUserTabSaveRootList.Add(followingUserRoot.Data.Rows[i]);
 
-                if (followingUserTabSaveRootList.Count > 20)
-                {
-                    followingUserTabSaveRootList.Remove(followingUserTabSaveRootList[0]);
-                }
-            }
-            //followingUserTabSavejsonList.Data = followingUserRoot.Data;
-            followingUserTabSavejsonList.Data.Rows = followingUserTabSaveRootList;
-            followingUserTabSavejsonList.Success = followingUserRoot.Success;
-            followingUserTabSavejsonList.Data.Count = followingUserRoot.Data.Count;
-        }
-        yield return new WaitForSeconds(0.1f);
+    //            if (followingUserTabSaveRootList.Count > 20)
+    //            {
+    //                followingUserTabSaveRootList.Remove(followingUserTabSaveRootList[0]);
+    //            }
+    //        }
+    //        //followingUserTabSavejsonList.Data = followingUserRoot.Data;
+    //        followingUserTabSavejsonList.Data.Rows = followingUserTabSaveRootList;
+    //        followingUserTabSavejsonList.Success = followingUserRoot.Success;
+    //        followingUserTabSavejsonList.Data.Count = followingUserRoot.Data.Count;
+    //    }
+    //    yield return new WaitForSeconds(0.1f);
 
-        APIController.Instance.OnGetAllFeedForFollowingTab(pageNum, callingFrom);
+    //    APIController.Instance.OnGetAllFeedForFollowingTab(pageNum, callingFrom);
 
-        if (followingUserTabSaveRootList.Count != 0)
-        {
-            string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
-            File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
-            //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
-            //Debug.Log("json  " + feedData);
-        }
-    }
+    //    if (followingUserTabSaveRootList.Count != 0)
+    //    {
+    //        string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
+    //        File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
+    //        //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
+    //        //Debug.Log("json  " + feedData);
+    //    }
+    //}
 
-    public void FeedFollowingSaveAndUpdateJson(List<int> unFollowingUserList, string callingFrom = "")
-    {
-        for (int i = 0; i < unFollowingUserList.Count; i++)
-        {
-            //Debug.Log("UmFollow Id:" + unFollowingUserList[i]);
-            List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.CreatedBy == unFollowingUserList[i]).ToList();
-            //Debug.Log("matches" + matches.Count);
-            for (int k = 0; k < matches.Count; k++)
-            {
-                APIController.Instance.RemoveFollowingItemAndResetData(matches[k].Id);
-                allFollowingUserRootList.Remove(matches[k]);
-                followingUserTabSaveRootList.Remove(matches[k]);
-            }
-            followingUserRoot.Data.Count -= matches.Count;
-        }
-        //followingUserTabSavejsonList.Data = followingUserRoot.Data;
-        followingUserTabSavejsonList.Data.Rows = followingUserTabSaveRootList;
-        followingUserTabSavejsonList.Success = followingUserRoot.Success;
-        followingUserTabSavejsonList.Data.Count = followingUserRoot.Data.Count;
+    //public void FeedFollowingSaveAndUpdateJson(List<int> unFollowingUserList, string callingFrom = "")
+    //{
+    //    for (int i = 0; i < unFollowingUserList.Count; i++)
+    //    {
+    //        //Debug.Log("UmFollow Id:" + unFollowingUserList[i]);
+    //        List<FeedsByFollowingUserRow> matches = allFollowingUserRootList.Where(p => p.CreatedBy == unFollowingUserList[i]).ToList();
+    //        //Debug.Log("matches" + matches.Count);
+    //        for (int k = 0; k < matches.Count; k++)
+    //        {
+    //            APIController.Instance.RemoveFollowingItemAndResetData(matches[k].Id);
+    //            allFollowingUserRootList.Remove(matches[k]);
+    //            followingUserTabSaveRootList.Remove(matches[k]);
+    //        }
+    //        followingUserRoot.Data.Count -= matches.Count;
+    //    }
+    //    //followingUserTabSavejsonList.Data = followingUserRoot.Data;
+    //    followingUserTabSavejsonList.Data.Rows = followingUserTabSaveRootList;
+    //    followingUserTabSavejsonList.Success = followingUserRoot.Success;
+    //    followingUserTabSavejsonList.Data.Count = followingUserRoot.Data.Count;
 
-        if (followingUserTabSaveRootList.Count != 0)
-        {
-            string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
-            File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
-            //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
-            //Debug.Log("json  " + feedData);
-        }
+    //    if (followingUserTabSaveRootList.Count != 0)
+    //    {
+    //        string feedData = JsonUtility.ToJson(followingUserTabSavejsonList);
+    //        File.WriteAllText(Application.persistentDataPath + "/FeedFollowingData.json", feedData);
+    //        //Debug.Log("path " + Application.persistentDataPath + "/FeedFollowingData.json");
+    //        //Debug.Log("json  " + feedData);
+    //    }
 
-        FeedUIController.Instance.unFollowedUserListForFollowingTab.Clear();//clear 
+    //    FeedUIController.Instance.unFollowedUserListForFollowingTab.Clear();//clear 
 
-        Resources.UnloadUnusedAssets();
-        //Caching.ClearCache();
-        //GC.Collect();
-        if (FeedUIController.Instance.followingFeedTabContainer.childCount <= 0)
-        {
-            //Debug.Log("RequestGetFeedsByFollowingUser.......");
-            RequestGetFeedsByFollowingUser(1, 10);
-        }
-        switch (callingFrom)
-        {
-            case "FollowingTabScreen":
-                //if User unfollow user from other user profile screen comes from following tab then refresh hot tab api.......
-                RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
-                break;
-            default:
-                break;
-        }
-    }
+    //    Resources.UnloadUnusedAssets();
+    //    //Caching.ClearCache();
+    //    //GC.Collect();
+    //    if (FeedUIController.Instance.followingFeedTabContainer.childCount <= 0)
+    //    {
+    //        //Debug.Log("RequestGetFeedsByFollowingUser.......");
+    //        RequestGetFeedsByFollowingUser(1, 10);
+    //    }
+    //    switch (callingFrom)
+    //    {
+    //        case "FollowingTabScreen":
+    //            //if User unfollow user from other user profile screen comes from following tab then refresh hot tab api.......
+    //            RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 
     //this api is used to get feed for single user.......
     public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize, string callingFrom, bool _callFromFindFriendWithName = false)
@@ -829,40 +829,40 @@ public class APIManager : MonoBehaviour
     }
 
     //this api is used to get all followers.......
-    public void RequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
-    {
-        StartCoroutine(IERequestGetAllFollowers(pageNum, pageSize, callingFrom));
-    }
-    public IEnumerator IERequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowers + "/" + pageNum + "/" + pageSize)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //public void RequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
+    //{
+    //    StartCoroutine(IERequestGetAllFollowers(pageNum, pageSize, callingFrom));
+    //}
+    //public IEnumerator IERequestGetAllFollowers(int pageNum, int pageSize, string callingFrom)
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowers + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Get Follower Success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color = red> GetAllFollowers Data" + data + "</color>");
-                AllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Get Follower Success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color = red> GetAllFollowers Data" + data + "</color>");
+    //            AllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
 
-                switch (callingFrom)
-                {
-                    case "FeedStart":
-                        APIController.Instance.GetSetAllfollowerInTopStoryPanelUser();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    //            switch (callingFrom)
+    //            {
+    //                case "FeedStart":
+    //                    APIController.Instance.GetSetAllfollowerInTopStoryPanelUser();
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
 
     //this api is used to follow user.......
     public void RequestFollowAUser(string user_Id, string callingFrom)

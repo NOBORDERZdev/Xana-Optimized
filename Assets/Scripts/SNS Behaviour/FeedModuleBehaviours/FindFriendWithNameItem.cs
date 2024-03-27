@@ -400,7 +400,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 //    FeedUIController.Instance.ShowLoader(false);
                 //}
                 //refresh Feed API.......
-                APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
+               // APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
 
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
                 //Debug.Log("Now following user: " + user_Id + " : " + searchUserRow.am_i_following);

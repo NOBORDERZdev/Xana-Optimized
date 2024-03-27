@@ -258,7 +258,7 @@ public class FollowerItemController : MonoBehaviour
                 FollowFollowingSetUp(true);
 
                 //refresh Feed API.......
-                APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
+                //APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
             }
         }
     }
