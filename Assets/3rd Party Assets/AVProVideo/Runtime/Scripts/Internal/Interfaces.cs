@@ -499,6 +499,16 @@ namespace RenderHeads.Media.AVProVideo
 		/// </summary>
 		Matrix4x4 GetYpCbCrTransform();
 
+		/// <summary>
+		/// The affine transform of the texture as an array of six floats: [a, b, c, d, tx, ty].
+		/// </summary>
+		float[] GetAffineTransform();
+
+		/// <summary>
+		/// The full 4x4 transform of the texture
+		/// </summary>
+		Matrix4x4 GetTextureMatrix();
+
 #if AVPRO_NEW_GAMMA
 		/// <summary>
 		/// Returns the gamma type of a sampled pixel
@@ -645,6 +655,16 @@ namespace RenderHeads.Media.AVProVideo
 	[System.Serializable]
 	public struct VideoResolveOptions
 	{
+		public enum AspectRatio
+		{
+			NoScaling,
+			FitVertically,
+			FitHorizontally,
+			FitInside,
+			FitOutside,
+			Stretch
+		}
+
 		[SerializeField] public bool applyHSBC;
 		[SerializeField, Range(0f, 1f)]	public float hue;
 		[SerializeField, Range(0f, 1f)]	public float saturation;
@@ -653,6 +673,7 @@ namespace RenderHeads.Media.AVProVideo
 		[SerializeField, Range(0.0001f, 10f)]	public float gamma;
 		[SerializeField] public Color tint;
 		[SerializeField] public bool generateMipmaps;
+		[SerializeField] public AspectRatio aspectRatio;
 
 		public bool IsColourAdjust()
 		{
@@ -673,6 +694,7 @@ namespace RenderHeads.Media.AVProVideo
 			VideoResolveOptions result = new VideoResolveOptions()
 			{
 				tint = Color.white,
+				aspectRatio = AspectRatio.Stretch,
 			};
 			result.ResetColourAdjust();
 

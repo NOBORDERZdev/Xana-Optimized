@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916627079940695803}
   - component: {fileID: 5424083809791621242}
+  - component: {fileID: 2370059558418852991}
   - component: {fileID: 7131525990368517632}
   m_Layer: 0
   m_Name: XanaFestivalPlayer
@@ -48,10 +49,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LiveStreamPlayer: {fileID: 7995507085264838646}
-  NormalPlayer: {fileID: 3478125501452759322}
+  NormalPlayer: {fileID: 3805648036091765640}
   APIHandler: {fileID: 7131525990368517632}
-  videoPlayerAudioSource: {fileID: 0}
+  videoPlayerAudioSource: {fileID: 3558926172653405874}
   mediaPlayerAudioSource: {fileID: 6592240787134628983}
+--- !u!114 &2370059558418852991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701209940026606156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 3433836251880016732}
+  videoPlayer: {fileID: 3805648036091765640}
 --- !u!114 &7131525990368517632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3476779859716909979
 Transform:
   m_ObjectHideFlags: 0
@@ -175,7 +191,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3481050133062655214}
-  - component: {fileID: 3591432958577479218}
   m_Layer: 0
   m_Name: YoutubeSimplified
   m_TagString: Untagged
@@ -202,27 +217,6 @@ Transform:
   m_Father: {fileID: 916627079940695803}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 215.337, z: 180}
---- !u!114 &3591432958577479218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3478125501452759322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 3591423694166375894}
-  mPlayer: {fileID: 1143835048744441774}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
-  videoPlayer: {fileID: 3805648036091765640}
-  x: 0
-  y: 0
-  z: 0
 --- !u!1 &3478224703463058098
 GameObject:
   m_ObjectHideFlags: 0
@@ -505,7 +499,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3481030278887656440
 Transform:
   m_ObjectHideFlags: 0
@@ -1093,7 +1087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &901787316052580137
 Transform:
   m_ObjectHideFlags: 0
@@ -1222,7 +1216,6 @@ GameObject:
   - component: {fileID: 854279515907760481}
   - component: {fileID: 6129634721144644684}
   - component: {fileID: 3433836251880016732}
-  - component: {fileID: 7627902506293395929}
   - component: {fileID: 5975590294647308262}
   - component: {fileID: 4929145585370904188}
   m_Layer: 0
@@ -1533,23 +1526,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &7627902506293395929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7995507085264838646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _livestreamUrl: 
-  mPlayer: {fileID: 3433836251880016732}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 180, z: 180}
-  videoPlayerParent: {fileID: 0}
 --- !u!82 &5975590294647308262
 AudioSource:
   m_ObjectHideFlags: 0

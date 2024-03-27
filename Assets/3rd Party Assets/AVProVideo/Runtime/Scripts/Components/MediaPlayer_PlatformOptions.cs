@@ -510,7 +510,10 @@ namespace RenderHeads.Media.AVProVideo
 			public bool showPosterFrame = false;
 			public Android.AudioOutput audioOutput = Android.AudioOutput.System;
 			public Audio360ChannelMode audio360ChannelMode = Audio360ChannelMode.TBE_8_2;
+			public int audio360LatencyMS = 0;
 			public bool preferSoftwareDecoder = false;
+			public bool forceRtpTCP = false;
+			public bool forceEnableMediaCodecAsyncQueueing = false;
 			public Android.TextureFiltering blitTextureFiltering = Android.TextureFiltering.Point;
 
 			[SerializeField, Tooltip("Byte offset into the file where the media file is located.  This is useful when hiding or packing media files within another file.")]
@@ -523,7 +526,6 @@ namespace RenderHeads.Media.AVProVideo
 			public int bufferForPlaybackMs					= Android.Default_BufferForPlaybackMs;
 			public int bufferForPlaybackAfterRebufferMs		= Android.Default_BufferForPlaybackAfterRebufferMs;
 
-
 			public override bool IsModified()
 			{
 				return (base.IsModified()
@@ -533,7 +535,10 @@ namespace RenderHeads.Media.AVProVideo
 					|| (videoApi != Android.VideoApi.ExoPlayer)
 					|| audioOutput != Android.AudioOutput.System
 					|| (audio360ChannelMode != Audio360ChannelMode.TBE_8_2)
+					|| (audio360LatencyMS != 0 )
 					|| preferSoftwareDecoder
+					|| forceRtpTCP
+					|| forceEnableMediaCodecAsyncQueueing
 					|| startWithHighestBitrate
 					|| (minBufferMs != Android.Default_MinBufferTimeMs)
 					|| (maxBufferMs != Android.Default_MaxBufferTimeMs)
