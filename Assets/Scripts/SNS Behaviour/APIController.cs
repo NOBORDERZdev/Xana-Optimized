@@ -162,15 +162,15 @@ public class APIController : MonoBehaviour
     //    FeedUIController.Instance.followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     //}
 
-    IEnumerator WaitToEnableDataLoadedBool(int pageNum)
-    {
-        yield return new WaitForSeconds(0.5f);
-        FeedUIController.Instance.isDataLoad = true;
-        if (pageNum > 1 && APIManager.Instance.followingUserRoot.Data.Rows.Count > 0)
-        {
-            FeedUIController.Instance.followingUserCurrentpage += 1;
-        }
-    }
+    //IEnumerator WaitToEnableDataLoadedBool(int pageNum)
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    FeedUIController.Instance.isDataLoad = true;
+    //    if (pageNum > 1 && APIManager.Instance.followingUserRoot.Data.Rows.Count > 0)
+    //    {
+    //        FeedUIController.Instance.followingUserCurrentpage += 1;
+    //    }
+    //}
 
     //this method is used to instantiate discover/foryou tab items.......
     public void AllUserForYouFeeds(int pageNum, string callingFrom)
@@ -212,17 +212,17 @@ public class APIController : MonoBehaviour
             }
         }*/     //RIKEN
 
-        if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-        {
-            /*if (feedForYouIdList.Count == 0)
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-            }
-            else
-            {
-                FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-            }*/
-        }
+        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //{
+        //    /*if (feedForYouIdList.Count == 0)
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //    }
+        //    else
+        //    {
+        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //    }*/
+        //}
 
         //Debug.Log("isDataLoad true");
         StartCoroutine(HotWaitToEnableDataLoadedBool(pageNum));
@@ -233,13 +233,13 @@ public class APIController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         //Debug.Log("isDataLoad true");
-        FeedUIController.Instance.isDataLoad = true;
+        //FeedUIController.Instance.isDataLoad = true;
         //Riken
         //if (pageNum > 1 && APIManager.Instance.root.data.rows.Count > 0)
-        if (pageNum > 1 && APIManager.Instance.hotFeedRoot.data.rows.Count > 0)
-        {
-            FeedUIController.Instance.allFeedCurrentpage += 1;
-        }
+        //if (pageNum > 1 && APIManager.Instance.hotFeedRoot.data.rows.Count > 0)
+        //{
+        //    FeedUIController.Instance.allFeedCurrentpage += 1;
+        //}
     }
 
     //this method is used to instantiate hot tab items.......

@@ -50,7 +50,7 @@ public class FeedUIController : MonoBehaviour
 
     [Space]
     [Header("HorizontalScrollSnap")]
-    public HorizontalScrollSnap feedUiHorizontalSnap;
+    //public HorizontalScrollSnap feedUiHorizontalSnap;
 
     public GameObject feedUiSelectionLine;
     public Transform[] feedUiSelectionTab;
@@ -62,16 +62,16 @@ public class FeedUIController : MonoBehaviour
     //public ScrollRectFasterEx[] allFeedScrollRectFasterEx;
     //public ScrollRectFasterEx feedUiScrollRectFasterEx;
 
-    [Space]
-    [Header("AllFeedScreen")]
-    public GameObject[] allFeedPanel;
-    public GameObject videoFeedRect;
-    public List<TextMeshProUGUI> allFeedMessageTextList = new List<TextMeshProUGUI>();
+    //[Space]
+    //[Header("AllFeedScreen")]
+    //public GameObject[] allFeedPanel;
+    //public GameObject videoFeedRect;
+    //public List<TextMeshProUGUI> allFeedMessageTextList = new List<TextMeshProUGUI>();
 
-    public int allFeedCurrentpage, followingUserCurrentpage, myPostCurrentPage;
-    public bool isDataLoad = false;
+    //public int allFeedCurrentpage, followingUserCurrentpage, myPostCurrentPage;
+    //public bool isDataLoad = false;
 
-    public bool isAnyUserFollow = false;
+    //public bool isAnyUserFollow = false;
 
     [Space]
     [Header("Feed All Tabs Loaded checking Variable")]
@@ -834,16 +834,16 @@ public class FeedUIController : MonoBehaviour
     //    }
     //}
 
-    public void CloseAllFeed(bool isActive)
-    {
-        if (feedUiScreen.activeSelf)
-        {
-            for (int i = 0; i < allFeedPanel.Length; i++)
-            {
-                allFeedPanel[i].transform.gameObject.SetActive(isActive);
-            }
-        }
-    }
+    //public void CloseAllFeed(bool isActive)
+    //{
+    //    if (feedUiScreen.activeSelf)
+    //    {
+    //        for (int i = 0; i < allFeedPanel.Length; i++)
+    //        {
+    //            allFeedPanel[i].transform.gameObject.SetActive(isActive);
+    //        }
+    //    }
+    //}
 
     public float verticalNormalizedPosition;
     //public void APiPagination()

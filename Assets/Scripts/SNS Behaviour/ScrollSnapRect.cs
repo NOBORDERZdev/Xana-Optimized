@@ -344,10 +344,10 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         // not dragging yet
         _dragging = false;
 
-        if (FeedUIController.Instance != null)//vishal
-        {
-            FeedUIController.Instance.CloseAllFeed(true);
-        }
+        //if (FeedUIController.Instance != null)//vishal
+        //{
+        //    FeedUIController.Instance.CloseAllFeed(true);
+        //}
     }
 
     //------------------------------------------------------------------------
@@ -407,9 +407,9 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             }
         }
 
-        if (FeedUIController.Instance != null)//vishal
-        {
-            FeedUIController.Instance.CloseAllFeed(true);
-        }
+        //if (FeedUIController.Instance != null)//vishal
+        //{
+        //    FeedUIController.Instance.CloseAllFeed(true);
+        //}
     }
 }

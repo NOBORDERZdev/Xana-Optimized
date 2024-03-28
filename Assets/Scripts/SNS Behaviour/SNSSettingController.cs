@@ -193,7 +193,8 @@ public class SNSSettingController : MonoBehaviour
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-            NftDataScript.Instance.ResetNftData();
+            if(NftDataScript.Instance)
+                NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {
                 FileInfo file_info = new FileInfo(Application.persistentDataPath + "/NftData.txt");

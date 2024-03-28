@@ -33,24 +33,24 @@ public class LoaderController : MonoBehaviour
             loaderBGImage.SetActive(true);
             m_UIRefreshControl.loaderObj.transform.GetChild(0).GetComponent<CustomLoader>().isRotate = true;
 
-            if (FeedUIController.Instance.feedUiScreen.activeSelf)
-            {
-                var allFeedPanel = FeedUIController.Instance.allFeedPanel;
-                for (int i = 0; i < allFeedPanel.Length; i++)
-                {
-                    if (allFeedPanel[i].gameObject.activeSelf)
-                    {
-                        if (i == 1)
-                        {
-                            //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
-                        }
-                        else
-                        {
-                            APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
-                        }
-                    }
-                }
-            }
+            //if (FeedUIController.Instance.feedUiScreen.activeSelf)
+            //{
+            //    var allFeedPanel = FeedUIController.Instance.allFeedPanel;
+            //    for (int i = 0; i < allFeedPanel.Length; i++)
+            //    {
+            //        if (allFeedPanel[i].gameObject.activeSelf)
+            //        {
+            //            if (i == 1)
+            //            {
+            //                //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
+            //            }
+            //            else
+            //            {
+            //                APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+            //            }
+            //        }
+            //    }
+            //}
             Debug.Log("Refresh Current Screen Api");
 
             StartCoroutine(FetchDataDemo());
