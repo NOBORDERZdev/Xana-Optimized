@@ -182,6 +182,12 @@ public class BuilderMapDownload : MonoBehaviour
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
+        if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
+        {
+            yield return StartCoroutine(DownloadAddressableGamificationObject());
+            yield return StartCoroutine(GemificationObjectLoadWait(1f));
+        }
+
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -504,6 +510,8 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
+                    if (_mat.GetTexture("_Tex") == null)
+                        Debug.LogError("Main Texture null");
                     RenderSettings.skybox = _mat;
                     directionalLight.transform.rotation = Quaternion.Euler(skyBoxItem.directionalLightData.directionLightRot);
                     directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
@@ -644,19 +652,25 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator XanaSetItemDataCO()
     {
-        yield return StartCoroutine(DownloadAddressableGamificationObject());
-        yield return StartCoroutine(GemificationObjectLoadWait(1f));
-
-        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        if (levelData.otherItems.Count > 0)
         {
-            xanaItem.SetData(xanaItem.itemData);
+            if (!GamificationComponentData.instance.withMultiplayer)
+            {
+                yield return StartCoroutine(DownloadAddressableGamificationObject());
+                yield return StartCoroutine(GemificationObjectLoadWait(1f));
+            }
+
+            foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+            {
+                xanaItem.SetData(xanaItem.itemData);
+            }
+
+            GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
+            //Set Hierarchy same as builder
+            SetObjectHirarchy();
+
+            BuilderEventManager.CombineMeshes?.Invoke();
         }
-
-        GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
-        //Set Hierarchy same as builder
-        SetObjectHirarchy();
-
-        BuilderEventManager.CombineMeshes?.Invoke();
 
         PlayerSetup();
 
