@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EnhancedUI.EnhancedScroller;
 using EnhancedScrollerDemos.NestedScrollers;
+using UnityEngine.UI;
 
 public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 {
@@ -119,10 +120,13 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     public void LoadDataInPool()
     {
         scrollPosition = masterScroller.ScrollPosition;
+        if (!masterScroller.GetComponent<ScrollRect>().enabled)
+            masterScroller.GetComponent<ScrollRect>().enabled = true;
         // tell the scroller to reload now that we have the data
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
         _loadingNew = false;
+
         paginationLoaderRef.ShowApiLoader(false);
     }
 
@@ -175,6 +179,13 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterCellView.gameObject.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = 
             new Vector2(masterCellView.gameObject.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x, GetCellViewSize(scroller, dataIndex));
 
+        //Setting child data loopable if child data count is greater than 3
+        //Debug.Log("This Master cell view name: " + masterCellView.name + " child data size is: " + _data[dataIndex].childData.Count);
+        if (_data[dataIndex].childData.Count >= 3)
+        {
+            masterCellView.gameObject.transform.GetChild(1).GetComponent<EnhancedScroller>().Loop = true;
+        }
+
         // in this example, we just pass the data to our cell's view which will update its UI
         masterCellView.SetData(_data[dataIndex]);
 
@@ -197,13 +208,13 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
             _spaceCategDataInitializer.CategorytagNames.Clear();
             if (!(_spaceCategDataInitializer._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
             {
-                paginationLoaderRef.ShowApiLoader(true);
+                masterScroller.GetComponent<ScrollRect>().enabled = false;
 
                 // toggle on loading so that we don't get stuck in a loading loop
                 _loadingNew = true;
 
+                Invoke(nameof(LoadCategoryTagsWithDelay), 0.5f);
                 //Debug.Log("Scroller Scrolled Registered");
-                _spaceCategDataInitializer.GetUsersMostVisitedTags();
 
             }
             else
@@ -216,6 +227,12 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
             //    //StartCoroutine(FakeDelay());
         }
+    }
+
+    public void LoadCategoryTagsWithDelay()
+    {
+        paginationLoaderRef.ShowApiLoader(true);
+        _spaceCategDataInitializer.GetUsersMostVisitedTags();
     }
 
         #endregion
