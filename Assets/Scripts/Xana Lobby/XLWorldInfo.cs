@@ -46,8 +46,8 @@ public class XLWorldInfo : MonoBehaviour
             imgVideo1x1.SetActive(false);
         StartCoroutine(GetSprite(imageLink, (response) =>
         {
-            if (LobbyManager.Instance && response != null)
-                LobbyManager.Instance.WorldsLoadedSprites.Add(response);
+            if (XanaLobbyManager.Instance && response != null)
+                XanaLobbyManager.Instance.WorldsLoadedSprites.Add(response);
             if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
             {
                 if (imgVideo1x1)
@@ -118,15 +118,15 @@ public class XLWorldInfo : MonoBehaviour
             ReferrencesForGameplay.instance.playerControllerNew.restJoyStick();
 
         //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
-        if (LobbyManager.Instance != null)
+        if (XanaLobbyManager.Instance != null)
         {
             if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
             {
-                LobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, LobbyManager.Instance.worldsData[id].world_name, LobbyManager.Instance.worldsData[id].users.name, LobbyManager.Instance.worldsData[id].description, _texture,MediaType.Image);
+                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture,MediaType.Image);
             }
             else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
-                LobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, LobbyManager.Instance.worldsData[id].world_name, LobbyManager.Instance.worldsData[id].users.name, LobbyManager.Instance.worldsData[id].description, _texture, MediaType.Image);
+                XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture, MediaType.Image);
             }
         }
     }
