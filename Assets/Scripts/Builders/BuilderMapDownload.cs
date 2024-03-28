@@ -439,9 +439,12 @@ public class BuilderMapDownload : MonoBehaviour
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
-                var deformedMeshData = Encoding.UTF8.GetString(deformationData);
-                if (deformedMeshData.Length >= 10)
-                    realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                if (deformationData.Length > 0)
+                {
+                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                    if (deformedMeshData.Length >= 10)
+                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                }
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }
