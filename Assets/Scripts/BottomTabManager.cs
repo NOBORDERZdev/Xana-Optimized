@@ -59,6 +59,7 @@ public class BottomTabManager : MonoBehaviour
         if (XanaConstants.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstants.xanaConstants.isFromXanaLobby)
         {
             XanaConstants.xanaConstants.CurrentSceneName = "";
+            GameManager.Instance.defaultSelection = 10;
             Invoke(nameof(OnClickHomeWorldButton), 5);
         }
     }
@@ -274,7 +275,7 @@ public class BottomTabManager : MonoBehaviour
         GameManager.Instance.HomeCameraInputHandler(false);
 
         GlobalVeriableClass.callingScreen = "";
-        Debug.Log("Home button onclick");
+        //Debug.Log("Home button onclick: " + GameManager.Instance.defaultSelection);
         if (GameManager.Instance.defaultSelection != 1)
         {
             GameManager.Instance.ActorManager._cinemaCam.SetActive(false);

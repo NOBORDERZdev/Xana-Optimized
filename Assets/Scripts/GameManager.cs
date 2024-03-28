@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public bool BottomAvatarButtonBool;
     public bool OnceGuestBool;
     public bool OnceLoginBool;
+    public bool isTabSwitched = false;
     [Header("Camera Work")]
     public GameObject faceMorphCam;
     public GameObject headCam;

@@ -53,8 +53,13 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void StartLoading()
     {
-        WorldManager.instance.changeFollowState = false;
-        FeatureSpaceLoading();
+        spaceCategoryScroller.masterScroller.ScrollPosition = 0f;
+        if (!GameManager.Instance.isTabSwitched)
+        {
+            GameManager.Instance.isTabSwitched = true;
+            WorldManager.instance.changeFollowState = false;
+            FeatureSpaceLoading();
+        }
         //HotSpaceLoading();
         //HotGamesLoading();
         //FollowingSpaceLoading();
@@ -579,9 +584,15 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
-            ApiHolderContainsData = true;
-            callback(true, apiResponseHolder.GetResponse(apiURL));
-            yield break;
+            if (!XanaConstants.xanaConstants.returnedFromGamePlay)
+            {
+                ApiHolderContainsData = true;
+            }
+            if (apiResponseHolder.GetResponse(apiURL) != null)
+            {
+                callback(true, apiResponseHolder.GetResponse(apiURL));
+                yield break;
+            }
         }
         // Debug.LogError("API URL :- " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
@@ -693,6 +704,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         CategorytagNames.Clear();
         ApiHolderContainsData = false;
         apiResponseHolder.apiResponses.Clear();
+        GameManager.Instance.isTabSwitched = false;
+        XanaConstants.xanaConstants.returnedFromGamePlay = false;
     }
 
     [Serializable]

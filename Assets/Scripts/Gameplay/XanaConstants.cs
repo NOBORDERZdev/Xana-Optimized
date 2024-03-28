@@ -26,6 +26,7 @@ public class XanaConstants : MonoBehaviour
     //public bool profileImageModifedByUser = false;
     public string userProfileLink;
     public string CurrentSceneName;
+    public bool returnedFromGamePlay = false;
     public string EnviornmentName;
     public string userLimit;
     public AssetBundle museumAssetLoaded;
