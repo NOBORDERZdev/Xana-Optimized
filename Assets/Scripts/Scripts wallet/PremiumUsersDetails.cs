@@ -24,22 +24,46 @@ public class PremiumUsersDetails : MonoBehaviour
     public bool testing;
 
     // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            SetMainObj = new MainClass();
-            comingSoonObj = new MainClass();
             DontDestroyOnLoad(gameObject);
             PremiumUserType = "";
         }
-        else
-        if (Instance != this)
+        else if (Instance != this)
         {
             DestroyImmediate(this.gameObject);
             return;
         }
+    }
+
+
+
+    void Start()
+    {
+        if (Instance == this)
+        {
+            SetMainObj = new MainClass();
+            comingSoonObj = new MainClass();
+            PremiumUserType = "";
+        }
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //    SetMainObj = new MainClass();
+        //    comingSoonObj = new MainClass();
+        //    DontDestroyOnLoad(gameObject);
+        //    PremiumUserType = "";
+        //}
+        //else
+        //if (Instance != this)
+        //{
+        //    DestroyImmediate(this.gameObject);
+        //    return;
+        //}
     }
 
     public void OpenComingSoonPopUp()
