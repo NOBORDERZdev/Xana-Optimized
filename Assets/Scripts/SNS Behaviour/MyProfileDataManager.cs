@@ -22,84 +22,83 @@ public class MyProfileDataManager : MonoBehaviour
 {
     public static MyProfileDataManager Instance;
 
-    public string defaultUrl = "https://";
+    string defaultUrl = "https://";
 
     public GetUserDetailData myProfileData = new GetUserDetailData();
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
-    public List<FeedResponseRow> allMyTextPostFeedImageRootDataList = new List<FeedResponseRow>();//text feed list
+    List<FeedResponseRow> allMyTextPostFeedImageRootDataList = new List<FeedResponseRow>();//text feed list
 
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
-    public List<FeedResponseRow> allMyFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
-    public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
+    //public List<FeedResponseRow> allMyFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
+    //public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
 
-    public AllFeedByUserIdRoot currentPageAllFeedWithUserIdRoot = new AllFeedByUserIdRoot();
-    public FeedResponse currentPageAllTextPostFeedWithUserIdRoot = new FeedResponse();
-    public AllTextPostByUserIdRoot currentPageAllTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
+    //public AllFeedByUserIdRoot currentPageAllFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    //public FeedResponse currentPageAllTextPostFeedWithUserIdRoot = new FeedResponse();
+    AllTextPostByUserIdRoot currentPageAllTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
 
     private AllUserWithFeedRow FeedRawData;
 
     [Space]
     [Header("Screen References")]
     public GameObject myProfileScreen;
-    public GameObject editProfileScreen;
-    public GameObject pickImageOptionScreen;
+    [SerializeField] GameObject editProfileScreen;
+    [SerializeField] GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
-    public GameObject settingsButton;
+    [SerializeField] GameObject settingsButton;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
-    public GameObject mainFullScreenContainer;
-    public GameObject mainProfileDetailPart;
-    public GameObject userPostPart;
-    public GameObject bioDetailPart;
-    public GameObject bioTxtParent;
+    [SerializeField] GameObject mainFullScreenContainer;
+    [SerializeField] GameObject mainProfileDetailPart;
+     //public GameObject userPostPart;
+    [SerializeField] GameObject bioDetailPart;
+    [SerializeField] GameObject bioTxtParent;
 
     [Space]
     [Header("Player info References")]
     //public TextMeshProUGUI topHaderUserNameText;
     public Image profileImage;
     public TextMeshProUGUI totalPostText;
-    public TextMeshProUGUI totalFollowerText;
-    public TextMeshProUGUI totalFollowingText;
+    [SerializeField] TextMeshProUGUI totalFollowerText;
+    [SerializeField] TextMeshProUGUI totalFollowingText;
     [Space]
-    public TextMeshProUGUI playerNameText;
-    public TextMeshProUGUI jobText;
-    public TextMeshProUGUI textUserBio;
-    public GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
-    public TextMeshProUGUI websiteText;
+    [SerializeField] TextMeshProUGUI playerNameText;
+    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI textUserBio;
+    [SerializeField] GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
+    [SerializeField] TextMeshProUGUI websiteText;
 
-    public GameObject seeMoreBioButton;
-    public GameObject seeMoreButtonTextObj;
-    public GameObject seeLessButtonTextObj;
+    [SerializeField] GameObject seeMoreBioButton;
+    [SerializeField] GameObject seeMoreButtonTextObj;
+    [SerializeField] GameObject seeLessButtonTextObj;
 
     [Space]
     [Header("Photo, Movie, NFT Button Panel Tab panel Reference")]
-    public string CurrentSection;
-    public ScrollRectGiftScreen tabScrollRectGiftScreen;
-    public ParentHeightResetScript parentHeightResetScript;
-    public SelectionItemScript selectionItemScript1;
-    public SelectionItemScript selectionItemScript2;
+    string CurrentSection;
+    [SerializeField] ParentHeightResetScript parentHeightResetScript;
+    [SerializeField] SelectionItemScript selectionItemScript1;
+    [SerializeField] SelectionItemScript selectionItemScript2;
 
-    [Space]
-    [Header("Follow Message Button References")]
-    public Image followButtonImage;
-    public Sprite followSprite, followingSprite;
-    public TextMeshProUGUI followFollowingText;
-    public Color followTextColor, FollowingTextColor;
+    //[Space]
+    //[Header("Follow Message Button References")]
+    //public Image followButtonImage;
+    //public Sprite followSprite, followingSprite;
+    //public TextMeshProUGUI followFollowingText;
+    //public Color followTextColor, FollowingTextColor;
 
     [Space]
     [Header("Player Uploaded Item References")]
-    public Transform mainPostContainer;
+    [SerializeField] Transform mainPostContainer;
     public Transform allPhotoContainer;
-    public Transform allTagContainer;
+    //public Transform allTagContainer;
     public Transform allMovieContainer;
-    public Transform allOwnedNFTContainer;
+    //public Transform allOwnedNFTContainer;
     public GameObject photoPrefab;
-    public GameObject EmptyFeedPrefab;
-    public GameObject emptyFeedObjRef;
-    public GameObject photoPrefabInMyPostFeed;
-    public GameObject NFTImagePrefab;
+    //public GameObject EmptyFeedPrefab;
+    //public GameObject emptyFeedObjRef;
+    //public GameObject photoPrefabInMyPostFeed;
+    [SerializeField] GameObject NFTImagePrefab;
 
     //[Header("post empty message reference")]
     //public GameObject createYourFirstPostMsgObj;
@@ -108,68 +107,104 @@ public class MyProfileDataManager : MonoBehaviour
     //public GameObject FooterCreateIcon;
 
     [Space]
-    public GameObject tabPrivateObject;
-    public GameObject tabPublicObject;
+    [SerializeField] GameObject tabPrivateObject;
+    [SerializeField] GameObject tabPublicObject;
 
     [Space]
-    public Sprite defultProfileImage;
+    [SerializeField] Sprite defultProfileImage;
 
     [Space]
     [Header("Edit Profile Reference")]
-    public Image editProfileImage;
+    [SerializeField] Image editProfileImage;
     //public TMP_InputField editProfileNameInputfield;
     //public InputField editProfileNameInputfield;
-    public AdvancedInputField editProfileNameAdvanceInputfield;
-    public AdvancedInputField editProfileUniqueNameAdvanceInputfield;
+    [SerializeField] AdvancedInputField editProfileNameAdvanceInputfield;
+    [SerializeField] AdvancedInputField editProfileUniqueNameAdvanceInputfield;
     //public TMP_InputField editProfileJobInputfield;
     //public InputField editProfileJobInputfield;
-    public AdvancedInputField editProfileJobAdvanceInputfield;
+    //public AdvancedInputField editProfileJobAdvanceInputfield;
     //public TMP_InputField editProfileWebsiteInputfield;
     //public InputField editProfileWebsiteInputfield;
-    public AdvancedInputField editProfileWebsiteAdvanceInputfield;
+    //public AdvancedInputField editProfileWebsiteAdvanceInputfield;
     //public TMP_InputField editProfileBioInputfield;
-    public AdvancedInputField editProfileBioInputfield;
+    [SerializeField] AdvancedInputField editProfileBioInputfield;
     //public InputField editProfileBioInputfield;
     //public TMP_InputField editProfileGenderInputfield;
-    public InputField editProfileGenderInputfield;
-    public GameObject editProfilemainInfoPart;
-    public GameObject websiteErrorObj;
-    public GameObject nameErrorMessageObj;
-    public GameObject uniqueNameErrorMessageObj;
-    public Button editProfileDoneButton;
+    //public InputField editProfileGenderInputfield;
+    //public GameObject editProfilemainInfoPart;
+    [SerializeField] GameObject websiteErrorObj;
+    [SerializeField] GameObject nameErrorMessageObj;
+    [SerializeField] GameObject uniqueNameErrorMessageObj;
+    [SerializeField] Button editProfileDoneButton;
     public bool isEditProfileNameAlreadyExists;
 
     [Space]
-    public GameObject editProfileBioScreen;
+    [SerializeField] GameObject editProfileBioScreen;
     //public TMP_InputField bioEditInputField;
     //public InputField bioEditInputField;
 
-    public AdvancedInputField bioEditAdvanceInputField;
+    [SerializeField] AdvancedInputField bioEditAdvanceInputField;
 
     [Space]
     [Header("Tags in Edit Profile")]
-    public GameObject tags_row;
-    public GameObject tags_row_obj;
-    public Transform tags_row_parent;
-    public List<string> availableTagsAtServer;
+    [SerializeField] GameObject tags_row;
+    [SerializeField] GameObject tags_row_obj;
+    [SerializeField] Transform tags_row_parent;
+    [SerializeField] List<string> availableTagsAtServer;
     public List<string> userSelectedTags;
-    public GameObject dropDownBtn;
+    [SerializeField] GameObject dropDownBtn;
 
 
     [Space]
     [Header("For API Pagination")]
-    public ScrollRectFasterEx profileMainScrollRectFasterEx;
-    public bool isFeedLoaded = false;
-    public int profileFeedAPiCurrentPageIndex = 1;
-    public float VerticalPosition;
+    [SerializeField] ScrollRectFasterEx profileMainScrollRectFasterEx;
+   // public bool isFeedLoaded = false;
+    //public int profileFeedAPiCurrentPageIndex = 1;
+   // public float VerticalPosition;
 
-    [Space]
-    [Header("Premium UserRole Referense")]
-    public UserRolesView userRolesView;
+    //[Space]
+    //[Header("Premium UserRole Referense")]
+    //public UserRolesView userRolesView;
     private bool NFTShowingOnneBool;
 
     [Header("NFT Data Holder Scriptable Object")]
-    public OwnedNFTContainer _OwnedNFTDataObj;
+    [SerializeField] OwnedNFTContainer _OwnedNFTDataObj;
+    int tempOPCount = 0;
+    bool tempLogout = false;
+    bool isSetTempSpriteAfterUpdateAvatar = false;
+    string lastTopUserText;
+    string tempBioOnly10LineStr = "";
+    [SerializeField] List<int> loadedMyPostAndVideoId = new List<int>();
+    [SerializeField] List<int> loadedMyPostAndVideoIdInFeedPage = new List<int>();
+    //public Coroutine ScrollNFTCoroutine;
+    //public bool NFTDataLoaded;
+    int generatedTagCount = 0; // generated Tag Counter 
+    int availableTagsCount = 0;
+    [SerializeField] int checkEditNameUpdated = 0;
+    [SerializeField] int checkEditInfoUpdated = 0;
+    string website = "";
+    string job = "";
+    string bio = "";
+    string gender = "";
+    string username = "";
+    string uniqueUsername = "";
+    string[] tempTags;
+    bool isUrl = false;
+    Coroutine webValidCo;
+    Coroutine editProfileErrorCo;
+    GameObject currentEditProfileErrorMessgaeObj;
+    [SerializeField] string setImageAvatarTempPath = "";
+    [SerializeField] string setImageAvatarTempFilename = "";
+    //[SerializeField] AspectRatioFitter fit;
+    //[SerializeField] GameObject webcamScreen;
+    private WebCamTexture webCamTexture;
+    //public RawImage webcamRawImage;
+    //public Renderer  webcampan;
+    Coroutine followingCo;
+    Coroutine followeCo;
+    [SerializeField] GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
+    bool profileMakedFlag = false;
+    public string permissionCheck = "";
 
     private void Awake()
     {
@@ -180,8 +215,6 @@ public class MyProfileDataManager : MonoBehaviour
         NFTShowingOnneBool = false;
     }
 
-    int tempOPCount = 0;
-    bool tempLogout = false;
     private void OnEnable()
     {
         if (profileMainScrollRectFasterEx.GetComponent<Mask>().enabled)
@@ -320,7 +353,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    bool isSetTempSpriteAfterUpdateAvatar = false;
+   
     //this method is used to set temp profile image after update profile image.......
     public void AfterUpdateAvatarSetTempSprite()
     {
@@ -353,7 +386,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    string lastTopUserText;
+  
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
@@ -637,7 +670,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    string tempBioOnly10LineStr = "";
+   
     //this method is used to setup bio text.......
     public void SetupBioPart(string bioText)
     {
@@ -725,8 +758,7 @@ public class MyProfileDataManager : MonoBehaviour
         */
     }
 
-    public List<int> loadedMyPostAndVideoId = new List<int>();
-    public List<int> loadedMyPostAndVideoIdInFeedPage = new List<int>();
+   
     //this method is used to load All my feed and setup.......
     public void AllFeedWithUserId(int pageNumb, Transform Feedparent = null, bool IsNew = false)
     {
@@ -1185,23 +1217,23 @@ public class MyProfileDataManager : MonoBehaviour
     //    }
     //}
 
-    public void OnSetUserUi(bool isFollow)
-    {
-        if (isFollow)
-        {
-            followButtonImage.sprite = followingSprite;
-            //followFollowingText.text = "Following";
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
-            followFollowingText.color = FollowingTextColor;
-        }
-        else
-        {
-            followButtonImage.sprite = followSprite;
-            //followFollowingText.text = "Follow";
-            followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
-            followFollowingText.color = followTextColor;
-        }
-    }
+    //public void OnSetUserUi(bool isFollow)
+    //{
+    //    if (isFollow)
+    //    {
+    //        followButtonImage.sprite = followingSprite;
+    //        //followFollowingText.text = "Following";
+    //        followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Following");
+    //        followFollowingText.color = FollowingTextColor;
+    //    }
+    //    else
+    //    {
+    //        followButtonImage.sprite = followSprite;
+    //        //followFollowingText.text = "Follow";
+    //        followFollowingText.text = TextLocalization.GetLocaliseTextByKey("Follow");
+    //        followFollowingText.color = followTextColor;
+    //    }
+    //}
 
     public void PrivatePublicTabSetup(bool isFollow)
     {
@@ -1399,8 +1431,7 @@ public class MyProfileDataManager : MonoBehaviour
         NftDataScript.Instance.NftLoadingPenal.SetActive(false);
     }
 
-    public Coroutine ScrollNFTCoroutine;
-    public bool NFTDataLoaded;
+   
     public void OnScrollNFT()
     {
         // StartCoroutine(IEOnScrollNFT());
@@ -1710,8 +1741,7 @@ public class MyProfileDataManager : MonoBehaviour
         DisplayTags();
     }
 
-    int generatedTagCount = 0; // generated Tag Counter 
-    int availableTagsCount = 0;
+   
 
     void DisplayTags()
     {
@@ -1843,15 +1873,7 @@ public class MyProfileDataManager : MonoBehaviour
         editProfileDoneButton.interactable = isActive;
     }
 
-    public int checkEditNameUpdated = 0;
-    public int checkEditInfoUpdated = 0;
-    string website = "";
-    string job = "";
-    string bio = "";
-    string gender = "";
-    string username = "";
-    string uniqueUsername = "";
-    string[] tempTags;
+   
 
     public void OnClickEditProfileDoneButton()
     {
@@ -2204,7 +2226,6 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    bool isUrl = false;
     //public bool CheckForWebSite()
     //{
     //    if (editProfileWebsiteAdvanceInputfield.Text != website)
@@ -2252,7 +2273,6 @@ public class MyProfileDataManager : MonoBehaviour
     //    }
     //}
 
-    Coroutine webValidCo;
     public void RequestForWebSiteValidation(string url)
     {
         if (webValidCo != null)
@@ -2318,8 +2338,6 @@ public class MyProfileDataManager : MonoBehaviour
         editProfileErrorCo = StartCoroutine(WaitUntilErrorAnimationFinished());
     }
 
-    Coroutine editProfileErrorCo;
-    GameObject currentEditProfileErrorMessgaeObj;
     //this coroutine is used to show and wait until finish error message animation.......
     IEnumerator WaitUntilErrorAnimationFinished()
     {
@@ -2433,8 +2451,6 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    public string setImageAvatarTempPath = "";
-    public string setImageAvatarTempFilename = "";
 
     //public bool setGroupFromCamera = false;
     //[Space]
@@ -2697,7 +2713,6 @@ public class MyProfileDataManager : MonoBehaviour
 #endif
     }
 
-    public AspectRatioFitter fit;
 
     public void StartWebCam()
     {
@@ -2722,35 +2737,31 @@ public class MyProfileDataManager : MonoBehaviour
         }
 
         webCamTexture.Play();
-        webcamRawImage.texture = webCamTexture;
+        //webcamRawImage.texture = webCamTexture;
 
         float ratio = (float)webCamTexture.width / (float)webCamTexture.height;
-        fit.aspectRatio = ratio;
+        //fit.aspectRatio = ratio;
 
         int orient = -webCamTexture.videoRotationAngle;
         Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
-        webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
+        //webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
     }
 
-    public GameObject webcamScreen;
-    private WebCamTexture webCamTexture;
-    public RawImage webcamRawImage;
-    //public Renderer  webcampan;
-    private IEnumerator OpenWebCamPhotoCamera()
-    {
-        webcamScreen.SetActive(true);
-        // Request camera permission
-        yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
-        if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
-            yield break;
-        // Start the WebCamTexture
+    //private IEnumerator OpenWebCamPhotoCamera()
+    //{
+    //    webcamScreen.SetActive(true);
+    //    // Request camera permission
+    //    yield return Application.RequestUserAuthorization(UserAuthorization.WebCam);
+    //    if (!Application.HasUserAuthorization(UserAuthorization.WebCam))
+    //        yield break;
+    //    // Start the WebCamTexture
 
-        StartWebCam();
-        //webCamTexture = new WebCamTexture();
-        //webcampan.material.mainTexture = webCamTexture;
-        //webcamRawImage.texture = webCamTexture;
-        //webCamTexture.Play();        
-    }
+    //    StartWebCam();
+    //    //webCamTexture = new WebCamTexture();
+    //    //webcampan.material.mainTexture = webCamTexture;
+    //    //webcamRawImage.texture = webCamTexture;
+    //    //webCamTexture.Play();        
+    //}
 
     public void OnClickTakePhotoFromWebCam()
     {
@@ -2788,7 +2799,7 @@ public class MyProfileDataManager : MonoBehaviour
         setImageAvatarTempFilename = fileName;
 
         webCamTexture.Stop();
-        webcamScreen.SetActive(false);
+        //webcamScreen.SetActive(false);
         Crop(photo, setImageAvatarTempPath);
     }
     #endregion
@@ -3009,7 +3020,6 @@ public class MyProfileDataManager : MonoBehaviour
         //}
     }
 
-    Coroutine followingCo;
     IEnumerator WaitToCallFollowing()
     {
         yield return new WaitForSeconds(1f);
@@ -3038,7 +3048,6 @@ public class MyProfileDataManager : MonoBehaviour
         //}
     }
 
-    Coroutine followeCo;
     IEnumerator WaitToFollower()
     {
         yield return new WaitForSeconds(1f);
@@ -3048,7 +3057,6 @@ public class MyProfileDataManager : MonoBehaviour
     #endregion
 
     #region my profile Data API
-    public GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
     public void RequestGetUserDetails()
     {
         //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
@@ -3088,7 +3096,6 @@ public class MyProfileDataManager : MonoBehaviour
             }
         }
     }
-    bool profileMakedFlag = false;
     public void OnlyLoadDataMyProfile()
     {
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -3147,7 +3154,7 @@ public class MyProfileDataManager : MonoBehaviour
         }
     }
 
-    public string permissionCheck = "";
+   
     private void SampleCallback(string permissionWasGranted)
     {
         Debug.Log("Callback.permissionWasGranted = " + permissionWasGranted);

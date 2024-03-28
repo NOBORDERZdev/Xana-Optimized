@@ -46,10 +46,10 @@ public class FollowingUserFeedItem : MonoBehaviour
 
     private void Start()
     {
-        float value0 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.width;
-        float value1 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.height;
-        //Debug.Log("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:" + value1);
-        this.GetComponent<RectTransform>().sizeDelta = new Vector2(value0, value1);
+        //float value0 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.width;
+        //float value1 = FeedUIController.Instance.feedVideoButtonPanelImage.rect.height;
+        ////Debug.Log("height : " + Screen.height + "width " + (Screen.height - 150) + ":value:" + value1);
+        //this.GetComponent<RectTransform>().sizeDelta = new Vector2(value0, value1);
     }
 
     private void OnEnable()

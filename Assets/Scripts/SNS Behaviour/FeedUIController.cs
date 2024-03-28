@@ -87,16 +87,16 @@ public class FeedUIController : MonoBehaviour
     public List<int> unFollowedUserListForFollowingTab = new List<int>();
 
     //public GameObject fingerTouch;
-    [Space]
-    [Header("FeedVideo Screen")]
-    public RectTransform feedVideoButtonPanelImage;
-    public string feedFullViewScreenCallingFrom = "";
+    //[Space]
+    //[Header("FeedVideo Screen")]
+    //public RectTransform feedVideoButtonPanelImage;
+    //public string feedFullViewScreenCallingFrom = "";
 
     [Space]
     [Header("Find Friend screen References")]
     public GameObject findFriendScreen;
     public Transform findFriendContainer;
-    public TMP_InputField findFriendInputField;
+    //public TMP_InputField findFriendInputField;
     public AdvancedInputField findFriendInputFieldAdvanced;
 
     //[Space]
@@ -170,13 +170,13 @@ public class FeedUIController : MonoBehaviour
     public GameObject profileFinfFriendScreen;
     public AdvancedInputField profileFinfFriendAdvancedInputField;
     public GameObject profileNoSearchFound;
-    public TextMeshProUGUI profileFFScreenTitleText;
+    //public TextMeshProUGUI profileFFScreenTitleText;
     public Transform profileFFLineSelection;
     public Transform[] profileFFSelectionTab;
     public TextMeshProUGUI[] profileFFSelectionTabText;
     public Image[] profileFFSelectionTabLine;
-    public HorizontalScrollSnap profileFollowerFollowingHorizontalScroll;
-    public ScrollRectFasterEx[] profileFFScreenScrollrectFasterEXList;
+    //public HorizontalScrollSnap profileFollowerFollowingHorizontalScroll;
+    //public ScrollRectFasterEx[] profileFFScreenScrollrectFasterEXList;
     public int profileFollowerPaginationPageNo = 1;
     public int profileFollowingPaginationPageNo = 1;
     public int adFrndFollowingPaginationPageNo = 1;
@@ -566,7 +566,6 @@ public class FeedUIController : MonoBehaviour
         }
         waitToFadeOutCo = StartCoroutine(WaitToFadeOut());
     }
-
     IEnumerator WaitToFadeOut()
     {
         yield return new WaitForSeconds(0.5f);
@@ -1597,18 +1596,18 @@ public class FeedUIController : MonoBehaviour
         //MyProfileDataManager.Instance.MyProfileSceenShow(false);
     }
 
-    IEnumerator WaitToProfileFollowerFollowingHorizontalScroll(int Tabindex)
-    {
-        yield return new WaitForSeconds(0.02f);
-        profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
-    }
+    //IEnumerator WaitToProfileFollowerFollowingHorizontalScroll(int Tabindex)
+    //{
+    //    yield return new WaitForSeconds(0.02f);
+    //    profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
+    //}
 
-    public void ProfileFFSelectionOnValueChange()
-    {
-        //float xPos = profileFFSelectionTab[profileFollowerFollowingHorizontalScroll.CurrentPage].position.x;
-        //profileFFLineSelection.transform.DOMoveX(xPos, .01f);
-        ProfileFFLineSelectionSetup(profileFollowerFollowingHorizontalScroll.CurrentPage);
-    }
+    //public void ProfileFFSelectionOnValueChange()
+    //{
+    //    //float xPos = profileFFSelectionTab[profileFollowerFollowingHorizontalScroll.CurrentPage].position.x;
+    //    //profileFFLineSelection.transform.DOMoveX(xPos, .01f);
+    //    ProfileFFLineSelectionSetup(profileFollowerFollowingHorizontalScroll.CurrentPage);
+    //}
 
     public void ProfileFFLineSelectionSetup(int index)
     {
@@ -1694,16 +1693,16 @@ public class FeedUIController : MonoBehaviour
         //waitToProfileFollowerDataLoadCo = StartCoroutine(WaitToProfileFollowerDataLoad(pageNum));
     }
 
-    Coroutine waitToProfileFollowerDataLoadCo;
-    IEnumerator WaitToProfileFollowerDataLoad(int pageNum)
-    {
-        yield return new WaitForSeconds(0.5f);
-        isProfileFollowerDataLoaded = true;
-      if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
-        {
-            profileFollowerPaginationPageNo += 1;
-        }
-    }
+    //Coroutine waitToProfileFollowerDataLoadCo;
+    //IEnumerator WaitToProfileFollowerDataLoad(int pageNum)
+    //{
+    //    yield return new WaitForSeconds(0.5f);
+    //    isProfileFollowerDataLoaded = true;
+    //  if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
+    //    {
+    //        profileFollowerPaginationPageNo += 1;
+    //    }
+    //}
 
     public void ProfileGetAllFollowing(int pageNum)
     {
@@ -1726,7 +1725,7 @@ public class FeedUIController : MonoBehaviour
         waitToProfileFollowingDataLoadCo = StartCoroutine(WaitToProfileFollowingDataLoad(pageNum));
     }
 
-     Coroutine waitToAdFrndFollowingDataLoadCo;
+    Coroutine waitToAdFrndFollowingDataLoadCo;
     public void AdFrndGetAllFollowing(int pageNum)
     {
         //Debug.Log("ProfileGetAllFollowing:" + APIManager.Instance.profileAllFollowingRoot.data.rows.Count + "    :pageNum:" + pageNum);
@@ -1791,34 +1790,34 @@ public class FeedUIController : MonoBehaviour
         }
     }
 
-    public void ProfileFollowerPaginationAPICall()
-    {
-        //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
-        if (profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition <= 0.01f && isProfileFollowerDataLoaded)
-        {
-            if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
-            {
-                //Debug.Log("ProfileFollowerFollowingPagination follower currentPage:" + profileFollowerPaginationPageNo);
-                isProfileFollowerDataLoaded = false;
-                APIManager.Instance.RequestGetAllFollowersFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowerPaginationPageNo + 1), 50);
-            }
-        }
-    }
+    //public void ProfileFollowerPaginationAPICall()
+    //{
+    //    //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
+    //    if (profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition <= 0.01f && isProfileFollowerDataLoaded)
+    //    {
+    //        if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
+    //        {
+    //            //Debug.Log("ProfileFollowerFollowingPagination follower currentPage:" + profileFollowerPaginationPageNo);
+    //            isProfileFollowerDataLoaded = false;
+    //            APIManager.Instance.RequestGetAllFollowersFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowerPaginationPageNo + 1), 50);
+    //        }
+    //    }
+    //}
 
-    public void ProfileFollowingPaginationAPICall()
-    {
-        print("~~~~~~~~");
-        //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
-        if (profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition <= 0.01f && isProfileFollowingDataLoaded)
-        {
-            if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
-            {
-                //Debug.Log("ProfileFollowerFollowingPagination following currentPage:" + profileFollowingPaginationPageNo);
-                isProfileFollowingDataLoaded = false;
-                APIManager.Instance.RequestGetAllFollowingFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowingPaginationPageNo + 1), 50);
-            }
-        }
-    }
+    //public void ProfileFollowingPaginationAPICall()
+    //{
+    //    print("~~~~~~~~");
+    //    Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
+    //    if (profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition <= 0.01f && isProfileFollowingDataLoaded)
+    //    {
+    //        if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
+    //        {
+    //            Debug.Log("ProfileFollowerFollowingPagination following currentPage:" + profileFollowingPaginationPageNo);
+    //            isProfileFollowingDataLoaded = false;
+    //            APIManager.Instance.RequestGetAllFollowingFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowingPaginationPageNo + 1), 50);
+    //        }
+    //    }
+    //}
     #endregion
 
     //#region Edit Delete Feed Methods.......
@@ -2468,7 +2467,7 @@ public class FeedUIController : MonoBehaviour
 
     //        if (hotFeed != null)
     //        {
-                
+
     //                hotFeed.commentCount = feedVideoItem.hotFeed.commentCount;
     //        }
     //    }
@@ -2700,13 +2699,7 @@ public class FeedUIController : MonoBehaviour
         return NrOfDigits;
     }
 
-    public void TestKMBValue(int value)
-    {
-       Debug.Log("Test Value:" + GetAbreviation(value));
-    }
     #endregion
-
-
 
     public void UpdateAdFrndBtnStatus(int index){
         foreach (TMP_Text text in FrndsPanelBtns)

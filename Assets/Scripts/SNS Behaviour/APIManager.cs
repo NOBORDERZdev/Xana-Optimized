@@ -635,30 +635,30 @@ public class APIManager : MonoBehaviour
                     NullValueHandling = NullValueHandling.Ignore,
                     MissingMemberHandling = MissingMemberHandling.Ignore
                 };
-                AllTextPostByUserIdRoot test = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
+                AllTextPostByUserIdRoot jsonData = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
                 if (callingFrom == "MyProfile")
                 {
-                    MyProfileDataManager.Instance.totalPostText.text = test.data.Count.ToString();
+                    MyProfileDataManager.Instance.totalPostText.text = jsonData.data.Count.ToString();
                     allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
-                    OtherPlayerProfileData.Instance.textPlayerTottlePost.text = test.data.Count.ToString();
+                    OtherPlayerProfileData.Instance.textPlayerTottlePost.text = jsonData.data.Count.ToString();
                 }
                 //FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
-                if (allTextPostWithUserIdRoot.data.rows.Count >= test.data.rows.Count)
+                if (allTextPostWithUserIdRoot.data.rows.Count >= jsonData.data.rows.Count)
                 {
                     //below line of clearing was commented earlier by riken but uncommented now after start of profile 2.0 as it is working fine for me ----- UMER
                     allTextPostWithUserIdRoot.data.rows.Clear();
 
-                    for (int i = 0; i < test.data.rows.Count; i++)
+                    for (int i = 0; i < jsonData.data.rows.Count; i++)
                     {
                         // myList.Where(p => p.Name == nameToExtract);
                         // allFeedWithUserIdRoot.Data.Rows.Where(p => p.Id == test.Data.Rows[i].Id);
 
-                        if (!allTextPostWithUserIdRoot.data.rows.Any(x => x.id == test.data.rows[i].id))
+                        if (!allTextPostWithUserIdRoot.data.rows.Any(x => x.id == jsonData.data.rows[i].id))
                         {
-                            allTextPostWithUserIdRoot.data.rows.Add(test.data.rows[i]);
+                            allTextPostWithUserIdRoot.data.rows.Add(jsonData.data.rows[i]);
                         }
                         //    if (!allFeedWithUserIdRoot.Data.Rows.Contains(test.Data.Rows[i]))
                         //{
@@ -672,11 +672,11 @@ public class APIManager : MonoBehaviour
                         allTextPostWithUserIdRoot.data.rows.Clear();
                     }
 
-                    allTextPostWithUserIdRoot = test;
+                    allTextPostWithUserIdRoot = jsonData;
                 }
                 if (callingFrom == "OtherPlayerFeed")
                 {
-                    allTextPostWithUserIdRoot = test;
+                    allTextPostWithUserIdRoot = jsonData;
                 }
                 switch (callingFrom)
                 {
@@ -1643,20 +1643,20 @@ public class APIManager : MonoBehaviour
     //}
 
     //this api is used to delete avatar.......
-    public void DeleteAvatarDataFromServer(string token, string UserId)
-    {
-        StartCoroutine(DeleteUserData(token, UserId));
-    }
-    IEnumerator DeleteUserData(string token, string userID)   // delete data if Exist
-    {
-        UnityWebRequest www = UnityWebRequest.Delete(ConstantsGod.API_BASEURL + ConstantsGod.DELETEOCCUPIDEUSER + userID);
-        www.SetRequestHeader("Authorization", token);
-        yield return www.SendWebRequest();
-        if (www.responseCode == 200)
-        {
-            Debug.Log("<color = red> Occupied Asset Delete Successfully </color>");
-        }
-    }
+    //public void DeleteAvatarDataFromServer(string token, string UserId)
+    //{
+    //    StartCoroutine(DeleteUserData(token, UserId));
+    //}
+    //IEnumerator DeleteUserData(string token, string userID)   // delete data if Exist
+    //{
+    //    UnityWebRequest www = UnityWebRequest.Delete(ConstantsGod.API_BASEURL + ConstantsGod.DELETEOCCUPIDEUSER + userID);
+    //    www.SetRequestHeader("Authorization", token);
+    //    yield return www.SendWebRequest();
+    //    if (www.responseCode == 200)
+    //    {
+    //        Debug.Log("<color = red> Occupied Asset Delete Successfully </color>");
+    //    }
+    //}
 
     //this api is used to get search user list......
     public void RequestGetSearchUser(string name)

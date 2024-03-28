@@ -643,7 +643,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         GlobalVeriableClass.callingScreen = "";
     }
 
-        IEnumerator WaitToFeedLoadedUpdate(int pageNum)
+    IEnumerator WaitToFeedLoadedUpdate(int pageNum)
     {
         yield return new WaitForSeconds(0.1f);
         //userPostMainPart.GetComponent<ParentHeightResetScript>().GetAndCheckMaxHeightInAllTab();
