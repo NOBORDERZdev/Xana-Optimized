@@ -232,45 +232,49 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.avatarType = SaveItemList.avatarType;
             _CharacterData.myItemObj = SaveItemList.myItemObj;
             _CharacterData.PresetValue = SaveItemList.PresetValue;
-            _CharacterData.HairColorPaletteValue = SaveItemList.HairColorPaletteValue;
             _CharacterData.BodyFat = SaveItemList.BodyFat;
-            _CharacterData.FaceValue = SaveItemList.FaceValue;
-            _CharacterData.EyeBrowValue = SaveItemList.EyeBrowValue;
-            _CharacterData.EyeBrowColorPaletteValue = SaveItemList.EyeBrowColorPaletteValue;
-            _CharacterData.EyeLashesValue = SaveItemList.EyeLashesValue;
-            _CharacterData.EyeValue = SaveItemList.EyeValue;
-            _CharacterData.EyesColorValue = SaveItemList.EyesColorValue;
-            _CharacterData.EyesColorPaletteValue = SaveItemList.EyesColorPaletteValue;
-            _CharacterData.NoseValue = SaveItemList.NoseValue;
-            _CharacterData.LipsValue = SaveItemList.LipsValue;
-            _CharacterData.LipsColorValue = SaveItemList.LipsColorValue;
-            _CharacterData.LipsColorPaletteValue = SaveItemList.LipsColorPaletteValue;
-            _CharacterData.MakeupValue = SaveItemList.MakeupValue;
 
-            _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
-            _CharacterData.faceMorphed = SaveItemList.faceMorphed;
-            _CharacterData.eyeBrowMorphed = SaveItemList.eyeBrowMorphed;
-            _CharacterData.eyeMorphed = SaveItemList.eyeMorphed;
-            _CharacterData.noseMorphed = SaveItemList.noseMorphed;
-            _CharacterData.lipMorphed = SaveItemList.lipMorphed;
-            _CharacterData.SavedBones = SaveItemList.SavedBones;
-            _CharacterData.Skin = charcterBodyParts.GetBodyColor();
-            _CharacterData.SkinGerdientColor = charcterBodyParts.GetSkinGredientColor();
-            _CharacterData.SkinId = SaveItemList.SkinId;
+            // Old Characters Properties
+            {
+                //_CharacterData.HairColorPaletteValue = SaveItemList.HairColorPaletteValue;
+                //_CharacterData.FaceValue = SaveItemList.FaceValue;
+                //_CharacterData.EyeBrowValue = SaveItemList.EyeBrowValue;
+                //_CharacterData.EyeBrowColorPaletteValue = SaveItemList.EyeBrowColorPaletteValue;
+                //_CharacterData.EyeLashesValue = SaveItemList.EyeLashesValue;
+                //_CharacterData.EyeValue = SaveItemList.EyeValue;
+                //_CharacterData.EyesColorValue = SaveItemList.EyesColorValue;
+                //_CharacterData.EyesColorPaletteValue = SaveItemList.EyesColorPaletteValue;
+                //_CharacterData.NoseValue = SaveItemList.NoseValue;
+                //_CharacterData.LipsValue = SaveItemList.LipsValue;
+                //_CharacterData.LipsColorValue = SaveItemList.LipsColorValue;
+                //_CharacterData.LipsColorPaletteValue = SaveItemList.LipsColorPaletteValue;
+                //_CharacterData.MakeupValue = SaveItemList.MakeupValue;
 
-            // Added By WaqasAhmad
-            _CharacterData.LipColor = charcterBodyParts.GetLipColor();
-            _CharacterData.HairColor = charcterBodyParts.GetHairColor();
-            _CharacterData.EyebrowColor = charcterBodyParts.GetEyebrowColor();
-            _CharacterData.EyeColor = charcterBodyParts.GetEyeColor();
-            //
-            _CharacterData.eyeTextureName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[0].GetTexture("_Main_Trexture").name;
-            _CharacterData.eyebrrowTexture = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[1].GetTexture("_BaseMap").name;
-            _CharacterData.eyeLashesName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture("_BaseMap").name;
-            _CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
+                //_CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
+                //_CharacterData.faceMorphed = SaveItemList.faceMorphed;
+                //_CharacterData.eyeBrowMorphed = SaveItemList.eyeBrowMorphed;
+                //_CharacterData.eyeMorphed = SaveItemList.eyeMorphed;
+                //_CharacterData.noseMorphed = SaveItemList.noseMorphed;
+                //_CharacterData.lipMorphed = SaveItemList.lipMorphed;
+                //_CharacterData.SavedBones = SaveItemList.SavedBones;
+                //_CharacterData.Skin = charcterBodyParts.GetBodyColor();
+                //_CharacterData.SkinGerdientColor = charcterBodyParts.GetSkinGredientColor();
+                //_CharacterData.SkinId = SaveItemList.SkinId;
 
-            _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
-            
+                // Added By WaqasAhmad
+                //_CharacterData.LipColor = charcterBodyParts.GetLipColor();
+                //_CharacterData.HairColor = charcterBodyParts.GetHairColor();
+                //_CharacterData.EyebrowColor = charcterBodyParts.GetEyebrowColor();
+                //_CharacterData.EyeColor = charcterBodyParts.GetEyeColor();
+
+                //_CharacterData.eyeTextureName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[0].GetTexture("_Main_Trexture").name;
+                //_CharacterData.eyebrrowTexture = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[1].GetTexture("_BaseMap").name;
+                //_CharacterData.eyeLashesName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture("_BaseMap").name;
+                //_CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
+
+                //_CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
+            }
+
             _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
             _CharacterData.hair_color = SaveItemList.hair_color;
