@@ -172,7 +172,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
-            StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
+            yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
             SetTerrainTexture(levelData.terrainProperties.texturePath);
         if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
