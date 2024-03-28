@@ -77,7 +77,7 @@ namespace XanaAi
         /// <param name="applyOn">AI that are going to wear the dress</param>
         public void StichItem(int itemId, GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
         {
-            CharcterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharacterBodyParts>();
             UnStichItem(type);
             if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)
             {

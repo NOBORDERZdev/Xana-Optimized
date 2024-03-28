@@ -16,10 +16,19 @@ public class FriendHomeManager : MonoBehaviour
 
     public GameObject menuLightObj;
     public GameObject profileLightingObj;
+    private void OnEnable()
+    {
+        StartCoroutine(BuildMoodDialog());
+        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
+
+        MainSceneEventHandler.OnSucessFullLogin += SpawnFriends;
+    }
     private void OnDisable()
     {
         if (SocketController.instance != null)
             SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
+
+        MainSceneEventHandler.OnSucessFullLogin -= SpawnFriends;
     }
 
     public void SpawnFriends()
@@ -31,14 +40,9 @@ public class FriendHomeManager : MonoBehaviour
             StartCoroutine(BuildMoodDialog());
         }
     }
-    void Start()
-    {
-        StartCoroutine(BuildMoodDialog());
-        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
-    }
     string PrepareApiURL()
     {
-        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.xanaConstants.userId;
+        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.userId;
     }
    IEnumerator BuildMoodDialog()
     {
@@ -82,12 +86,12 @@ public class FriendHomeManager : MonoBehaviour
         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[GetPostRandomDefaultAnim()]);
         if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
         {
-            CreatedFriend.GetComponent<FriendAvatarController>().IntializeAvatar(friend.userOccupiedAssets[0].json);
+            CreatedFriend.GetComponent<AvatarController>().InitializeFrndAvatar(friend.userOccupiedAssets[0].json,CreatedFriend.gameObject);
         }
         else
         {
             int _rand = UnityEngine.Random.Range(0, 13);
-            CreatedFriend.GetComponent<FriendAvatarController>().DownloadRandomPresets(_rand);
+            CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());

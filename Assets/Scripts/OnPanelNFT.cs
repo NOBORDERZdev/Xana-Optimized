@@ -38,15 +38,15 @@ public class OnPanelNFT : MonoBehaviour
             this.transform.parent.GetComponent<PointerDown>().timer = 0;
             // GameManager.Instance.WorldBool = false;
             //Invoke("SetFalse", 0.15f);
-            // UIManager.Instance.ShowFooter(true);//rik
+            // GameManager.Instance.UiManager.ShowFooter(true);//rik
         }
         Invoke("SetFalse", 0f);
     }
 
     private void OnDisable()
     {
-        //if (UIManager.Instance.HomePage.activeInHierarchy)
-        //    UIManager.Instance.HomePage.SetActive(true);
+        //if (GameManager.Instance.UiManager.HomePage.activeInHierarchy)
+        //    GameManager.Instance.UiManager.HomePage.SetActive(true);
 
 
         reverse = false;

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager Instance;
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
@@ -38,7 +37,6 @@ public class UIManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
         Canvas.GetComponent<CanvasGroup>().interactable = false;
@@ -90,7 +88,7 @@ public class UIManager : MonoBehaviour
     }
     public void IsWorldClicked()
     {
-        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || UserRegisterationManager.instance.LoggedIn)
+        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
@@ -137,7 +135,25 @@ public class UIManager : MonoBehaviour
         ShowFooter(!_state);
         if(UserRegisterationManager.instance)
         UserRegisterationManager.instance.ShowWelcomeScreenessintial();
+        if (!_state)
+        {
+            SplashMemoryFree();
+        }
     }
+
+    public void SplashMemoryFree()
+    {
+        StartCoroutine(ReleaseSplashFromMemory());
+    }
+
+    IEnumerator ReleaseSplashFromMemory()
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(_SplashScreen);
+        Resources.UnloadUnusedAssets();
+    }
+
+
     public int PreviousScreen;
     public void SwitchToScreen(int Screen)
     {

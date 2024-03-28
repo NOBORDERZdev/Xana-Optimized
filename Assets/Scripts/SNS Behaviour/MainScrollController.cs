@@ -13,7 +13,7 @@ public class MainScrollController : MonoBehaviour
 
     public GameObject headerTitleObject;
 
-    [SerializeField] private ScrollRectFasterEx m_ScrollRect;
+    public ScrollRectFasterEx m_ScrollRect;
     public float m_InitialPosition;
 
     public ScrollRectFasterEx subScrollRectFasterEx;

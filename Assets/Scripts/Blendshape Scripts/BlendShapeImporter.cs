@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 
 public class BlendShapeImporter : MonoBehaviour
 {
-    public static BlendShapeImporter Instance;
+    //public static BlendShapeImporter Instance;
 
     [Header("Mesh Renderer for Blend Shapes")]
     public SkinnedMeshRenderer m_Renderer;
@@ -56,7 +56,7 @@ public class BlendShapeImporter : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        //Instance = this;
     }
 
     private void Start()
@@ -108,10 +108,10 @@ public class BlendShapeImporter : MonoBehaviour
                     SliderX.gameObject.SetActive(false);
                     SliderY.gameObject.SetActive(false);
 
-                    SliderX.onValueChanged.RemoveAllListeners();
+                    SliderX.onValueChanged.RemoveAllListeners(); 
                     SliderY.onValueChanged.RemoveAllListeners();
-
-                    CharcterBodyParts.instance.ValuesForSliderXY(info.blendListIndex);
+                    GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().ValuesForSliderXY(info.blendListIndex);
+                   // CharacterBodyParts.instance.ValuesForSliderXY(info.blendListIndex);
                 }
             }
         }

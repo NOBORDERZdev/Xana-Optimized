@@ -57,7 +57,7 @@ public class CameraLook : MonoBehaviour
     [HideInInspector]
     public bool isRotatingScreen = false;
 
-    CharcterBodyParts charcterBody;
+    CharacterBodyParts charcterBody;
     [SerializeField] GameObject pointObj;
     GameObject camRender;
     float midRigHeight, midRigRadius, topRigHeight, topRigRadius, bottomRigRadius, defaultZoomInLimit, defaultZoomOutLimit;
@@ -194,7 +194,7 @@ public class CameraLook : MonoBehaviour
         {
             if (ReferrencesForDynamicMuseum.instance.m_34player)
             {
-                charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>();
+                charcterBody = ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterBodyParts>();
                 // pointObj = charcterBody.Body.gameObject;
             }
             else

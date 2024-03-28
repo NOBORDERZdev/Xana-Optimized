@@ -24,11 +24,11 @@ public class ItemDatabase : MonoBehaviour
     public AvatarDefaultClothes femaleAvatarDefaultCostume;
 
     AddressableDownloader downloader;
-    public void itemlistresettodefault()
-    {
-        Awake();
-    }
-    private void Awake()
+    //public void itemlistresettodefault()
+    //{
+    //    Awake();
+    //}
+    void Awake()
     {
         if (instance == null)
         {
@@ -124,7 +124,7 @@ public class ItemDatabase : MonoBehaviour
     public IEnumerator WaitAndDownloadFromRevert(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SavaCharacterProperties.instance.characterController.IntializeAvatar();
+        SavaCharacterProperties.instance.characterController.InitializeAvatar();
 
         #region Commented Section
         //SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();

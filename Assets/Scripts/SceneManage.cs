@@ -18,6 +18,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public GameObject EventEndedPanel;
     public string mainScene = "Main";
     bool exitOnce = true;
+    GameManager gameManager;
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
     private void OnEnable()
     {
         mainScene = "Main";
@@ -108,6 +113,15 @@ public class SceneManage : MonoBehaviourPunCallbacks
         XanaConstants.xanaConstants.isBuilderScene = false;
         XanaConstants.xanaConstants.JjWorldSceneChange = true;
         XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+
+        // While Retruing from sub world to Xana Lobby
+        // Storing Xana Lobby Ids
+
+        if ((ConstantsGod.API_BASEURL.Contains("test")))
+            XanaConstants.xanaConstants.MuseumID = "406";
+        else
+            XanaConstants.xanaConstants.MuseumID = "38";
+
         StartCoroutine(LoadMainEnumerator());
     }
     IEnumerator LoadMainEnumerator()
@@ -121,12 +135,12 @@ public class SceneManage : MonoBehaviourPunCallbacks
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-            UIManager.Instance.LoginRegisterScreen.SetActive(true);
+            gameManager.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+            gameManager.UiManager.LoginRegisterScreen.SetActive(true);
         }
         else
         {
-            UIManager.Instance.IsWorldClicked();
+            gameManager.UiManager.IsWorldClicked();
         }
     }
     public void LeaveRoom()

@@ -36,7 +36,6 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
-    public PopulationGenerator populationGenerator;
 
     private GameObject player;
 
@@ -578,10 +577,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
+
+        // Firebase Event for Join World
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
     void ActivateNpcChat()
@@ -655,7 +659,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
-            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharcterBodyParts>();
+            GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharacterBodyParts>();
             GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
 
             //Post Process enable for Builder Scene
@@ -749,7 +753,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
-        ActivateNpcChat();
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
+        //ActivateNpcChat();
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

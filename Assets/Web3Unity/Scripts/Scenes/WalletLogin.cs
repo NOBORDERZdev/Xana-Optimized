@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class WalletLogin: MonoBehaviour
 {
     ProjectConfigScriptableObject projectConfigSO = null;
-    public Toggle rememberMe;
+    //public Toggle rememberMe;
     //UserRegisterationManager registerationManager;
     [SerializeField] ConnectingWallet connectingWallet;
     //[SerializeField] GameObject SuccessfulPopUp;
@@ -84,11 +84,10 @@ public class WalletLogin: MonoBehaviour
             if (account.Length == 42 && expirationTime >= now) {
                 // save account
                 PlayerPrefs.SetString("publicID", account);
-                if (rememberMe.isOn)
                     PlayerPrefs.SetInt("RememberMe", 1);
-                else
-                    PlayerPrefs.SetInt("RememberMe", 0);
-                print("Account: " + account);
+                //if (rememberMe.isOn)
+                //else
+                //    PlayerPrefs.SetInt("RememberMe", 0);
                 // load next scene
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 switch (type)
@@ -170,9 +169,9 @@ public class WalletLogin: MonoBehaviour
     // //               PlayerPrefs.SetInt("FristPresetSet", 1);
     // //               ServerSIdeCharacterHandling.Instance.GetDataFromServer();  
     // //               PlayerPrefs.SetString("PlayerName", localUsername);
-    // //               if (UIManager.Instance != null)//rik  
+    // //               if (GameManager.Instance.UiManager != null)//rik  
     // //               {
-    // //                   UIManager.Instance._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+    // //                   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
     // //               }
     // //            }
     // //       }

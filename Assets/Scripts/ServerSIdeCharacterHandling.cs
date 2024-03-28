@@ -17,26 +17,75 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
     {
         if (Instance == null)
             Instance = this;
-
-
     }
-
-    private void Start()
-    {
-        //  StartCoroutine(UpdateUserData());
-    }
-
-
     public void CreateUserOccupiedAsset(Action CallBack)
     {
         StartCoroutine(CreateUserData(CallBack));
     }
     public void GetDataFromServer()
     {
-        print(ConstantsGod.AUTH_TOKEN);
         StartCoroutine(GetUserData(ConstantsGod.AUTH_TOKEN));
-        //   StartCoroutine(AddingEnteries(UserIDfromServer));
     }
+
+    IEnumerator GetUserData(string token)   // check if  data Exist
+    {
+        UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.OCCUPIDEASSETS + "1/1");
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+        string str = www.downloadHandler.text;
+        Root getdata = new Root();
+        getdata = JsonUtility.FromJson<Root>(str);
+        if (www.result!=UnityWebRequest.Result.ConnectionError && www.result==UnityWebRequest.Result.Success)
+        {
+            if (getdata.success)
+            {
+                if (getdata.data.count == 0)
+                {
+                    SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
+                    SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
+                    string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
+                    File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
+                    //if user does not have data then open preset panel
+                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
+                    print("!!GetUserData IF");
+                }
+                else
+                {
+                    string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
+                    LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
+                    LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
+                    LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
+                    XanaConstants.userId = getdata.data.rows[0].createdBy.ToString();
+                    File.WriteAllText(GetStringFolderPath(), jsonbody);
+                    yield return new WaitForSeconds(0.1f);
+
+                    loadprevious();
+
+                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
+                }
+            }
+        }
+
+        www.Dispose();
+
+        if (loadAllAvatar != null && StoreManager.instance.MultipleSave)
+        {
+            loadAllAvatar?.Invoke(1, 20);
+        }
+
+        if (EyesBlinking.instance)
+        {
+            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        }
+        //LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 20);
+
+    }
+
+
 
     public IEnumerator CreateUserData(Action callBack)   // send json data with user id but first check if user already exist or not   user ID
     {
@@ -61,7 +110,11 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
         www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         www.SetRequestHeader("Content-Type", "application/json");
-        yield return www.SendWebRequest();
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
         //////Debug.Log(www.downloadHandler.text);
         string str = www.downloadHandler.text;
         Root getdata = new Root();
@@ -95,7 +148,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
 
     IEnumerator UpdateExistingUserData(string avatarID)
     {
-        
+
         Json json = new Json();
         json = json.CreateFromJSON(File.ReadAllText(GetStringFolderPath()));
 
@@ -135,8 +188,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
 
                 print("DataUpdated");
                 //if (StoreManager.instance.AvatarUpdated != null)
-                    //StoreManager.instance.AvatarUpdated.SetActive(true);
-                if(StoreManager.instance.MultipleSave && LoadPlayerAvatar.instance_loadplayer!= null)
+                //StoreManager.instance.AvatarUpdated.SetActive(true);
+                if (StoreManager.instance.MultipleSave && LoadPlayerAvatar.instance_loadplayer != null)
                     LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 1);
                 /*if (StoreManager.instance.isSaveFromreturnHomePopUp)
                 {
@@ -156,7 +209,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
     }
 
 
-    
+
 
     public void DeleteAvatarDataFromServer(string token, string UserId)
     {
@@ -194,88 +247,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
     }
     [HideInInspector]
     public int UserIDfromServer;
-    IEnumerator GetUserData(string token)   // check if  data Exist
-    {
 
-        UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.OCCUPIDEASSETS + "1/1");
-        www.SetRequestHeader("Authorization", token);
-        www.SendWebRequest();
-        while (!www.isDone)
-        {
-            yield return null;
-        }
-        ////Debug.Log(www.downloadHandler.text);
-        string str = www.downloadHandler.text;
-        Root getdata = new Root();
-        getdata = JsonUtility.FromJson<Root>(str);
-        // DefaultEnteriesforManican.instance.DefaultReset();
-        //  print(getdata.success);
-        if (!www.isHttpError && !www.isNetworkError)
-        {
-            if (getdata.success)
-            {
-                print("!!GetUserData ");
-                // its a new user so create file 
-                if (getdata.data.count == 0)
-                {
-                    SavingCharacterDataClass SubCatString = new SavingCharacterDataClass();
-                    SubCatString.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-                    string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
-                    File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
-                    //if user does not have data then open preset panel
-                    MainSceneEventHandler.OpenPresetPanel?.Invoke();
-                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-                  
-                }
-                else
-                {
-                    // write latest json data to file
-                    //if (File.Exists(GameManager.Instance.GetStringFolderPath()))
-                    //{
-                    //    ////Debug.Log("Load previous player");
-                    //    SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-                    //    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-                    //    LoadPlayerAvatar.avatarId = _CharacterData.id;
-                    //    LoadPlayerAvatar.avatarName = _CharacterData.name;
-                    //    LoadPlayerAvatar.avatarThumbnailUrl = _CharacterData.thumbnail;
-                    //}
-                    //else
-                    //{
-                        string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
-                        LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
-                        LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
-                        LoadPlayerAvatar.avatarThumbnailUrl = getdata.data.rows[0].thumbnail;
-                        XanaConstants.xanaConstants.userId = getdata.data.rows[0].createdBy.ToString();
-                        File.WriteAllText(GetStringFolderPath(), jsonbody);
-                        yield return new WaitForSeconds(0.1f);
-                    //}
-                    loadprevious();
-                    //StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-                    GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-
-                    //On merging from Release getting this error
-                    //DefaultEnteriesforManican.instance.DefaultReset_HAck();
-                    //GameManager.Instance.mainCharacter.GetComponent<Equipment>().UpdateStoreList();
-                }
-            }
-        }
-        else
-           Debug.Log("NetWorkissue");
-
-        www.Dispose();
-
-        if (loadAllAvatar != null && StoreManager.instance.MultipleSave)
-        {
-            loadAllAvatar?.Invoke(1, 20);
-        }
-
-        if (EyesBlinking.instance)
-        {
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        }
-        //LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 20);
-
-    }
     //For Preset account to get presets
     public void getPresetDataFromServer()
     {
@@ -501,7 +473,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public List<BoneDataContainer> SavedBones;
         public int SkinId;
         public Color Skin;
-        public Color LipColor; 
+        public Color LipColor;
         public float SssIntensity;
         public Color SkinGerdientColor;
         public bool isSkinColorChanged;

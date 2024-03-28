@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,9 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSMessage;
     public BottomTabManager homeBottomTab;
     
+
+    public static bool isAppOpen = false;
+
     private void Start()
     {
         if(!XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -21,7 +25,7 @@ public class AdditiveScenesManager : MonoBehaviour
             StartCoroutine(AddDelayStore(sceneDelay / 3));
             StartCoroutine(AddDelay(sceneDelay));
             StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
-            StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
+           // StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
         }
     }
     IEnumerator AddDelayStore(float delay)
@@ -43,24 +47,41 @@ public class AdditiveScenesManager : MonoBehaviour
     IEnumerator AddDelaySNSFeedModule(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SceneManager.LoadSceneAsync(sceneTest3, LoadSceneMode.Additive);
-    }
-    IEnumerator AddDelaySNSMessageModule(float delay)
-    {
-       
-        yield return new WaitForSeconds(delay);
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneTest4, LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneTest3, LoadSceneMode.Additive);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
-        //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
         if (XanaConstants.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();
             XanaConstants.xanaConstants.isBackfromSns=false;
         }
         LoadingHandler.Instance.HideLoading();
-       // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+
+        // Xana Analytics
+        if (!isAppOpen)
+        {
+            isAppOpen = true;
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.App_Started.ToString());
+        }
     }
+    //IEnumerator AddDelaySNSMessageModule(float delay)
+    //{
+       
+    //    yield return new WaitForSeconds(delay);
+    //    AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneTest4, LoadSceneMode.Additive);
+    //    while (!asyncLoad.isDone)
+    //    {
+    //        yield return null;
+    //    }
+    //    //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+    //    if (XanaConstants.xanaConstants.isBackfromSns)
+    //    {
+    //        homeBottomTab.OnClickFeedButton();
+    //        XanaConstants.xanaConstants.isBackfromSns=false;
+    //    }
+    //    LoadingHandler.Instance.HideLoading();
+    //   // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+    //}
 }

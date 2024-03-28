@@ -18,7 +18,7 @@ public class BodyTextures
 
 public class BodyColorCustomization : MonoBehaviour
 {
-    public CharcterBodyParts characterBodyParts;
+    public CharacterBodyParts characterBodyParts;
     public Renderer head;
     public Renderer[] eyeball;
 

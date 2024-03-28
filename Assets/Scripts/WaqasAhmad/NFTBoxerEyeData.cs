@@ -6,10 +6,14 @@ public class NFTBoxerEyeData : MonoBehaviour
 {
     public List<BoneBlendContainer> items;
     public static NFTBoxerEyeData instance;
-
+    CharacterBodyParts bodyParts;
     private void Awake()
     {
         instance = this;
+    }
+    void Start()
+    {
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
     /// <summary>
     /// Find Item of item
@@ -44,7 +48,7 @@ public class NFTBoxerEyeData : MonoBehaviour
         int index =  GetIndex(eyeName);
         //CharcterBodyParts bodyParts = CharcterBodyParts.instance.gameObject.GetComponent<CharcterBodyParts>();
         //AvatarController  avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.head;
+        SkinnedMeshRenderer blendShaps = bodyParts.head;
 
         // Reset BlendShapes to Default
         //bodyParts.DefaultBlendShapes(bodyParts.gameObject);
@@ -78,14 +82,14 @@ public class NFTBoxerEyeData : MonoBehaviour
 
     public bool isBoneMissing = false;
 
-    CharcterBodyParts body;
+    CharacterBodyParts body;
 
     public int boneIndex = 0;
     public void NextBone()
     {
         boneIndex++;
-        SkinnedMeshRenderer blendShaps = CharcterBodyParts.instance.head;
-        CharcterBodyParts.instance.gameObject.GetComponent<AvatarController>().ResetBonesDefault(CharcterBodyParts.instance);
+        SkinnedMeshRenderer blendShaps = bodyParts.head;
+        bodyParts.gameObject.GetComponent<AvatarController>().ResetBonesDefault(bodyParts);
 
         Debug.Log("Shape  : " + items[boneIndex].styleName);
 

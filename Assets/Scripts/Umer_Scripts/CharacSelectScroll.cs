@@ -33,7 +33,7 @@ public class CharacSelectScroll : MonoBehaviour
         {
             hssRef.enabled = true;
         }
-        if (UIManager.Instance.isAvatarSelectionBtnClicked)
+        if (GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
         {
             backBtnstore.SetActive(true);
         }
@@ -78,10 +78,12 @@ public class CharacSelectScroll : MonoBehaviour
         if (SelectedOBJ != null)
         {
             GameManager.Instance.HomeCameraInputHandler(true);
-            UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
-            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterOnCLickFromserver();
+            UserLoginSignupManager.instance.selectedPresetImage.sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
+            //Debug.LogError("selected obj name :- "+SelectedOBJ.name);
+            SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
             GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
         }

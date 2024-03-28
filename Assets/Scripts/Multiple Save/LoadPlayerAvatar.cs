@@ -433,7 +433,7 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             SavaCharacterProperties.instance.LoadMorphsfromFile();
             loadprevious();
             StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
-            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
+            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
             //StoreManager.instance.UndoSelection();
 
             isAlreadyRunning = true;

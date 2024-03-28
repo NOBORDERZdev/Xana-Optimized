@@ -119,7 +119,7 @@ public class WorldManager : MonoBehaviour
     }
     public void ChangeWorld(APIURL tab)
     {
-        if (UIManager.Instance.IsSplashActive)
+        if (GameManager.Instance.UiManager.IsSplashActive)
         {
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
@@ -429,7 +429,10 @@ public class WorldManager : MonoBehaviour
 
                 _event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
             }
-
+            if (_WorldInfo.data.rows[i].user != null)
+            {
+                _event.UserAvatarURL= _WorldInfo.data.rows[i].user.avatar;
+            }
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
                 _event.Creator_Name = _WorldInfo.data.rows[i].user.name;
@@ -498,7 +501,7 @@ public class WorldManager : MonoBehaviour
 
         previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        //if (!UIManager.Instance.IsSplashActive)
+        //if (!GameManager.Instance.UiManager.IsSplashActive)
         //{
         //    Invoke(nameof(ShowTutorial), 1f);
         //}
@@ -612,12 +615,12 @@ public class WorldManager : MonoBehaviour
         
         
         _callSingleTime = true;
-        if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
             }
             else
             {
@@ -633,7 +636,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {
@@ -646,9 +649,7 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
-                    print("NFT is in your OwnerShip Enjoy " + PlayerPrefs.GetInt("Equiped"));
-                    List<List> fighterNFTlist = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
-                    Debug.LogError("fighterNFTlist count: " + fighterNFTlist.Count);
+                    List<List> fighterNFTlist = UserLoginSignupManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
                     List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
                     if (list != null)
                     {
@@ -692,12 +693,12 @@ public class WorldManager : MonoBehaviour
     }
     public async void JoinBuilderWorld()
     {
-        if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
-                UIManager.Instance.LoginRegisterScreen.SetActive(true);
+                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
             }
             else
             {
@@ -713,7 +714,7 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
                 bool _IsInOwnerShip = await task;
                 if (!_IsInOwnerShip)
                 {

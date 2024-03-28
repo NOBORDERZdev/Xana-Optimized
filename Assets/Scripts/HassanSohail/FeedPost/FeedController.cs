@@ -444,6 +444,7 @@ public class FeedController : MonoBehaviour
             SerachPanel.SetActive(false);
             SearchContentPanel.SetActive(false);
             EmptySearchPanel();
+            feedContentParent.gameObject.SetActive(true);
             searchInputField.Text = "";
             feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
             if (!isFeedInitialized)
