@@ -13,17 +13,7 @@ public class StreamYoutubeVideo : MonoBehaviour
     private string oldUrl;
     public MediaPlayer mediaPlayer;
     public VideoPlayer videoPlayer;
-    public static StreamYoutubeVideo instance;
     public UnityEvent liveVideoPlay;
-
-
-    private void Awake()
-    {
-        if (instance == null)
-            instance = this;
-        else if (instance != null)
-            Destroy(this);
-    }
 
     public void StreamYtVideo(string Url,bool isLive)
     {
