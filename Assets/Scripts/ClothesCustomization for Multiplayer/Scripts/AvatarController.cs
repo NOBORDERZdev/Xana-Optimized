@@ -117,6 +117,8 @@ public class AvatarController : MonoBehaviour
                 {
                     EquipNFT();
                 }
+                else
+                    Custom_InitializeAvatar();
                 if (xanaConstants.isNFTEquiped)
                 {
                     this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
