@@ -29,10 +29,12 @@ namespace Climbing
     {
         public bool showDebug = true;
         public bool isGroundStay;
+        public Transform feetsTransform;
 
         [Header("Layers")]
         public LayerMask ledgeLayer;
         public LayerMask climbLayer;
+        public LayerMask NoValutDownLayer;
 
         [Header("Rays")]
         [SerializeField] private Vector3 OriginLedgeRay;
@@ -117,6 +119,17 @@ namespace Climbing
             }
 
             return foundWall;
+        }
+
+        public bool AvoidValutDown()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(feetsTransform.position, feetsTransform.up, out hit, 0.5f, NoValutDownLayer))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public bool ThrowRayToLedge(Vector3 origin, out RaycastHit hit)

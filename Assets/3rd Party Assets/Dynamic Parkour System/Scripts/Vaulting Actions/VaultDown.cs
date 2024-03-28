@@ -33,7 +33,7 @@ namespace Climbing
 
         public override bool CheckAction()
         {
-            if (controller.isGrounded && !controller.isJumping && !controller.dummy)
+            if (controller.isGrounded && !controller.isJumping && !controller.dummy && controller.characterDetection.AvoidValutDown() == false)
             {
                 //Checks if Player is in limit of a surface to Drop
                 if (controller.characterMovement.limitMovement && controller.characterMovement.velLimit == 0 && timeDrop != -1 && !controller.isVaulting)
@@ -81,7 +81,7 @@ namespace Climbing
             bool ret = false;
             if (controller.isVaulting)
             {
-                if (!controller.dummy && controller.isJumping && !controller.characterAnimation.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")&& !controller.characterAnimation.animator.GetCurrentAnimatorStateInfo(0).IsName("Fall Idle"))
+                if (!controller.dummy && controller.isJumping && !controller.characterAnimation.animator.GetCurrentAnimatorStateInfo(0).IsName("Idle") && !controller.characterAnimation.animator.GetCurrentAnimatorStateInfo(0).IsName("Fall Idle"))
                 {
                     //Grants movement while falling
                     if (controller.characterInput.run)

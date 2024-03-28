@@ -5549,6 +5549,7 @@ Transform:
   - {fileID: 792521511356914939}
   - {fileID: 3798328719503789260}
   - {fileID: 3376362499695249942}
+  - {fileID: 1961764267330981209}
   m_Father: {fileID: 5556358533142032527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5645,7 +5646,7 @@ MonoBehaviour:
   freeCamera: {fileID: 0}
   runCamera: {fileID: 0}
   sliderCamera: {fileID: 0}
-  stepHeight: 0.6
+  stepHeight: 0.2
   stepVelocity: 0.08
   normalCapsuleCollider: {fileID: 5556358534646836576}
   slidingCapsuleCollider: {fileID: 6941776532399528574}
@@ -5699,7 +5700,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  vaultActions: -1
+  vaultActions: 79
   controller: {fileID: 0}
   animator: {fileID: 0}
 --- !u!114 &5556358534646836587
@@ -5716,12 +5717,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebug: 0
   isGroundStay: 0
+  feetsTransform: {fileID: 1961764267330981209}
   ledgeLayer:
     serializedVersion: 2
     m_Bits: 256
   climbLayer:
     serializedVersion: 2
     m_Bits: 769
+  NoValutDownLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
   OriginLedgeRay: {x: 0, y: 1.57, z: 0.1}
   OriginFeetRay: {x: 0.3, y: -1, z: -0.3}
   LedgeRayLength: 1.5
@@ -5749,7 +5754,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5556358534646836578}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aca52b1107b69e94793d17118572494c, type: 3}
   m_Name: 
@@ -6255,6 +6260,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!1 &7052408152431473538
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961764267330981209}
+  m_Layer: 22
+  m_Name: FeetsLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1961764267330981209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7052408152431473538}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5556358534646836579}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &7766411047248706767
 GameObject:
   m_ObjectHideFlags: 0
