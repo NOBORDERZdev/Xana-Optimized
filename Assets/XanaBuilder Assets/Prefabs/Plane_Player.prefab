@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 773635852}
   - component: {fileID: 773635853}
-  m_Layer: 27
+  m_Layer: 0
   m_Name: CinemachineCollisionLayer
   m_TagString: Footsteps/water
   m_Icon: {fileID: 0}
@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 10.000002, y: 0, z: 10.000002}
-  m_Center: {x: 0, y: -0.2, z: 0}
+  m_Size: {x: 10.000002, y: 0.1, z: 10.000002}
+  m_Center: {x: 0, y: -0.6, z: 0}
 --- !u!1 &4680463021435520345
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,9 +451,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7965747545624217532}
     m_Modifications:
+    - target: {fileID: 2827730419749978367, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f0c543c06ab39a459d0b661003c8b4e, type: 2}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_LocalPosition.x
@@ -461,7 +469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 3996154159519529872, guid: 6071f4e00c3db0d41b7a17e0f94f4dab, type: 3}
       propertyPath: m_LocalPosition.z

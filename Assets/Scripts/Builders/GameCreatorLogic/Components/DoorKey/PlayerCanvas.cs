@@ -67,9 +67,8 @@ public class PlayerCanvas : MonoBehaviour
             {
                 cameraMain = GamificationComponentData.instance.playerControllerNew.ActiveCamera.transform;
             }
-            Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 180);
-            keyImage.transform.rotation = targetRotation;
-            wrongKey.transform.rotation = targetRotation;
+            Quaternion targetRotation = Quaternion.Euler(0, cameraMain.eulerAngles.y, 0);
+            this.transform.rotation = targetRotation;
         }
     }
 

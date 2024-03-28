@@ -64,7 +64,7 @@ public class AddForceComponent : ItemComponent
     }
     private void StopComponent()
     {
-        rigidBody.isKinematic = false;
+        //rigidBody.isKinematic = false;
     }
 
     public override void StopBehaviour()
