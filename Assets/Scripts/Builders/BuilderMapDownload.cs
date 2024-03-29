@@ -39,6 +39,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     //Reflection Probe
     public ReflectionProbe reflectionProbe;
+    private byte[] deformationData;
 
     #region PRIVATE_VAR
     private ServerData serverData;
@@ -171,7 +172,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
-            StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
+            yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
             SetTerrainTexture(levelData.terrainProperties.texturePath);
         if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
@@ -344,7 +345,7 @@ public class BuilderMapDownload : MonoBehaviour
         return levelData;
     }
 
-    public static IEnumerator LoadMeshDeformationFile(string path, Action<byte[]> callback)
+    public IEnumerator LoadMeshDeformationFile(string path, Action<byte[]> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get(path);
         www.SendWebRequest();
@@ -361,6 +362,7 @@ public class BuilderMapDownload : MonoBehaviour
         else
         {
             byte[] results = www.downloadHandler.data;
+            deformationData = results;
             callback?.Invoke(results);
         }
     }
@@ -437,8 +439,12 @@ public class BuilderMapDownload : MonoBehaviour
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
-                realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = terrainPlane.GetComponent<MeshFilter>().mesh.vertices;
-                realisticPlanRenderer.GetComponent<MD_MeshColliderRefresher>().MeshCollider_UpdateMeshCollider();
+                if (deformationData.Length > 0)
+                {
+                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                    if (deformedMeshData.Length >= 10)
+                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                }
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }

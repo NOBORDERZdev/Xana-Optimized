@@ -103,6 +103,7 @@ public class APIManager : MonoBehaviour
             RequestGetAllUsersWithFeeds(1, 20);
             RequestGetFeedsByFollowingUser(1, 20);
         }*/
+        GetBestFriend(); //To get bestFriend Count from the server.
     }
 
     public void OnFeedAPiCalling(string callingFrom = "")

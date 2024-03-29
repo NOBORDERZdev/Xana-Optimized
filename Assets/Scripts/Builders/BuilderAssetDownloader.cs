@@ -375,7 +375,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.spawnComponent)
+        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
