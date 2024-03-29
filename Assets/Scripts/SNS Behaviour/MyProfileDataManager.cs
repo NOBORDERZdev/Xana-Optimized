@@ -23,8 +23,8 @@ public class MyProfileDataManager : MonoBehaviour
     public static MyProfileDataManager Instance;
 
     string defaultUrl = "https://";
-
     public GetUserDetailData myProfileData = new GetUserDetailData();
+
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
     List<FeedResponseRow> allMyTextPostFeedImageRootDataList = new List<FeedResponseRow>();//text feed list
@@ -205,7 +205,11 @@ public class MyProfileDataManager : MonoBehaviour
     [SerializeField] GetUserDetailRoot tempMyProfileDataRoot = new GetUserDetailRoot();
     bool profileMakedFlag = false;
     public string permissionCheck = "";
-
+    public string TestingJasonForTags;
+    UserLoginSignupManager userLoginSignupManager;
+    APIManager apiManager;
+    ProfileUIHandler profileUIHandler;
+    FeedUIController feedUIController;
     private void Awake()
     {
         if (Instance == null)
@@ -245,7 +249,10 @@ public class MyProfileDataManager : MonoBehaviour
     private void Start()
     {
         ClearDummyData();//clear dummy data.......
-
+        userLoginSignupManager = UserLoginSignupManager.instance;
+        apiManager= APIManager.Instance;
+        profileUIHandler = ProfileUIHandler.instance;
+        feedUIController = FeedUIController.Instance;
         string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
         if (!Directory.Exists(saveDir))
         {
@@ -257,7 +264,8 @@ public class MyProfileDataManager : MonoBehaviour
             //ProfileTabButtonClick();
             myProfileScreen.SetActive(true);
         }
-        InvokeRepeating(nameof(RequestGetUserDetails), 0f, 2f);
+        //InvokeRepeating(nameof(RequestGetUserDetails), 0f, 2f);
+        RequestGetUserDetails();
         //string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
         //Debug.Log("Country Name:" + countryName + "    Name:"+ System.Globalization.RegionInfo.CurrentRegion.Name);
     }
@@ -287,13 +295,17 @@ public class MyProfileDataManager : MonoBehaviour
         ClearDummyData();
         tempLogout = true;
         MyProfileSceenShow(false);
-        UserLoginSignupManager.instance.userRoleScriptScriptableObj.userNftRoleSlist.Clear();
+        userLoginSignupManager.userRoleScriptScriptableObj.userNftRoleSlist.Clear();
     }
 
     //this method is used to Profile Tab Button Click.......
     public void ProfileTabButtonClick()
     {
-        APIManager.Instance.RequestGetUserDetails("myProfile");//Get My Profile data       
+        if (apiManager == null)
+        {
+            apiManager = APIManager.Instance;
+        }
+        apiManager.RequestGetUserDetails("myProfile");//Get My Profile data       
         MyProfileSceenShow(true);//active myprofile screen
     }
 
@@ -314,7 +326,7 @@ public class MyProfileDataManager : MonoBehaviour
         //Debug.Log(callingFrom);
         if (callingFrom == "EditProfileAvatar")
         {
-            //FeedUIController.Instance.ShowLoader(false);
+            //feedUIController.ShowLoader(false);
             EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
             if (!isEditProfileNameAlreadyExists)
             {
@@ -349,7 +361,7 @@ public class MyProfileDataManager : MonoBehaviour
         else
         {
             LoadDataMyProfile();//set data
-            APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, 1, 40, "MyProfile");
+            apiManager.RequestGetFeedsByUserId(apiManager.userId, 1, 40, "MyProfile");
         }
     }
 
@@ -390,10 +402,10 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to my profile data set.......
     public void LoadDataMyProfile()
     {
-        if (ProfileUIHandler.instance)
+        if (profileUIHandler)
         {
-            ProfileUIHandler.instance.followerBtn.interactable = true;
-            ProfileUIHandler.instance.followingBtn.interactable = true;
+            profileUIHandler.followerBtn.interactable = true;
+            profileUIHandler.followingBtn.interactable = true;
         }
 
         //userRolesView.SetUpUserRole(ConstantsGod.UserPriorityRole, ConstantsGod.UserRoles);//this method is used to set user role.......
@@ -417,7 +429,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         websiteText.gameObject.SetActive(false);
         // Website functionality is disabled
-        {
+        //{
             //if (string.IsNullOrEmpty(myProfileData.userProfile.website))
             //{
             //    websiteText.gameObject.SetActive(false);
@@ -441,7 +453,7 @@ public class MyProfileDataManager : MonoBehaviour
             //    }
             //    websiteText.gameObject.SetActive(true);
             //}
-        }
+        //}
 
 
         if (myProfileData.userProfile != null)
@@ -497,7 +509,7 @@ public class MyProfileDataManager : MonoBehaviour
         //if (!string.IsNullOrEmpty(myProfileData.avatar))
         //{
         //    //Debug.Log("My profile Avatar :-" + myProfileData.avatar);
-        //    bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
+        //    bool isUrlContainsHttpAndHttps = apiManager.CheckUrlDropboxOrNot(myProfileData.avatar);
         //    if (isUrlContainsHttpAndHttps)
         //    {
         //        AssetCache.Instance.EnqueueOneResAndWait(myProfileData.avatar, myProfileData.avatar, (success) =>
@@ -529,7 +541,7 @@ public class MyProfileDataManager : MonoBehaviour
         if (!string.IsNullOrEmpty(myProfileData.avatar))
         {
             Debug.Log("My profile Avatar :-" + myProfileData.avatar);
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(myProfileData.avatar);
+            bool isUrlContainsHttpAndHttps = apiManager.CheckUrlDropboxOrNot(myProfileData.avatar);
             if (isUrlContainsHttpAndHttps)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(myProfileData.avatar, myProfileData.avatar, (success) =>
@@ -557,62 +569,36 @@ public class MyProfileDataManager : MonoBehaviour
 
     public void UpdateUserTags()
     {
-        if (myProfileData.tags != null && myProfileData.tags.Length > 0)
-        {
-            if (ProfileUIHandler.instance)
+       if (profileUIHandler)
+       {
+            if (myProfileData.tags != null && myProfileData.tags.Length > 0)
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
-                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > myProfileData.tags.Length)
+                profileUIHandler.UserTagsParent.transform.parent.gameObject.SetActive(true);
+                profileUIHandler.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+
+                while (profileUIHandler.UserTagsParent.transform.childCount < myProfileData.tags.Length)
                 {
-                    for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
-                    {
-                        if (i >= myProfileData.tags.Length)
-                        {
-                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
-                        }
-                        else
-                        {
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
-                        }
-                    }
+                    GameObject _tagobject = Instantiate(profileUIHandler.TagPrefab, profileUIHandler.UserTagsParent.transform);
+                    _tagobject.name = "TagPrefab" + profileUIHandler.UserTagsParent.transform.childCount;
                 }
-                else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < myProfileData.tags.Length)
+
+                for (int i = 0; i < profileUIHandler.UserTagsParent.transform.childCount; i++)
                 {
-                    if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                    if (i < myProfileData.tags.Length)
                     {
-                        for (int i = 0; i < myProfileData.tags.Length; i++)
-                        {
-                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
-                            _tagobject.name = "TagPrefab" + i;
-                            _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
-                        }
+                        profileUIHandler.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
                     }
                     else
                     {
-                        for (int i = 0; i < myProfileData.tags.Length; i++)
-                        {
-                            if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
-                            {
-                                GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
-                                _tagobject.name = "TagPrefab" + i;
-                                _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            }
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = myProfileData.tags[i];
-                            ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
-                        }
+                        Destroy(profileUIHandler.UserTagsParent.transform.GetChild(i).gameObject);
                     }
                 }
             }
-        }
-        else
-        {
-            if (ProfileUIHandler.instance)
+            else
             {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
+                profileUIHandler.UserTagsParent.transform.parent.gameObject.SetActive(false);
             }
-        }
+       }
     }
 
     public string ReplaceNonCharacters(string aString, char replacement)
@@ -674,27 +660,16 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to setup bio text.......
     public void SetupBioPart(string bioText)
     {
-        int numLines = bioText.Split('\n').Length;
-        //Debug.Log("Bio Line Count:" + numLines);
-
-        if (numLines > 10)
+        string[] bioLines = bioText.Split('\n');
+        if (bioLines.Length > 10)
         {
-            string[] bioLineSTR = bioText.Split('\n').Take(10).ToArray();
-            //Debug.Log("Result:" + bioLineSTR);
-
-            tempBioOnly10LineStr = "";
-            for (int i = 0; i < bioLineSTR.Length; i++)
-            {
-                tempBioOnly10LineStr += bioLineSTR[i] + "\n";
-            }
+            tempBioOnly10LineStr = string.Join("\n", bioLines.Take(10));
             textUserBio.text = tempBioOnly10LineStr;
-
             SeeMoreLessBioTextSetup(true);
             seeMoreBioButton.SetActive(true);
         }
         else
         {
-            //false see more button
             seeMoreBioButton.SetActive(false);
         }
     }
@@ -750,7 +725,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     isFeedLoaded = false;
                     //Debug.Log("isDataLoad False");
-                    APIManager.Instance.RequestGetFeedsByUserId(APIManager.Instance.userId, (profileFeedAPiCurrentPageIndex + 1), 10, "MyProfile");
+                    apiManager.RequestGetFeedsByUserId(apiManager.userId, (profileFeedAPiCurrentPageIndex + 1), 10, "MyProfile");
                 }
                 // OnScrollNFT();
             }
@@ -764,20 +739,20 @@ public class MyProfileDataManager : MonoBehaviour
     {
         #region Old photo and video based feed displaying implimentation
         //Old photo and video based feed displaying implimentation
-        //currentPageAllFeedWithUserIdRoot = APIManager.Instance.allFeedWithUserIdRoot;
+        //currentPageAllFeedWithUserIdRoot = apiManager.allFeedWithUserIdRoot;
         //bool IsMyProfileFeed = false;
-        //FeedUIController.Instance.ShowLoader(false);
+        //feedUIController.ShowLoader(false);
         //// OLD FEED UI
-        ////if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        ////if (feedUIController.allFeedMessageTextList[2].gameObject.activeSelf)
         ////{
         ////    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
         ////    {
-        ////        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        ////        //feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        ////        feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         ////    }
         ////    else
         ////    {
-        ////        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        ////        feedUIController.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
         ////    }
         ////}
         //// END OLD FEED UI
@@ -822,13 +797,13 @@ public class MyProfileDataManager : MonoBehaviour
         //            userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
         //            Debug.Log("userTagPostObject is Instantiate in FeedParent");
         //        }
-        //        if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
+        //        if (apiManager.allFeedWithUserIdRoot.Data.Rows.Count == 0)
         //        {
-        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //            feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //        }
         //        else
         //        {
-        //            FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //            feedUIController.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
         //        }
         //        if (IsNew)
         //        {
@@ -937,222 +912,274 @@ public class MyProfileDataManager : MonoBehaviour
 
 
         // OLD FEED UI
-        //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
+        //if (feedUIController.allFeedMessageTextList[2].gameObject.activeSelf)
         //{
         //    if (currentPageAllFeedWithUserIdRoot.Data.Rows.Count == 0)
         //    {
-        //        //FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
-        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //        //feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("no discover feed available"));
+        //        feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
         //    }
         //    else
         //    {
-        //        FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //        feedUIController.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
         //    }
         //}
         // END OLD FEED UI
         #endregion
 
         //New Text post based feed implimentation
-        currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
+        currentPageAllTextPostWithUserIdRoot = apiManager.allTextPostWithUserIdRoot;
         bool IsMyProfileFeed = false;
-        //FeedUIController.Instance.ShowLoader(false);
-        //FeedUIController.Instance.ShowLoader(true);
+        //feedUIController.ShowLoader(false);
+        //feedUIController.ShowLoader(true);
+        #region unOptimize code
+        //for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
+        //{
+        //    if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+        //    {
+        //        Debug.Log("currentPageAllFeedWithUserIdRoot");
+        //        if (loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
+        //        {
+        //            //allPhotoContainer
+        //            //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+        //            Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
 
-        for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
+        //            if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
+        //                allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+        //            allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
+        //            //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
+        //        }
+        //        else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) ||
+        //            (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
+        //          /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
+        //        {
+
+        //            bool isVideo = false;
+
+        //            Transform parent = allPhotoContainer;
+        //            if (Feedparent == null)
+        //            {
+        //                parent = allPhotoContainer;
+        //                if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post))
+        //                {
+        //                    parent = allPhotoContainer;
+        //                }
+        //                //else if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].Video))
+        //                //{
+        //                //    isVideo = true;
+        //                //    parent = allMovieContainer;
+        //                //}
+        //                IsMyProfileFeed = true;
+        //            }
+        //            //else
+        //            //{
+        //            //    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
+        //            //    {
+        //            //        isVideo = true;
+        //            //    }
+        //            //}
+        //            GameObject userTagPostObject;
+        //            //if (Feedparent == null)
+        //            //{
+
+        //            userTagPostObject = Instantiate(photoPrefab, parent);
+        //            userTagPostObject.name = "User Feed Post 2.0 " + i;
+        //            Debug.Log("userTagPostObject is Instantiate in parent ");
+        //            //}
+        //            //else
+        //            //{
+        //            //    userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
+        //            //    Debug.Log("userTagPostObject is Instantiate in FeedParent");
+        //            //}
+        //            //if (apiManager.allTextPostWithUserIdRoot.data.rows.Count == 0)
+        //            //{
+        //            //    feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
+        //            //}
+        //            //else
+        //            //{
+        //            //    feedUIController.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
+        //            //}
+        //            if (IsNew)
+        //            {
+        //                userTagPostObject.transform.SetAsFirstSibling();
+        //            }
+        //            Debug.Log("userTagPostObject" + userTagPostObject.name);
+        //            //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
+        //            FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
+        //            userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+        //            userPostItem.isProfileScene = true;
+        //            //userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
+        //            if (!allMyTextPostFeedImageRootDataList.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i]))
+        //            {
+        //                if (IsNew)
+        //                {
+        //                    allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+        //                }
+        //                else
+        //                {
+        //                    allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+        //                }
+        //            }
+        //            //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
+        //            //feedUserData.Id = myProfileData.id;
+        //            //feedUserData.Name = myProfileData.name;
+        //            //feedUserData.Email = myProfileData.email;
+        //            //feedUserData.Avatar = myProfileData.avatar;
+        //            //userPostItem.feedUserData = feedUserData;
+        //            //userPostItem.avtarUrl = myProfileData.avatar;
+        //            //userPostItem.LoadFeed();
+
+        //            //if (Feedparent == null)
+        //            //{
+        //            //    loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+        //            //}
+        //            //else
+        //            //{
+        //            //    if (IsNew)
+        //            //    {
+        //            //        loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+        //            //    }
+        //            //    else
+        //            //    {
+        //            //        loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
+        //            //    }
+        //            //}
+        //            if (pageNumb == 1 && i == 0)
+        //            {
+        //                Debug.Log("Latest Profile pic set as top");
+        //                userTagPostObject.transform.SetAsFirstSibling();
+        //                //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+        //                //{
+        //                //if (!isVideo)//text post
+        //                //{
+        //                allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+        //                //}
+        //                //else
+        //                //{
+        //                //    allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+        //                //}
+        //                // }
+        //            }
+        //            else
+        //            {
+        //                Debug.Log("Latest Profile pic set as top   5555");
+
+
+        //                //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
+        //                //{
+
+
+        //                //if (!isVideo)//image
+        //                //{
+        //                userTagPostObject.transform.SetSiblingIndex(i);
+        //                allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+        //                //}
+        //                //else
+        //                //{
+        //                //    allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
+        //                //}
+
+
+        //                // }
+        //            }
+
+
+        //        }
+        //    }
+        //    else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
+        //    {
+        //        //if (emptyFeedObjRef)
+        //        //{
+        //        //    Destroy(emptyFeedObjRef);
+        //        //}
+        //        //emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
+        //        //emptyFeedObjRef.name = "NewlyCreatedEmptyFeed";
+        //        //for (int j = 0; j < 4; j++)
+        //        //{
+        //        //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
+        //        //    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(apiManager.profileAllFollowerRoot.data.rows[0], true);
+        //        //}
+        //    }
+
+
+        //    if (allPhotoContainer != null)
+        //    {
+        //        allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
+        //    }
+        //}
+        #endregion
+        int rowsCount = currentPageAllTextPostWithUserIdRoot.data.rows.Count;
+        for (int i = 0; i <= rowsCount; i++)
         {
-            if (i < currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+            if (i < rowsCount)
             {
-                Debug.Log("currentPageAllFeedWithUserIdRoot");
-                if (loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id))
+                var currentRow = currentPageAllTextPostWithUserIdRoot.data.rows[i];
+                if (loadedMyPostAndVideoId.Contains(currentRow.id))
                 {
-                    //allPhotoContainer
-                    //int index = loadedMyPostAndVideoId.FindIndex(value => value == currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    Debug.Log("countsss" + allPhotoContainer.transform.childCount + " " + i);
-
-                    if (allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>())
-                        allPhotoContainer.transform.GetChild(i).GetComponent<FeedData>().SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
-                    allPhotoContainer.transform.GetChild(i).name = "User Feed Post old one " + i;
-                    //allPhotoContainer.transform.GetChild(i).SetSiblingIndex(i);
-                }
-                else if (((!loadedMyPostAndVideoId.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent == null) ||
-                    (!loadedMyPostAndVideoIdInFeedPage.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i].id) && Feedparent != null))
-                  /* && (currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post.ToLower() != "null")*/)
-                {
-
-                    bool isVideo = false;
-
-                    Transform parent = allPhotoContainer;
-                    if (Feedparent == null)
+                    var child = allPhotoContainer.transform.GetChild(i);
+                    var feedData = child.GetComponent<FeedData>();
+                    if (feedData)
                     {
-                        parent = allPhotoContainer;
-                        if (!string.IsNullOrEmpty(currentPageAllTextPostWithUserIdRoot.data.rows[i].text_post))
-                        {
-                            parent = allPhotoContainer;
-                        }
-                        //else if (!string.IsNullOrEmpty(currentPageAllTextPostFeedWithUserIdRoot.data.rows[i].Video))
-                        //{
-                        //    isVideo = true;
-                        //    parent = allMovieContainer;
-                        //}
-                        IsMyProfileFeed = true;
+                        feedData.SetFeedPrefab(currentRow, false);
+                        child.name = "User Feed Post old one " + i;
                     }
-                    //else
-                    //{
-                    //    if (!string.IsNullOrEmpty(currentPageAllFeedWithUserIdRoot.Data.Rows[i].Video))
-                    //    {
-                    //        isVideo = true;
-                    //    }
-                    //}
-                    GameObject userTagPostObject;
-                    //if (Feedparent == null)
-                    //{
-
-                    userTagPostObject = Instantiate(photoPrefab, parent);
+                }
+                else if ((!loadedMyPostAndVideoId.Contains(currentRow.id) && Feedparent == null) ||
+                         (!loadedMyPostAndVideoIdInFeedPage.Contains(currentRow.id) && Feedparent != null))
+                {
+                    Transform parent = Feedparent == null && !string.IsNullOrEmpty(currentRow.text_post) ? allPhotoContainer : null;
+                    GameObject userTagPostObject = Instantiate(photoPrefab, parent);
                     userTagPostObject.name = "User Feed Post 2.0 " + i;
-                    Debug.Log("userTagPostObject is Instantiate in parent ");
-                    //}
-                    //else
-                    //{
-                    //    userTagPostObject = Instantiate(photoPrefabInMyPostFeed, Feedparent);
-                    //    Debug.Log("userTagPostObject is Instantiate in FeedParent");
-                    //}
-                    //if (APIManager.Instance.allTextPostWithUserIdRoot.data.rows.Count == 0)
-                    //{
-                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-                    //}
-                    //else
-                    //{
-                    //    FeedUIController.Instance.AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-                    //}
                     if (IsNew)
                     {
                         userTagPostObject.transform.SetAsFirstSibling();
                     }
-                    Debug.Log("userTagPostObject" + userTagPostObject.name);
-                    //UserPostItem userPostItem = userTagPostObject.GetComponent<UserPostItem>();
                     FeedData userPostItem = userTagPostObject.GetComponent<FeedData>();
-                    userPostItem.SetFeedPrefab(currentPageAllTextPostWithUserIdRoot.data.rows[i], false);
+                    userPostItem.SetFeedPrefab(currentRow, false);
                     userPostItem.isProfileScene = true;
-                    //userPostItem.userData = currentPageAllFeedWithUserIdRoot.Data.Rows[i];
-                    if (!allMyTextPostFeedImageRootDataList.Contains(currentPageAllTextPostWithUserIdRoot.data.rows[i]))
+                    if (!allMyTextPostFeedImageRootDataList.Contains(currentRow))
                     {
                         if (IsNew)
                         {
-                            allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                            allMyTextPostFeedImageRootDataList.Insert(0, currentRow);
                         }
                         else
                         {
-                            allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
+                            allMyTextPostFeedImageRootDataList.Add(currentRow);
                         }
                     }
-                    //FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
-                    //feedUserData.Id = myProfileData.id;
-                    //feedUserData.Name = myProfileData.name;
-                    //feedUserData.Email = myProfileData.email;
-                    //feedUserData.Avatar = myProfileData.avatar;
-                    //userPostItem.feedUserData = feedUserData;
-                    //userPostItem.avtarUrl = myProfileData.avatar;
-                    //userPostItem.LoadFeed();
-
-                    //if (Feedparent == null)
-                    //{
-                    //    loadedMyPostAndVideoId.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    //}
-                    //else
-                    //{
-                    //    if (IsNew)
-                    //    {
-                    //        loadedMyPostAndVideoIdInFeedPage.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    //    }
-                    //    else
-                    //    {
-                    //        loadedMyPostAndVideoIdInFeedPage.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i].id);
-                    //    }
-                    //}
                     if (pageNumb == 1 && i == 0)
                     {
-                        Debug.Log("Latest Profile pic set as top");
                         userTagPostObject.transform.SetAsFirstSibling();
-                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                        //{
-                        //if (!isVideo)//text post
-                        //{
-                        allMyTextPostFeedImageRootDataList.Insert(0, currentPageAllTextPostWithUserIdRoot.data.rows[i]);
-                        //}
-                        //else
-                        //{
-                        //    allMyFeedVideoRootDataList.Insert(0, currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                        //}
-                        // }
+                        allMyTextPostFeedImageRootDataList.Insert(0, currentRow);
                     }
                     else
                     {
-                        Debug.Log("Latest Profile pic set as top   5555");
-
-
-                        //if (allMyFeedImageRootDataList.Any(x => x.Id != currentPageAllFeedWithUserIdRoot.Data.Rows[i].Id))
-                        //{
-
-
-                        //if (!isVideo)//image
-                        //{
                         userTagPostObject.transform.SetSiblingIndex(i);
-                        allMyTextPostFeedImageRootDataList.Add(currentPageAllTextPostWithUserIdRoot.data.rows[i]);
-                        //}
-                        //else
-                        //{
-                        //    allMyFeedVideoRootDataList.Add(currentPageAllFeedWithUserIdRoot.Data.Rows[i]);
-                        //}
-
-
-                        // }
+                        allMyTextPostFeedImageRootDataList.Add(currentRow);
                     }
-
-
                 }
             }
-            else//Case added to instantiate empty object at end of posts so last one wont get hidden behide bottom UI
-            {
-                //if (emptyFeedObjRef)
-                //{
-                //    Destroy(emptyFeedObjRef);
-                //}
-                //emptyFeedObjRef = Instantiate(EmptyFeedPrefab, allPhotoContainer);
-                //emptyFeedObjRef.name = "NewlyCreatedEmptyFeed";
-                //for (int j = 0; j < 4; j++)
-                //{
-                //    GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                //    followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
-                //}
-            }
-
-
             if (allPhotoContainer != null)
             {
                 allPhotoContainer.GetComponent<VerticalLayoutGroup>().spacing = 5.01f;
             }
         }
-        
-        if (allPhotoContainer.childCount > currentPageAllTextPostWithUserIdRoot.data.rows.Count)
+
+        int childCount = allPhotoContainer.childCount;
+
+        if (childCount > rowsCount)
         {
-            int _diff = allPhotoContainer.childCount - currentPageAllTextPostWithUserIdRoot.data.rows.Count;
-            for (int i = 0; i < _diff; i++)
+            for (int i = rowsCount; i < childCount; i++)
             {
-                Destroy(allPhotoContainer.GetChild(currentPageAllTextPostWithUserIdRoot.data.rows.Count + i).gameObject);
+                Destroy(allPhotoContainer.GetChild(i).gameObject);
             }
         }
-
         Debug.Log("Pagenmub bar");
-
-
-        if (allMyTextPostFeedImageRootDataList.Count >= 2)
+        if (allMyTextPostFeedImageRootDataList.Count >= 2 && 
+            allMyTextPostFeedImageRootDataList[0].id == allMyTextPostFeedImageRootDataList[1].id)
         {
-            Debug.Log("Text Post ids: " + allMyTextPostFeedImageRootDataList[0].id + "    " + allMyTextPostFeedImageRootDataList[1].id);
-            if (allMyTextPostFeedImageRootDataList[0].id == allMyTextPostFeedImageRootDataList[1].id)
-            {
-                allMyTextPostFeedImageRootDataList.RemoveAt(0);
-
-            }
+            allMyTextPostFeedImageRootDataList.RemoveAt(0);
         }
         
         Invoke(nameof(DisableFadderWithDelay),0.3f);
@@ -1160,7 +1187,7 @@ public class MyProfileDataManager : MonoBehaviour
 
     void DisableFadderWithDelay()
     {
-        FeedUIController.Instance.ShowLoader(false);
+        feedUIController.ShowLoader(false);
         allPhotoContainer.gameObject.SetActive(false);
         allPhotoContainer.gameObject.SetActive(true);
     }
@@ -1181,7 +1208,7 @@ public class MyProfileDataManager : MonoBehaviour
     //    SetupEmptyMsgForPhotoTab(false);//check for empty message.......
     //    userPostPart.GetComponent<ParentHeightResetScript>().SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
     //    yield return new WaitForSeconds(1f);
-    //    FeedUIController.Instance.ShowLoader(false);
+    //    feedUIController.ShowLoader(false);
     //    isFeedLoaded = true;
     //    if (pageNum > 1 && currentPageAllTextPostWithUserIdRoot.data.rows.Count > 0)
     //    {
@@ -1198,12 +1225,12 @@ public class MyProfileDataManager : MonoBehaviour
     //        Destroy(item.gameObject);
     //    }
     //    yield return new WaitForSeconds(0.5f);
-    //    for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
+    //    for (int i = 0; i < apiManager.taggedFeedsByUserIdRoot.data.rows.Count; i++)
     //    {
     //        GameObject userPostObject = Instantiate(photoPrefab, allTagContainer);
-    //        //Debug.Log("tagdata" + APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i]);
+    //        //Debug.Log("tagdata" + apiManager.taggedFeedsByUserIdRoot.data.rows[i]);
     //        UserPostItem userPostItem = userPostObject.GetComponent<UserPostItem>();
-    //        userPostItem.tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
+    //        userPostItem.tagUserData = apiManager.taggedFeedsByUserIdRoot.data.rows[i];
 
     //        FeedsByFollowingUser feedUserData = new FeedsByFollowingUser();
     //        feedUserData.Id = FeedRawData.id;
@@ -1235,19 +1262,19 @@ public class MyProfileDataManager : MonoBehaviour
     //    }
     //}
 
-    public void PrivatePublicTabSetup(bool isFollow)
-    {
-        if (isFollow)
-        {
-            tabPrivateObject.SetActive(false);
-            tabPublicObject.SetActive(true);
-        }
-        else
-        {
-            tabPrivateObject.SetActive(true);
-            tabPublicObject.SetActive(false);
-        }
-    }
+    //public void PrivatePublicTabSetup(bool isFollow)
+    //{
+    //    if (isFollow)
+    //    {
+    //        tabPrivateObject.SetActive(false);
+    //        tabPublicObject.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        tabPrivateObject.SetActive(true);
+    //        tabPublicObject.SetActive(false);
+    //    }
+    //}
 
     //this method is used to check and setup ui for Empty photo tab message.......
     //public void SetupEmptyMsgForPhotoTab(bool isReset)
@@ -1340,309 +1367,309 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to other player profile back button.......
     public void OnClickOtherPalyerProfileBackButton()
     {
-        FeedUIController.Instance.feedUiScreen.SetActive(true);
-       // FeedUIController.Instance.otherPlayerProfileScreen.SetActive(false);
+        feedUIController.feedUiScreen.SetActive(true);
+       // feedUIController.otherPlayerProfileScreen.SetActive(false);
     }
 
     //this method is used to follow user button click.......
     public void OnClickFollowUserButton()
     {
-        APIManager.Instance.RequestFollowAUser(FeedRawData.id.ToString(), "MyProfile");
+        apiManager.RequestFollowAUser(FeedRawData.id.ToString(), "MyProfile");
     }
 
     ////this method is used to Create post Button Click.......
     //public void OnClickCreatePostButton()
     //{
-    //    FeedUIController.Instance.OnClickCreateFeedPickImageOrVideo();
+    //    feedUIController.OnClickCreateFeedPickImageOrVideo();
     //}
 
     //this method is used to website button click.......
-    public void OnClickWebsiteButtonClick()
-    {
-        string websiteUrl = "";
-        if (CheckUrlDropboxOrNot(websiteText.text))
-        {
-            websiteUrl = websiteText.text;
-        }
-        else
-        {
-            websiteUrl = String.Concat(defaultUrl + websiteText.text);//https://www.xana.net/
-        }
+    //public void OnClickWebsiteButtonClick()
+    //{
+    //    string websiteUrl = "";
+    //    if (CheckUrlDropboxOrNot(websiteText.text))
+    //    {
+    //        websiteUrl = websiteText.text;
+    //    }
+    //    else
+    //    {
+    //        websiteUrl = String.Concat(defaultUrl + websiteText.text);//https://www.xana.net/
+    //    }
 
-        Uri uriResult;
-        bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
-                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-        if (result)
-        {
-            Debug.Log("Given URL is valid");
-            websiteUrl = myProfileData.userProfile.website;
-        }
-        else
-        {
-            Debug.Log("Given URL is Invalid");
-            websiteUrl = defaultUrl + myProfileData.userProfile.website;
-        }
-        //Debug.Log("WebsiteURL:" + websiteUrl);
-        Application.OpenURL(websiteUrl);
-    }
+    //    Uri uriResult;
+    //    bool result = Uri.TryCreate(myProfileData.userProfile.website, UriKind.Absolute, out uriResult)
+    //                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    //    if (result)
+    //    {
+    //        Debug.Log("Given URL is valid");
+    //        websiteUrl = myProfileData.userProfile.website;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Given URL is Invalid");
+    //        websiteUrl = defaultUrl + myProfileData.userProfile.website;
+    //    }
+    //    //Debug.Log("WebsiteURL:" + websiteUrl);
+    //    Application.OpenURL(websiteUrl);
+    //}
     #endregion
 
     #region Photo, Movie, NFT Tab Methods.......
-    //this method is used to Photo Tab button click.......
-    public void OnClickPhotoTabButtonMain(int index)
-    {
-        NFTShowingOnneBool = false;
-        selectionItemScript1.OnSelectedClick(index);
-        TabCommonChange(index);
+    ////this method is used to Photo Tab button click.......
+    //public void OnClickPhotoTabButtonMain(int index)
+    //{
+    //    NFTShowingOnneBool = false;
+    //    selectionItemScript1.OnSelectedClick(index);
+    //    TabCommonChange(index);
 
-        NftDataScript.Instance.nftloading.SetActive(false);
-        NftDataScript.Instance.ResetNftData();
-        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-    }
-    public void OnClickPhotoTabButtonSub(int index)
-    {
-        selectionItemScript2.OnSelectedClick(index);
-        TabCommonChange(index);
+    //    NftDataScript.Instance.nftloading.SetActive(false);
+    //    NftDataScript.Instance.ResetNftData();
+    //    NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //}
+    //public void OnClickPhotoTabButtonSub(int index)
+    //{
+    //    selectionItemScript2.OnSelectedClick(index);
+    //    TabCommonChange(index);
 
-        NftDataScript.Instance.nftloading.SetActive(false);
-        NftDataScript.Instance.ResetNftData();
-        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-    }
+    //    NftDataScript.Instance.nftloading.SetActive(false);
+    //    NftDataScript.Instance.ResetNftData();
+    //    NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //}
 
-    //this method is used to Movie Tab button click.......
-    public void OnClickMovieTabButtonMain(int index)
-    {
+    ////this method is used to Movie Tab button click.......
+    //public void OnClickMovieTabButtonMain(int index)
+    //{
 
-        NFTShowingOnneBool = false;
-        parentHeightResetScript.OnHeightReset(index);
-        selectionItemScript1.OnSelectedClick(index);
-        TabCommonChange(index);
+    //    NFTShowingOnneBool = false;
+    //    parentHeightResetScript.OnHeightReset(index);
+    //    selectionItemScript1.OnSelectedClick(index);
+    //    TabCommonChange(index);
 
-        NftDataScript.Instance.nftloading.SetActive(false);
-        NftDataScript.Instance.ResetNftData();
-        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-    }
-    public void OnClickMovieTabButtonSub(int index)
-    {
-        selectionItemScript2.OnSelectedClick(index);
-        TabCommonChange(index);
-        NftDataScript.Instance.nftloading.SetActive(false);
-        NftDataScript.Instance.ResetNftData();
-        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-    }
+    //    NftDataScript.Instance.nftloading.SetActive(false);
+    //    NftDataScript.Instance.ResetNftData();
+    //    NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //}
+    //public void OnClickMovieTabButtonSub(int index)
+    //{
+    //    selectionItemScript2.OnSelectedClick(index);
+    //    TabCommonChange(index);
+    //    NftDataScript.Instance.nftloading.SetActive(false);
+    //    NftDataScript.Instance.ResetNftData();
+    //    NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //}
 
    
-    public void OnScrollNFT()
-    {
-        // StartCoroutine(IEOnScrollNFT());
-    }
+    //public void OnScrollNFT()
+    //{
+    //    // StartCoroutine(IEOnScrollNFT());
+    //}
 
-    public IEnumerator IEOnScrollNFT()
-    {
-        /*
-        if(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count<=0)
-        {
-            UserRegisterationManager.instance._web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"), () =>
-            {
-                //if (CurrentSection.Equals("OwnedAssets"))
-                //{
-                displayNFTinUIAsync();
-                //}
-            });
-        }
-        else
-        {
-            displayNFTinUIAsync();
-        }
-        */
-        yield return new WaitForSeconds(2);
+    //public IEnumerator IEOnScrollNFT()
+    //{
+    //    /*
+    //    if(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.Count<=0)
+    //    {
+    //        UserRegisterationManager.instance._web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"), () =>
+    //        {
+    //            //if (CurrentSection.Equals("OwnedAssets"))
+    //            //{
+    //            displayNFTinUIAsync();
+    //            //}
+    //        });
+    //    }
+    //    else
+    //    {
+    //        displayNFTinUIAsync();
+    //    }
+    //    */
+    //    yield return new WaitForSeconds(2);
 
-    }
-    //this method is used to NFT Tab button click.......
-    public void OnClickNFTTabButtonMain(int index)
-    { 
-        UserLoginSignupManager.instance.GetOwnedNFTsFromAPI();
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
-        {
-            print("Please Upgrade to Premium account");
-            return;
-        }
-        else
-        {
-            print("Horayyy you have Access");
-        }
-        Debug.LogError("NftLoadingPenal OnClickNFTTabButtonMain true");
-        if (NftDataScript.Instance.ContentPanel.transform.childCount <= 0)
-        {
-            NftDataScript.Instance.NftLoadingPenal.SetActive(true);
-        }
-        else
-        {
-            NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-        }
-        //NftDataScript.Instance.currentSelection();
-        parentHeightResetScript.OnHeightReset(index);
-        selectionItemScript1.OnSelectedClick(index);
-        //if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
-        //{
-        //    OnScrollNFT();
-        //}
-        if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
-        {
-            displayNFTinUIAsync();
-        }
-        //StartCoroutine(WaitToNFTTabHeight(index));
-        if (gameObject.activeSelf)
-        {
-            StartCoroutine(WaitToNFTTabHeight(index));
-        }
-    }
+    //}
+    ////this method is used to NFT Tab button click.......
+    //public void OnClickNFTTabButtonMain(int index)
+    //{ 
+    //    userLoginSignupManager.GetOwnedNFTsFromAPI();
+    //    if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
+    //    {
+    //        print("Please Upgrade to Premium account");
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        print("Horayyy you have Access");
+    //    }
+    //    Debug.LogError("NftLoadingPenal OnClickNFTTabButtonMain true");
+    //    if (NftDataScript.Instance.ContentPanel.transform.childCount <= 0)
+    //    {
+    //        NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+    //    }
+    //    else
+    //    {
+    //        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //    }
+    //    //NftDataScript.Instance.currentSelection();
+    //    parentHeightResetScript.OnHeightReset(index);
+    //    selectionItemScript1.OnSelectedClick(index);
+    //    //if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
+    //    //{
+    //    //    OnScrollNFT();
+    //    //}
+    //    if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
+    //    {
+    //        displayNFTinUIAsync();
+    //    }
+    //    //StartCoroutine(WaitToNFTTabHeight(index));
+    //    if (gameObject.activeSelf)
+    //    {
+    //        StartCoroutine(WaitToNFTTabHeight(index));
+    //    }
+    //}
 
-    public void OnClickNFTTabButtonSub(int index)
-    {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
-        {
-            print("Please Upgrade to Premium account");
-            return;
-        }
-        else
-        {
-            print("Horayyy you have Access");
-        }
-        //  NftDataScript.Instance.currentSelection();
-        selectionItemScript2.OnSelectedClick(index);
-        NftDataScript.Instance.NftLoadingPenal.SetActive(true);
-        NftDataScript.Instance.NoNftyet.SetActive(false);
-        NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
-        NftDataScript.Instance.nftloading.SetActive(true);
-        //   if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
-        //  {
-        //   OnScrollNFT();
-        //   }
-        if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
-        {
-            displayNFTinUIAsync();
-        }
-        // StartCoroutine(WaitToNFTTabHeight(index));
-    }
+    //public void OnClickNFTTabButtonSub(int index)
+    //{
+    //    if (!PremiumUsersDetails.Instance.CheckSpecificItem("mynftbutton"))
+    //    {
+    //        print("Please Upgrade to Premium account");
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        print("Horayyy you have Access");
+    //    }
+    //    //  NftDataScript.Instance.currentSelection();
+    //    selectionItemScript2.OnSelectedClick(index);
+    //    NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+    //    NftDataScript.Instance.NoNftyet.SetActive(false);
+    //    NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+    //    NftDataScript.Instance.nftloading.SetActive(true);
+    //    //   if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
+    //    //  {
+    //    //   OnScrollNFT();
+    //    //   }
+    //    if (NftDataScript.Instance.ContentPanel.transform.childCount == 0)
+    //    {
+    //        displayNFTinUIAsync();
+    //    }
+    //    // StartCoroutine(WaitToNFTTabHeight(index));
+    //}
 
-    IEnumerator WaitToNFTTabHeight(int index)
-    {
-        yield return new WaitForSeconds(0.001f);
-        TabCommonChange(index);
-    }
+    //IEnumerator WaitToNFTTabHeight(int index)
+    //{
+    //    yield return new WaitForSeconds(0.001f);
+    //    TabCommonChange(index);
+    //}
 
-    void displayNFTinUIAsync()
-    {
-        //GameObject[] objsNFTs = NftDataScript.Instance.ContentPanel.transform.childCount;
-        print("come to async showing NFT");
+    //void displayNFTinUIAsync()
+    //{
+    //    //GameObject[] objsNFTs = NftDataScript.Instance.ContentPanel.transform.childCount;
+    //    print("come to async showing NFT");
 
-        //if (UserRegisterationManager.instance.userRoleObj.NFTsURL.Count < NftDataScript.Instance.ContentPanel.transform.childCount)
-        //{
-        //  print("come to 2222");
-        if (_OwnedNFTDataObj.NFTlistdata.list.Count > 0)
-        {
-            NftDataScript.Instance.NftLoadingPenal.SetActive(false);
-            NftDataScript.Instance.NoNftyet.SetActive(false);
-            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
-            NftDataScript.Instance.nftloading.SetActive(false);
-            for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
-            {
-                GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
-                Debug.Log("L_ItemBtnObj");
-                if (_OwnedNFTDataObj.NFTstype.Count > i && _OwnedNFTDataObj.NFTstype[i] == 4)
-                {
-                    L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
-                }
-                int locali = i;
-                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
-                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
-                L_ItemBtnObj.gameObject.name = "image_NFT " + _OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
-            }
-        }
-        else
-        {
-            Debug.Log("call hua else data");
-            NftDataScript.Instance.NftLoadingPenal.SetActive(true);
-            NftDataScript.Instance.NoNftyet.SetActive(true);
-            NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
-            NftDataScript.Instance.nftloading.SetActive(false);
-        }
-        // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb++;
-        //  Invoke(nameof(RefreshNFTScrollHeight), 1f);
-    }
-    public void RefreshNFTScrollHeight()
-    {
-        parentHeightResetScript.OnHeightReset(2);
-    }
-    IEnumerator DownloadImage(RawImage _rawImage, string MediaUrl)
-    {
-        UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
-        yield return request.SendWebRequest();
-        if (request.isNetworkError || request.isHttpError)
-            Debug.Log(request.error);
-        else
-            _rawImage.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
-    }
+    //    //if (UserRegisterationManager.instance.userRoleObj.NFTsURL.Count < NftDataScript.Instance.ContentPanel.transform.childCount)
+    //    //{
+    //    //  print("come to 2222");
+    //    if (_OwnedNFTDataObj.NFTlistdata.list.Count > 0)
+    //    {
+    //        NftDataScript.Instance.NftLoadingPenal.SetActive(false);
+    //        NftDataScript.Instance.NoNftyet.SetActive(false);
+    //        NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = string.Empty;
+    //        NftDataScript.Instance.nftloading.SetActive(false);
+    //        for (int i = 0; i < _OwnedNFTDataObj.NFTlistdata.list.Count; i++)
+    //        {
+    //            GameObject L_ItemBtnObj = Instantiate(NFTImagePrefab, NftDataScript.Instance.ContentPanel.transform);
+    //            Debug.Log("L_ItemBtnObj");
+    //            if (_OwnedNFTDataObj.NFTstype.Count > i && _OwnedNFTDataObj.NFTstype[i] == 4)
+    //            {
+    //                L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().VideoIcon.SetActive(true);
+    //            }
+    //            int locali = i;
+    //            L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>()._indexNumber = i;
+    //            L_ItemBtnObj.gameObject.GetComponent<NFTtypeClass>().isVisible = true;
+    //            L_ItemBtnObj.gameObject.name = "image_NFT " + _OwnedNFTDataObj.NFTlistdata.list[locali].nftId.ToString();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("call hua else data");
+    //        NftDataScript.Instance.NftLoadingPenal.SetActive(true);
+    //        NftDataScript.Instance.NoNftyet.SetActive(true);
+    //        NftDataScript.Instance.NoNftyet.GetComponent<TMPro.TextMeshProUGUI>().text = TextLocalization.GetLocaliseTextByKey("NFT data not found");
+    //        NftDataScript.Instance.nftloading.SetActive(false);
+    //    }
+    //    // UserRegisterationManager.instance._web3APIforWeb2.OwnedNFTPageNumb++;
+    //    //  Invoke(nameof(RefreshNFTScrollHeight), 1f);
+    //}
+    //public void RefreshNFTScrollHeight()
+    //{
+    //    parentHeightResetScript.OnHeightReset(2);
+    //}
+    //IEnumerator DownloadImage(RawImage _rawImage, string MediaUrl)
+    //{
+    //    UnityWebRequest request = UnityWebRequestTexture.GetTexture(MediaUrl);
+    //    yield return request.SendWebRequest();
+    //    if (request.isNetworkError || request.isHttpError)
+    //        Debug.Log(request.error);
+    //    else
+    //        _rawImage.texture = ((DownloadHandlerTexture)request.downloadHandler).texture;
+    //}
 
-    public static async Task<Texture2D> GetRemoteTexture(string url)
-    {
-        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
-        {
-            // begin request:
-            var asyncOp = www.SendWebRequest();
+//    public static async Task<Texture2D> GetRemoteTexture(string url)
+//    {
+//        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+//        {
+//            // begin request:
+//            var asyncOp = www.SendWebRequest();
 
-            // await until it's done: 
-            while (asyncOp.isDone == false)
-                await Task.Delay(1000 / 30);//30 hertz
-                                            // read results:
-            if (www.isNetworkError || www.isHttpError)
-            // if( www.result!=UnityWebRequest.Result.Success )// for Unity >= 2020.1
-            {
-                // log error:
-#if DEBUG
-                Debug.Log($"{www.error}, URL:{www.url}");
-#endif
+//            // await until it's done: 
+//            while (asyncOp.isDone == false)
+//                await Task.Delay(1000 / 30);//30 hertz
+//                                            // read results:
+//            if (www.isNetworkError || www.isHttpError)
+//            // if( www.result!=UnityWebRequest.Result.Success )// for Unity >= 2020.1
+//            {
+//                // log error:
+//#if DEBUG
+//                Debug.Log($"{www.error}, URL:{www.url}");
+//#endif
 
-                // nothing to return on error:
-                return null;
-            }
-            else
-            {
-                // return valid results:
-                return DownloadHandlerTexture.GetContent(www);
-            }
-        }
-    }
+//                // nothing to return on error:
+//                return null;
+//            }
+//            else
+//            {
+//                // return valid results:
+//                return DownloadHandlerTexture.GetContent(www);
+//            }
+//        }
+//    }
 
-    void TabCommonChange(int index)
-    {
-        // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
-        //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
-        parentHeightResetScript.OnHeightReset(index);
-        //if (index == 2)
-        //{
-        //    CheckAndDisableFirstFeedPopupForMyNFT(true);//for Create First Feed Popup Auto hide if nft list available.......
-        //}
-        //else
-        //{
-        //    CheckAndDisableFirstFeedPopupForMyNFT(false);//for Create First Feed Popup Auto hide if nft list available.......
-        //}
-        switch (index)
-        {
-            case 0:
-                CurrentSection = "Photo";
-                break;
-            case 1:
-                CurrentSection = "Movie";
-                break;
-            case 2:
-                CurrentSection = "OwnedAssets";
-                break;
-            default:
-                break;
-        }
-    }
+    //void TabCommonChange(int index)
+    //{
+    //    // Debug.Log("<color=blue> Btn Index: " + index + "</color>");
+    //    //tabScrollRectGiftScreen.LerpToPage(index); //Commented for now to make scroll work properly in my profile as this line was creating issues
+    //    parentHeightResetScript.OnHeightReset(index);
+    //    //if (index == 2)
+    //    //{
+    //    //    CheckAndDisableFirstFeedPopupForMyNFT(true);//for Create First Feed Popup Auto hide if nft list available.......
+    //    //}
+    //    //else
+    //    //{
+    //    //    CheckAndDisableFirstFeedPopupForMyNFT(false);//for Create First Feed Popup Auto hide if nft list available.......
+    //    //}
+    //    switch (index)
+    //    {
+    //        case 0:
+    //            CurrentSection = "Photo";
+    //            break;
+    //        case 1:
+    //            CurrentSection = "Movie";
+    //            break;
+    //        case 2:
+    //            CurrentSection = "OwnedAssets";
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
     #endregion
 
     #region Edit Profile Methods.......
@@ -1703,28 +1730,18 @@ public class MyProfileDataManager : MonoBehaviour
     }
     IEnumerator CallAPI_ForTags()
     {
-        yield return new WaitForSeconds(0.1f);
-
-        string token = ConstantsGod.AUTH_TOKEN;
-        WWWForm form = new WWWForm();
-
         string api = ConstantsGod.API_BASEURL + ConstantsGod.availableTags;
 
-        UnityWebRequest www;
-        www = UnityWebRequest.Get(api);
-        www.SendWebRequest();
-
-        while (!www.isDone)
+        using (UnityWebRequest www = UnityWebRequest.Get(api))
         {
-            yield return null;
-        }
+            yield return www.SendWebRequest();
 
-        if (!www.isHttpError && !www.isNetworkError)
-        {
-            ConvertJsonStringIntoList(www.downloadHandler.text);
+            if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
+            {
+                ConvertJsonStringIntoList(www.downloadHandler.text);
+            }
+            www.Dispose();
         }
-
-        www.Dispose();
     }
     void ConvertJsonStringIntoList(string availableTags)
     {
@@ -1732,10 +1749,7 @@ public class MyProfileDataManager : MonoBehaviour
         Debug.Log("Available tags :" + tags.data.count);
 
         // Store All tags in list
-        for (int i = 0; i < tags.data.rows.Length; i++)
-        {
-            availableTagsAtServer.Add(tags.data.rows[i].tagName);
-        }
+        availableTagsAtServer.AddRange(tags.data.rows.Select(row => row.tagName));
 
         availableTagsCount = availableTagsAtServer.Count;
         DisplayTags();
@@ -1745,47 +1759,47 @@ public class MyProfileDataManager : MonoBehaviour
 
     void DisplayTags()
     {
-        // Each row contains 4 tags: Calcluate total rows
-        int totalRows = availableTagsCount / 4;
-        if (availableTagsCount % 4 != 0) totalRows++;
+        #region old 
+        //// Each row contains 4 tags: Calcluate total rows
+        //int totalRows = availableTagsCount / 4;
+        //if (availableTagsCount % 4 != 0) totalRows++;
 
+        //// Generate Rows
+        //for (int i = 0; i < totalRows; i++)
+        //{
+        //    GenerateRow_Tags();
+        //}
+
+        //// Some Rows has 3 tags so we need to generate more row's according to tags
+        //while (availableTagsCount - 1 > generatedTagCount)
+        //{
+        //    GenerateRow_Tags();
+        //}
+        #endregion
+        // Each row contains 4 tags: Calculate total rows
+        int totalRows = (availableTagsCount + 3) / 4;
         // Generate Rows
         for (int i = 0; i < totalRows; i++)
-        {
-            GenerateRow_Tags();
-        }
-
-        // Some Rows has 3 tags so we need to generate more row's according to tags
-        while (availableTagsCount - 1 > generatedTagCount)
         {
             GenerateRow_Tags();
         }
     }
     void GenerateRow_Tags()
     {
-        GameObject tempRow, tempTag;
-        tempRow = Instantiate(tags_row, tags_row_parent);
+        GameObject tempRow = Instantiate(tags_row, tags_row_parent);
 
         // Generate Tags for Each Row
         int tagPerRow = CalculateTagsPerRow(generatedTagCount);
-        for (int k = 0; k < tagPerRow; k++)
+        for (int k = 0; k < tagPerRow && availableTagsCount > generatedTagCount; k++)
         {
-            if (availableTagsCount > generatedTagCount)
-            {
-                tempTag = Instantiate(tags_row_obj, tempRow.transform);
+            GameObject tempTag = Instantiate(tags_row_obj, tempRow.transform);
+            string currentTag = availableTagsAtServer[generatedTagCount];
+            tempTag.GetComponent<TagPrefabInfo>().tagName.text = currentTag;
 
-                tempTag.GetComponent<TagPrefabInfo>().tagName.text = availableTagsAtServer[generatedTagCount];
+            if (userSelectedTags.Contains(currentTag))
+                tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
 
-                // Currently Not Use Localize Tag As its Search hot showing Any result
-                //tempTag.GetComponent<TagPrefabInfo>().tagName.GetComponent<TextLocalization>().LocalizeTextText(availableTagsAtServer[generatedTagCount]);
-
-                //tempTag.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = availableTagsAtServer[generatedTagCount];
-
-                if (userSelectedTags.Contains(availableTagsAtServer[generatedTagCount]))
-                    tempTag.GetComponent<TagPrefabInfo>().Select_UnselectTags();
-
-                generatedTagCount += 1;
-            }
+            generatedTagCount++;
         }
 
         tempRow.GetComponent<UnityEngine.UI.HorizontalLayoutGroup>().spacing = 18.01f;
@@ -1810,23 +1824,31 @@ public class MyProfileDataManager : MonoBehaviour
     void Highlight_UserSelectedTag()
     {
         // highlight user selected tags that are available at server when reopen edit profile screen
-        for (int i = 0; i < userSelectedTags.Count; i++)
+        //foreach (string userSelectedTag in userSelectedTags)
+        //{
+        //    foreach (Transform child in tags_row_parent)
+        //    {
+        //        foreach (Transform grandChild in child)
+        //        {
+        //            TagPrefabInfo tagInfo = grandChild.GetComponent<TagPrefabInfo>();
+        //            if (tagInfo.tagName.text == userSelectedTag)
+        //            {
+        //                tagInfo.Select_UnselectTags();
+        //            }
+        //        }
+        //    }
+        //}
+
+        var tagPrefabInfos = tags_row_parent.GetComponentsInChildren<TagPrefabInfo>();
+        foreach (var tagInfo in tagPrefabInfos)
         {
-            for (int j = 0; j < tags_row_parent.childCount; j++)
+            if (userSelectedTags.Contains(tagInfo.tagName.text))
             {
-                for (int k = 0; k < tags_row_parent.GetChild(j).childCount; k++)
-                {
-                    //print("Tags Details : " + i + " -- " + j + " -- " + k);
-                    if (tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().tagName.text == userSelectedTags[i])
-                    {
-                        //print("Tag Highlighted : " + userSelectedTags[i]);
-                        tags_row_parent.GetChild(j).GetChild(k).GetComponent<TagPrefabInfo>().Select_UnselectTags();
-                    }
-                }
+                tagInfo.Select_UnselectTags();
             }
         }
-
     }
+
 
     public void EnableTagScroller(ScrollRect scrollerObj)
     {
@@ -1844,7 +1866,6 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
 
-    public string TestingJasonForTags;
     public void TestCase()
     {
         generatedTagCount = 0; // generated TagCounter 
@@ -1900,331 +1921,131 @@ public class MyProfileDataManager : MonoBehaviour
 
         EditProfileDoneButtonSetUp(false);//setup edit profile done button.......
 
-        if (/*!CheckForWebSite()*/ true)
-        {
-            EditProfileInfoCheckAndAPICalling();
-        }
+        //if (/*!CheckForWebSite()*/ true)
+        //{
+        //    EditProfileInfoCheckAndAPICalling();
+        //}
+        EditProfileInfoCheckAndAPICalling();
     }
 
     void EditProfileInfoCheckAndAPICalling()
     {
-        /*checkEditNameUpdated = 0;
-        checkEditInfoUpdated = 0;
-
-        string username = playerNameText.text;
-        job = "";
-        gender = "";
-        website = "";
-        bio = "";
-
-        if (myProfileData.userProfile != null)
+        string tempStr;
+        if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text) && editProfileNameAdvanceInputfield.Text != playerNameText.text)
         {
-            job = myProfileData.userProfile.job;
-            website = myProfileData.userProfile.website;
-            bio = myProfileData.userProfile.bio;
-            gender = myProfileData.userProfile.gender;
-        }*/
-
-        //if (!string.IsNullOrEmpty(editProfileNameInputfield.text))
-        // Display Name
-        if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text))
-        {
-            //if (editProfileNameInputfield.text != playerNameText.text)
-            if (editProfileNameAdvanceInputfield.Text != playerNameText.text)
-            {
-                //string tempStr = editProfileNameInputfield.text;
-                string tempStr = editProfileNameAdvanceInputfield.Text;
-                if (tempStr.StartsWith(" "))
-                {
-                    tempStr = tempStr.TrimStart(' ');
-                }
-                if (tempStr.EndsWith(" "))
-                {
-                    tempStr = tempStr.TrimEnd(' ');
-                }
-                Debug.Log("temp Name Str:" + tempStr);
-                username = tempStr;
-                checkEditNameUpdated = 1;
-                Debug.Log("New User Name ----> " + username);
-                GameManager.Instance.UpdatePlayerName(username);
-            }
+            tempStr = editProfileNameAdvanceInputfield.Text.Trim();
+            username = tempStr;
+            checkEditNameUpdated = 1;
+            GameManager.Instance.UpdatePlayerName(username);
         }
-        else
+        else if (string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text))
         {
-            Debug.Log("Please enter username");
             ShowEditProfileNameErrorMessage("Display name can't be empty");
             return;
         }
 
-        // User Unique Name
-        if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
+        if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text) && editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername
+            && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
-            //if (editProfileNameInputfield.text != playerNameText.text)
-            if (editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername && (uniqueUsername != "null" || uniqueUsername != "Null"))
-            {
-                //string tempStr = editProfileNameInputfield.text;
-                string tempStr = editProfileUniqueNameAdvanceInputfield.Text;
-                if (tempStr.StartsWith(" "))
-                {
-                    tempStr = tempStr.TrimStart(' ');
-                }
-                if (tempStr.EndsWith(" "))
-                {
-                    tempStr = tempStr.TrimEnd(' ');
-                }
-                Debug.Log("temp Name Str:" + tempStr);
-                uniqueUsername = tempStr;
-                checkEditInfoUpdated = 1;
-                Debug.LogError("New UniqueUser Name ----> " + uniqueUsername);
-            }
+            tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
+            uniqueUsername = tempStr;
+            checkEditInfoUpdated = 1;
         }
-        else
+        else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
         {
-            Debug.Log("Please enter  username");
             ShowEditProfileUniqueNameErrorMessage("Username can't be empty");
             return;
         }
 
-        //if (editProfileJobInputfield.text != job)
-        // Job
-        //if (editProfileJobAdvanceInputfield.Text != job)
-        //{
-        //    //string tempStr = editProfileJobInputfield.text;
-        //    string tempStr = editProfileJobAdvanceInputfield.RichText;
-        //    if (tempStr.StartsWith(" "))
-        //    {
-        //        tempStr = tempStr.TrimStart(' ');
-        //    }
-        //    Debug.Log("temp Job Str:" + tempStr);
-        //    job = tempStr;
-        //    checkEditInfoUpdated = 1;
-        //}
-        //else
-        //{
-        //    //if (string.IsNullOrEmpty(editProfileJobInputfield.text))
-        //    if (string.IsNullOrEmpty(editProfileJobAdvanceInputfield.Text))
-        //    {
-        //        job = "";
-        //    }
-        //}
-
-        //if (editProfileWebsiteInputfield.text != website)
-        /*if (editProfileWebsiteAdvanceInputfield.Text != website)
-        {
-            //string tempStr = editProfileWebsiteInputfield.text;
-            string tempStr = editProfileWebsiteAdvanceInputfield.Text;
-            if (tempStr.StartsWith(" "))
-            {
-                tempStr = tempStr.TrimStart(' ');
-            }
-           Debug.Log("temp Web Str:" + tempStr);
-            website = tempStr;
-            checkEditInfoUpdated = 1;
-
-            if (!string.IsNullOrEmpty(tempStr))
-            {
-                //FeedUIController.Instance.ShowLoader(true);
-                //editProfileDoneButton.interactable = false;
-
-                string webUrl = tempStr;
-                bool isUrl = false;
-                if (!CheckUrlDropboxOrNot(webUrl))
-                {
-                    webUrl = String.Concat(defaultUrl + tempStr);
-                }
-                else
-                {
-                    isUrl = true;
-                }
-
-               Debug.Log("WebUrl:" + webUrl + "  :isUrl:" + isUrl);
-
-                if (!IsReachableUri(webUrl) || webUrl.Contains("@"))
-                {
-                   Debug.Log("Please enter valid web");
-                    //FeedUIController.Instance.ShowLoader(false);
-                    //websiteErrorObj.GetComponent<Animator>().SetBool("playAnim", true);
-                    if (webErrorCo != null)
-                    {
-                        StopCoroutine(webErrorCo);
-                        websiteErrorObj.SetActive(false);
-                    }
-                    websiteErrorObj.SetActive(true);
-                    webErrorCo = StartCoroutine(WaitUntilErrorAnimationFinished(websiteErrorObj.GetComponent<Animator>()));                    
-                    return;
-                }
-                else
-                {                    
-                    editProfileDoneButton.interactable = true;
-                    if (isUrl)
-                    {
-                        Uri myUri = new Uri(tempStr);
-                        website = myUri.Host;
-                       Debug.Log("temp Web Str111:" + website);
-                    }
-                }
-            }
-
-            //website = editProfileWebsiteInputfield.text;
-            //checkEditInfoUpdated = 1;
-        }
-        else
-        {
-            //if (string.IsNullOrEmpty(editProfileWebsiteInputfield.text))
-            if (string.IsNullOrEmpty(editProfileWebsiteAdvanceInputfield.Text))
-            {
-                website = "";
-            }
-        }*/
-        // Bio
         if (editProfileBioInputfield.Text != bio)
         {
-            string tempStr = editProfileBioInputfield.Text;
-            if (tempStr.StartsWith(" "))
-            {
-                tempStr = tempStr.TrimStart(' ');
-            }
-            Debug.Log("temp Bio Str:" + tempStr);
+            tempStr = editProfileBioInputfield.Text.Trim();
             bio = tempStr;
             checkEditInfoUpdated = 1;
         }
-        else
+        else if (string.IsNullOrEmpty(editProfileBioInputfield.Text))
         {
-            if (string.IsNullOrEmpty(editProfileBioInputfield.Text))
-            {
-                bio = "";
-            }
+            bio = "";
         }
 
-        // Gander
-        //if (!string.IsNullOrEmpty(editProfileGenderInputfield.text))
-        //{
-        //    if (editProfileGenderInputfield.text != gender)
-        //    {
-        //        gender = editProfileGenderInputfield.text;
-        //        checkEditInfoUpdated = 1;
-        //    }
-        //}
-
-        // Check for Tags   
         tempTags = userSelectedTags.ToArray();
-        if (new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
-        {
-            Debug.Log("No changes are done in Tags");
-            //tempTags = null;
-        }
-        else
+        if (!new HashSet<string>(tempTags).SetEquals(tempMyProfileDataRoot.data.tags))
         {
             checkEditInfoUpdated = 1;
-            Debug.Log("Founds Changes");
         }
 
-
-
-        //editProfileScreen.SetActive(false);//Flase edit profile screen
-        if (checkEditNameUpdated == 1)
+        if (checkEditNameUpdated == 1 && !string.IsNullOrEmpty(username))
         {
-            if (string.IsNullOrEmpty(username))
-            {
-                username = "";
-            }
             isEditProfileNameAlreadyExists = false;
-            APIManager.Instance.RequestSetName(username);
+            apiManager.RequestSetName(username);
         }
 
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            Debug.Log("User Display Name:" + username + "User Unique Name:" + uniqueUsername + "   :job:" + job + "    :website:" + website + "    :bio:" + bio + "  :Gender:" + gender + "  :Country:" + countryName);
-
-            if (string.IsNullOrEmpty(uniqueUsername))
-            {
-                uniqueUsername = "";
-            }
-            if (string.IsNullOrEmpty(job))
-            {
-                job = "";
-            }
-            if (string.IsNullOrEmpty(website))
-            {
-                website = "";
-            }
-            if (string.IsNullOrEmpty(bio))
-            {
-                bio = "";
-            }
-            if (string.IsNullOrEmpty(gender))
-            {
-                gender = "Male";
-                Debug.Log("Default Gender:" + gender);
-            }
-            if (string.IsNullOrEmpty(countryName))
-            {
-                countryName = "";
-            }
-
-            APIManager.Instance.RequestUpdateUserProfile(uniqueUsername, gender, APIManager.EncodedString(job), countryName, website, APIManager.EncodedString(bio), tempTags);
+            apiManager.RequestUpdateUserProfile(uniqueUsername ?? "", gender ?? "Male", APIManager.EncodedString(job ?? ""),
+                countryName ?? "", website ?? "", APIManager.EncodedString(bio ?? ""), tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
         {
             if (checkEditNameUpdated == 1 || checkEditInfoUpdated == 1)
             {
-                Debug.Log("EditProfileInfoCheckAndAPICalling Get User Details API Call");
                 StartCoroutine(WaitEditProfileGetUserDetails(false));
             }
             else
             {
                 editProfileScreen.SetActive(false);
-                EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
+                EditProfileDoneButtonSetUp(true);
             }
         }
         else
         {
             StartCoroutine(WaitEditProfileGetUserDetails(true));
         }
+
     }
 
     //this method is return value with url is valid or not 
-    public bool IsReachableUri(string url)
-    {
-        HttpWebRequest request;
-        try
-        {
-            request = (HttpWebRequest)WebRequest.Create(url);
-        }
-        catch (Exception e)
-        {
-            Debug.Log("isreachableUri ecception:" + e);
-            return false;
-        }
-        request.Timeout = 2500;
-        request.Method = "HEAD"; // As per Lasse's comment
-        try
-        {
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                return response.StatusCode == HttpStatusCode.OK;
-            }
-        }
-        catch (WebException)
-        {
-            return false;
-        }
-    }
+    //public bool IsReachableUri(string url)
+    //{
+    //    HttpWebRequest request;
+    //    try
+    //    {
+    //        request = (HttpWebRequest)WebRequest.Create(url);
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.Log("isreachableUri ecception:" + e);
+    //        return false;
+    //    }
+    //    request.Timeout = 2500;
+    //    request.Method = "HEAD"; // As per Lasse's comment
+    //    try
+    //    {
+    //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+    //        {
+    //            return response.StatusCode == HttpStatusCode.OK;
+    //        }
+    //    }
+    //    catch (WebException)
+    //    {
+    //        return false;
+    //    }
+    //}
 
-    public bool IsValidMail(string emailaddress)
-    {
-        try
-        {
-            MailAddress m = new MailAddress(emailaddress);
-            return true;
-        }
-        catch (FormatException)
-        {
-            return false;
-        }
-    }
+    //public bool IsValidMail(string emailaddress)
+    //{
+    //    try
+    //    {
+    //        MailAddress m = new MailAddress(emailaddress);
+    //        return true;
+    //    }
+    //    catch (FormatException)
+    //    {
+    //        return false;
+    //    }
+    //}
 
     //public bool CheckForWebSite()
     //{
@@ -2253,7 +2074,7 @@ public class MyProfileDataManager : MonoBehaviour
     //                isUrl = true;
     //            }
 
-    //            //FeedUIController.Instance.ShowLoader(true);
+    //            //feedUIController.ShowLoader(true);
     //            RequestForWebSiteValidation(webUrl);
     //            return true;
     //        }
@@ -2273,14 +2094,14 @@ public class MyProfileDataManager : MonoBehaviour
     //    }
     //}
 
-    public void RequestForWebSiteValidation(string url)
-    {
-        if (webValidCo != null)
-        {
-            StopCoroutine(webValidCo);
-        }
-        webValidCo = StartCoroutine(IERequestForWebSiteValidation(url));
-    }
+    //public void RequestForWebSiteValidation(string url)
+    //{
+    //    if (webValidCo != null)
+    //    {
+    //        StopCoroutine(webValidCo);
+    //    }
+    //    webValidCo = StartCoroutine(IERequestForWebSiteValidation(url));
+    //}
     public IEnumerator IERequestForWebSiteValidation(string url)
     {
         WWWForm form = new WWWForm();
@@ -2290,7 +2111,7 @@ public class MyProfileDataManager : MonoBehaviour
         {
             yield return www.SendWebRequest();
 
-            //FeedUIController.Instance.ShowLoader(false);
+            //feedUIController.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -2321,6 +2142,7 @@ public class MyProfileDataManager : MonoBehaviour
                     Debug.Log("Invalid WebSite");
                 }
             }
+            www.Dispose();
         }
     }
 
@@ -2345,7 +2167,7 @@ public class MyProfileDataManager : MonoBehaviour
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         //yield return new WaitForSeconds(1f);
         //MyAnim.SetBool("playAnim", false);
-        //FeedUIController.Instance.ShowLoader(false);
+        //feedUIController.ShowLoader(false);
         currentEditProfileErrorMessgaeObj.SetActive(false);
     }
 
@@ -2368,11 +2190,11 @@ public class MyProfileDataManager : MonoBehaviour
     //this coroutine is used check and GetUserDetails or UploadAvatar api call.......
     IEnumerator WaitEditProfileGetUserDetails(bool isProfileUpdate)
     {
-        FeedUIController.Instance.ShowLoader(true);
+        feedUIController.ShowLoader(true);
         yield return new WaitForSeconds(1f);
         if (!isProfileUpdate)
         {
-            APIManager.Instance.RequestGetUserDetails("EditProfileAvatar");//Get My Profile data 
+            apiManager.RequestGetUserDetails("EditProfileAvatar");//Get My Profile data 
         }
         else
         {
@@ -2435,18 +2257,15 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (!mainFullScreenContainer.activeSelf)
             mainFullScreenContainer.SetActive(true);//fo disable profile screen post part.......
-        if (_resetProfileScreen)
+        if (_resetProfileScreen && allPhotoContainer.childCount > 0)
         {
-            if (allPhotoContainer.childCount > 0)
+            loadedMyPostAndVideoId.Clear();
+            for (int i = 0; i < allPhotoContainer.childCount; i++)
             {
-                loadedMyPostAndVideoId.Clear();
-                for (int i = 0; i < allPhotoContainer.childCount; i++)
-                {
-                    Destroy(allPhotoContainer.GetChild(i).gameObject);
-                }
-                //APIManager.Instance.userId = myProfileData.id;
-                //APIManager.Instance.LoadMyPost();
+                Destroy(allPhotoContainer.GetChild(i).gameObject);
             }
+            //apiManager.userId = myProfileData.id;
+            //apiManager.LoadMyPost();
             Invoke(nameof(ProfileTabButtonClick), 5);
         }
     }
@@ -2714,38 +2533,38 @@ public class MyProfileDataManager : MonoBehaviour
     }
 
 
-    public void StartWebCam()
-    {
-        WebCamDevice[] device = WebCamTexture.devices;
+    //public void StartWebCam()
+    //{
+    //    WebCamDevice[] device = WebCamTexture.devices;
 
-        if (device.Length == 0)
-        {
-            Debug.Log("No camera detected");
-            return;
-        }
-        for (int i = 0; i < device.Length; i++)
-        {
-            if (!device[i].isFrontFacing)
-            {
-                webCamTexture = new WebCamTexture(device[i].name, Screen.width, Screen.height);
-            }
-        }
-        if (webCamTexture == null)
-        {
-            Debug.Log("Enable to find back camera");
-            return;
-        }
+    //    if (device.Length == 0)
+    //    {
+    //        Debug.Log("No camera detected");
+    //        return;
+    //    }
+    //    for (int i = 0; i < device.Length; i++)
+    //    {
+    //        if (!device[i].isFrontFacing)
+    //        {
+    //            webCamTexture = new WebCamTexture(device[i].name, Screen.width, Screen.height);
+    //        }
+    //    }
+    //    if (webCamTexture == null)
+    //    {
+    //        Debug.Log("Enable to find back camera");
+    //        return;
+    //    }
 
-        webCamTexture.Play();
-        //webcamRawImage.texture = webCamTexture;
+    //    webCamTexture.Play();
+    //    //webcamRawImage.texture = webCamTexture;
 
-        float ratio = (float)webCamTexture.width / (float)webCamTexture.height;
-        //fit.aspectRatio = ratio;
+    //    float ratio = (float)webCamTexture.width / (float)webCamTexture.height;
+    //    //fit.aspectRatio = ratio;
 
-        int orient = -webCamTexture.videoRotationAngle;
-        Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
-        //webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
-    }
+    //    int orient = -webCamTexture.videoRotationAngle;
+    //    Debug.Log("Ratio:" + ratio + " :Angle:" + orient);
+    //    //webcamRawImage.transform.localEulerAngles = new Vector3(0, 0, orient);
+    //}
 
     //private IEnumerator OpenWebCamPhotoCamera()
     //{
@@ -2807,16 +2626,16 @@ public class MyProfileDataManager : MonoBehaviour
     #region Get Feed By User Id
     /*public void RequestGetFeedsByUserId(int userId, int pageNum, int pageSize)
     {
-        FeedUIController.Instance.ShowLoader(true);
+        feedUIController.ShowLoader(true);
         StartCoroutine(IERequestGetFeedsByUserId(userId, pageNum, pageSize));
     }
     public IEnumerator IERequestGetFeedsByUserId(int userId, int pageNum, int pageSize)
     {
         WWWForm form = new WWWForm();
 
-        using (UnityWebRequest www = UnityWebRequest.Get((APIManager.Instance.mainURL + APIManager.Instance.url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
+        using (UnityWebRequest www = UnityWebRequest.Get((apiManager.mainURL + apiManager.url_GetFeedsByUserId + "/" + userId + "/" + pageNum + "/" + pageSize)))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", apiManager.userAuthorizeToken);
 
             yield return www.SendWebRequest();
 
@@ -3002,15 +2821,15 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to profile follower button click.......
     public void OnClickFollowerButton()
     {
-        //FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(0, topHaderUserNameText.text);
-        FeedUIController.Instance.OnClickProfileFollowerButton();
-        //if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count != myProfileData.followerCount)
+        //feedUIController.ProfileFollowerFollowingScreenSetup(0, topHaderUserNameText.text);
+        feedUIController.OnClickProfileFollowerButton();
+        //if (apiManager.profileAllFollowerRoot.data.rows.Count != myProfileData.followerCount)
         //{
-        //    //FeedUIController.Instance.ProfileFollowerFollowingListClear();
+        //    //feedUIController.ProfileFollowerFollowingListClear();
 
-        //    //FeedUIController.Instance.ShowLoader(true);
-        //    FeedUIController.Instance.isProfileFollowerDataLoaded = false;
-        //    APIManager.Instance.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
+        //    //feedUIController.ShowLoader(true);
+        //    feedUIController.isProfileFollowerDataLoaded = false;
+        //    apiManager.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
 
         //    //if (followingCo != null)
         //    //{
@@ -3023,22 +2842,22 @@ public class MyProfileDataManager : MonoBehaviour
     IEnumerator WaitToCallFollowing()
     {
         yield return new WaitForSeconds(1f);
-        FeedUIController.Instance.isProfileFollowingDataLoaded = false;
-        APIManager.Instance.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
+        feedUIController.isProfileFollowingDataLoaded = false;
+        apiManager.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
     }
 
     //this method is used to profile Following button click.......
     public void OnClickFollowingButtton()
     {
-        //FeedUIController.Instance.ProfileFollowerFollowingScreenSetup(1, topHaderUserNameText.text);
-        FeedUIController.Instance.OnClickProfileFollowingButton();
-        //if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count != myProfileData.followingCount)
+        //feedUIController.ProfileFollowerFollowingScreenSetup(1, topHaderUserNameText.text);
+        feedUIController.OnClickProfileFollowingButton();
+        //if (apiManager.profileAllFollowingRoot.data.rows.Count != myProfileData.followingCount)
         //{
-        //    //FeedUIController.Instance.ProfileFollowerFollowingListClear();
+        //    //feedUIController.ProfileFollowerFollowingListClear();
 
-        //    //FeedUIController.Instance.ShowLoader(true);
-        //    FeedUIController.Instance.isProfileFollowingDataLoaded = false;
-        //    APIManager.Instance.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
+        //    //feedUIController.ShowLoader(true);
+        //    feedUIController.isProfileFollowingDataLoaded = false;
+        //    apiManager.RequestGetAllFollowingFromProfile(myProfileData.id.ToString(), 1, 50);
 
         //    //if (followeCo != null)
         //    //{
@@ -3051,8 +2870,8 @@ public class MyProfileDataManager : MonoBehaviour
     IEnumerator WaitToFollower()
     {
         yield return new WaitForSeconds(1f);
-        FeedUIController.Instance.isProfileFollowerDataLoaded = false;
-        APIManager.Instance.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
+        feedUIController.isProfileFollowerDataLoaded = false;
+        apiManager.RequestGetAllFollowersFromProfile(myProfileData.id.ToString(), 1, 50);
     }
     #endregion
 
@@ -3077,7 +2896,7 @@ public class MyProfileDataManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", apiManager.userAuthorizeToken);
 
             yield return www.SendWebRequest();
 
@@ -3094,6 +2913,7 @@ public class MyProfileDataManager : MonoBehaviour
                 //XanaConstants.xanaConstants.userProfileLink = tempMyProfileDataRoot.data.avatar;
                 OnlyLoadDataMyProfile();//set data                
             }
+            www.Dispose();
         }
     }
     public void OnlyLoadDataMyProfile()
