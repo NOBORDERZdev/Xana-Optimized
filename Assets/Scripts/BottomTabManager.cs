@@ -633,8 +633,8 @@ public class BottomTabManager : MonoBehaviour
     {
         if (FeedUIController.Instance != null)
         {
-            SNSSettingController.Instance.settingScreen.SetActive(false);
-            SNSSettingController.Instance.myAccountScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.settingScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
         }
     }   
 

@@ -219,6 +219,7 @@ public class FeedUIController : MonoBehaviour
     [Header("Feed 2.0")]
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
+    public SNSSettingController SNSSettingController;
     private void Awake()
     {
         if (Instance == null)
@@ -386,8 +387,8 @@ public class FeedUIController : MonoBehaviour
             OtherPlayerProfileData.Instance.backKeyManageList.Clear();
         }
 
-        SNSSettingController.Instance.myAccountScreen.SetActive(false);
-        SNSSettingController.Instance.myAccountPersonalInfoScreen.SetActive(false);
+        FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
+        FeedUIController.Instance.SNSSettingController.myAccountPersonalInfoScreen.SetActive(false);
         //StartCoroutine(WaitToResetAllFeedScreen(isFeedScreen));        
     }
 

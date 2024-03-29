@@ -2228,7 +2228,7 @@ public class APIManager : MonoBehaviour
                         break;
                     case "MyAccount":
                         MyProfileDataManager.Instance.myProfileData = myProfileDataRoot.data;
-                        SNSSettingController.Instance.SetUpPersonalInformationScreen();
+                        FeedUIController.Instance.SNSSettingController.SetUpPersonalInformationScreen();
                         break;
                     default:
                         break;

@@ -7,7 +7,7 @@ using System.IO;
 
 public class SNSSettingController : MonoBehaviour
 {
-    public static SNSSettingController Instance;
+    //public static SNSSettingController Instance;
 
     [Header("Setting Screen Reference")]
     public GameObject settingScreen;
@@ -42,10 +42,10 @@ public class SNSSettingController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //}
     }
 
     #region Setting Screen.......
