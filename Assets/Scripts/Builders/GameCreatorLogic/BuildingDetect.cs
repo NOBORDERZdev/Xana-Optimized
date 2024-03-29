@@ -20,6 +20,8 @@ public class BuildingDetect : MonoBehaviour
     private SkinnedMeshRenderer playerPants;
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
+    [SerializeField]
+    public SkinnedMeshRenderer[] playerEyebrow;
 
     [SerializeField]
     public MeshRenderer playerFreeCamConsole;
@@ -39,6 +41,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultShoesMat;
     [SerializeField]
     private Material defaultFreeCamConsoleMat;
+    [SerializeField]
+    private Material[] defaltEyebrowMat;
 
     [Header("Gangster Character")]
     internal GameObject gangsterCharacter;
@@ -107,6 +111,18 @@ public class BuildingDetect : MonoBehaviour
             playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
         if (ac.wornShoes)
             playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+        int index = 0;
+        if (ac.wornEyebrow.Length > 0)
+        {
+            playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+            foreach (var eyeBrow in ac.wornEyebrow)
+            {
+                playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                index++;
+            }
+            index = 0;
+        }
+
 
         playerBody = GamificationComponentData.instance.charcterBodyParts.body;
 
@@ -131,6 +147,14 @@ public class BuildingDetect : MonoBehaviour
             defaultHairMat = playerHair.sharedMaterials;
         if (playerShoes)
             defaultShoesMat = playerShoes.material;
+        if (playerEyebrow.Length > 0)
+        {
+            defaltEyebrowMat = new Material[playerEyebrow.Length];
+            foreach (var eyeBrowMat in playerEyebrow)
+            {
+                defaltEyebrowMat[index] = eyeBrowMat.material;
+            }
+        }
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
@@ -352,6 +376,13 @@ public class BuildingDetect : MonoBehaviour
                 playerShirt.enabled = state;
             if (playerShoes)
                 playerShoes.enabled = state;
+            if (playerEyebrow.Length > 0)
+            {
+                foreach (var eyeBrow in playerEyebrow)
+                {
+                    eyeBrow.enabled = state;
+                }
+            }
         }
     }
     #endregion
@@ -488,6 +519,14 @@ public class BuildingDetect : MonoBehaviour
             playerPants.material = state ? defaultPantsMat : hologramMaterial;
         if (playerShoes)
             playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
+        if (playerEyebrow.Length > 0)
+        {
+            for (int i = 0; i < playerEyebrow.Length; i++)
+            {
+                playerEyebrow[i].material = state ? defaltEyebrowMat[i] : hologramMaterial;
+            }
+        }
 
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 

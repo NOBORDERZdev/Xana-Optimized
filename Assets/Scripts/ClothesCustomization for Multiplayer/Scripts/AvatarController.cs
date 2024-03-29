@@ -29,6 +29,7 @@ public class AvatarController : MonoBehaviour
     public string presetValue;
     public AvatarGender avatarGender;
     public GameObject wornHair, wornPant, wornShirt, wornShoes, wornEyeWearable, wornGloves, wornChain;
+    public GameObject[] wornEyebrow;
     public NFTColorCodes _nftAvatarColorCodes;
     public CharacterBodyParts characterBodyParts;
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
