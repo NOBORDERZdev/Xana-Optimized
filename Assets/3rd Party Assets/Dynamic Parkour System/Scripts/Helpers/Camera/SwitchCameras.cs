@@ -92,11 +92,15 @@ namespace Climbing
             if (!RFM.Globals.player) return;
 
             var cameraController = RFM.Globals.player.GetComponentInChildren<Climbing.CameraController>();
+            var controller = RFM.Globals.player.GetComponentInChildren<Climbing.ThirdPersonController>();
+
+            FreeLook.transform.position = controller.transform.position;
+            Slide.transform.position = controller.transform.position;
+
             FreeLook.Follow = cameraController.playerModel;
             FreeLook.LookAt = cameraController.focus;
             Slide.Follow = cameraController.playerModel;
 
-            var controller = RFM.Globals.player.GetComponentInChildren<Climbing.ThirdPersonController>();
             controller.mainCamera = transform;
             controller.freeCamera = FreeLook.transform;
             controller.runCamera = FreeLook;

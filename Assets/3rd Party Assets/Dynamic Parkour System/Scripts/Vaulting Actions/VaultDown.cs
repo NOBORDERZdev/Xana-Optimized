@@ -95,6 +95,10 @@ namespace Climbing
                     ret = true;
                 }
             }
+            else
+            {
+                Debug.LogError("Vaulting: " + controller.isVaulting);
+            }
 
             return ret;
         }

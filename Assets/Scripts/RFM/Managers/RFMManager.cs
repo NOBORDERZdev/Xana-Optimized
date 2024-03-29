@@ -261,8 +261,6 @@ namespace RFM.Managers
             //huntersCage.GetComponent<Animator>().Play("RFMCloseDoor");
             //huntersCage.GetComponent<Animator>().Play("Cage Door Close");
             huntersCageDoor.transform.rotation = Quaternion.Euler(new Vector3(-90, 0, 0));
-            _mainCam.SetActive(true);
-            _gameCanvas.SetActive(true);
 
 
 
@@ -274,6 +272,10 @@ namespace RFM.Managers
 
             //RFM.Globals.player.transform.root.gameObject.SetActive(true);
             var newPlayer = PhotonNetwork.Instantiate("XANA Player", spawnPosition, Quaternion.identity, 0);
+
+            _mainCam.SetActive(true);
+            _gameCanvas.SetActive(true);
+
             RFM.Globals.player = newPlayer.transform.GetChild(0).gameObject; // Player is the 1st obj. TODO Muneeb
 
             CanvasButtonsHandler.inst.ShowRFMButtons(true);
