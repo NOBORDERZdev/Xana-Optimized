@@ -453,6 +453,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
+            if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            {
+                PlayerCamera.m_Lens.NearClipPlane = 0.05f;
+            }
             if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
