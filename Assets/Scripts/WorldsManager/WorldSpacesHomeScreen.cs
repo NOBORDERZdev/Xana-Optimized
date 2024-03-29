@@ -56,6 +56,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         spaceCategoryScroller.masterScroller.ScrollPosition = 0f;
         if (!GameManager.Instance.isTabSwitched)
         {
+            spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(true);
             GameManager.Instance.isTabSwitched = true;
             WorldManager.instance.changeFollowState = false;
             FeatureSpaceLoading();
@@ -95,6 +96,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 }
                 SetContentItem(hotSpacesContent, worldInfo, "Featured Spaces");
             }
+            //spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
             HotSpaceLoading();
         }));
     }

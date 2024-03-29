@@ -37,6 +37,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     public WorldSpacesHomeScreen _spaceCategDataInitializer;
     public SNSAPILoaderController paginationLoaderRef;
     SpaceScrollRowHandler masterData;
+    public List<Sprite> categIcons = new List<Sprite>();
     public float scrollPosition;
     int instanChildCount = 0;
 
@@ -83,6 +84,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                 }
             }
             LoadDataInPool();
+            paginationLoaderRef.ShowApiLoader(false);
         }
         else
         {
@@ -126,8 +128,6 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
         _loadingNew = false;
-
-        paginationLoaderRef.ShowApiLoader(false);
     }
 
     #region EnhancedScroller Handlers
@@ -178,6 +178,15 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterCellView.name = "Master Cell " + dataIndex.ToString();
         masterCellView.gameObject.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta = 
             new Vector2(masterCellView.gameObject.transform.GetChild(1).GetComponent<RectTransform>().sizeDelta.x, GetCellViewSize(scroller, dataIndex));
+        if (dataIndex >= 0 && dataIndex < categIcons.Count)
+        {
+            masterCellView.transform.GetChild(0).GetChild(0).GetComponent<Image>().sprite = categIcons[dataIndex];
+            SetCategIconState(5, -5, true, masterCellView.transform.GetChild(0).GetComponent<HorizontalLayoutGroup>(), masterCellView.transform.GetChild(0).GetChild(0).gameObject);
+        }
+        else
+        {
+            SetCategIconState(0, -9, false, masterCellView.transform.GetChild(0).GetComponent<HorizontalLayoutGroup>(), masterCellView.transform.GetChild(0).GetChild(0).gameObject);
+        }
 
         //Setting child data loopable if child data count is greater than 3
         //Debug.Log("This Master cell view name: " + masterCellView.name + " child data size is: " + _data[dataIndex].childData.Count);
@@ -191,6 +200,13 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         // return the cell to the scroller
         return masterCellView;
+    }
+
+    void SetCategIconState(int _leftPaddingHLG, int _topPaddingHLG, bool _cateIconState, HorizontalLayoutGroup _categTitleHLG, GameObject _categIconRef)
+    {
+        _categTitleHLG.padding.left = _leftPaddingHLG;
+        _categTitleHLG.padding.top = _topPaddingHLG;
+        _categIconRef.SetActive(_cateIconState);
     }
 
     /// <summary>
