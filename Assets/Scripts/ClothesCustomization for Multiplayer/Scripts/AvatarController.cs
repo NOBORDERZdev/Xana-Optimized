@@ -18,7 +18,7 @@ public class AvatarController : MonoBehaviour
     #endregion
 
     #region public Var
-    public bool isFrndAvatar = false;
+    public bool isPlayerAvatar = false;
     public bool IsInit = false;
     public bool staticPlayer;
     public bool isWearOrNot = false;
@@ -88,7 +88,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
         if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         {
-            if (isFrndAvatar) // to check is friend or player avatar in Home Scene.
+            if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
             {
                 SetAvatarClothDefault(this.gameObject, "Male");
             }
@@ -120,7 +120,10 @@ public class AvatarController : MonoBehaviour
                     EquipNFT();
                 }
                 else
-                    Custom_InitializeAvatar();
+                {
+                    if (isPlayerAvatar)
+                        Custom_InitializeAvatar();
+                }
                 if (xanaConstants.isNFTEquiped)
                 {
                     this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
