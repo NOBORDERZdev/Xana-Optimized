@@ -158,6 +158,9 @@ public class SavaCharacterProperties : MonoBehaviour
 
     public void SavePlayerPropertiesInClassObj()
     {
+        if(characterController == null)
+            characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+
         SaveItemList.myItemObj.Clear();
         SaveItemList.id = LoadPlayerAvatar.avatarId;
         SaveItemList.name = LoadPlayerAvatar.avatarName;

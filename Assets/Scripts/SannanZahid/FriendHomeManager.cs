@@ -182,7 +182,7 @@ public class FriendHomeManager : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(data.text_post) && !data.text_post.Equals("null"))
                 {
-                    frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
+                    frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
                     frds.friendPostBubbleObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
 
