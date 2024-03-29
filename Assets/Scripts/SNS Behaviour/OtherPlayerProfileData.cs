@@ -15,65 +15,65 @@ public class OtherPlayerProfileData : MonoBehaviour
 {
     public static OtherPlayerProfileData Instance;
 
-    public SingleUserProfileData singleUserProfileData;
-    public SingleUserProfileData visitedUserProfileAssetsData;
+    [SerializeField] SingleUserProfileData singleUserProfileData;
+    [SerializeField] SingleUserProfileData visitedUserProfileAssetsData;
 
     public AllUserWithFeedRow FeedRawData;
 
     public List<AllFeedByUserIdRow> allMyFeedImageRootDataList = new List<AllFeedByUserIdRow>();//image feed list
     public List<FeedResponseRow> allMyTextPostRootDataList = new List<FeedResponseRow>();//image feed list
     //For Temp use needs to be deleted later 
-    public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
+    //public List<FeedResponseRow> allMyTextPostFeedInFeedPageRootDataList = new List<FeedResponseRow>();//video feed list
     public List<AllFeedByUserIdRow> allMyFeedVideoRootDataList = new List<AllFeedByUserIdRow>();//video feed list
 
-    public AllFeedByUserIdRoot currentPageAllFeedWithUserIdRoot = new AllFeedByUserIdRoot();
-    public AllTextPostByUserIdRoot currentPageAllTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
+    [SerializeField] AllFeedByUserIdRoot currentPageAllFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    [SerializeField] AllTextPostByUserIdRoot currentPageAllTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
     //Used temp need to to delete later
-    public FeedResponse currentPageAllTextPostFeedWithUserIdRoot = new FeedResponse();
+    [SerializeField] FeedResponse currentPageAllTextPostFeedWithUserIdRoot = new FeedResponse();
 
 
     public int lastUserId;
-    public bool lastUserIsFollowFollowing;
+    [SerializeField] bool lastUserIsFollowFollowing;
 
-    public bool isFollowFollowing = false;
+    [SerializeField] bool isFollowFollowing = false;
 
     [Space]
     [Header("Screen Reference")]
-    public GameObject otherUserSettingScreen;
+    //[SerializeField] GameObject otherUserSettingScreen;
     public GameObject myPlayerdataObj;
 
     [Space]
     [Header("Other Profile Screen Refresh Object")]
-    public GameObject mainFullScreenContainer;
-    public GameObject mainProfileDetailPart;
-    public GameObject bioDetailPart;
+    [SerializeField] GameObject mainFullScreenContainer;
+    [SerializeField] GameObject mainProfileDetailPart;
+    [SerializeField] GameObject bioDetailPart;
 
     [Space]
     [Header("Refresh Object")]
-    public Transform mainPostContainer;
-    public GameObject userPostMainPart;
-    public GameObject userPostPrefab;
-    public GameObject emptyFeedObjRef;
-    public Transform userPostParent;
-    public Transform userTagPostParent;
-    public Transform allMovieContainer;
-    public ScrollRectGiftScreen tabScrollRectGiftScreen;
-    public ParentHeightResetScript parentHeightResetScript;
+    //public Transform mainPostContainer;
+    [SerializeField] GameObject userPostMainPart;
+    //public GameObject userPostPrefab;
+    //public GameObject emptyFeedObjRef;
+    [SerializeField] Transform userPostParent;
+   // public Transform userTagPostParent;
+    [SerializeField] Transform allMovieContainer;
+    //[SerializeField] ScrollRectGiftScreen tabScrollRectGiftScreen;
+    [SerializeField] ParentHeightResetScript parentHeightResetScript;
 
     [Header("post empty message reference")]
-    public GameObject emptyPhotoPostMsgObj;
-    public GameObject emptyMoviePostMsgObj;
+    [SerializeField] GameObject emptyPhotoPostMsgObj;
+    [SerializeField] GameObject emptyMoviePostMsgObj;
 
     [Space]
     [Header("Player info References")]
-    public Image profileImage;
-    public TextMeshProUGUI textPlayerName;
-    public TextMeshProUGUI textPlayerTottleFollower;
-    public TextMeshProUGUI textPlayerTottleFollowing;
+    [SerializeField] Image profileImage;
+    [SerializeField] TextMeshProUGUI textPlayerName;
+    [SerializeField] TextMeshProUGUI textPlayerTottleFollower;
+    [SerializeField] TextMeshProUGUI textPlayerTottleFollowing;
     public TextMeshProUGUI textPlayerTottlePost;
-    public TextMeshProUGUI jobText;
-    public TextMeshProUGUI textUserBio;
-    public TextMeshProUGUI WebsiteText;
+    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI textUserBio;
+    //[SerializeField] TextMeshProUGUI WebsiteText;
     //public TextMeshProUGUI textHeaderUserName;
 
     public GameObject seeMoreBioButton;
@@ -117,23 +117,32 @@ public class OtherPlayerProfileData : MonoBehaviour
     bool isTempDirectMessageScreenOpen = false;
 
     public bool isProfiletranzistFromMessage = false;
-
-    [Space]
-    [Header("Premium UserRole Referense")]
-    public UserRolesView userRolesView;
-
+    string tempBioOnly10LineStr = "";
+    //[Space]
+    //[Header("Premium UserRole Referense")]
+    //public UserRolesView userRolesView;
+    ProfileUIHandler profileUIHandler;
+    public List<int> loadedMyPostAndVideoId = new List<int>();
+    [SerializeField] FeedUIController  feedUIController;
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
         }
+        
     }
 
     private void Start()
     {
+        if (feedUIController == null)
+        {
+            feedUIController = FeedUIController.Instance;
+        }
+        profileUIHandler = ProfileUIHandler.instance;
         ClearDummyData();//clear dummy data.......
-        InvokeRepeating(nameof(RefreshUserData), 0, 2);
+        //InvokeRepeating(nameof(RefreshUserData), 0, 2);
+        RefreshUserData();
     }
     public void RefreshUserData()
     {
@@ -179,7 +188,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         textPlayerName.text = "";
         //textHeaderUserName.text = "";
         jobText.text = "";
-        WebsiteText.text = "";
+        //WebsiteText.text = "";
         jobText.gameObject.SetActive(false);
         textUserBio.text = "";
         //websiteText.text = "";
@@ -187,19 +196,19 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
 
     //this method is used to Other user Menu button click.......
-    public void OnClickMenuButton()
-    {
-        otherUserSettingScreen.SetActive(true);
-    }
+    //public void OnClickMenuButton()
+    //{
+    //    //otherUserSettingScreen.SetActive(true);
+    //}
 
     public void LoadUserData(bool isFirstTime)
     {
-        if (ProfileUIHandler.instance)
+        if (profileUIHandler)
         {
-            ProfileUIHandler.instance.followerBtn.interactable = false;
-            ProfileUIHandler.instance.followingBtn.interactable = false;
-            ProfileUIHandler.instance.editProfileBtn.SetActive(false);
-            ProfileUIHandler.instance.followProfileBtn.SetActive(true);
+            profileUIHandler.followerBtn.interactable = false;
+            profileUIHandler.followingBtn.interactable = false;
+            profileUIHandler.editProfileBtn.SetActive(false);
+            profileUIHandler.followProfileBtn.SetActive(true);
         }
 
         //Debug.Log("Other user profile load data");
@@ -255,18 +264,18 @@ public class OtherPlayerProfileData : MonoBehaviour
                     {
                         Debug.Log("Given URL is valid");
                         Uri websiteHost = new Uri(singleUserProfileData.userProfile.website);
-                        WebsiteText.text = websiteHost.Host.ToString();
+                        //WebsiteText.text = websiteHost.Host.ToString();
                     }
                     else
                     {
                         Debug.Log("Given URL is Invalid");
-                        WebsiteText.text = singleUserProfileData.userProfile.website.ToString();
+                       /// WebsiteText.text = singleUserProfileData.userProfile.website.ToString();
                     }
-                    WebsiteText.gameObject.SetActive(true);
+                   // WebsiteText.gameObject.SetActive(true);
                 }
                 else
                 {
-                    WebsiteText.gameObject.SetActive(false);
+                   // WebsiteText.gameObject.SetActive(false);
                 }
             }
             else
@@ -306,102 +315,103 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void UpdateUserTags()
     {
-            if (singleUserProfileData.tags != null && singleUserProfileData.tags.Length > 0)
+        if (singleUserProfileData.tags != null && singleUserProfileData.tags.Length > 0)
+        {
+            if (profileUIHandler)
             {
-            if (ProfileUIHandler.instance)
-            {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(true);
-                if (ProfileUIHandler.instance.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
+                profileUIHandler.UserTagsParent.transform.parent.gameObject.SetActive(true);
+                if (profileUIHandler.UserTagsParent.transform.childCount > singleUserProfileData.tags.Length)
                 {
-                    for (int i = 0; i < ProfileUIHandler.instance.UserTagsParent.transform.childCount; i++)
+                    for (int i = 0; i < profileUIHandler.UserTagsParent.transform.childCount; i++)
                     {
                         if (i >= singleUserProfileData.tags.Length)
                         {
-                            Destroy(ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).transform.gameObject);
+                            Destroy(profileUIHandler.UserTagsParent.transform.GetChild(i).transform.gameObject);
                         }
                         else
                         {
-                            ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                            profileUIHandler.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                         }
                     }
                 }
-                else if (ProfileUIHandler.instance.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
+                else if (profileUIHandler.UserTagsParent.transform.childCount < singleUserProfileData.tags.Length)
                 {
-                    if (ProfileUIHandler.instance.UserTagsParent.transform.childCount == 0)
+                    if (profileUIHandler.UserTagsParent.transform.childCount == 0)
                     {
                         for (int i = 0; i < singleUserProfileData.tags.Length; i++)
                         {
-                            GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                            GameObject _tagobject = Instantiate(profileUIHandler.TagPrefab, profileUIHandler.UserTagsParent.transform);
                             _tagobject.name = "TagPrefab" + i;
                             _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                         }
-                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                        profileUIHandler.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                     else
                     {
                         for (int i = 0; i < singleUserProfileData.tags.Length; i++)
                         {
-                            if (i >= ProfileUIHandler.instance.UserTagsParent.transform.childCount)
+                            if (i >= profileUIHandler.UserTagsParent.transform.childCount)
                             {
-                                GameObject _tagobject = Instantiate(ProfileUIHandler.instance.TagPrefab, ProfileUIHandler.instance.UserTagsParent.transform);
+                                GameObject _tagobject = Instantiate(profileUIHandler.TagPrefab, profileUIHandler.UserTagsParent.transform);
                                 _tagobject.name = "TagPrefab" + i;
                                 _tagobject.GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
                             else
                             {
-                                ProfileUIHandler.instance.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
+                                profileUIHandler.UserTagsParent.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = singleUserProfileData.tags[i];
                             }
                         }
-                        ProfileUIHandler.instance.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
+                        profileUIHandler.UserTagsParent.GetComponent<HorizontalLayoutGroup>().spacing = 18.01f;
                     }
                 }
             }
-            }
-            else
-            {
-            if (ProfileUIHandler.instance)
-            {
-                ProfileUIHandler.instance.UserTagsParent.transform.parent.gameObject.SetActive(false);
-            }
-            }
-    }
-
-    public void OnClickWebsiteButtonClick()
-    {
-        string websiteUrl = "";
-        websiteUrl = singleUserProfileData.userProfile.website;
-        //Debug.Log("WebsiteURL:" + websiteUrl);
-        Uri uriResult;
-        bool result = Uri.TryCreate(singleUserProfileData.userProfile.website, UriKind.Absolute, out uriResult)
-                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-        if (result)
-        {
-            Debug.Log("Given URL is valid");
-            websiteUrl = singleUserProfileData.userProfile.website;
         }
         else
         {
-            Debug.Log("Given URL is Invalid");
-            websiteUrl = "https://" + singleUserProfileData.userProfile.website;
+            if (profileUIHandler)
+            {
+                profileUIHandler.UserTagsParent.transform.parent.gameObject.SetActive(false);
+            }
         }
-        Application.OpenURL(websiteUrl);
+    }
+
+    //public void OnClickWebsiteButtonClick()
+    //{
+    //    string websiteUrl = "";
+    //    websiteUrl = singleUserProfileData.userProfile.website;
+    //    //Debug.Log("WebsiteURL:" + websiteUrl);
+    //    Uri uriResult;
+    //    bool result = Uri.TryCreate(singleUserProfileData.userProfile.website, UriKind.Absolute, out uriResult)
+    //                    && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+    //    if (result)
+    //    {
+    //        Debug.Log("Given URL is valid");
+    //        websiteUrl = singleUserProfileData.userProfile.website;
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("Given URL is Invalid");
+    //        websiteUrl = "https://" + singleUserProfileData.userProfile.website;
+    //    }
+    //    Application.OpenURL(websiteUrl);
+    //}
+
+    private IEnumerator SetVerticalFitMode(GameObject target, ContentSizeFitter.FitMode mode)
+    {
+        var fitter = target.GetComponent<ContentSizeFitter>();
+        fitter.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        yield return new WaitForSeconds(0.01f);
+        fitter.verticalFit = mode;
     }
 
     IEnumerator WaitToRefreshProfileScreen()
     {
-        bioDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-
-        bioDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        mainProfileDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        mainProfileDetailPart.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        yield return new WaitForSeconds(0.01f);
-        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        yield return StartCoroutine(SetVerticalFitMode(bioDetailPart, ContentSizeFitter.FitMode.PreferredSize));
+        yield return StartCoroutine(SetVerticalFitMode(mainProfileDetailPart, ContentSizeFitter.FitMode.PreferredSize));
+        yield return StartCoroutine(SetVerticalFitMode(mainFullScreenContainer, ContentSizeFitter.FitMode.PreferredSize));
     }
 
-    string tempBioOnly10LineStr = "";
+    
     public void SetupBioPart(string bioText)
     {
         int numLines = bioText.Split('\n').Length;
@@ -499,7 +509,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         }
     }
 
-    public List<int> loadedMyPostAndVideoId = new List<int>();
+  
     public void AllFeedWithUserId(int pageNumb, bool _callFromFindFriendWithName = false)
     {
         //Old photo and video type feed displaying implimentation
@@ -666,15 +676,15 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     public void OnClickPhotoButton()
     {
-        tabScrollRectGiftScreen.LerpToPage(0);
-        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(0);
+        //tabScrollRectGiftScreen.LerpToPage(0);
+        profileUIHandler.otherUserButtonPanelScriptRef.OnSelectedClick(0);
         //tabScrollRectGiftScreen.SetPage(0);
         parentHeightResetScript.OnHeightReset(0);
     }
     public void OnClickMovieButton()
     {
-        tabScrollRectGiftScreen.LerpToPage(1);
-        ProfileUIHandler.instance.otherUserButtonPanelScriptRef.OnSelectedClick(1);
+        //tabScrollRectGiftScreen.LerpToPage(1);
+        profileUIHandler.otherUserButtonPanelScriptRef.OnSelectedClick(1);
         //tabScrollRectGiftScreen.SetPage(1);
         parentHeightResetScript.OnHeightReset(1);
     }
@@ -774,11 +784,11 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
 
     //this is used to destroy user from hot tab after follow.......
-    public void DestroyUserFromHotTabAfterFollow()
-    {
-        //APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
-        //APIManager.Instance.OnFeedAPiCalling();
-    }
+    //public void DestroyUserFromHotTabAfterFollow()
+    //{
+    //    //APIController.Instance.RemoveFollowedUserFromHot(singleUserProfileData.id);
+    //    //APIManager.Instance.OnFeedAPiCalling();
+    //}
 
     //this is used to follower increase or decrease after hit follower api.......
     public void OnFollowerIncreaseOrDecrease(bool isIscrease)
@@ -911,15 +921,15 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //unfollow.......
             APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
+            //profileUIHandler.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
+            profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
             APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
-            ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
+            //profileUIHandler.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Unfollow";
+            profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
         }
     }
 
@@ -1043,14 +1053,14 @@ public class OtherPlayerProfileData : MonoBehaviour
             //LoadUserData(isUserProfileDataDiff);
             LoadUserData(true);
         }
-        else
-        {
-            textPlayerName.text = singleUserProfileData.name;
-            //textHeaderUserName.text = singleUserProfileData.name;
-            textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
-            textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
-            //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
-        }
+        //else
+        //{
+        //    textPlayerName.text = singleUserProfileData.name;
+        //    //textHeaderUserName.text = singleUserProfileData.name;
+        //    textPlayerTottleFollower.text = singleUserProfileData.followerCount.ToString();
+        //    textPlayerTottleFollowing.text = singleUserProfileData.followingCount.ToString();
+        //    //textPlayerTottlePost.text = singleUserProfileData.feedCount.ToString();
+        //}
     }
 
     //this method is used to Get Other userRole and pass info.......

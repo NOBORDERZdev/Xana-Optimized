@@ -29,17 +29,23 @@ public class APIManager : MonoBehaviour
     [Space]
     public bool r_isCreateMessage = false;
 
-    [Space]
-    [Header("For Feed Comment")]
-    public int feedIdTemp;
-    private string checkText = "Newest";
-    private int commentPageCount = 1;
-    private int commnetFeedPagesize = 50;
-    private bool scrollToTop;
-    public bool isCommentDataLoaded = false;
+    //[Space]
+    //[Header("For Feed Comment")]
+    //public int feedIdTemp;
+    //private string checkText = "Newest";
+    //private int commentPageCount = 1;
+    //private int commnetFeedPagesize = 50;
+    //private bool scrollToTop;
+    //public bool isCommentDataLoaded = false;
     private int BFCount = 0;
     private int maxBfCount = 10;
+    //Coroutine requestGetAllUsersWithFeedsCoroutine;
+    public AllFollowingRoot adFrndFollowing;
     GameManager gameManager;
+    APIController apiController;
+    FeedUIController feedUIController;
+    OtherPlayerProfileData otherPlayerProfileData;
+    MyProfileDataManager myProfileDataManager;
     private void Awake()
     {
         if (Instance == null)
@@ -53,6 +59,23 @@ public class APIManager : MonoBehaviour
         userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
         userId = int.Parse(PlayerPrefs.GetString("UserName"));
         gameManager = GameManager.Instance;
+        if (apiController == null)
+        {
+            apiController = APIController.Instance;
+        }
+
+        if (feedUIController == null)
+        {
+            feedUIController = FeedUIController.Instance;
+        }
+        if (otherPlayerProfileData == null)
+        {
+            otherPlayerProfileData = OtherPlayerProfileData.Instance;
+        }
+        if (myProfileDataManager == null)
+        {
+            myProfileDataManager = MyProfileDataManager.Instance;
+        }
         //}
         //}
     }
@@ -82,28 +105,28 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        /*if (Application.internetReachability == NetworkReachability.NotReachable) //rik
-        {
-            if (File.Exists(Application.persistentDataPath + "/FeedData.json"))
-            {
-                LoadJson();
-            }
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    /*if (Application.internetReachability == NetworkReachability.NotReachable) //rik
+    //    {
+    //        if (File.Exists(Application.persistentDataPath + "/FeedData.json"))
+    //        {
+    //            LoadJson();
+    //        }
 
-            if (File.Exists(Application.persistentDataPath + "/FeedFollowingData.json"))
-            {
-                LoadJsonFollowingFeed();
-            }
-        }
-        else
-        {
-            //Debug.Log("dfdfsd");
-            RequestGetAllUsersWithFeeds(1, 20);
-            RequestGetFeedsByFollowingUser(1, 20);
-        }*/
-    }
+    //        if (File.Exists(Application.persistentDataPath + "/FeedFollowingData.json"))
+    //        {
+    //            LoadJsonFollowingFeed();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //Debug.Log("dfdfsd");
+    //        RequestGetAllUsersWithFeeds(1, 20);
+    //        RequestGetFeedsByFollowingUser(1, 20);
+    //    }*/
+    //}
 
     //public void OnFeedAPiCalling(string callingFrom = "")
     //{
@@ -130,7 +153,7 @@ public class APIManager : MonoBehaviour
     //        string json = r.ReadToEnd();
     //        //Debug.Log("json " + json);
     //        StartCoroutine(SaveAndLoadJson(json, 0, 1, ""));
-    //        //  FeedUIController.Instance.isDataLoad = true;
+    //        //  feedUIController.isDataLoad = true;
     //    }
     //}
 
@@ -141,75 +164,74 @@ public class APIManager : MonoBehaviour
     //        string json = r.ReadToEnd();
     //        //Debug.Log("json " + json);
     //        StartCoroutine(SaveAndLoadJsonFollowingFeed(json, 0, 1, ""));
-    //        //  FeedUIController.Instance.isDataLoad = true;
+    //        //  feedUIController.isDataLoad = true;
     //    }
     //}
 
     #region HotAPI..........   
-    Coroutine requestGetAllUsersWithFeedsCoroutine;
-    public void RequestGetAllUsersWithFeeds(int pageNum, int pageSize, string callingFrom = "")
-    {
-        if (requestGetAllUsersWithFeedsCoroutine != null)
-        {
-            StopCoroutine(requestGetAllUsersWithFeedsCoroutine);
-        }
-        // FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
-        requestGetAllUsersWithFeedsCoroutine = StartCoroutine(IERequestGetAllUsersWithFeeds(pageNum, pageSize, callingFrom));
-    }
-    public IEnumerator IERequestGetAllUsersWithFeeds(int pageNum, int pageSize, string callingFrom)
-    {
-        //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllUsersWithFeeds + "/" + pageNum + "/" + pageSize)))
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetHotFeeds + "/" + pageNum + "/" + pageSize)))
-        {
-            //Debug.Log(ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllUsersWithFeeds + "/" + pageNum + "/" + pageSize + "   :Token:" + userAuthorizeToken);
-            Debug.Log(ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetHotFeeds + "/" + pageNum + "/" + pageSize + "   :Token:" + userAuthorizeToken);
+    //public void RequestGetAllUsersWithFeeds(int pageNum, int pageSize, string callingFrom = "")
+    //{
+    //    if (requestGetAllUsersWithFeedsCoroutine != null)
+    //    {
+    //        StopCoroutine(requestGetAllUsersWithFeedsCoroutine);
+    //    }
+    //    // feedUIController.ApiLoaderScreen.SetActive(true);
+    //    requestGetAllUsersWithFeedsCoroutine = StartCoroutine(IERequestGetAllUsersWithFeeds(pageNum, pageSize, callingFrom));
+    //}
+    //public IEnumerator IERequestGetAllUsersWithFeeds(int pageNum, int pageSize, string callingFrom)
+    //{
+    //    //using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllUsersWithFeeds + "/" + pageNum + "/" + pageSize)))
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetHotFeeds + "/" + pageNum + "/" + pageSize)))
+    //    {
+    //        //Debug.Log(ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllUsersWithFeeds + "/" + pageNum + "/" + pageSize + "   :Token:" + userAuthorizeToken);
+    //        Debug.Log(ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetHotFeeds + "/" + pageNum + "/" + pageSize + "   :Token:" + userAuthorizeToken);
 
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            if (LoaderController.Instance != null)//main feed top loader start
-            {
-                LoaderController.Instance.isLoaderGetApiResponce = false;
-            }
+    //        if (LoaderController.Instance != null)//main feed top loader start
+    //        {
+    //            LoaderController.Instance.isLoaderGetApiResponce = false;
+    //        }
 
-            www.SendWebRequest();
+    //        www.SendWebRequest();
 
-            while (!www.isDone)
-            {
-                yield return null;
-            }
+    //        while (!www.isDone)
+    //        {
+    //            yield return null;
+    //        }
 
-            if (LoaderController.Instance != null)//main feed top loader stop
-            {
-                LoaderController.Instance.isLoaderGetApiResponce = true;
-            }
+    //        if (LoaderController.Instance != null)//main feed top loader stop
+    //        {
+    //            LoaderController.Instance.isLoaderGetApiResponce = true;
+    //        }
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                // OLD FEED UI
-                //if (FeedUIController.Instance.allFeedMessageTextList[0].gameObject.activeSelf)
-                //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                //}
-                //if (FeedUIController.Instance.allFeedMessageTextList[2].gameObject.activeSelf)
-                //{
-                //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
-                //}
-                // END OLD FEED UI
-            }
-            else
-            {
-                //Debug.Log("Form upload complete! IERequestGetAllUsersWithFeeds pageNum:" + pageNum + "   :pageSize:" + pageSize);
-                string data = www.downloadHandler.text;
-                //Debug.Log("IERequestGetAllUsersWithFeeds PageNum:" + pageNum + "    :PageSize:" + pageSize + "     :Data:" + data);
-                // FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            // OLD FEED UI
+    //            //if (feedUIController.allFeedMessageTextList[0].gameObject.activeSelf)
+    //            //{
+    //            //    feedUIController.AllFeedScreenMessageTextActive(true, 0, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+    //            //}
+    //            //if (feedUIController.allFeedMessageTextList[2].gameObject.activeSelf)
+    //            //{
+    //            //    feedUIController.AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+    //            //}
+    //            // END OLD FEED UI
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete! IERequestGetAllUsersWithFeeds pageNum:" + pageNum + "   :pageSize:" + pageSize);
+    //            string data = www.downloadHandler.text;
+    //            //Debug.Log("IERequestGetAllUsersWithFeeds PageNum:" + pageNum + "    :PageSize:" + pageSize + "     :Data:" + data);
+    //            // feedUIController.ApiLoaderScreen.SetActive(false);
 
-                //StartCoroutine(SaveAndLoadJson(data, 1, pageNum, callingFrom));
-                //LoaderController.Instance.isLoaderGetApiResponce = true;
-                //FeedUIController.Instance.allFeedCurrentpage += 1;
-            }
-        }
-    }
+    //            //StartCoroutine(SaveAndLoadJson(data, 1, pageNum, callingFrom));
+    //            //LoaderController.Instance.isLoaderGetApiResponce = true;
+    //            //feedUIController.allFeedCurrentpage += 1;
+    //        }
+    //    }
+    //}
     //Coroutine requestGetFeedsByFollowingUserCoroutine;
     //public void RequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom = "")
     //{
@@ -217,7 +239,7 @@ public class APIManager : MonoBehaviour
     //    {
     //        StopCoroutine(requestGetFeedsByFollowingUserCoroutine);
     //    }
-    //    //FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
+    //    //feedUIController.ApiLoaderScreen.SetActive(true);
     //    requestGetFeedsByFollowingUserCoroutine = StartCoroutine(IERequestGetFeedsByFollowingUser(pageNum, pageSize, callingFrom));
     //}
     //public IEnumerator IERequestGetFeedsByFollowingUser(int pageNum, int pageSize, string callingFrom)
@@ -249,9 +271,9 @@ public class APIManager : MonoBehaviour
     //            Debug.Log(www.error);
 
     //            // OLD FEED UI
-    //            //if (FeedUIController.Instance.allFeedMessageTextList[1].gameObject.activeSelf)
+    //            //if (feedUIController.allFeedMessageTextList[1].gameObject.activeSelf)
     //            //{
-    //            //    FeedUIController.Instance.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
+    //            //    feedUIController.AllFeedScreenMessageTextActive(true, 1, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));
     //            //}
     //            // END OLD FEED UI
     //        }
@@ -259,17 +281,17 @@ public class APIManager : MonoBehaviour
     //        {
     //            string data = www.downloadHandler.text;
     //            Debug.Log("Form upload complete! IERequestGetFeedsByFollowingUser pageNum:" + pageNum + "   :pageSize:" + pageSize + " :Data:" + data);
-    //            //FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //            //feedUIController.ApiLoaderScreen.SetActive(false);
     //            //  followingUserRoot = JsonConvert.DeserializeObject<FeedsByFollowingUserRoot>(data);
-    //            // APIController.Instance.OnGetAllFeedForFollowingTab();
+    //            // apiController.OnGetAllFeedForFollowingTab();
 
     //            StartCoroutine(SaveAndLoadJsonFollowingFeed(data, 1, pageNum, callingFrom));
     //            //LoaderController.Instance.isLoaderGetApiResponce = true;
-    //            //FeedUIController.Instance.followingUserCurrentpage += 1;
+    //            //feedUIController.followingUserCurrentpage += 1;
     //        }
     //    }
     //}
-    public string HotdataStr;
+    //public string HotdataStr;
     //public IEnumerator SaveAndLoadJson(string data, int caller, int pageNum, string callingFrom)
     //{
     //    var settings = new JsonSerializerSettings
@@ -283,9 +305,9 @@ public class APIManager : MonoBehaviour
     //    yield return new WaitForSeconds(.5f);
     //    for (int i = 0; i < hotFeedRoot.data.rows.Count; i++)
     //    {
-    //        if (!APIController.Instance.feedHotIdList.Contains(hotFeedRoot.data.rows[i].id))
+    //        if (!apiController.feedHotIdList.Contains(hotFeedRoot.data.rows[i].id))
     //        {
-    //            //APIController.Instance.feedHotIdList.Add(hotFeedRoot.data.rows[i].id);
+    //            //apiController.feedHotIdList.Add(hotFeedRoot.data.rows[i].id);
     //            allhotFeedRoot.data.rows.Add(hotFeedRoot.data.rows[i]);
     //        }
     //    }
@@ -329,14 +351,14 @@ public class APIManager : MonoBehaviour
     //    yield return new WaitForSeconds(0.1f);
 
     //    ///////////////////////////////////////////////
-    //    //APIController.Instance.AllUsersWithHotFeeds(callingFrom);
+    //    //apiController.AllUsersWithHotFeeds(callingFrom);
     //    //Debug.Log("Feed Load");
-    //    FeedUIController.Instance.myPostCurrentPage += 1;
-    //    RequestGetFeedsByUserId(userId, (FeedUIController.Instance.myPostCurrentPage), 10, "FeedPage");
+    //    feedUIController.myPostCurrentPage += 1;
+    //    RequestGetFeedsByUserId(userId, (feedUIController.myPostCurrentPage), 10, "FeedPage");
     //    yield return new WaitForSeconds(1f);
-    //   // MyProfileDataManager.Instance.AllFeedWithUserId((FeedUIController.Instance.myPostCurrentPage), FeedUIController.Instance.forYouFeedTabContainer);
-    //    //APIController.Instance.AllUserForYouFeeds(pageNum, callingFrom);
-    //    StartCoroutine(APIController.Instance.HotWaitToEnableDataLoadedBool(pageNum));
+    //   // myProfileDataManager.AllFeedWithUserId((feedUIController.myPostCurrentPage), feedUIController.forYouFeedTabContainer);
+    //    //apiController.AllUserForYouFeeds(pageNum, callingFrom);
+    //    StartCoroutine(apiController.HotWaitToEnableDataLoadedBool(pageNum));
     //    //Riken
     //    /* if (hotSaveRootList.Count != 0)
     //     {
@@ -356,50 +378,50 @@ public class APIManager : MonoBehaviour
     //{
     //    RequestGetFeedsByUserId(userId, (1), 10, "FeedPage");
     //    yield return new WaitForSeconds(1f);
-    //    MyProfileDataManager.Instance.AllFeedWithUserId((1), FeedUIController.Instance.forYouFeedTabContainer, true);
+    //    myProfileDataManager.AllFeedWithUserId((1), feedUIController.forYouFeedTabContainer, true);
     //    yield return new WaitForSeconds(.5f);
     //    APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
     //}
-    public void HotAndDiscoverSaveAndUpdateJson(int feedId, int index)
-    {
-        AllUserWithFeedRow allUserWithFeedRow = allUserRootList[index];
-        bool isFindSuccess = false;
-        //Debug.Log("HotAndDiscoverSaveAndUpdateJson:" + allUserWithFeedRow.id + "   :feedId:" + feedId);
-        if (allUserWithFeedRow.id == feedId)
-        {
-            isFindSuccess = true;
-        }
-        else
-        {
-            AllUserWithFeedRow allUserWithFeedRow1 = allUserRootList.Find((x) => x.id == feedId);
+    //public void HotAndDiscoverSaveAndUpdateJson(int feedId, int index)
+    //{
+    //    AllUserWithFeedRow allUserWithFeedRow = allUserRootList[index];
+    //    bool isFindSuccess = false;
+    //    //Debug.Log("HotAndDiscoverSaveAndUpdateJson:" + allUserWithFeedRow.id + "   :feedId:" + feedId);
+    //    if (allUserWithFeedRow.id == feedId)
+    //    {
+    //        isFindSuccess = true;
+    //    }
+    //    else
+    //    {
+    //        AllUserWithFeedRow allUserWithFeedRow1 = allUserRootList.Find((x) => x.id == feedId);
 
-            if (allUserWithFeedRow1 != null)
-            {
-                isFindSuccess = true;
-                allUserWithFeedRow = allUserWithFeedRow1;
-            }
-        }
+    //        if (allUserWithFeedRow1 != null)
+    //        {
+    //            isFindSuccess = true;
+    //            allUserWithFeedRow = allUserWithFeedRow1;
+    //        }
+    //    }
 
-        //Debug.Log("Find Success:" + isFindSuccess + "   :id:" + allUserWithFeedRow.id);
-        if (isFindSuccess)
-        {
-            if (hotSaveRootList.Contains(allUserWithFeedRow))
-            {
-                hotSaveRootList.Remove(allUserWithFeedRow);
+    //    //Debug.Log("Find Success:" + isFindSuccess + "   :id:" + allUserWithFeedRow.id);
+    //    if (isFindSuccess)
+    //    {
+    //        if (hotSaveRootList.Contains(allUserWithFeedRow))
+    //        {
+    //            hotSaveRootList.Remove(allUserWithFeedRow);
 
-                hotSavejsonList.data.rows = hotSaveRootList;
-                hotSavejsonList.success = root.success;
+    //            hotSavejsonList.data.rows = hotSaveRootList;
+    //            hotSavejsonList.success = root.success;
 
-                if (hotSaveRootList.Count != 0)
-                {
-                    string feedData = JsonUtility.ToJson(hotSavejsonList);
-                    File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
-                    //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
-                }
-            }
-            allUserRootList.Remove(allUserWithFeedRow);
-        }
-    }
+    //            if (hotSaveRootList.Count != 0)
+    //            {
+    //                string feedData = JsonUtility.ToJson(hotSavejsonList);
+    //                File.WriteAllText(Application.persistentDataPath + "/FeedData.json", feedData);
+    //                //Debug.Log("path " + Application.persistentDataPath + "/FeedData.json");
+    //            }
+    //        }
+    //        allUserRootList.Remove(allUserWithFeedRow);
+    //    }
+    //}
 
     //public IEnumerator SaveAndLoadJsonFollowingFeed(string data, int caller, int pageNum, string callingFrom)
     //{
@@ -445,7 +467,7 @@ public class APIManager : MonoBehaviour
     //    }
     //    yield return new WaitForSeconds(0.1f);
 
-    //    APIController.Instance.OnGetAllFeedForFollowingTab(pageNum, callingFrom);
+    //    apiController.OnGetAllFeedForFollowingTab(pageNum, callingFrom);
 
     //    if (followingUserTabSaveRootList.Count != 0)
     //    {
@@ -465,7 +487,7 @@ public class APIManager : MonoBehaviour
     //        //Debug.Log("matches" + matches.Count);
     //        for (int k = 0; k < matches.Count; k++)
     //        {
-    //            APIController.Instance.RemoveFollowingItemAndResetData(matches[k].Id);
+    //            apiController.RemoveFollowingItemAndResetData(matches[k].Id);
     //            allFollowingUserRootList.Remove(matches[k]);
     //            followingUserTabSaveRootList.Remove(matches[k]);
     //        }
@@ -484,12 +506,12 @@ public class APIManager : MonoBehaviour
     //        //Debug.Log("json  " + feedData);
     //    }
 
-    //    FeedUIController.Instance.unFollowedUserListForFollowingTab.Clear();//clear 
+    //    feedUIController.unFollowedUserListForFollowingTab.Clear();//clear 
 
     //    Resources.UnloadUnusedAssets();
     //    //Caching.ClearCache();
     //    //GC.Collect();
-    //    if (FeedUIController.Instance.followingFeedTabContainer.childCount <= 0)
+    //    if (feedUIController.followingFeedTabContainer.childCount <= 0)
     //    {
     //        //Debug.Log("RequestGetFeedsByFollowingUser.......");
     //        RequestGetFeedsByFollowingUser(1, 10);
@@ -527,14 +549,14 @@ public class APIManager : MonoBehaviour
         //    if (www.isNetworkError || www.isHttpError)
         //    {
         //        Debug.Log(www.error);
-        //        FeedUIController.Instance.ShowLoader(false);
+        //        feedUIController.ShowLoader(false);
 
         //        switch (callingFrom)
         //        {
         //            case "OtherPlayerFeed":
-        //                if (OtherPlayerProfileData.Instance != null && pageNum == 1)
+        //                if (otherPlayerProfileData != null && pageNum == 1)
         //                {
-        //                    OtherPlayerProfileData.Instance.RemoveAndCheckBackKey();
+        //                    otherPlayerProfileData.RemoveAndCheckBackKey();
         //                }
         //                break;
         //            default:
@@ -582,10 +604,10 @@ public class APIManager : MonoBehaviour
         //        switch (callingFrom)
         //        {
         //            case "OtherPlayerFeed":
-        //                OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum);
+        //                otherPlayerProfileData.AllFeedWithUserId(pageNum);
         //                break;
         //            case "MyProfile":
-        //                MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
+        //                myProfileDataManager.AllFeedWithUserId(pageNum);
         //                break;
         //            default:
         //                break;
@@ -610,14 +632,14 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                FeedUIController.Instance.ShowLoader(false);
+                feedUIController.ShowLoader(false);
 
                 switch (callingFrom)
                 {
                     case "OtherPlayerFeed":
-                        if (OtherPlayerProfileData.Instance != null && pageNum == 1)
+                        if (otherPlayerProfileData != null && pageNum == 1)
                         {
-                            OtherPlayerProfileData.Instance.RemoveAndCheckBackKey();
+                            otherPlayerProfileData.RemoveAndCheckBackKey();
                         }
                         break;
                     default:
@@ -638,12 +660,12 @@ public class APIManager : MonoBehaviour
                 AllTextPostByUserIdRoot jsonData = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
                 if (callingFrom == "MyProfile")
                 {
-                    MyProfileDataManager.Instance.totalPostText.text = jsonData.data.Count.ToString();
+                    myProfileDataManager.totalPostText.text = jsonData.data.Count.ToString();
                     allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
-                    OtherPlayerProfileData.Instance.textPlayerTottlePost.text = jsonData.data.Count.ToString();
+                    otherPlayerProfileData.textPlayerTottlePost.text = jsonData.data.Count.ToString();
                 }
                 //FeedResponse test = JsonConvert.DeserializeObject<FeedResponse>(data, settings);
                 if (allTextPostWithUserIdRoot.data.rows.Count >= jsonData.data.rows.Count)
@@ -681,10 +703,10 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherPlayerFeed":
-                        OtherPlayerProfileData.Instance.AllFeedWithUserId(pageNum, _callFromFindFriendWithName);
+                        otherPlayerProfileData.AllFeedWithUserId(pageNum, _callFromFindFriendWithName);
                         break;
                     case "MyProfile":
-                        MyProfileDataManager.Instance.AllFeedWithUserId(pageNum);
+                        myProfileDataManager.AllFeedWithUserId(pageNum);
                         break;
                     default:
                         break;
@@ -696,7 +718,7 @@ public class APIManager : MonoBehaviour
     ////this api is used to get tagged feed for user.......
     //public void RequesturlGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
     //{
-    //    //  FeedUIController.Instance.ApiLoaderScreen.SetActive(true);
+    //    //  feedUIController.ApiLoaderScreen.SetActive(true);
     //    StartCoroutine(IERequestGetTaggedFeedsByUserId(userId, pageNum, pageSize));
     //}
     //public IEnumerator IERequestGetTaggedFeedsByUserId(int userId, int pageNum, int pageSize)
@@ -715,10 +737,10 @@ public class APIManager : MonoBehaviour
     //        {
     //            //Debug.Log("Form upload complete!");
     //            string data = www.downloadHandler.text;
-    //            //  FeedUIController.Instance.ApiLoaderScreen.SetActive(false);
+    //            //  feedUIController.ApiLoaderScreen.SetActive(false);
     //            Debug.Log("taggedFeedsByUserIdRoot" + data);
     //            taggedFeedsByUserIdRoot = JsonConvert.DeserializeObject<TaggedFeedsByUserIdRoot>(data);
-    //            StartCoroutine(OtherPlayerProfileData.Instance.AllTagFeed());
+    //            StartCoroutine(otherPlayerProfileData.AllTagFeed());
     //            // Debug.Log(root.data.count);
     //        }
     //    }
@@ -762,7 +784,7 @@ public class APIManager : MonoBehaviour
                 switch (getFollowingFor)
                 {
                     case "Message":
-                        APIController.Instance.GetAllFollowingUser(pageNum);
+                        apiController.GetAllFollowingUser(pageNum);
                         break;
                     default:
                         break;
@@ -772,16 +794,18 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// For Add Friend Following
+    /// </summary>
     public void SetAdFrndFollowing()
     {
-        if (FeedUIController.Instance != null)
+        if (feedUIController != null)
         {
-            FeedUIController.Instance.ShowLoader(true);
+            feedUIController.ShowLoader(true);
         }
         StartCoroutine(IEAdFrndAllFollowing(1, 100));
     }
-
-    public AllFollowingRoot adFrndFollowing;
+   
     public IEnumerator IEAdFrndAllFollowing(int pageNum, int pageSize)
     {
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetAllFollowing + userId + "/" + pageNum + "/" + pageSize;
@@ -795,30 +819,30 @@ public class APIManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
             else
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
                 Debug.Log("GetAllFollowing Data" + data);
                 //adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
                 adFrndFollowing = JsonUtility.FromJson<AllFollowingRoot>(data);
-                APIController.Instance.SpwanAdFrndFollowing();
+                apiController.SpwanAdFrndFollowing();
                 GetBestFriend();
 
                 //switch (getFollowingFor)
                 //{
                 //    case "Message":
-                //        APIController.Instance.GetAllFollowingUser(pageNum);
+                //        apiController.GetAllFollowingUser(pageNum);
                 //        break;
                 //    default:
                 //        break;
@@ -855,7 +879,7 @@ public class APIManager : MonoBehaviour
     //            switch (callingFrom)
     //            {
     //                case "FeedStart":
-    //                    APIController.Instance.GetSetAllfollowerInTopStoryPanelUser();
+    //                    apiController.GetSetAllfollowerInTopStoryPanelUser();
     //                    break;
     //                default:
     //                    break;
@@ -883,9 +907,9 @@ public class APIManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
@@ -896,23 +920,23 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        FeedUIController.Instance.ShowLoader(false);
-                        //OtherPlayerProfileData.Instance.OnSetUserUi(true);
-                        OtherPlayerProfileData.Instance.OnFollowerIncreaseOrDecrease(true);//Inscrease follower count.......
-                        //OtherPlayerProfileData.Instance.DestroyUserFromHotTabAfterFollow();
+                        feedUIController.ShowLoader(false);
+                        //otherPlayerProfileData.OnSetUserUi(true);
+                        otherPlayerProfileData.OnFollowerIncreaseOrDecrease(true);//Inscrease follower count.......
+                        //otherPlayerProfileData.DestroyUserFromHotTabAfterFollow();
 
-                        FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
+                        feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
                         break;
                     case "Feed":
-                        if (FeedUIController.Instance != null)
+                        if (feedUIController != null)
                         {
                             StartCoroutine(WaitToFalseLoader());
                         }
 
-                        APIController.Instance.currentFeedRawItemController.OnFollowUserSuccessful();
-                        APIController.Instance.currentFeedRawItemController.isFollow = true;
-                        APIController.Instance.currentFeedRawItemController = null;
-                        //OtherPlayerProfileData.Instance.OnSetUserUi(APIController.Instance.currentFeedRawItemController.isFollow);                        
+                        apiController.currentFeedRawItemController.OnFollowUserSuccessful();
+                        apiController.currentFeedRawItemController.isFollow = true;
+                        apiController.currentFeedRawItemController = null;
+                        //otherPlayerProfileData.OnSetUserUi(apiController.currentFeedRawItemController.isFollow);                        
                         break;
                     default:
                         break;
@@ -939,9 +963,9 @@ public class APIManager : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
@@ -952,20 +976,20 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        FeedUIController.Instance.ShowLoader(false);
-                        //OtherPlayerProfileData.Instance.OnSetUserUi(false);
-                        OtherPlayerProfileData.Instance.OnFollowerIncreaseOrDecrease(false);//Descrease follower count.......
+                        feedUIController.ShowLoader(false);
+                        //otherPlayerProfileData.OnSetUserUi(false);
+                        otherPlayerProfileData.OnFollowerIncreaseOrDecrease(false);//Descrease follower count.......
 
-                        FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                        feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
                         break;
                     case "Feed":
-                        if (FeedUIController.Instance != null)
+                        if (feedUIController != null)
                         {
                             StartCoroutine(WaitToFalseLoader());
                         }
 
-                        APIController.Instance.currentFeedRawItemController.OnFollowUserSuccessful();
-                        //OtherPlayerProfileData.Instance.OnSetUserUi(APIController.Instance.currentFeedRawItemController.isFollow);                        
+                        apiController.currentFeedRawItemController.OnFollowUserSuccessful();
+                        //otherPlayerProfileData.OnSetUserUi(apiController.currentFeedRawItemController.isFollow);                        
                         break;
                     default:
                         break;
@@ -977,7 +1001,7 @@ public class APIManager : MonoBehaviour
     IEnumerator WaitToFalseLoader()
     {
         yield return new WaitForSeconds(1.7f);
-        FeedUIController.Instance.ShowLoader(false);
+        feedUIController.ShowLoader(false);
     }
 
     //this api is used to make favourite follower.......
@@ -1024,7 +1048,7 @@ public class APIManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            //FeedUIController.Instance.ShowLoader(false);
+            //feedUIController.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -1036,7 +1060,7 @@ public class APIManager : MonoBehaviour
                 Debug.Log("<color = red> GetAllFollowersFromProfile data:" + data + "</color>");
                 profileAllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
 
-                FeedUIController.Instance.ProfileGetAllFollower(pageNum);
+                feedUIController.ProfileGetAllFollower(pageNum);
             }
         }
     }
@@ -1054,7 +1078,7 @@ public class APIManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            //FeedUIController.Instance.ShowLoader(false);
+            //feedUIController.ShowLoader(false);
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -1065,16 +1089,16 @@ public class APIManager : MonoBehaviour
                 string data = www.downloadHandler.text;
                 Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
                 //profileAllFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
-                //FeedUIController.Instance.ProfileGetAllFollowing(pageNum);
+                //feedUIController.ProfileGetAllFollowing(pageNum);
                 profileAllFollowingRoot = JsonUtility.FromJson<AllFollowingRoot>(data);
-                APIController.Instance.SpwanProfileFollowing();
+                apiController.SpwanProfileFollowing();
             }
         }
     }
 
 
     //public void AdFrndFollowingFetch(){ 
-    //   foreach (Transform item in FeedUIController.Instance.AddFriendPanelFollowingCont.transform)
+    //   foreach (Transform item in feedUIController.AddFriendPanelFollowingCont.transform)
     //   {
     //        Destroy(item.gameObject);
     //   }
@@ -1089,7 +1113,7 @@ public class APIManager : MonoBehaviour
 
     //        yield return www.SendWebRequest();
 
-    //        //FeedUIController.Instance.ShowLoader(false);
+    //        //feedUIController.ShowLoader(false);
 
     //        if (www.isNetworkError || www.isHttpError)
     //        {
@@ -1100,7 +1124,7 @@ public class APIManager : MonoBehaviour
     //            string data = www.downloadHandler.text;
     //            Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
     //            AdFrndFollowingRoot  = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
-    //            FeedUIController.Instance.AdFrndGetAllFollowing(pageNum);
+    //            feedUIController.AdFrndGetAllFollowing(pageNum);
     //        }
     //    }
     //}
@@ -1186,15 +1210,15 @@ public class APIManager : MonoBehaviour
 
     //                if (bean.data.commentPost != null)
     //                {
-    //                    GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
+    //                    GameObject CommentObject = Instantiate(feedUIController.commentListItemPrefab, feedUIController.commentContentPanel.transform);
 
     //                    if (!checkText.Equals("Oldest"))
     //                    {
     //                        CommentObject.transform.SetAsFirstSibling();
-    //                        FeedUIController.Instance.commentContentPanel.transform.GetChild(1).SetAsFirstSibling();
+    //                        feedUIController.commentContentPanel.transform.GetChild(1).SetAsFirstSibling();
     //                    }
 
-    //                    //FeedUIController.Instance.CommentCount.text = bean.data.count.ToString();
+    //                    //feedUIController.CommentCount.text = bean.data.count.ToString();
 
     //                    CommentRow commentRow = new CommentRow();
     //                    commentRow.id = bean.data.commentPost.id;
@@ -1211,14 +1235,14 @@ public class APIManager : MonoBehaviour
 
     //                    if (checkText.Equals("Oldest"))
     //                    {
-    //                        FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 0f;
+    //                        feedUIController.commentScrollPosition.verticalNormalizedPosition = 0f;
     //                    }
     //                    else if (checkText.Equals("Newest"))
     //                    {
-    //                        FeedUIController.Instance.commentScrollPosition.verticalNormalizedPosition = 1f;
+    //                        feedUIController.commentScrollPosition.verticalNormalizedPosition = 1f;
     //                    }
 
-    //                    FeedUIController.Instance.CommentSuccessAfterUpdateRequireFeedResponse();
+    //                    feedUIController.CommentSuccessAfterUpdateRequireFeedResponse();
     //                }
     //            }
     //        }
@@ -1252,9 +1276,9 @@ public class APIManager : MonoBehaviour
 
     //public void resetObject()
     //{
-    //    if (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
+    //    if (feedUIController.commentContentPanel.transform.childCount > 1)
     //    {
-    //        foreach (Transform child in FeedUIController.Instance.commentContentPanel.transform)
+    //        foreach (Transform child in feedUIController.commentContentPanel.transform)
     //        {
     //            if (!child.transform.name.Equals("HeaderCommentCount"))
     //            {
@@ -1271,7 +1295,7 @@ public class APIManager : MonoBehaviour
     //    scrollToTop = false;
     //    checkText = text.ToString();
     //    // fitertextDropdown.text = text;
-    //    FeedUIController.Instance.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
+    //    feedUIController.commentFitertextDropdown.text = TextLocalization.GetLocaliseTextByKey(text);
 
     //    if (checkText.Equals("Oldest"))
     //    {
@@ -1294,7 +1318,7 @@ public class APIManager : MonoBehaviour
     //{
     //    if (!scrollToTop)
     //    {
-    //        while (FeedUIController.Instance.commentContentPanel.transform.childCount > 1)
+    //        while (feedUIController.commentContentPanel.transform.childCount > 1)
     //        {
     //            resetObject();
     //            yield return null;
@@ -1324,12 +1348,12 @@ public class APIManager : MonoBehaviour
     //            //if (!commentFeedList.Equals("") || !commentFeedList.Equals(null))
     //            if (commentFeedList.data != null)
     //            {
-    //                //FeedUIController.Instance.CommentCount.text = commentFeedList.data.count.ToString();
+    //                //feedUIController.CommentCount.text = commentFeedList.data.count.ToString();
     //                CommentCountTextSetup(commentFeedList.data.count);//set comment count on commet panel.......
 
     //                for (int i = 0; i < commentFeedList.data.rows.Count; i++)
     //                {
-    //                    GameObject CommentObject = Instantiate(FeedUIController.Instance.commentListItemPrefab, FeedUIController.Instance.commentContentPanel.transform);
+    //                    GameObject CommentObject = Instantiate(feedUIController.commentListItemPrefab, feedUIController.commentContentPanel.transform);
 
     //                    FeedCommentItemController feedCommentItemController = CommentObject.GetComponent<FeedCommentItemController>();
     //                    feedCommentItemController.SetupData(commentFeedList.data.rows[i]);
@@ -1345,43 +1369,43 @@ public class APIManager : MonoBehaviour
     //    }
     //}
 
-    Coroutine commentDataLoadedCoroutine;
-    IEnumerator waitToSetCommentDataLoaded()
-    {
-        yield return new WaitForSeconds(0.05f);
-        isCommentDataLoaded = true;//this is used to comment data loaded.......
-    }
+    //Coroutine commentDataLoadedCoroutine;
+    //IEnumerator waitToSetCommentDataLoaded()
+    //{
+    //    yield return new WaitForSeconds(0.05f);
+    //    isCommentDataLoaded = true;//this is used to comment data loaded.......
+    //}
 
     //this api is used to delete feed comment.......
-    public void RequestDeleteComment(string feed_commentID, string feed_feedId)
-    {
-        StartCoroutine(IERequestDeleteComment(feed_commentID, feed_feedId));
-    }
-    public IEnumerator IERequestDeleteComment(string feed_commentID, string feed_feedId)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("commentId", feed_commentID);
-        form.AddField("feedId", feed_feedId);
+    //public void RequestDeleteComment(string feed_commentID, string feed_feedId)
+    //{
+    //    StartCoroutine(IERequestDeleteComment(feed_commentID, feed_feedId));
+    //}
+    //public IEnumerator IERequestDeleteComment(string feed_commentID, string feed_feedId)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("commentId", feed_commentID);
+    //    form.AddField("feedId", feed_feedId);
 
-        using (UnityWebRequest www = UnityWebRequest.Delete((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteComment)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Delete((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteComment)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("DeleteComment data:" + data);
-                // root = JsonUtility.FromJson<AllCommentFeedRoot>(data);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("DeleteComment data:" + data);
+    //            // root = JsonUtility.FromJson<AllCommentFeedRoot>(data);
+    //        }
+    //    }
+    //}
 
     //public void CommentCountTextSetup(int count)
     //{
@@ -1389,11 +1413,11 @@ public class APIManager : MonoBehaviour
     //    //Debug.Log("Comment Count:" + count);
     //    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
     //    {
-    //        FeedUIController.Instance.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
+    //        feedUIController.CommentCount.text = TextLocalization.GetLocaliseTextByKey("Comments") + "<color=blue>" + count.ToString() + "</color>" + TextLocalization.GetLocaliseTextByKey("s");
     //    }
     //    else
     //    {
-    //        FeedUIController.Instance.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
+    //        feedUIController.CommentCount.text = "<color=blue>" + count.ToString() + "</color> " + TextLocalization.GetLocaliseTextByKey("Comments");
     //    }
     //}
     //End comment.......
@@ -1457,10 +1481,10 @@ public class APIManager : MonoBehaviour
     //        switch (callingFrom)
     //        {
     //            case "MyProfileCreateFeed":
-    //                if (FeedUIController.Instance != null)
+    //                if (feedUIController != null)
     //                {
-    //                    FeedUIController.Instance.ShowLoader(false);//false api loader.......
-    //                    FeedUIController.Instance.OnClickCreateFeedBackBtn(true);
+    //                    feedUIController.ShowLoader(false);//false api loader.......
+    //                    feedUIController.OnClickCreateFeedBackBtn(true);
     //                }
     //                break;
     //            case "RoomCreateFeed":
@@ -1489,9 +1513,9 @@ public class APIManager : MonoBehaviour
     //            switch (callingFrom)
     //            {
     //                case "MyProfileCreateFeed":
-    //                    if (MyProfileDataManager.Instance != null)
+    //                    if (myProfileDataManager != null)
     //                    {
-    //                        MyProfileDataManager.Instance.ProfileTabButtonClick();
+    //                        myProfileDataManager.ProfileTabButtonClick();
     //                        Invoke(nameof(LoadMyPost), 0);
     //                        //RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
     //                    }
@@ -1529,7 +1553,7 @@ public class APIManager : MonoBehaviour
     //        yield return www.SendWebRequest();
 
     //        SNSNotificationManager.Instance.DeleteLoaderShow(false);//delete loader disable
-    //        //FeedUIController.Instance.ShowLoader(false);
+    //        //feedUIController.ShowLoader(false);
 
     //        if (www.isNetworkError || www.isHttpError)
     //        {
@@ -1543,7 +1567,7 @@ public class APIManager : MonoBehaviour
     //            switch (callingFrom)
     //            {
     //                case "DeleteFeed":
-    //                    FeedUIController.Instance.OnSuccessDeleteFeed();
+    //                    feedUIController.OnSuccessDeleteFeed();
     //                    break;
     //                default:
     //                    break;
@@ -1574,7 +1598,7 @@ public class APIManager : MonoBehaviour
 
     //        yield return www.SendWebRequest();
 
-    //        FeedUIController.Instance.ShowLoader(false);
+    //        feedUIController.ShowLoader(false);
 
     //        if (www.isNetworkError || www.isHttpError)
     //        {
@@ -1586,7 +1610,7 @@ public class APIManager : MonoBehaviour
     //            //Debug.Log("feed update complete!");
     //            string data = www.downloadHandler.text;
     //            // Debug.Log("Edit Feed data:" + data);
-    //            FeedUIController.Instance.OnSuccessFeedEdit();
+    //            feedUIController.OnSuccessFeedEdit();
     //        }
     //    }
     //}
@@ -1632,11 +1656,11 @@ public class APIManager : MonoBehaviour
     //            //if (feedLikeDisLikeRoot.data == null)
     //            if (feedLikeDisLikeRoot.msg.Equals("Feed disLike successfully"))
     //            {
-    //                FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(false, feedLikeDisLikeRoot.data.likeCount);
+    //                feedUIController.LikeDislikeSuccessAfterUpdateRequireFeedResponse(false, feedLikeDisLikeRoot.data.likeCount);
     //            }
     //            else
     //            {
-    //                FeedUIController.Instance.LikeDislikeSuccessAfterUpdateRequireFeedResponse(true, feedLikeDisLikeRoot.data.likeCount);
+    //                feedUIController.LikeDislikeSuccessAfterUpdateRequireFeedResponse(true, feedLikeDisLikeRoot.data.likeCount);
     //            }
     //        }
     //    }
@@ -1694,7 +1718,7 @@ public class APIManager : MonoBehaviour
                 string data = www.downloadHandler.text;
                 Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.FeedGetAllSearchUser();
+                apiController.FeedGetAllSearchUser();
             }
         }
     }
@@ -1727,9 +1751,9 @@ public class APIManager : MonoBehaviour
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 if (searchUserRoot.msg.Contains("yourself"))
                 {
-                    if (FeedUIController.Instance)
+                    if (feedUIController)
                     {
-                        FeedUIController.Instance.bottomTabManager.OnClickProfileButton();
+                        feedUIController.bottomTabManager.OnClickProfileButton();
                     }
                 }
             }
@@ -1853,7 +1877,7 @@ public class APIManager : MonoBehaviour
                 string data = www.downloadHandler.text;
                 Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.FeedGetAllSearchUserForProfile();
+                apiController.FeedGetAllSearchUserForProfile();
             }
         }
     }
@@ -1863,9 +1887,9 @@ public class APIManager : MonoBehaviour
 
     public void SetHotFriend()
     {
-        if (FeedUIController.Instance != null)
+        if (feedUIController != null)
         {
-            FeedUIController.Instance.ShowLoader(true);
+            feedUIController.ShowLoader(true);
         }
         StartCoroutine(IERequestHotFirends());
     }
@@ -1879,23 +1903,23 @@ public class APIManager : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
             else
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Hot Friends Data" + data);
                 hotUsersRoot = JsonUtility.FromJson<HotUsersRoot>(data);
-                APIController.Instance.ShowHotFirend(hotUsersRoot);
-                //APIController.Instance.FeedGetAllSearchUser();
+                apiController.ShowHotFirend(hotUsersRoot);
+                //apiController.FeedGetAllSearchUser();
             }
         }
     }
@@ -1903,9 +1927,9 @@ public class APIManager : MonoBehaviour
 
     public void SetRecommendedFriend()
     {
-        if (FeedUIController.Instance != null)
+        if (feedUIController != null)
         {
-            FeedUIController.Instance.ShowLoader(true);
+            feedUIController.ShowLoader(true);
         }
         StartCoroutine(IERequestRecommendedFirends());
     }
@@ -1919,23 +1943,23 @@ public class APIManager : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
             else
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Recommended Friends Data" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
-                APIController.Instance.ShowRecommendedFriends(searchUserRoot);
-                //APIController.Instance.FeedGetAllSearchUser();
+                apiController.ShowRecommendedFriends(searchUserRoot);
+                //apiController.FeedGetAllSearchUser();
             }
         }
     }
@@ -1943,9 +1967,9 @@ public class APIManager : MonoBehaviour
 
     public void SetMutalFrndList()
     {
-        if (FeedUIController.Instance != null)
+        if (feedUIController != null)
         {
-            FeedUIController.Instance.ShowLoader(true);
+            feedUIController.ShowLoader(true);
         }
         StartCoroutine(IERequestSetMutalFrndList());
     }
@@ -1959,29 +1983,29 @@ public class APIManager : MonoBehaviour
             yield return www.SendWebRequest();
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 Debug.Log(www.error);
             }
             else
             {
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ MutalFrnd Data" + data);
                 SearchUserRoot mutalFrnd = JsonUtility.FromJson<SearchUserRoot>(data);
-                FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(false);
+                feedUIController.AddFrndNoMutalFrnd.SetActive(false);
                 if (mutalFrnd.data.count > 0)
                 {
-                    APIController.Instance.ShowMutalFrnds(mutalFrnd);
+                    apiController.ShowMutalFrnds(mutalFrnd);
                 }
                 else
                 { // to Show no mutal Frnd
-                    FeedUIController.Instance.AddFrndNoMutalFrnd.SetActive(true);
+                    feedUIController.AddFrndNoMutalFrnd.SetActive(true);
                 }
             }
         }
@@ -2015,60 +2039,58 @@ public class APIManager : MonoBehaviour
 
     public void AddBestFriend(int userId, GameObject FrndBtn)
     {
+        var footerCanvasGroup = gameManager.UiManager._footerCan.GetComponent<CanvasGroup>();
+
         if (BFCount < maxBfCount)
         {
             StartCoroutine(IEAddBestFriend(userId, FrndBtn));
         }
         else
         {
-            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0;
-            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
-            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            FeedUIController.Instance.BestFriendFull.SetActive(true);
+            footerCanvasGroup.alpha = 0;
+            footerCanvasGroup.interactable = false;
+            footerCanvasGroup.blocksRaycasts = false;
+            feedUIController.BestFriendFull.SetActive(true);
             //SNSNotificationManager.Instance.ShowNotificationMsg("Best Friend limit is reached");
         }
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn)
     {
-        //if (FeedUIController.Instance != null)
+        //if (feedUIController != null)
         //{
-        //    FeedUIController.Instance.ShowLoader(true);
+        //    feedUIController.ShowLoader(true);
         //}
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Post(uri, "POST"))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
             yield return www.SendWebRequest();
+
+            feedUIController?.ShowLoader(false);
+
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
                 Debug.Log(www.error);
             }
             else
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
                 string data = www.downloadHandler.text;
                 Debug.Log("~~~~~~ Add Best Friend : " + data);
                 AdCloseFrndRoot AdCloseFrnds = JsonUtility.FromJson<AdCloseFrndRoot>(data);
                 if (AdCloseFrnds.success)
                 {
-                    //BFCount++;
                     GetBestFriend();
-                    if (FrndBtn.GetComponent<FollowingItemController>())
-                    {
-                        FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(true);
-                    }
-                    else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
-                    {
-                        FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(true);
-                    }
+                    var followingController = FrndBtn.GetComponent<FollowingItemController>();
+                    var findFriendController = FrndBtn.GetComponent<FindFriendWithNameItem>();
 
+                    if (followingController != null)
+                    {
+                        followingController.UpdateBfBtn(true);
+                    }
+                    else if (findFriendController != null)
+                    {
+                        findFriendController.UpdateBfBtn(true);
+                    }
                 }
             }
         }
@@ -2076,47 +2098,39 @@ public class APIManager : MonoBehaviour
 
     public void RemoveBestFriend(int userId, GameObject FrndBtn)
     {
-        //if (FeedUIController.Instance != null)
+        //if (feedUIController != null)
         //{
-        //    FeedUIController.Instance.ShowLoader(true);
+        //    feedUIController.ShowLoader(true);
         //}
         StartCoroutine(IERemoveBestFriend(userId, FrndBtn));
     }
     IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn)
     {
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveBestFrnd + userId.ToString();
-        //WWWForm form = new WWWForm();
-        //form.AddField("friendId", userId.ToString());
         using (UnityWebRequest www = UnityWebRequest.Delete(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
             yield return www.SendWebRequest();
+
+            feedUIController?.ShowLoader(false);
+
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
                 Debug.Log(www.error);
             }
             else
             {
-                //if (BFCount<0)
-                //{
-                //   BFCount--;
-                //}
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
                 GetBestFriend();
-                if (FrndBtn.GetComponent<FollowingItemController>())
+                var followingController = FrndBtn.GetComponent<FollowingItemController>();
+                var findFriendController = FrndBtn.GetComponent<FindFriendWithNameItem>();
+
+                if (followingController != null)
                 {
-                    FrndBtn.GetComponent<FollowingItemController>().UpdateBfBtn(false);
+                    followingController.UpdateBfBtn(false);
                 }
-                else if (FrndBtn.GetComponent<FindFriendWithNameItem>())
+                else if (findFriendController != null)
                 {
-                    FrndBtn.GetComponent<FindFriendWithNameItem>().UpdateBfBtn(false);
+                    findFriendController.UpdateBfBtn(false);
                 }
             }
         }
@@ -2157,7 +2171,7 @@ public class APIManager : MonoBehaviour
                 if (msg == "This name is already taken by other user.")
                 {
                     //Debug.Log("Username already exists");
-                    MyProfileDataManager.Instance.ShowEditProfileNameErrorMessage("Username already exists");
+                    myProfileDataManager.ShowEditProfileNameErrorMessage("Username already exists");
                 }
                 else
                 {
@@ -2193,13 +2207,13 @@ public class APIManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("IERequestGetUserDetails error:" + www.error);
-                if (FeedUIController.Instance != null)
+                if (feedUIController != null)
                 {
-                    FeedUIController.Instance.ShowLoader(false);
+                    feedUIController.ShowLoader(false);
                     switch (callingFrom)
                     {
                         case "EditProfileAvatar":
-                            MyProfileDataManager.Instance.EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
+                            myProfileDataManager.EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
                             break;
                         default:
                             break;
@@ -2218,17 +2232,17 @@ public class APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "myProfile":
-                        MyProfileDataManager.Instance.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......                        
+                        myProfileDataManager.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......                        
                         break;
                     case "EditProfileAvatar":
-                        MyProfileDataManager.Instance.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......
+                        myProfileDataManager.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......
                         break;
                     case "messageScreen":
                         MessageController.Instance.GetSuccessUserDetails(myProfileDataRoot.data);
                         break;
                     case "MyAccount":
-                        MyProfileDataManager.Instance.myProfileData = myProfileDataRoot.data;
-                        FeedUIController.Instance.SNSSettingController.SetUpPersonalInformationScreen();
+                        myProfileDataManager.myProfileData = myProfileDataRoot.data;
+                        feedUIController.SNSSettingController.SetUpPersonalInformationScreen();
                         break;
                     default:
                         break;
@@ -2286,7 +2300,7 @@ public class APIManager : MonoBehaviour
                 {
                     case "EditProfileAvatar":
                         RequestGetUserDetails(callingFrom);
-                        MyProfileDataManager.Instance.AfterUpdateAvatarSetTempSprite();
+                        myProfileDataManager.AfterUpdateAvatarSetTempSprite();
                         break;
                     default:
                         break;
@@ -2393,12 +2407,12 @@ public class APIManager : MonoBehaviour
                 Debug.Log("<color=red> ------Edit API Error " + www.error + www.downloadHandler.text + "</color>");
                 if (test.msg.Contains("Username"))
                 {
-                    MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                    MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The username must include letters");
+                    myProfileDataManager.isEditProfileNameAlreadyExists = true;
+                    myProfileDataManager.ShowEditProfileUniqueNameErrorMessage("The username must include letters");
                 }
                 //Jugar for mainnet issue as API is not deployed yet on mainnet
-                //MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                //MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
+                //myProfileDataManager.isEditProfileNameAlreadyExists = true;
+                //myProfileDataManager.ShowEditProfileUniqueNameErrorMessage("The User Name field should be Unique and not empty");
                 //Debug.Log("data" + form);
             }
             else
@@ -2411,8 +2425,8 @@ public class APIManager : MonoBehaviour
                 {
                     if (test.msg.Contains("Username"))
                     {
-                        MyProfileDataManager.Instance.isEditProfileNameAlreadyExists = true;
-                        MyProfileDataManager.Instance.ShowEditProfileUniqueNameErrorMessage("Username already taken");
+                        myProfileDataManager.isEditProfileNameAlreadyExists = true;
+                        myProfileDataManager.ShowEditProfileUniqueNameErrorMessage("Username already taken");
                     }
                 }
                 Debug.Log("<color=red> UpdateUserProfile data:" + www.downloadHandler.text + "</color>");
@@ -2485,7 +2499,7 @@ public class APIManager : MonoBehaviour
                 };
                 allChatGetConversationRoot = JsonConvert.DeserializeObject<ChatGetConversationRoot>(data, settings);
 
-                APIController.Instance.GetAllConversation();
+                apiController.GetAllConversation();
                 // Debug.Log(root.data.count);
             }
         }
@@ -2589,7 +2603,7 @@ public class APIManager : MonoBehaviour
                 };
                 allChatMessagesRoot = JsonConvert.DeserializeObject<ChatGetMessagesRoot>(data, settings);
                 //allChatMessagesRoot.data.rows.Reverse();
-                APIController.Instance.GetAllChat(message_pageNumber, "");
+                apiController.GetAllChat(message_pageNumber, "");
                 switch (callingFrom)
                 {
                     case "Conversation":
@@ -2654,7 +2668,7 @@ public class APIManager : MonoBehaviour
                             {
                                 Destroy(item.gameObject);
                             }
-                            APIController.Instance.SetChatMember();
+                            apiController.SetChatMember();
                         }
                         else if (index == 1)
                         {
@@ -2677,7 +2691,7 @@ public class APIManager : MonoBehaviour
                 AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data, settings);
                 //AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
 
-                APIController.Instance.GetAllAttachments(index);
+                apiController.GetAllAttachments(index);
                 // Debug.Log(root.data.count);
             }
         }
@@ -2725,7 +2739,7 @@ public class APIManager : MonoBehaviour
                 // RequestChatGetConversation();
                 // RequestChatGetMessages(1, 50, 0,ChatCreateGroupRoot.data.id);
                 // MessageController.Instance.typeMessageText.text = "";
-                // APIController.Instance.GetAllChat();
+                // apiController.GetAllChat();
                 // Debug.Log(root.data.count);
             }
         }
@@ -2944,7 +2958,7 @@ public class APIManager : MonoBehaviour
                         MessageController.Instance.DeleteConversationWithLeaveGroupApiResponseSuccess(groupId);
                         break;
                     case "DetailsScreen":
-                        APIController.Instance.LeaveTheChatCallBack(groupId);
+                        apiController.LeaveTheChatCallBack(groupId);
                         break;
                     default:
                         break;
