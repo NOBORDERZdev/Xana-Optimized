@@ -55,7 +55,7 @@ public class PlayerPostBubbleHandler : MonoBehaviour
 
     private IEnumerator ArrangeBubbleTxt(TMP_Text tmpText)
     {
-        ContentSizeFitter contentSizeFitter = tmpText.transform.parent.GetComponent<ContentSizeFitter>();
+        ContentSizeFitter contentSizeFitter = tmpText.transform.parent.parent.GetComponent<ContentSizeFitter>();
         contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         yield return new WaitForEndOfFrame();
 
@@ -67,13 +67,13 @@ public class PlayerPostBubbleHandler : MonoBehaviour
             tmpText.ForceMeshUpdate();
 
             var preferredWidth = tmpText.GetPreferredValues().x;
-            if (preferredWidth > 134)
+            if (preferredWidth > 260)
             {
                 yield return new WaitForEndOfFrame();
                 contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
                 yield return new WaitForEndOfFrame();
                 contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(135f, contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+                    new Vector2(300f, contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta.y);
 
                 tmpText.text = str;
                 yield break;
