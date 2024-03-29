@@ -101,6 +101,8 @@ public class AvatarController : MonoBehaviour
         {
             xanaConstants = XanaConstants.xanaConstants;
         }
+        if(addressableDownloader==null)
+            addressableDownloader = AddressableDownloader.Instance;
         if (xanaConstants != null)
         {
             if (!sceneName.Contains("Main")) // call for spaces only
