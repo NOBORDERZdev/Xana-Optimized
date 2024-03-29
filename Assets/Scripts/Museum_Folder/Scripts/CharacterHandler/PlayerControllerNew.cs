@@ -1573,6 +1573,8 @@ public class PlayerControllerNew : MonoBehaviour
 
     void AnimationBehaviourNinjaMode()
     {
+        if (!_IsGrounded || animator.GetBool("IsFalling")) return;
+
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.E))
             attackwithSword = true;
