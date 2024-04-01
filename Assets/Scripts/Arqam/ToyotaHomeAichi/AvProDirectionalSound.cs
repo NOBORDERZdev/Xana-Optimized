@@ -35,7 +35,7 @@ public class AvProDirectionalSound : MonoBehaviour
         updateDelay = new WaitForSeconds(updateInterval);
     }
 
-    private void Mute_UnMute_Sound(bool flag)
+    private void Mute_UnMute_Sound(bool flag, string roomName)
     {
         audioSource.mute = flag;
         if (flag)
