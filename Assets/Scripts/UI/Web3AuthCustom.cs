@@ -14,7 +14,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     [Header("Web3Auth Project settings")]
     private string redirectURI = "web3auth://com.nbi.xana/auth";
     private string ClientId;
-    //private string rpcURL = "https://rpc.ankr.com/eth";
     private string loginVerifier;
     private string loginSubVerifier;
     private string passwordLessClientId;
@@ -103,8 +102,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         privateKey = response.privKey;
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
-        Debug.Log("Signature :" + mysignature1);
-        Debug.Log("Public Address :" + publicAdress);
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));
         StartCoroutine(LoginExternalWallet());
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
@@ -151,13 +148,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
         }
 
-
     }
-
-
-
-      
-
     private void OnDestroy()
     {
         logout();
@@ -191,8 +182,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         var signature2 = signer.EncodeUTF8AndSign(msg2, new EthECKey(privateKey));
         mysignature1= signature1;
         mysignature2 = signature2;
-        Debug.Log("My Signature1:"+ signature1.ToString());
-        Debug.Log("My Signature2:" + signature2.ToString());
         updateConsole("Signature 1" + signature1.ToString());
         updateConsole("Signature 2" + signature2.ToString());
         return signature1;
