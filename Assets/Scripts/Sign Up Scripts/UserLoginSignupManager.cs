@@ -824,6 +824,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 
                 Debug.Log("Email Signup");
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
+                PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
             }));
         }
 
