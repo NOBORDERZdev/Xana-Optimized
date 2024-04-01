@@ -94,7 +94,7 @@ public class FriendHomeManager : MonoBehaviour
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
-            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
+            CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
         FriendSpawn.id = friend.id;
         FriendSpawn.friendObj = CreatedFriend;
         FriendSpawn.friendNameObj = CreatedNameTag;
@@ -182,7 +182,7 @@ public class FriendHomeManager : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(data.text_post) && !data.text_post.Equals("null"))
                 {
-                    frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
+                    frds.friendPostBubbleObj.transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = data.text_post;
                     frds.friendPostBubbleObj.transform.GetChild(0).gameObject.SetActive(true);
                 }
 
