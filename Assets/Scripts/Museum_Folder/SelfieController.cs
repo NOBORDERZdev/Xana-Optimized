@@ -581,8 +581,8 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture.targetTexture = null;
             screenShotCameraCapture.transform.GetChild(0).GetComponent<Camera>().targetTexture = null;
         }
-       
-        newRenderTexture.Release();
+        if(newRenderTexture)
+            newRenderTexture.Release();
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }
