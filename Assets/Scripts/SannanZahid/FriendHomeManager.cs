@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using static StoreManager;
 
 public class FriendHomeManager : MonoBehaviour
 {
-    public Transform FriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
+    public Transform FriendAvatarPrefab, maleFriendAvatarPrefab, femaleFriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
@@ -74,7 +75,13 @@ public class FriendHomeManager : MonoBehaviour
     IEnumerator CreateFriend(FriendsDetail friend)
     {
         FriendSpawnData FriendSpawn = new FriendSpawnData();
-        Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
+        Transform CreatedFriend;
+        if (friend.userOccupiedAssets[0].json.gender == "Male")
+            CreatedFriend = Instantiate(maleFriendAvatarPrefab, maleFriendAvatarPrefab.parent).transform;
+        else
+            CreatedFriend = Instantiate(femaleFriendAvatarPrefab, femaleFriendAvatarPrefab.parent).transform;
+
+        //Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
         yield return null; // Wait for the next frame to continue execution
 
         Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
@@ -90,7 +97,7 @@ public class FriendHomeManager : MonoBehaviour
         }
         else
         {
-            int _rand = UnityEngine.Random.Range(0, 13);
+            int _rand = UnityEngine.Random.Range(0, 7);
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,

@@ -71,7 +71,7 @@ public class CharacterBodyParts : MonoBehaviour
     public Color PresetGredientColor;
     //public List<BoneDataContainer> DefaultBones = new List<BoneDataContainer>();
     public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
-    private Material characterHeadMat, characterBodyMat;
+    public Material characterHeadMat, characterBodyMat;
 
 
     public AvatarController avatarController;
@@ -81,11 +81,12 @@ public class CharacterBodyParts : MonoBehaviour
     public AvatarMeshes femaleAvatarMeshes;
     public SkinnedMeshRenderer boxerBody;
     public SkinnedMeshRenderer boxerHead;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer body;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer head;
 
+    public CharacterHandler ref_characterHandler;
     [Serializable]
     public class AvatarMeshes
     {
@@ -148,8 +149,10 @@ public class CharacterBodyParts : MonoBehaviour
     {
         blend = GameManager.Instance.BlendShapeImporter;
         //avatarController = GetComponent<AvatarController>();
-        head = maleAvatarMeshes.avatar_head;
-        body = maleAvatarMeshes.avatar_body;
+        //head = ref_characterHandler.avatarData.avatar_face;
+        //body = ref_characterHandler.avatarData.avatar_body;
+        //head = maleAvatarMeshes.avatar_head;
+        //body = maleAvatarMeshes.avatar_body;
         characterHeadMat = head.materials[2];
         characterBodyMat = body.materials[0];
         // To remove old character customization
@@ -157,42 +160,45 @@ public class CharacterBodyParts : MonoBehaviour
     }
 
 
-    public void SetAvatarByGender(string _gender)
-    {
+    //public void SetAvatarByGender(string _gender)
+    //{
 
-        if (_gender == AvatarGender.Male.ToString())
-        {
-            avatarController.avatarGender = AvatarGender.Male;
-            maleAvatarMeshes.avatar_parent.SetActive(true);
-            femaleAvatarMeshes.avatar_parent.SetActive(false);
-            body = maleAvatarMeshes.avatar_body;
-            head = maleAvatarMeshes.avatar_head;
-        }
-        else if (_gender == AvatarGender.Female.ToString())
-        {
-            avatarController.avatarGender = AvatarGender.Female;
-            maleAvatarMeshes.avatar_parent.SetActive(false);
-            femaleAvatarMeshes.avatar_parent.SetActive(true);
-            body = femaleAvatarMeshes.avatar_body;
-            head = femaleAvatarMeshes.avatar_head;
-        }
-
-        if (XanaConstants.xanaConstants.isNFTEquiped)
-        {
-            body = boxerBody;
-            head = boxerHead;
-        }
-    }
+    //    if (_gender == AvatarGender.Male.ToString())
+    //    {
+    //        avatarController.avatarGender = AvatarGender.Male;
+    //        //maleAvatarMeshes.avatar_parent.SetActive(true);
+    //        //femaleAvatarMeshes.avatar_parent.SetActive(false);
+    //        //body = maleAvatarMeshes.avatar_body;
+    //        //head = maleAvatarMeshes.avatar_head;
+    //    }
+    //    else if (_gender == AvatarGender.Female.ToString())
+    //    {
+    //        avatarController.avatarGender = AvatarGender.Female;
+    //        //maleAvatarMeshes.avatar_parent.SetActive(false);
+    //        //femaleAvatarMeshes.avatar_parent.SetActive(true);
+    //        //body = femaleAvatarMeshes.avatar_body;
+    //        //head = femaleAvatarMeshes.avatar_head;
+    //    }
+    //    head = ref_characterHandler.avatarData.avatar_face;
+    //    body = ref_characterHandler.avatarData.avatar_body;
+    //    if (XanaConstants.xanaConstants.isNFTEquiped)
+    //    {
+    //        body = boxerBody;
+    //        head = boxerHead;
+    //    }
+    //}
 
     //Set Texture For Shirt
     public void TextureForShirt(Texture texture)
     {
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(shirt_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
+        else
+            ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Male)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Female)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
 
         //Body.materials[0].SetTexture(shirt_TextureName, texture);
     }
@@ -203,10 +209,12 @@ public class CharacterBodyParts : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Pent_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
+        else
+            ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Male)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Female)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
         //Body.materials[0].SetTexture(Pent_TextureName, texture);
     }
 
@@ -214,10 +222,12 @@ public class CharacterBodyParts : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.isNFTEquiped)
             body.materials[0].SetTexture(Shoes_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
+        else
+            ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Male)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
+        //else if (avatarController.avatarGender == AvatarGender.Female)
+        //    ref_characterHandler.avatarData.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
 
         //Body.materials[0].SetTexture(Shoes_TextureName, texture);
     }
@@ -292,36 +302,50 @@ public class CharacterBodyParts : MonoBehaviour
         //}
         //else
         //{
-        if (_gender == "Female")
+        CharacterHandler.AvatarData avatarData = ref_characterHandler.avatarData;
+        Body = avatarData.avatar_body;
+        HeadMeshComponent = avatarData.avatar_face;
+        Body.materials[0].SetTexture(Shoes_TextureName, null);
+        if (ApplyClothMask)
         {
-            Body = femaleAvatarMeshes.avatar_body;
-            HeadMeshComponent = femaleAvatarMeshes.avatar_head;
-            Body.materials[0].SetTexture(Shoes_TextureName, null);
-            if (ApplyClothMask)
-            {
-                if (femaleAvatarMeshes.Pent_Texture != null)
-                    Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
-                if (femaleAvatarMeshes.Shirt_Texture != null)
-                    Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
-                if (femaleAvatarMeshes.Shoe_Texture != null)
-                    Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
-            }
+            if (avatarData.DPent_Texture != null)
+                Body.materials[0].SetTexture(Pent_TextureName, avatarData.DPent_Texture);
+            if (femaleAvatarMeshes.Shirt_Texture != null)
+                Body.materials[0].SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
+            if (femaleAvatarMeshes.Shoe_Texture != null)
+                Body.materials[0].SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
         }
-        else
-        {
-            Body = maleAvatarMeshes.avatar_body;
-            HeadMeshComponent = maleAvatarMeshes.avatar_head;
-            Body.materials[0].SetTexture(Shoes_TextureName, null);
-            if (ApplyClothMask)
-            {
-                if (maleAvatarMeshes.Pent_Texture != null)
-                    Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
-                if (maleAvatarMeshes.Shirt_Texture != null)
-                    Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
-                if (maleAvatarMeshes.Shoe_Texture != null)
-                    Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
-            }
-        }
+
+        //if (_gender == "Female")
+        //{
+        //    Body = femaleAvatarMeshes.avatar_body;
+        //    HeadMeshComponent = femaleAvatarMeshes.avatar_head;
+        //    Body.materials[0].SetTexture(Shoes_TextureName, null);
+        //    if (ApplyClothMask)
+        //    {
+        //        if (femaleAvatarMeshes.Pent_Texture != null)
+        //            Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
+        //        if (femaleAvatarMeshes.Shirt_Texture != null)
+        //            Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
+        //        if (femaleAvatarMeshes.Shoe_Texture != null)
+        //            Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
+        //    }
+        //}
+        //else
+        //{
+        //    Body = maleAvatarMeshes.avatar_body;
+        //    HeadMeshComponent = maleAvatarMeshes.avatar_head;
+        //    Body.materials[0].SetTexture(Shoes_TextureName, null);
+        //    if (ApplyClothMask)
+        //    {
+        //        if (maleAvatarMeshes.Pent_Texture != null)
+        //            Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
+        //        if (maleAvatarMeshes.Shirt_Texture != null)
+        //            Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
+        //        if (maleAvatarMeshes.Shoe_Texture != null)
+        //            Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
+        //    }
+        //}
         //}
 
         //Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
@@ -1758,16 +1782,18 @@ public class CharacterBodyParts : MonoBehaviour
                 applyOn.GetComponent<CharacterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharacterBodyParts>().defaultEyebrow, applyOn);
                 break;
             case CurrentTextureType.Skin:
-                if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
-                else
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().ref_characterHandler.avatarData.DSkin_Texture, applyOn);
+                //if (avatarController.avatarGender == AvatarGender.Male)
+                //    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
+                //else
+                //    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
                 break;
             case CurrentTextureType.Face:
-                if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
-                else
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().ref_characterHandler.avatarData.DFace_Texture, applyOn);
+                //if (avatarController.avatarGender == AvatarGender.Male)
+                //    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
+                //else
+                //    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharacterBodyParts>().RemoveEyeLidTexture(null, applyOn);

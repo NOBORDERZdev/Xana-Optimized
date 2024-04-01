@@ -26,9 +26,10 @@ public class SavaCharacterProperties : MonoBehaviour
     }
     public void Start()
     {
+        StartLocal();
         charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
         characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        StartLocal();
+        //StartLocal();
 
         SaveItemList.faceMorphed = false;
         SaveItemList.eyeBrowMorphed = false;
@@ -207,7 +208,8 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
-        SaveItemList.gender = characterController.avatarGender.ToString();
+        //SaveItemList.gender = characterController.avatarGender.ToString();
+        SaveItemList.gender = GameManager.Instance.avatarGender.ToString();
 
         SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
         SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
@@ -334,6 +336,8 @@ public class SavaCharacterProperties : MonoBehaviour
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+
+            GameManager.Instance.ActivateAvatarByGender(_CharacterData.gender);   // Activate Avatar
 
             SaveItemList.myItemObj = _CharacterData.myItemObj;
             SaveItemList.BodyFat = _CharacterData.BodyFat;

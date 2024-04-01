@@ -21,8 +21,8 @@ public class PresetData_Jsons : MonoBehaviour
     //public static GameObject lastSelectedPreset=null;
     //public static string lastSelectedPresetName=null;
     [SerializeField] Texture eyeTex;
-    AvatarController avatarController;
-    CharacterBodyParts charcterBodyParts;
+    //AvatarController avatarController;
+    //CharacterBodyParts charcterBodyParts;
 
     public AvatarGender avatarGender;
 
@@ -62,8 +62,8 @@ public class PresetData_Jsons : MonoBehaviour
 
     public void GetScriptRef()
     {
-        avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+        //avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        //charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
 
 
@@ -83,7 +83,7 @@ public class PresetData_Jsons : MonoBehaviour
             else
                 return;
         }
-        charcterBodyParts.DefaultTexture(false);
+        GameManager.Instance.characterBodyParts.DefaultTexture(false);
 
         if (!IsStartUp_Canvas && !PremiumUsersDetails.Instance.CheckSpecificItem(PresetNameinServer))
         {
@@ -149,7 +149,8 @@ public class PresetData_Jsons : MonoBehaviour
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
-            GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
+            GameManager.Instance.ActivateAvatarByGender(_CharacterData.gender);
+            //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
             if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf || StoreManager.instance.selfiePanel.activeSelf)
@@ -191,9 +192,9 @@ public class PresetData_Jsons : MonoBehaviour
 
                 XanaConstants.xanaConstants._lastClickedBtn = this.gameObject;
             }
-            if (avatarController.wornEyeWearable != null)
+            if (GameManager.Instance.avatarController.wornEyeWearable != null)
             {
-                avatarController.UnStichItem("EyeWearable");
+                GameManager.Instance.avatarController.UnStichItem("EyeWearable");
             }
 
             if (_CharacterData.HairColor != null)
@@ -270,7 +271,7 @@ public class PresetData_Jsons : MonoBehaviour
         //UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
-        avatarController.InitializeAvatar();
+        GameManager.Instance.avatarController.InitializeAvatar();
     }
 
     void SavePresetOnServer(SavingCharacterDataClass savingCharacterDataClass)

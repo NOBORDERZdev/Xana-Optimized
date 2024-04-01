@@ -11,6 +11,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [Header("Character")]
     public GameObject mainCharacter;
+    public GameObject maleAvatar;
+    public GameObject femaleAvatar;
+    public AvatarController avatarController;
+    public CharacterBodyParts characterBodyParts;
+    public AvatarGender avatarGender;
+
     public GameObject m_ChHead;
     [Header("Character Animator")]
     public Animator m_CharacterAnimator;
@@ -61,6 +67,7 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesManager>();
         }
     }
+    
     public void HomeCameraInputHandler(bool flag)
     {
         HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
@@ -250,5 +257,20 @@ public class GameManager : MonoBehaviour
     public void UpdatePlayerName(string newName)
     {
         mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(newName);
+    }
+
+    public void ActivateAvatarByGender(string gender)
+    {
+        switch (gender)
+        {
+            case "Male":
+                maleAvatar.SetActive(true);
+                femaleAvatar.SetActive(false);
+                break;
+            case "Female":
+                maleAvatar.SetActive(false);
+                femaleAvatar.SetActive(true);
+                break;
+        }
     }
 }

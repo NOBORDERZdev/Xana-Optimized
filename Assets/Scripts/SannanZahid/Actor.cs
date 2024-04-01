@@ -1,6 +1,7 @@
 using Photon.Voice;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
@@ -18,6 +19,7 @@ public class Actor : MonoBehaviour
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
     public AnimatorOverrideController overrideController;
+    public AnimatorOverrideController _animatorController;
     bool _lastAction = false;
     [SerializeField] bool isPlayer;
     private void OnEnable()
@@ -50,10 +52,10 @@ public class Actor : MonoBehaviour
     {
         _playerMoves.Clear();
     }
-    IEnumerator StartBehaviour()
+    public IEnumerator StartBehaviour()
     {
         while(ActionClipTime.Equals( 0f))
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(StartActorBehaviour());
     }
@@ -120,7 +122,7 @@ public class Actor : MonoBehaviour
         //StartCoroutine(StartActorBehaviour());
 
     }
-    IEnumerator StartActorBehaviour()
+    public IEnumerator StartActorBehaviour()
     {
         CheckedInLoop:
         yield return new WaitForSeconds(Time.deltaTime);
