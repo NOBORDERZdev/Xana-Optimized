@@ -21,13 +21,10 @@ public class DisplayMessagesComponent : ItemComponent
     }
 
     //oncollisionEnter to OnTriggerEnter
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            BuilderEventManager.onComponentActivated(_componentType);
-            PlayBehaviour();
-        }
+        BuilderEventManager.onComponentActivated(_componentType);
+        PlayBehaviour();
     }
 
     #region BehaviourControl
@@ -53,10 +50,10 @@ public class DisplayMessagesComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -83,6 +80,16 @@ public class DisplayMessagesComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.DisplayMessagesComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

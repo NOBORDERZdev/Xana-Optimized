@@ -17,15 +17,13 @@ public class ElapsedTimeComponent : ItemComponent
         isActivated = true;
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
             if (isActivated && elapsedTimeComponentData.IsStart)
             {
-                if (!IsAgainTouchable) return;
+                //if (!IsAgainTouchable) return;
 
-                IsAgainTouchable = false;
+                //IsAgainTouchable = false;
                 BuilderEventManager.onComponentActivated?.Invoke(_componentType);
                 PlayBehaviour();
             }
@@ -33,17 +31,16 @@ public class ElapsedTimeComponent : ItemComponent
             {
                 BuilderEventManager.elapsedEndTime?.Invoke();
             }
-        }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        IsAgainTouchable = false;
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        IsAgainTouchable = true;
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    IsAgainTouchable = false;
+    //}
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    IsAgainTouchable = true;
+    //}
 
     #region BehaviourControler
     private void StartComponent()
@@ -97,6 +94,16 @@ public class ElapsedTimeComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.ElapsedTimeComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion
