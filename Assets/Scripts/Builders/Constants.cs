@@ -7,6 +7,11 @@ public static class Constants
     public static int defaultLayer = 0;
     public static int itemLayer = 9;
 
+    public const float minPlayerUISpeed = 1f;
+    public const float maxPlayerUISpeed = 20f;
+    public const float minPlayerSprintSpeed = 5f;
+    public const float maxPlayerSprintSpeed = 20f;
+
     public const string HomeScene = "Home";
     public const string BuilderScene = "XanaBuilder";
     public const string PlayerScene = "XanaPlayer";

@@ -18,7 +18,7 @@ public class AvatarController : MonoBehaviour
     #endregion
 
     #region public Var
-    public bool isFrndAvatar = false;
+    public bool isPlayerAvatar = false;
     public bool IsInit = false;
     public bool staticPlayer;
     public bool isWearOrNot = false;
@@ -29,6 +29,7 @@ public class AvatarController : MonoBehaviour
     public string presetValue;
     public AvatarGender avatarGender;
     public GameObject wornHair, wornPant, wornShirt, wornShoes, wornEyeWearable, wornGloves, wornChain;
+    public GameObject[] wornEyebrow;
     public NFTColorCodes _nftAvatarColorCodes;
     public CharacterBodyParts characterBodyParts;
     public SavingCharacterDataClass _PCharacterData = new SavingCharacterDataClass();
@@ -88,7 +89,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
         if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         {
-            if (isFrndAvatar) // to check is friend or player avatar in Home Scene.
+            if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
             {
                 SetAvatarClothDefault(this.gameObject, "Male");
             }
@@ -101,6 +102,8 @@ public class AvatarController : MonoBehaviour
         {
             xanaConstants = XanaConstants.xanaConstants;
         }
+        if(addressableDownloader==null)
+            addressableDownloader = AddressableDownloader.Instance;
         if (xanaConstants != null)
         {
             if (!sceneName.Contains("Main")) // call for spaces only
@@ -118,7 +121,10 @@ public class AvatarController : MonoBehaviour
                     EquipNFT();
                 }
                 else
-                    Custom_InitializeAvatar();
+                {
+                    if (isPlayerAvatar)
+                        Custom_InitializeAvatar();
+                }
                 if (xanaConstants.isNFTEquiped)
                 {
                     this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();

@@ -21,6 +21,8 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     [Header("Player Head")]
     [SerializeField]
     private SkinnedMeshRenderer playerHead;
+    [SerializeField]
+    public SkinnedMeshRenderer[] playerEyebrow;
 
     GameObject playerObj;
     Avatar defaultAvatar;
@@ -76,6 +78,17 @@ public class AvatarChangerSyncing : MonoBehaviourPun
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShoes)
                 playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+            int index = 0;
+            if (ac.wornEyebrow.Length > 0)
+            {
+                playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+                foreach (var eyeBrow in ac.wornEyebrow)
+                {
+                    playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                    index++;
+                }
+                index = 0;
+            }
             playerBody = charcterBodyParts.body;
             playerHead = charcterBodyParts.head;
             anim = playerObj.GetComponent<Animator>();
@@ -152,6 +165,13 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             playerShirt.enabled = state;
         if (playerShoes)
             playerShoes.enabled = state;
+        if (playerEyebrow.Length > 0)
+        {
+            foreach (var eyeBrow in playerEyebrow)
+            {
+                eyeBrow.enabled = state;
+            }
+        }
     }
 
     private void OnDisable()
