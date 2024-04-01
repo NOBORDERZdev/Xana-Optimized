@@ -377,14 +377,14 @@ public class BottomTabManager : MonoBehaviour
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
-                if (MessageController.Instance != null)
-                {
-                    MessageController.Instance.isChatDetailsScreenDeactive = true;
-                }
+                //if (MessageController.Instance != null)
+                //{
+                //    MessageController.Instance.isChatDetailsScreenDeactive = true;
+                //}
                // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
-                MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
+                //MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
             }
             else
             {

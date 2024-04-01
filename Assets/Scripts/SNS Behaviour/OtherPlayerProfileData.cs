@@ -933,27 +933,27 @@ public class OtherPlayerProfileData : MonoBehaviour
         }
     }
 
-    public void OnClickMessageButtonClick()
-    {
-        isTempDirectMessageScreenOpen = true;
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
-        if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
-        {
-            //Debug.Log("OnClickMessageButtonClick000000");
-            if (MessageController.Instance != null)
-            {
-                isDirectMessageScreenOpen = true;
-                if (backKeyManageList.Contains("GroupDetailsScreen"))
-                {
-                    backKeyManageList.Remove("GroupDetailsScreen");
-                    //RemoveAndCheckBackKey();
-                }
-                //Debug.Log("OnClickMessageButtonClick");
-                MessageController.Instance.OnDirectMessageFromOtherUserProfile(singleUserProfileData.id, singleUserProfileData.name, profileImage.sprite);
-            }
-        }
-        isTempDirectMessageScreenOpen = false;
-    }
+    //public void OnClickMessageButtonClick()
+    //{
+    //    isTempDirectMessageScreenOpen = true;
+    //    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+    //    if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
+    //    {
+    //        //Debug.Log("OnClickMessageButtonClick000000");
+    //        if (MessageController.Instance != null)
+    //        {
+    //            isDirectMessageScreenOpen = true;
+    //            if (backKeyManageList.Contains("GroupDetailsScreen"))
+    //            {
+    //                backKeyManageList.Remove("GroupDetailsScreen");
+    //                //RemoveAndCheckBackKey();
+    //            }
+    //            //Debug.Log("OnClickMessageButtonClick");
+    //            MessageController.Instance.OnDirectMessageFromOtherUserProfile(singleUserProfileData.id, singleUserProfileData.name, profileImage.sprite);
+    //        }
+    //    }
+    //    isTempDirectMessageScreenOpen = false;
+    //}
 
     #region Get User Details API Integrate........
     public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1, bool _callFromFindFriendWithName = false)

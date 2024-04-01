@@ -364,14 +364,14 @@ public class FeedUIController : MonoBehaviour
 
     public void ResetAllFeedScreen(bool isFeedScreen)
     {
-        if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
-        {
-           Debug.Log("Feed Data Load");
+        //if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
+        //{
+        //   Debug.Log("Feed Data Load");
         
-            // OLD FEED UI
-            ///StartCoroutine(WaitToSceneLoad());
-            // END OLD FEED UI
-        }
+        //    // OLD FEED UI
+        //    ///StartCoroutine(WaitToSceneLoad());
+        //    // END OLD FEED UI
+        //}
 
         //feedUiScreen.SetActive(isFeedScreen);
         //otherPlayerProfileScreen.SetActive(false);
@@ -467,7 +467,7 @@ public class FeedUIController : MonoBehaviour
 
     public void ClearAllFeedDataAfterLogOut()
     {
-        APIManager.Instance.ClearAllFeedDataForLogout();
+        //APIManager.Instance.ClearAllFeedDataForLogout();
 
         APIController.Instance.feedFollowingIdList.Clear();
         APIController.Instance.feedForYouIdList.Clear();
@@ -1594,7 +1594,7 @@ public class FeedUIController : MonoBehaviour
         //    profileFFScreenScrollrectFasterEXList[i].verticalNormalizedPosition = 1;
         //}
         //tempFollowFollowingScreenOpenCount++;
-        //MyProfileDataManager.Instance.MyProfileSceenShow(false);
+        MyProfileDataManager.Instance.MyProfileSceenShow(false);
     }
 
     //IEnumerator WaitToProfileFollowerFollowingHorizontalScroll(int Tabindex)

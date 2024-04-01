@@ -167,90 +167,90 @@ public class AWSHandler : MonoBehaviour
     }
 
     //this method is used to upload Message items.......
-    public void PostObject(string fileName, string key, string compress = "")
-    {
-        Debug.Log("Retrieving the file from message");
-        isCompress = compress;
-        MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //public void PostObject(string fileName, string key, string compress = "")
+    //{
+    //    Debug.Log("Retrieving the file from message");
+    //    isCompress = compress;
+    //    //MessageController.Instance.LoaderShow(true);//rik loader active.......
 
-        currentSNSApiLoaderController = MessageController.Instance.apiLoaderController;
-        if (currentSNSApiLoaderController != null)
-        {
-            currentSNSApiLoaderController.ShowUploadStatusImage(true);
-        }
+    //   // currentSNSApiLoaderController = MessageController.Instance.apiLoaderController;
+    //    //if (currentSNSApiLoaderController != null)
+    //    //{
+    //    //    currentSNSApiLoaderController.ShowUploadStatusImage(true);
+    //    //}
 
-        string fileNam1 = Path.GetFileName(fileName);
-        byte[] myData = File.ReadAllBytes(fileName);
-        Debug.Log("Retrieving ThenFile From Message FileName =>" + fileNam1 + " :Data:" + myData.Length);
+    //    string fileNam1 = Path.GetFileName(fileName);
+    //    byte[] myData = File.ReadAllBytes(fileName);
+    //    Debug.Log("Retrieving ThenFile From Message FileName =>" + fileNam1 + " :Data:" + myData.Length);
 
-        PostObjectMethod(myData, fileNam1, callback =>
-        {
-            if (callback.success)
-            {
-                if (currentSNSApiLoaderController != null)
-                {
-                    currentSNSApiLoaderController.ShowUploadStatusImage(false);
-                }
+    //    PostObjectMethod(myData, fileNam1, callback =>
+    //    {
+    //        if (callback.success)
+    //        {
+    //            if (currentSNSApiLoaderController != null)
+    //            {
+    //                currentSNSApiLoaderController.ShowUploadStatusImage(false);
+    //            }
 
-                string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + callback.cdn_link + MessageController.Instance.attechmentArraystr + "]";
-                //   string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
+    //            string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + callback.cdn_link + MessageController.Instance.attechmentArraystr + "]";
+    //            //   string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
 
-                //Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
-                //Debug.Log($"<color=red> attechmentStr {MessageController.Instance.attechmentstr}</color>");
+    //            //Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
+    //            //Debug.Log($"<color=red> attechmentStr {MessageController.Instance.attechmentstr}</color>");
 
-                string fileUrl = callback.cdn_link;
-               Debug.Log("attachment str:" + fileUrl + "  :Message:" + callback.msg);
+    //            string fileUrl = callback.cdn_link;
+    //           Debug.Log("attachment str:" + fileUrl + "  :Message:" + callback.msg);
 
-                if (!string.IsNullOrEmpty(fileUrl))
-                {
-                    if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
-                    {
-                        APIManager.Instance.RequestChatCreateMessage(0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId, "", "", attechmentstr);
-                    }
-                    else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
-                    {
-                        if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
-                        {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.senderId, 0, "", "", attechmentstr);
-                        }
-                        else
-                        {
-                            APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.receiverId, 0, "", "", attechmentstr);
-                        }
-                    }
-                    else
-                    {
-                        if (MessageController.Instance.isDirectMessage)
-                        {
-                            if (MessageController.Instance.CreateNewMessageUserList.Count > 0)
-                            {
-                                MessageController.Instance.isDirectMessageFirstTimeRecivedID += MessageController.Instance.CreateNewMessageUserList[0];
-                               Debug.Log("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
-                                APIManager.Instance.RequestChatCreateMessage(int.Parse(MessageController.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    MessageController.Instance.LoaderShow(false);//rik loader false.......
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
-                }
-            }
-            else
-            {
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-               Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
-            }
-        });
-    }
+    //            if (!string.IsNullOrEmpty(fileUrl))
+    //            {
+    //                if (MessageController.Instance.allChatGetConversationDatum.receivedGroupId != 0)
+    //                {
+    //                    APIManager.Instance.RequestChatCreateMessage(0, MessageController.Instance.allChatGetConversationDatum.receivedGroupId, "", "", attechmentstr);
+    //                }
+    //                else if (MessageController.Instance.allChatGetConversationDatum.receiverId != 0)
+    //                {
+    //                    if (MessageController.Instance.allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+    //                    {
+    //                        APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.senderId, 0, "", "", attechmentstr);
+    //                    }
+    //                    else
+    //                    {
+    //                        APIManager.Instance.RequestChatCreateMessage(MessageController.Instance.allChatGetConversationDatum.receiverId, 0, "", "", attechmentstr);
+    //                    }
+    //                }
+    //                else
+    //                {
+    //                    if (MessageController.Instance.isDirectMessage)
+    //                    {
+    //                        if (MessageController.Instance.CreateNewMessageUserList.Count > 0)
+    //                        {
+    //                            MessageController.Instance.isDirectMessageFirstTimeRecivedID += MessageController.Instance.CreateNewMessageUserList[0];
+    //                           Debug.Log("Direct One To One Image Share:" + MessageController.Instance.isDirectMessageFirstTimeRecivedID);
+    //                            APIManager.Instance.RequestChatCreateMessage(int.Parse(MessageController.Instance.CreateNewMessageUserList[0]), 0, "", "", attechmentstr);
+    //                        }
+    //                    }
+    //                }
+    //            }
+    //            else
+    //            {
+    //                MessageController.Instance.LoaderShow(false);//rik loader false.......
+    //               Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
+    //            }
+    //        }
+    //        else
+    //        {
+    //            MessageController.Instance.LoaderShow(false);//rik loader false.......
+    //           Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", callback.msg));
+    //        }
+    //    });
+    //}
 
-    //this method is used to upload avatar.......
+    ////this method is used to upload avatar.......
     public void PostAvatarObject(string fileName, string key, string CallingFrom)
     {
         string fileName1 = Path.GetFileName(fileName);
         byte[] myData = File.ReadAllBytes(fileName);
-       Debug.Log("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
+        Debug.Log("PostAvatarObject calling FileName:" + fileName1 + "    :Data:" + myData.Length);
 
         PostObjectMethodAvatar(myData, fileName1, callback =>
         {
@@ -260,14 +260,14 @@ public class AWSHandler : MonoBehaviour
                 //  string attechmentstr = "[" + MessageController.Instance.attechmentArraystr + key + MessageController.Instance.attechmentArraystr + "]";
                 //  Debug.Log($"<color=red> attechmentStr {attechmentstr}</color>");
                 string fileUrl = callback.cdn_link;
-               Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
+                Debug.Log("Attachment url:" + fileUrl + "  :Message:" + callback.msg + "   :CallingFrom:" + CallingFrom);
 
                 if (!string.IsNullOrEmpty(fileUrl))
                 {
                     switch (CallingFrom)
                     {
                         case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup(fileUrl);
+                           // MessageController.Instance.CreateNewGroup(fileUrl);
                             break;
                         case "UpdateUserAvatar":
                             APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
@@ -285,7 +285,7 @@ public class AWSHandler : MonoBehaviour
                     switch (CallingFrom)
                     {
                         case "CreateGroupAvatar":
-                            MessageController.Instance.CreateNewGroup("");
+                            //MessageController.Instance.CreateNewGroup("");
                             break;
                         case "EditProfileAvatar":
                             APIManager.Instance.RequestGetUserDetails(CallingFrom);
@@ -293,7 +293,7 @@ public class AWSHandler : MonoBehaviour
                         default:
                             break;
                     }
-                   Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
+                    Debug.Log("\nException while posting the result object" + string.Format("\n receieved error {0}", fileUrl));
                 }
             }
         });

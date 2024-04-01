@@ -79,14 +79,14 @@ public class FeedRawItemController : MonoBehaviour
             tottlehotFeeditem = FeedRawData.feeds.Count;
         }
 
-        for (int i = 0; i < tottlehotFeeditem; i++)
-        {
-            GameObject hotFeedFeedObject = Instantiate(APIController.Instance.hotItemPrefab, hotItemPrefabParent);
-            hotFeedFeedObject.GetComponent<FeedItemController>().FeedData = FeedRawData.feeds[i];
-            hotFeedFeedObject.GetComponent<FeedItemController>().FeedRawData = FeedRawData;
-            hotFeedFeedObject.GetComponent<FeedItemController>().LoadFeed();
-            hotFeedFeedObject.name = "HotColloection_" + FeedRawData.feeds[i].id.ToString();
-        }
+        //for (int i = 0; i < tottlehotFeeditem; i++)
+        //{
+        //    GameObject hotFeedFeedObject = Instantiate(APIController.Instance.hotItemPrefab, hotItemPrefabParent);
+        //    hotFeedFeedObject.GetComponent<FeedItemController>().FeedData = FeedRawData.feeds[i];
+        //    hotFeedFeedObject.GetComponent<FeedItemController>().FeedRawData = FeedRawData;
+        //    hotFeedFeedObject.GetComponent<FeedItemController>().LoadFeed();
+        //    hotFeedFeedObject.name = "HotColloection_" + FeedRawData.feeds[i].id.ToString();
+        //}
     }
 
     public void OnClickCheckOtherPlayerProfile()

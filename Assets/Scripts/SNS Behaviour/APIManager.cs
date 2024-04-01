@@ -42,10 +42,10 @@ public class APIManager : MonoBehaviour
     //Coroutine requestGetAllUsersWithFeedsCoroutine;
     public AllFollowingRoot adFrndFollowing;
     GameManager gameManager;
-    APIController apiController;
-    FeedUIController feedUIController;
-    OtherPlayerProfileData otherPlayerProfileData;
-    MyProfileDataManager myProfileDataManager;
+    [SerializeField] APIController apiController;
+    [SerializeField] FeedUIController feedUIController;
+    [SerializeField] OtherPlayerProfileData otherPlayerProfileData;
+    [SerializeField] MyProfileDataManager myProfileDataManager;
     private void Awake()
     {
         if (Instance == null)
@@ -761,14 +761,14 @@ public class APIManager : MonoBehaviour
 
             yield return www.SendWebRequest();
 
-            switch (getFollowingFor)
-            {
-                case "Message"://chat scene loader false
-                    MessageController.Instance.LoaderShow(false);//False api loader.
-                    break;
-                default:
-                    break;
-            }
+            //switch (getFollowingFor)
+            //{
+            //    case "Message"://chat scene loader false
+            //        MessageController.Instance.LoaderShow(false);//False api loader.
+            //        break;
+            //    default:
+            //        break;
+            //}
 
             if (www.isNetworkError || www.isHttpError)
             {
@@ -781,14 +781,14 @@ public class APIManager : MonoBehaviour
                 Debug.Log("GetAllFollowing Data" + data);
                 allFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
 
-                switch (getFollowingFor)
-                {
-                    case "Message":
-                        apiController.GetAllFollowingUser(pageNum);
-                        break;
-                    default:
-                        break;
-                }
+                //switch (getFollowingFor)
+                //{
+                //    case "Message":
+                //        apiController.GetAllFollowingUser(pageNum);
+                //        break;
+                //    default:
+                //        break;
+                //}
                 // Debug.Log(root.data.count);
             }
         }
@@ -1005,33 +1005,33 @@ public class APIManager : MonoBehaviour
     }
 
     //this api is used to make favourite follower.......
-    public void RequestMakeFavouriteFollower(string user_Id)
-    {
-        StartCoroutine(IERequestMakeFavouriteFollower(user_Id));
-    }
-    public IEnumerator IERequestMakeFavouriteFollower(string user_Id)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("userId", user_Id);
+    //public void RequestMakeFavouriteFollower(string user_Id)
+    //{
+    //    StartCoroutine(IERequestMakeFavouriteFollower(user_Id));
+    //}
+    //public IEnumerator IERequestMakeFavouriteFollower(string user_Id)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("userId", user_Id);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_MakeFavouriteFollower), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_MakeFavouriteFollower), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                string data = www.downloadHandler.text;
-                Debug.Log("MakeFavouriteFollower data:" + data);
-                // root = JsonUtility.FromJson<MakeAllFavouriteFollowerRoot>(data);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("MakeFavouriteFollower data:" + data);
+    //            // root = JsonUtility.FromJson<MakeAllFavouriteFollowerRoot>(data);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Profile Follower Following list APIs
@@ -2237,9 +2237,9 @@ public class APIManager : MonoBehaviour
                     case "EditProfileAvatar":
                         myProfileDataManager.SetupData(myProfileDataRoot.data, callingFrom);//setup and load my profile data.......
                         break;
-                    case "messageScreen":
-                        MessageController.Instance.GetSuccessUserDetails(myProfileDataRoot.data);
-                        break;
+                    //case "messageScreen":
+                    //    MessageController.Instance.GetSuccessUserDetails(myProfileDataRoot.data);
+                    //    break;
                     case "MyAccount":
                         myProfileDataManager.myProfileData = myProfileDataRoot.data;
                         feedUIController.SNSSettingController.SetUpPersonalInformationScreen();
@@ -2309,42 +2309,42 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    // Old API
-    public void RequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
-    {
-        StartCoroutine(IERequestUpdateUserProfile(user_gender, user_job, user_country, user_website, user_bio));
-    }
+    //// Old API
+    //public void RequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
+    //{
+    //    StartCoroutine(IERequestUpdateUserProfile(user_gender, user_job, user_country, user_website, user_bio));
+    //}
 
-    public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
-    {
-        WWWForm form = new WWWForm();
-        Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
-        form.AddField("gender", user_gender);
-        form.AddField("job", user_job);
-        form.AddField("country", user_country);
-        form.AddField("website", user_website);
-        form.AddField("bio", user_bio);
+    //public IEnumerator IERequestUpdateUserProfile(string user_gender, string user_job, string user_country, string user_website, string user_bio)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    Debug.Log("BaseUrl:" + ConstantsGod.API_BASEURL + "job:" + user_job + "  :bio:" + user_bio);
+    //    form.AddField("gender", user_gender);
+    //    form.AddField("job", user_job);
+    //    form.AddField("country", user_country);
+    //    form.AddField("website", user_website);
+    //    form.AddField("bio", user_bio);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                //Debug.Log("data" + form);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
-                // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            //Debug.Log("data" + form);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("<color=red> UpdateUserProfile data:" + data + "</color>");
+    //            // root = JsonUtility.FromJson<UpdateUserProfileRoot>(data);
+    //        }
+    //    }
+    //}
 
     // New API
     public void RequestUpdateUserProfile(string unique_Name, string user_gender, string user_job, string user_country, string user_website, string user_bio, string[] _tags)
@@ -2435,650 +2435,650 @@ public class APIManager : MonoBehaviour
         }
     }
 
-    public void RequestDeleteAccount()
-    {
-        StartCoroutine(IERequestDeleteAccount());
-    }
-    public IEnumerator IERequestDeleteAccount()
-    {
-        WWWForm form = new WWWForm();
+    //public void RequestDeleteAccount()
+    //{
+    //    StartCoroutine(IERequestDeleteAccount());
+    //}
+    //public IEnumerator IERequestDeleteAccount()
+    //{
+    //    WWWForm form = new WWWForm();
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteAccount), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteAccount), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+    //        yield return www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("DeleteAccount data:" + data);
-                // root = JsonUtility.FromJson<DeletAccountRoot>(data);
-            }
-        }
-    }
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("DeleteAccount data:" + data);
+    //            // root = JsonUtility.FromJson<DeletAccountRoot>(data);
+    //        }
+    //    }
+    //}
     #endregion
 
     #region MessageApi.........
-    //this api is used to get all conversation.......
-    public void RequestChatGetConversation()
-    {
-        //Debug.Log("111111");
-        StartCoroutine(IERequestChatGetConversation());
-    }
-    public IEnumerator IERequestChatGetConversation()
-    {
-        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetConversation)))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
-                {
-                    MessageController.Instance.StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
-                }
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("ChatGetConversation data:" + data);
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                allChatGetConversationRoot = JsonConvert.DeserializeObject<ChatGetConversationRoot>(data, settings);
-
-                apiController.GetAllConversation();
-                // Debug.Log(root.data.count);
-            }
-        }
-    }
-
-    //this api is used to chate mute unmute conversation.......
-    public void RequestChatMuteUnMuteConversation(int conversationId)
-    {
-        Debug.Log("RequestChatMuteUnMuteConversation conversation id:" + conversationId);
-        if (IERequestChatMuteUnMuteConversationCo != null)
-        {
-            StopCoroutine(IERequestChatMuteUnMuteConversationCo);
-        }
-        IERequestChatMuteUnMuteConversationCo = StartCoroutine(IERequestChatMuteUnMuteConversation(conversationId));
-    }
-    Coroutine IERequestChatMuteUnMuteConversationCo;
-    public IEnumerator IERequestChatMuteUnMuteConversation(int conversationId)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("conversationId", conversationId);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatMuteUnMuteConversation), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//false api loader 
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Mute UnMute conversation success: " + data);
-                ChatMuteUnMuteRoot chatMuteUnMuteRoot = JsonConvert.DeserializeObject<ChatMuteUnMuteRoot>(data);
-
-                if (chatMuteUnMuteRoot != null)//refresh current conversation data after mute unmute.......
-                {
-                    if (chatMuteUnMuteRoot.msg == "conversation muted successfully")
-                    {
-                        MessageController.Instance.allChatGetConversationDatum.isMutedConversations = true;
-                    }
-                    else
-                    {
-                        MessageController.Instance.allChatGetConversationDatum.isMutedConversations = false;
-                    }
-                }
-            }
-        }
-    }
-
-    //this api is used to get all message for user.......
-    public void RequestChatGetMessages(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, string callingFrom)
-    {
-        StartCoroutine(IERequestChatGetMessages(message_pageNumber, message_pageSize, message_receiverId, message_receivedGroupId, callingFrom));
-    }
-    public IEnumerator IERequestChatGetMessages(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, string callingFrom)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("pageNumber", message_pageNumber);
-        form.AddField("pageSize", message_pageSize);
-        if (message_receivedGroupId != 0)
-        {
-            form.AddField("receivedGroupId", message_receivedGroupId);
-        }
-        else if (message_receiverId != 0)
-        {
-            form.AddField("receiverId", message_receiverId);
-        }
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetMessages), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                if (message_receivedGroupId != 0)
-                {
-                    MessageController.Instance.ChatScreen.SetActive(true);
-                    MessageController.Instance.MessageListScreen.SetActive(false);
-                    r_isCreateMessage = false;
-                }
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Message Chat: " + data);
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                allChatMessagesRoot = JsonConvert.DeserializeObject<ChatGetMessagesRoot>(data, settings);
-                //allChatMessagesRoot.data.rows.Reverse();
-                apiController.GetAllChat(message_pageNumber, "");
-                switch (callingFrom)
-                {
-                    case "Conversation":
-                        if (CommonAPIManager.Instance != null)//For Get All Chat UnRead Message Count.......
-                        {
-                            CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                // Debug.Log(root.data.count);                
-            }
-        }
-    }
-
-    //this api is used to send attachments.......
-    public void RequestChatGetAttachments(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, int index)
-    {
-        MessageController.Instance.LoaderShow(true);//active api loader.
-
-        StartCoroutine(IERequestChatAttachments(message_pageNumber, message_pageSize, message_receiverId, message_receivedGroupId, index));
-    }
-    public IEnumerator IERequestChatAttachments(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, int index)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("pageNumber", message_pageNumber);
-        form.AddField("pageSize", message_pageSize);
-        if (message_receivedGroupId != 0)
-        {
-            form.AddField("receivedGroupId", message_receivedGroupId);
-        }
-        else if (message_receiverId != 0)
-        {
-            form.AddField("receiverId", message_receiverId);
-        }
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetAttachments), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                // Debug.Log(www.error);
-                //Debug.Log("data" + www.downloadHandler);
-                // Debug.Log("data" + www.downloadHandler.text);
-
-                MessageController.Instance.LoaderShow(false);//False api loader.
-
-                string data = www.downloadHandler.text;
-                Debug.Log("Get Attachment Error:" + data);
-                AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
-                if (AllChatAttachmentsRoot != null)
-                {
-                    if (AllChatAttachmentsRoot.msg == "No attachments found")
-                    {
-                        if (index == 0)
-                        {
-                            foreach (Transform item in MessageController.Instance.chatShareAttechmentparent)
-                            {
-                                Destroy(item.gameObject);
-                            }
-                            apiController.SetChatMember();
-                        }
-                        else if (index == 1)
-                        {
-                            MessageController.Instance.NoAttechmentScreen.SetActive(true);
-                            MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Get Attachment Data: " + data);
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data, settings);
-                //AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
-
-                apiController.GetAllAttachments(index);
-                // Debug.Log(root.data.count);
-            }
-        }
-    }
-
-    //this api is used to create group.......
-    public void RequestChatCreateGroup(string createGroupName, string createGroupUserIds, string groupAvatarUrl)
-    {
-        StartCoroutine(IERequestChatCreateGroup(createGroupName, createGroupUserIds, groupAvatarUrl));
-    }
-    public IEnumerator IERequestChatCreateGroup(string createGroupName, string createGroupUserIds, string groupAvatarUrl)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("name", createGroupName);
-        form.AddField("userIds", createGroupUserIds);
-        form.AddField("avatar", groupAvatarUrl);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatCreateGroup), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Message Chat: " + data);
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                ChatCreateGroupRoot = JsonConvert.DeserializeObject<ChatCreateGroupRoot>(data, settings);
-
-                //Debug.Log("msg : " + MessageController.Instance.typeMessageText.text);
-                //Debug.Log("msg : " + MessageController.Instance.chatTypeMessageInputfield.Text);
-                yield return new WaitForSeconds(0.1f);
-
-                // RequestChatCreateMessage(0, ChatCreateGroupRoot.data.id,MessageController.Instance.typeMessageText.text,"");
-                // RequestChatGetConversation();
-                // RequestChatGetMessages(1, 50, 0,ChatCreateGroupRoot.data.id);
-                // MessageController.Instance.typeMessageText.text = "";
-                // apiController.GetAllChat();
-                // Debug.Log(root.data.count);
-            }
-        }
-    }
-
-    //this api is used to add member on group.......
-    public void RequestAddGroupMember(string groupId, string conversationId, string userIds)
-    {
-        StartCoroutine(IERequestAddGroupMember(groupId, conversationId, userIds));
-    }
-    public IEnumerator IERequestAddGroupMember(string groupId, string conversationId, string userIds)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("groupId", groupId);
-        form.AddField("conversationId", conversationId);
-        form.AddField("userIds", userIds);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AddGroupMember), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-
-                MessageController.Instance.LoaderShow(false);//false api loader 
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Add member success on group: " + data);
-                RequestChatGetConversation();//refresh conversation list to update group data
-            }
-        }
-    }
-
-    //this api is used to Update group info.......
-    public void RequestUpdateGroupInfo(string groupId, string groupName, string avatar)
-    {
-        StartCoroutine(IERequestUpdateGroupInfo(groupId, groupName, avatar));
-    }
-    public IEnumerator IERequestUpdateGroupInfo(string groupId, string groupName, string avatar)
-    {
-        WWWForm form = new WWWForm();
-        form.AddField("groupId", groupId);
-        form.AddField("name", groupName);
-        form.AddField("avatar", avatar);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateGroupInfo), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//false loader screen.
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Update Success Group Info: " + data);
-                MessageController.Instance.UpdateGroupInFoSuccessResponce();
-            }
-        }
-    }
-
-    //this api is used to create message.......
-    public void RequestChatCreateMessage(int createMessageReceiverId, int createMessageReceivedGroupId, string createMessageMsg, string createMessageType, string createMessageAttachments)
-    {
-        StartCoroutine(IERequestChatCreateMessage(createMessageReceiverId, createMessageReceivedGroupId, createMessageMsg, createMessageType, createMessageAttachments));
-    }
-    public IEnumerator IERequestChatCreateMessage(int createMessageReceiverId, int createMessageReceivedGroupId, string createMessageMsg, string createMessageType, string createMessageAttachments)
-    {
-        WWWForm form = new WWWForm();
-        if (createMessageReceivedGroupId != 0)
-        {
-            form.AddField("receivedGroupId", createMessageReceivedGroupId);
-        }
-        else if (createMessageReceiverId != 0)
-        {
-            form.AddField("receiverId", createMessageReceiverId);
-        }
-
-        if (!string.IsNullOrEmpty(createMessageMsg))
-        {
-            string encodeSTR = EncodedString(createMessageMsg);
-            Debug.Log("Encode STR:" + encodeSTR);
-            form.AddField("msg", encodeSTR);
-        }
-
-        if (!string.IsNullOrEmpty(createMessageType))
-        {
-            form.AddField("type", createMessageType);
-        }
-
-        if (!string.IsNullOrEmpty(createMessageAttachments))
-        {
-            Debug.Log("attachments: " + createMessageAttachments);
-            form.AddField("attachments", createMessageAttachments);
-        }
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatCreateMessage), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-            //Debug.Log("receiverId" + createMessageReceiverId);
-            //Debug.Log("receivedGroupId" + createMessageReceivedGroupId);
-            //Debug.Log("msg" + createMessageMsg);
-            // Debug.Log("attachments" + createMessageAttachments);
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-                r_isCreateMessage = false;
-
-                MessageController.Instance.isLeaveGroup = false;//if create message is failed  then false LeaveGroup bool.
-
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-                MessageController.Instance.OnClcikSendMessageButtonbool = false;
-            }
-            else
-            {
-                // Debug.Log("Form upload complete!");
-                string data = www.downloadHandler.text;
-                //Debug.Log("Message : " + data);
-                // RequestChatGetConversation();
-                var settings = new JsonSerializerSettings
-                {
-                    NullValueHandling = NullValueHandling.Ignore,
-                    MissingMemberHandling = MissingMemberHandling.Ignore
-                };
-                AllChatCreateMessageRoot = JsonConvert.DeserializeObject<ChatCreateMessageRoot>(data, settings);
-
-                yield return new WaitForSeconds(0f);
-
-                MessageController.Instance.LoaderShow(false);//rik loader false.......
-                Debug.Log("Chat CreateMessage success:" + MessageController.Instance.isLeaveGroup + "  :Data:" + data);
-                if (!MessageController.Instance.isLeaveGroup)//not get message api call after leave group.......
-                {
-                    if (AllChatCreateMessageRoot.data.receivedGroupId != 0)
-                    {
-                        //Debug.Log("receivedGroupId" + AllChatCreateMessageRoot.data.receivedGroupId);
-                        //MessageController.Instance.LoaderShow(true);//rik loader active.......
-                        RequestChatGetMessages(1, 50, 0, AllChatCreateMessageRoot.data.receivedGroupId, "Conversation");
-                    }
-                    else
-                    {
-                        //Debug.Log("user id:" + userId + "    :receiverId:" + AllChatCreateMessageRoot.data.receiverId);
-                        if (AllChatCreateMessageRoot.data.receiverId == userId)
-                        {
-                            //MessageController.Instance.LoaderShow(true);//rik loader active.......
-                            RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.senderId, 0, "Conversation");
-                        }
-                        else
-                        {
-                            //MessageController.Instance.LoaderShow(true);//rik loader active.......
-                            RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0, "Conversation");
-                        }
-                        //  RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0);
-                    }
-                    //MessageController.Instance.typeMessageText.text = "";
-                    MessageController.Instance.chatTypeMessageInputfield.Text = "";
-                    MessageController.Instance.OnChatVoiceOrSendButtonEnable();
-                    // Debug.Log(root.data.count);
-
-                    if (!string.IsNullOrEmpty(MessageController.Instance.isDirectMessageFirstTimeRecivedID))
-                    {
-                        RequestChatGetConversation();
-                    }
-                }
-                else
-                {
-                    MessageController.Instance.isLeaveGroup = false;//set leave group bool false.......
-                }
-                MessageController.Instance.OnClcikSendMessageButtonbool = false;
-            }
-        }
-    }
-
-    //this api is used to Leave the chat.......
-    public void RequestLeaveTheChat(string groupId, string callingFrom)
-    {
-        StartCoroutine(IERequestLeaveTheChat(groupId, callingFrom));
-    }
-    public IEnumerator IERequestLeaveTheChat(string groupId, string callingFrom)
-    {
-        Debug.Log("Group ID:" + groupId + "    :CallingFrom:" + callingFrom);
-        WWWForm form = new WWWForm();
-        form.AddField("id", groupId);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_LeaveTheChat), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Leave The Chat success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Leave The Chat: " + data);
-                switch (callingFrom)
-                {
-                    case "ConversationScreen":
-                        MessageController.Instance.DeleteConversationWithLeaveGroupApiResponseSuccess(groupId);
-                        break;
-                    case "DetailsScreen":
-                        apiController.LeaveTheChatCallBack(groupId);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-
-    //this api is used to Remove member from group chat.......
-    public void RequestRemoveGroupMember(int groupId, int userId)
-    {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
-        StartCoroutine(IERequestRemoveGroupMember(groupId, userId));
-    }
-    public IEnumerator IERequestRemoveGroupMember(int groupId, int userId)
-    {
-        Debug.Log("Remove Group member Group ID:" + groupId + "    :UserId:" + userId);
-        WWWForm form = new WWWForm();
-        form.AddField("groupId", groupId);
-        form.AddField("userId", userId);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveGroupMember), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Remove group member from Group Chat success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Remove group member data: " + data);
-                MessageController.Instance.RemoveMemberApiResponseSuccess();
-            }
-        }
-    }
-
-    //this api is used to Delete Conversation.......
-    public void RequestDeleteConversation(int conversationId)
-    {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
-        StartCoroutine(IERequestDeleteConversation(conversationId));
-    }
-    public IEnumerator IERequestDeleteConversation(int conversationId)
-    {
-        Debug.Log("Delete conversation ID:" + conversationId);
-        WWWForm form = new WWWForm();
-        form.AddField("conversationId", conversationId);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteConversation), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Delete conversation success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Delete conversation data: " + data);
-                MessageController.Instance.DeleteConversationApiResponseSuccess("Conversation Deleted");
-            }
-        }
-    }
-
-    //this api is used to Delete Conversation.......
-    public void RequestDeleteChatGroup(int groupId, string callingFrom)
-    {
-        MessageController.Instance.LoaderShow(true);//rik loader false.......
-        StartCoroutine(IERequestDeleteChatGroup(groupId, callingFrom));
-    }
-    public IEnumerator IERequestDeleteChatGroup(int groupId, string callingFrom)
-    {
-        Debug.Log("Delete Group Chat GroupID:" + groupId);
-        WWWForm form = new WWWForm();
-        form.AddField("groupId", groupId);
-
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteChatGroup), form))
-        {
-            www.SetRequestHeader("Authorization", userAuthorizeToken);
-
-            yield return www.SendWebRequest();
-
-            MessageController.Instance.LoaderShow(false);//rik loader false.......
-
-            if (www.isNetworkError || www.isHttpError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                //Debug.Log("Delete Group Chat success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("Delete Group Chat data: " + data);
-                switch (callingFrom)
-                {
-                    case "ConversationScreen":
-                        MessageController.Instance.DeleteConversationApiResponseSuccess("Group Deleted");
-                        break;
-                    case "DetailsScreen":
-                        MessageController.Instance.DeleteGroupChatApiResponseSuccess();
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+    ////this api is used to get all conversation.......
+    //public void RequestChatGetConversation()
+    //{
+    //    //Debug.Log("111111");
+    //    StartCoroutine(IERequestChatGetConversation());
+    //}
+    //public IEnumerator IERequestChatGetConversation()
+    //{
+    //    using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetConversation)))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            if (MessageController.Instance.startAndWaitMessageText.gameObject.activeSelf)
+    //            {
+    //                MessageController.Instance.StartAndWaitMessageTextActive(true, TextLocalization.GetLocaliseTextByKey("bad internet connection please try again"));//start and wait message text show.......
+    //            }
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("ChatGetConversation data:" + data);
+    //            var settings = new JsonSerializerSettings
+    //            {
+    //                NullValueHandling = NullValueHandling.Ignore,
+    //                MissingMemberHandling = MissingMemberHandling.Ignore
+    //            };
+    //            allChatGetConversationRoot = JsonConvert.DeserializeObject<ChatGetConversationRoot>(data, settings);
+
+    //            apiController.GetAllConversation();
+    //            // Debug.Log(root.data.count);
+    //        }
+    //    }
+    //}
+
+    ////this api is used to chate mute unmute conversation.......
+    //public void RequestChatMuteUnMuteConversation(int conversationId)
+    //{
+    //    Debug.Log("RequestChatMuteUnMuteConversation conversation id:" + conversationId);
+    //    if (IERequestChatMuteUnMuteConversationCo != null)
+    //    {
+    //        StopCoroutine(IERequestChatMuteUnMuteConversationCo);
+    //    }
+    //    IERequestChatMuteUnMuteConversationCo = StartCoroutine(IERequestChatMuteUnMuteConversation(conversationId));
+    //}
+    //Coroutine IERequestChatMuteUnMuteConversationCo;
+    //public IEnumerator IERequestChatMuteUnMuteConversation(int conversationId)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("conversationId", conversationId);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatMuteUnMuteConversation), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//false api loader 
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Mute UnMute conversation success: " + data);
+    //            ChatMuteUnMuteRoot chatMuteUnMuteRoot = JsonConvert.DeserializeObject<ChatMuteUnMuteRoot>(data);
+
+    //            if (chatMuteUnMuteRoot != null)//refresh current conversation data after mute unmute.......
+    //            {
+    //                if (chatMuteUnMuteRoot.msg == "conversation muted successfully")
+    //                {
+    //                    MessageController.Instance.allChatGetConversationDatum.isMutedConversations = true;
+    //                }
+    //                else
+    //                {
+    //                    MessageController.Instance.allChatGetConversationDatum.isMutedConversations = false;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+
+    ////this api is used to get all message for user.......
+    //public void RequestChatGetMessages(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, string callingFrom)
+    //{
+    //    StartCoroutine(IERequestChatGetMessages(message_pageNumber, message_pageSize, message_receiverId, message_receivedGroupId, callingFrom));
+    //}
+    //public IEnumerator IERequestChatGetMessages(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, string callingFrom)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("pageNumber", message_pageNumber);
+    //    form.AddField("pageSize", message_pageSize);
+    //    if (message_receivedGroupId != 0)
+    //    {
+    //        form.AddField("receivedGroupId", message_receivedGroupId);
+    //    }
+    //    else if (message_receiverId != 0)
+    //    {
+    //        form.AddField("receiverId", message_receiverId);
+    //    }
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetMessages), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//rik loader false.......
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            if (message_receivedGroupId != 0)
+    //            {
+    //                MessageController.Instance.ChatScreen.SetActive(true);
+    //                MessageController.Instance.MessageListScreen.SetActive(false);
+    //                r_isCreateMessage = false;
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Message Chat: " + data);
+    //            var settings = new JsonSerializerSettings
+    //            {
+    //                NullValueHandling = NullValueHandling.Ignore,
+    //                MissingMemberHandling = MissingMemberHandling.Ignore
+    //            };
+    //            allChatMessagesRoot = JsonConvert.DeserializeObject<ChatGetMessagesRoot>(data, settings);
+    //            //allChatMessagesRoot.data.rows.Reverse();
+    //            apiController.GetAllChat(message_pageNumber, "");
+    //            switch (callingFrom)
+    //            {
+    //                case "Conversation":
+    //                    if (CommonAPIManager.Instance != null)//For Get All Chat UnRead Message Count.......
+    //                    {
+    //                        CommonAPIManager.Instance.RequestGetAllChatUnReadMessagesCount();
+    //                    }
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //            // Debug.Log(root.data.count);                
+    //        }
+    //    }
+    //}
+
+    ////this api is used to send attachments.......
+    //public void RequestChatGetAttachments(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, int index)
+    //{
+    //    MessageController.Instance.LoaderShow(true);//active api loader.
+
+    //    StartCoroutine(IERequestChatAttachments(message_pageNumber, message_pageSize, message_receiverId, message_receivedGroupId, index));
+    //}
+    //public IEnumerator IERequestChatAttachments(int message_pageNumber, int message_pageSize, int message_receiverId, int message_receivedGroupId, int index)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("pageNumber", message_pageNumber);
+    //    form.AddField("pageSize", message_pageSize);
+    //    if (message_receivedGroupId != 0)
+    //    {
+    //        form.AddField("receivedGroupId", message_receivedGroupId);
+    //    }
+    //    else if (message_receiverId != 0)
+    //    {
+    //        form.AddField("receiverId", message_receiverId);
+    //    }
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatGetAttachments), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            // Debug.Log(www.error);
+    //            //Debug.Log("data" + www.downloadHandler);
+    //            // Debug.Log("data" + www.downloadHandler.text);
+
+    //            MessageController.Instance.LoaderShow(false);//False api loader.
+
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Get Attachment Error:" + data);
+    //            AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
+    //            if (AllChatAttachmentsRoot != null)
+    //            {
+    //                if (AllChatAttachmentsRoot.msg == "No attachments found")
+    //                {
+    //                    if (index == 0)
+    //                    {
+    //                        foreach (Transform item in MessageController.Instance.chatShareAttechmentparent)
+    //                        {
+    //                            Destroy(item.gameObject);
+    //                        }
+    //                        apiController.SetChatMember();
+    //                    }
+    //                    else if (index == 1)
+    //                    {
+    //                        MessageController.Instance.NoAttechmentScreen.SetActive(true);
+    //                        MessageController.Instance.chatShareAttechmentparent.gameObject.SetActive(false);
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Get Attachment Data: " + data);
+    //            var settings = new JsonSerializerSettings
+    //            {
+    //                NullValueHandling = NullValueHandling.Ignore,
+    //                MissingMemberHandling = MissingMemberHandling.Ignore
+    //            };
+    //            AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data, settings);
+    //            //AllChatAttachmentsRoot = JsonConvert.DeserializeObject<ChatAttachmentsRoot>(data);
+
+    //            apiController.GetAllAttachments(index);
+    //            // Debug.Log(root.data.count);
+    //        }
+    //    }
+    //}
+
+    ////this api is used to create group.......
+    //public void RequestChatCreateGroup(string createGroupName, string createGroupUserIds, string groupAvatarUrl)
+    //{
+    //    StartCoroutine(IERequestChatCreateGroup(createGroupName, createGroupUserIds, groupAvatarUrl));
+    //}
+    //public IEnumerator IERequestChatCreateGroup(string createGroupName, string createGroupUserIds, string groupAvatarUrl)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("name", createGroupName);
+    //    form.AddField("userIds", createGroupUserIds);
+    //    form.AddField("avatar", groupAvatarUrl);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatCreateGroup), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Message Chat: " + data);
+    //            var settings = new JsonSerializerSettings
+    //            {
+    //                NullValueHandling = NullValueHandling.Ignore,
+    //                MissingMemberHandling = MissingMemberHandling.Ignore
+    //            };
+    //            ChatCreateGroupRoot = JsonConvert.DeserializeObject<ChatCreateGroupRoot>(data, settings);
+
+    //            //Debug.Log("msg : " + MessageController.Instance.typeMessageText.text);
+    //            //Debug.Log("msg : " + MessageController.Instance.chatTypeMessageInputfield.Text);
+    //            yield return new WaitForSeconds(0.1f);
+
+    //            // RequestChatCreateMessage(0, ChatCreateGroupRoot.data.id,MessageController.Instance.typeMessageText.text,"");
+    //            // RequestChatGetConversation();
+    //            // RequestChatGetMessages(1, 50, 0,ChatCreateGroupRoot.data.id);
+    //            // MessageController.Instance.typeMessageText.text = "";
+    //            // apiController.GetAllChat();
+    //            // Debug.Log(root.data.count);
+    //        }
+    //    }
+    //}
+
+    ////this api is used to add member on group.......
+    //public void RequestAddGroupMember(string groupId, string conversationId, string userIds)
+    //{
+    //    StartCoroutine(IERequestAddGroupMember(groupId, conversationId, userIds));
+    //}
+    //public IEnumerator IERequestAddGroupMember(string groupId, string conversationId, string userIds)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("groupId", groupId);
+    //    form.AddField("conversationId", conversationId);
+    //    form.AddField("userIds", userIds);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_AddGroupMember), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+
+    //            MessageController.Instance.LoaderShow(false);//false api loader 
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Add member success on group: " + data);
+    //            RequestChatGetConversation();//refresh conversation list to update group data
+    //        }
+    //    }
+    //}
+
+    ////this api is used to Update group info.......
+    //public void RequestUpdateGroupInfo(string groupId, string groupName, string avatar)
+    //{
+    //    StartCoroutine(IERequestUpdateGroupInfo(groupId, groupName, avatar));
+    //}
+    //public IEnumerator IERequestUpdateGroupInfo(string groupId, string groupName, string avatar)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("groupId", groupId);
+    //    form.AddField("name", groupName);
+    //    form.AddField("avatar", avatar);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateGroupInfo), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//false loader screen.
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Update Success Group Info: " + data);
+    //            MessageController.Instance.UpdateGroupInFoSuccessResponce();
+    //        }
+    //    }
+    //}
+
+    ////this api is used to create message.......
+    //public void RequestChatCreateMessage(int createMessageReceiverId, int createMessageReceivedGroupId, string createMessageMsg, string createMessageType, string createMessageAttachments)
+    //{
+    //    StartCoroutine(IERequestChatCreateMessage(createMessageReceiverId, createMessageReceivedGroupId, createMessageMsg, createMessageType, createMessageAttachments));
+    //}
+    //public IEnumerator IERequestChatCreateMessage(int createMessageReceiverId, int createMessageReceivedGroupId, string createMessageMsg, string createMessageType, string createMessageAttachments)
+    //{
+    //    WWWForm form = new WWWForm();
+    //    if (createMessageReceivedGroupId != 0)
+    //    {
+    //        form.AddField("receivedGroupId", createMessageReceivedGroupId);
+    //    }
+    //    else if (createMessageReceiverId != 0)
+    //    {
+    //        form.AddField("receiverId", createMessageReceiverId);
+    //    }
+
+    //    if (!string.IsNullOrEmpty(createMessageMsg))
+    //    {
+    //        string encodeSTR = EncodedString(createMessageMsg);
+    //        Debug.Log("Encode STR:" + encodeSTR);
+    //        form.AddField("msg", encodeSTR);
+    //    }
+
+    //    if (!string.IsNullOrEmpty(createMessageType))
+    //    {
+    //        form.AddField("type", createMessageType);
+    //    }
+
+    //    if (!string.IsNullOrEmpty(createMessageAttachments))
+    //    {
+    //        Debug.Log("attachments: " + createMessageAttachments);
+    //        form.AddField("attachments", createMessageAttachments);
+    //    }
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_ChatCreateMessage), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+    //        //Debug.Log("receiverId" + createMessageReceiverId);
+    //        //Debug.Log("receivedGroupId" + createMessageReceivedGroupId);
+    //        //Debug.Log("msg" + createMessageMsg);
+    //        // Debug.Log("attachments" + createMessageAttachments);
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //            r_isCreateMessage = false;
+
+    //            MessageController.Instance.isLeaveGroup = false;//if create message is failed  then false LeaveGroup bool.
+
+    //            MessageController.Instance.LoaderShow(false);//rik loader false.......
+    //            MessageController.Instance.OnClcikSendMessageButtonbool = false;
+    //        }
+    //        else
+    //        {
+    //            // Debug.Log("Form upload complete!");
+    //            string data = www.downloadHandler.text;
+    //            //Debug.Log("Message : " + data);
+    //            // RequestChatGetConversation();
+    //            var settings = new JsonSerializerSettings
+    //            {
+    //                NullValueHandling = NullValueHandling.Ignore,
+    //                MissingMemberHandling = MissingMemberHandling.Ignore
+    //            };
+    //            AllChatCreateMessageRoot = JsonConvert.DeserializeObject<ChatCreateMessageRoot>(data, settings);
+
+    //            yield return new WaitForSeconds(0f);
+
+    //            MessageController.Instance.LoaderShow(false);//rik loader false.......
+    //            Debug.Log("Chat CreateMessage success:" + MessageController.Instance.isLeaveGroup + "  :Data:" + data);
+    //            if (!MessageController.Instance.isLeaveGroup)//not get message api call after leave group.......
+    //            {
+    //                if (AllChatCreateMessageRoot.data.receivedGroupId != 0)
+    //                {
+    //                    //Debug.Log("receivedGroupId" + AllChatCreateMessageRoot.data.receivedGroupId);
+    //                    //MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //                    RequestChatGetMessages(1, 50, 0, AllChatCreateMessageRoot.data.receivedGroupId, "Conversation");
+    //                }
+    //                else
+    //                {
+    //                    //Debug.Log("user id:" + userId + "    :receiverId:" + AllChatCreateMessageRoot.data.receiverId);
+    //                    if (AllChatCreateMessageRoot.data.receiverId == userId)
+    //                    {
+    //                        //MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //                        RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.senderId, 0, "Conversation");
+    //                    }
+    //                    else
+    //                    {
+    //                        //MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //                        RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0, "Conversation");
+    //                    }
+    //                    //  RequestChatGetMessages(1, 50, AllChatCreateMessageRoot.data.receiverId, 0);
+    //                }
+    //                //MessageController.Instance.typeMessageText.text = "";
+    //                MessageController.Instance.chatTypeMessageInputfield.Text = "";
+    //                MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+    //                // Debug.Log(root.data.count);
+
+    //                if (!string.IsNullOrEmpty(MessageController.Instance.isDirectMessageFirstTimeRecivedID))
+    //                {
+    //                    RequestChatGetConversation();
+    //                }
+    //            }
+    //            else
+    //            {
+    //                MessageController.Instance.isLeaveGroup = false;//set leave group bool false.......
+    //            }
+    //            MessageController.Instance.OnClcikSendMessageButtonbool = false;
+    //        }
+    //    }
+    //}
+
+    ////this api is used to Leave the chat.......
+    //public void RequestLeaveTheChat(string groupId, string callingFrom)
+    //{
+    //    StartCoroutine(IERequestLeaveTheChat(groupId, callingFrom));
+    //}
+    //public IEnumerator IERequestLeaveTheChat(string groupId, string callingFrom)
+    //{
+    //    Debug.Log("Group ID:" + groupId + "    :CallingFrom:" + callingFrom);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("id", groupId);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_LeaveTheChat), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Leave The Chat success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Leave The Chat: " + data);
+    //            switch (callingFrom)
+    //            {
+    //                case "ConversationScreen":
+    //                    MessageController.Instance.DeleteConversationWithLeaveGroupApiResponseSuccess(groupId);
+    //                    break;
+    //                case "DetailsScreen":
+    //                    apiController.LeaveTheChatCallBack(groupId);
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
+
+    ////this api is used to Remove member from group chat.......
+    //public void RequestRemoveGroupMember(int groupId, int userId)
+    //{
+    //    MessageController.Instance.LoaderShow(true);//rik loader false.......
+    //    StartCoroutine(IERequestRemoveGroupMember(groupId, userId));
+    //}
+    //public IEnumerator IERequestRemoveGroupMember(int groupId, int userId)
+    //{
+    //    Debug.Log("Remove Group member Group ID:" + groupId + "    :UserId:" + userId);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("groupId", groupId);
+    //    form.AddField("userId", userId);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveGroupMember), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//rik loader false.......
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Remove group member from Group Chat success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Remove group member data: " + data);
+    //            MessageController.Instance.RemoveMemberApiResponseSuccess();
+    //        }
+    //    }
+    //}
+
+    ////this api is used to Delete Conversation.......
+    //public void RequestDeleteConversation(int conversationId)
+    //{
+    //    MessageController.Instance.LoaderShow(true);//rik loader false.......
+    //    StartCoroutine(IERequestDeleteConversation(conversationId));
+    //}
+    //public IEnumerator IERequestDeleteConversation(int conversationId)
+    //{
+    //    Debug.Log("Delete conversation ID:" + conversationId);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("conversationId", conversationId);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteConversation), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//rik loader false.......
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Delete conversation success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Delete conversation data: " + data);
+    //            MessageController.Instance.DeleteConversationApiResponseSuccess("Conversation Deleted");
+    //        }
+    //    }
+    //}
+
+    ////this api is used to Delete Conversation.......
+    //public void RequestDeleteChatGroup(int groupId, string callingFrom)
+    //{
+    //    MessageController.Instance.LoaderShow(true);//rik loader false.......
+    //    StartCoroutine(IERequestDeleteChatGroup(groupId, callingFrom));
+    //}
+    //public IEnumerator IERequestDeleteChatGroup(int groupId, string callingFrom)
+    //{
+    //    Debug.Log("Delete Group Chat GroupID:" + groupId);
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("groupId", groupId);
+
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_DeleteChatGroup), form))
+    //    {
+    //        www.SetRequestHeader("Authorization", userAuthorizeToken);
+
+    //        yield return www.SendWebRequest();
+
+    //        MessageController.Instance.LoaderShow(false);//rik loader false.......
+
+    //        if (www.isNetworkError || www.isHttpError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            //Debug.Log("Delete Group Chat success!");
+    //            string data = www.downloadHandler.text;
+    //            Debug.Log("Delete Group Chat data: " + data);
+    //            switch (callingFrom)
+    //            {
+    //                case "ConversationScreen":
+    //                    MessageController.Instance.DeleteConversationApiResponseSuccess("Group Deleted");
+    //                    break;
+    //                case "DetailsScreen":
+    //                    MessageController.Instance.DeleteGroupChatApiResponseSuccess();
+    //                    break;
+    //                default:
+    //                    break;
+    //            }
+    //        }
+    //    }
+    //}
     #endregion
 
     #region Encode or Decode String.......
@@ -3109,13 +3109,13 @@ public class APIManager : MonoBehaviour
     #endregion
 
     #region Clear FeedDataAfterLogout.......
-    public void ClearAllFeedDataForLogout()
-    {
-        allUserRootList.Clear();
-        hotSaveRootList.Clear();
-        followingUserTabSaveRootList.Clear();
-        allFollowingUserRootList.Clear();
-    }
+    //public void ClearAllFeedDataForLogout()
+    //{
+    //    //allUserRootList.Clear();
+    //    //hotSaveRootList.Clear();
+    //    followingUserTabSaveRootList.Clear();
+    //    allFollowingUserRootList.Clear();
+    //}
     #endregion
 
     #region Check Usl is contains http/https or not
@@ -3136,34 +3136,34 @@ public class APIManager : MonoBehaviour
     [Header("My Profile Data")]
     public GetUserDetailRoot myProfileDataRoot = new GetUserDetailRoot();
 
-    [Header("Hot Tab Data")]
-    public AllUserWithFeedRoot root = new AllUserWithFeedRoot();
-    public HotFeedRoot hotFeedRoot = new HotFeedRoot();
-    public HotFeedRoot allhotFeedRoot = new HotFeedRoot();
-    public List<AllUserWithFeedRow> allUserRootList = new List<AllUserWithFeedRow>();
-    private List<AllUserWithFeedRow> hotSaveRootList = new List<AllUserWithFeedRow>();
-    private AllUserWithFeedRoot hotSavejsonList = new AllUserWithFeedRoot();
+    //[Header("Hot Tab Data")]
+    //public AllUserWithFeedRoot root = new AllUserWithFeedRoot();
+    //public HotFeedRoot hotFeedRoot = new HotFeedRoot();
+    //public HotFeedRoot allhotFeedRoot = new HotFeedRoot();
+    //public List<AllUserWithFeedRow> allUserRootList = new List<AllUserWithFeedRow>();
+    //private List<AllUserWithFeedRow> hotSaveRootList = new List<AllUserWithFeedRow>();
+    //private AllUserWithFeedRoot hotSavejsonList = new AllUserWithFeedRoot();
 
-    [Header("Following Tab Data")]
-    public FeedsByFollowingUserRoot followingUserRoot = new FeedsByFollowingUserRoot();
-    public List<FeedsByFollowingUserRow> allFollowingUserRootList = new List<FeedsByFollowingUserRow>();
-    private List<FeedsByFollowingUserRow> followingUserTabSaveRootList = new List<FeedsByFollowingUserRow>();
-    private FeedsByFollowingUserRoot followingUserTabSavejsonList = new FeedsByFollowingUserRoot();
+    //[Header("Following Tab Data")]
+    ////public FeedsByFollowingUserRoot followingUserRoot = new FeedsByFollowingUserRoot();
+    //public List<FeedsByFollowingUserRow> allFollowingUserRootList = new List<FeedsByFollowingUserRow>();
+    //private List<FeedsByFollowingUserRow> followingUserTabSaveRootList = new List<FeedsByFollowingUserRow>();
+    //private FeedsByFollowingUserRoot followingUserTabSavejsonList = new FeedsByFollowingUserRoot();
 
     //public AllFeedRoot AlluserData = new AllFeedRoot();
     //public AllFeedRow userPostData = new AllFeedRow();
     [Header("Single User All Feed Data")]
-    public AllFeedByUserIdRoot allFeedWithUserIdRoot = new AllFeedByUserIdRoot();
+    //public AllFeedByUserIdRoot allFeedWithUserIdRoot = new AllFeedByUserIdRoot();
     public AllTextPostByUserIdRoot allTextPostWithUserIdRoot = new AllTextPostByUserIdRoot();
     //For Temp use
-    public FeedResponse allTextPostFeedWithUserIdRoot = new FeedResponse();
-    public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
+    //public FeedResponse allTextPostFeedWithUserIdRoot = new FeedResponse();
+    //public TaggedFeedsByUserIdRoot taggedFeedsByUserIdRoot = new TaggedFeedsByUserIdRoot();
 
     public SearchUserRoot searchUserRoot = new SearchUserRoot();
     public HotUsersRoot hotUsersRoot = new HotUsersRoot();
-    public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
+    //public AllFollowersRoot AllFollowerRoot = new AllFollowersRoot();
     public AllFollowingRoot allFollowingRoot = new AllFollowingRoot();
-    public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
+    //public AllFollowingRoot adFrndFollowingRoot = new AllFollowingRoot();
 
     [Space]
     [Header("Profile Follower Following")]
@@ -3172,19 +3172,19 @@ public class APIManager : MonoBehaviour
     public AllFollowingRoot AdFrndFollowingRoot = new AllFollowingRoot();
     public UserLatestAvatarData VisitedUserAvatarData = new UserLatestAvatarData();
 
-    [Space]
-    [Header("Current Feed Comment List Response")]
-    [SerializeField]
-    private CommentDetails commentFeedList = new CommentDetails();
+    //[Space]
+    //[Header("Current Feed Comment List Response")]
+    //[SerializeField]
+    //private CommentDetails commentFeedList = new CommentDetails();
 
-    [Space]
-    [Header("Message Module")]
-    public ChatGetConversationRoot allChatGetConversationRoot = new ChatGetConversationRoot();
-    public ChatGetMessagesRoot allChatMessagesRoot = new ChatGetMessagesRoot();
-    public ChatCreateGroupRoot ChatCreateGroupRoot = new ChatCreateGroupRoot();
-    public ChatCreateMessageRoot AllChatCreateMessageRoot = new ChatCreateMessageRoot();
-    public ChatAttachmentsRoot AllChatAttachmentsRoot = new ChatAttachmentsRoot();
-    //private Sprite sprite;    
+    //[Space]
+    //[Header("Message Module")]
+    //public ChatGetConversationRoot allChatGetConversationRoot = new ChatGetConversationRoot();
+    //public ChatGetMessagesRoot allChatMessagesRoot = new ChatGetMessagesRoot();
+    //public ChatCreateGroupRoot ChatCreateGroupRoot = new ChatCreateGroupRoot();
+    //public ChatCreateMessageRoot AllChatCreateMessageRoot = new ChatCreateMessageRoot();
+    //public ChatAttachmentsRoot AllChatAttachmentsRoot = new ChatAttachmentsRoot();
+    ////private Sprite sprite;    
 }
 
 public enum ExtentionType { Image, Video, Audio };
@@ -3240,13 +3240,13 @@ public class GetUserDetailRoot
     public string msg;
 }
 
-[System.Serializable]
-public class UpdateUserAvatarRoot
-{
-    public bool success;
-    public object data;
-    public string msg;
-}
+//[System.Serializable]
+//public class UpdateUserAvatarRoot
+//{
+//    public bool success;
+//    public object data;
+//    public string msg;
+//}
 
 [System.Serializable]
 public class UpdateUserProfileData
@@ -3262,21 +3262,21 @@ public class UpdateUserProfileData
     public DateTime createdAt;
 }
 
-[System.Serializable]
-public class UpdateUserProfileRoot
-{
-    public bool success;
-    public UpdateUserProfileData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class UpdateUserProfileRoot
+//{
+//    public bool success;
+//    public UpdateUserProfileData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class DeletAccountRoot
-{
-    public bool success;
-    public object data;
-    public string msg;
-}
+//[System.Serializable]
+//public class DeletAccountRoot
+//{
+//    public bool success;
+//    public object data;
+//    public string msg;
+//}
 
 [System.Serializable]
 public class WebSiteValidRoot
@@ -3467,58 +3467,58 @@ public class FeedsByFollowingUserData
     public List<FeedsByFollowingUserRow> Rows;
 }
 
-[System.Serializable]
-public class FeedsByFollowingUserRoot
-{
-    public bool Success;
-    public FeedsByFollowingUserData Data = new FeedsByFollowingUserData();
-    public string Msg;
-}
+//[System.Serializable]
+//public class FeedsByFollowingUserRoot
+//{
+//    public bool Success;
+//    public FeedsByFollowingUserData Data = new FeedsByFollowingUserData();
+//    public string Msg;
+//}
 
-[System.Serializable]
-public class TaggedFeedsByUserIdFeed
-{
-    public int id;
-    public string title;
-    public string descriptions;
-    public string image;
-    public string video;
-    public int likeCount;
-    public bool isAllowComment;
-    public bool isHide;
-    public bool isDeleted;
-    public int createdBy;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public bool isLike;
-    public int commentCount;
-}
+//[System.Serializable]
+//public class TaggedFeedsByUserIdFeed
+//{
+//    public int id;
+//    public string title;
+//    public string descriptions;
+//    public string image;
+//    public string video;
+//    public int likeCount;
+//    public bool isAllowComment;
+//    public bool isHide;
+//    public bool isDeleted;
+//    public int createdBy;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public bool isLike;
+//    public int commentCount;
+//}
 
-[System.Serializable]
-public class TaggedFeedsByUserIdRow
-{
-    public int id;
-    public int feedId;
-    public int userId;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public TaggedFeedsByUserIdFeed feed;
-}
+//[System.Serializable]
+//public class TaggedFeedsByUserIdRow
+//{
+//    public int id;
+//    public int feedId;
+//    public int userId;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public TaggedFeedsByUserIdFeed feed;
+//}
 
-[System.Serializable]
-public class TaggedFeedsByUserIdData
-{
-    public int count;
-    public List<TaggedFeedsByUserIdRow> rows;
-}
+//[System.Serializable]
+//public class TaggedFeedsByUserIdData
+//{
+//    public int count;
+//    public List<TaggedFeedsByUserIdRow> rows;
+//}
 
-[System.Serializable]
-public class TaggedFeedsByUserIdRoot
-{
-    public bool success;
-    public TaggedFeedsByUserIdData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class TaggedFeedsByUserIdRoot
+//{
+//    public bool success;
+//    public TaggedFeedsByUserIdData data;
+//    public string msg;
+//}
 
 [System.Serializable]
 public class AllFeedByUserIdRow
@@ -3570,87 +3570,87 @@ public class AllTextPostByUserIdData
     public List<FeedResponseRow> rows;
 }
 
-[System.Serializable]
-public class AllTextPostByUserIdRow
-{
-    public int id;
-    public int user_id;
-    public string text_post;
-    public string text_mood;
-    public int like_count;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public bool isLikedByUser;
-    public UserData user;
-}
+//[System.Serializable]
+//public class AllTextPostByUserIdRow
+//{
+//    public int id;
+//    public int user_id;
+//    public string text_post;
+//    public string text_mood;
+//    public int like_count;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public bool isLikedByUser;
+//    public UserData user;
+//}
 
-[System.Serializable]
-public class UserData
-{
-    public int id;
-    public string name;
-    public string avatar;
-}
+//[System.Serializable]
+//public class UserData
+//{
+//    public int id;
+//    public string name;
+//    public string avatar;
+//}
 
-/// <summary>
-/// All Following Classes
-/// </summary>
-[System.Serializable]
-public class HotFeedData
-{
-    public int count;
-    public List<HotFeed> rows = new List<HotFeed>();
-}
+///// <summary>
+///// All Following Classes
+///// </summary>
+//[System.Serializable]
+//public class HotFeedData
+//{
+//    public int count;
+//    public List<HotFeed> rows = new List<HotFeed>();
+//}
 
-[System.Serializable]
-public class HotFeedRoot
-{
-    public bool success;
-    public HotFeedData data = new HotFeedData();
-    public string msg;
-}
+//[System.Serializable]
+//public class HotFeedRoot
+//{
+//    public bool success;
+//    public HotFeedData data = new HotFeedData();
+//    public string msg;
+//}
 
-[System.Serializable]
-public class HotFeed
-{
-    public int id;
-    public string title;
-    public string descriptions;
-    public string image;
-    public string video;
-    public string thumbnail;
-    public int likeCount;
-    public bool isAllowComment;
-    public bool isHide;
-    public bool isDeleted;
-    public int createdBy;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public HotFeedUser user = new HotFeedUser();
-    public List<string> feedTags = new List<string>();
-    public bool isLike;
-    public int commentCount;
-}
+//[System.Serializable]
+//public class HotFeed
+//{
+//    public int id;
+//    public string title;
+//    public string descriptions;
+//    public string image;
+//    public string video;
+//    public string thumbnail;
+//    public int likeCount;
+//    public bool isAllowComment;
+//    public bool isHide;
+//    public bool isDeleted;
+//    public int createdBy;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public HotFeedUser user = new HotFeedUser();
+//    public List<string> feedTags = new List<string>();
+//    public bool isLike;
+//    public int commentCount;
+//}
 
-[System.Serializable]
-public class FeedComment
-{
-    public int id;
-    public int feedId;
-    public string comment;
-    public int createdBy;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public User user;
-}
-[System.Serializable]
-public class HotFeedUser
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class FeedComment
+//{
+//    public int id;
+//    public int feedId;
+//    public string comment;
+//    public int createdBy;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public User user;
+//}
+//[System.Serializable]
+//public class HotFeedUser
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
 /// /// <summary>
 /// User Latest Avatar Data Classes
@@ -3791,12 +3791,12 @@ public class AdCloseFrndRoot
     public string msg;
 }
 
-//[System.Serializable]
-//public class AdCloseFrndData
-//{
-//    public int count;
-//    public List<AdCloseFrndRow> rows;
-//}
+[System.Serializable]
+public class AdCloseFrndData
+{
+    public int count;
+    public List<AdCloseFrndRow> rows;
+}
 
 
 [System.Serializable]
@@ -3871,21 +3871,21 @@ public class AllFollowAUserData
     public DateTime createdAt;
 }
 
-[System.Serializable]
-public class AllFollowAUserRoot
-{
-    public bool success;
-    public AllFollowAUserData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class AllFollowAUserRoot
+//{
+//    public bool success;
+//    public AllFollowAUserData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class MakeAllFavouriteFollowerRoot
-{
-    public bool success;
-    public string data;
-    public string msg;
-}
+//[System.Serializable]
+//public class MakeAllFavouriteFollowerRoot
+//{
+//    public bool success;
+//    public string data;
+//    public string msg;
+//}
 
 [System.Serializable]
 public class AllFeedRow
@@ -3913,38 +3913,38 @@ public class AllFeedData
     public List<AllFeedRow> rows;
 }
 
-[System.Serializable]
-public class AllFeedRoot
-{
-    public bool success;
-    public AllFeedData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class AllFeedRoot
+//{
+//    public bool success;
+//    public AllFeedData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class AllCreateFeedData
-{
-    public int likeCount;
-    public bool isHide;
-    public bool isDeleted;
-    public int id;
-    public string title;
-    public string descriptions;
-    public string image;
-    public string video;
-    public bool isAllowComment;
-    public int createdBy;
-    public DateTime updatedAt;
-    public DateTime createdAt;
-}
+//[System.Serializable]
+//public class AllCreateFeedData
+//{
+//    public int likeCount;
+//    public bool isHide;
+//    public bool isDeleted;
+//    public int id;
+//    public string title;
+//    public string descriptions;
+//    public string image;
+//    public string video;
+//    public bool isAllowComment;
+//    public int createdBy;
+//    public DateTime updatedAt;
+//    public DateTime createdAt;
+//}
 
-[System.Serializable]
-public class AllCreateFeedRoot
-{
-    public bool success;
-    public AllCreateFeedData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class AllCreateFeedRoot
+//{
+//    public bool success;
+//    public AllCreateFeedData data;
+//    public string msg;
+//}
 
 [System.Serializable]
 public class SearchUserRow
@@ -3977,364 +3977,364 @@ public class SearchUserRoot
     public string msg;
 }
 
-/// <summary>
-/// Feed Edit or Delete Option Class.......
-/// </summary>
-/// 
-[System.Serializable]
-public class FeedEditOrDeleteData
-{
-    public int feedId;
-    public string feedTitle;
-    public string feedDescriptions;
-    public string feedImage;
-    public string feedVideo;
-    public int feedCreatedBy;
-    public DateTime CreatedAt;
-    public DateTime UpdatedAt;
-    public FeedsByFollowingUser userData;
-}
+///// <summary>
+///// Feed Edit or Delete Option Class.......
+///// </summary>
+///// 
+//[System.Serializable]
+//public class FeedEditOrDeleteData
+//{
+//    public int feedId;
+//    public string feedTitle;
+//    public string feedDescriptions;
+//    public string feedImage;
+//    public string feedVideo;
+//    public int feedCreatedBy;
+//    public DateTime CreatedAt;
+//    public DateTime UpdatedAt;
+//    public FeedsByFollowingUser userData;
+//}
 //----------------------------------------------------
 
 /// <summary>
 /// Feed Like or DisLike Class.......
 /// </summary>
 /// 
-[System.Serializable]
-public class FeedLikeDisLikeData
-{
-    public int id;
-    public int feedId;
-    public int createdBy;
-    public DateTime updatedAt;
-    public DateTime createdAt;
-    public int likeCount;
-}
+//[System.Serializable]
+//public class FeedLikeDisLikeData
+//{
+//    public int id;
+//    public int feedId;
+//    public int createdBy;
+//    public DateTime updatedAt;
+//    public DateTime createdAt;
+//    public int likeCount;
+//}
 
-[System.Serializable]
-public class FeedLikeDisLikeRoot
-{
-    public bool success;
-    public FeedLikeDisLikeData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class FeedLikeDisLikeRoot
+//{
+//    public bool success;
+//    public FeedLikeDisLikeData data;
+//    public string msg;
+//}
 //----------------------------------------------------
 #endregion
 
 #region chat classes........................................................................
-[System.Serializable]
-public class ChatMuteUnMuteRoot
-{
-    public bool success;
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatMuteUnMuteRoot
+//{
+//    public bool success;
+//    public string msg;
+//}
 
 
-[System.Serializable]
-public class ChatCreateGroupData
-{
-    public int id;
-    public string name;
-    public int createdBy;
-    public string avatar;
-    public DateTime updatedAt;
-    public DateTime createdAt;
-}
+//[System.Serializable]
+//public class ChatCreateGroupData
+//{
+//    public int id;
+//    public string name;
+//    public int createdBy;
+//    public string avatar;
+//    public DateTime updatedAt;
+//    public DateTime createdAt;
+//}
 
-[System.Serializable]
-public class ChatCreateGroupRoot
-{
-    public bool success;
-    public ChatCreateGroupData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatCreateGroupRoot
+//{
+//    public bool success;
+//    public ChatCreateGroupData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class ChatGetConversationReceiver
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class ChatGetConversationReceiver
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class ChatGetConversationSender
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class ChatGetConversationSender
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class ChatGetConversationUser
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class ChatGetConversationUser
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class ChatGetConversationGroupUser
-{
-    public int id;
-    public int userId;
-    public int groupId;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public ChatGetConversationUser user;
-    public bool isFollowing;
-}
+//[System.Serializable]
+//public class ChatGetConversationGroupUser
+//{
+//    public int id;
+//    public int userId;
+//    public int groupId;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public ChatGetConversationUser user;
+//    public bool isFollowing;
+//}
 
-[System.Serializable]
-public class ChatGetConversationGroup
-{
-    public int id;
-    public string name;
-    public string avatar;
-    public int createdBy;
-    public bool isDeleted;
-    public List<ChatGetConversationGroupUser> groupUsers = new List<ChatGetConversationGroupUser>();
-}
-[System.Serializable]
-public class ChatGetConversationsReadCount
-{
-    public int id;
-    public int conversationId;
-    public int userId;
-    public int unReadCount;
-}
+//[System.Serializable]
+//public class ChatGetConversationGroup
+//{
+//    public int id;
+//    public string name;
+//    public string avatar;
+//    public int createdBy;
+//    public bool isDeleted;
+//    public List<ChatGetConversationGroupUser> groupUsers = new List<ChatGetConversationGroupUser>();
+//}
+//[System.Serializable]
+//public class ChatGetConversationsReadCount
+//{
+//    public int id;
+//    public int conversationId;
+//    public int userId;
+//    public int unReadCount;
+//}
 
-[System.Serializable]
-public class ChatGetConversationDatum
-{
-    public int id;
-    public int receiverId;
-    public int receivedGroupId;
-    public int senderId;
-    public string lastMsg;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public bool isDeleted;
-    public ChatGetConversationReceiver ConReceiver;
-    public ChatGetConversationSender ConSender;
-    public ChatGetConversationGroup group;
-    public List<ChatGetConversationsReadCount> conversationsReadCounts;
-    public List<string> mutedConversations;
-    public bool isMutedConversations;
-}
+//[System.Serializable]
+//public class ChatGetConversationDatum
+//{
+//    public int id;
+//    public int receiverId;
+//    public int receivedGroupId;
+//    public int senderId;
+//    public string lastMsg;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public bool isDeleted;
+//    public ChatGetConversationReceiver ConReceiver;
+//    public ChatGetConversationSender ConSender;
+//    public ChatGetConversationGroup group;
+//    public List<ChatGetConversationsReadCount> conversationsReadCounts;
+//    public List<string> mutedConversations;
+//    public bool isMutedConversations;
+//}
 
-[System.Serializable]
-public class ChatGetConversationRoot
-{
-    public bool success;
-    public List<ChatGetConversationDatum> data = new List<ChatGetConversationDatum>();
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatGetConversationRoot
+//{
+//    public bool success;
+//    public List<ChatGetConversationDatum> data = new List<ChatGetConversationDatum>();
+//    public string msg;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesReceiver
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class ChatGetMessagesReceiver
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesSender
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+//[System.Serializable]
+//public class ChatGetMessagesSender
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesAttachment
-{
-    public int id;
-    public string url;
-}
+//[System.Serializable]
+//public class ChatGetMessagesAttachment
+//{
+//    public int id;
+//    public string url;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesMessage
-{
-    public int id;
-    public string msg;
-    public string type;
-    public List<ChatGetMessagesAttachment> attachments;
-}
+//[System.Serializable]
+//public class ChatGetMessagesMessage
+//{
+//    public int id;
+//    public string msg;
+//    public string type;
+//    public List<ChatGetMessagesAttachment> attachments;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesRow
-{
-    public int id;
-    public int receiverId;
-    public int receivedGroupId;
-    public int messageId;
-    public int senderId;
-    public bool isRead;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public ChatGetMessagesReceiver receiver;
-    public ChatGetMessagesSender sender;
-    public ChatGetMessagesMessage message;
-}
+//[System.Serializable]
+//public class ChatGetMessagesRow
+//{
+//    public int id;
+//    public int receiverId;
+//    public int receivedGroupId;
+//    public int messageId;
+//    public int senderId;
+//    public bool isRead;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public ChatGetMessagesReceiver receiver;
+//    public ChatGetMessagesSender sender;
+//    public ChatGetMessagesMessage message;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesData
-{
-    public int count;
-    public List<ChatGetMessagesRow> rows;
-}
+//[System.Serializable]
+//public class ChatGetMessagesData
+//{
+//    public int count;
+//    public List<ChatGetMessagesRow> rows;
+//}
 
-[System.Serializable]
-public class ChatGetMessagesRoot
-{
-    public bool success;
-    public ChatGetMessagesData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatGetMessagesRoot
+//{
+//    public bool success;
+//    public ChatGetMessagesData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class ChatCreateMessageData
-{
-    public int id;
-    public int senderId;
-    public int messageId;
-    public int receiverId;
-    public DateTime updatedAt;
-    public DateTime createdAt;
-    public int receivedGroupId;
-    public int userId;
-    public int groupId;
-}
+//[System.Serializable]
+//public class ChatCreateMessageData
+//{
+//    public int id;
+//    public int senderId;
+//    public int messageId;
+//    public int receiverId;
+//    public DateTime updatedAt;
+//    public DateTime createdAt;
+//    public int receivedGroupId;
+//    public int userId;
+//    public int groupId;
+//}
 
-[System.Serializable]
-public class ChatCreateMessageRoot
-{
-    public bool success;
-    public ChatCreateMessageData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatCreateMessageRoot
+//{
+//    public bool success;
+//    public ChatCreateMessageData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class ChatAttachmentMessageRecipient
-{
-    public int id;
-    public int receiverId;
-    public string receivedGroupId;
-    public int messageId;
-    public int senderId;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public ChatGetMessagesReceiver receiver;
-    public ChatGetMessagesSender sender;
-}
+//[System.Serializable]
+//public class ChatAttachmentMessageRecipient
+//{
+//    public int id;
+//    public int receiverId;
+//    public string receivedGroupId;
+//    public int messageId;
+//    public int senderId;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public ChatGetMessagesReceiver receiver;
+//    public ChatGetMessagesSender sender;
+//}
 
-[System.Serializable]
-public class ChatAttachmentMessage
-{
-    public int id;
-    public string msg;
-    public string type;
-    public ChatAttachmentMessageRecipient messageRecipient;
-}
+//[System.Serializable]
+//public class ChatAttachmentMessage
+//{
+//    public int id;
+//    public string msg;
+//    public string type;
+//    public ChatAttachmentMessageRecipient messageRecipient;
+//}
 
-[System.Serializable]
-public class ChatAttachmentsRow
-{
-    public int id;
-    public string url;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public ChatAttachmentMessage message;
-}
+//[System.Serializable]
+//public class ChatAttachmentsRow
+//{
+//    public int id;
+//    public string url;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public ChatAttachmentMessage message;
+//}
 
-[System.Serializable]
-public class ChatAttachmentsData
-{
-    public int count;
-    public List<ChatAttachmentsRow> rows;
-}
+//[System.Serializable]
+//public class ChatAttachmentsData
+//{
+//    public int count;
+//    public List<ChatAttachmentsRow> rows;
+//}
 
-[System.Serializable]
-public class ChatAttachmentsRoot
-{
-    public bool success;
-    public ChatAttachmentsData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class ChatAttachmentsRoot
+//{
+//    public bool success;
+//    public ChatAttachmentsData data;
+//    public string msg;
+//}
 #endregion
 
 #region Feed Comment.......
-///comment list
-///
-[System.Serializable]
-public class CommentUser
-{
-    public int id;
-    public string name;
-    public string email;
-    public string avatar;
-}
+/////comment list
+/////
+//[System.Serializable]
+//public class CommentUser
+//{
+//    public int id;
+//    public string name;
+//    public string email;
+//    public string avatar;
+//}
 
-[System.Serializable]
-public class CommentRow
-{
-    public int id;
-    public int feedId;
-    public string comment;
-    public int createdBy;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public CommentUser user;
-}
+//[System.Serializable]
+//public class CommentRow
+//{
+//    public int id;
+//    public int feedId;
+//    public string comment;
+//    public int createdBy;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public CommentUser user;
+//}
 
-[System.Serializable]
-public class CommentData
-{
-    public int count;
-    public List<CommentRow> rows;
-}
+//[System.Serializable]
+//public class CommentData
+//{
+//    public int count;
+//    public List<CommentRow> rows;
+//}
 
-[System.Serializable]
-public class CommentDetails
-{
-    public bool success;
-    public CommentData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class CommentDetails
+//{
+//    public bool success;
+//    public CommentData data;
+//    public string msg;
+//}
 
-[System.Serializable]
-public class CommentPost
-{
-    public int id;
-    public int feedId;
-    public string comment;
-    public int createdBy;
-    public DateTime createdAt;
-    public DateTime updatedAt;
-    public CommentUser user;
-}
+//[System.Serializable]
+//public class CommentPost
+//{
+//    public int id;
+//    public int feedId;
+//    public string comment;
+//    public int createdBy;
+//    public DateTime createdAt;
+//    public DateTime updatedAt;
+//    public CommentUser user;
+//}
 
-[System.Serializable]
-public class CommentPostData
-{
-    public int count;
-    public CommentPost commentPost;
-}
+//[System.Serializable]
+//public class CommentPostData
+//{
+//    public int count;
+//    public CommentPost commentPost;
+//}
 
-[System.Serializable]
-public class CommentPostDetail
-{
-    public bool success;
-    public CommentPostData data;
-    public string msg;
-}
+//[System.Serializable]
+//public class CommentPostDetail
+//{
+//    public bool success;
+//    public CommentPostData data;
+//    public string msg;
+//}
 #endregion
 #region Hot Users API Classes //Most Active Users in 24 hours
 [System.Serializable]
