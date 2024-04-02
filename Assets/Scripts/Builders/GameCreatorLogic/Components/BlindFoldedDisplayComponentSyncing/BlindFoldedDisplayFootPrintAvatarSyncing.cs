@@ -13,6 +13,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
     SkinnedMeshRenderer playerHead;
+    SkinnedMeshRenderer[] playerEyebrow;
     MeshRenderer playerFreeCamConsole;
     MeshRenderer playerFreeCamConsoleOther;
 
@@ -45,6 +46,16 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShoes)
                 playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornEyebrow.Length > 0)
+            {
+                int index = 0;
+                playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+                foreach (var eyeBrow in ac.wornEyebrow)
+                {
+                    playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                    index++;
+                }
+            }
             playerBody = charcterBodyParts.body;
             playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
@@ -100,6 +111,13 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
             playerPants.enabled = state;
         if (playerShoes)
             playerShoes.enabled = state;
+        if (playerEyebrow.Length > 0)
+        {
+            foreach (var eyeBrow in playerEyebrow)
+            {
+                eyeBrow.enabled = state;
+            }
+        }
         playerHead.enabled = state;
         playerFreeCamConsole.enabled = state;
         playerFreeCamConsoleOther.enabled = state;
