@@ -63,7 +63,13 @@ namespace Toyota
         public int roomNumber = 1;
         private StreamYoutubeVideo streamYoutubeVideo;
 
-
+        private void Awake()
+        {
+            imgVideo16x9.gameObject.SetActive(false);
+            imgVideo9x16.gameObject.SetActive(false);
+            imgVideo1x1.gameObject.SetActive(false);
+            imgVideo4x3.gameObject.SetActive(false);
+        }
         private void Start()
         {
                 imgVideo16x9.AddComponent<Button>();
@@ -399,13 +405,26 @@ namespace Toyota
         public void EraseDownloadedData()
         {
             if (imgVideo16x9.GetComponent<RawImage>().texture != null)
+            {
                 DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture, true);
+                imgVideo16x9.SetActive(false);
+            }
             else if (imgVideo9x16.GetComponent<RawImage>().texture != null)
+            {
                 DestroyImmediate(imgVideo9x16.GetComponent<RawImage>().texture, true);
+                imgVideo9x16.SetActive(false);
+            }
             else if (imgVideo1x1.GetComponent<RawImage>().texture != null)
+            {
+
                 DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+                imgVideo1x1.SetActive(false);
+            }
             else if (imgVideo4x3.GetComponent<RawImage>().texture != null)
+            {
                 DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
+                imgVideo4x3.SetActive(false);
+            }
             disableFrame.Invoke();
         }
 
