@@ -516,8 +516,11 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
-                    if (_mat.GetTexture("_Tex") == null)
-                        Debug.LogError("Main Texture null");
+                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId==32)
+                    {
+                        //Set texture when getting null from addressable
+                        _mat.SetTexture("_Tex", GamificationComponentData.instance.defaultSkyTex);
+                    }
                     RenderSettings.skybox = _mat;
                     directionalLight.transform.rotation = Quaternion.Euler(skyBoxItem.directionalLightData.directionLightRot);
                     directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
