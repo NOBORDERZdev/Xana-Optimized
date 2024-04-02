@@ -1136,7 +1136,7 @@ public class APIManager : MonoBehaviour
     #endregion
 
     #region Feed Comment.......
-    int lastCommentTotalCount;
+   // int lastCommentTotalCount;
     //this method is used to Comment button click and get comment list for current feed.......
     //public void CommentListGetAndClickFeedCommentButton(int currentId, bool isRefresh, int commentCount)
     //{
