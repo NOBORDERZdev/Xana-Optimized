@@ -14,6 +14,9 @@ public class AdditiveScenesManager : MonoBehaviour
     public GameObject SNSMessage;
     public BottomTabManager homeBottomTab;
     
+
+    public static bool isAppOpen = false;
+
     private void Start()
     {
         if(!XanaConstants.xanaConstants.JjWorldSceneChange)
@@ -55,6 +58,13 @@ public class AdditiveScenesManager : MonoBehaviour
             XanaConstants.xanaConstants.isBackfromSns=false;
         }
         LoadingHandler.Instance.HideLoading();
+
+        // Xana Analytics
+        if (!isAppOpen)
+        {
+            isAppOpen = true;
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.App_Started.ToString());
+        }
     }
     //IEnumerator AddDelaySNSMessageModule(float delay)
     //{

@@ -78,10 +78,7 @@ namespace RenderHeads.Media.AVProVideo
 		private static bool 	_isInitialised = false;
 		private static string 	_version = "Plug-in not yet initialised";
 
-//		private static System.IntPtr _nativeFunction_BeginRender;
-		private static System.IntPtr _nativeFunction_UpdateAllTextures;
-		private static System.IntPtr _nativeFunction_FreeTextures;
-		private static System.IntPtr _nativeFunction_ExtractFrame;
+		private static System.IntPtr _nativeFunction_UnityRenderEvent;
 
 #if AVPROVIDEO_FIXREGRESSION_TEXTUREQUALITY_UNITY542
 		private int _textureQuality = QualitySettings.masterTextureLimit;
@@ -117,14 +114,8 @@ namespace RenderHeads.Media.AVProVideo
 						{
 							_isInitialised = true;
 							_version = GetPluginVersion();
-//							_nativeFunction_BeginRender 		= Native.GetRenderEventFunc_BeginRender();
-							_nativeFunction_UpdateAllTextures 	= Native.GetRenderEventFunc_UpdateAllTextures();
-							_nativeFunction_FreeTextures 		= Native.GetRenderEventFunc_FreeTextures();
-							_nativeFunction_ExtractFrame 		= Native.GetRenderEventFunc_WaitForNewFrame();
-							if (/*(_nativeFunction_BeginRender 		!= IntPtr.Zero) &&*/
-								(_nativeFunction_UpdateAllTextures 	!= IntPtr.Zero) &&
-								(_nativeFunction_FreeTextures 		!= IntPtr.Zero) &&
-								(_nativeFunction_ExtractFrame 		!= IntPtr.Zero))
+							_nativeFunction_UnityRenderEvent = Native.GetRenderEventFunc();
+							if (_nativeFunction_UnityRenderEvent != IntPtr.Zero)
 							{
 								_isInitialised = true;
 							}
@@ -1087,49 +1078,27 @@ namespace RenderHeads.Media.AVProVideo
 		}
 
 		private static int _lastUpdateAllTexturesFrame = -1;
-//		private static int _lastFreeUnusedTexturesFrame = -1;
-
 		private static void IssueRenderThreadEvent(Native.RenderThreadEvent renderEvent)
 		{
-			// RJT TODO: Use single callback with different events instead of multiple callbacks?!
-
 			// We only want to update all textures once per Unity frame
-			if (renderEvent == Native.RenderThreadEvent.UpdateAllTextures)
+			if ((renderEvent == Native.RenderThreadEvent.BeginRender) || (renderEvent == Native.RenderThreadEvent.UpdateAllTextures))
 			{
-#if UNITY_EDITOR
+	#if UNITY_EDITOR
 				// In the editor Time.frameCount is not updated when not in play mode, in which case skip this check and always allow rendering
 				if (Application.isPlaying)
-#endif
+	#endif
 				if (_lastUpdateAllTexturesFrame == Time.frameCount)
+				{
 					return;
+				}
 
-				_lastUpdateAllTexturesFrame = Time.frameCount;
+				if (renderEvent == Native.RenderThreadEvent.UpdateAllTextures)
+				{
+					_lastUpdateAllTexturesFrame = Time.frameCount;
+				}
 			}
-/*			else if (renderEvent == Native.RenderThreadEvent.FreeTextures)
-			{
-				// We only want to free unused textures once per Unity frame
-				if (_lastFreeUnusedTexturesFrame == Time.frameCount)
-					return;
 
-				_lastFreeUnusedTexturesFrame = Time.frameCount;
-			}*/
-
-/*			if (renderEvent == Native.RenderThreadEvent.BeginRender)
-			{
-				GL.IssuePluginEvent(_nativeFunction_BeginRender, 0);
-			}
-			else*/ if (renderEvent == Native.RenderThreadEvent.UpdateAllTextures)
-			{
-				GL.IssuePluginEvent(_nativeFunction_UpdateAllTextures, 0);
-			}
-			else if (renderEvent == Native.RenderThreadEvent.FreeTextures)
-			{
-				GL.IssuePluginEvent(_nativeFunction_FreeTextures, 0);
-			}
-			else if (renderEvent == Native.RenderThreadEvent.WaitForNewFrame)
-			{
-				GL.IssuePluginEvent(_nativeFunction_ExtractFrame, 0);
-			}
+			GL.IssuePluginEvent(_nativeFunction_UnityRenderEvent, (int)renderEvent);
 		}
 
 		private static string GetPluginVersion()
@@ -1362,7 +1331,7 @@ namespace RenderHeads.Media.AVProVideo
 		{
 			public enum RenderThreadEvent
 			{
-				BeginRender,
+				BeginRender			= 0,
 				UpdateAllTextures,
 				FreeTextures,
 				WaitForNewFrame,
@@ -1620,16 +1589,7 @@ namespace RenderHeads.Media.AVProVideo
 			public static extern float GetTexturePixelAspectRatio(System.IntPtr instance);
 
 			[DllImport("AVProVideo")]
-			public static extern System.IntPtr GetRenderEventFunc_BeginRender();
-
-			[DllImport("AVProVideo")]
-			public static extern System.IntPtr GetRenderEventFunc_UpdateAllTextures();
-
-			[DllImport("AVProVideo")]
-			public static extern System.IntPtr GetRenderEventFunc_FreeTextures();
-
-			[DllImport("AVProVideo")]
-			public static extern System.IntPtr GetRenderEventFunc_WaitForNewFrame();
+			public static extern System.IntPtr GetRenderEventFunc();
 
 			// Audio Grabbing
 

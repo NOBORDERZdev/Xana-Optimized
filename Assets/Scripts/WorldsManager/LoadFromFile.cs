@@ -453,6 +453,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
+            if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            {
+                PlayerCamera.m_Lens.NearClipPlane = 0.05f;
+            }
             if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -577,10 +581,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
+
+        // Firebase Event for Join World
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
     void ActivateNpcChat()
@@ -748,7 +757,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
-        ActivateNpcChat();
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
+        //ActivateNpcChat();
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

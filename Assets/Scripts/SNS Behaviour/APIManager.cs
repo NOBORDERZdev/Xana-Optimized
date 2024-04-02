@@ -105,6 +105,11 @@ public class APIManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+         GetBestFriend();
+    }
+
     //// Start is called before the first frame update
     //void Start()
     //{

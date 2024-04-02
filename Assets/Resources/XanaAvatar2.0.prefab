@@ -7426,8 +7426,8 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 0
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
@@ -7649,8 +7649,8 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
+  m_Antialiasing: 2
+  m_AntialiasingQuality: 0
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
@@ -10631,7 +10631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isFrndAvatar: 0
+  isPlayerAvatar: 0
   IsInit: 0
   staticPlayer: 0
   isWearOrNot: 0
@@ -10648,6 +10648,9 @@ MonoBehaviour:
   wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
+  wornEyebrow:
+  - {fileID: 4351465816897965654}
+  - {fileID: 2547049722289093451}
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   characterBodyParts: {fileID: 4834376472678329915}
   _PCharacterData:
@@ -18692,9 +18695,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8169141683405601361, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
   m_PrefabInstance: {fileID: 1350435271784124746}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2547049722289093451 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5628015727021282815, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+  m_PrefabInstance: {fileID: 1350435271784124746}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &3012711319047648032 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -4939611779333627286, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
+  m_PrefabInstance: {fileID: 1350435271784124746}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4351465816897965654 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5846175190581731556, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
   m_PrefabInstance: {fileID: 1350435271784124746}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &5324566583025066389 stripped

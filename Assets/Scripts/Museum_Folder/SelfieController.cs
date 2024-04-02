@@ -415,7 +415,10 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(0).GetComponent<Camera>();    // my changes 
             //m_RenderTexture.width = 960;
             //m_RenderTexture.height = 540;
-            newRenderTexture = new RenderTexture(960, 540,0,UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
+            newRenderTexture = new RenderTexture(960, 540,0,UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture.antiAliasing = 4;
+            newRenderTexture.useMipMap = true;
+            newRenderTexture.filterMode = FilterMode.Trilinear;
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             screenShotCameraCapture.targetTexture = newRenderTexture;   // my changes
 
@@ -433,7 +436,10 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture = m_IKComponenet.GetComponent<IKMuseum>().selfieCamera.transform.GetChild(2).GetComponent<Camera>();    // my changes 
             //m_RenderTexture.width = 730;
             //m_RenderTexture.height = 1580;
-            newRenderTexture = new RenderTexture(730, 1580, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat);
+            newRenderTexture = new RenderTexture(730, 1580, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
+            newRenderTexture.antiAliasing = 4;
+            newRenderTexture.useMipMap = true;
+            newRenderTexture.filterMode = FilterMode.Trilinear;
             //Graphics.Blit(m_RenderTexture, newRenderTexture);
             screenShotCameraCapture.targetTexture = newRenderTexture;   // my changes
 
@@ -575,8 +581,8 @@ public class SelfieController : MonoBehaviour
             screenShotCameraCapture.targetTexture = null;
             screenShotCameraCapture.transform.GetChild(0).GetComponent<Camera>().targetTexture = null;
         }
-       
-        newRenderTexture.Release();
+        if(newRenderTexture)
+            newRenderTexture.Release();
         Resources.UnloadUnusedAssets();
         GC.Collect();
     }

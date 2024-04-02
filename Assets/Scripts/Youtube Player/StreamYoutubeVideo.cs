@@ -2,10 +2,10 @@ using Newtonsoft.Json;
 using RenderHeads.Media.AVProVideo;
 using SimpleJSON;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
+using UnityEngine.Events;
 
 public class StreamYoutubeVideo : MonoBehaviour
 {
@@ -13,18 +13,8 @@ public class StreamYoutubeVideo : MonoBehaviour
     private string oldUrl;
     public MediaPlayer mediaPlayer;
     public VideoPlayer videoPlayer;
-    public static StreamYoutubeVideo instance;
-    // Start is called before the first frame update
-    void Start()
-    {
-        instance = this;
-    }
+    public UnityEvent liveVideoPlay;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void StreamYtVideo(string Url,bool isLive)
     {
         if (oldUrl != Url)
@@ -59,6 +49,7 @@ public class StreamYoutubeVideo : MonoBehaviour
                 {
                     mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
                     mediaPlayer.Play();
+                    liveVideoPlay.Invoke();
                 }
                 else
                 {

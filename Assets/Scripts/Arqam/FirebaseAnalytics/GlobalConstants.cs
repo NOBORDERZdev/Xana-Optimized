@@ -46,6 +46,18 @@ public class GlobalConstants
         URL_Consult,
         URL_LandInfo,
         URL_Architec,
+
+        // Added Xana Items
+        App_Started,
+
+        Login_Email_Success,
+        Signup_Email_Completed,
+
+        Login_Wallet_Success,
+        Signup_Wallet_Completed,
+        
+        Join_World,
+        StayTime,
     }
 
     public static void SendFirebaseEvent(string eventName)
