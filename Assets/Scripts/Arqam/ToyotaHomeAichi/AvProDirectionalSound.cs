@@ -33,6 +33,35 @@ public class AvProDirectionalSound : MonoBehaviour
     private void Start()
     {
         updateDelay = new WaitForSeconds(updateInterval);
+        //Landscape mode
+        SoundManagerSettings.soundManagerSettings.totalVolumeSlider.onValueChanged.AddListener((float vol) =>
+        {
+            if(volumeCoroutine != null)
+                StopCoroutine(volumeCoroutine);
+            UpdateSliderValue(vol);
+
+        });
+        //Potrait mode
+        SoundManagerSettings.soundManagerSettings.totalVolumeSliderPotrait.onValueChanged.AddListener((float vol) =>
+        {
+            if (volumeCoroutine != null)
+                StopCoroutine(volumeCoroutine);
+            UpdateSliderValue(vol);
+
+        });
+    }
+    private float sliderValue = 0;
+    void UpdateSliderValue(float value)
+    {
+        if (sliderValue < value)
+        {
+            maxDistance += Mathf.Clamp(value, 0f, 1f) * Time.deltaTime;
+        }
+        else if (sliderValue > value)
+        {
+            maxDistance -= Mathf.Clamp(value, 0f, 1f) * Time.deltaTime;
+        }
+        sliderValue = value;
     }
 
     private void Mute_UnMute_Sound(bool flag, string roomName)
