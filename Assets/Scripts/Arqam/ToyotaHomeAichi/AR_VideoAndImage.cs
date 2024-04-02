@@ -57,7 +57,7 @@ namespace Toyota
         [Space(5)]
         public UnityEvent nftStartAction;
         public UnityEvent<int> enableFrame;
-
+        public UnityEvent disableFrame;
         public AR_Nft_Manager nftMAnager;
         [Range(1, 5)]
         public int roomNumber = 1;
@@ -394,6 +394,21 @@ namespace Toyota
                 }
             }
         }
+
+
+        public void EraseDownloadedData()
+        {
+            if (imgVideo16x9.GetComponent<RawImage>().texture != null)
+                DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture, true);
+            else if (imgVideo9x16.GetComponent<RawImage>().texture != null)
+                DestroyImmediate(imgVideo9x16.GetComponent<RawImage>().texture, true);
+            else if (imgVideo1x1.GetComponent<RawImage>().texture != null)
+                DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+            else if (imgVideo4x3.GetComponent<RawImage>().texture != null)
+                DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
+            disableFrame.Invoke();
+        }
+
 
     }
 }
