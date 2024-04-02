@@ -7,6 +7,7 @@ using Nethereum.Signer;
 using UnityEngine.Networking;
 using System.Security.Principal;
 using static WalletLogin;
+using static System.Net.WebRequestMethods;
 
 public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
@@ -17,7 +18,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     private string loginVerifier;
     private string loginSubVerifier;
     private string passwordLessClientId;
-    private string domains;
     private Web3Auth.Network network;
 
     [Header("Refs")]
@@ -34,32 +34,35 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     
 
     private void Start()
-    {
-        if (APIBaseUrlChange.instance.IsXanaLive)
-        {   //For Mainnet
-            ClientId = "BPnWnv68o43X4uLNUNrBEWgu6GgletwK5bOU4SLpHFrKrkATivj36lOX3B1DE7u3qeFTksKqK30arrFLYAzAgGY";
-            loginVerifier = "social-aggregate-verifier";
-            loginSubVerifier = "ppp-passwordless-login";
-            passwordLessClientId = "fr46GR3TzfOJFNvgEcIcQKLtLi48cm3c";
-            network = Web3Auth.Network.SAPPHIRE_MAINNET;
-            domains = "https://dev-i7bsu7bon4og1n64.us.auth0.com";
-        }
-        else {
-            //For Testnet
-            ClientId = "BMwTnf6I4qw7qwOWP1J1BsgHKEZDGG0peo-DpCMBmurc1RUSY16Ag8LdC4on55hLiStTQxm0FJ2wOuIZU2m9gr0";
-            loginVerifier = "ppp-social-login-2";
-            loginSubVerifier = "ppp-passwordless-login";
-            passwordLessClientId = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
-            network = Web3Auth.Network.TESTNET;
-            domains = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
-        }
-        var JWTLoginConfig = new LoginConfigItem()
+    {  
+        //For Testnet
+        ClientId = "BMwTnf6I4qw7qwOWP1J1BsgHKEZDGG0peo-DpCMBmurc1RUSY16Ag8LdC4on55hLiStTQxm0FJ2wOuIZU2m9gr0";
+        network = Web3Auth.Network.TESTNET;
+       
+      
+        var EmailPasswordlessConfigItem = new LoginConfigItem()
         {
-            verifier = loginVerifier,
-            verifierSubIdentifier = loginSubVerifier,
-            clientId = passwordLessClientId,
+            verifier = "ppp-social-login-2",
+            verifierSubIdentifier = "ppp-passwordless-login",
+            clientId = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu",
             typeOfLogin = TypeOfLogin.JWT,
         };
+        var GoogleConfig = new LoginConfigItem()
+        {
+            verifier = "ppp-social-login-2",
+            verifierSubIdentifier = "ppp-google-login",
+            clientId = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com",
+            typeOfLogin = TypeOfLogin.GOOGLE,
+        };
+        var AppleConfigItem = new LoginConfigItem()
+        {
+            verifier = "ppp-social-login-2",
+            verifierSubIdentifier = "ppp-apple-login",
+            clientId = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0",
+            typeOfLogin = TypeOfLogin.APPLE,
+        };
+
+
         web3Auth.setOptions(new Web3AuthOptions()
         {
             clientId = ClientId,
@@ -67,12 +70,13 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             network = network,
             loginConfig = new Dictionary<string, LoginConfigItem>
             {
-                { "jwt", JWTLoginConfig }
+                 { "google", GoogleConfig },
+                { "jwt", EmailPasswordlessConfigItem },
+                { "apple", AppleConfigItem },
             }
         });
         web3Auth.onLogin += onLogin;
         web3Auth.onLogout += onLogout;
-        //Web3 web3 = new Web3(rpcURL);
         updateConsole("Ready to Login!");
     }
 
@@ -85,16 +89,52 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginProvider = selectedProvider,
             extraLoginOptions = new ExtraLoginOptions()
             {
-                domain = domains,
+                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
                 prompt = Prompt.LOGIN,
             }
         };
 
+
+        web3Auth.login(options);
+    }
+   
+    
+    public void GoogleLogin(bool isnewreg)
+    {
+        var selectedProvider = Provider.GOOGLE;
+        isNewReg = isnewreg;
+        var options = new LoginParams()
+        {
+            loginProvider = selectedProvider,
+           
+        };
+
+
         web3Auth.login(options);
     }
 
+    public void AppleLogin(bool isnewreg)
+    {
+        var selectedProvider = Provider.APPLE;
+        isNewReg = isnewreg;
+        var options = new LoginParams()
+        {
+            loginProvider = selectedProvider,
+            extraLoginOptions = new ExtraLoginOptions()
+            {
+                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
+                verifierIdField = "email",
+                isVerifierIdCaseSensitive = false,
+                connection = "apple",
+                prompt = Prompt.LOGIN,
+            }
+        };
+
+
+        web3Auth.login(options);
+    }
     private void onLogin(Web3AuthResponse response)
     {
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
