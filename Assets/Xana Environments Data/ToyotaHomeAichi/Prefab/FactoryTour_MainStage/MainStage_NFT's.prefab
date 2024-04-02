@@ -2889,7 +2889,7 @@ MonoBehaviour:
     stereoPacking: 0
   _autoOpen: 1
   _autoPlayOnStart: 1
-  _loop: 0
+  _loop: 1
   _audioVolume: 1
   _audioBalance: 0
   _audioMuted: 0
@@ -4682,6 +4682,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &4555282112127552841
@@ -5098,6 +5101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b4e521a20a9114fad769f07acb3789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nftName: 0
+  isShowDataAtStart: 1
   RetryChances: 3
   PMY_RoomId_test: 3
   PMY_RoomId_main: 1
@@ -5578,6 +5583,7 @@ MonoBehaviour:
   updateInterval: 0.5
   activePlayer: {fileID: 2507505394166159395}
   audioSource: {fileID: 5026257661121069021}
+  LiveStreamPlayer: {fileID: 2507505394166159384}
 --- !u!1 &5026257660917194773
 GameObject:
   m_ObjectHideFlags: 0
@@ -6063,6 +6069,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   enableFrame:
+    m_PersistentCalls:
+      m_Calls: []
+  disableFrame:
     m_PersistentCalls:
       m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
@@ -6872,6 +6881,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &7855809191213857397
@@ -7070,6 +7082,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &8550141001658258278
