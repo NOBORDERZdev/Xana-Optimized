@@ -333,8 +333,8 @@ namespace Toyota
 
                 if (streamYoutubeVideo != null)
                     streamYoutubeVideo.StreamYtVideo(videoLink, true);
-                SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-                SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+                //SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+                //SoundManagerSettings.soundManagerSettings.setNewSliderValues();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded)
             {
