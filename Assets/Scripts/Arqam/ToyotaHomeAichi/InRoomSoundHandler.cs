@@ -3,18 +3,19 @@ using UnityEngine.Events;
 
 public class InRoomSoundHandler : MonoBehaviour
 {
-    public static UnityAction<bool> playerInRoom;
+    [SerializeField] string roomName = "";
+    public static UnityAction<bool, string> playerInRoom;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "PhotonLocalPlayer")
-            playerInRoom?.Invoke(true);
+            playerInRoom?.Invoke(true, roomName);
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "PhotonLocalPlayer")
-            playerInRoom?.Invoke(false);       
+            playerInRoom?.Invoke(false, roomName);       
     }
 
 }
