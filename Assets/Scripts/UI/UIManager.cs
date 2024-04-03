@@ -20,7 +20,7 @@ public class UIManager : MonoBehaviour
     //[Space(5)]
     //[Header("New World Layout References")]
     //public Transform SearchHomeHolder;
-    public Transform SearchWorldHolder, 
+    public Transform /*SearchWorldHolder,*/ 
         SearchWorldScreenHolder,
         //AvatarWindowHolder,
         HomeWorldTabsHolder, 
@@ -164,7 +164,7 @@ public class UIManager : MonoBehaviour
                     PreviousScreen = 0;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     //SearchHomeHolder.gameObject.SetActive(true);
-                    SearchWorldHolder.gameObject.SetActive(false);
+                    //SearchWorldHolder.gameObject.SetActive(false);
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
                   //  HomeWorldTabsHolder.gameObject.SetActive(true);
@@ -181,7 +181,7 @@ public class UIManager : MonoBehaviour
                     PreviousScreen = 1;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
                     //SearchHomeHolder.gameObject.SetActive(false);
-                    SearchWorldHolder.gameObject.SetActive(true);
+                    //SearchWorldHolder.gameObject.SetActive(true);
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                     //  HomeWorldTabsHolder.gameObject.SetActive(false);
@@ -198,7 +198,7 @@ public class UIManager : MonoBehaviour
                     WorldManager.instance.SearchKey = "";
                     SearchWorldScreenHolder.gameObject.SetActive(true);
                     //SearchHomeHolder.gameObject.SetActive(false);
-                    SearchWorldHolder.gameObject.SetActive(false);
+                    //SearchWorldHolder.gameObject.SetActive(false);
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                     //worldHolder.SetActive(false);
