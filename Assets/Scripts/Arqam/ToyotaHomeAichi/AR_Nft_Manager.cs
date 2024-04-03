@@ -134,6 +134,8 @@ namespace Toyota
                 for (int i = 0; i < NftPlaceholder.Count; i++)
                     NftPlaceholder[i].GetComponent<AR_VideoAndImage>().EraseDownloadedData();
             }
+            NFTLoadedSprites.Clear();
+            NFTLoadedVideos.Clear();
         }
 
         bool isNFTUploaded = false;
