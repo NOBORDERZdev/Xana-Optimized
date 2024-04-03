@@ -57,7 +57,7 @@ public class WorldManager : MonoBehaviour
 
     public List<WorldItemDetail> resultWorldList = new List<WorldItemDetail>();
 
-    /*public WorldItemManager WorldItemManager;*/
+    public WorldItemManager WorldItemManager;
     public WorldsInfo _WorldInfo;
     public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
@@ -289,6 +289,7 @@ public class WorldManager : MonoBehaviour
     Coroutine FetchUserMapFromServerCO;
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
+        Debug.Log("Current Data in Input field: " + worldSearchManager.searchWorldInput.Text);
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
         //Debug.LogError(finalAPIURL);
@@ -309,6 +310,17 @@ public class WorldManager : MonoBehaviour
                 }
                 else
                 {
+                    if (_WorldInfo.data.rows.Count > 0)
+                    {
+                        WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(worldSearchManager.searchWorldInput.Text))
+                            WorldLoadingText(APIURL.SearchWorld);
+                        else
+                            WorldLoadingText(aPIURL);
+                    }
                     CallBack(false);
                 }
             }
@@ -324,6 +336,7 @@ public class WorldManager : MonoBehaviour
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
             }
+            previousSearchKey = SearchKey;
         }));
     }
 
@@ -483,24 +496,21 @@ public class WorldManager : MonoBehaviour
             WorldItemManager.WorldLoadingText(_apiURL);
         }*/
 
+        //if (_WorldInfo.data.rows.Count > 0)
+        //{
+        //    WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
+        //}
+        //else
+        //{
+        //    if (searchWorldControllerRef.scroller.Container.transform.childCount > 3)
+        //        WorldLoadingText(APIURL.SearchWorld);
+        //    else
+        //        WorldLoadingText(_apiURL);
+        //}
 
-        searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
-        if (_WorldInfo.data.rows.Count > 0)
-        {
-            WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
-        }
-        else
-        {
-            if (searchWorldControllerRef.scroller.Container.transform.childCount > 3)
-                WorldLoadingText(APIURL.SearchWorld);
-            else
-                WorldLoadingText(_apiURL);
-        }
-
-
-
-        previousSearchKey = SearchKey;
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+        LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+        searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
         //if (!GameManager.Instance.UiManager.IsSplashActive)
         //{
         //    Invoke(nameof(ShowTutorial), 1f);
@@ -515,6 +525,9 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
         switch (aPIURL)
         {
+            case APIURL.FeaturedSpaces:
+                worldFoundText.text = "";
+                return;
             case APIURL.HotSpaces:
                 worldFoundText.text = "";
                 return;
@@ -871,7 +884,7 @@ public class WorldManager : MonoBehaviour
     }
     public void ClearHomePageData()
     {
-        worldSpaceHomeScreenRef.RemoveThumbnailImages();
+        //worldSpaceHomeScreenRef.RemoveThumbnailImages();
     }
 }
 [Serializable]

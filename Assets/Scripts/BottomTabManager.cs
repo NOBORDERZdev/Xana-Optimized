@@ -289,7 +289,7 @@ public class BottomTabManager : MonoBehaviour
             }
            
             WorldManager.LoadHomeScreenWorlds?.Invoke();
-            FlexibleRect.OnAdjustSize?.Invoke(false);
+            //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);
             //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
