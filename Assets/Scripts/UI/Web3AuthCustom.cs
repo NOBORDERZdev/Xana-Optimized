@@ -61,6 +61,13 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientId = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0",
             typeOfLogin = TypeOfLogin.APPLE,
         };
+        var LineConfigItem = new LoginConfigItem()
+        {
+            verifier = "ppp-social-login-2",
+            verifierSubIdentifier = "ppp-line-login",
+            clientId = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP",
+            typeOfLogin = TypeOfLogin.LINE,
+        };
 
 
         web3Auth.setOptions(new Web3AuthOptions()
@@ -73,6 +80,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                  { "google", GoogleConfig },
                 { "jwt", EmailPasswordlessConfigItem },
                 { "apple", AppleConfigItem },
+                { "line" , LineConfigItem }
             }
         });
         web3Auth.onLogin += onLogin;
@@ -135,6 +143,28 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
         web3Auth.login(options);
     }
+
+    public void LineLogin(bool isnewreg)
+    {
+        var selectedProvider = Provider.LINE;
+        isNewReg = isnewreg;
+        var options = new LoginParams()
+        {
+            loginProvider = selectedProvider,
+            extraLoginOptions = new ExtraLoginOptions()
+            {
+                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
+                verifierIdField = "email",
+                isVerifierIdCaseSensitive = false,
+                connection = "line",
+               prompt = Prompt.LOGIN,
+            }
+        };
+
+
+        web3Auth.login(options);
+    }
+
     private void onLogin(Web3AuthResponse response)
     {
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
