@@ -21,7 +21,7 @@ public class WorldManager : MonoBehaviour
     private string finalAPIURL;
     private string status = "Publish";
     [HideInInspector]
-    public int hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
+    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -226,6 +226,8 @@ public class WorldManager : MonoBehaviour
     {
         switch (aPIURL)
         {
+            case APIURL.FeaturedSpaces:
+                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotFeatSpacePN + "/" + recordPerPage;
             case APIURL.HotSpaces:
                 return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
             case APIURL.HotGames:
@@ -250,6 +252,9 @@ public class WorldManager : MonoBehaviour
     {
         switch (aPIURL)
         {
+            case APIURL.FeaturedSpaces:
+                hotFeatSpacePN += 1;
+                return;
             case APIURL.HotSpaces:
                 hotSpacePN += 1;
                 return;
@@ -294,13 +299,18 @@ public class WorldManager : MonoBehaviour
             if (isSucess)
             {
                 CallBackCheck = 0;
-                InstantiateWorlds(aPIURL, isSucess);
                 dataIsFatched = true;
-                UpdatePageNumber(aPIURL);
-                if (_WorldInfo.data.count > 0)
+
+                if (_WorldInfo.data.rows.Count > 0)
+                {
+                    InstantiateWorlds(aPIURL, isSucess);
+                    UpdatePageNumber(aPIURL);
                     CallBack(true);
+                }
                 else
+                {
                     CallBack(false);
+                }
             }
             else
             {
@@ -349,8 +359,8 @@ public class WorldManager : MonoBehaviour
 
     void InstantiateWorlds(APIURL _apiURL, bool APIResponse)
     {
-        searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
-
+        //searchWorldControllerRef.scroller.ScrollPosition = 0f;    // my changes
+        Debug.Log("Category worlds list count: " + _WorldInfo.data.rows.Count);
         resultWorldList.Clear();
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
@@ -475,7 +485,7 @@ public class WorldManager : MonoBehaviour
 
 
         searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
-        if (_WorldInfo.data.count > 0)
+        if (_WorldInfo.data.rows.Count > 0)
         {
             WorldLoadingText(APIURL.Temp);  //remove loading text from search screen
         }
@@ -677,6 +687,7 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "AddressableScene";
             LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
         }
+        XanaConstants.xanaConstants.returnedFromGamePlay = false;
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
@@ -728,6 +739,7 @@ public class WorldManager : MonoBehaviour
                 }
             }
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            XanaConstants.xanaConstants.returnedFromGamePlay = false;
             //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
@@ -968,7 +980,7 @@ public class WorldItemDetail
 
 public enum APIURL
 {
-    HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag, Temp
+    FeaturedSpaces, HotSpaces, HotGames, FolloingSpace, MySpace, SearchWorld, SearchWorldByTag, Temp
 }
 
 public enum WorldType

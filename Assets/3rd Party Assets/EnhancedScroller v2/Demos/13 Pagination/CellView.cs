@@ -18,10 +18,10 @@ namespace EnhancedScrollerDemos.Pagination
         /// This function just takes the Demo data and displays it
         /// </summary>
         /// <param name="data"></param>
-        public void SetData(WorldItemDetail data)
+        public void SetData(Data data)
         {
             // update the UI text with the cell data
-            //someTextText.text = data.someText;
+            someTextText.text = data.someText;
         }
     }
 }
