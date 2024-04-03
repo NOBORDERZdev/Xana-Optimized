@@ -62,6 +62,7 @@ public class BottomTabManager : MonoBehaviour
         if (XanaConstants.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstants.xanaConstants.isFromXanaLobby)
         {
             XanaConstants.xanaConstants.CurrentSceneName = "";
+            GameManager.Instance.defaultSelection = 10;
             Invoke(nameof(OnClickHomeWorldButton), 5);
         }
     }
