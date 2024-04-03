@@ -425,6 +425,8 @@ namespace Toyota
                 DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
                 imgVideo4x3.SetActive(false);
             }
+            if (liveVideoPlayer.activeSelf)
+                liveVideoPlayer.SetActive(false);
             disableFrame.Invoke();
         }
 
