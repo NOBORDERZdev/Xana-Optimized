@@ -15,7 +15,7 @@ public class InRoomSoundHandler : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer")
+        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
             playerInRoom?.Invoke(false, roomName);       
     }
 
