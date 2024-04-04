@@ -102,7 +102,7 @@ public class NarrationComponent : ItemComponent
 
     public override void CollisionExitBehaviour()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 
     public override void CollisionEnterBehaviour()
