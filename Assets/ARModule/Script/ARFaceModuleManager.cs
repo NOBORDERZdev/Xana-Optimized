@@ -1037,76 +1037,76 @@ public class ARFaceModuleManager : MonoBehaviour
 
 
     //this method is used to create feed post.......
-    public void OnClickCreatePostButton()
-    {
-        ShowLoader(true);//active loader
-        string iscompress = "";
-        if (imageOrVideo == "Image")
-        {
-            iscompress = "true";
-        }
-        else if(imageOrVideo == "Video")
-        {
-            feedMediaPlayer.Pause();
-        }
-        AWSHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
-    }
+    //public void OnClickCreatePostButton()
+    //{
+    //    ShowLoader(true);//active loader
+    //    string iscompress = "";
+    //    if (imageOrVideo == "Image")
+    //    {
+    //        iscompress = "true";
+    //    }
+    //    else if(imageOrVideo == "Video")
+    //    {
+    //        feedMediaPlayer.Pause();
+    //    }
+    //    AWSHandler.Instance.PostObjectFeed(createFeedFilePath, createFeedFileName, "CreateFeedRoom", iscompress);
+    //}
 
 
-    public void CreateFeedAPICall(string url, string thumbnail)
-    {
-       Debug.Log("Room Feed Create:" + url);
-        switch (imageOrVideo)
-        {
-            case "Image":
-                //string s1 = createFeedTitle.text;
-                //string s1 = createFeedTitleAdvance.RichText;
-                string s1 = APIManager.Instance.userName;
-                //string s2 = createFeedDescription.text;
-                string s2 = createFeedDescriptionAdvance.RichText;
+    //public void CreateFeedAPICall(string url, string thumbnail)
+    //{
+    //   Debug.Log("Room Feed Create:" + url);
+    //    switch (imageOrVideo)
+    //    {
+    //        case "Image":
+    //            //string s1 = createFeedTitle.text;
+    //            //string s1 = createFeedTitleAdvance.RichText;
+    //            string s1 = APIManager.Instance.userName;
+    //            //string s2 = createFeedDescription.text;
+    //            string s2 = createFeedDescriptionAdvance.RichText;
 
-                if (string.IsNullOrEmpty(s1))
-                {
-                    s1 = "@new";
-                }
-                else
-                {
-                    s1 = "@" + s1;
-                }
+    //            if (string.IsNullOrEmpty(s1))
+    //            {
+    //                s1 = "@new";
+    //            }
+    //            else
+    //            {
+    //                s1 = "@" + s1;
+    //            }
 
-                if (string.IsNullOrEmpty(s2))
-                {
-                    s2 = "  ";
-                }
+    //            if (string.IsNullOrEmpty(s2))
+    //            {
+    //                s2 = "  ";
+    //            }
 
-                APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s1), APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
-                break;
-            case "Video":
-                //string s11 = createFeedTitle.text;
-                //string s11 = createFeedTitleAdvance.RichText;
-                string s11 = APIManager.Instance.userName;
-                //string s22 = createFeedDescription.text;
-                string s22 = createFeedDescriptionAdvance.RichText;
+    //            //APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s1), APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
+    //            break;
+    //        case "Video":
+    //            //string s11 = createFeedTitle.text;
+    //            //string s11 = createFeedTitleAdvance.RichText;
+    //            string s11 = APIManager.Instance.userName;
+    //            //string s22 = createFeedDescription.text;
+    //            string s22 = createFeedDescriptionAdvance.RichText;
 
-                if (string.IsNullOrEmpty(s11))
-                {
-                    s11 = "@new";
-                }
-                else
-                {
-                    s11 = "@" + s11;
-                }
+    //            if (string.IsNullOrEmpty(s11))
+    //            {
+    //                s11 = "@new";
+    //            }
+    //            else
+    //            {
+    //                s11 = "@" + s11;
+    //            }
 
-                if (string.IsNullOrEmpty(s22))
-                {
-                    s22 = "  ";
-                }
-                APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s11), APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
-                break;
-            default:
-                break;
-        }
-    }
+    //            if (string.IsNullOrEmpty(s22))
+    //            {
+    //                s22 = "  ";
+    //            }
+    //            APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s11), APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
 
     public void OnClickCreatePostBackButton()
     {
