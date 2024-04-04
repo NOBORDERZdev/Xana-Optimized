@@ -17,6 +17,10 @@ namespace Toyota
 {
     public class AR_Nft_Manager : MonoBehaviour
     {
+        public enum NFT_NAME { Stage, Factory, Home, Architec, LandInfo }
+        [SerializeField] NFT_NAME nftName;
+        [SerializeField] bool isShowDataAtStart = true;
+
         [SerializeField] int RetryChances = 3;
         [SerializeField] int PMY_RoomId_test;
         [SerializeField] int PMY_RoomId_main;
@@ -63,6 +67,7 @@ namespace Toyota
         [Space(5)]
         public UnityEvent allDataLoaded;
         private NFT_Holder_Manager nftHolder;
+        private PMY_Json json = new PMY_Json();
 
         private void Awake()
         {
@@ -80,6 +85,7 @@ namespace Toyota
                     player.prepareCompleted += VideoReady;
                 }
             }
+            InRoomSoundHandler.playerInRoom += UpdateNFTData;
 
             if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
                 PMY_RoomId = PMY_RoomId_main;
@@ -109,10 +115,27 @@ namespace Toyota
                 {
                     StringBuilder data = new StringBuilder();
                     data.Append(request.downloadHandler.text);
-                    PMY_Json json = JsonConvert.DeserializeObject<PMY_Json>(data.ToString());
-                    StartCoroutine(InitData(json, NftPlaceholder));
+                    json = JsonConvert.DeserializeObject<PMY_Json>(data.ToString());
+                    if (isShowDataAtStart)
+                        StartCoroutine(InitData(json, NftPlaceholder));
                 }
             }
+        }
+
+        // This method will call when player enter in respective room
+        private void UpdateNFTData(bool playerInRoom, string roomName)
+        {
+            if (roomName != nftName.ToString()) return;
+
+            if (playerInRoom)
+                StartCoroutine(InitData(json, NftPlaceholder));
+            else if (!playerInRoom)
+            {
+                for (int i = 0; i < NftPlaceholder.Count; i++)
+                    NftPlaceholder[i].GetComponent<AR_VideoAndImage>().EraseDownloadedData();
+            }
+            NFTLoadedSprites.Clear();
+            NFTLoadedVideos.Clear();
         }
 
         bool isNFTUploaded = false;
@@ -397,19 +420,19 @@ namespace Toyota
                     }
                 }
                 else // for Potraite
-                {   
+                {
                     nftHolder.LandscapeObj.SetActive(false);
                     nftHolder.PotraiteObj.SetActive(true);
                     nftHolder.ratioReferences[ratioId].l_obj.SetActive(false);
                     nftHolder.ratioReferences[ratioId].p_obj.SetActive(true);
                     if (type == PMY_DataType.Video)
-                    {   
+                    {
                         nftHolder.ratioReferences[ratioId].l_Loader.SetActive(false);
                         nftHolder.ratioReferences[ratioId].p_Loader.SetActive(true);
                         nftHolder.ratioReferences[ratioId].p_videoPlayer.Play();
 
                         if (videoType == PMY_VideoTypeRes.islive)
-                        {   
+                        {
                             nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = false;
                             nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = false;
                             nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
@@ -418,7 +441,7 @@ namespace Toyota
                             nftHolder.ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                         }
                         else if (videoType == PMY_VideoTypeRes.prerecorded)
-                        {   
+                        {
                             nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
                             nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
                             nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
@@ -428,7 +451,7 @@ namespace Toyota
                             nftHolder.ratioReferences[ratioId].p_videoPlayer.enabled = true;
                         }
                         else if (videoType == PMY_VideoTypeRes.aws)
-                        {   
+                        {
                             nftHolder.ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
                             nftHolder.ratioReferences[ratioId].p_LivePlayer.SetActive(false);
                             nftHolder.ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
@@ -552,7 +575,9 @@ namespace Toyota
                     player.errorReceived -= ErrorOnVideo;
                     player.prepareCompleted -= VideoReady;
                 }
+            InRoomSoundHandler.playerInRoom -= UpdateNFTData;
         }
+
     }
 
     [Serializable]
