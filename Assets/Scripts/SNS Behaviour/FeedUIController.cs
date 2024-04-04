@@ -10,7 +10,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
-//using Amazon.S3.Model;
 
 public class FeedUIController : MonoBehaviour
 {
@@ -19,132 +18,33 @@ public class FeedUIController : MonoBehaviour
     [Header("-------FooterCan-------")]
     public GameObject footerCan;
     public BottomTabManager bottomTabManager;
-
-    //[Space]
-    //[Header("-------API Controller Feed References-------")]
-    //public Transform followingFeedTabLeftContainer;
-    //public Transform followingFeedTabRightContainer;
-    //public Transform followingFeedTabContainer;
-    //public Transform forYouFeedTabContainer;
-    //public Transform hotTabContainer;
-    //public Transform videofeedParent;
-    //public GameObject followingFeedMainContainer;
-
     [Space]
     [Header("-------All Screens-------")]
     public GameObject feedUiScreen;
-   // public GameObject otherPlayerProfileScreen;
-    //public GameObject giftItemScreens;
-   // public GameObject feedVideoScreen;
+  
     public SNSAPILoaderController apiLoaderController;
-
-    //[Space]
-    //[Header("Top Story Panel")]
-    //public GameObject TopPanelMainObj;
-    //public GameObject TopPanelMainStoryObj;
-    //public Transform TopPanelMainContainerObj;
-
-    //[Header("GiftScreen")]
-    ////  public Transform fashionCetegoryContent;
-    //public Sprite selectedSprite, unSelectedSprite;
-
     [Space]
     [Header("HorizontalScrollSnap")]
-    //public HorizontalScrollSnap feedUiHorizontalSnap;
 
     public GameObject feedUiSelectionLine;
     public Transform[] feedUiSelectionTab;
     public TextMeshProUGUI[] feedUiTabTitleText;
     public Color selectedColor, unSelectedColor;
-
-    //[Space]
-    //[Header("ScrollRectFaster")]
-    //public ScrollRectFasterEx[] allFeedScrollRectFasterEx;
-    //public ScrollRectFasterEx feedUiScrollRectFasterEx;
-
-    //[Space]
-    //[Header("AllFeedScreen")]
-    //public GameObject[] allFeedPanel;
-    //public GameObject videoFeedRect;
-    //public List<TextMeshProUGUI> allFeedMessageTextList = new List<TextMeshProUGUI>();
-
-    //public int allFeedCurrentpage, followingUserCurrentpage, myPostCurrentPage;
-    //public bool isDataLoad = false;
-
-    //public bool isAnyUserFollow = false;
-
     [Space]
     [Header("Feed All Tabs Loaded checking Variable")]
     public int followingFeedInitiateTotalCount;
-    //public int followingFeedImageLoadedCount;
     public int hotFeedInitiateTotalCount;
-    //public int HotFeedImageLoadedCount;
     public int hotForYouFeedInitiateTotalCount;
-    //public int hotForYouFeedImageLoadedCount;
-
     [Space]
     //this list is used to unfollowed user feed removed from following tab.......
     public List<int> unFollowedUserListForFollowingTab = new List<int>();
 
-    //public GameObject fingerTouch;
-    //[Space]
-    //[Header("FeedVideo Screen")]
-    //public RectTransform feedVideoButtonPanelImage;
-    //public string feedFullViewScreenCallingFrom = "";
 
     [Space]
     [Header("Find Friend screen References")]
     public GameObject findFriendScreen;
     public Transform findFriendContainer;
-    //public TMP_InputField findFriendInputField;
     public AdvancedInputField findFriendInputFieldAdvanced;
-
-    //[Space]
-    //[Header("Create Feed Screen References")]
-    //public GameObject createFeedScreen;
-    //public TMP_InputField createFeedTitle;
-    //public AdvancedInputField createFeedTitleAdvanced;
-    //public TMP_InputField createFeedDescription;
-    //public AdvancedInputField createFeedDescriptionAdvanced;
-    //public Image createFeedImage;
-    //public GameObject createFeedVideoObj;
-    //public MediaPlayer createFeedMediaPlayer;
-
-    //[Space]
-    //[Header("Edit Delete Feed Screen Reference")]
-    //public FeedEditOrDeleteData feedEditOrDeleteData;
-    //public GameObject editDeleteFeedScreen;
-    //public TextMeshProUGUI editDeleteFeedUserNameText;
-    //public TextMeshProUGUI editDeleteFeedDateTimeText;
-    //public Image editDeleteCurrentFeedImage;
-    //public GameObject editDeleteVideoDisplay;
-    ////public MediaPlayer editDeleteMideaPlayer;
-    //public PostFeedVideoItem editDeleteCurrentPostFeedVideoItem;
-
-    //[Space]
-    //[Header("Edit Feed Screen Reference")]
-    //public GameObject editFeedScreen;
-    //public AdvancedInputField editFeedDescriptionInputField;
-    //public Image editFeedCurrentFeedImage;
-    //public GameObject editFeedCurrentVideoDisplay;
-
-    //[Space]
-    //[Header("Delete Feed Confirmation Screen")]
-    //public GameObject deleteFeedConfirmationScreen;
-
-    //[Space]
-    //[Header("Feed Comment Screen Reference")]
-    //public GameObject commentPanel;
-    //public AdvancedInputField commentInputFieldAdvanced;
-    //public Text commentFitertextDropdown;
-    //public ScrollRect commentScrollPosition;
-
-    //public GameObject commentContentPanel;
-    //public GameObject commentListItemPrefab;
-    //public Text CommentCount;
-
-    //[Space]
-    //public string attechmentArraystr;
 
     [Space]
     [Header("FadeInOut Screen Reference")]
@@ -170,13 +70,10 @@ public class FeedUIController : MonoBehaviour
     public GameObject profileFinfFriendScreen;
     public AdvancedInputField profileFinfFriendAdvancedInputField;
     public GameObject profileNoSearchFound;
-    //public TextMeshProUGUI profileFFScreenTitleText;
     public Transform profileFFLineSelection;
     public Transform[] profileFFSelectionTab;
     public TextMeshProUGUI[] profileFFSelectionTabText;
     public Image[] profileFFSelectionTabLine;
-    //public HorizontalScrollSnap profileFollowerFollowingHorizontalScroll;
-    //public ScrollRectFasterEx[] profileFFScreenScrollrectFasterEXList;
     public int profileFollowerPaginationPageNo = 1;
     public int profileFollowingPaginationPageNo = 1;
     public int adFrndFollowingPaginationPageNo = 1;
@@ -252,64 +149,8 @@ public class FeedUIController : MonoBehaviour
         {
            Debug.Log("FeedUI Controller new user login and calling feed start function");
             ResetAllFeedScreen(false);
-            StartMethodCalling();//Start Function Calling.......
         }
     }
-
-    private void Start()
-    {
-        StartMethodCalling();//Start Function Calling.......
-    }
-
-    //this method calling start of the scene.......
-    public void StartMethodCalling()
-    {
-        //Debug.Log("FeedController Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
-        //Debug.Log("ApiBaseUrl:" + ConstantsGod.API_BASEURL);
-        
-        // OLD FEED UI
-        //if (GlobalVeriableClass.callingScreen == "Feed")
-        //{
-        //    StartCoroutine(WaitToSceneLoad());
-        //}
-        ///SetupFollowerAndFeedScreen(false);
-        //END Old UI CODE
-    }
-
-    //IEnumerator WaitToSceneLoad()
-    //{
-    //    yield return new WaitForSeconds(0);
-    //    // OLD FEED UI
-    //    ///SetupLineSelectionPosition();//move Selection Line
-    //    // END OLD FEED UI
-    //    //APIManager.Instance.RequestGetAllFollowers(1, 10, "FeedStart");//Get All Follower
-    //    // OLD FEED UI
-    //    //for (int i = 0; i < allFeedMessageTextList.Count; i++)
-    //    //{
-    //    //    AllFeedScreenMessageTextActive(true, i, TextLocalization.GetLocaliseTextByKey("please wait"));
-    //    //}
-    //    // END Old UI
-    //    //Debug.Log("FeedUIController Start:" + Application.internetReachability);
-    //    //rik for start of the feed scene load data and default api calling....... 
-    //    if (Application.internetReachability == NetworkReachability.NotReachable)
-    //    {
-    //        if (File.Exists(Application.persistentDataPath + "/FeedData.json"))
-    //        {
-    //            //APIManager.Instance.LoadJson();
-    //        }
-
-    //        if (File.Exists(Application.persistentDataPath + "/FeedFollowingData.json"))
-    //        {
-    //            APIManager.Instance.LoadJsonFollowingFeed();
-    //        }
-    //    }
-    //    else
-    //    {
-    //        //Debug.Log("dfdfsd");
-    //        OnFeedButtonTabBtnClick();
-    //    }
-    //}
-
 
     //this method are used to Message button click.......
     public void OnClickMessageButton()
@@ -322,63 +163,15 @@ public class FeedUIController : MonoBehaviour
         apiLoaderController.ShowApiLoader(isActive);
     }
 
-    private void Update()
-    {
-        //APiPagination();
-    }
 
     public void OnFeedButtonTabBtnClick()
     {
        Debug.Log("OnFeedButtonTabBtnClick.......");
-        //APIManager.Instance.OnFeedAPiCalling();
         feedUiScreen.SetActive(true);
-    }
-
-    public void AllFeedScreenMessageTextActive(bool isActive, int index, string message)
-    {
-        // OLD FEED UI
-        ////allFeedMessageTextList[index].text = message;
-        ////allFeedMessageTextList[index].gameObject.SetActive(isActive);
-        // END OLD FEED UI
-    }
-
-    //public void OnClickFollowingTabBtnClick()
-    //{
-    //    RemoveUnFollowedUserFromFollowingTab();
-
-    //    //if (isAnyUserFollow)
-    //    //{
-    //    //isAnyUserFollow = false;
-    //    //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
-    //    //}
-    //}
-
-    public void OnClickHotAndDiscoverTabBtnClick()
-    {
-        //if (isAnyUserFollow)
-        //{
-        //isAnyUserFollow = false;
-        //APIManager.Instance.RequestGetAllUsersWithFeeds(1, 5);
-        //}
     }
 
     public void ResetAllFeedScreen(bool isFeedScreen)
     {
-        //if (isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
-        //{
-        //   Debug.Log("Feed Data Load");
-        
-        //    // OLD FEED UI
-        //    ///StartCoroutine(WaitToSceneLoad());
-        //    // END OLD FEED UI
-        //}
-
-        //feedUiScreen.SetActive(isFeedScreen);
-        //otherPlayerProfileScreen.SetActive(false);
-        //giftItemScreens.SetActive(false);
-        //feedVideoScreen.SetActive(false);
-        //findFriendScreen.SetActive(false);
-        //createFeedScreen.SetActive(false);
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
         profileFollowerFollowingListScreen.SetActive(false);
@@ -386,10 +179,8 @@ public class FeedUIController : MonoBehaviour
         {
             OtherPlayerProfileData.Instance.backKeyManageList.Clear();
         }
-
         FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
         FeedUIController.Instance.SNSSettingController.myAccountPersonalInfoScreen.SetActive(false);
-        //StartCoroutine(WaitToResetAllFeedScreen(isFeedScreen));        
     }
 
     public void SetAddFriendScreen(bool flag){
@@ -432,39 +223,8 @@ public class FeedUIController : MonoBehaviour
     }
     public void OnClickFeedSearchBtn()
     {
-
         FeedSerachBar.SetActive(!FeedSerachBar.activeInHierarchy);
-        //if (FeedSerachBar.activeInHierarchy)
-        //{
-        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
-        //}
-        //else
-        //{
-        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
-        //}
-        //FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
-        //FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
-    /*public IEnumerator WaitToResetAllFeedScreen(bool isFeedScreen)
-    {
-        yield return new WaitForSeconds(0f);
-
-        if(isFeedScreen && APIManager.Instance.allUserRootList.Count == 0)
-        {
-           Debug.Log("Feed Data Load");
-            StartCoroutine(WaitToSceneLoad());
-        }
-
-        feedUiScreen.SetActive(isFeedScreen);
-        otherPlayerProfileScreen.SetActive(false);
-        giftItemScreens.SetActive(false);
-        feedVideoScreen.SetActive(false);
-        findFriendScreen.SetActive(false);
-        createFeedScreen.SetActive(false);
-
-        SNSSettingController.Instance.myAccountScreen.SetActive(false);                
-    }*/
-
     public void ClearAllFeedDataAfterLogOut()
     {
         //APIManager.Instance.ClearAllFeedDataForLogout();
@@ -482,52 +242,6 @@ public class FeedUIController : MonoBehaviour
             OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Clear();
             OtherPlayerProfileData.Instance.backKeyManageList.Clear();
         }
-        //if(followingFeedTabContainer)
-        //{
-        //    foreach (Transform item in followingFeedTabContainer)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-        
-        //if (followingFeedTabContainer)
-        //{
-        //    foreach (Transform item in followingFeedTabLeftContainer)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-
-        //if (followingFeedTabRightContainer)
-        //{
-        //    foreach (Transform item in followingFeedTabRightContainer)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-        
-        //if (forYouFeedTabContainer)
-        //{
-        //    foreach (Transform item in forYouFeedTabContainer)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-        //if (hotTabContainer)
-        //{
-        //    foreach (Transform item in hotTabContainer)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
-        
-        //if (videofeedParent)
-        //{
-        //    foreach (Transform item in videofeedParent)
-        //    {
-        //        Destroy(item.gameObject);
-        //    }
-        //}
 
         if (MyProfileDataManager.Instance.allPhotoContainer)
         {
@@ -576,44 +290,6 @@ public class FeedUIController : MonoBehaviour
     }
     #endregion
 
-    //#region Setup position and size Feed and Top Follower Panel.......
-    //public void SetupFollowerAndFeedScreen(bool isStoryAvailable)
-    //{
-    //    if (isStoryAvailable)
-    //    {
-    //        if (TopPanelMainStoryObj.activeSelf)
-    //        {
-    //            return;
-    //        }
-    //        TopPanelMainStoryObj.SetActive(true);
-
-    //        TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-    //        TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y - (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
-    //        for (int i = 0; i < allFeedPanel.Length; i++)
-    //        {
-    //            allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        //Commented in order to make profile 2.0 work after ahsan bhai removed old feedui object from scene ----- UMER
-    //        //if (!TopPanelMainStoryObj.activeSelf)
-    //        //{
-    //        //    return;
-    //        //}
-    //        //TopPanelMainStoryObj.SetActive(false);
-
-    //        //TopPanelMainObj.GetComponent<RectTransform>().sizeDelta = new Vector2(TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.x, TopPanelMainObj.GetComponent<RectTransform>().sizeDelta.y - TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-    //        //TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (float)(TopPanelMainObj.GetComponent<RectTransform>().anchoredPosition.y + (TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y / 2)));
-
-    //        //for (int i = 0; i < allFeedPanel.Length; i++)
-    //        //{
-    //        //    allFeedPanel[i].GetComponent<RectTransform>().offsetMax = new Vector2(0, allFeedPanel[i].GetComponent<RectTransform>().offsetMax.y + TopPanelMainStoryObj.GetComponent<RectTransform>().sizeDelta.y);
-    //        //}
-    //    }
-    //}
-    //#endregion
-
     public void OnBackToMainXanaBtnClick()
     {
         Initiate.Fade("Main", Color.black, 1.0f);
@@ -621,28 +297,6 @@ public class FeedUIController : MonoBehaviour
 
     public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
     {
-        //otherPlayerProfileScreen.SetActive(true);
-        //OtherPlayerProfileData.Instance.gameObject.SetActive(true);
-        //MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
-        //MyProfileDataManager.Instance.gameObject.SetActive(false);
-
-        //ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        //ProfileUIHandler.instance.SetMainScrolRefs();
-        //Other player avatar initialization required here
-
-        //if (_callFromFindFriendWithName)
-        //{
-        //    if (OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count > 0)
-        //    {
-        //        //print("user occupied assets data here: " + OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets.Count + "::::" + OtherPlayerProfileData.Instance.singleUserProfileData.userOccupiedAssets[0].json);
-        //        ProfileUIHandler.instance.SetUserAvatarClothing(OtherPlayerProfileData.Instance.visitedUserProfileAssetsData.userOccupiedAssets[0].json);
-        //    }
-        //    else
-        //    {
-        //        //print("wearing default clothing here");
-        //        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
-        //    }
-        //}
 
         if (OtherPlayerProfileData.Instance.backKeyManageList.Count > 0)
         {
@@ -650,20 +304,9 @@ public class FeedUIController : MonoBehaviour
             {
                 case "FollowerFollowingListScreen":
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-                    //MyProfileDataManager.Instance.myProfileScreen.SetActive(false);
                     profileFollowerFollowingListScreen.SetActive(false);
                     footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     break;
-                //case "HotTabScreen":
-                    //Debug.Log("Comes from Hot or Discover tab full feed screen");
-                    //disable feed full screen after click on profile button and open other user profile.......
-                    //OnClickVideoItemBackButton();
-                   // break;
-                //case "FollowingTabScreen":
-                    //Debug.Log("Comes from Following tab full feed screen");
-                    //disable feed full screen after click on profile button and open other user profile.......
-                    //OnClickVideoItemBackButton();
-                    //break;
                 default:
                     feedUiScreen.SetActive(false);
                     break;
@@ -675,110 +318,15 @@ public class FeedUIController : MonoBehaviour
         }
     }
 
-    public void OnClickProfileGiftBOxButton()
-    {
-        //otherPlayerProfileScreen.SetActive(false);
-       // giftItemScreens.SetActive(true);
-    }
 
-    public void OnClickFashionCetegoryItem(int index)
-    {
-        /* for (int i = 0; i < fashionCetegoryContent.childCount; i++)
-         {
-             if (i == index)
-             {
-                 fashionCetegoryContent.GetChild(i).gameObject.GetComponent<Image>().sprite = selectedSprite;
-                 fashionCetegoryContent.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Bold;
-                 fashionCetegoryContent.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = selectedColor;
-             }
-             else
-             {
-                 fashionCetegoryContent.GetChild(i).gameObject.GetComponent<Image>().sprite = unSelectedSprite;
-                 fashionCetegoryContent.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().fontStyle = FontStyles.Normal;
-                 fashionCetegoryContent.GetChild(i).gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = unSelectedColor;
-             }
-         }*/
-    }
-
-    public void Swipe(Vector2 value)
-    {
-        //Debug.Log(" value " + value.y);
-    }
-
+  
     public void OnSetSelectionLine()
     {
         if (feedUiScreen.activeSelf)
         {
-            // OLD FEED UI
-            /// SetupLineSelectionPosition();//move Selection Line
-            // END OLD FEED UI
-            //feedUiSelectionLine.transform.DOMove(new Vector3((feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x), feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
-            /*for (int i = 0; i < feedUiTabTitleText.Length; i++)
-            {
-                if (i == feedUiHorizontalSnap.CurrentPage)
-                {
-                    feedUiTabTitleText[i].color = selectedColor;
-                    StartCoroutine(ActiveFeedUi(i));
-                }
-                else
-                {
-                    feedUiTabTitleText[i].color = unSelectedColor;
-                }
-            }*/
-            //  if (feedUiHorizontalSnap.CurrentPage != 0)
-            // {
             isChangeMainScrollRect = true;
-            // OLD FEED UI
-            //feedUiScrollRectFasterEx = allFeedScrollRectFasterEx[feedUiHorizontalSnap.CurrentPage];
-           // OLD FEED UI
             StartCoroutine(WaitChangeScrollRectFasterOnMain());
-            // }
         }
-    }
-
-    void SetupLineSelectionPosition()
-    {
-        //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-        //float xPos;
-        //if (feedUiHorizontalSnap.CurrentPage == 0)
-        //{
-        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 25f;
-        //}
-        //else if (feedUiHorizontalSnap.CurrentPage == 1)
-        //{
-        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x - 10f;
-        //}
-        //else if (feedUiHorizontalSnap.CurrentPage == 2)
-        //{
-        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x + 11f;
-        //}
-        //else
-        //{
-        //    xPos = feedUiSelectionTab[feedUiHorizontalSnap.CurrentPage].position.x;
-        //}
-
-        ////feedUiSelectionLine.transform.DOMove(new Vector3(xPos, feedUiSelectionLine.transform.position.y, feedUiSelectionLine.transform.position.z), .2f);
-        //feedUiSelectionLine.transform.DOMoveX(xPos, .2f);
-
-        ////SetColor Feed Tab Title Text
-        //for (int i = 0; i < feedUiTabTitleText.Length; i++)
-        //{
-        //    if (i == feedUiHorizontalSnap.CurrentPage)
-        //    {
-        //        feedUiTabTitleText[i].color = selectedColor;
-        //        feedUiTabTitleText[i].fontStyle = FontStyles.Bold;
-        //    }
-        //    else
-        //    {
-        //        feedUiTabTitleText[i].color = unSelectedColor;
-        //        feedUiTabTitleText[i].fontStyle = FontStyles.Normal;
-        //    }
-        //    /*if (i == 1)//new cmnt
-        //    {
-        //        StartCoroutine(SetContentOnFollowingItemScreen());
-        //    }*/
-        //}
-        //------UMER
     }
 
     public IEnumerator SetContentOnFollowingItemScreen()
@@ -789,11 +337,6 @@ public class FeedUIController : MonoBehaviour
         //followingFeedMainContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
-    //public void SetUpFeedTabDefaultTop()
-    //{
-    //    feedUiScrollRectFasterEx.verticalNormalizedPosition = 1;
-    //}
-
     public bool isChangeMainScrollRect = false;
     IEnumerator WaitChangeScrollRectFasterOnMain()
     {
@@ -801,113 +344,8 @@ public class FeedUIController : MonoBehaviour
         isChangeMainScrollRect = false;
     }
 
-    //public IEnumerator ActiveFeedUi(int index, int callingIndex)
-    //{
-    //    if (feedUiScreen.activeSelf)
-    //    {
-    //        for (int i = 0; i < allFeedPanel.Length; i++)
-    //        {
-    //            if (i == index)
-    //            {
-    //                allFeedPanel[i].transform.gameObject.SetActive(true);
-    //                // OLD FEED UI
-    //                ////if (callingIndex == 1)//set default scroll top.......
-    //                ////{
-    //                ////    SetUpFeedTabDefaultTop();
-    //                ////}
-    //                //  End OLD FEED UI
-    //            }
-    //        }
-    //        yield return new WaitForSeconds(0.5f);
-    //        for (int i = 0; i < allFeedPanel.Length; i++)
-    //        {
-    //            if (i != feedUiHorizontalSnap.CurrentPage)
-    //            {
-    //                allFeedPanel[i].transform.gameObject.SetActive(false);
-    //            }
-    //        }
-
-    //        if (index == 1)
-    //        {
-    //            StartCoroutine(SetContentOnFollowingItemScreen());
-    //        }
-    //    }
-    //}
-
-    //public void CloseAllFeed(bool isActive)
-    //{
-    //    if (feedUiScreen.activeSelf)
-    //    {
-    //        for (int i = 0; i < allFeedPanel.Length; i++)
-    //        {
-    //            allFeedPanel[i].transform.gameObject.SetActive(isActive);
-    //        }
-    //    }
-    //}
 
     public float verticalNormalizedPosition;
-    //public void APiPagination()
-    //{
-    //    //Debug.Log("y pos:" + feedUiScrollRectFasterEx.verticalEndPos);
-
-    //    if (isChangeMainScrollRect)
-    //    {
-    //        return;
-    //    }
-    //    verticalNormalizedPosition = feedUiScrollRectFasterEx.verticalNormalizedPosition;
-    //    //Debug.Log("verticalNormalizedPosition : " + feedUiScrollRectFasterEx.verticalNormalizedPosition + "    :verticalEndPos:" + feedUiScrollRectFasterEx.verticalEndPos + "    :isDataLoad:" + isDataLoad);
-    //    //if (feedUiScrollRectFasterEx.verticalEndPos <= 1 && isDataLoad)
-    //    if (feedUiScrollRectFasterEx.verticalNormalizedPosition <= 0.01f && isDataLoad)
-    //    {
-    //        if (feedUiScrollRectFasterEx == allFeedScrollRectFasterEx[2])
-    //        {
-    //            APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-    //        }
-    //        //Debug.Log("scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition);
-    //        if (feedUiHorizontalSnap.CurrentPage == 1)
-    //        {
-    //            //Debug.Log("Feed Following scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.followingUserRoot.Data.Rows.Count);
-    //            //if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 && followingFeedImageLoadedCount >= (followingFeedInitiateTotalCount - 1))
-    //            if (APIManager.Instance.followingUserRoot.Data.Rows.Count > 0 /*&& followingFeedInitiateTotalCount < 2*/)
-    //            {
-    //                isDataLoad = false;
-    //               Debug.Log("isDataLoad False");
-    //                APIManager.Instance.RequestGetFeedsByFollowingUser((followingUserCurrentpage + 1), 10);
-    //            }
-    //        }
-    //        else
-    //        {
-    //            //Debug.Log("Feed scrollRect pos :" + feedUiScrollRectFasterEx.verticalNormalizedPosition + " rows count:"+ APIManager.Instance.root.data.rows.Count + " :current screen:" + feedUiHorizontalSnap.CurrentPage);
-    //            //Riken
-    //            //if (APIManager.Instance.root.data.rows.Count > 0)
-    //            if (APIManager.Instance.allhotFeedRoot.data.rows.Count > 0)
-    //            {
-    //                bool isCallAPi = false;
-    //                if (feedUiHorizontalSnap.CurrentPage == 0 && hotFeedInitiateTotalCount < 2)
-    //                {
-    //                    isCallAPi = true;
-    //                }
-    //                else if (feedUiHorizontalSnap.CurrentPage == 2 && hotForYouFeedInitiateTotalCount < 2)
-    //                {
-    //                    isCallAPi = true;
-    //                }
-    //               Debug.Log("isCalling:" + isCallAPi);
-    //                if (isCallAPi)
-    //                {
-    //                   Debug.Log("isDataLoad False APiPagination currentPage :" + allFeedCurrentpage);
-    //                    isDataLoad = false;
-    //                    APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-    //                }
-    //            }
-    //        }
-    //        //Debug.Log("isDataLoad False");
-    //        //isDataLoad = false;
-    //    }
-    //    if (Input.GetKeyDown(KeyCode.A))
-    //    {
-    //        APIManager.Instance.RequestGetAllUsersWithFeeds((allFeedCurrentpage + 1), 10);
-    //    }
-    //}
 
     public string GetConvertedTimeString(DateTime dateTime)
     {
@@ -984,85 +422,12 @@ public class FeedUIController : MonoBehaviour
         return timestr;
     }
 
-    //public void OnClickVideoItemBackButton()
-    //{
-    //   //  feedVideoScreen.SetActive(false);
-    //    switch (feedFullViewScreenCallingFrom)
-    //    {
-    //        case "MyProfile":
-    //           Debug.Log("Full Video Screen back calling from MyProfile");
-    //            MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
-    //            MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
-    //            MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-    //            break;
-    //        case "OtherProfile":
-    //            OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
-    //            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-    //           Debug.Log("Full Video Screen back calling from OtherProfile");
-    //            break;
-    //        case "FeedPage":
-    //           Debug.Log("Full Video Screen back calling from MyPostFed");
-    //            break;
-    //        default:
-    //            feedUiScreen.SetActive(true);
-    //            break;
-    //    }
-    //    feedFullViewScreenCallingFrom = "";
-
-    //    foreach (Transform item in videofeedParent)
-    //    {
-    //        Destroy(item.gameObject);
-    //    }
-    //}
-    //public void OnClickVideoItemBackButton(bool ComeFromBackButton)
-    //{
-    //    //feedVideoScreen.SetActive(false);
-    //    switch (feedFullViewScreenCallingFrom)
-    //    {
-    //        case "MyProfile":
-    //           Debug.Log("Full Video Screen back calling from MyProfile");
-    //            MyProfileDataManager.Instance.mainPostContainer.gameObject.SetActive(true);
-    //            MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
-    //            //MyProfileDataManager.Instance.SetupEmptyMsgForPhotoTab(false);//check for empty message.......
-    //            break;
-    //        case "OtherProfile":
-    //            OtherPlayerProfileData.Instance.mainPostContainer.gameObject.SetActive(true);
-    //            OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
-    //           Debug.Log("Full Video Screen back calling from OtherProfile");
-    //            break;
-    //        case "FeedPage":
-    //           Debug.Log("Full Video Screen back calling from MyPostFed");
-    //            if (!ComeFromBackButton)
-    //            {
-    //                bottomTabManager.OnClickProfileButton();
-    //            }
-    //            bottomTabManager.OnClickProfileButton();
-    //            break;
-    //        default:
-    //            feedUiScreen.SetActive(true);
-    //            break;
-    //    }
-    //    feedFullViewScreenCallingFrom = "";
-
-    //    foreach (Transform item in videofeedParent)
-    //    {
-    //        Destroy(item.gameObject);
-    //    }
-    //}
-
-    //public void OnClickGiftScreenBackButton()
-    //{
-    //  //  giftItemScreens.SetActive(false);
-    //    otherPlayerProfileScreen.SetActive(true);
-    //}
 
     //this method is used to Find Friend Button click.......
     public void OnClickSearchUserButton()
     {
-        //findFriendInputField.text = "";
         findFriendInputFieldAdvanced.Text = "";
         APIManager.Instance.GetBestFriend();
-        //findFriendScreen.SetActive(true);
     }
 
     /// <summary>
@@ -1162,374 +527,6 @@ public class FeedUIController : MonoBehaviour
     #endregion
 
     #region Create Feed
-    //public void CreateFeedAPICall(string url, string thumbnail)
-    //{
-    //    switch (imageOrVideo)
-    //    {
-    //        case "Image":
-    //            //string s1 = createFeedTitle.text;
-    //            //string s1 = createFeedTitleAdvanced.RichText;
-    //            string s1 = APIManager.Instance.userName;
-    //            //string s2 = createFeedDescription.text;
-    //            string s2 = createFeedDescriptionAdvanced.RichText;
-
-    //            if (string.IsNullOrEmpty(s1))
-    //            {
-    //                s1 = "@new";
-    //            }
-    //            else
-    //            {
-    //                s1 = "@" + s1;
-    //            }
-
-    //            if (string.IsNullOrEmpty(s2))
-    //            {
-    //                s2 = "  ";
-    //            }
-    //            APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s1), APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "MyProfileCreateFeed");
-    //            break;
-    //        case "Video":
-    //            //string s11 = createFeedTitle.text;
-    //            //string s11 = createFeedTitleAdvanced.RichText;
-    //            string s11 = APIManager.Instance.userName;
-    //            //string s22 = createFeedDescription.text;
-    //            string s22 = createFeedDescriptionAdvanced.RichText;
-
-    //            if (string.IsNullOrEmpty(s11))
-    //            {
-    //                s11 = "@new";
-    //            }
-    //            else
-    //            {
-    //                s11 = "@" + s11;
-    //            }
-
-    //            if (string.IsNullOrEmpty(s22))
-    //            {
-    //                s22 = "  ";
-    //            }
-    //            APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s11), APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "MyProfileCreateFeed");
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    //static long GetFileSize(string FilePath)
-    //{
-    //    if (File.Exists(FilePath))
-    //    {
-    //        return new FileInfo(FilePath).Length;
-    //    }
-    //    return 0;
-    //}
-
-//    public bool lastPostCreatedImageDownload = false;
-//    public string imageOrVideo = "";
-//    public string createFeedLastPickFilePath;
-//    public string createFeedLastPickFileName;
-//    public void OnClickCreateFeedPickImageOrVideo()
-//    {
-//        //ResetAndClearCreateFeedData();
-
-//        /*createFeedTitle.text = "";
-//        createFeedDescription.text = "";
-//        createFeedImage.sprite = null;
-//        imageOrVideo = "";
-
-//        createFeedLastPickFilePath = "";
-//        createFeedLastPickFileName = "";*/
-
-//        //createFeedImage.gameObject.SetActive(false);
-//        //createFeedVideoObj.SetActive(false);
-//        //createFeedMediaPlayer.gameObject.SetActive(false);
-//        //createFeedScreen.transform.localScale = Vector3.one;
-
-//        /*NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
-//        {
-//            if (path != null)
-//            {
-//                string fileExtention = Path.GetExtension(path);
-//                switch (NativeGallery.GetMediaTypeOfFile(path))
-//                {
-//                    case NativeGallery.MediaType.Image:
-//                        Texture2D texture = NativeGallery.LoadImageAtPath(path, 1024, false);
-//                        if (texture == null)
-//                        {
-//                            Debug.Log("Couldn't load texture from " + path);
-//                            return;
-//                        }
-//                        createFeedImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
-//                        imageOrVideo = "Image";
-//                        createFeedImage.gameObject.SetActive(true);
-//                        Debug.Log("Picked image");
-//                        break;
-//                    case NativeGallery.MediaType.Video:
-//                        createFeedVideoObj.SetActive(true);
-//                        createFeedMediaPlayer.gameObject.SetActive(true);
-//                        createFeedMediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
-//                        createFeedMediaPlayer.Play();
-//                        Debug.Log("Picked video");
-//                        imageOrVideo = "Video";
-//                        break;
-//                    default:
-//                        Debug.Log("Probably picked something else");
-//#if UNITY_EDITOR
-//                        if (fileExtention == ".heic")
-//                        {
-//                            imageOrVideo = "Image";
-//                            break;
-//                        }
-//                        else
-//                        {
-//                            if (SNSNotificationManager.Instance != null)
-//                            {
-//                                SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
-//                            }
-//                            return;
-//                        }
-//#else
-//                        if (SNSNotificationManager.Instance != null)
-//                        {
-//                            SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
-//                        }
-//                        return;
-//#endif
-//                }
-
-//                createFeedLastPickFilePath = path;
-
-//                string[] pathArry = path.Split('/');
-
-//                //string fileName = pathArry[pathArry.Length - 1];
-//                string fileName = Path.GetFileName(path);
-//                createFeedLastPickFileName = (Time.time + fileName);
-//               Debug.Log("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
-
-//                createFeedScreen.SetActive(true);
-//            }
-//        });
-//        Debug.Log("Permission result: " + permission);
-//        return;*/
-
-//        if (NativeGallery.CanSelectMultipleMediaTypesFromGallery())
-//        {
-//            NativeGallery.Permission permission = NativeGallery.GetMixedMediaFromGallery((path) =>
-//            {
-//                //UnityToolbag.Dispatcher.Invoke(() =>
-//                //{
-
-//                string fileExtention = Path.GetExtension(path);
-//                //Debug.Log("Path:" + path + "   :File extention:" + fileExtention + "    :MediaType:" + NativeGallery.GetMediaTypeOfFile(path));
-
-//                if (path != null)
-//                {
-//                    // Determine if user has picked an image, video or neither of these
-//                    switch (NativeGallery.GetMediaTypeOfFile(path))
-//                    {
-//                        case NativeGallery.MediaType.Image:
-//                            Texture2D texture = NativeGallery.LoadImageAtPath(path, 1024, false);
-//                            if (texture == null)
-//                            {
-//                                Debug.Log("Couldn't load texture from " + path);
-//                                return;
-//                            }
-//                            createFeedImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
-//                            imageOrVideo = "Image";
-//                            createFeedImage.gameObject.SetActive(true);
-//                            createFeedScreen.SetActive(true);
-//                            //Debug.Log("Picked image");
-//                            break;
-//                        case NativeGallery.MediaType.Video:
-//                            ShowLoader(true);//show loader for prepare video.......
-//                            createFeedScreen.transform.localScale = Vector3.zero;
-//                            createFeedScreen.SetActive(true);
-//                            createFeedVideoObj.SetActive(true);
-//                            createFeedMediaPlayer.gameObject.SetActive(true);
-//                            createFeedMediaPlayer.OpenMedia(new MediaPath(path, MediaPathType.AbsolutePathOrURL), autoPlay: true);
-//                            createFeedMediaPlayer.Events.AddListener(OnFeedCreateMediaPlayerEvent);
-//                            createFeedMediaPlayer.Play();
-//                            //Debug.Log("Picked video");
-//                            imageOrVideo = "Video";
-//                            break;
-//                        default:
-//                            //SNSWarningMessageManager.Instance.ShowWarningMessage("Only upload image or video");
-//                            Debug.Log("Probably picked something else:" + fileExtention);
-//#if UNITY_EDITOR
-//                            if (fileExtention == ".heic")
-//                            {
-//                                imageOrVideo = "Image";
-//                                createFeedScreen.SetActive(true);
-//                                break;
-//                            }
-//                            else
-//                            {
-//                                if (SNSNotificationManager.Instance != null)
-//                                {
-//                                    SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
-//                                }
-//                                return;
-//                            }
-//#else
-//                            if (SNSNotificationManager.Instance != null)
-//                            {
-//                                SNSNotificationManager.Instance.ShowNotificationMsg("Please upload valid image or video file");
-//                            }
-//                            return;
-//#endif
-//                    }
-
-//                    createFeedLastPickFilePath = path;
-
-//                    string[] pathArry = path.Split('/');
-
-//                    //string fileName = pathArry[pathArry.Length - 1];
-//                    string fileName = Path.GetFileName(path);
-//                    createFeedLastPickFileName = (Time.time + fileName);
-//                   Debug.Log("createFeedLastPickFileName  :" + createFeedLastPickFileName + " :fileName   :" + fileName);
-
-//                    //createFeedScreen.SetActive(true);
-//                }
-//                //});
-//            }, NativeGallery.MediaType.Image | NativeGallery.MediaType.Video, "Select an image or video");
-
-//            Debug.Log("Permission result: " + permission);
-//        }
-//    }
-
-    //public void FeedCreateVideoTimeGet()
-    //{
-    //    //Debug.Log("Duration:" + createFeedMediaPlayer.Info.GetDuration() + "   :frame:" + createFeedMediaPlayer.Info.GetDurationFrames());
-    //    if (createFeedMediaPlayer.Info.GetDuration() > 15)
-    //    {
-    //        SNSWarningMessageManager.Instance.ShowWarningMessage("Please upload video upto 15 seconds");
-    //        createFeedMediaPlayer.CloseMedia();
-    //        imageOrVideo = "";
-    //        createFeedLastPickFilePath = "";
-    //        createFeedLastPickFileName = "";
-    //        createFeedScreen.SetActive(false);
-    //        Resources.UnloadUnusedAssets();
-    //    }
-    //    createFeedScreen.transform.localScale = Vector3.one;
-    //    ShowLoader(false);//show loader for prepare video.......
-    //}
-
-    //public void OnFeedCreateMediaPlayerEvent(MediaPlayer mp, MediaPlayerEvent.EventType et, ErrorCode errorCode)
-    //{
-    //    //Debug.Log("OnFeedCreateMediaPlayerEvent:" + et);
-    //    switch (et)
-    //    {
-    //        case MediaPlayerEvent.EventType.MetaDataReady:
-    //            //Debug.Log("MetaDataReady: " + createFeedMediaPlayer.Info.GetDuration());
-    //            FeedCreateVideoTimeGet();
-    //            break;
-    //        case MediaPlayerEvent.EventType.FirstFrameReady:
-    //            //Debug.Log("FirstFrameReady: " + createFeedMediaPlayer.Info.GetDuration());
-    //            FeedCreateVideoTimeGet();
-    //            break;
-    //        case MediaPlayerEvent.EventType.ReadyToPlay:
-    //            //Debug.Log("ReadyToPlay: " + createFeedMediaPlayer.Info.GetDuration());
-    //            FeedCreateVideoTimeGet();
-    //            break;
-    //        case MediaPlayerEvent.EventType.Error:
-    //            FeedCreateVideoError();
-    //            break;
-    //    }
-    //}
-
-    //public void FeedCreateVideoError()
-    //{
-    //   Debug.Log("Error to load feed seleted video");
-    //    SNSNotificationManager.Instance.ShowNotificationMsg("video can't load please try again");
-    //    createFeedMediaPlayer.CloseMedia();
-    //    imageOrVideo = "";
-    //    createFeedLastPickFilePath = "";
-    //    createFeedLastPickFileName = "";
-    //    createFeedScreen.SetActive(false);
-    //    createFeedScreen.transform.localScale = Vector3.one;
-    //    ShowLoader(false);//show loader for prepare video.......
-    //    Resources.UnloadUnusedAssets();
-    //}
-
-    ////this method is used to post Feed 
-    //public void OnClickCreateFeedPostBtn()
-    //{
-    //    print("post btn");
-    //    if (PremiumUsersDetails.Instance != null && !PremiumUsersDetails.Instance.CheckSpecificItem("post button"))
-    //    {
-    //        //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
-    //        print("Please Upgrade to Premium account");
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        print("Horayyy you have Access");
-    //    }
-
-    //    ShowLoader(true);//active loader
-
-    //    string iscompress = "";
-    //    if (imageOrVideo == "Image")
-    //    {
-    //        iscompress = "true";
-    //    }
-    //    else if (imageOrVideo == "Video")
-    //    {
-    //        createFeedMediaPlayer.Pause();
-    //    }
-    //    AWSHandler.Instance.PostObjectFeed(createFeedLastPickFilePath, createFeedLastPickFileName, "CreateFeed", iscompress);
-    //}
-
-    //public void OnClickCreateFeedBackBtn(bool isDataNotReset)
-    //{
-    //    createFeedScreen.SetActive(false);
-
-    //    createFeedImage.gameObject.SetActive(false);
-    //    createFeedVideoObj.SetActive(false);
-    //    if (createFeedMediaPlayer.gameObject.activeSelf)
-    //    {
-    //       Debug.Log("Close media player");
-    //        createFeedMediaPlayer.CloseMedia();
-    //        createFeedMediaPlayer.gameObject.SetActive(false);
-    //    }
-
-    //    if (!isDataNotReset)
-    //    {
-    //        ResetAndClearCreateFeedData();
-    //    }
-
-    //    /*createFeedTitle.text = "";
-    //    createFeedDescription.text = "";
-    //    createFeedImage.sprite = null;
-    //    imageOrVideo = "";
-
-    //    createFeedLastPickFilePath = "";
-    //    createFeedLastPickFileName = "";*/
-    //}
-
-    //public void ResetAndClearCreateFeedData()
-    //{
-    //    lastPostCreatedImageDownload = false;
-
-    //    createFeedTitle.text = "";
-    //    createFeedDescription.text = "";
-    //    createFeedTitleAdvanced.Text = "";
-    //    createFeedDescriptionAdvanced.Text = "";
-    //    /*if (createFeedImage.sprite != null)
-    //    {
-    //        Destroy(createFeedImage.sprite);
-    //    }*/
-    //    createFeedImage.sprite = null;
-    //    imageOrVideo = "";
-
-    //    createFeedLastPickFilePath = "";
-    //    createFeedLastPickFileName = "";
-
-    //    Resources.UnloadUnusedAssets();
-    //    //Caching.ClearCache();
-    //    //GC.Collect();
-    //}
-    //#endregion
 
     #region Following Tab Feed Remove and refresh after unfollow user
     //this method is used to check add and remove from unfollowed list.......
@@ -1551,15 +548,6 @@ public class FeedUIController : MonoBehaviour
         }
     }
 
-    //this method is used to Remove feed from following tab.......
-    //public void RemoveUnFollowedUserFromFollowingTab(string callingFrom = "")
-    //{
-    //    //Debug.Log("RemoveUnFollowedUserFromFollowingTab.......:" + unFollowedUserListForFollowingTab.Count);
-    //    if (unFollowedUserListForFollowingTab.Count > 0)
-    //    {
-    //        APIManager.Instance.FeedFollowingSaveAndUpdateJson(unFollowedUserListForFollowingTab, callingFrom);
-    //    }
-    //}
     #endregion
 
     #region Profile Follower and Following list Screen Methods
@@ -1567,53 +555,18 @@ public class FeedUIController : MonoBehaviour
     //this method is used to profile follower button click.......
     public void ProfileFollowerFollowingScreenSetup(int Tabindex, string userName)
     {
-        //string titleLocalize = TextLocalization.GetLocaliseTextByKey("s friends");
-        //if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese)
-        //{
-        //    titleLocalize = "'" + titleLocalize;
-        //}
-
-        //profileFFScreenTitleText.text = userName + titleLocalize;
         profileFollowerFollowingListScreen.SetActive(true);
         if (ProfileUIHandler.instance)
         {
             ProfileUIHandler.instance.gameObject.SetActive(false);
         }
-        //if (tempFollowFollowingScreenOpenCount == 0)
-        //{
-        //    StartCoroutine(WaitToProfileFollowerFollowingHorizontalScroll(Tabindex));
-        //}
-        //else
-        //{
-        //    profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
-        //}
         ProfileFFLineSelectionSetup(Tabindex);
-
-        //for (int i = 0; i < profileFFScreenScrollrectFasterEXList.Length; i++)
-        //{
-        //    profileFFScreenScrollrectFasterEXList[i].verticalNormalizedPosition = 1;
-        //}
-        //tempFollowFollowingScreenOpenCount++;
         MyProfileDataManager.Instance.MyProfileSceenShow(false);
     }
 
-    //IEnumerator WaitToProfileFollowerFollowingHorizontalScroll(int Tabindex)
-    //{
-    //    yield return new WaitForSeconds(0.02f);
-    //    profileFollowerFollowingHorizontalScroll.GoToScreen(Tabindex);
-    //}
-
-    //public void ProfileFFSelectionOnValueChange()
-    //{
-    //    //float xPos = profileFFSelectionTab[profileFollowerFollowingHorizontalScroll.CurrentPage].position.x;
-    //    //profileFFLineSelection.transform.DOMoveX(xPos, .01f);
-    //    ProfileFFLineSelectionSetup(profileFollowerFollowingHorizontalScroll.CurrentPage);
-    //}
 
     public void ProfileFFLineSelectionSetup(int index)
     {
-        //float xPos = profileFFSelectionTab[index].position.x;
-        //profileFFLineSelection.transform.DOMoveX(xPos, .2f);
 
         for (int i = 0; i < profileFFSelectionTabText.Length; i++)
         {
@@ -1621,20 +574,17 @@ public class FeedUIController : MonoBehaviour
             {
                 profileFFSelectionTabText[i].color = selectedColor;
                 profileFFSelectionTabLine[i].gameObject.SetActive(true);
-                //profileFFSelectionTabText[i].fontStyle = FontStyles.Bold;
             }
             else
             {
                 profileFFSelectionTabText[i].color = unSelectedColor;
                 profileFFSelectionTabLine[i].gameObject.SetActive(false);
-                //profileFFSelectionTabText[i].fontStyle = FontStyles.Normal;
             }
         }
     }
 
     public void OnClickProfileFollowerFollowingBackButton()
     {
-        //RemoveUnFollowedUserFromFollowingTab();
         MyProfileDataManager.Instance.MyProfileSceenShow(true);
         profileFollowerFollowingListScreen.SetActive(false);
     }
@@ -1654,7 +604,6 @@ public class FeedUIController : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-        //Debug.Log("ProfileGetAllFollower:" + APIManager.Instance.profileAllFollowerRoot.data.rows.Count + "    :pageNum:" + pageNum);
         if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
         {
             for (int i = 0; i <= APIManager.Instance.profileAllFollowerRoot.data.rows.Count; i++)
@@ -1665,18 +614,8 @@ public class FeedUIController : MonoBehaviour
                     {
                         GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
                         followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[i]);
-                        //profileFollowerItemControllersList.Add(followerObject.GetComponent<FollowerItemController>());
-                        //profileFollowerLoadedItemIDList.Add(APIManager.Instance.profileAllFollowerRoot.data.rows[i].follower.id);
                     }
                 }
-                //else
-                //{
-                //    for (int j = 0; j < 4; j++)
-                //    {
-                //        GameObject followerObject = Instantiate(followerPrefab, profileFollowerListContainer);
-                //        followerObject.GetComponent<FindFriendWithNameItem>().SetupData(APIManager.Instance.profileAllFollowerRoot.data.rows[0], true);
-                //    }
-                //}
             }
             if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 10)
             {
@@ -1687,23 +626,7 @@ public class FeedUIController : MonoBehaviour
         {
             noProfileFollowers.SetActive(true);
         }
-        //if (waitToProfileFollowerDataLoadCo != null)
-        //{
-        //    StopCoroutine(waitToProfileFollowerDataLoadCo);
-        //}
-        //waitToProfileFollowerDataLoadCo = StartCoroutine(WaitToProfileFollowerDataLoad(pageNum));
     }
-
-    //Coroutine waitToProfileFollowerDataLoadCo;
-    //IEnumerator WaitToProfileFollowerDataLoad(int pageNum)
-    //{
-    //    yield return new WaitForSeconds(0.5f);
-    //    isProfileFollowerDataLoaded = true;
-    //  if (pageNum > 1 && APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
-    //    {
-    //        profileFollowerPaginationPageNo += 1;
-    //    }
-    //}
 
     public void ProfileGetAllFollowing(int pageNum)
     {
@@ -1791,852 +714,8 @@ public class FeedUIController : MonoBehaviour
         }
     }
 
-    //public void ProfileFollowerPaginationAPICall()
-    //{
-    //    //Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
-    //    if (profileFFScreenScrollrectFasterEXList[0].verticalNormalizedPosition <= 0.01f && isProfileFollowerDataLoaded)
-    //    {
-    //        if (APIManager.Instance.profileAllFollowerRoot.data.rows.Count > 0)
-    //        {
-    //            //Debug.Log("ProfileFollowerFollowingPagination follower currentPage:" + profileFollowerPaginationPageNo);
-    //            isProfileFollowerDataLoaded = false;
-    //            APIManager.Instance.RequestGetAllFollowersFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowerPaginationPageNo + 1), 50);
-    //        }
-    //    }
-    //}
-
-    //public void ProfileFollowingPaginationAPICall()
-    //{
-    //    print("~~~~~~~~");
-    //    Debug.Log("ProfileFollowerFollowingPagination : " + profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition + " :CurrentPage:" + profileFollowerFollowingHorizontalScroll.CurrentPage);
-    //    if (profileFFScreenScrollrectFasterEXList[1].verticalNormalizedPosition <= 0.01f && isProfileFollowingDataLoaded)
-    //    {
-    //        if (APIManager.Instance.profileAllFollowingRoot.data.rows.Count > 0)
-    //        {
-    //            Debug.Log("ProfileFollowerFollowingPagination following currentPage:" + profileFollowingPaginationPageNo);
-    //            isProfileFollowingDataLoaded = false;
-    //            APIManager.Instance.RequestGetAllFollowingFromProfile(MyProfileDataManager.Instance.myProfileData.id.ToString(), (profileFollowingPaginationPageNo + 1), 50);
-    //        }
-    //    }
-    //}
+   
     #endregion
-
-    //#region Edit Delete Feed Methods.......
-    //public void SetupEditDeleteFeedScreen()
-    //{
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedImage))
-    //    {
-    //        bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(feedEditOrDeleteData.feedImage);
-    //        if (isUrlContainsHttpAndHttps)
-    //        {
-    //            AssetCache.Instance.EnqueueOneResAndWait(feedEditOrDeleteData.feedImage, feedEditOrDeleteData.feedImage, (success) =>
-    //            {
-    //                if (success)
-    //                {
-    //                    AssetCache.Instance.LoadSpriteIntoImage(editDeleteCurrentFeedImage, feedEditOrDeleteData.feedImage, changeAspectRatio: true);
-    //                }
-    //            });
-    //        }
-    //        else
-    //        {
-    //            GetImageFromAWS(feedEditOrDeleteData.feedImage, editDeleteCurrentFeedImage);//Get image from aws and save/load into asset cache.......
-    //        }
-
-    //        float diff = editDeleteCurrentFeedImage.sprite.rect.width - editDeleteCurrentFeedImage.sprite.rect.height;
-    //        if (diff < -160)
-    //        {
-    //            editDeleteCurrentFeedImage.GetComponent<AspectRatioFitter>().aspectRatio = 0.1f;
-    //        }
-    //        else
-    //        {
-    //            editDeleteCurrentFeedImage.GetComponent<AspectRatioFitter>().aspectRatio = 2.2f;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        editDeleteCurrentFeedImage.gameObject.SetActive(false);
-    //        editDeleteVideoDisplay.SetActive(true);
-    //        //editDeleteMideaPlayer.gameObject.SetActive(true);
-    //        editDeleteCurrentPostFeedVideoItem.feedMediaPlayer.Pause();
-    //        editDeleteVideoDisplay.GetComponent<DisplayUGUI>().CurrentMediaPlayer = editDeleteCurrentPostFeedVideoItem.feedMediaPlayer;
-    //        //editDeleteMideaPlayer = editDeleteCurrentPostFeedVideoItem.feedMediaPlayer;
-    //    }
-    //    if (GameManager.currentLanguage == "ja")
-    //    {
-    //        editDeleteFeedUserNameText.text = feedEditOrDeleteData.userData.Name + " " + TextLocalization.GetLocaliseTextByKey("Post by");
-    //    }
-    //    else
-    //    {
-    //        editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post by") + " " + feedEditOrDeleteData.userData.Name;
-    //    }
-    //    if (feedEditOrDeleteData.UpdatedAt != null)
-    //    {
-    //        DateTime timeUtc = feedEditOrDeleteData.UpdatedAt;
-    //        DateTime today = TimeZoneInfo.ConvertTimeFromUtc(timeUtc, TimeZoneInfo.Local);
-
-    //        TimeSpan timeDiff = (DateTime.Now - today);
-    //       Debug.Log("timeDiff:" + timeDiff + " :timeUtc:" + timeUtc.ToString("yyyy/MM/dd tt hh:MM"));
-
-    //        editDeleteFeedDateTimeText.text = timeUtc.ToString("yyyy/MM/dd tt hh:MM");
-    //    }
-    //}
-
-    ////this method is used show edit delete feed screen.......
-    //public void OnShowEditDeleteFeedScreen(bool isActive)
-    //{
-    //    if (isActive)
-    //    {
-    //        SetupEditDeleteFeedScreen();
-    //    }
-    //    editDeleteFeedScreen.SetActive(isActive);
-    //}
-
-    //this method is used to Edit/Delete Feed Close Popup Button Click.......
-    //public void OnClickEditDeleteClosePopupButton()
-    //{
-    //    StartCoroutine(WaitToOnClickEditDeleteClose());
-    //}
-    //IEnumerator WaitToOnClickEditDeleteClose()
-    //{
-    //    yield return new WaitForSeconds(0.25f);
-    //    editDeleteCurrentFeedImage.gameObject.SetActive(true);
-    //    editDeleteVideoDisplay.SetActive(false);
-    //    //editDeleteMideaPlayer.gameObject.SetActive(false);
-
-    //    editDeleteFeedUserNameText.text = TextLocalization.GetLocaliseTextByKey("Post") + " " + TextLocalization.GetLocaliseTextByKey("by");
-    //    editDeleteFeedUserNameText.text = "";
-    //    AssetCache.Instance.RemoveFromMemory(editDeleteCurrentFeedImage.sprite);
-    //    editDeleteCurrentFeedImage.sprite = null;
-
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedVideo))
-    //    {
-    //        editDeleteCurrentPostFeedVideoItem.feedMediaPlayer.Play();
-    //    }
-
-    //    //editDeleteMideaPlayer = null;
-    //    Resources.UnloadUnusedAssets();
-    //    //Caching.ClearCache();
-    //    //GC.Collect();
-
-    //    if (editDeleteCurrentPostFeedVideoItem != null)
-    //    {
-    //        editDeleteCurrentPostFeedVideoItem = null;
-    //    }
-    //}
-
-    ////this method is used to Edit/Delete Feed Screen Delete button click.......
-    //public void OnClickEditDeleteFeedDeleteButton()
-    //{
-    //    deleteFeedConfirmationScreen.SetActive(true);
-    //}
-
-    ////this method is used to Edit/Delete Feed Screen Edit button click.......
-    //public void OnClickEditDeleteFeedEditButton()
-    //{
-    //    editFeedCurrentFeedImage.gameObject.SetActive(true);
-    //    editFeedCurrentVideoDisplay.SetActive(false);
-
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedImage))
-    //    {
-    //        editFeedCurrentFeedImage.sprite = editDeleteCurrentFeedImage.sprite;
-    //        editFeedCurrentFeedImage.GetComponent<AspectRatioFitter>().aspectRatio = editDeleteCurrentFeedImage.GetComponent<AspectRatioFitter>().aspectRatio;
-    //    }
-    //    else
-    //    {
-    //        editFeedCurrentFeedImage.gameObject.SetActive(false);
-    //        editFeedCurrentVideoDisplay.SetActive(true);
-
-    //        editFeedCurrentVideoDisplay.GetComponent<DisplayUGUI>().CurrentMediaPlayer = editDeleteCurrentPostFeedVideoItem.feedMediaPlayer;
-    //    }
-
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedDescriptions))
-    //    {
-    //        editFeedDescriptionInputField.Text = APIManager.DecodedString(feedEditOrDeleteData.feedDescriptions);
-    //    }
-    //    else
-    //    {
-    //        editFeedDescriptionInputField.Text = "";
-    //    }
-
-    //    editFeedScreen.SetActive(true);
-    //}
-
-    ////this method is used to Edit/Delete Feed Screen Share button click.......
-    //public void OnClickEditDeleteFeedShareButton()
-    //{
-    //    string url = editDeleteCurrentPostFeedVideoItem.shareMediaUrl;
-
-    //    new NativeShare().AddFile("Scoial Image")
-    //   .SetSubject("Subject goes here").SetText("Xana App!").SetUrl(url)
-    //   .SetCallback((result, shareTarget) => Debug.Log("Share result: " + result + ", selected app: " + shareTarget))
-    //   .Share();
-    //}
-
-    ////this method is used to Delete Feed Confirmation Screen Ok button click.......
-    //public void OnClickDeleteFeedConfirmationOkButton()
-    //{
-    //    //ShowLoader(true);
-    //    APIManager.Instance.RequestDeleteFeed(feedEditOrDeleteData.feedId.ToString(), "DeleteFeed");
-    //    //deleteFeedConfirmationScreen.SetActive(false);
-    //}
-
-    ////this method is used to Delete Feed Confirmation Screen Cancel button click.......
-    //public void OnClickDeleteFeedConfirmationCancelButton()
-    //{
-    //    deleteFeedConfirmationScreen.SetActive(false);
-    //}
-
-    ////this method is used to success Delete Feed Response.......
-    //public void OnSuccessDeleteFeed()
-    //{
-    //    DeleteFeedAfterRemoveAndRefreshData();
-    //}
-
-    ////this method is used to delete after remove prefab and remove from list and refresh.......
-    //void DeleteFeedAfterRemoveAndRefreshData()
-    //{
-    //    Debug.Log("feedEditOrDeleteData.feedId" + feedEditOrDeleteData.feedId);
-    //    int PostIndex = MyProfileDataManager.Instance.loadedMyPostAndVideoIdInFeedPage.FindIndex(o => o.Equals(feedEditOrDeleteData.feedId));
-    //    int HotPostIndex = APIController.Instance.feedHotIdList.FindIndex(o => o.Equals(feedEditOrDeleteData.feedId));
-    //    APIController.Instance.feedHotIdList.Remove(feedEditOrDeleteData.feedId);
-    //    MyProfileDataManager.Instance.loadedMyPostAndVideoId.Remove(feedEditOrDeleteData.feedId);
-    //    MyProfileDataManager.Instance.loadedMyPostAndVideoIdInFeedPage.Remove(feedEditOrDeleteData.feedId);
-    //    AllFeedByUserIdRow allFeedByUserIdForAPI = APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Find(x => x.Id.Equals(feedEditOrDeleteData.feedId));
-    //    APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Remove(allFeedByUserIdForAPI);
-
-    //    //for image.......
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedImage))
-    //    {
-    //        AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == feedEditOrDeleteData.feedId);
-    //        Debug.Log("Image Before");
-    //        int imageIndex = MyProfileDataManager.Instance.allMyFeedImageRootDataList.IndexOf(allFeedByUserIdRow);
-    //        Debug.Log("Image " + imageIndex);
-    //        if (MyProfileDataManager.Instance.allPhotoContainer.childCount > imageIndex)
-    //        {
-    //            DestroyImmediate(MyProfileDataManager.Instance.allPhotoContainer.GetChild(imageIndex).gameObject);
-    //            Debug.Log("Image Delete");
-    //        }
-    //        MyProfileDataManager.Instance.allMyFeedImageRootDataList.Remove(allFeedByUserIdRow);
-    //    }
-    //    else
-    //    {
-    //        AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == feedEditOrDeleteData.feedId);
-    //        Debug.Log("Video Before");
-    //        int videoIndex = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.IndexOf(allFeedByUserIdRow);
-    //        Debug.Log("Video " + videoIndex);
-    //        if (MyProfileDataManager.Instance.allMovieContainer.childCount > videoIndex)
-    //        {
-    //            DestroyImmediate(MyProfileDataManager.Instance.allMovieContainer.GetChild(videoIndex).gameObject);
-    //            Debug.Log("Video Delete");
-    //        }
-    //        MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Remove(allFeedByUserIdRow);
-    //    }
-
-    //    HotFeed myhotfeed = APIManager.Instance.allhotFeedRoot.data.rows.Find((x) => x.id == feedEditOrDeleteData.feedId);
-    //    Debug.Log("Hot Image Before");
-    //    int index = APIManager.Instance.allhotFeedRoot.data.rows.IndexOf(myhotfeed);
-    //    Debug.Log("Hot Image " + index);
-    //    APIManager.Instance.allhotFeedRoot.data.rows.Remove(myhotfeed);
-
-    //    Debug.Log("PostIndex:" + PostIndex);
-    //    if (PostIndex >= 0 && forYouFeedTabContainer.childCount > PostIndex)
-    //    {
-    //        Destroy(forYouFeedTabContainer.GetChild(PostIndex).gameObject);
-    //    }
-    //    Debug.Log("HotPostIndex:" + HotPostIndex);
-    //    if (HotPostIndex >= 0 && hotTabContainer.childCount > HotPostIndex)
-    //    {
-    //        Destroy(hotTabContainer.GetChild(HotPostIndex).gameObject);
-    //    }
-
-    //    if (editDeleteCurrentPostFeedVideoItem != null)
-    //    {
-    //        DestroyImmediate(editDeleteCurrentPostFeedVideoItem.gameObject);
-    //        editDeleteCurrentPostFeedVideoItem = null;
-    //    }
-    //    // OLD FEED UI
-    //    //if (APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.Count == 0)
-    //    //{
-    //    //    AllFeedScreenMessageTextActive(true, 2, TextLocalization.GetLocaliseTextByKey("There's nothing to show here."));
-    //    //}
-    //    //else
-    //    //{
-    //    //    AllFeedScreenMessageTextActive(false, 2, TextLocalization.GetLocaliseTextByKey(""));
-    //    //}
-    //    // END OLD FEED UI
-
-    //    if (videoFeedRect.GetComponent<ScrollSnapRect>().startingPage > 0)
-    //    {
-    //        videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = videoFeedRect.GetComponent<ScrollSnapRect>().startingPage - 1;
-    //    }
-
-    //    if (videofeedParent.childCount > 0)
-    //    {
-    //        videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();//refresh and setup upto top Full view feed screen.......
-    //    }
-
-    //    OnClickDeleteFeedConfirmationCancelButton();
-    //    editDeleteFeedScreen.GetComponent<OnEnableDisable>().ClosePopUp();
-
-    //    //SNSNotificationManager.Instance.ShowNotificationMsg("Post deleted");//this method is used to show SNS notification.......
-
-    //    MyProfileDataManager.Instance.RequestGetUserDetails();
-
-    //    if (videofeedParent.childCount <= 0)
-    //    {
-    //        //MyProfileDataManager.Instance.totalPostText.text = "0";
-    //        OnClickVideoItemBackButton();
-    //    }
-    //}
-
-    ///// <summary>
-    ///// feed edit-----------------------------
-    ///// </summary>
-    ////this method is used to Edit/Delete Feed Screen Edit button click.......
-    //string lastUpdatedFeedDescriptionStr = "";
-    //public void OnClickEditFeedDoneButton()
-    //{
-    //    int updatefeedDescription = 0;
-    //    lastUpdatedFeedDescriptionStr = "";
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedDescriptions))
-    //    {
-    //        if (feedEditOrDeleteData.feedDescriptions != editFeedDescriptionInputField.Text)
-    //        {
-    //            //lastUpdatedFeedDescriptionStr = editFeedDescriptionInputField.Text;
-    //            lastUpdatedFeedDescriptionStr = editFeedDescriptionInputField.Text;
-    //            updatefeedDescription = 1;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (!string.IsNullOrEmpty(editFeedDescriptionInputField.Text))
-    //        {
-    //            //lastUpdatedFeedDescriptionStr = editFeedDescriptionInputField.Text;
-    //            lastUpdatedFeedDescriptionStr = editFeedDescriptionInputField.Text;
-    //            updatefeedDescription = 1;
-    //        }
-    //    }
-
-    //    if (updatefeedDescription == 1)
-    //    {
-    //        if (string.IsNullOrEmpty(lastUpdatedFeedDescriptionStr))
-    //        {
-    //            lastUpdatedFeedDescriptionStr = " ";
-    //        }
-
-    //        ShowLoader(true);
-    //        APIManager.Instance.RequestEditFeed(feedEditOrDeleteData.feedId.ToString(), APIManager.EncodedString(lastUpdatedFeedDescriptionStr), feedEditOrDeleteData.feedImage, feedEditOrDeleteData.feedVideo);
-    //    }
-    //    editFeedScreen.SetActive(true);
-    //}
-
-    ////this method is used to success response of Feed Edit.......
-    //public void OnSuccessFeedEdit()
-    //{
-    //    //for image.......
-    //    if (!string.IsNullOrEmpty(feedEditOrDeleteData.feedImage))
-    //    {
-    //        AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == feedEditOrDeleteData.feedId);
-    //        allFeedByUserIdRow.Descriptions = lastUpdatedFeedDescriptionStr;
-
-    //        int index = MyProfileDataManager.Instance.allMyFeedImageRootDataList.IndexOf(allFeedByUserIdRow);
-    //        if (MyProfileDataManager.Instance.allPhotoContainer.childCount > index)
-    //        {
-    //            MyProfileDataManager.Instance.allPhotoContainer.GetChild(index).GetComponent<UserPostItem>().userData.Descriptions = lastUpdatedFeedDescriptionStr;
-    //        }
-    //        editDeleteCurrentPostFeedVideoItem.userData.Descriptions = lastUpdatedFeedDescriptionStr;
-    //        editDeleteCurrentPostFeedVideoItem.descriptionText.text = lastUpdatedFeedDescriptionStr;
-    //    }
-    //    else
-    //    {
-    //        AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == feedEditOrDeleteData.feedId);
-    //        allFeedByUserIdRow.Descriptions = lastUpdatedFeedDescriptionStr;
-
-    //        int index = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.IndexOf(allFeedByUserIdRow);
-    //        if (MyProfileDataManager.Instance.allMovieContainer.childCount > index)
-    //        {
-    //            MyProfileDataManager.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.Descriptions = lastUpdatedFeedDescriptionStr;
-    //        }
-    //        editDeleteCurrentPostFeedVideoItem.userData.Descriptions = lastUpdatedFeedDescriptionStr;
-    //        editDeleteCurrentPostFeedVideoItem.descriptionText.text = lastUpdatedFeedDescriptionStr;
-    //    }
-
-    //    feedEditOrDeleteData.feedDescriptions = lastUpdatedFeedDescriptionStr;
-
-    //    editDeleteCurrentPostFeedVideoItem.RefreshDescriptionAfterEdit(lastUpdatedFeedDescriptionStr);
-
-    //    editFeedScreen.SetActive(false);
-    //}
-
-    //#endregion
-
-    //#region Get Image And Video From AWS
-    //public void GetVideoUrl(string key)
-    //{
-    //    /*var request_1 = new GetPreSignedUrlRequest()
-    //    {
-    //        BucketName = AWSHandler.Instance.Bucketname,
-    //        Key = key,
-    //        Expires = DateTime.Now.AddHours(6)
-    //    };
-    //    //Debug.Log("Feed Video file sending url request:" + AWSHandler.Instance._s3Client);
-
-    //    AWSHandler.Instance._s3Client.GetPreSignedURLAsync(request_1, (callback) =>
-    //    {
-    //        if (callback.Exception == null)
-    //        {
-    //            string mediaUrl = callback.Response.Url;
-    //            UnityToolbag.Dispatcher.Invoke(() =>
-    //            {
-    //                //Debug.Log("Feed Video URL " + mediaUrl);
-    //                //feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-    //            });
-    //        }
-    //        else
-    //           Debug.Log(callback.Exception);
-    //    });*/
-
-    //    if (key != "")
-    //    {
-    //        string mediaUrl = "";
-
-    //        if (key.Contains("https"))
-    //        {
-    //            mediaUrl = key;
-    //        }
-    //        else
-    //        {
-    //            mediaUrl = ConstantsGod.AWS_VIDEO_BASE_URL + key;
-    //        }
-
-    //        Debug.Log($"<color=green> Video Key = FeedFollowItemController : </color>{mediaUrl}");
-    //        UnityToolbag.Dispatcher.Invoke(() =>
-    //        {
-    //            //Debug.Log("Feed Video URL " + mediaUrl);
-    //            //feedMediaPlayer.OpenMedia(new MediaPath(mediaUrl, MediaPathType.AbsolutePathOrURL), autoPlay: false);
-    //        });
-    //    }
-    //}
-
-    //public void GetImageFromAWS(string key, Image mainImage)
-    //{
-    //    //Debug.Log("GetImageFromAWS key:" + key);
-    //    //GetExtentionType(key);
-    //    if (AssetCache.Instance.HasFile(key))
-    //    {
-    //        //Debug.Log("Image Available on Disk");
-    //        AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
-    //        return;
-    //    }
-    //    else
-    //    {
-    //        AssetCache.Instance.EnqueueOneResAndWait(key, (ConstantsGod.r_AWSImageKitBaseUrl + key), (success) =>
-    //        {
-    //            if (success)
-    //            {
-    //                AssetCache.Instance.LoadSpriteIntoImage(mainImage, key, changeAspectRatio: true);
-    //            }
-    //        });
-    //    }
-    //}
-
-    /*public static ExtentionType currentExtention;
-    public static ExtentionType GetExtentionType(string path)
-    {
-        if (string.IsNullOrEmpty(path))
-            return (ExtentionType)0;
-
-        string extension = Path.GetExtension(path);
-        if (string.IsNullOrEmpty(extension))
-            return (ExtentionType)0;
-
-        if (extension[0] == '.')
-        {
-            if (extension.Length == 1)
-                return (ExtentionType)0;
-
-            extension = extension.Substring(1);
-        }
-
-        extension = extension.ToLowerInvariant();
-        //Debug.Log("ExtentionType " + extension);
-        if (extension == "png" || extension == "jpg" || extension == "jpeg" || extension == "gif" || extension == "bmp" || extension == "tiff" || extension == "heic")
-        {
-            currentExtention = ExtentionType.Image;
-            return ExtentionType.Image;
-        }
-        else if (extension == "mp4" || extension == "mov" || extension == "wav" || extension == "avi")
-        {
-            currentExtention = ExtentionType.Video;
-            return ExtentionType.Video;
-        }
-        else if (extension == "mp3" || extension == "aac" || extension == "flac")
-        {
-            currentExtention = ExtentionType.Audio;
-            return ExtentionType.Audio;
-        }
-        return (ExtentionType)0;
-    }*/
-    //#endregion
-
-    //#region Feed Comment Screeen Methods
-    //this method is used to open comment screen.......
-    //public void OpenCommentPanel()
-    //{
-    //    if (!commentPanel.activeInHierarchy)
-    //    {
-    //        commentInputFieldAdvanced.Clear();
-    //        commentPanel.SetActive(true);
-    //    }
-    //}
-
-    //this method is used to Full Feed View screen comment button click.......
-    //public void OnClickFeedBottomCommentButton()
-    //{
-    //    OpenCommentPanel();
-    //    commentInputFieldAdvanced.Select();
-    //}
-
-    //this method is used to comment on feed after update require feed response.......
-    //public void CommentSuccessAfterUpdateRequireFeedResponse()
-    //{
-    //   Debug.Log("CommentSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom);
-    //    switch (feedFullViewScreenCallingFrom)
-    //    {
-    //        case "MyProfile":
-    //            PostFeedVideoItem postFeedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            //current full feed selected item data update.......
-    //            postFeedVideoItem.userData.commentCount += 1;
-
-    //            string commentCountSTR = GetAbreviation(postFeedVideoItem.userData.commentCount);
-    //            if (commentCountSTR != "0")
-    //            {
-    //                postFeedVideoItem.commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
-    //            }
-
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedVideoItem.userData.Image))
-    //            {
-    //                //for
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedVideoItem.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedVideoItem.userData.commentCount;
-
-    //                int index = MyProfileDataManager.Instance.allMyFeedImageRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (MyProfileDataManager.Instance.allPhotoContainer.childCount > index)
-    //                {
-    //                    MyProfileDataManager.Instance.allPhotoContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItem.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedVideoItem.userData.commentCount;
-
-    //                int index = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (MyProfileDataManager.Instance.allMovieContainer.childCount > index)
-    //                {
-    //                    MyProfileDataManager.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //           Debug.Log("Full Feed Screen Comment calling from MyProfile");
-    //            break;
-    //        case "FeedPage":
-    //            PostFeedVideoItem postFeedPageVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            //current full feed selected item data update.......
-    //            postFeedPageVideoItem.userData.commentCount += 1;
-
-    //            string FeedcommentCountSTR = GetAbreviation(postFeedPageVideoItem.userData.commentCount);
-    //            if (FeedcommentCountSTR != "0")
-    //            {
-    //                postFeedPageVideoItem.commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = FeedcommentCountSTR;
-    //            }
-
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedPageVideoItem.userData.Image))
-    //            {
-    //                //for
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedPageVideoItem.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedPageVideoItem.userData.commentCount;
-
-    //                int index = MyProfileDataManager.Instance.allMyFeedImageRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (MyProfileDataManager.Instance.allPhotoContainer.childCount > index)
-    //                {
-    //                    MyProfileDataManager.Instance.allPhotoContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedPageVideoItem.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedPageVideoItem.userData.commentCount;
-
-    //                int index = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (MyProfileDataManager.Instance.allMovieContainer.childCount > index)
-    //                {
-    //                    MyProfileDataManager.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //           Debug.Log("Full Feed Screen Comment calling from FeedPage");
-    //            break;
-    //        case "OtherProfile":
-    //            //current full feed selected item data update.......
-    //            PostFeedVideoItem postFeedVideoItem1 = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            postFeedVideoItem1.userData.commentCount += 1;
-
-    //            string commentCountSTR1 = GetAbreviation(postFeedVideoItem1.userData.commentCount);
-    //            if (commentCountSTR1 != "0")
-    //            {
-    //                postFeedVideoItem1.commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR1;
-    //            }
-
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedVideoItem1.userData.Image))
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedVideoItem1.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedVideoItem1.userData.commentCount;
-
-    //                int index = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (OtherPlayerProfileData.Instance.userPostParent.childCount > index)
-    //                {
-    //                    OtherPlayerProfileData.Instance.userPostParent.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItem1.userData.Id);
-    //                allFeedByUserIdRow.commentCount = postFeedVideoItem1.userData.commentCount;
-
-    //                int index = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.IndexOf(allFeedByUserIdRow);
-    //                if (OtherPlayerProfileData.Instance.allMovieContainer.childCount > index)
-    //                {
-    //                    OtherPlayerProfileData.Instance.allMovieContainer.GetChild(index).GetComponent<UserPostItem>().userData.commentCount = allFeedByUserIdRow.commentCount;
-    //                }
-    //            }
-    //           Debug.Log("Full Feed Screen Comment calling from OtherProfile");
-    //            break;
-    //        case "HotTab":
-    //            CommentAfterRefereshDiscoverAndHotFeedItemResponse();
-    //           Debug.Log("Full Feed Screen Comment calling from HotTab");
-    //            break;
-    //        case "FollowingTab":
-    //            CommentAfterRefereshFollowingFeedItemResponse();
-    //           Debug.Log("Full Feed Screen Comment calling from FollowingTab");
-    //            break;
-    //        case "DiscoverTab":
-    //            CommentAfterRefereshDiscoverAndHotFeedItemResponse();
-    //           Debug.Log("Full Feed Screen Comment calling from DiscoverTab");
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    ////this method is used to refresh comment response Following feed items.......
-    //void CommentAfterRefereshFollowingFeedItemResponse()
-    //{
-    //    //current full feed selected item data update.......
-    //    FollowingUserFeedItem feedFollowingItemController = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FollowingUserFeedItem>();
-    //    feedFollowingItemController.FollowingUserFeedData.commentCount += 1;
-
-    //    string commentCountSTR = GetAbreviation(feedFollowingItemController.FollowingUserFeedData.commentCount);
-    //    if (commentCountSTR != "0")
-    //    {
-    //        feedFollowingItemController.commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
-    //    }
-
-    //    FeedsByFollowingUserRow feedsByFollowingUserRow = APIManager.Instance.allFollowingUserRootList.Find((x) => x.Id == feedFollowingItemController.FollowingUserFeedData.Id);
-    //    if (feedsByFollowingUserRow != null)
-    //    {
-    //        feedsByFollowingUserRow.commentCount = feedFollowingItemController.FollowingUserFeedData.commentCount;
-    //    }
-    //}
-
-    ////this method is used to refresh comment response Hot and Discover feed items.......
-    //void CommentAfterRefereshDiscoverAndHotFeedItemResponse()
-    //{
-    //    //current full feed selected item data update.......
-    //    FeedVideoItem feedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FeedVideoItem>();
-    //    feedVideoItem.hotFeed.commentCount += 1;
-    //    APIManager.Instance.CommentCountTextSetup(feedVideoItem.hotFeed.commentCount);
-    //    string commentCountSTR = GetAbreviation(feedVideoItem.hotFeed.commentCount);
-    //    if (commentCountSTR != "0")
-    //    {
-    //        feedVideoItem.commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = commentCountSTR;
-    //    }
-    //    if (feedFullViewScreenCallingFrom == "HotTab")
-    //    {
-    //       HotFeed hotFeed = APIManager.Instance.allhotFeedRoot.data.rows.Find((x) => x.id == feedVideoItem.hotFeed.id);
-
-    //        if (hotFeed != null)
-    //        {
-
-    //                hotFeed.commentCount = feedVideoItem.hotFeed.commentCount;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        AllUserWithFeedRow allUserWithFeedRow = APIManager.Instance.allUserRootList.Find((x) => x.id == feedVideoItem.FeedRawData.id);
-
-    //        if (allUserWithFeedRow != null)
-    //        {
-    //            AllUserWithFeed allUserWithFeed = allUserWithFeedRow.feeds.Find((x) => x.id == feedVideoItem.FeedData.id);
-
-    //            if (allUserWithFeed != null)
-    //            {
-    //                allUserWithFeed.commentCount = feedVideoItem.FeedData.commentCount;
-    //            }
-    //        }
-    //    }
-    //}
-    //#endregion
-
-    //#region Feed Like or DisLike methods.......
-    ////this method is used to like or dislike feed after update require feed response.......
-    //public void LikeDislikeSuccessAfterUpdateRequireFeedResponse(bool isLike, int likeCount)
-    //{
-    //   Debug.Log("LikeDislikeSuccessAfterUpdateRequireFeedResponse:" + feedFullViewScreenCallingFrom + "  :isLike:" + isLike + "  :LikeCount:" + likeCount);
-    //    switch (feedFullViewScreenCallingFrom)
-    //    {
-    //        case "MyProfile":
-    //            //current full feed selected item data update.......
-    //            PostFeedVideoItem postFeedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            postFeedVideoItem.userData.LikeCount = likeCount;
-    //            postFeedVideoItem.userData.isLike = isLike;
-    //            postFeedVideoItem.LikeCountAndUISetup(postFeedVideoItem.userData.LikeCount);
-
-    //            int index = APIManager.Instance.allFeedWithUserIdRoot.Data.Rows.FindIndex(x => x.Id == postFeedVideoItem.userData.Id);
-    //            APIManager.Instance.allFeedWithUserIdRoot.Data.Rows[index].LikeCount = likeCount;
-    //            APIManager.Instance.allFeedWithUserIdRoot.Data.Rows[index].isLike = isLike;
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedVideoItem.userData.Image))
-    //            {
-    //                //for
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedVideoItem.userData.Id);
-    //                allFeedByUserIdRow.LikeCount = postFeedVideoItem.userData.LikeCount;
-    //                allFeedByUserIdRow.isLike = postFeedVideoItem.userData.isLike;
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItem.userData.Id);
-    //                allFeedByUserIdRow.isLike = postFeedVideoItem.userData.isLike;
-    //            }
-    //            // Debug.Log("Full Feed Screen like or dislike calling from MyProfile");
-    //            break;
-    //        case "OtherProfile":
-    //            //current full feed selected item data update.......
-    //            PostFeedVideoItem postFeedVideoItem1 = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            postFeedVideoItem1.userData.LikeCount = likeCount;
-    //            postFeedVideoItem1.userData.isLike = isLike;
-    //            postFeedVideoItem1.LikeCountAndUISetup(postFeedVideoItem1.userData.LikeCount);
-
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedVideoItem1.userData.Image))
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = OtherPlayerProfileData.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedVideoItem1.userData.Id);
-    //                allFeedByUserIdRow.LikeCount = postFeedVideoItem1.userData.LikeCount;
-    //                allFeedByUserIdRow.isLike = postFeedVideoItem1.userData.isLike;
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = OtherPlayerProfileData.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItem1.userData.Id);
-    //                allFeedByUserIdRow.LikeCount = postFeedVideoItem1.userData.LikeCount;
-    //                allFeedByUserIdRow.isLike = postFeedVideoItem1.userData.isLike;
-    //            }
-    //            // Debug.Log("Full Feed Screen like or dislike calling from OtherProfile");
-    //            break;
-    //        case "HotTab":
-    //            LikeOrDisLikeAfterRefereshDiscoverAndHotFeedItemResponse(isLike, likeCount);
-    //            //  Debug.Log("Full Feed Screen like or dislike calling from HotTab");
-    //            break;
-    //        case "FollowingTab":
-    //            LikeOrDisLikeAfterRefereshFollowingFeedItemResponse(isLike, likeCount);
-    //            // Debug.Log("Full Feed Screen like or dislike calling from FollowingTab");
-    //            break;
-    //        case "DiscoverTab":
-    //            LikeOrDisLikeAfterRefereshDiscoverAndHotFeedItemResponse(isLike, likeCount);
-    //            break;
-    //        case "FeedPage":
-    //            PostFeedVideoItem postFeedVideoItemFeedPage = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<PostFeedVideoItem>();
-    //            postFeedVideoItemFeedPage.userData.LikeCount = likeCount;
-    //            postFeedVideoItemFeedPage.userData.isLike = isLike;
-    //            postFeedVideoItemFeedPage.LikeCountAndUISetup(postFeedVideoItemFeedPage.userData.LikeCount);
-
-    //            //for image.......
-    //            if (!string.IsNullOrEmpty(postFeedVideoItemFeedPage.userData.Image))
-    //            {
-    //                //for
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedImageRootDataList.Find((x) => x.Id == postFeedVideoItemFeedPage.userData.Id);
-    //                allFeedByUserIdRow.LikeCount = postFeedVideoItemFeedPage.userData.LikeCount;
-    //                allFeedByUserIdRow.isLike = postFeedVideoItemFeedPage.userData.isLike;
-    //            }
-    //            else
-    //            {
-    //                AllFeedByUserIdRow allFeedByUserIdRow = MyProfileDataManager.Instance.allMyFeedVideoRootDataList.Find((x) => x.Id == postFeedVideoItemFeedPage.userData.Id);
-    //                allFeedByUserIdRow.isLike = postFeedVideoItemFeedPage.userData.isLike;
-    //            }
-    //            // Debug.Log("Full Feed Screen like or dislike calling from DiscoverTab");
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
-
-    ////this method is used to refresh like or dislike response Following feed items.......
-    //void LikeOrDisLikeAfterRefereshFollowingFeedItemResponse(bool isLike, int likeCount)
-    //{
-    //    //current full feed selected item data update.......
-    //    FollowingUserFeedItem feedFollowingItemController = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FollowingUserFeedItem>();
-    //    // Debug.Log("LikeOrDisLike islike:" + isLike + "     :FeedId:" + feedFollowingItemController.FollowingUserFeedData.Id + "    :likeCount:" + feedFollowingItemController.FollowingUserFeedData.LikeCount);
-    //    feedFollowingItemController.FollowingUserFeedData.LikeCount = likeCount;
-    //    feedFollowingItemController.FollowingUserFeedData.isLike = isLike;
-
-    //    feedFollowingItemController.LikeCountAndUISetup(feedFollowingItemController.FollowingUserFeedData.LikeCount);
-
-    //    FeedsByFollowingUserRow feedsByFollowingUserRow = APIManager.Instance.allFollowingUserRootList.Find((x) => x.Id == feedFollowingItemController.FollowingUserFeedData.Id);
-    //    if (feedsByFollowingUserRow != null)
-    //    {
-    //        feedsByFollowingUserRow.LikeCount = feedFollowingItemController.FollowingUserFeedData.LikeCount;
-    //        feedsByFollowingUserRow.isLike = feedFollowingItemController.FollowingUserFeedData.isLike;
-    //    }
-    //}
-
-    ////this method is used to refresh comment response Hot and Discover feed items.......
-    //void LikeOrDisLikeAfterRefereshDiscoverAndHotFeedItemResponse(bool isLike, int likeCount)
-    //{
-    //    //current full feed selected item data update.......
-    //    FeedVideoItem feedVideoItem = videofeedParent.GetChild(videoFeedRect.GetComponent<ScrollSnapRect>()._currentPage).GetComponent<FeedVideoItem>();
-    //    // Debug.Log("LikeOrDisLike islike:" + isLike + "     :feedRawData Id:" + feedVideoItem.FeedRawData.id + "    :FeedId:" + feedVideoItem.FeedData.id + "   :likeCount:" + feedVideoItem.FeedData.likeCount);
-    //    if (feedFullViewScreenCallingFrom == "HotTab")
-    //    {
-    //        feedVideoItem.hotFeed.likeCount = likeCount;
-    //        feedVideoItem.hotFeed.isLike = isLike;
-    //        feedVideoItem.LikeCountAndUISetup(feedVideoItem.hotFeed.likeCount);
-    //        HotFeed hotfeed = APIManager.Instance.allhotFeedRoot.data.rows.Find((x) => x.id == feedVideoItem.hotFeed.id);
-    //        if (hotfeed != null)
-    //        {
-    //            hotfeed.likeCount = feedVideoItem.hotFeed.likeCount;
-    //            hotfeed.isLike = feedVideoItem.hotFeed.isLike;
-    //        }
-    //    }
-    //    else
-    //    {
-    //        feedVideoItem.FeedData.likeCount = likeCount;
-    //        feedVideoItem.FeedData.isLike = isLike;
-    //        feedVideoItem.LikeCountAndUISetup(feedVideoItem.FeedData.likeCount);
-    //        AllUserWithFeedRow allUserWithFeedRow = APIManager.Instance.allUserRootList.Find((x) => x.id == feedVideoItem.FeedRawData.id);
-
-    //        if (allUserWithFeedRow != null)
-    //        {
-    //            AllUserWithFeed allUserWithFeed = allUserWithFeedRow.feeds.Find((x) => x.id == feedVideoItem.FeedData.id);
-
-    //            if (allUserWithFeed != null)
-    //            {
-    //                allUserWithFeed.likeCount = feedVideoItem.FeedData.likeCount;
-    //                allUserWithFeed.isLike = feedVideoItem.FeedData.isLike;
-    //            }
-    //        }
-    //    }
-    //}
-    //#endregion
 
     #region Get Int Value in 1K 1M 1B.......
     public string GetAbreviation(int value)
@@ -2780,7 +859,6 @@ public class FeedUIController : MonoBehaviour
         profileFinfFriendScreen.SetActive(false);
         APIManager.Instance.RequestGetAllFollowingFromProfile(APIManager.Instance.userId.ToString(), 1, 50);
         ProfileFollowerFollowingScreenSetup(1, "");
-        //FeedUIController.Instance.OnClickProfileFollowingButton();
     }
     /// <summary>
     /// Check following count. if count is less than zero than show no following panel
@@ -2790,27 +868,15 @@ public class FeedUIController : MonoBehaviour
         StartCoroutine(IEnumCheckFollowingCount());
     }
     IEnumerator IEnumCheckFollowingCount(){
-        //print("~~~~~~~~CheckFollowingCount");
-        //if (FeedUIController.Instance != null)
-        //{
-        //    FeedUIController.Instance.ShowLoader(true);
-        //}
         yield return new WaitForSeconds(1);
         foreach(Transform child in AddFrndFollowingContainer.transform)
         {
             if(child.gameObject.activeInHierarchy)
             {
-                //if (FeedUIController.Instance != null)
-                //{
-                //    FeedUIController.Instance.ShowLoader(false);
-                //}
+               
               yield break;
             }
         }
-        //if (FeedUIController.Instance != null)
-        //{
-        //    FeedUIController.Instance.ShowLoader(false);
-        //}
         AddFrndNoFollowing.SetActive(true);
     }
 }

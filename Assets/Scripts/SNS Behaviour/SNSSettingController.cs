@@ -12,10 +12,6 @@ public class SNSSettingController : MonoBehaviour
     [Header("Setting Screen Reference")]
     public GameObject settingScreen;
     public TextMeshProUGUI versionText;
-
-    //private string privacyPolicyLink = "https://cdn.xana.net/xanaprod/privacy-policy/PRIVACYPOLICY-2.pdf";
-    //private string termsAndConditionLink = "https://cdn.xana.net/xanaprod/privacy-policy/termsofuse.pdf";
-
     [Space]
     [Header("My Account Screen Reference")]
     public GameObject myAccountScreen;
@@ -40,13 +36,6 @@ public class SNSSettingController : MonoBehaviour
     public Image btnImageOff;
     //public Sprite offBtn, onBtn;
 
-    private void Awake()
-    {
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-        //}
-    }
 
     #region Setting Screen.......
     //this method is used to Open Setting Screen.......
@@ -71,8 +60,6 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Button click.......
     public void OnClickMyAccountButton()
     {
-       // MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(true);
-
         OnClickSettingClose();
         myAccountScreen.SetActive(true);
     }
@@ -81,7 +68,6 @@ public class SNSSettingController : MonoBehaviour
     public void OnClickMyAccountBackButton()
     {
         OnClickSettingOpen();
-        //MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
     }
 
     //this method is used to terms and policy.......
@@ -176,7 +162,6 @@ public class SNSSettingController : MonoBehaviour
         {
             SimultaneousConnectionButton();
         }
-        //SimultaneousConnectionButton();
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
         PlayerPrefs.SetInt("shownWelcome", 0);
         PlayerPrefs.SetString("UserNameAndPassword", "");
@@ -261,7 +246,6 @@ public class SNSSettingController : MonoBehaviour
         if (status == 0)
         {
             // Currently Btn is OFF, enable Btn Here
-            // btnImageOn = onBtn;
             btnImageOn.gameObject.SetActive(true);
             btnImageOff.gameObject.SetActive(false);
             status = 1;
@@ -270,7 +254,6 @@ public class SNSSettingController : MonoBehaviour
         {
             // Currently Btn is ON, disable Btn Here
             status = 0;
-            //btnImage.sprite = offBtn;
             btnImageOn.gameObject.SetActive(false);
             btnImageOff.gameObject.SetActive(true);
         }
@@ -280,13 +263,11 @@ public class SNSSettingController : MonoBehaviour
     {
         if (status == 0)
         {
-            //btnImage.sprite = offBtn;
             btnImageOn.gameObject.SetActive(false);
             btnImageOff.gameObject.SetActive(true);
         }
         else
         {
-            //btnImage.sprite = onBtn;
             btnImageOn.gameObject.SetActive(true);
             btnImageOff.gameObject.SetActive(false);
         }
