@@ -21,44 +21,40 @@ public class WarpFunctionComponent : ItemComponent
         isPortalUsed = false;
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
+        characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
 
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+
+        if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
         {
-            characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
-            
-
-            if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
+            StartCoroutine(PositionUpdating());
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+            isPortalUsed = true;
+            for (int i = 0; i < warpFunctionComponentData.warpPortalDataEndPoint.Count; i++)
             {
-                StartCoroutine(PositionUpdating());
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
-                isPortalUsed = true;
-                for (int i = 0; i < warpFunctionComponentData.warpPortalDataEndPoint.Count; i++)
+                if ((warpFunctionComponentData.warpPortalStartKeyValue == warpFunctionComponentData.warpPortalDataEndPoint[i].indexPortalEndKey) && warpFunctionComponentData.warpPortalStartKeyValue != "Select Key")
                 {
-                    if ((warpFunctionComponentData.warpPortalStartKeyValue == warpFunctionComponentData.warpPortalDataEndPoint[i].indexPortalEndKey) && warpFunctionComponentData.warpPortalStartKeyValue != "Select Key")
-                    {
-                        characterControllerNew.enabled = false;
-                        GamificationComponentData.instance.buildingDetect.CameraEffect();
-                        GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataEndPoint[i].portalEndLocation;
-                        characterControllerNew.enabled = true;
-                    }
+                    characterControllerNew.enabled = false;
+                    GamificationComponentData.instance.buildingDetect.CameraEffect();
+                    GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataEndPoint[i].portalEndLocation;
+                    characterControllerNew.enabled = true;
                 }
             }
-            else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
+        }
+        else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
+        {
+            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+            StartCoroutine(PositionUpdating());
+            isPortalUsed = true;
+            for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
-                StartCoroutine(PositionUpdating());
-                isPortalUsed = true;
-                for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)
+                if ((warpFunctionComponentData.warpPortalEndKeyValue == warpFunctionComponentData.warpPortalDataStartPoint[i].indexPortalStartKey) && warpFunctionComponentData.warpPortalEndKeyValue != "Select Key")
                 {
-                    if ((warpFunctionComponentData.warpPortalEndKeyValue == warpFunctionComponentData.warpPortalDataStartPoint[i].indexPortalStartKey) && warpFunctionComponentData.warpPortalEndKeyValue != "Select Key")
-                    {
-                        characterControllerNew.enabled = false;
-                        GamificationComponentData.instance.buildingDetect.CameraEffect();
-                        GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataStartPoint[i].portalStartLocation;
-                        characterControllerNew.enabled = true;
-                    }
+                    characterControllerNew.enabled = false;
+                    GamificationComponentData.instance.buildingDetect.CameraEffect();
+                    GamificationComponentData.instance.playerControllerNew.transform.localPosition = warpFunctionComponentData.warpPortalDataStartPoint[i].portalStartLocation;
+                    characterControllerNew.enabled = true;
                 }
             }
         }
@@ -84,10 +80,10 @@ public class WarpFunctionComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -114,6 +110,16 @@ public class WarpFunctionComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.WarpFunctionComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

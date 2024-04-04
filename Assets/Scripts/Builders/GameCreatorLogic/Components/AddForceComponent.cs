@@ -45,14 +45,11 @@ public class AddForceComponent : ItemComponent
     }
 
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
-        }
+        if (GamificationComponentData.instance.withMultiplayer)
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+        else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
     }
 
     #region BehaviourControl
@@ -96,6 +93,16 @@ public class AddForceComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.AddForceComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion
