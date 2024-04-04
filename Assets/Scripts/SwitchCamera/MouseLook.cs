@@ -46,7 +46,7 @@ public class MouseLook : MonoBehaviour
     {
         if (!playerController.isFirstPerson && !playerController.m_FreeFloatCam)
             return;
-        if (IsPointerOverUI())
+        if (!Application.isEditor && IsPointerOverUI() && !_allowSyncedControl)
         {
             _allowRotation = false;
             _allowSyncedControl =false;

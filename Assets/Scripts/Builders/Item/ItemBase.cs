@@ -199,4 +199,7 @@ public abstract class ItemComponent : MonoBehaviour, IComponentBehaviour
 
     public abstract void AssignItemComponentType();
 
+    public abstract void CollisionExitBehaviour();
+    public abstract void CollisionEnterBehaviour();
+
 }

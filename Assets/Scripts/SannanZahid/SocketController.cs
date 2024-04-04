@@ -26,10 +26,10 @@ public class SocketController : MonoBehaviour
 
     void Start()
     {
-        Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
-        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        //Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
+        //Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
     }
     void OnSocketDisconnect(CustomError args)
     {
@@ -163,4 +163,20 @@ public class FeedLikeSocket
 {
     public int textPostId;
     public int likeCount;
+}
+
+class CustomError : Error
+{
+    public ErrorData data;
+
+    public override string ToString()
+    {
+        return $"[CustomError {message}, {data?.code}, {data?.content}]";
+    }
+}
+
+class ErrorData
+{
+    public int code;
+    public string content;
 }

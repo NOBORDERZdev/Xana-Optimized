@@ -13,7 +13,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
     /// Internal representation of our data. Note that the scroller will never see
     /// this, so it separates the data from the layout using MVC principles.
     /// </summary>
-    public SmallList<WorldItemDetail> _data;
+    public List<WorldItemDetail> _data = new List<WorldItemDetail>();
 
     /// <summary>
     /// This is our scroller we will be a delegate for
@@ -24,7 +24,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
     /// This will be the prefab of each cell in our scroller. Note that you can use more
     /// than one kind of cell, but this example just has the one type.
     /// </summary>
-    public EnhancedScrollerDemos.Pagination.CellView cellViewPrefab;
+    public WorldItemView cellViewPrefab;
 
     /// <summary>
     /// Loading cell view prefab displayed at the bottom of the scroller
@@ -67,7 +67,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
         scroller.scrollerScrolled = ScrollerScrolled;
 
         // initialize the data
-        _data = new SmallList<WorldItemDetail>();
+        //_data = new SmallList<WorldItemDetail>();
 
         // load in the first page of data
         //LoadData(0);
@@ -79,10 +79,10 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
     float scrollPosition;
     public void LoadData(int pageStartIndex)
     {
-        if (pageStartIndex == 0)
-            scroller.isScrollEnded = true;
-        else
-            scroller.isScrollEnded = false;
+        //if (pageStartIndex == 0)
+        //    scroller.isScrollEnded = true;
+        //else
+        //    scroller.isScrollEnded = false;
 
         // grab the last index of the data to jump to when we are finished
         var previousLastIndex = _data.Count;
@@ -107,15 +107,15 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
 
         scrollPosition = scroller.ScrollPosition;
         // tell the scroller to reload now that we have the data.
-        if (pageStartIndex != 0)
-        {
+        //if (pageStartIndex != 0)
+        //{
             scroller.ReloadData();
-        }
+        //}
 
         // set the scroller's position back to the cached position
-        if (pageStartIndex == 0)
-            scroller.ScrollPosition = scrollPosition + 400;
-        else
+        //if (pageStartIndex == 0)
+        //    scroller.ScrollPosition = scrollPosition + 400;
+        //else
             scroller.ScrollPosition = scrollPosition;
 
         // toggle off loading new so that we can load again at the bottom of the scroller
@@ -178,7 +178,7 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
             // first, we get a cell from the scroller by passing a prefab.
             // if the scroller finds one it can recycle it will do so, otherwise
             // it will create a new cell.
-            EnhancedScrollerDemos.Pagination.CellView cellView = scroller.GetCellView(cellViewPrefab) as EnhancedScrollerDemos.Pagination.CellView;
+            WorldItemView cellView = scroller.GetCellView(cellViewPrefab) as WorldItemView;
 
             // set the name of the game object to the cell's data index.
             // this is optional, but it helps up debug the objects in 
@@ -186,8 +186,8 @@ public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
             cellView.name = "Cell " + dataIndex.ToString();
 
             // in this example, we just pass the data to our cell's view which will update its UI
-            //cellView.SetData(_data[dataIndex]);
-            cellView.GetComponent<WorldItemView>().InitItem(_data[dataIndex]);
+            cellView.InitItem(_data[dataIndex]);
+            //cellView.GetComponent<WorldItemView>().InitItem(_data[dataIndex]);
 
             // return the cell to the scroller
             return cellView;
