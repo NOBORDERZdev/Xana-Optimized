@@ -1496,7 +1496,7 @@ public class StoreManager : MonoBehaviour
         }
         AvatarPanel[m_GetIndex].SetActive(true);
         CheckColorProperty(m_GetIndex);
-        if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeLashes*/|| m_GetIndex == 9) //its a preset do nothing
+        if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeBrowPoints*/|| m_GetIndex == 9) //its a preset do nothing
         {
             // When Preset click than update the panel index
             PreviousSelectionCount = IndexofPanel;
@@ -3196,7 +3196,7 @@ public class StoreManager : MonoBehaviour
                     break;
                 }
             case 16:
-                {// EyeLashes
+                {// EyeBrowPoints
 
                     TempSubcategoryParent = ParentOfBtnsAvatarEyeLashes;
                     TempEnumVar = EnumClass.CategoryEnum.EyeLashesAvatar;

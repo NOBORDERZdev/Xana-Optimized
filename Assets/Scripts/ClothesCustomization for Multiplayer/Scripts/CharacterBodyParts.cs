@@ -391,7 +391,7 @@ public class CharacterBodyParts : MonoBehaviour
         //                    blend.SliderX.minValue = item.minValue;
 
         //                    // Setting Slider Value
-        //                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
         //                    blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
         //                }
         //            }
@@ -405,7 +405,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderX.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
         //            blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderX.onValueChanged.AddListener(delegate { BoneSliderCallBack('x', item.workingTransform, bone, blend.SliderX.value); });
@@ -420,7 +420,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderY.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
         //            blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderY.onValueChanged.AddListener(delegate { BoneSliderCallBack('y', item.workingTransform, bone, blend.SliderY.value); });
@@ -431,7 +431,7 @@ public class CharacterBodyParts : MonoBehaviour
         //        else if (item.workingAxes == AxesDetails.xy)
         //        {
         //            // Get Bone Reference
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
 
         //            print("Sub Axis :" + BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType);
         //            // Check which slider require 
@@ -528,7 +528,7 @@ public class CharacterBodyParts : MonoBehaviour
                 {
                     print("---- AxesDetails : " + item.workingAxes);
 
-                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].boneObj.transform;
+                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)

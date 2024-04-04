@@ -18,7 +18,7 @@ public class BlendShapeImporter : MonoBehaviour
 
     [Header("Object to be Placed on BlendShape")]
     public GameObject NosePoint;
-    public GameObject LipsPoints, EyesPoints, EyeLashes, FacePoints, Body, HeadPints;
+    public GameObject LipsPoints, EyesPoints, EyeBrowPoints, FacePoints, Body, HeadPoints;
 
     [Header("Animator and Object Parent")]
     public Animator anim;
@@ -120,7 +120,7 @@ public class BlendShapeImporter : MonoBehaviour
 
     #endregion
 
-    void ChangeSphareSpriteToDefault(Transform parentObj)
+    void ChangeSphereSpriteToDefault(Transform parentObj)
     {
         for (int i = 0; i < parentObj.childCount; i++)
         {
@@ -381,15 +381,15 @@ public class BlendShapeImporter : MonoBehaviour
                 FacePoints.transform.GetChild(0).gameObject.SetActive(status_1);
                 FacePoints.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(FacePoints.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(FacePoints.transform.GetChild(childInd).transform);
                 break;
 
             case "EyeBrowMorph":
             case "EyeBrow":
-                EyeLashes.transform.GetChild(0).gameObject.SetActive(status_1);
-                EyeLashes.transform.GetChild(1).gameObject.SetActive(status_2);
+                EyeBrowPoints.transform.GetChild(0).gameObject.SetActive(status_1);
+                EyeBrowPoints.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(EyeLashes.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(EyeBrowPoints.transform.GetChild(childInd).transform);
                 break;
 
             case "EyesMorph":
@@ -397,7 +397,7 @@ public class BlendShapeImporter : MonoBehaviour
                 EyesPoints.transform.GetChild(0).gameObject.SetActive(status_1);
                 EyesPoints.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(EyesPoints.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(EyesPoints.transform.GetChild(childInd).transform);
                 break;
 
 
@@ -406,7 +406,7 @@ public class BlendShapeImporter : MonoBehaviour
                 LipsPoints.transform.GetChild(0).gameObject.SetActive(status_1);
                 LipsPoints.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(LipsPoints.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(LipsPoints.transform.GetChild(childInd).transform);
                 break;
 
             case "NoseMorph":
@@ -414,15 +414,15 @@ public class BlendShapeImporter : MonoBehaviour
                 NosePoint.transform.GetChild(0).gameObject.SetActive(status_1);
                 NosePoint.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(NosePoint.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(NosePoint.transform.GetChild(childInd).transform);
                 break;
 
             case "HeadMorph":
             case "Head":
-                HeadPints.transform.GetChild(0).gameObject.SetActive(status_1);
-                HeadPints.transform.GetChild(1).gameObject.SetActive(status_2);
+                HeadPoints.transform.GetChild(0).gameObject.SetActive(status_1);
+                HeadPoints.transform.GetChild(1).gameObject.SetActive(status_2);
 
-                ChangeSphareSpriteToDefault(HeadPints.transform.GetChild(childInd).transform);
+                ChangeSphereSpriteToDefault(HeadPoints.transform.GetChild(childInd).transform);
                 break;
         }
     }
@@ -442,9 +442,9 @@ public class BlendShapeImporter : MonoBehaviour
         NosePoint.SetActive(false);
         LipsPoints.SetActive(false);
         EyesPoints.SetActive(false);
-        EyeLashes.SetActive(false);
+        EyeBrowPoints.SetActive(false);
         FacePoints.SetActive(false);
-        HeadPints.SetActive(false);
+        HeadPoints.SetActive(false);
     }
 
     public void TurnOnPoints(string name)
@@ -459,7 +459,7 @@ public class BlendShapeImporter : MonoBehaviour
 
             case "EyeBrowMorph":
                 TurnOffAllObjects();
-                EyeLashes.SetActive(true);
+                EyeBrowPoints.SetActive(true);
                 break;
 
             case "EyesMorph":
@@ -479,7 +479,7 @@ public class BlendShapeImporter : MonoBehaviour
 
             case "HeadMorph":
                 TurnOffAllObjects();
-                HeadPints.SetActive(true);
+                HeadPoints.SetActive(true);
                 break;
         }
         EnableRespectedSidePoints(name, true, false);
@@ -488,11 +488,11 @@ public class BlendShapeImporter : MonoBehaviour
     public void TurnOffAllObjects()
     {
         FacePoints.SetActive(false);
-        EyeLashes.SetActive(false);
+        EyeBrowPoints.SetActive(false);
         EyesPoints.SetActive(false);
         LipsPoints.SetActive(false);
         NosePoint.SetActive(false);
-        HeadPints.SetActive(false);
+        HeadPoints.SetActive(false);
     }
 
     #endregion

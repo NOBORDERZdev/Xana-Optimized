@@ -134,6 +134,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //CharacterCustomizationManager.Instance.f_MainCharacter.GetComponent<Animator>().enabled = false;
 
       StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        gameManager.UiManager.HomePage.SetActive(false);
         gameManager.UiManager.faceMorphPanel.SetActive(true);
         gameManager.faceMorphCam.SetActive(true);
     }
@@ -152,6 +153,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
         //    }
         //    StoreManager.instance.SubmitAllItemswithSpecificSubCategory(StoreManager.instance.SubCategoriesList[XanaConstants.xanaConstants.currentButtonIndex + 8].id, true);
         //}
+        gameManager.UiManager.HomePage.SetActive(true);
         gameManager.UiManager.faceMorphPanel.SetActive(false);
         gameManager.faceMorphCam.SetActive(false);
         CharacterCustomizationManager.Instance.m_IsCharacterRotating = true;
@@ -192,6 +194,7 @@ public class CharacterCustomizationUIManager : MonoBehaviour
     // save morph to server 
     public void CloseCustomBlendShapePanelSave_Morphs()
     {
+        gameManager.UiManager.HomePage.SetActive(true);
         gameManager.UiManager._footerCan.SetActive(true);
         StoreManager.instance.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         gameManager.UiManager.faceMorphPanel.SetActive(false);

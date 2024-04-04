@@ -61,7 +61,7 @@ public class BlendShapeController : MonoBehaviour
         if (selectedBlendShapeIndex != -1 || selectedBlendShapeIndex >= allBlendShapes.Count)
             return;
 
-        Transform boneTransform = allBlendShapes[selectedBlendShapeIndex].boneObj.transform;
+        Transform boneTransform = allBlendShapes[selectedBlendShapeIndex].maleBoneObj.transform;
 
         switch (objectProperty)
         {

@@ -395,7 +395,7 @@ public class ItemDetail : MonoBehaviour
                             else
                             {
                                 AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                                //Debug.Log("<color=red> Set Default EyeLashes </color>");
+                                //Debug.Log("<color=red> Set Default EyeBrowPoints </color>");
                             }
                         }
                         break;

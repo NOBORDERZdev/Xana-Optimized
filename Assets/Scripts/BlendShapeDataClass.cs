@@ -16,7 +16,9 @@ public class BlendShapeDataClass
 
     [Header("Bone Releated Fields")]
     public bool boneAvailable;
-    public GameObject boneObj;
+    //bones to Customise
+    public GameObject maleBoneObj;  
+    public GameObject femaleBoneObj;
     public List<BoneData> boneData;
 }
 [System.Serializable]

@@ -73,7 +73,7 @@ public class AvatarBtn : MonoBehaviour
                     }
                 }
                 break;
-            case "EyeLashes":
+            case "EyeBrowPoints":
                 {
                     if (ActivePanelCallStack.obj.IsCallByBtn() && XanaConstants.xanaConstants.eyeLashesIndex == AvatarBtnId)   //!isAddedInUndoRedo && // check if image is selected
                     {
@@ -83,7 +83,7 @@ public class AvatarBtn : MonoBehaviour
                         else
                         {
                             AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                            Debug.Log("<color=red> Set Default EyeLashes morph </color>");
+                            Debug.Log("<color=red> Set Default EyeBrowPoints morph </color>");
                         }
                     }
                 }
@@ -230,16 +230,16 @@ public class AvatarBtn : MonoBehaviour
                     }
                     break;
                 }
-            case "EyeLashes":
+            case "EyeBrowPoints":
                 {
-                    CurrentString = "EyeLashes";
+                    CurrentString = "EyeBrowPoints";
 
                     if (!AR_UndoRedo.obj.addToList)
                         AR_UndoRedo.obj.addToList = true;
                     else
                     {
                         AR_UndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "OnAvatarBtnClick", AR_UndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                        Debug.Log("<color=red> Set EyeLashes morph btn into list </color>");
+                        Debug.Log("<color=red> Set EyeBrowPoints morph btn into list </color>");
                     }
                     break;
                 }
@@ -339,7 +339,7 @@ public class AvatarBtn : MonoBehaviour
         }
 
 
-        if ((!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeLashes")) && CurrentString != "")
+        if ((!PremiumUsersDetails.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeBrowPoints")) && CurrentString != "")
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
             //print("Please Upgrade to Premium account");
@@ -381,7 +381,7 @@ public class AvatarBtn : MonoBehaviour
 
                         break;
                     }
-                case "EyeLashes":
+                case "EyeBrowPoints":
                     {
                         XanaConstants.xanaConstants.eyeLashesIndex = AvatarBtnId;
 
@@ -540,7 +540,7 @@ public class AvatarBtn : MonoBehaviour
 
                         break;
                     }
-                case "EyeLashes":
+                case "EyeBrowPoints":
                     {
                         string lashesName = GetComponent<EyeLashBtn>().LashesName;
                         downloader.StartCoroutine(downloader.DownloadAddressableTexture(lashesName, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
