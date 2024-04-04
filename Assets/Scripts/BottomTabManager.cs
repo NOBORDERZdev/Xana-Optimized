@@ -378,14 +378,14 @@ public class BottomTabManager : MonoBehaviour
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
-                if (MessageController.Instance != null)
-                {
-                    MessageController.Instance.isChatDetailsScreenDeactive = true;
-                }
+                //if (MessageController.Instance != null)
+                //{
+                //    MessageController.Instance.isChatDetailsScreenDeactive = true;
+                //}
                // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
-                MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
+                //MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
             }
             else
             {
@@ -634,8 +634,8 @@ public class BottomTabManager : MonoBehaviour
     {
         if (FeedUIController.Instance != null)
         {
-            SNSSettingController.Instance.settingScreen.SetActive(false);
-            SNSSettingController.Instance.myAccountScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.settingScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
         }
     }   
 
@@ -726,12 +726,11 @@ public class BottomTabManager : MonoBehaviour
             {
                 MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
-            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
-            ProfileUIHandler.instance.SetMainScrolRefs();
+            ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
+            ProfileUIHandler.instance.SetMainScrollRefs();
             ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);
-
             DisableSubScreen();
         }
 

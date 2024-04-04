@@ -644,6 +644,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
+            playerRB.mass = 70;
             playerRB.isKinematic = true;
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
@@ -654,7 +655,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //player.GetComponent<CapsuleCollider>().enabled = false;
             TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
-
+            player.AddComponent<EnvironmentChecker>();
             if (GamificationComponentData.instance.raycast == null)
                 GamificationComponentData.instance.raycast = new GameObject("Raycasst");
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
