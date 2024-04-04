@@ -1618,6 +1618,7 @@ MonoBehaviour:
     punch: 0
     kick: 0
   _sliderindexes: {fileID: 11400000, guid: 007ece8573d836d4b8f5fc3bfe09bf52, type: 2}
+  charcterBodyParts: {fileID: 0}
   characterController: {fileID: 0}
 --- !u!1 &104173792
 GameObject:
@@ -7503,87 +7504,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414214556}
   m_CullTransparentMesh: 0
---- !u!1 &419651299
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 419651300}
-  - component: {fileID: 419651301}
-  m_Layer: 0
-  m_Name: XanaAvatar2.0_Female_Parent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &419651300
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419651299}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1274926222}
-  m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &419651301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419651299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155bacb56a04132418c3448cf7bac8d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maleAvatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_face: {fileID: 0}
-    avatar_animator: {fileID: 0}
-    DShirt_Texture: {fileID: 0}
-    DPent_Texture: {fileID: 0}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 0}
-    DFace_Texture: {fileID: 0}
-    DSkin_Texture: {fileID: 0}
-  femaleAvatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_face: {fileID: 0}
-    avatar_animator: {fileID: 0}
-    DShirt_Texture: {fileID: 0}
-    DPent_Texture: {fileID: 0}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 0}
-    DFace_Texture: {fileID: 0}
-    DSkin_Texture: {fileID: 0}
-  avatarData:
-    avatar_Gender: 1
-    avatar_parent: {fileID: 1274926221}
-    avatar_body: {fileID: 1499883469}
-    avatar_face: {fileID: 1061392659}
-    avatar_animator: {fileID: 1274926232}
-    DShirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
-    DPent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    DFace_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
-    DSkin_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
 --- !u!1 &424566996
 GameObject:
   m_ObjectHideFlags: 0
@@ -9575,6 +9495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerXanaPostBubble (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6118699874111086673, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6118699874111086675, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
       propertyPath: Offset.y
       value: 1.9
@@ -9594,11 +9518,11 @@ PrefabInstance:
     - target: {fileID: 6118699874111086675, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
       propertyPath: _playerTransform
       value: 
-      objectReference: {fileID: 1671144882}
+      objectReference: {fileID: 0}
     - target: {fileID: 6118699874111086675, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
       propertyPath: newplayerTransform
       value: 
-      objectReference: {fileID: 1671144882}
+      objectReference: {fileID: 0}
     - target: {fileID: 6118699874111086675, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
       propertyPath: boxerplayerTransform
       value: 
@@ -14270,6 +14194,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 832228078}
   m_CullTransparentMesh: 0
+--- !u!1 &834298638 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6118699874111086673, guid: b0d248739aa90df4d94b00cc1244caae, type: 3}
+  m_PrefabInstance: {fileID: 549901461}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &834669818
 GameObject:
   m_ObjectHideFlags: 0
@@ -15493,11 +15422,11 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 419651300}
+    m_TransformParent: {fileID: 1375190884}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15553,7 +15482,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Controller
@@ -15593,10 +15522,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 4331046921016676993}
+  m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &909929901
 MonoBehaviour:
@@ -15610,6 +15538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155bacb56a04132418c3448cf7bac8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activePlayerGender: 0
   maleAvatarData:
     avatar_Gender: 0
     avatar_parent: {fileID: 0}
@@ -15634,18 +15563,8 @@ MonoBehaviour:
     DEye_texture: {fileID: 0}
     DFace_Texture: {fileID: 0}
     DSkin_Texture: {fileID: 0}
-  avatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 3986011773299836987}
-    avatar_body: {fileID: 4250547001034352913}
-    avatar_face: {fileID: 2965121486705948889}
-    avatar_animator: {fileID: 7708707834451609851}
-    DShirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
-    DPent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    DFace_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
-    DSkin_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
+  playerNameCanvas: {fileID: 0}
+  playerPostCanvas: {fileID: 0}
 --- !u!1001 &915149435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17405,10 +17324,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7592066579447590246}
+  m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1040342419
 MonoBehaviour:
@@ -17422,6 +17340,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155bacb56a04132418c3448cf7bac8d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activePlayerGender: 0
   maleAvatarData:
     avatar_Gender: 0
     avatar_parent: {fileID: 0}
@@ -17446,18 +17365,8 @@ MonoBehaviour:
     DEye_texture: {fileID: 0}
     DFace_Texture: {fileID: 0}
     DSkin_Texture: {fileID: 0}
-  avatarData:
-    avatar_Gender: 1
-    avatar_parent: {fileID: 7068295130442561500}
-    avatar_body: {fileID: 6853803127325941348}
-    avatar_face: {fileID: 5670148258136735585}
-    avatar_animator: {fileID: 4592647428568217372}
-    DShirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
-    DPent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    DFace_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
-    DSkin_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
+  playerNameCanvas: {fileID: 0}
+  playerPostCanvas: {fileID: 0}
 --- !u!1 &1042342214
 GameObject:
   m_ObjectHideFlags: 0
@@ -21519,7 +21428,6 @@ MonoBehaviour:
   boxerHead: {fileID: 0}
   body: {fileID: 1499883469}
   head: {fileID: 1061392659}
-  ref_characterHandler: {fileID: 419651301}
   randomPresetData:
   - Name: Preset 1
     GenderType: Female
@@ -21691,7 +21599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerAvatar: 0
+  isPlayerAvatar: 1
   IsInit: 0
   staticPlayer: 0
   isWearOrNot: 0
@@ -23433,6 +23341,79 @@ Transform:
   m_Father: {fileID: 1274926222}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1375190883
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1375190884}
+  - component: {fileID: 1375190885}
+  m_Layer: 0
+  m_Name: CharacterHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1375190884
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375190883}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1833378507}
+  - {fileID: 1274926222}
+  m_Father: {fileID: 2302478908594623880}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1375190885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375190883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155bacb56a04132418c3448cf7bac8d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activePlayerGender: 0
+  maleAvatarData:
+    avatar_Gender: 0
+    avatar_parent: {fileID: 1833378506}
+    avatar_body: {fileID: 201963827}
+    avatar_face: {fileID: 78250523}
+    avatar_animator: {fileID: 1833378517}
+    DShirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
+    DPent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
+    DShoe_Texture: {fileID: 0}
+    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    DFace_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
+    DSkin_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
+  femaleAvatarData:
+    avatar_Gender: 1
+    avatar_parent: {fileID: 1274926221}
+    avatar_body: {fileID: 1499883469}
+    avatar_face: {fileID: 1061392659}
+    avatar_animator: {fileID: 1274926232}
+    DShirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
+    DPent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
+    DShoe_Texture: {fileID: 0}
+    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
+    DFace_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
+    DSkin_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
+  playerNameCanvas: {fileID: 2302478909030753248}
+  playerPostCanvas: {fileID: 834298638}
 --- !u!1 &1376069364
 GameObject:
   m_ObjectHideFlags: 0
@@ -25704,6 +25685,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461170391}
   m_CullTransparentMesh: 0
+--- !u!1 &1465352272 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6994720053636512001, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
+  m_PrefabInstance: {fileID: 1911818702}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1469917317
 GameObject:
   m_ObjectHideFlags: 0
@@ -26658,7 +26644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 53202a621bb654c46b8392b253ac66bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -27873,7 +27859,6 @@ MonoBehaviour:
   boxerHead: {fileID: 0}
   body: {fileID: 0}
   head: {fileID: 0}
-  ref_characterHandler: {fileID: 0}
   randomPresetData:
   - Name: Preset 1
     GenderType: Male
@@ -28998,87 +28983,6 @@ Transform:
   m_Father: {fileID: 1682183961}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1548267857
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1548267858}
-  - component: {fileID: 1548267859}
-  m_Layer: 0
-  m_Name: XanaAvatar2.0_Male_Parent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1548267858
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548267857}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1833378507}
-  m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1548267859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548267857}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 155bacb56a04132418c3448cf7bac8d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maleAvatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_face: {fileID: 0}
-    avatar_animator: {fileID: 0}
-    DShirt_Texture: {fileID: 0}
-    DPent_Texture: {fileID: 0}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 0}
-    DFace_Texture: {fileID: 0}
-    DSkin_Texture: {fileID: 0}
-  femaleAvatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_face: {fileID: 0}
-    avatar_animator: {fileID: 0}
-    DShirt_Texture: {fileID: 0}
-    DPent_Texture: {fileID: 0}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 0}
-    DFace_Texture: {fileID: 0}
-    DSkin_Texture: {fileID: 0}
-  avatarData:
-    avatar_Gender: 0
-    avatar_parent: {fileID: 1833378506}
-    avatar_body: {fileID: 201963827}
-    avatar_face: {fileID: 78250523}
-    avatar_animator: {fileID: 1833378517}
-    DShirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
-    DPent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
-    DShoe_Texture: {fileID: 0}
-    DEye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    DFace_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
-    DSkin_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
 --- !u!1 &1549620711
 GameObject:
   m_ObjectHideFlags: 0
@@ -34519,7 +34423,6 @@ MonoBehaviour:
   boxerHead: {fileID: 0}
   body: {fileID: 201963827}
   head: {fileID: 78250523}
-  ref_characterHandler: {fileID: 1548267859}
   randomPresetData:
   - Name: Preset 1
     GenderType: Male
@@ -34691,7 +34594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95296ea1ef4bbab4e9a8dc6f89182fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayerAvatar: 0
+  isPlayerAvatar: 1
   IsInit: 0
   staticPlayer: 0
   isWearOrNot: 0
@@ -36930,7 +36833,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1548267858}
+    m_TransformParent: {fileID: 1375190884}
     m_Modifications:
     - target: {fileID: -9120712023179273093, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -37006,7 +36909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
       propertyPath: m_Controller
@@ -47435,7 +47338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7465522771781175557, guid: c2fa70638f19ba849b0c7f4e0fd76527, type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 7465522771781175557, guid: c2fa70638f19ba849b0c7f4e0fd76527, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47723,9 +47626,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa33bb8f19a78d14e94004b233b586e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FriendAvatarPrefab: {fileID: 1512555880}
-  maleFriendAvatarPrefab: {fileID: 909929900}
-  femaleFriendAvatarPrefab: {fileID: 1040342418}
+  FriendAvatarPrefab: {fileID: 4331046921016676993}
+  maleFriendAvatarPrefab: {fileID: 4331046921016676993}
+  femaleFriendAvatarPrefab: {fileID: 7592066579447590246}
   NameTagFriendAvatarPrefab: {fileID: 2302478909030753249}
   PostBubbleFriendAvatarPrefab: {fileID: 1842460682}
   _friendsDataFetched:
@@ -47751,7 +47654,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2302478907799769721
 PrefabInstance:
@@ -48057,7 +47960,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2302478908206129068
 PrefabInstance:
@@ -48142,7 +48045,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2302478908345900025
 GameObject:
@@ -48734,7 +48637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7846243930142895868, guid: 88c2c017b4fae564da0be94019085c2c, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7846243930142895868, guid: 88c2c017b4fae564da0be94019085c2c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -48886,8 +48789,7 @@ Transform:
   - {fileID: 2302478907977166314}
   - {fileID: 2302478909501488051}
   - {fileID: 1671144882}
-  - {fileID: 1548267858}
-  - {fileID: 419651300}
+  - {fileID: 1375190884}
   - {fileID: 1817680624}
   - {fileID: 1213340251}
   - {fileID: 2302478909215631708}
@@ -48896,6 +48798,8 @@ Transform:
   - {fileID: 2302478907713652558}
   - {fileID: 2302478909422598566}
   - {fileID: 1512555880}
+  - {fileID: 4331046921016676993}
+  - {fileID: 7592066579447590246}
   - {fileID: 909929900}
   - {fileID: 1040342418}
   - {fileID: 520773522}
@@ -49125,7 +49029,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2302478909030753249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49159,9 +49063,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98569066d4359e1448dc469d5a00a267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targ: {fileID: 1671144882}
+  targ: {fileID: 0}
   boxerplayerTransform: {fileID: 0}
-  newplayerTransform: {fileID: 1671144882}
+  newplayerTransform: {fileID: 0}
   Offset: {x: 0.07, y: 1.05, z: 0.39}
   MainCamera: {fileID: 1999834765}
   divisable: 8.25
@@ -49482,7 +49386,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2302478909422598564
 GameObject:
@@ -49532,7 +49436,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302478908594623880}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2302478909426159025
 PrefabInstance:
@@ -49575,7 +49479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7996957628341297417, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7996957628341297417, guid: 15557ee817a66284fb3ee8d23a0c95a0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51936,7 +51840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3994316015466126853
 Transform:
   m_ObjectHideFlags: 0
@@ -52890,8 +52794,8 @@ Transform:
   - {fileID: 1405053067}
   - {fileID: 1835314924}
   - {fileID: 245325378}
-  m_Father: {fileID: 909929900}
-  m_RootOrder: 0
+  m_Father: {fileID: 2302478908594623880}
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4351068328200492424
 Transform:
@@ -54370,7 +54274,7 @@ PrefabInstance:
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_ChHead
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1465352272}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: UIManager
       value: 
@@ -54390,7 +54294,7 @@ PrefabInstance:
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: maleAvatar
       value: 
-      objectReference: {fileID: 1548267857}
+      objectReference: {fileID: 0}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: PostManager
       value: 
@@ -54414,7 +54318,7 @@ PrefabInstance:
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: femaleAvatar
       value: 
-      objectReference: {fileID: 419651299}
+      objectReference: {fileID: 0}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_MainCamera
       value: 
@@ -54426,7 +54330,7 @@ PrefabInstance:
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: mainCharacter
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1833378506}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: EyeballTexture1
       value: 
@@ -54440,6 +54344,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 915149437}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: avatarController
+      value: 
+      objectReference: {fileID: 1833378514}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: BlendShapeImporter
       value: 
       objectReference: {fileID: 45990412}
@@ -54448,9 +54356,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2302478907713652558}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
+      propertyPath: characterBodyParts
+      value: 
+      objectReference: {fileID: 1833378510}
+    - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: m_CharacterAnimator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1833378517}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: additiveScenesManager
       value: 
@@ -83962,7 +83874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7408531609928192901, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -84218,7 +84130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7072939699948102114
 Transform:
   m_ObjectHideFlags: 0
@@ -85594,8 +85506,8 @@ Transform:
   - {fileID: 834669819}
   - {fileID: 1605704501}
   - {fileID: 298595185}
-  m_Father: {fileID: 1040342418}
-  m_RootOrder: 0
+  m_Father: {fileID: 2302478908594623880}
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7592066579447590247
 MonoBehaviour:
@@ -86371,7 +86283,6 @@ MonoBehaviour:
   boxerHead: {fileID: 0}
   body: {fileID: 6853803127325941348}
   head: {fileID: 5670148258136735585}
-  ref_characterHandler: {fileID: 1040342419}
   randomPresetData:
   - Name: Preset 1
     GenderType: Female
@@ -87452,7 +87363,6 @@ MonoBehaviour:
   boxerHead: {fileID: 0}
   body: {fileID: 4250547001034352913}
   head: {fileID: 2965121486705948889}
-  ref_characterHandler: {fileID: 909929901}
   randomPresetData:
   - Name: Preset 1
     GenderType: Male

@@ -2,72 +2,106 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static StoreManager;
 
 public class CharacterHandler : MonoBehaviour
 {
-    //public static CharacterHandler instance;
-
+    public static CharacterHandler instance;
+    public AvatarGender activePlayerGender;
     public AvatarData maleAvatarData;
     public AvatarData femaleAvatarData;
-    public AvatarData avatarData;
+
+    public GameObject playerNameCanvas;
+    public GameObject playerPostCanvas;
     private void Awake()
     {
-        //instance = this;
+        instance = this;
     }
-
-    private void OnEnable()
+    private void Start()
     {
-        GameManager.Instance.avatarGender = avatarData.avatar_Gender;
-        GameManager.Instance.mainCharacter = avatarData.avatar_parent;
-        GameManager.Instance.m_ChHead = avatarData.avatar_face.gameObject;
-        GameManager.Instance.m_CharacterAnimator = avatarData.avatar_animator;
-        GameManager.Instance.avatarController = avatarData.avatar_parent.GetComponent<AvatarController>();
-        GameManager.Instance.characterBodyParts = avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
-        //GameManager.Instance.characterBodyParts.body= avatarData.avatar_body;
-        //GameManager.Instance.characterBodyParts.head = avatarData.avatar_face;
-
-        GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
-        GameManager.Instance.ActorManager.Init();
+        if(SavaCharacterProperties.instance && !string.IsNullOrEmpty(SavaCharacterProperties.instance.SaveItemList.gender))
+            ActivateAvatarByGender(SavaCharacterProperties.instance.SaveItemList.gender);
     }
-
 
     public void ActivateAvatarByGender(string gender)
     {
         switch (gender)
         {
             case "Male":
-                GameManager.Instance.mainCharacter = maleAvatarData.avatar_parent;
-                GameManager.Instance.m_ChHead = maleAvatarData.avatar_face.gameObject;
-                GameManager.Instance.m_CharacterAnimator = maleAvatarData.avatar_animator;
-                //GameManager.Instance.characterBodyParts.body = maleAvatarData.avatar_body;
-                //GameManager.Instance.characterBodyParts.head = maleAvatarData.avatar_face;
+                maleAvatarData.avatar_parent.gameObject.SetActive(true);
+                femaleAvatarData.avatar_parent.gameObject.SetActive(false);
+                UpdateAvatarRefrences(maleAvatarData);
                 break;
             case "Female":
-                GameManager.Instance.mainCharacter = femaleAvatarData.avatar_parent;
-                GameManager.Instance.m_ChHead = femaleAvatarData.avatar_face.gameObject;
-                GameManager.Instance.m_CharacterAnimator = femaleAvatarData.avatar_animator;
-                //GameManager.Instance.characterBodyParts.body = femaleAvatarData.avatar_body;
-                // GameManager.Instance.characterBodyParts.head = femaleAvatarData.avatar_face;
+                maleAvatarData.avatar_parent.gameObject.SetActive(false);
+                femaleAvatarData.avatar_parent.gameObject.SetActive(true);
+                UpdateAvatarRefrences(femaleAvatarData);
                 break;
         }
-        maleAvatarData.avatar_parent.SetActive(false);
-        femaleAvatarData.avatar_parent.SetActive(false);
-        GameManager.Instance.mainCharacter.SetActive(true);
-        GameManager.Instance.avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        GameManager.Instance.characterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
-
-
-        // GameManager.Instance.characterBodyParts.characterHeadMat = GameManager.Instance.characterBodyParts.head.materials[2];
-        // GameManager.Instance.characterBodyParts.characterBodyMat = GameManager.Instance.characterBodyParts.body.materials[0];
-
-        NFTBoxerEyeData.instance.bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
-        GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
-
-        //StopCoroutine(GameManager.Instance.mainCharacter.GetComponent<Actor>().StartBehaviour());
-        //StopCoroutine(GameManager.Instance.mainCharacter.GetComponent<Actor>().StartActorBehaviour());
-        GameManager.Instance.ActorManager.Init();
     }
 
+    private void UpdateAvatarRefrences(AvatarData _avatarData)
+    {
+        activePlayerGender = _avatarData.avatar_Gender;
+
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.mainCharacter = _avatarData.avatar_parent;
+            GameManager.Instance.m_ChHead = _avatarData.avatar_face.gameObject;
+            GameManager.Instance.m_CharacterAnimator = _avatarData.avatar_animator;
+            GameManager.Instance.avatarController = _avatarData.avatar_parent.GetComponent<AvatarController>();
+            GameManager.Instance.characterBodyParts = _avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
+            GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
+            GameManager.Instance.ActorManager.Init();
+
+        }
+        if (SavaCharacterProperties.instance != null)
+        {
+            SavaCharacterProperties.instance.charcterBodyParts = GameManager.Instance.characterBodyParts;
+            SavaCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
+        }
+        
+        if (playerNameCanvas && playerPostCanvas)
+        {
+            UpdateNameAndPostTarget(_avatarData.avatar_parent);   // Update the target of the name and post canvas to the active player
+        }
+    }
+
+    
+
+    public AvatarData GetActiveAvatarData()
+    {
+        if (activePlayerGender == AvatarGender.Male)
+        {
+            return maleAvatarData;
+        }
+        else
+        {
+            return femaleAvatarData;
+        }
+    }
+
+    private void UpdateNameAndPostTarget(GameObject activePlayer)
+    {
+        playerNameCanvas.GetComponent<FollowUser>().targ= activePlayer.transform;
+        playerNameCanvas.GetComponent<FollowUser>().newplayerTransform= activePlayer.transform;
+
+        playerPostCanvas.GetComponent<LookAtCamera>()._playerTransform = activePlayer.transform;
+        playerPostCanvas.GetComponent<LookAtCamera>().newplayerTransform = activePlayer.transform;
+
+        if (!playerNameCanvas.activeInHierarchy)
+            playerNameCanvas.SetActive(true);
+        if (!playerPostCanvas.activeInHierarchy)
+            playerPostCanvas.SetActive(true);
+    }
+
+    public void RemoveUnnecessaryComponentsForUGC(GameObject _character)
+    {
+        Destroy(_character.GetComponent<CharacterOnScreenNameHandler>());
+        Destroy(_character.GetComponent<Actor>());
+        Destroy(_character.GetComponent<FaceIK>());
+        Destroy(_character.GetComponent<FootStaticIK>());
+    }
 
     [Serializable]
     public class AvatarData

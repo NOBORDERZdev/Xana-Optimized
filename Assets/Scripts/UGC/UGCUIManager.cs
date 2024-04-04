@@ -43,9 +43,14 @@ public class UGCUIManager : MonoBehaviour
 
     void Start()
     {
+        CharacterHandler.instance.ActivateAvatarByGender(SavaCharacterProperties.instance.SaveItemList.gender);
+        UGCCharacter = CharacterHandler.instance.GetActiveAvatarData().avatar_parent.GetComponent<AvatarController>();
+
+        CharacterHandler.instance.RemoveUnnecessaryComponentsForUGC(UGCCharacter.gameObject);  // Remove unnecessary components from the character for UGC
         DisableLoadingPanel();
-       // BGMat = new Material(BG.material);
+        // BGMat = new Material(BG.material);
     }
+
 
     public void DisableLoadingPanel()
     {

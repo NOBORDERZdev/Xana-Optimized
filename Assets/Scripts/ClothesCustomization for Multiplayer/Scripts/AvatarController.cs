@@ -88,6 +88,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
         if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         {
+
             if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
             {
                 SetAvatarClothDefault(this.gameObject, "Male");
@@ -105,15 +106,7 @@ public class AvatarController : MonoBehaviour
             addressableDownloader = AddressableDownloader.Instance;
         if (xanaConstants != null)
         {
-            if (!sceneName.Contains("Main")) // call for spaces only
-            {
-                Invoke(nameof(Custom_InitializeAvatar), 0.5f);
-                if (xanaConstants.isNFTEquiped)
-                {
-                    this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-                }
-            }
-            else // For Home
+            if (sceneName.Contains("Main") || sceneName.Contains("UGC")) // For Home
             {
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -130,6 +123,15 @@ public class AvatarController : MonoBehaviour
                 }
 
             }
+            else
+            {
+                Invoke(nameof(Custom_InitializeAvatar), 0.5f);
+                if (xanaConstants.isNFTEquiped)
+                {
+                    this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                }
+            }
+            
         }
     }
     private void OnDisable()
@@ -272,6 +274,8 @@ public class AvatarController : MonoBehaviour
     /// <param name="_rand"> Random numbe of the preset</param>
     void DownloadRandomPresets(SavingCharacterDataClass _CharacterData, int _rand)
     {
+        CharacterHandler.instance.ActivateAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
+        //GameManager.Instance.ActivateAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
         SetAvatarClothDefault(gameObject, characterBodyParts.randomPresetData[_rand].GenderType); //Set Default Cloth and Set texture according to it.
         if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count == 0)
         {
@@ -289,9 +293,9 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[2].ItemType = randomPresetData.HairPresetData.ObjectType;
 
         _CharacterData.myItemObj[3].ItemName = randomPresetData.ShoesPresetData.ObjectName;
-        _CharacterData.myItemObj[3].ItemType = randomPresetData.ShoesPresetData.ObjectType; 
+        _CharacterData.myItemObj[3].ItemType = randomPresetData.ShoesPresetData.ObjectType;
 
-        GameManager.Instance.ActivateAvatarByGender(randomPresetData.GenderType);
+        CharacterHandler.instance.ActivateAvatarByGender(randomPresetData.GenderType);
         //characterBodyParts.SetAvatarByGender(randomPresetData.GenderType);
 
         if (_CharacterData.myItemObj.Count > 0)
@@ -428,16 +432,16 @@ public class AvatarController : MonoBehaviour
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
-            if (sceneName.Equals("Main")) // for store/ main menu
+            if (sceneName.Equals("Main") || sceneName.Equals("UGC")) // for store/ main menu
             {
                 if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
                 {
-                    int _rand = Random.Range(0, 13);
+                    int _rand = Random.Range(0, characterBodyParts.randomPresetData.Length);
                     DownloadRandomPresets(_CharacterData, _rand);
                 }
                 else
                 {
-                    GameManager.Instance.ActivateAvatarByGender(_CharacterData.gender);
+                    CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
                     SetAvatarClothDefault(gameObject, _CharacterData.gender);
                     //characterBodyParts.SetAvatarByGender(_CharacterData.gender);
 
@@ -665,7 +669,7 @@ public class AvatarController : MonoBehaviour
             {
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    GameManager.Instance.ActivateAvatarByGender(gender);
+                    CharacterHandler.instance.ActivateAvatarByGender(gender);
                     SetAvatarClothDefault(gameObject, gender);
                     //characterBodyParts.SetAvatarByGender(gender);
 
@@ -1437,7 +1441,7 @@ public class AvatarController : MonoBehaviour
                     break;
             }
         }
-        GameManager.Instance.ActivateAvatarByGender(gender);
+        //GameManager.Instance.ActivateAvatarByGender(gender);
     }
 
     /// <summary>
@@ -2001,7 +2005,7 @@ public class AvatarController : MonoBehaviour
         }
         else
         {
-            SetAvatarClothDefault(ProfileUIHandler.instance.avatarRef.GetComponent<AvatarController>().gameObject,_CharacterData.gender);
+            SetAvatarClothDefault(applyOn.gameObject,_CharacterData.gender);
             //SetAvatarClothDefault(gameObject, _CharacterData.gender);
             //bodyParts.SetAvatarByGender(_CharacterData.gender);
                     
@@ -2269,7 +2273,7 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemName = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        ProfileUIHandler.instance.ActivateProfileAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
+        //ProfileUIHandler.instance.ActivateProfileAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
         //characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
        if (_CharacterData.myItemObj.Count > 0)
         {

@@ -123,7 +123,7 @@ public class ProfileUIHandler : MonoBehaviour
 
                 if (femaleAvatarRef)
                     femaleAvatarRef.SetActive(false);
-                avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
+                avatarRef = maleAvatarRef.gameObject;
                 break;
             case "Female":
                 if (femaleAvatarRef)
@@ -133,7 +133,7 @@ public class ProfileUIHandler : MonoBehaviour
 
                 if (maleAvatarRef)
                     maleAvatarRef.SetActive(false);
-                avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
+                avatarRef = femaleAvatarRef.gameObject;
                 break;
         }
         menuLightingObj.SetActive(false);
@@ -147,21 +147,22 @@ public class ProfileUIHandler : MonoBehaviour
         _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
         lightingObj = ref_FriendHomeManager.profileLightingObj;
         menuLightingObj = ref_FriendHomeManager.menuLightObj;
+        //GameObject avatarPrefab;
         if (gender == AvatarGender.Male)
         {
+           // avatarPrefab = ref_FriendHomeManager.maleFriendAvatarPrefab.gameObject;
             maleAvatarRef = Instantiate(ref_FriendHomeManager.maleFriendAvatarPrefab.gameObject);
             avatarRef = maleAvatarRef;
             avatarRef.name = "MaleUserPreviewAvatar_Parent";
         }
         else
         {
+            //avatarPrefab = ref_FriendHomeManager.femaleFriendAvatarPrefab.gameObject;
             femaleAvatarRef = Instantiate(ref_FriendHomeManager.femaleFriendAvatarPrefab.gameObject);
             avatarRef = femaleAvatarRef;
             avatarRef.name = "FemaleUserPreviewAvatar_Parent";
         }
 
-        avatarRef = avatarRef.GetComponent<CharacterHandler>().avatarData.avatar_parent;
-        avatarRef.name = "UserPreviewAvatar";
         //AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         avatarRef.GetComponent<FootStaticIK>().ikActive = true;
         avatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
@@ -170,7 +171,7 @@ public class ProfileUIHandler : MonoBehaviour
         Destroy(avatarRef.GetComponent<Actor>());
         Destroy(avatarRef.GetComponent<PlayerPostBubbleHandler>());
 
-        avatarRef.transform.parent.gameObject.SetActive(true);
+        avatarRef.gameObject.SetActive(true);
 
         GameObject temp = Instantiate(avatarBgObject, avatarRef.transform);
         //Destroy(AvatarRef.GetComponent<AvatarController>());
@@ -214,7 +215,8 @@ public class ProfileUIHandler : MonoBehaviour
 
     public void SetUserAvatarDefaultClothing()
     {
-        int _rand = Random.Range(0, 7);
+        ActivateProfileAvatarByGender(Random.Range(0f, 2f) <= 1f ? "Male" : "Female");
+        int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);
         //if (GameManager.Instance.avatarGender == AvatarGender.Male)
         //{
         //    if (maleAvatarRef)

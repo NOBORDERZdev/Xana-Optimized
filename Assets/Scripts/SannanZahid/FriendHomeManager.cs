@@ -76,11 +76,19 @@ public class FriendHomeManager : MonoBehaviour
     {
         FriendSpawnData FriendSpawn = new FriendSpawnData();
         Transform CreatedFriend;
-        if (friend.userOccupiedAssets[0].json.gender == "Male")
-            CreatedFriend = Instantiate(maleFriendAvatarPrefab, maleFriendAvatarPrefab.parent).transform;
+        GameObject avatarPrefab;
+        if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
+        {
+            if (friend.userOccupiedAssets[0].json.gender == "Male")
+                avatarPrefab= maleFriendAvatarPrefab.gameObject;
+            else
+                avatarPrefab = femaleFriendAvatarPrefab.gameObject;
+        }
         else
-            CreatedFriend = Instantiate(femaleFriendAvatarPrefab, femaleFriendAvatarPrefab.parent).transform;
-
+        {
+            avatarPrefab = (UnityEngine.Random.Range(0, 2) == 0 ? femaleFriendAvatarPrefab : maleFriendAvatarPrefab).gameObject;
+        }
+        CreatedFriend = Instantiate(avatarPrefab, avatarPrefab.transform.parent).transform;
         //Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
         yield return null; // Wait for the next frame to continue execution
 
@@ -97,7 +105,7 @@ public class FriendHomeManager : MonoBehaviour
         }
         else
         {
-            int _rand = UnityEngine.Random.Range(0, 7);
+            int _rand = UnityEngine.Random.Range(0, CreatedFriend.GetComponent<CharacterBodyParts>().randomPresetData.Length);
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,

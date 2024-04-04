@@ -131,6 +131,7 @@ public class PresetData_Jsons : MonoBehaviour
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(JsonDataPreset);  //(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));        
             _CharacterData.BodyFat = 0;
             _CharacterData.PresetValue = gameObject.name;
+            SavaCharacterProperties.instance.SaveItemList.gender = _CharacterData.gender;
             XanaConstants.xanaConstants.bodyNumber = 0;
             if (UGCManager.isSelfieTaken)
             {
@@ -149,7 +150,7 @@ public class PresetData_Jsons : MonoBehaviour
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
 
-            GameManager.Instance.ActivateAvatarByGender(_CharacterData.gender);
+            CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
             //GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().SetAvatarByGender(_CharacterData.gender);
 
 
