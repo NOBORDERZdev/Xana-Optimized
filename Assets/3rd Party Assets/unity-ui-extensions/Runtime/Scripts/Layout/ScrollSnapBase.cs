@@ -378,21 +378,21 @@ namespace UnityEngine.UI.Extensions
             }
         }
 
-        public void OnRequestFollowingApi()//vishal
-        {
-            if (FeedUIController.Instance.feedUiScreen.activeSelf)
-            {
-                if (_currentPage == 0)
-                {
-                    APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
-                }
-                else
-                {
-                    Debug.LogError("OnRequestFollowingApi.......");
-                    APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10);
-                }
-            }
-        }
+        //public void OnRequestFollowingApi()//vishal
+        //{
+        //    if (FeedUIController.Instance.feedUiScreen.activeSelf)
+        //    {
+        //        if (_currentPage == 0)
+        //        {
+        //            APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
+        //        }
+        //        else
+        //        {
+        //            Debug.LogError("OnRequestFollowingApi.......");
+        //            APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10);
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Gets the closest page for the current Scroll Rect container position
