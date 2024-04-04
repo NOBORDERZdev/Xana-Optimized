@@ -669,7 +669,7 @@ public class AvatarController : MonoBehaviour
             {
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
-                    CharacterHandler.instance.ActivateAvatarByGender(gender);
+                    //CharacterHandler.instance.ActivateAvatarByGender(gender);
                     SetAvatarClothDefault(gameObject, gender);
                     //characterBodyParts.SetAvatarByGender(gender);
 
