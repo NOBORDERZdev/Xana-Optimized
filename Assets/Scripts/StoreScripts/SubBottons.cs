@@ -15,19 +15,22 @@ public class SubBottons : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        customizationUIManager = FindObjectOfType<CharacterCustomizationUIManager>();
+        customizationUIManager = CharacterCustomizationUIManager.Instance;
     }
 
     private int currentSelectedCategoryIndex;
 
     public void ClickBtnFtn(int m_Index)
     {
+        if(customizationUIManager == null)
+            customizationUIManager = CharacterCustomizationUIManager.Instance;
 
         for (int i = 0; i < TotalBtns.Length; i++)
         {
             TotalBtns[i].GetComponentInChildren<ButtonScript>().BtnTxt.color = NormalColor;
             TotalBtns[i].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Normal;
         }
+
         TotalBtns[m_Index].GetComponentInChildren<ButtonScript>().BtnTxt.color = HighlightedColor;
         TotalBtns[m_Index].transform.GetChild(0).GetComponent<Text>().fontStyle = FontStyle.Bold;
 
@@ -37,12 +40,12 @@ public class SubBottons : MonoBehaviour
             StoreManager.instance.OpenClothContainerPanel(m_Index);
             if (m_Index == 2)
             {
-                CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+                customizationUIManager.LoadMyFaceCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
             }
             else
             {
-                CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+                customizationUIManager.LoadMyClothCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
             }
         }
@@ -53,11 +56,11 @@ public class SubBottons : MonoBehaviour
 
             if (m_Index == 10 || m_Index == 6)
             {
-                CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+                customizationUIManager.LoadMyClothCustomizationPanel();
             }
             else
             {
-                CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+                customizationUIManager.LoadMyFaceCustomizationPanel();
             }
         }
         // print(m_Index);

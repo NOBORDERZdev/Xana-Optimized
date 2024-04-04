@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
     internal string selectedPresetData="";
     private void Awake()
     {
+        Debug.Log("GameManager Awake");
         if (Instance == null)
             Instance = this;
         PlayerPrefs.SetInt("presetPanel", 0);  // was loggedin as account 
@@ -170,7 +171,7 @@ public class GameManager : MonoBehaviour
     }
     public void AvatarMenuBtnPressed()
     {
-        UiManager.AvaterButtonCustomPushed();
+        //UiManager.AvaterButtonCustomPushed();
         CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
         if (XanaConstants.loggedIn) 
@@ -179,14 +180,14 @@ public class GameManager : MonoBehaviour
             StoreManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
-        else
-        {
-            //UserRegisterationManager.instance.checkbool_preser_start = true;
-            //PlayerPrefs.SetInt("IsChanged", 0);  
-            //UserRegisterationManager.instance.OpenUIPanal(17);
+        //else  // Disable Guest Sceniro
+        //{
+        //    //UserRegisterationManager.instance.checkbool_preser_start = true;
+        //    //PlayerPrefs.SetInt("IsChanged", 0);  
+        //    //UserRegisterationManager.instance.OpenUIPanal(17);
 
-            UserLoginSignupManager.instance.ShowWelcomeScreen();
-        }
+        //    UserLoginSignupManager.instance.ShowWelcomeScreen();
+        //}
         StoreManager.instance.AvatarUpdated.SetActive(false);
         StoreManager.instance.AvatarSaved.SetActive(false);
         StoreManager.instance.AvatarSavedGuest.SetActive(false);
