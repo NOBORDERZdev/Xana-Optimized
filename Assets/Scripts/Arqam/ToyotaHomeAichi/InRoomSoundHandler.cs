@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using Photon.Pun;
 
 public class InRoomSoundHandler : MonoBehaviour
 {
@@ -8,13 +9,13 @@ public class InRoomSoundHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "PhotonLocalPlayer")
+        if(other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
             playerInRoom?.Invoke(true, roomName);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer")
+        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
             playerInRoom?.Invoke(false, roomName);       
     }
 

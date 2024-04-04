@@ -64,7 +64,7 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
-         FeedUIController.Instance.feedUiScreen.SetActive(true);
+         feedUIController.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
         //FeedUIController.Instance.ShowLoader(true);
@@ -188,12 +188,9 @@ public class FeedController : MonoBehaviour
                 }
                 if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
-                    //scrollerController._data.InsertRange(0,tempData);
                     AddDataToTopScroller(FeedAPIData);
                 }
                 else{
-                    //noFeedsScreen.gameObject.SetActive(true);
-                    //FeedLoader.SetActive(false);
                     if (_isNameChanged)
                     {
                         AddDataToTopScroller(FeedAPIData);
@@ -287,7 +284,6 @@ public class FeedController : MonoBehaviour
         {
             if (scrollerController._data[i].id == feedLikeSocket.textPostId)
             {
-                //scrollerController._data[i].UpdateLikeCount(feedLikeSocket.likeCount);
                 scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
                 //scrollerController.scroller.ReloadData();
                 foreach (Transform item in feedContentParent.GetChild(0).transform )
@@ -300,14 +296,6 @@ public class FeedController : MonoBehaviour
                 break;
             }
         }
-        //foreach (var item in scrollerController._data)
-        //{
-        //    if (item.GetFeedId() == feedLikeSocket.textPostId)
-        //    {
-        //      item.UpdateLikeCount(feedLikeSocket.likeCount);
-        //      scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
-        //    }
-        //}
     }
 
     public void OnClickSerachBtn(){
@@ -337,7 +325,6 @@ public class FeedController : MonoBehaviour
     } 
 
     public void SearchFeed(){
-        print("~~~~~");
         noFeedSerach. gameObject.SetActive(false);
         FeedLoader.SetActive(true);
         EmptySearchPanel();   
@@ -462,7 +449,7 @@ public class FeedController : MonoBehaviour
             noFeedSerach.gameObject.SetActive(false);
             noFeedsScreen.gameObject.SetActive(false);
             FeedLoader.gameObject.SetActive(false);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+            feedUIController.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
         }
      }
     private void OnDisable()
