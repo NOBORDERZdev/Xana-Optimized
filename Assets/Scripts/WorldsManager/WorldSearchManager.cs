@@ -27,7 +27,7 @@ public class WorldSearchManager : MonoBehaviour
     {
         searchWorldInput.Clear();
         WorldManager.instance.AllWorldTabReference.BackToPreviousScreen();
-        FlexibleRect.OnAdjustSize?.Invoke(false);
+        //FlexibleRect.OnAdjustSize?.Invoke(false);
     }
     public void GetSearchBarStatus()
     {

@@ -42,7 +42,7 @@ public class AllWorldManage : MonoBehaviour
     {
         WorldSearchManager.IsSearchBarActive = true;
         gameManager.UiManager.SwitchToScreen(2);
-        FlexibleRect.OnAdjustSize?.Invoke(true);
+        //FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
         WorldManager.instance.SearchPageNumb = 1;
     }
@@ -51,7 +51,7 @@ public class AllWorldManage : MonoBehaviour
     {
         WorldSearchManager.IsSearchBarActive = true;
         gameManager.UiManager.SwitchToScreen(2);
-        FlexibleRect.OnAdjustSize?.Invoke(true);
+        //FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
     }
 
