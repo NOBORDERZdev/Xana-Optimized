@@ -289,7 +289,7 @@ public class WorldManager : MonoBehaviour
     Coroutine FetchUserMapFromServerCO;
     public void GetBuilderWorlds(APIURL aPIURL, Action<bool> CallBack)
     {
-        Debug.Log("Current Data in Input field: " + worldSearchManager.searchWorldInput.Text);
+        //Debug.Log("Current Data in Input field: " + worldSearchManager.searchWorldInput.Text);
         finalAPIURL = PrepareApiURL(aPIURL);
         loadOnce = false;
         //Debug.LogError(finalAPIURL);
