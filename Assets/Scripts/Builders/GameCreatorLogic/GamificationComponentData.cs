@@ -94,6 +94,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     //platformLayers
     public LayerMask platformLayers;
+
+    [Tooltip("What layers the character uses as ground")]
+    public LayerMask GroundLayers;
+
     private void Awake()
     {
         instance = this;
