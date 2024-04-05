@@ -27,7 +27,6 @@ public class WarpFunctionComponent : ItemComponent
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
             characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
-            
 
             if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
             {
@@ -67,7 +66,7 @@ public class WarpFunctionComponent : ItemComponent
     IEnumerator PositionUpdating()
     {
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         isPortalUsed = false;
     }
 
