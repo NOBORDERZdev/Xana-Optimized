@@ -83,7 +83,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                     MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
-            LoadDataInPool(/*true*/);
+            LoadDataInPool();
             Debug.Log("Added log message here in order to get loader turned off as without it loader wont get turned off");//UMER
             paginationLoaderRef.ShowApiLoader(false);
         }
@@ -94,7 +94,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
             if (instanChildCount.Equals(_dataCount))
             {
-                LoadDataInPool(/*false*/);
+                LoadDataInPool();
             }
         }
     }
@@ -120,7 +120,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterData.childData.Add(_masterRowChildData);
     }
 
-    public void LoadDataInPool(/*bool _loaderDeact*/)
+    public void LoadDataInPool()
     {
         scrollPosition = masterScroller.ScrollPosition;
         if (!masterScroller.GetComponent<ScrollRect>().enabled)
@@ -128,10 +128,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         // tell the scroller to reload now that we have the data
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
-        //if (_loaderDeact)
-        //{
-        //    paginationLoaderRef.ShowApiLoader(false);
-        //}
+
         _loadingNew = false;
     }
 
@@ -168,7 +165,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// </summary>
     /// <param name="scroller">The scroller requesting the cell</param>
     /// <param name="dataIndex">The index of the data that the scroller is requesting</param>
-    /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is looping</param>
+    /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is 4ing</param>
     /// <returns>The cell for the scroller to use</returns>
     public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
     {
