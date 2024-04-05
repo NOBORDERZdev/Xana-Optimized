@@ -9,11 +9,13 @@ using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
 
+
 public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
   
     [Header("Web3Auth Project settings")]
-    private string redirectURI = "web3auth://com.nbi.xana/auth";
+    private string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
+    private string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
     private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
     private string loginVerifier;
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
@@ -107,7 +109,13 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.setOptions(new Web3AuthOptions()
         {
             clientId = ClientId,
-            redirectUrl = new Uri(redirectURI),
+#if UNITY_IOS
+            redirectUrl = new Uri(redirectURIiOS),
+#endif
+#if UNITY_ANDROID
+   redirectUrl = new Uri(redirectURIAndroid),
+#endif
+
             network = network,
             loginConfig = new Dictionary<string, LoginConfigItem>
             {
