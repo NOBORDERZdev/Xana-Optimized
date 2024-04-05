@@ -624,6 +624,7 @@ public class WorldManager : MonoBehaviour
             WorldItemView.m_EnvName = "D_Infinity_Labo";
             Launcher.sceneName = WorldItemView.m_EnvName;
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail_PlayBtn.ToString());
         }
         
         
@@ -702,8 +703,9 @@ public class WorldManager : MonoBehaviour
         }
         XanaConstants.xanaConstants.returnedFromGamePlay = false;
         if (WorldItemView.m_EnvName == "ZONE-X")
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
     }
+
     public async void JoinBuilderWorld()
     {
         if (!XanaConstants.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
