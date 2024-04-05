@@ -83,7 +83,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                     MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
+            Debug.Log("Debug added here as getting stuck on mobile and loader not getting turned off");
             LoadDataInPool();
+            Debug.Log("Debug added here as getting stuck on mobile and loader not getting turned off");
             paginationLoaderRef.ShowApiLoader(false);
         }
         else
