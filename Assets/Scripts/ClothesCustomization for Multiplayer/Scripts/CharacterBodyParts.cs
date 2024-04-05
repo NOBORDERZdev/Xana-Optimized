@@ -527,8 +527,16 @@ public class CharacterBodyParts : MonoBehaviour
                 foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[i]].boneData)
                 {
                     print("---- AxesDetails : " + item.workingAxes);
+                    Transform bone = null;
+                    if (avatarController.avatarGender == AvatarGender.Male)
+                    {
+                        bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
 
-                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
+                    }
+                    else
+                    {
+                        bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].femaleBoneObj.transform;
+                    }
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)

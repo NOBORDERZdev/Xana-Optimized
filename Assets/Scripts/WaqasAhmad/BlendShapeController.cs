@@ -61,8 +61,8 @@ public class BlendShapeController : MonoBehaviour
         if (selectedBlendShapeIndex != -1 || selectedBlendShapeIndex >= allBlendShapes.Count)
             return;
 
-        Transform boneTransform = allBlendShapes[selectedBlendShapeIndex].maleBoneObj.transform;
-
+        Transform boneTransform = null;
+        boneTransform = allBlendShapes[selectedBlendShapeIndex].maleBoneObj.transform;
         switch (objectProperty)
         {
             case ObjectProperty.position:
@@ -121,7 +121,7 @@ public class BlendShapeController : MonoBehaviour
     //            //    item.itemName = item.blendShapeName.ToString() + " - Blend Ind :" + item.index;
     //        }
     //    }
-        
+
     //}
 }
 public enum ObjectProperty { position, rotation, scale }

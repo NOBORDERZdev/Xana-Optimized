@@ -38,12 +38,7 @@ public class BlendShapeImporter : MonoBehaviour
     [Tooltip("Min Distance at which corresponding blendshapes are placed")]
     [Header("Distance Settings")]
     public float AllowedDistance;
-
     public string SelectedPart = "";
-    private int ListIndex;
-    private int CurrentBlendShapeInd;
-    private bool Allowed;
-    private int SelectedObjIndex;
 
     public SphereInfo CurrentSelectedObject;
     private List<CorrespondingVertices> Objects;
@@ -52,12 +47,6 @@ public class BlendShapeImporter : MonoBehaviour
     public Sprite defaultIcon, selectedIcon;
 
     #region Unity Events
-
-
-    private void Awake()
-    {
-        //Instance = this;
-    }
 
     private void Start()
     {
