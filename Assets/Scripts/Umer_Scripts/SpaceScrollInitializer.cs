@@ -83,7 +83,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                     MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
-            LoadDataInPool(true);
+            LoadDataInPool(/*true*/);
+            Debug.Log("Added log message here in order to get loader turned off as without it loader wont get turned off");//UMER
+            paginationLoaderRef.ShowApiLoader(false);
         }
         else
         {
@@ -92,7 +94,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
             if (instanChildCount.Equals(_dataCount))
             {
-                LoadDataInPool(false);
+                LoadDataInPool(/*false*/);
             }
         }
     }
@@ -118,7 +120,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         masterData.childData.Add(_masterRowChildData);
     }
 
-    public void LoadDataInPool(bool _loaderDeact)
+    public void LoadDataInPool(/*bool _loaderDeact*/)
     {
         scrollPosition = masterScroller.ScrollPosition;
         if (!masterScroller.GetComponent<ScrollRect>().enabled)
@@ -126,10 +128,10 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         // tell the scroller to reload now that we have the data
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
-        if (_loaderDeact)
-        {
-            paginationLoaderRef.ShowApiLoader(false);
-        }
+        //if (_loaderDeact)
+        //{
+        //    paginationLoaderRef.ShowApiLoader(false);
+        //}
         _loadingNew = false;
     }
 
