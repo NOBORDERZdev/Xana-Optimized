@@ -7,8 +7,9 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
+using EnhancedUI.EnhancedScroller;
 
-public class WorldItemView : MonoBehaviour
+public class WorldItemView : EnhancedScrollerCellView
 {
     /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
     /*public int Index;
@@ -270,7 +271,6 @@ public class WorldItemView : MonoBehaviour
     }
     public IEnumerator DownloadAndLoadFeed(int worlditemcount, int _loopcount)
     {
-        yield return null;
         if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
@@ -296,6 +296,7 @@ public class WorldItemView : MonoBehaviour
             /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
+        yield return null;
     }
     void GetEventType(string entityType)
     {
@@ -387,6 +388,8 @@ public class WorldItemView : MonoBehaviour
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
+        else if (m_EnvironmentName == "D +  Infinity Labo")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail.ToString());
 
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);

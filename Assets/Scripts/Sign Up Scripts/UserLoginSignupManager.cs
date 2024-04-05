@@ -95,6 +95,14 @@ public class UserLoginSignupManager : MonoBehaviour
 
     void CheckForAutoLogin()
     {
+        // If already logged in than Return
+        if (XanaConstants.loggedIn)
+        {
+            Debug.Log("Already Login Dont Call API");
+            return;
+        }
+        Debug.Log("Auto Login");
+
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
@@ -224,7 +232,13 @@ public class UserLoginSignupManager : MonoBehaviour
 
     //wallet login functions 
     public void WalletAutoLogin()
-    { 
+    {
+        if (!XanaConstants.loggedIn)
+        {
+            //Debug.Log("Firebase: Wallet Login Event");
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
+        }
+
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
@@ -235,6 +249,7 @@ public class UserLoginSignupManager : MonoBehaviour
         XanaConstants.isWalletLogin = true;
         GetUserClothData();
         GetOwnedNFTsFromAPI();
+        
         PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
         PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(WaitForDeepLink());
@@ -390,6 +405,13 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void LoginWithWallet()
     {
+        Debug.Log("Login With Wallet");
+        if (!XanaConstants.loggedIn)
+        {
+            //Debug.Log("Firebase: Wallet Login Event");
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
+        }
+
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
@@ -779,6 +801,8 @@ public class UserLoginSignupManager : MonoBehaviour
         string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
+
+
         if (XanaConstants.isWalletLogin)
         {
             StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername, (isSucess) =>
@@ -786,6 +810,9 @@ public class UserLoginSignupManager : MonoBehaviour
                 OpenUIPanel(16);
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
+                
+                Debug.Log("Wallet Signup");
+                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
             }));
         }
         else
@@ -794,6 +821,10 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
+                
+                Debug.Log("Email Signup");
+                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
+                PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
             }));
         }
 
@@ -955,6 +986,8 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 loginLoader.SetActive(false);
                 loginButton.interactable = true;
+
+                
             }));
         }
         else
@@ -983,6 +1016,11 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             if (myObject1.success)
             {
+                if(!XanaConstants.loggedIn)
+                {
+                    Debug.Log("Email Login");
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Email_Success.ToString());
+                }
 
                 XanaConstants.xanaliaToken = myObject1.data.xanaliaToken;
                 XanaConstants.xanaToken = myObject1.data.token;
@@ -994,8 +1032,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 XanaConstants.loggedIn = true;
                 XanaConstants.isWalletLogin = false;
                 ConstantsGod.AUTH_TOKEN = myObject1.data.token;
-
-
 
                 PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                 PlayerPrefs.SetInt("shownWelcome", 1);
@@ -1020,6 +1056,8 @@ public class UserLoginSignupManager : MonoBehaviour
 
                 DynamicEventManager.deepLink?.Invoke("Login user here");
                 MainSceneEventHandler.OnSucessFullLogin?.Invoke();
+
+                
 
                 CallBack(true);
             }
@@ -1422,6 +1460,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
+        Debug.Log("Logout Successfully");
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -1458,9 +1497,9 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
-        if (SNSSettingController.Instance != null)
+        if (FeedUIController.Instance.SNSSettingController != null)
         {
-            SNSSettingController.Instance.LogoutSuccess();
+            FeedUIController.Instance.SNSSettingController.LogoutSuccess();
         }
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (StoreManager.instance.MultipleSave)

@@ -1128,9 +1128,9 @@ public class UserRegisterationManager : MonoBehaviour
     }
     IEnumerator WaitAndLogout()
     {
-        if (SNSSettingController.Instance != null)
+        if (FeedUIController.Instance.SNSSettingController != null)
         {
-            SNSSettingController.Instance.LogoutSuccess();
+            FeedUIController.Instance.SNSSettingController.LogoutSuccess();
         }
         yield return null;
     }

@@ -36,6 +36,9 @@ public class GlobalConstants
         URL_ZoneX, 
         URL_FiveElements,
         // Added Toyota Items
+        THA_Home_Thumbnail,
+        THA_Home_Thumbnail_PlayBtn,
+        StayTime_THA,
         CL_NFT_THA_Stage,
         CL_NFT_THA_Factory,
         CL_NFT_THA_Consult,
@@ -46,6 +49,18 @@ public class GlobalConstants
         URL_Consult,
         URL_LandInfo,
         URL_Architec,
+
+        // Added Xana Items
+        App_Started,
+
+        Login_Email_Success,
+        Signup_Email_Completed,
+
+        Login_Wallet_Success,
+        Signup_Wallet_Completed,
+        
+        Join_World,
+        StayTime,  
     }
 
     public static void SendFirebaseEvent(string eventName)
@@ -59,7 +74,7 @@ public class GlobalConstants
             prefix = "L_"; environmentType = EnvironmentType.Live; 
         }
         eventName = prefix + eventName;
-        Debug.Log("<color=red>" + eventName + "</color>");
+        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }

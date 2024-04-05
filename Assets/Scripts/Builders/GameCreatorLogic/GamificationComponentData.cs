@@ -27,6 +27,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal AvatarController avatarController;
     internal CharacterBodyParts charcterBodyParts;
     internal IKMuseum ikMuseum;
+    public Texture defaultSkyTex;
 
     public Vector3 spawnPointPosition;
     public GameObject raycast;
@@ -93,6 +94,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     //platformLayers
     public LayerMask platformLayers;
+
+    [Tooltip("What layers the character uses as ground")]
+    public LayerMask GroundLayers;
+
     private void Awake()
     {
         instance = this;
@@ -141,6 +146,11 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         Physics.IgnoreLayerCollision(9, 22, false);
 
         Debug.Log("Blindfolded spawned");
+    }
+
+    public float MapValue(float oldValue, float oldMin, float oldMax, float newMin, float newMax)
+    {
+        return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
     #region OrientationChange

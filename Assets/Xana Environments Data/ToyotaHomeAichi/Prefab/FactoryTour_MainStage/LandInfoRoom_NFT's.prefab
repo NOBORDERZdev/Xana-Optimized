@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97587988015785255}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.231}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -581,7 +581,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348635875435398760}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.231}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -824,16 +824,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -952,7 +942,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1494,7 +1487,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 877687020644736588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.231}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2211,7 +2204,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395657799357488720}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.231}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2429,7 +2422,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1783238567770676151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.058}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2667,6 +2660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddBtnCompOnScreen: 1
   id: 0
   imgVideo16x9: {fileID: 1783238569722770594}
   imgVideo9x16: {fileID: 1783238567828644421}
@@ -2687,7 +2681,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -2698,6 +2692,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1783238568760101411}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2935,16 +2944,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -3063,7 +3062,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -5142,16 +5144,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -5270,7 +5262,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -6340,7 +6335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  isAddBtnCompOnScreen: 1
+  id: 2
   imgVideo16x9: {fileID: 6109863440154170743}
   imgVideo9x16: {fileID: 6181319019311811263}
   imgVideo1x1: {fileID: 97587988015785255}
@@ -6360,7 +6356,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -6371,6 +6367,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8360794137994677707}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6799,16 +6810,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -6927,7 +6928,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -7213,7 +7217,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484470487276507920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.061}
   m_LocalScale: {x: 0.37029177, y: 0.37029177, z: 0.3702918}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7636,7 +7640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  isAddBtnCompOnScreen: 1
+  id: 3
   imgVideo16x9: {fileID: 9212335773847402582}
   imgVideo9x16: {fileID: 4589392038392653611}
   imgVideo1x1: {fileID: 1395657799357488720}
@@ -7656,7 +7661,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -7667,6 +7672,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5300800625020226538}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8281,7 +8301,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5054170875373060356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.231}
+  m_LocalPosition: {x: 0, y: 0, z: 0.169}
   m_LocalScale: {x: 0.30315018, y: 0.30315018, z: 0.29784778}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9486,7 +9506,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  isAddBtnCompOnScreen: 1
+  id: 4
   imgVideo16x9: {fileID: 2873888933298817330}
   imgVideo9x16: {fileID: 934944418313247030}
   imgVideo1x1: {fileID: 5054170875373060356}
@@ -9506,7 +9527,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -9517,6 +9538,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2964097276032421988}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -10078,7 +10114,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6737258262425926022}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.27, y: -13.7, z: 69.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10113,6 +10149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b4e521a20a9114fad769f07acb3789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nftName: 4
+  isShowDataAtStart: 0
   RetryChances: 3
   PMY_RoomId_test: 5
   PMY_RoomId_main: 3
@@ -10468,16 +10506,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -10596,7 +10624,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -10972,7 +11003,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  isAddBtnCompOnScreen: 1
+  id: 5
   imgVideo16x9: {fileID: 4860520006740259090}
   imgVideo9x16: {fileID: 793865640470494767}
   imgVideo1x1: {fileID: 877687020644736588}
@@ -10992,7 +11024,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -11003,6 +11035,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1907616532090342443}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11487,7 +11534,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  isAddBtnCompOnScreen: 1
+  id: 1
   imgVideo16x9: {fileID: 5237105087584098364}
   imgVideo9x16: {fileID: 3880235238574345410}
   imgVideo1x1: {fileID: 348635875435398760}
@@ -11507,7 +11555,7 @@ MonoBehaviour:
   imgVideoFrame1x1: {fileID: 0}
   imgVideoFrame4x3: {fileID: 0}
   isMultipleScreen: 0
-  roomType: 0
+  roomType: 4
   nftStartAction:
     m_PersistentCalls:
       m_Calls: []
@@ -11518,6 +11566,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
         m_MethodName: UpdateFrame
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 99754613631848592}
+        m_TargetAssemblyTypeName: FrameHandler, Assembly-CSharp
+        m_MethodName: Start
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11689,16 +11752,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -11817,7 +11870,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0

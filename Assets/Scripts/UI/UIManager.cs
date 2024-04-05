@@ -17,19 +17,19 @@ public class UIManager : MonoBehaviour
     [Header("Footer Reference")]
     public GameObject _footerCan;
     public GameObject faceMorphPanel;
-    [Space(5)]
-    [Header("New World Layout References")]
-    public Transform SearchHomeHolder;
-    public Transform SearchWorldHolder, 
+    //[Space(5)]
+    //[Header("New World Layout References")]
+    //public Transform SearchHomeHolder;
+    public Transform /*SearchWorldHolder,*/ 
         SearchWorldScreenHolder,
-        AvatarWindowHolder,
+        //AvatarWindowHolder,
         HomeWorldTabsHolder, 
-        WorldWorldTabsHolder, 
-        WorldScrollerHolder,
-        /*LobbyTabHolder,*/
-        AdvanceSearchInputField;
+        //WorldWorldTabsHolder, 
+        WorldScrollerHolder/*,*/
+        //LobbyTabHolder,
+        /*AdvanceSearchInputField*/;
 
-    public GameObject worldHolder;
+    //public GameObject worldHolder;
     public GameObject searchWorldHolder;
 
 
@@ -164,15 +164,15 @@ public class UIManager : MonoBehaviour
                 {
                     PreviousScreen = 0;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
-                    SearchHomeHolder.gameObject.SetActive(true);
-                    SearchWorldHolder.gameObject.SetActive(false);
-                    AvatarWindowHolder.gameObject.SetActive(false);
+                    //SearchHomeHolder.gameObject.SetActive(true);
+                    //SearchWorldHolder.gameObject.SetActive(false);
+                    //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());*/
                   //  HomeWorldTabsHolder.gameObject.SetActive(true);
-                    WorldWorldTabsHolder.gameObject.SetActive(false);
+                    //WorldWorldTabsHolder.gameObject.SetActive(false);
                     //WorldManager.instance.WorldPageStateHandler(false);
                     //WorldManager.instance.WorldScrollReset();
-                    worldHolder.SetActive(true);
+                    //worldHolder.SetActive(true);
                     searchWorldHolder.SetActive(false);
                     /*SecondSliderScrollView.GetComponent<Mask>().enabled = false;*/
                     break;
@@ -181,12 +181,12 @@ public class UIManager : MonoBehaviour
                 {
                     PreviousScreen = 1;
                     SearchWorldScreenHolder.gameObject.SetActive(false);
-                    SearchHomeHolder.gameObject.SetActive(false);
-                    SearchWorldHolder.gameObject.SetActive(true);
-                    AvatarWindowHolder.gameObject.SetActive(false);
+                    //SearchHomeHolder.gameObject.SetActive(false);
+                    //SearchWorldHolder.gameObject.SetActive(true);
+                    //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
-                  //  HomeWorldTabsHolder.gameObject.SetActive(false);
-                    WorldWorldTabsHolder.gameObject.SetActive(true);
+                    //  HomeWorldTabsHolder.gameObject.SetActive(false);
+                    //WorldWorldTabsHolder.gameObject.SetActive(true);
                     //WorldManager.instance.WorldPageStateHandler(true);
                     //WorldManager.instance.WorldScrollReset();
                     /*SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
@@ -194,18 +194,21 @@ public class UIManager : MonoBehaviour
                 }
             case 2:
                 {
-                    AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
+                    //AdvanceSearchInputField.GetComponent<AdvancedInputField>().Clear();
+                    WorldManager.instance.previousSearchKey = "";
+                    WorldManager.instance.SearchKey = "";
                     SearchWorldScreenHolder.gameObject.SetActive(true);
-                    SearchHomeHolder.gameObject.SetActive(false);
-                    SearchWorldHolder.gameObject.SetActive(false);
-                    AvatarWindowHolder.gameObject.SetActive(false);
+                    //SearchHomeHolder.gameObject.SetActive(false);
+                    //SearchWorldHolder.gameObject.SetActive(false);
+                    //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
-                    worldHolder.SetActive(false);
+                    //worldHolder.SetActive(false);
                     searchWorldHolder.SetActive(true);
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
-                    WorldWorldTabsHolder.gameObject.SetActive(false);
+                    //WorldWorldTabsHolder.gameObject.SetActive(false);
                     //WorldManager.instance.WorldPageStateHandler(true);
                     WorldManager.instance.WorldScrollReset();
+                    WorldManager.instance.WorldLoadingText(APIURL.Temp);
                    /* SecondSliderScrollView.GetComponent<Mask>().enabled = true;*/
                     ShowFooter(true);
                     break;

@@ -817,7 +817,7 @@ public class ConnectingWallet : MonoBehaviour
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 XanaConstants.xanaToken = VerifySignatureReadObj.data.token;
-                XanaConstants.loggedIn = true;
+                //XanaConstants.loggedIn = true; // Updating Value in LoginWithWallet();
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
 
                 UserLoginSignupManager.instance.LoginWithWallet();

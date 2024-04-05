@@ -233,7 +233,7 @@ public class FeedScroller : MonoBehaviour, IEnhancedScrollerDelegate, IBeginDrag
         /// GET NEW DATA FROM API
              scroller.GetComponent<FeedController>().GetComponent<FeedController>().PullNewPlayerPost();
             // reload the scroller to show the new data
-            scroller.ReloadData();
+          //  scroller.ReloadData();
 
             // take off the refresh now that it is handled
             _pullToRefresh = false;

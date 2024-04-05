@@ -43,6 +43,7 @@ public class UGCUIManager : MonoBehaviour
 
     void Start()
     {
+        XanaConstants.xanaConstants.returnedFromGamePlay = true;
         DisableLoadingPanel();
        // BGMat = new Material(BG.material);
     }

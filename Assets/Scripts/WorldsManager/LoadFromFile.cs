@@ -453,6 +453,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             {
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
+            if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            {
+                PlayerCamera.m_Lens.NearClipPlane = 0.05f;
+            }
             if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
@@ -577,10 +581,15 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
+
+        // Firebase Event for Join World
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
-        ActivateNpcChat();
+        //ActivateNpcChat();
     }
 
     void ActivateNpcChat()
@@ -635,6 +644,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
+            playerRB.mass = 70;
             playerRB.isKinematic = true;
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
@@ -645,7 +655,7 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             //player.GetComponent<CapsuleCollider>().enabled = false;
             TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
             GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerControllerNew>();
-
+            player.AddComponent<EnvironmentChecker>();
             if (GamificationComponentData.instance.raycast == null)
                 GamificationComponentData.instance.raycast = new GameObject("Raycasst");
             GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
@@ -748,7 +758,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         XanaChatSocket.onJoinRoom?.Invoke(XanaConstants.xanaConstants.builderMapID.ToString());
 
-        ActivateNpcChat();
+        Debug.Log("Player Spawn Completed --  Join World");
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+
+        //ActivateNpcChat();
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)

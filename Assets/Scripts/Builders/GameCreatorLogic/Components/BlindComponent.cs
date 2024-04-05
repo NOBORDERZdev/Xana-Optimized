@@ -41,42 +41,39 @@ public class BlindComponent : ItemComponent
         GetLightsData();
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        playerObject = GamificationComponentData.instance.buildingDetect.gameObject;
+        //if (!IsAgainTouchable) return;
+
+        //IsAgainTouchable = false;
+
+        if (GamificationComponentData.instance.withMultiplayer)
         {
-            playerObject = _other.gameObject;
-            if (!IsAgainTouchable) return;
-
-            IsAgainTouchable = false;
-
-            if (GamificationComponentData.instance.withMultiplayer)
+            if (!blindToggle && !isRunning)
             {
-                if (!blindToggle && !isRunning)
-                {
-                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
-                    utccounterValue.CounterValue = blindComponentData.time + 1;
-                    var hash = new ExitGames.Client.Photon.Hashtable();
-                    hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
-                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
-                }
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+                utccounterValue.CounterValue = blindComponentData.time + 1;
+                var hash = new ExitGames.Client.Photon.Hashtable();
+                hash["blindComponent"] = JsonUtility.ToJson(utccounterValue);
+                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
             }
-            else
-                StartComponent();
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
         }
+        else
+            StartComponent();
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        IsAgainTouchable = false;
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        IsAgainTouchable = true;
-        playerObject = null;
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    IsAgainTouchable = false;
+    //}
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    IsAgainTouchable = true;
+    //    playerObject = null;
+    //}
 
     IEnumerator DimLights(bool _isOff, Light[] _light, float[] _lightsIntensity, float timeCheck, float _Radius, int _skyBoxID = 20)
     {
@@ -176,7 +173,7 @@ public class BlindComponent : ItemComponent
                 DateTime currentDateTime = DateTime.UtcNow;
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue+1)
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
                     utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
                 else
                     return;
@@ -281,6 +278,16 @@ public class BlindComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.BlindComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

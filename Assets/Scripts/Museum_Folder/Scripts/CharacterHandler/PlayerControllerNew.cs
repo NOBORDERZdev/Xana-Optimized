@@ -101,6 +101,7 @@ public class PlayerControllerNew : MonoBehaviour
     #endregion
     [SerializeField]
     CinemachineFreeLook cinemachineFreeLook;
+    float topRigDefaultRadius;
 
     internal float animationBlendValue = 0;
 
@@ -174,8 +175,9 @@ public class PlayerControllerNew : MonoBehaviour
                 // Remove the layer from the collide against mask
                 cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
             }
+            cinemachineFreeLook = LoadFromFile.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
+            topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
         }
-
 
     }
 
@@ -1339,13 +1341,16 @@ public class PlayerControllerNew : MonoBehaviour
     //update player jump according to builder setting 
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
-        sprintSpeed = 5;
+        //sprintSpeed = 5;
         JumpVelocity += (jumpValue - 1);
-        sprintSpeed += (playerSpeed - 1);
+        sprintSpeed = GamificationComponentData.instance.MapValue(playerSpeed,
+                Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         speedMultiplier = playerSpeed;
         jumpMultiplier = jumpValue;
         //Store default speed when player update it's speed & jump height
         GamificationComponentData.instance.buildingDetect.DefaultSpeedStore();
+
+
     }
 
     void SpecialItemPlayerPropertiesUpdate(float jumpValue, float playerSpeed)
@@ -1573,6 +1578,8 @@ public class PlayerControllerNew : MonoBehaviour
 
     void AnimationBehaviourNinjaMode()
     {
+        if (!_IsGrounded || animator.GetBool("IsFalling")) return;
+
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.E))
             attackwithSword = true;
@@ -1758,7 +1765,8 @@ public class PlayerControllerNew : MonoBehaviour
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
-        sprintSpeed = originalSprintSpeed + (speedMultiplier - 1);
+        sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
+                Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
         isMovementAllowed = true;
     }
@@ -1797,6 +1805,8 @@ public class PlayerControllerNew : MonoBehaviour
         isThrowModeActive = true;
         if (throwMainCo == null)
             throwMainCo = StartCoroutine(Throw());
+        cinemachineFreeLook.m_Orbits[0].m_Radius = 0.55f;
+
     }
     Vector3 tempRotation, tempPostion;
     public float timeToStartAimLineRenderer, timeToStopAimLineRenderer;
@@ -1943,6 +1953,7 @@ public class PlayerControllerNew : MonoBehaviour
         isThrowModeActive = false;
         isBallThrow = false;
         BuilderEventManager.OnThrowThingsComponentDisable?.Invoke();
+        cinemachineFreeLook.m_Orbits[0].m_Radius = topRigDefaultRadius;
     }
 
     bool throwBallPositionSet, throwBall;
