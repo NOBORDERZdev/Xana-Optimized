@@ -8,7 +8,7 @@ using static StoreManager;
 
 public class FriendHomeManager : MonoBehaviour
 {
-    public Transform FriendAvatarPrefab, maleFriendAvatarPrefab, femaleFriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
+    public Transform maleFriendAvatarPrefab, femaleFriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;

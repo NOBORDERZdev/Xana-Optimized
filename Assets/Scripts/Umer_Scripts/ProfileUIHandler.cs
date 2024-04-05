@@ -65,25 +65,24 @@ public class ProfileUIHandler : MonoBehaviour
         GameManager.Instance.defaultSelection = 10;
         SetCameraRenderTexture();
 
-        //if ((GameManager.Instance.avatarGender==AvatarGender.Male && !maleAvatarRef) ||
-        //    (GameManager.Instance.avatarGender == AvatarGender.Female && !femaleAvatarRef))
-        //{
-        //    InstantiateUserPreviewAvatar(GameManager.Instance.avatarGender);
-        //}
-        
-        //else
-        //{
-        //    if (GameManager.Instance.avatarGender==AvatarGender.Male)
-        //    {
-        //        maleAvatarRef.SetActive(true);
-        //        avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
-        //    }
-        //    else
-        //    {
-        //        femaleAvatarRef.SetActive(true);
-        //        avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
-        //    }
-        //}
+        if ((CharacterHandler.instance.activePlayerGender == AvatarGender.Male && !maleAvatarRef) ||
+            (CharacterHandler.instance.activePlayerGender == AvatarGender.Female && !femaleAvatarRef))
+        {
+            InstantiateUserPreviewAvatar(CharacterHandler.instance.activePlayerGender);
+        }
+        else
+        {
+            if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+            {
+                maleAvatarRef.SetActive(true);
+                avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
+            }
+            else
+            {
+                femaleAvatarRef.SetActive(true);
+                avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
+            }
+        }
     }
 
     private void OnDisable()

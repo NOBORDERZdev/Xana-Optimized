@@ -19,7 +19,6 @@ public class Actor : MonoBehaviour
     public Transform NameTagHolderObj;
     bool _startCoroutineFLag = false;
     public AnimatorOverrideController overrideController;
-    public AnimatorOverrideController _animatorController;
     bool _lastAction = false;
     [SerializeField] bool isPlayer;
     private void OnEnable()

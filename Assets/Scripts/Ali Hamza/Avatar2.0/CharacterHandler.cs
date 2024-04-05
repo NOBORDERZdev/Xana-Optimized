@@ -67,7 +67,20 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    
+
+    private void UpdateNameAndPostTarget(GameObject activePlayer)
+    {
+        playerNameCanvas.GetComponent<FollowUser>().targ = activePlayer.transform;
+        playerNameCanvas.GetComponent<FollowUser>().newplayerTransform = activePlayer.transform;
+
+        playerPostCanvas.GetComponent<LookAtCamera>()._playerTransform = activePlayer.transform;
+        playerPostCanvas.GetComponent<LookAtCamera>().newplayerTransform = activePlayer.transform;
+
+        if (!playerNameCanvas.activeInHierarchy)
+            playerNameCanvas.SetActive(true);
+        if (!playerPostCanvas.activeInHierarchy)
+            playerPostCanvas.SetActive(true);
+    }
 
     public AvatarData GetActiveAvatarData()
     {
@@ -81,27 +94,6 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    private void UpdateNameAndPostTarget(GameObject activePlayer)
-    {
-        playerNameCanvas.GetComponent<FollowUser>().targ= activePlayer.transform;
-        playerNameCanvas.GetComponent<FollowUser>().newplayerTransform= activePlayer.transform;
-
-        playerPostCanvas.GetComponent<LookAtCamera>()._playerTransform = activePlayer.transform;
-        playerPostCanvas.GetComponent<LookAtCamera>().newplayerTransform = activePlayer.transform;
-
-        if (!playerNameCanvas.activeInHierarchy)
-            playerNameCanvas.SetActive(true);
-        if (!playerPostCanvas.activeInHierarchy)
-            playerPostCanvas.SetActive(true);
-    }
-
-    public void RemoveUnnecessaryComponentsForUGC(GameObject _character)
-    {
-        Destroy(_character.GetComponent<CharacterOnScreenNameHandler>());
-        Destroy(_character.GetComponent<Actor>());
-        Destroy(_character.GetComponent<FaceIK>());
-        Destroy(_character.GetComponent<FootStaticIK>());
-    }
 
     [Serializable]
     public class AvatarData
