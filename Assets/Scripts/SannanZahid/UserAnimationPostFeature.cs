@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -14,11 +15,14 @@ public class UserAnimationPostFeature : MonoBehaviour
     public string _moodstr;
     ActorBehaviour.Category _selectedCategory;
     public Button postButton;
+    [HideInInspector]
+    public TextMeshProUGUI postButtonText;
     void Start()
     {
         _selectedCategory = ActorBehaviour.Category.Fun;
         InstantiateMoodTab();
        StartCoroutine( BuildMoodDialog());
+        postButtonText=postButton.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
     }
     string PrepareApiURL()
     {
@@ -126,6 +130,7 @@ public class UserAnimationPostFeature : MonoBehaviour
         if(!postButton.interactable)
         {
             postButton.interactable = true;
+            postButtonText.color= Color.white;
         }
     }
 

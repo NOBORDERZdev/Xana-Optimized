@@ -75,6 +75,7 @@ public class UIManager : MonoBehaviour
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
             GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
             GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
+            GameManager.Instance.userAnimationPostFeature.postButtonText.color = Color.black;
         }
     }
     public void ResetPlayerToLastPostPosted()
