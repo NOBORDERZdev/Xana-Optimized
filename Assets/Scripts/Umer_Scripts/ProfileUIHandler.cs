@@ -145,23 +145,19 @@ public class ProfileUIHandler : MonoBehaviour
         _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
         lightingObj = ref_FriendHomeManager.profileLightingObj;
         menuLightingObj = ref_FriendHomeManager.menuLightObj;
-        //GameObject avatarPrefab;
         if (gender == AvatarGender.Male)
         {
-           // avatarPrefab = ref_FriendHomeManager.maleFriendAvatarPrefab.gameObject;
             maleAvatarRef = Instantiate(ref_FriendHomeManager.maleFriendAvatarPrefab.gameObject);
             avatarRef = maleAvatarRef;
             avatarRef.name = "MaleUserPreviewAvatar_Parent";
         }
         else
         {
-            //avatarPrefab = ref_FriendHomeManager.femaleFriendAvatarPrefab.gameObject;
             femaleAvatarRef = Instantiate(ref_FriendHomeManager.femaleFriendAvatarPrefab.gameObject);
             avatarRef = femaleAvatarRef;
             avatarRef.name = "FemaleUserPreviewAvatar_Parent";
         }
 
-        //AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
         avatarRef.GetComponent<FootStaticIK>().ikActive = true;
         avatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
         avatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
@@ -171,10 +167,7 @@ public class ProfileUIHandler : MonoBehaviour
 
         avatarRef.gameObject.SetActive(true);
 
-        GameObject temp = Instantiate(avatarBgObject, avatarRef.transform);
-        //Destroy(AvatarRef.GetComponent<AvatarController>());
-        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
-        //SetUserAvatarClothing();
+        Instantiate(avatarBgObject, avatarRef.transform);
     }
 
 
@@ -214,23 +207,7 @@ public class ProfileUIHandler : MonoBehaviour
     public void SetUserAvatarDefaultClothing()
     {
         ActivateProfileAvatarByGender(Random.Range(0f, 2f) <= 1f ? "Male" : "Female");
-        int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);
-        //if (GameManager.Instance.avatarGender == AvatarGender.Male)
-        //{
-        //    if (maleAvatarRef)
-        //        maleAvatarRef.SetActive(true);
-        //    if (femaleAvatarRef)
-        //        femaleAvatarRef.SetActive(false);
-        //    avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
-        //}
-        //else
-        //{
-        //    if (maleAvatarRef)
-        //        maleAvatarRef.SetActive(false);
-        //    if (femaleAvatarRef)
-        //        femaleAvatarRef.SetActive(true);
-        //    avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
-        //}
+        int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);   
         avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
     }
 

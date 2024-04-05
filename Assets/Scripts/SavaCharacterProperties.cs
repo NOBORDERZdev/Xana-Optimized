@@ -27,9 +27,6 @@ public class SavaCharacterProperties : MonoBehaviour
     public void Start()
     {
         StartLocal();
-        //charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
-        //characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-        //StartLocal();
 
         SaveItemList.faceMorphed = false;
         SaveItemList.eyeBrowMorphed = false;
@@ -211,7 +208,6 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
-        //SaveItemList.gender = characterController.avatarGender.ToString();
         SaveItemList.gender = CharacterHandler.instance.activePlayerGender.ToString();
 
         SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
@@ -370,11 +366,6 @@ public class SavaCharacterProperties : MonoBehaviour
                 }
             }
         }
-        //else // If File Not Exists
-        //{
-        //    CharacterHandler.instance.ActivateAvatarByGender("Male");   // Activate Avatar for assign dummy refrences
-        //    CharacterHandler.instance.GetActiveAvatarData().avatar_parent.SetActive(false);
-        //}
     }
     #endregion
 }

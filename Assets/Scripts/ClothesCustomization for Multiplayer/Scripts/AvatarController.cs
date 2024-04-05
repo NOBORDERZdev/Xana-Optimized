@@ -27,7 +27,6 @@ public class AvatarController : MonoBehaviour
     public string staticClothJson;
     public string clothJson;
     public string presetValue;
-    //public AvatarGender avatarGender;
     public GameObject wornHair, wornPant, wornShirt, wornShoes, wornEyeWearable, wornGloves, wornChain;
     public GameObject[] wornEyebrow;
     public NFTColorCodes _nftAvatarColorCodes;
@@ -1387,8 +1386,6 @@ public class AvatarController : MonoBehaviour
                 default:
                     break;
             }
-            //bodyParts.maleAvatarMeshes.avatar_parent.SetActive(true);
-            //bodyParts.femaleAvatarMeshes.avatar_parent.SetActive(false);
         }
         else if (gender == "Female") // if avatar is female
         {
@@ -1413,8 +1410,6 @@ public class AvatarController : MonoBehaviour
                 default:
                     break;
             }
-            //bodyParts.maleAvatarMeshes.avatar_parent.SetActive(false);
-            //bodyParts.femaleAvatarMeshes.avatar_parent.SetActive(true);
         }
         else
         {
@@ -1436,7 +1431,6 @@ public class AvatarController : MonoBehaviour
                     break;
             }
         }
-        //GameManager.Instance.ActivateAvatarByGender(gender);
     }
 
     /// <summary>

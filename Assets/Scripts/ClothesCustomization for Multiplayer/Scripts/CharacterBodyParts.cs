@@ -1652,17 +1652,9 @@ public class CharacterBodyParts : MonoBehaviour
                 break;
             case CurrentTextureType.Skin:
                 applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(CharacterHandler.instance.GetActiveAvatarData().DSkin_Texture, applyOn);
-                //if (avatarController.avatarGender == AvatarGender.Male)
-                //    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
-                //else
-                //    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
                 break;
             case CurrentTextureType.Face:
                 applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(CharacterHandler.instance.GetActiveAvatarData().DFace_Texture, applyOn);
-                //if (avatarController.avatarGender == AvatarGender.Male)
-                //    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
-                //else
-                //    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharacterBodyParts>().RemoveEyeLidTexture(null, applyOn);
