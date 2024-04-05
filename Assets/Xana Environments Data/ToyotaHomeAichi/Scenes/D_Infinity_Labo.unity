@@ -19197,6 +19197,52 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 15.712255, y: 1.0446882, z: 49.033424}
   m_Center: {x: 0.34635115, y: -0.19739914, z: -14.595055}
+--- !u!1 &1291774112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1291774113}
+  - component: {fileID: 1291774114}
+  m_Layer: 0
+  m_Name: StayTimeTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1291774113
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291774112}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1963513464}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1291774114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1291774112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cd581ca65668c842966576998006b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldName: 
+  forXanaDefaultAnalytics: 0
 --- !u!1 &1292259537
 GameObject:
   m_ObjectHideFlags: 0
@@ -27856,6 +27902,7 @@ Transform:
   - {fileID: 2122820455}
   - {fileID: 604343889}
   - {fileID: 1191278466}
+  - {fileID: 1291774113}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
