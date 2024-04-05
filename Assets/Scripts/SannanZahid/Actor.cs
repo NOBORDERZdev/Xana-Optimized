@@ -1,6 +1,7 @@
 using Photon.Voice;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
@@ -50,10 +51,10 @@ public class Actor : MonoBehaviour
     {
         _playerMoves.Clear();
     }
-    IEnumerator StartBehaviour()
+    public IEnumerator StartBehaviour()
     {
         while(ActionClipTime.Equals( 0f))
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(StartActorBehaviour());
     }
@@ -120,7 +121,7 @@ public class Actor : MonoBehaviour
         //StartCoroutine(StartActorBehaviour());
 
     }
-    IEnumerator StartActorBehaviour()
+    public IEnumerator StartActorBehaviour()
     {
         CheckedInLoop:
         yield return new WaitForSeconds(Time.deltaTime);

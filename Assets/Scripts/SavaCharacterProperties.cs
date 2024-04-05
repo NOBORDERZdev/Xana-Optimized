@@ -16,7 +16,7 @@ public class SavaCharacterProperties : MonoBehaviour
 
 
     //private Equipment equipment;
-    private CharacterBodyParts charcterBodyParts;
+    public CharacterBodyParts charcterBodyParts;
     public AvatarController characterController;
 
     private void Awake()
@@ -26,8 +26,6 @@ public class SavaCharacterProperties : MonoBehaviour
     }
     public void Start()
     {
-        charcterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
-        characterController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         StartLocal();
 
         SaveItemList.faceMorphed = false;
@@ -210,7 +208,7 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
         SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
         SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
-        SaveItemList.gender = characterController.avatarGender.ToString();
+        SaveItemList.gender = CharacterHandler.instance.activePlayerGender.ToString();
 
         SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
         SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
@@ -332,15 +330,19 @@ public class SavaCharacterProperties : MonoBehaviour
     #region Local
     public void StartLocal()
     {
-        SaveItemList.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
+        if(GameManager.Instance.m_ChHead)
+            SaveItemList.FaceBlendsShapes = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
 
+            CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);   // Activate Avatar
+
             SaveItemList.myItemObj = _CharacterData.myItemObj;
             SaveItemList.BodyFat = _CharacterData.BodyFat;
             SaveItemList.FaceBlendsShapes = _CharacterData.FaceBlendsShapes;
+            SaveItemList.gender = _CharacterData.gender;
 
             float[] blendValues = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
             for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
