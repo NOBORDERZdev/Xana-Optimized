@@ -14,11 +14,11 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
   
     [Header("Web3Auth Project settings")]
     private string redirectURI = "web3auth://com.nbi.xana/auth";
-    private string ClientId;
+    private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
     private string loginVerifier;
-    private string loginSubVerifier;
-    private string passwordLessClientId;
+    private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
     private Web3Auth.Network network;
+    private string domains, domainsLine;
 
     [Header("Refs")]
     [SerializeField] Web3Auth web3Auth;
@@ -31,41 +31,75 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     bool isNewReg;
     internal string publicAdress;
     internal string msg1 ,msg2;
-    
+
 
     private void Start()
-    {  
-        //For Testnet
-        ClientId = "BMwTnf6I4qw7qwOWP1J1BsgHKEZDGG0peo-DpCMBmurc1RUSY16Ag8LdC4on55hLiStTQxm0FJ2wOuIZU2m9gr0";
-        network = Web3Auth.Network.TESTNET;
-       
-      
+    {
+        if (APIBaseUrlChange.instance.IsXanaLive) {
+            //For Mainnet
+            ClientId = "BPnWnv68o43X4uLNUNrBEWgu6GgletwK5bOU4SLpHFrKrkATivj36lOX3B1DE7u3qeFTksKqK30arrFLYAzAgGY";
+            network = Web3Auth.Network.SAPPHIRE_MAINNET;
+            loginVerifier = "social-aggregate-verifier";
+            //...verifierSubIdentifier for testnet
+            loginSubVerifierEmail = "ppp-passwordless-login";
+            loginSubVerifierGoole = "ppp-google-login";
+            loginSubVerifierApple = "ppp-apple-login";
+            loginSubVerifierLine = "ppp-line-login";
+            //...
+            clientIdEmail = "fr46GR3TzfOJFNvgEcIcQKLtLi48cm3c";
+            clientIdGoole = "1041808867611-576ma9t6bva7b94irmvbt88n02tvoujn.apps.googleusercontent.com";
+            clientIdApple = "bJgmFBdg8eSa2gAzh1yv3ABinO9NIq1z";
+            clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
+            //...
+            domains = "https://dev-i7bsu7bon4og1n64.us.auth0.com";
+            domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+        }
+        else {
+            //For Testnet
+            ClientId = "BMwTnf6I4qw7qwOWP1J1BsgHKEZDGG0peo-DpCMBmurc1RUSY16Ag8LdC4on55hLiStTQxm0FJ2wOuIZU2m9gr0";
+            network = Web3Auth.Network.TESTNET;
+            loginVerifier = "ppp-social-login-2";
+            //...verifierSubIdentifier for testnet
+            loginSubVerifierEmail = "ppp-passwordless-login";
+            loginSubVerifierGoole= "ppp-google-login";
+            loginSubVerifierApple = "ppp-apple-login";
+            loginSubVerifierLine = "ppp-line-login";
+            //...
+            clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
+            clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
+            clientIdApple = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0";
+            clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
+            //...
+            domains = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+            domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+        }
+
         var EmailPasswordlessConfigItem = new LoginConfigItem()
         {
-            verifier = "ppp-social-login-2",
-            verifierSubIdentifier = "ppp-passwordless-login",
-            clientId = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu",
+            verifier = loginVerifier,
+            verifierSubIdentifier = loginSubVerifierEmail,
+            clientId = clientIdEmail,
             typeOfLogin = TypeOfLogin.JWT,
         };
         var GoogleConfig = new LoginConfigItem()
         {
-            verifier = "ppp-social-login-2",
-            verifierSubIdentifier = "ppp-google-login",
-            clientId = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com",
+            verifier = loginVerifier,
+            verifierSubIdentifier = loginSubVerifierGoole,
+            clientId = clientIdGoole,
             typeOfLogin = TypeOfLogin.GOOGLE,
         };
         var AppleConfigItem = new LoginConfigItem()
         {
-            verifier = "ppp-social-login-2",
-            verifierSubIdentifier = "ppp-apple-login",
-            clientId = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0",
+            verifier = loginVerifier,
+            verifierSubIdentifier = loginSubVerifierApple,
+            clientId = clientIdApple,
             typeOfLogin = TypeOfLogin.APPLE,
         };
         var LineConfigItem = new LoginConfigItem()
         {
-            verifier = "ppp-social-login-2",
-            verifierSubIdentifier = "ppp-line-login",
-            clientId = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP",
+            verifier = loginVerifier,
+            verifierSubIdentifier = loginSubVerifierLine,
+            clientId = clientIdLine,
             typeOfLogin = TypeOfLogin.LINE,
         };
 
@@ -97,7 +131,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginProvider = selectedProvider,
             extraLoginOptions = new ExtraLoginOptions()
             {
-                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
+                domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
                 prompt = Prompt.LOGIN,
@@ -132,7 +166,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginProvider = selectedProvider,
             extraLoginOptions = new ExtraLoginOptions()
             {
-                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
+                domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
                 connection = "apple",
@@ -153,7 +187,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginProvider = selectedProvider,
             extraLoginOptions = new ExtraLoginOptions()
             {
-                domain = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com",
+                domain = domainsLine,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
                 connection = "line",
