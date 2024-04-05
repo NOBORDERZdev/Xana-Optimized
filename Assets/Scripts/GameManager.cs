@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public bool BottomAvatarButtonBool;
     public bool OnceGuestBool;
     public bool OnceLoginBool;
+    public bool isTabSwitched = false;
     [Header("Camera Work")]
     public GameObject faceMorphCam;
     public GameObject headCam;
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     public HomeCameraController HomeCamera;
     public UIManager UiManager;
     public BottomTabManager bottomTabManagerInstance;
+    public WorldManager SpaceWorldManagerRef;
     internal string selectedPresetData="";
     private void Awake()
     {

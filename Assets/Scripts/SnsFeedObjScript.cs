@@ -5,19 +5,19 @@ using UnityEngine;
 public class SnsFeedObjScript : MonoBehaviour
 {
     public GameObject sns1;
-    private AdditiveScenesManager additiveSceneManger;
+    //private AdditiveScenesManager additiveSceneManger;
 
-    public bool isTest;
-    public GameObject testingObj;
+    //public bool isTest;
+    //public GameObject testingObj;
 
     void Awake()
     {
-        if (isTest)
-        {
-            testingObj.SetActive(true);
-            sns1.SetActive(true);
-            return;
-        }
+        //if (isTest)
+        //{
+        //    testingObj.SetActive(true);
+        //    sns1.SetActive(true);
+        //    return;
+        //}
 
         //additiveSceneManger = FindObjectOfType<AdditiveScenesManager>();
         GameManager.Instance.additiveScenesManager.SNSmodule = this.sns1;

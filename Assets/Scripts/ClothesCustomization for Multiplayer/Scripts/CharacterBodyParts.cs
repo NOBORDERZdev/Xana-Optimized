@@ -109,7 +109,7 @@ public class CharacterBodyParts : MonoBehaviour
         Shoes_TextureName = "_Shoes_Mask";
         Glove_TextureName = "_Gloves_Mask";
         Skin_ColorName = "_BaseColor";
-        Hair_ColorName = "_Color";
+        Hair_ColorName = "_BaseColor";
         Lip_ColorName = "_Lips_Color";
         Eyebrow_ColorName = "_BaseColor";
         Eye_ColorName = "_Mask_Color";

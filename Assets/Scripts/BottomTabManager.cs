@@ -62,6 +62,7 @@ public class BottomTabManager : MonoBehaviour
         if (XanaConstants.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstants.xanaConstants.isFromXanaLobby)
         {
             XanaConstants.xanaConstants.CurrentSceneName = "";
+            GameManager.Instance.defaultSelection = 10;
             Invoke(nameof(OnClickHomeWorldButton), 5);
         }
     }
@@ -288,7 +289,7 @@ public class BottomTabManager : MonoBehaviour
             }
            
             WorldManager.LoadHomeScreenWorlds?.Invoke();
-            FlexibleRect.OnAdjustSize?.Invoke(false);
+            //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);
             //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
@@ -377,14 +378,14 @@ public class BottomTabManager : MonoBehaviour
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
-                if (MessageController.Instance != null)
-                {
-                    MessageController.Instance.isChatDetailsScreenDeactive = true;
-                }
+                //if (MessageController.Instance != null)
+                //{
+                //    MessageController.Instance.isChatDetailsScreenDeactive = true;
+                //}
                // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
-                MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
+                //MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
             }
             else
             {
@@ -633,8 +634,8 @@ public class BottomTabManager : MonoBehaviour
     {
         if (FeedUIController.Instance != null)
         {
-            SNSSettingController.Instance.settingScreen.SetActive(false);
-            SNSSettingController.Instance.myAccountScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.settingScreen.SetActive(false);
+            FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
         }
     }   
 
@@ -725,13 +726,11 @@ public class BottomTabManager : MonoBehaviour
             {
                 MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
-            ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(true);
-            ProfileUIHandler.instance.SetMainScrolRefs();
-            ProfileUIHandler.instance.SetUserAvatarClothing(GameManager.Instance.avatarController._PCharacterData);
-            //ProfileUIHandler.instance.SetUserAvatarClothing(ProfileUIHandler.instance.AvatarRef.GetComponent<AvatarController>()._PCharacterData);
+            ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
+            ProfileUIHandler.instance.SetMainScrollRefs();
+            ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
             ProfileUIHandler.instance.editProfileBtn.SetActive(true);
             ProfileUIHandler.instance.followProfileBtn.SetActive(false);
-
             DisableSubScreen();
         }
 

@@ -79,27 +79,27 @@ public class CommonAPIManager : MonoBehaviour
     {
         print("Listen");
         //Manager.Socket.On<string>("FeedComment", FeedCommentResponse);
-        Manager.Socket.On<string>("MessageReceived", MessageReceivedResponse);
+        //Manager.Socket.On<string>("MessageReceived", MessageReceivedResponse);
     }
 
-    public void MessageReceivedResponse(string s)
-    {
-       Debug.Log("Common Socket Handler MessageReceivedResponce.......");
-        if (MessageController.Instance != null)
-        {
-            if (MessageController.Instance.ChatScreen.activeInHierarchy)
-            {
-                return;
-            }
+    //public void MessageReceivedResponse(string s)
+    //{
+    //   Debug.Log("Common Socket Handler MessageReceivedResponce.......");
+    //    if (MessageController.Instance != null)
+    //    {
+    //        if (MessageController.Instance.ChatScreen.activeInHierarchy)
+    //        {
+    //            return;
+    //        }
 
-            if (!MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
-            {
-                MessageController.Instance.isNeedToRefreshConversationAPI = true;
-            }
-        }
-       Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");
-        RequestGetAllChatUnReadMessagesCount();//For Get All Chat UnRead Message Count.......
-    }
+    //        if (!MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
+    //        {
+    //            MessageController.Instance.isNeedToRefreshConversationAPI = true;
+    //        }
+    //    }
+    //   Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");
+    //    RequestGetAllChatUnReadMessagesCount();//For Get All Chat UnRead Message Count.......
+    //}
 
     #endregion
 
