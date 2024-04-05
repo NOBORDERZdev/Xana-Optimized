@@ -40,7 +40,8 @@ public class WorldItemPreviewTab : MonoBehaviour
     string ThumbnailDownloadURL = "";
     public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
-    public GameObject creatorPanel;
+    public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
+    public RectTransform worldImageMask, parentBodyBG;
 
     [Header("Tags and Category")]
     public GameObject tagScroller;
@@ -66,18 +67,43 @@ public class WorldItemPreviewTab : MonoBehaviour
     {
         if(isFullOpen)
         {
+            SetSeparatorLineProp(false);
+            SetParentBodyTop(parentBodyBG, -2082.26f);
+            worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 515f), 0.1f).SetEase(Ease.Linear);
             //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
-            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500), 0.1f).SetEase(Ease.Linear);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -555), 0.1f).SetEase(Ease.Linear);
             //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
             worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
         }
         else
         {
+            SetSeparatorLineProp(true);
+            SetParentBodyTop(parentBodyBG, -2067.26f);
+            worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 500f), 0.1f).SetEase(Ease.Linear);
             //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
-            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310), 0.1f).SetEase(Ease.Linear);
+            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -319), 0.1f).SetEase(Ease.Linear);
             //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
             worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
         }
+    }
+
+    public void SetSeparatorLineProp(bool _switchLine)
+    {
+            sepLineSmallView.SetActive(_switchLine);
+            sepLineLargeView.SetActive(!_switchLine);
+    }
+
+    // Function to set the top properties of a RectTransform
+    void SetParentBodyTop(RectTransform rectTransform, float top)
+    {
+        // Get the current anchored position
+        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+
+        // Set the top parameter
+        anchoredPosition.y = top;
+
+        // Assign the new anchored position
+        rectTransform.anchoredPosition = anchoredPosition;
     }
 
     public void Init(GameObject thumbnailObjRef,Sprite worldImg, string worldName, string worldDescription, string creatorName,
@@ -127,6 +153,7 @@ public class WorldItemPreviewTab : MonoBehaviour
         {
             tagScroller.SetActive(false);
         }
+        UpdateDescirptionPanelItem(false);
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
@@ -289,8 +316,14 @@ public class WorldItemPreviewTab : MonoBehaviour
             {
                 GameObject temp = Instantiate(tagsPrefab, tagsParent);
                 temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
-                temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
+                temp.GetComponent<TagPrefabInfo>().tagName.text = temp.GetComponent<TagPrefabInfo>().tagName.text.ToUpper();
+                //temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
                 temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+                if (i == 0)
+                {
+                    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
+                    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
+                }
             }
         }
         tagsInstantiated = true;
