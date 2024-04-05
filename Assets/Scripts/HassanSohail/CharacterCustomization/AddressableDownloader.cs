@@ -90,7 +90,7 @@ public class AddressableDownloader : MonoBehaviour
                 string tempName = key.Replace("gambeson", "shirt");
                 key = tempName;
             }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+            if (StoreManager.instance != null && StoreManager.instance.loaderForItems)
             {
                 StoreManager.instance.loaderForItems.SetActive(true);
             }
