@@ -14,8 +14,8 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
   
     [Header("Web3Auth Project settings")]
-    private string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
-    private string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
+    public string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
+    public string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
     private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
     private string loginVerifier;
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
