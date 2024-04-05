@@ -469,7 +469,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
+
+        InstantiatePlayerAvatar();
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -592,6 +593,18 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         //ActivateNpcChat();
     }
 
+    void InstantiatePlayerAvatar()
+    {
+        if (SavaCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+        }
+        else
+        {
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+        }
+    }
+
     void ActivateNpcChat()
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
@@ -639,7 +652,9 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("XanaAvatar2.0", spawnPoint, Quaternion.identity, 0);
+
+        InstantiatePlayerAvatar();
+
         if (XanaConstants.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;
