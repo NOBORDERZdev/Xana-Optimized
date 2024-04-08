@@ -388,6 +388,8 @@ public class WorldItemView : EnhancedScrollerCellView
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
+        else if (m_EnvironmentName == "D +  Infinity Labo")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail.ToString());
 
         XanaConstants.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);

@@ -83,9 +83,8 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                     MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
-            Debug.Log("Debug added here as getting stuck on mobile and loader not getting turned off");
             LoadDataInPool();
-            Debug.Log("Debug added here as getting stuck on mobile and loader not getting turned off");
+            Debug.Log("Added log message here in order to get loader turned off as without it loader wont get turned off");//UMER
             paginationLoaderRef.ShowApiLoader(false);
         }
         else
@@ -129,6 +128,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         // tell the scroller to reload now that we have the data
         masterScroller.ReloadData();
         masterScroller.ScrollPosition = scrollPosition;
+
         _loadingNew = false;
     }
 
@@ -165,7 +165,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     /// </summary>
     /// <param name="scroller">The scroller requesting the cell</param>
     /// <param name="dataIndex">The index of the data that the scroller is requesting</param>
-    /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is looping</param>
+    /// <param name="cellIndex">The index of the list. This will likely be different from the dataIndex if the scroller is 4ing</param>
     /// <returns>The cell for the scroller to use</returns>
     public EnhancedScrollerCellView GetCellView(EnhancedScroller scroller, int dataIndex, int cellIndex)
     {
