@@ -12,6 +12,8 @@ public class FriendHomeManager : MonoBehaviour
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
+    [SerializeField]
+    OnlineFriends _onlineFriendsDataFetched;
     public bool SpawnFriendsAgain;
     public List<FriendSpawnData> SpawnFriendsObj = new List<FriendSpawnData>();
 
@@ -31,7 +33,29 @@ public class FriendHomeManager : MonoBehaviour
 
         MainSceneEventHandler.OnSucessFullLogin -= SpawnFriends;
     }
+    public void GetOnlineFriends()
+    {
+        print("online api called...");
+        StartCoroutine(IEGetOnlineFriends());
+    }
+    IEnumerator IEGetOnlineFriends()
+    {
+        string apiURL = ConstantsGod.API_BASEURL + ConstantsGod.r_url_OnlineFriends;
+        using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return www.SendWebRequest();
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.result);
+            }
+            else
+            {
+                _onlineFriendsDataFetched = JsonUtility.FromJson<OnlineFriends>(www.downloadHandler.text);
 
+            }
+        }
+    }
     public void SpawnFriends()
     {
         if(SpawnFriendsAgain)
@@ -40,6 +64,7 @@ public class FriendHomeManager : MonoBehaviour
             SpawnFriendsAgain = false;
             StartCoroutine(BuildMoodDialog());
         }
+        GetOnlineFriends();
     }
     string PrepareApiURL()
     {
@@ -96,17 +121,20 @@ public class FriendHomeManager : MonoBehaviour
         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
         CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
         CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
+        CreatedNameTag.GetComponent<CheckOnlineFriend>().friendId = friend.id;
         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
         CreatedFriend.gameObject.SetActive(true);
         CreatedFriend.GetComponent<Actor>().Init(GameManager.Instance.ActorManager.actorBehaviour[GetPostRandomDefaultAnim()]);
         if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
         {
             CreatedFriend.GetComponent<AvatarController>().InitializeFrndAvatar(friend.userOccupiedAssets[0].json,CreatedFriend.gameObject);
+            CreatedNameTag.GetComponent<CheckOnlineFriend>().json = friend.userOccupiedAssets[0].json;
         }
         else
         {
             int _rand = UnityEngine.Random.Range(0, CreatedFriend.GetComponent<CharacterBodyParts>().randomPresetData.Length);
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
+            CreatedNameTag.GetComponent<CheckOnlineFriend>().randomPreset = _rand;
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
@@ -282,4 +310,26 @@ public class FriendSpawnData
     public Transform friendNameObj;
     public Transform friendPostBubbleObj;
 
+}
+[Serializable]
+public class OnlineFriends
+{
+    public bool success;
+    public OnlineriendsData data;
+    public string msg;
+}
+[Serializable]
+public class OnlineriendsData
+{
+    public int id;
+    public int userId;
+    public bool isOnline;
+    public OnlineFriendsUser user;
+}
+[Serializable]
+public class OnlineFriendsUser
+{
+    public int id;
+    public string name;
+    public string avatar;
 }

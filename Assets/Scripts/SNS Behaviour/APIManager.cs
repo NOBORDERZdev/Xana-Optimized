@@ -1,5 +1,6 @@
 ﻿using AdvancedInputFieldPlugin;
 using Newtonsoft.Json;
+using Photon.Pun.UtilityScripts;
 using SimpleJSON;
 using System;
 using System.Collections;
@@ -497,7 +498,14 @@ public class APIManager : MonoBehaviour
             _feedUserData.SetupFeedUserProfile(result);
         }));
     }
-
+    public void GetHomeFriendProfileData<T>(int _userid, T obj) where T : class
+    {
+        StartCoroutine(IERequestFeedUserProfileData(_userid, result =>
+        {
+            CheckOnlineFriend checkOnlineFriend = obj as CheckOnlineFriend;
+            checkOnlineFriend.SetupHomeFriendProfile(result);
+        }));
+    }
     IEnumerator IERequestFeedUserProfileData(int _userid, Action<SearchUserRow> result)
     {
         WWWForm form = new WWWForm();
@@ -555,6 +563,11 @@ public class APIManager : MonoBehaviour
                      }else if (obj is FeedData)
                      {
                          FeedData _followingObj = obj as FeedData;
+                         _followingObj.DressUpUserAvatar();
+                     }
+                     else if(obj is CheckOnlineFriend)
+                     {
+                         CheckOnlineFriend _followingObj = obj as CheckOnlineFriend;
                          _followingObj.DressUpUserAvatar();
                      }
                  }

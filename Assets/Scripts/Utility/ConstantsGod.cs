@@ -149,6 +149,7 @@ public class ConstantsGod
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
+    public static string r_url_OnlineFriends = "/social/follow/get-user-online-friends";
 
     public static string r_url_AllFeed = "/feeds";
     public static string r_url_CommentFeed = "/feeds/comment-feed";

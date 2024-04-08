@@ -738,7 +738,58 @@ public class BottomTabManager : MonoBehaviour
         WorldManager.instance.ClearHomePageData();
         gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
     }
+    public void InitProfileData()
+    {
+        gameManager.HomeCameraInputHandler(false);
+        if (FeedUIController.Instance)
+        {
+            FeedUIController.Instance.feedUiScreen.SetActive(false);
+        }
 
+        if (ProfileUIHandler.instance)
+        {
+            // Reset Scroller position 
+            Transform contantObj = ProfileUIHandler.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
+            Vector2 tempPos = contantObj.position;
+            tempPos.y = 0f;
+            contantObj.position = tempPos;
+        }
+        gameManager.defaultSelection = 4;
+        //GlobalVeriableClass.callingScreen = "Profile";
+        gameManager.ActorManager._cinemaCam.SetActive(true);
+
+        if (additiveScenesManager != null)
+        {
+            additiveScenesManager.SNSmodule.SetActive(true);
+            // additiveScenesManager.SNSMessage.SetActive(false);
+            gameManager.defaultSelection = 4;
+            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+        }
+        else
+        {
+            if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
+            {
+                Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
+            }
+        }
+
+        if (gameManager.UiManager.Canvas.activeSelf)
+        {
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0; // hiding home footer
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
+            gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            gameManager.UiManager.Canvas.SetActive(false);
+
+            gameManager.UiManager.HomeWorldScreen.SetActive(false);
+            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+            FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            Invoke("ClearUnloadAssetData", 0.2f);
+        }
+
+        DisableSubScreen();
+    }
     public void ShopButtonClicked()
     {
         if (additiveScenesManager != null)
