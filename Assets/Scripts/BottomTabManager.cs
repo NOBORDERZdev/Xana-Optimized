@@ -26,9 +26,11 @@ public class BottomTabManager : MonoBehaviour
     public TextMeshProUGUI chatMessageUnReadCountText;
     AdditiveScenesManager additiveScenesManager;
     GameManager gameManager;
+    SocketController socketController;
     private void Awake()
     {
         gameManager = GameManager.Instance;
+        socketController = SocketController.instance;
         if (gameManager.defaultSelection == 3)
         {
             if (GlobalVeriableClass.callingScreen == "Profile")
@@ -48,9 +50,6 @@ public class BottomTabManager : MonoBehaviour
         {
             gameManager.defaultSelection = 0;
         }
-        //---->>>Sannan  OnSelectedClick(gameManager.defaultSelection);
-
-
         if (gameManager.UiManager != null && gameManager.defaultSelection == 0)
         {
             CheckLoginOrNotForFooterButton();
@@ -201,6 +200,7 @@ public class BottomTabManager : MonoBehaviour
     {
         if (!(GlobalVeriableClass.callingScreen == "Home"))
         {
+            socketController.DisscountSNSSockets();
             GlobalVeriableClass.callingScreen = "Home";
             if (/*gameManager.defaultSelection != 0*/ true)
             {
@@ -255,6 +255,8 @@ public class BottomTabManager : MonoBehaviour
         Debug.Log("Home button onclick");
         if (gameManager.defaultSelection != 1)
         {
+            socketController.DisscountSNSSockets();
+
             gameManager.ActorManager._cinemaCam.SetActive(false);
             gameManager.defaultSelection = 1;
             //  gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
@@ -458,6 +460,7 @@ public class BottomTabManager : MonoBehaviour
 
         if (gameManager.defaultSelection != 3)
         {
+            socketController.DisscountSNSSockets();
             gameManager.ActorManager._cinemaCam.SetActive(false);
             // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             // LoaderShow(true);
@@ -551,6 +554,8 @@ public class BottomTabManager : MonoBehaviour
         gameManager.ActorManager._cinemaCam.SetActive(false);
         if (gameManager.defaultSelection != 5)
         {
+            socketController.DisscountSNSSockets();
+
             gameManager.defaultSelection = 5;
             GlobalVeriableClass.callingScreen = "Feed";
 
@@ -655,6 +660,8 @@ public class BottomTabManager : MonoBehaviour
             //---->>>Sannan OnSelectedClick(4);
             if (GlobalVeriableClass.callingScreen == "Profile")
                 return;
+
+
             if (FeedUIController.Instance)
             {
                 FeedUIController.Instance.feedUiScreen.SetActive(false);

@@ -111,6 +111,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     ProfileUIHandler profileUIHandler;
     public List<int> loadedMyPostAndVideoId = new List<int>();
     [SerializeField] FeedUIController  feedUIController;
+    SocketController socketController;
     private void Awake()
     {
         if (Instance == null)
@@ -126,6 +127,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             feedUIController = FeedUIController.Instance;
         }
+        socketController = SocketController.instance;
         profileUIHandler = ProfileUIHandler.instance;
         ClearDummyData();//clear dummy data.......
         RefreshUserData();
@@ -768,6 +770,12 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //Riken
             LoadUserData(true);
+            if (socketController == null)
+            {
+                socketController = SocketController.instance;
+            }
+            socketController.ConnectSNSSockets(userId);
+
         }
     }
 

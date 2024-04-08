@@ -2,12 +2,9 @@ using System;
 using UnityEngine;
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
-using static UserPostFeature;
 using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
-using SimpleJSON;
-using static RestAPI;
 
 public class SocketController : MonoBehaviour
 {
@@ -19,6 +16,7 @@ public class SocketController : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
+    bool isSnsSocketConnnected = false;
     private void Awake()
     {
         instance = this;
@@ -49,7 +47,6 @@ public class SocketController : MonoBehaviour
         Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
         //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
         Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
-
     }
     void ReceivePost(string msg)
     {
@@ -121,8 +118,56 @@ public class SocketController : MonoBehaviour
         }
     }
 
-    
+    /// <summary>
+    /// To connect SNS Sockets
+    /// </summary>
+    /// <param name="userId"></param>
+    public void ConnectSNSSockets(int userId) {
+        DisscountSNSSockets();
+        Manager.Socket.On<userInfoUpdate>("user-updated", SnSUpate);
+        Manager.Socket.On<userFollowerFollowing>("user-follow", UpdateFollowerFollowing);
+        Manager.Socket.On<string>("send_new_cloth_info", AvatarUpdate);
+        isSnsSocketConnnected = true;
 
+    }
+
+
+    /// <summary>
+    /// Call on SNS info Update
+    /// </summary>
+    /// <param name="response"></param>
+    void SnSUpate(userInfoUpdate response) { 
+    
+    }
+
+    /// <summary>
+    /// Call on update Follower and Following Count
+    /// </summary>
+    /// <param name="response"></param>
+    void UpdateFollowerFollowing(userFollowerFollowing response)
+    {
+
+    }
+
+    /// <summary>
+    /// Call when Avatar assets update like shirt, pent etc
+    /// </summary>
+    /// <param name="response"></param>
+    void AvatarUpdate(string response) { 
+    
+    }
+
+    /// <summary>
+    /// To disconnect sns socket 
+    /// </summary>
+    public void DisscountSNSSockets() {
+        if (isSnsSocketConnnected && Manager != null)
+        {
+            Manager.Socket.Off("user-updated");/*<string>("likeTextPost", FeedLikeUpdate);*/
+            Manager.Socket.Off("user-follow");
+            Manager.Socket.Off("send_new_cloth_info");
+        }
+    }
 
     private void OnDisable()
     {
@@ -179,4 +224,22 @@ class ErrorData
 {
     public int code;
     public string content;
+}
+
+class userFollowerFollowing{
+    int userId;
+    int followerCount;
+    int followingCount;
+    int followerId;
+    bool isFollowing;
+}
+
+class userInfoUpdate {
+    int userId;
+    string name;
+    string avatar;
+    string[] tags;
+    string bio;
+    string username;
+
 }

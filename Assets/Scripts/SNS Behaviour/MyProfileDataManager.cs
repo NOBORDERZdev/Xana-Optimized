@@ -158,6 +158,7 @@ public class MyProfileDataManager : MonoBehaviour
     APIManager apiManager;
     ProfileUIHandler profileUIHandler;
     FeedUIController feedUIController;
+    SocketController socketController;
     private void Awake()
     {
         if (Instance == null)
@@ -188,6 +189,7 @@ public class MyProfileDataManager : MonoBehaviour
         apiManager= APIManager.Instance;
         profileUIHandler = ProfileUIHandler.instance;
         feedUIController = FeedUIController.Instance;
+        socketController = SocketController.instance;
         string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
         if (!Directory.Exists(saveDir))
         {
@@ -1594,6 +1596,12 @@ public class MyProfileDataManager : MonoBehaviour
         {
             UpdateProfilePic();
         }
+        if (socketController == null)
+        {
+            socketController = SocketController.instance;
+        }
+        socketController.ConnectSNSSockets(apiManager.userId);
+
     }
     #endregion
 
