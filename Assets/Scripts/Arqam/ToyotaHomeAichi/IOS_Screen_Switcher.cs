@@ -27,7 +27,6 @@ public class IOS_Screen_Switcher : MonoBehaviour
         m_filter.mesh = androidScreen;
 #elif UNITY_IOS
            m_filter.mesh = iosScreen;
-            m_filter.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 #endif
     }
 }
