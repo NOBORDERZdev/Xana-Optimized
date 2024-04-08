@@ -6,6 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CamerasSetting : MonoBehaviour
 {
+    public enum SceneType { Lobby, Other };
+    public SceneType sceneType;
 
     private void OnEnable()
     {
@@ -17,12 +19,17 @@ public class CamerasSetting : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= SetCamerasSetting;
     }
 
-    
+
     private void SetCamerasSetting()
     {
+        if (sceneType.Equals(SceneType.Other))
+        {
+            LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.01f;
+            return;
+        }
         // For TPC camera
         LoadFromFile.instance.PlayerCamera.m_Lens.FarClipPlane = 630;
-
+        LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.01f;
         // For selfie camera
         ArrowManager.Instance.slfieVirtualCam.m_Lens.FarClipPlane = 630;
         // For selfie shoot cameras
@@ -33,7 +40,7 @@ public class CamerasSetting : MonoBehaviour
         Camera freeFloatCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
             FreeFloatCamCharacterController.GetComponent<Camera>();
         freeFloatCam.farClipPlane = 630;
-        
+
         // For first person camera
         Camera firstPersonCam = AvatarManager.Instance.spawnPoint.GetComponent<PlayerControllerNew>().
             firstPersonCameraObj.GetComponent<Camera>();
