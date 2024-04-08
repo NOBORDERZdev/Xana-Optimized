@@ -1732,7 +1732,7 @@ public class AvatarController : MonoBehaviour
             if (wornChain)
                 wornChain.SetActive(false);
 
-            if (gameObject.GetComponent<SwitchToBoxerAvatar>())
+            if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
                 gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
         }
         else

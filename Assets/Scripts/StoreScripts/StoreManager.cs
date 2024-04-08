@@ -3399,7 +3399,7 @@ public class StoreManager : MonoBehaviour
         abc.isOccupied = useDefaultValue ? "False" : dataListOfItems[objId].isOccupied.ToString();
         abc.isPaid = useDefaultValue ? "False" : dataListOfItems[objId].isPaid.ToString();
         abc.isPurchased = useDefaultValue ? "true" : dataListOfItems[objId].isPurchased.ToString();
-        abc.name = useDefaultValue ? objName : dataListOfItems[objId].isPurchased.ToString(); ;
+        abc.name = useDefaultValue ? objName : dataListOfItems[objId].name.ToString(); ;
         abc.price = useDefaultValue ? "0" : dataListOfItems[objId].price;
         abc.categoryId = useDefaultValue ? "0" : dataListOfItems[objId].categoryId.ToString();
         abc.subCategory = useDefaultValue ? "0" : dataListOfItems[objId].subCategoryId.ToString();
