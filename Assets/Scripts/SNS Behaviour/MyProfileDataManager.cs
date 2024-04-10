@@ -680,7 +680,13 @@ public class MyProfileDataManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get(api))
         {
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+                
 
             if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
             {
@@ -920,11 +926,15 @@ public class MyProfileDataManager : MonoBehaviour
         Debug.Log("Web URL:" + url);
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_WebsiteValidation), form))
         {
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
 
             //feedUIController.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
                 EditProfileErrorMessageShow(websiteErrorObj);
@@ -933,7 +943,6 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("Website Validation success data:" + data);
                 WebSiteValidRoot webSiteValidRoot = JsonConvert.DeserializeObject<WebSiteValidRoot>(data);
                 if (webSiteValidRoot.success)
                 {
@@ -1564,9 +1573,13 @@ public class MyProfileDataManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", apiManager.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("IERequestGetUserDetails error:" + www.error);
             }

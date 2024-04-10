@@ -132,19 +132,21 @@ public class CommonAPIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                //Debug.Log("Get UnReadMessagesCount Success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color=red> Get UnReadMessagesCount Success! data:" + data +"</color>");
+                string data = www.downloadHandler.text;   
                 MessageUnreadCountRoot myDeserializedClass = JsonConvert.DeserializeObject<MessageUnreadCountRoot>(data);
-
                 SetUpBottomUnReadCount(myDeserializedClass.data);
             }
         }
@@ -154,6 +156,7 @@ public class CommonAPIManager : MonoBehaviour
     public void SetUpBottomUnReadCount(int count)
     {
         bottomTabManagers = Resources.FindObjectsOfTypeAll<BottomTabManager>();
+        Debug.LogError("finding bottom tab manager  :- ");
         for (int i = 0; i < bottomTabManagers.Length; i++)
         {
             bottomTabManagers[i].MessageUnReadCountSetUp(count);

@@ -129,9 +129,13 @@ public class ProfilePictureManager : MonoBehaviour
 
             www.SetRequestHeader("Authorization", tempToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }

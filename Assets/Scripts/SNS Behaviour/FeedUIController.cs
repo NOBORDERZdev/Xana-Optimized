@@ -807,6 +807,7 @@ public class FeedUIController : MonoBehaviour
             AddFrndRecommendedPanel.SetActive(false);
             findFriendInputFieldAdvanced.Text = "";
             findFriendScreen.SetActive(false);
+            Debug.LogError("On Click Hot Friend :- ");
             APIManager.Instance.SetHotFriend();
             UpdateAdFrndBtnStatus(0);
         }

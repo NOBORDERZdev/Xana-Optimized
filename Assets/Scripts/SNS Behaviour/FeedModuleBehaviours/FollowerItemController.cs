@@ -241,7 +241,11 @@ public class FollowerItemController : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             FeedUIController.Instance.ShowLoader(false);//false api loader
 
@@ -277,18 +281,21 @@ public class FollowerItemController : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             FeedUIController.Instance.ShowLoader(false);//false api loader
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-               Debug.Log("user unfollow success data:" + data);
                 //searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
             }

@@ -210,16 +210,18 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("GetAllFollowing Data" + data);
                 allFollowingRoot = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
             }
         }
@@ -246,9 +248,13 @@ public class APIManager : MonoBehaviour
             print("Authorization" + userAuthorizeToken);
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 if (feedUIController != null)
                 {
@@ -264,7 +270,6 @@ public class APIManager : MonoBehaviour
                 }
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("GetAllFollowing Data" + data);
                 //adFrndFollowing = JsonConvert.DeserializeObject<AllFollowingRoot>(data);
                 adFrndFollowing = JsonUtility.FromJson<AllFollowingRoot>(data);
                 apiController.SpwanAdFrndFollowing();
@@ -288,9 +293,14 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 if (feedUIController != null)
                 {
@@ -301,7 +311,6 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("Follow User data:" + data + "   :Follow User ID:" + user_Id + ":CallingFrom:" + callingFrom);
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
@@ -340,9 +349,13 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 if (feedUIController != null)
                 {
@@ -396,18 +409,21 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             //feedUIController.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("<color = red> GetAllFollowersFromProfile data:" + data + "</color>");
                 profileAllFollowerRoot = JsonUtility.FromJson<AllFollowersRoot>(data);
 
                 feedUIController.ProfileGetAllFollower(pageNum);
@@ -426,19 +442,21 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone) 
+            { 
+                yield return null;
+            }
 
             //feedUIController.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("<color = red> GetAllFollowingFromProfile data:" + data + "</color>");
-               
                 profileAllFollowingRoot = JsonUtility.FromJson<AllFollowingRoot>(data);
                 apiController.SpwanProfileFollowing();
             }
@@ -473,16 +491,19 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("Search user name data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 apiController.FeedGetAllSearchUser();
             }
@@ -507,11 +528,14 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
             {
-                Debug.Log(www.error);
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
                 string data = www.downloadHandler.text;
                 //Debug.Log("Feed user profile data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
@@ -526,7 +550,6 @@ public class APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("Feed user profile data:" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 result(searchUserRoot.data.rows[0]);
             }
@@ -588,7 +611,6 @@ public class APIManager : MonoBehaviour
             }
             else
             {
-                print("Received Avatar Json1: " + www.downloadHandler.text);
                 //// Print the elapsed time
                 //Debug.Log("User avatar data Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
                 UserLatestAvatarRoot _userAvatarData = JsonUtility.FromJson<UserLatestAvatarRoot>(www.downloadHandler.text);
@@ -632,9 +654,14 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
@@ -666,8 +693,12 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 if (feedUIController != null)
                 {
@@ -682,7 +713,6 @@ public class APIManager : MonoBehaviour
                     feedUIController.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
-                Debug.Log("~~~~~~ Hot Friends Data" + data);
                 hotUsersRoot = JsonUtility.FromJson<HotUsersRoot>(data);
                 apiController.ShowHotFirend(hotUsersRoot);
             }
@@ -705,8 +735,12 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ConnectionError)
             {
                 if (feedUIController != null)
                 {
@@ -721,7 +755,6 @@ public class APIManager : MonoBehaviour
                     feedUIController.ShowLoader(false);
                 }
                 string data = www.downloadHandler.text;
-                Debug.Log("~~~~~~ Recommended Friends Data" + data);
                 searchUserRoot = JsonUtility.FromJson<SearchUserRoot>(data);
                 apiController.ShowRecommendedFriends(searchUserRoot);
             }
@@ -744,8 +777,12 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 if (feedUIController != null)
                 {
@@ -785,15 +822,18 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Get(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("~~~~~~ Get Best Friends list : " + data);
                 CloseFrndRoot CloseFrnds = JsonUtility.FromJson<CloseFrndRoot>(data);
                 BFCount = CloseFrnds.data.count;
             }
@@ -822,18 +862,21 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Post(uri, "POST"))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone) 
+            {
+                yield return null;
+            }
 
             feedUIController?.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError    )
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("~~~~~~ Add Best Friend : " + data);
                 AdCloseFrndRoot AdCloseFrnds = JsonUtility.FromJson<AdCloseFrndRoot>(data);
                 if (AdCloseFrnds.success)
                 {
@@ -865,11 +908,15 @@ public class APIManager : MonoBehaviour
         using (UnityWebRequest www = UnityWebRequest.Delete(uri))
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             feedUIController?.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
@@ -909,9 +956,12 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
-
-            if (www.isNetworkError || www.isHttpError)
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
@@ -919,7 +969,7 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("SetName data:" + data);
+                
                 var jo = Newtonsoft.Json.Linq.JObject.Parse(data);
                 var msg = jo["msg"].ToString();
                 if (msg == "This name is already taken by other user.")
@@ -958,7 +1008,7 @@ public class APIManager : MonoBehaviour
 
             // Stop the stopwatch
             //stopwatch.Stop();
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("IERequestGetUserDetails error:" + www.error);
                 if (feedUIController != null)
@@ -980,7 +1030,6 @@ public class APIManager : MonoBehaviour
                 //Debug.Log("User details Request completed in: " + stopwatch.ElapsedMilliseconds + " milliseconds");
                 //Debug.Log("IERequestGetUserDetails Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("IERequestGetUserDetails Loaded Completed data:" + data + "      :Calling From:" + callingFrom);
                 //Debug.Log("callingFrom" + callingFrom);
                 myProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(data);
                 switch (callingFrom)
@@ -1030,9 +1079,13 @@ public class APIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
                 switch (callingFrom)
@@ -1048,7 +1101,6 @@ public class APIManager : MonoBehaviour
             {
                 //Debug.Log("Form upload complete!");
                 string data = www.downloadHandler.text;
-                Debug.Log("UpdateUserAvatar data:" + data);
                 // root = JsonUtility.FromJson<UpdateUserAvatarRoot>(data);
                 switch (callingFrom)
                 {
@@ -1109,7 +1161,11 @@ public class APIManager : MonoBehaviour
             www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
             www.SetRequestHeader("Content-Type", "application/json");
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
             UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
@@ -1130,7 +1186,6 @@ public class APIManager : MonoBehaviour
                         myProfileDataManager.ShowEditProfileUniqueNameErrorMessage("Username already taken");
                     }
                 }
-                Debug.Log("<color=red> UpdateUserProfile data:" + www.downloadHandler.text + "</color>");
             }
         }
     }
