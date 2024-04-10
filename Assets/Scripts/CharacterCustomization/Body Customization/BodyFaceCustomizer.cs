@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BodyCustomizer : MonoBehaviour
+public class BodyFaceCustomizer : MonoBehaviour
 {
-    public static BodyCustomizer Instance;
+    public static BodyFaceCustomizer Instance;
 
     public enum MorphType { Face, Body }  // To Set The "BodyCustomizerTrigger" To Modify Either The Face Or Body
     public MorphType m_MorphType;

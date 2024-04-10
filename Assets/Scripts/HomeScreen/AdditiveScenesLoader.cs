@@ -36,7 +36,7 @@ public class AdditiveScenesLoader : MonoBehaviour
         {
             yield return null;
         }
-        BodyCustomizer.Instance.BodyCustomCallFromStore();
+        BodyFaceCustomizer.Instance.BodyCustomCallFromStore();
     }
     IEnumerator AddDelay(float delay)
     {

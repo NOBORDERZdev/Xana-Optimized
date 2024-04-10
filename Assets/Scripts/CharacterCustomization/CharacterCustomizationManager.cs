@@ -216,7 +216,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     public void ApplyBlendShapeValuesToCustomFace(GameObject l_FaceObject)
     {
-        if (BodyCustomizer.Instance.m_IsFaceBlendShapeApplied)
+        if (BodyFaceCustomizer.Instance.m_IsFaceBlendShapeApplied)
         {
             int l_One = PlayerPrefs.GetInt("FaceMorphIndexOne");
             int l_Two = PlayerPrefs.GetInt("FaceMorphIndexTwo");

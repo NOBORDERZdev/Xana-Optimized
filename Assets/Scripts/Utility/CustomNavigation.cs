@@ -146,7 +146,7 @@ public class CustomNavigation : MonoBehaviour
     }
     public void Save()
     {
-        BodyCustomizer.Instance.save();
+        BodyFaceCustomizer.Instance.save();
         //FindObjectOfType<loadBundle>().save();
      
 
@@ -163,7 +163,7 @@ public class CustomNavigation : MonoBehaviour
        Debug.Log("current next " + data[currentindex].current);
         scriptInvoke = true;
         data[currentindex].data[data[currentindex].current].GetComponent<Button>().onClick.Invoke();
-        BodyCustomizer.Instance.setprev();
+        BodyFaceCustomizer.Instance.setprev();
 
     }
 
@@ -224,7 +224,7 @@ public class CustomNavigation : MonoBehaviour
         //    //    FindObjectOfType<BodyMorphing>().HairSelection(PlayerPrefs.GetInt("player hair",0));
         //    //   Debug.Log("Hairsection");
         //    //}
-        //        BodyCustomizer.Instance.apply_prev();
+        //        BodyFaceCustomizer.Instance.apply_prev();
         //  //  data[currentindex].data[data[currentindex].current+1].transform.parent.gameObject.transform.GetChild(0).GetComponent<Button>().onClick.Invoke();
         // //   scriptInvoke = true;
         //    return;
@@ -232,7 +232,7 @@ public class CustomNavigation : MonoBehaviour
         //Debug.Log("current previous " + data[currentindex].current);
         //scriptInvoke = true;
         //data[currentindex].data[data[currentindex].current].GetComponent<Button>().onClick.Invoke();
-        //BodyCustomizer.Instance.setprev();
+        //BodyFaceCustomizer.Instance.setprev();
     }   
     
 }

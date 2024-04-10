@@ -47,7 +47,7 @@ public class BodyCustomizationTrigger : MonoBehaviour
         }
         if (m_FaceMorphFeature == FaceMorphFeature.EyeBrows)
         {
-            BodyCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
+            BodyFaceCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
 
         }
 
