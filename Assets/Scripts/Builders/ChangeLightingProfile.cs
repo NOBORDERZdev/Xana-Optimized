@@ -9,7 +9,7 @@ public class ChangeLightingProfile : MonoBehaviour
 
     private void Start()
     {
-        if(XanaConstants.xanaConstants.isBuilderScene)
+        if(ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (QualitySettings.renderPipeline != builderProfile)
                 ApplyBuilderSetting();

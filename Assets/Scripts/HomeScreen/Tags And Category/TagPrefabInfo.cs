@@ -13,8 +13,8 @@ public class TagPrefabInfo : MonoBehaviour
 
     public void ClickOnTag()
     {
-        WorldSearchManager.OpenSearchPanel?.Invoke(tagName.text);
-        WorldSearchManager.SearchWorld?.Invoke(tagName.text);
+        SearchWorldUIController.OpenSearchPanel?.Invoke(tagName.text);
+        SearchWorldUIController.SearchWorld?.Invoke(tagName.text);
         if (descriptionPanel != null)
             descriptionPanel.SetActive(false);
     }

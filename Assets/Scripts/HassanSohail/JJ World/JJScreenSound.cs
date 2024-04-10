@@ -11,7 +11,7 @@ public class JJScreenSound : MonoBehaviour
         SoundManager.Instance.videoPlayerSource = VideoAudioSource;
         SoundManagerSettings.soundManagerSettings.videoSource = VideoAudioSource;
         VideoAudioSource.volume = PlayerPrefs.GetFloat(ConstantsGod.BGM_VOLUME);
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             Invoke(nameof(SetLobbyBg),1f);
             //SoundManagerSettings.soundManagerSettings.SetBgmVolume(0.05f);

@@ -110,7 +110,7 @@ public class CommonAPIManager : MonoBehaviour
     #region SNS Module APis.......
     [Space]
     [Header("Comman APi Handler")]
-    BottomTabManager[] bottomTabManagers;
+    HomeFooterHandler[] bottomTabManagers;
     //this api is used to get all UnRead Messages Count.......
     public void RequestGetAllChatUnReadMessagesCount()
     {
@@ -155,7 +155,7 @@ public class CommonAPIManager : MonoBehaviour
     //This method is used to setup footer message unread count setup.......
     public void SetUpBottomUnReadCount(int count)
     {
-        bottomTabManagers = Resources.FindObjectsOfTypeAll<BottomTabManager>();
+        bottomTabManagers = Resources.FindObjectsOfTypeAll<HomeFooterHandler>();
         Debug.LogError("finding bottom tab manager  :- ");
         for (int i = 0; i < bottomTabManagers.Length; i++)
         {

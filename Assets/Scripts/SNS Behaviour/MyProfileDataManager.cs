@@ -369,14 +369,14 @@ public class MyProfileDataManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
-                        XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                        ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
-                XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
     }
@@ -1603,7 +1603,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileMakedFlag = true;
             ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
         }
-        else if (XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        else if (ConstantsHolder.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
         {
             UpdateProfilePic();
         }

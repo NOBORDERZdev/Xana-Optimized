@@ -183,7 +183,7 @@ public class CustomNavigation : MonoBehaviour
         //    {
         //        if (PlayerPrefs.GetString("player pant") != "" && PlayerPrefs.GetString("player shirt") != "MDpants")
         //        {
-        //            // ItemDatabase.instance.itemList.Add(new Item(UnityEngine.Random.Range(0, 1000), PlayerPrefs.GetString("player pant"), "", PlayerPrefs.GetString("player pant"), "Legs", TextureandMeshwithDownloaded(PlayerPrefs.GetString("player pant"))));
+        //            // DefaultClothDatabase.instance.itemList.Add(new Item(UnityEngine.Random.Range(0, 1000), PlayerPrefs.GetString("player pant"), "", PlayerPrefs.GetString("player pant"), "Legs", TextureandMeshwithDownloaded(PlayerPrefs.GetString("player pant"))));
         //            //   ui.AddOrRemoveClothes("naked_legs", "Legs", PlayerPrefs.GetString("player pant"), 0);
         //             FindObjectOfType<ChangeGear>().UnequipItem("Legs", FindObjectOfType<Equipment>().wornLegs.gameObject.name);
         //            FindObjectOfType<ChangeGear>().EquipItem("Legs", PlayerPrefs.GetString("player pant"));
@@ -199,7 +199,7 @@ public class CustomNavigation : MonoBehaviour
         //    {
         //        if (PlayerPrefs.GetString("player shirt") != "" && PlayerPrefs.GetString("player shirt") != "MDgambeson")
         //        {
-        //            // ItemDatabase.instance.itemList.Add(new Item(UnityEngine.Random.Range(0, 1000), PlayerPrefs.GetString("player shirt"), "", PlayerPrefs.GetString("player shirt"), "Chest", TextureandMeshwithDownloaded(PlayerPrefs.GetString("player shirt"))));
+        //            // DefaultClothDatabase.instance.itemList.Add(new Item(UnityEngine.Random.Range(0, 1000), PlayerPrefs.GetString("player shirt"), "", PlayerPrefs.GetString("player shirt"), "Chest", TextureandMeshwithDownloaded(PlayerPrefs.GetString("player shirt"))));
 
         //            // ui.AddOrRemoveClothes("naked_chest", "Chest", PlayerPrefs.GetString("player shirt"), 1);
         //             FindObjectOfType<ChangeGear>().UnequipItem("Chest", FindObjectOfType<Equipment>().wornChest.gameObject.name);

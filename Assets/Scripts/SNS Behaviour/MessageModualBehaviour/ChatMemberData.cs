@@ -324,7 +324,7 @@ public class ChatMemberData : MonoBehaviour
     //   Debug.Log("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
     //    if (callingIndex == 0)
     //    {
-    //        MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickFeedButton();
+    //        MessageController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickFeedButton();
     //        if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
     //        {
     //            if (OtherPlayerProfileData.Instance != null)

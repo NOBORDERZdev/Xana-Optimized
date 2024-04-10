@@ -116,9 +116,9 @@ public class FollowerItemController : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-        //if (XanaConstants.xanaConstants != null)
+        //if (ConstantsHolder.xanaConstants != null)
         //{
-        //    if (XanaConstants.xanaConstants.r_isSNSComingSoonActive)
+        //    if (ConstantsHolder.xanaConstants.r_isSNSComingSoonActive)
         //    {
         //        print("sns features coming soon.......");
         //        return;

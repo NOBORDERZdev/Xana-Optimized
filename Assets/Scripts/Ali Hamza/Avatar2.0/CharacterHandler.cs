@@ -19,8 +19,8 @@ public class CharacterHandler : MonoBehaviour
     }
     private void Start()
     {
-        if(SavaCharacterProperties.instance && !string.IsNullOrEmpty(SavaCharacterProperties.instance.SaveItemList.gender))
-            ActivateAvatarByGender(SavaCharacterProperties.instance.SaveItemList.gender);
+        if(SaveCharacterProperties.instance && !string.IsNullOrEmpty(SaveCharacterProperties.instance.SaveItemList.gender))
+            ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
     }
 
     public void ActivateAvatarByGender(string gender)
@@ -55,10 +55,10 @@ public class CharacterHandler : MonoBehaviour
             GameManager.Instance.ActorManager.Init();
 
         }
-        if (SavaCharacterProperties.instance != null)
+        if (SaveCharacterProperties.instance != null)
         {
-            SavaCharacterProperties.instance.charcterBodyParts = GameManager.Instance.characterBodyParts;
-            SavaCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
+            SaveCharacterProperties.instance.charcterBodyParts = GameManager.Instance.characterBodyParts;
+            SaveCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
         }
         
         if (playerNameCanvas && playerPostCanvas)

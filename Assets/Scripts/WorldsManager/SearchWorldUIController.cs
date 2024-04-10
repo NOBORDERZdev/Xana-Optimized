@@ -2,7 +2,7 @@ using AdvancedInputFieldPlugin;
 using System;
 using UnityEngine;
 
-public class WorldSearchManager : MonoBehaviour
+public class SearchWorldUIController : MonoBehaviour
 {
     public AdvancedInputField searchWorldInput;
     public static Action<string> OpenSearchPanel;

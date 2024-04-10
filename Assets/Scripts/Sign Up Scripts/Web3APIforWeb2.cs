@@ -78,7 +78,7 @@ public class Web3APIforWeb2 : MonoBehaviour
 
 
 
-        if (!APIBaseUrlChange.instance.IsXanaLive)
+        if (!APIBasepointManager.instance.IsXanaLive)
         {
             //  localAPI = string.Format(TestNetOwnednftAPI, OwnedNFTPageNumb, OwnedNFTPageSize) + publicID + Postfix;
             if (TestSpecificCase)
@@ -155,7 +155,7 @@ public class Web3APIforWeb2 : MonoBehaviour
                     }
                     if (NFTname.Contains("deemo"))
                     {
-                        XanaConstants.xanaConstants.IsDeemoNFT = true;
+                        ConstantsHolder.xanaConstants.IsDeemoNFT = true;
                     }
                     if (NFTname.Contains("astroboy"))
                     {
@@ -220,7 +220,7 @@ public class Web3APIforWeb2 : MonoBehaviour
     {
         print("NFT22 " + _nftid);
         string localAPI = "";
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             //  localAPI = "https://prod-backend.xanalia.com/nfts/user-nft-status?userAddress=0x43Dc54e78EA2F1A038e84c0e003871a87D4D80C1&nftId=118868";
             if (TestSpecificCase)

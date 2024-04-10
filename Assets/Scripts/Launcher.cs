@@ -85,8 +85,8 @@ namespace Photon.Pun.Demo.PunBasics
 		{
 			print("Launcher "+ "Awake");
 			//if(SceneManager.GetActiveScene().name != "AddressableScene")//AddressableScene
-			//XanaConstants.xanaConstants.EnviornmentName = SceneManager.GetActiveScene().name;
-			//print("Envirornment "+XanaConstants.xanaConstants.EnviornmentName);
+			//ConstantsHolder.xanaConstants.EnviornmentName = SceneManager.GetActiveScene().name;
+			//print("Envirornment "+ConstantsHolder.xanaConstants.EnviornmentName);
 			if (instance == null)
 			{
 				instance = this;
@@ -122,8 +122,8 @@ namespace Photon.Pun.Demo.PunBasics
         {
 
             Loader = LoadingManager.Instance;
-            Connect(XanaConstants.xanaConstants.EnviornmentName);
-            print(XanaConstants.xanaConstants.EnviornmentName);
+            Connect(ConstantsHolder.xanaConstants.EnviornmentName);
+            print(ConstantsHolder.xanaConstants.EnviornmentName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -238,7 +238,7 @@ namespace Photon.Pun.Demo.PunBasics
                 PhotonNetwork.GameVersion = this.gameVersion;
             }
 
-			SetMaxPlayer(int.Parse(XanaConstants.xanaConstants.userLimit));
+			SetMaxPlayer(int.Parse(ConstantsHolder.xanaConstants.userLimit));
 			//SetMaxPlayer(10);
 		}
 
@@ -314,7 +314,7 @@ namespace Photon.Pun.Demo.PunBasics
                // print("Max Players can Join " + info.MaxPlayers);
                 int maxPlayer;
                 //if (info.PlayerCount < info.MaxPlayers) {
-                if (XanaConstants.xanaConstants.EnviornmentName == "Xana Festival") // to reserve the place for camera man (Show room is full to other players)
+                if (ConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival") // to reserve the place for camera man (Show room is full to other players)
                 {
                     maxPlayer = info.MaxPlayers - 1;
                 }
@@ -326,7 +326,7 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     print(info.MaxPlayers + "	" + info.Name);
                     lastRoomName = info.Name;
-                    if (!XanaConstants.xanaConstants.isCameraMan)
+                    if (!ConstantsHolder.xanaConstants.isCameraMan)
                     {
                         Debug.Log("joining room here-----");
                         PhotonNetwork.JoinRoom(lastRoomName);
@@ -338,7 +338,7 @@ namespace Photon.Pun.Demo.PunBasics
                 
                 //roomNames.Add(info.Name);
             }
-            if (XanaConstants.xanaConstants.isCameraMan)
+            if (ConstantsHolder.xanaConstants.isCameraMan)
             {
                 if (roomList.Count>0)
                 {
@@ -347,7 +347,7 @@ namespace Photon.Pun.Demo.PunBasics
                     //PhotonNetwork.JoinRoom(tempRooms[0].Name);
                     CameraManRoomName= tempRooms[0].Name;
                     //print(" VALUE IS "+tempRooms);
-                    //Debug.Log("Is cameraman :--" + XanaConstants.xanaConstants.isCameraMan);
+                    //Debug.Log("Is cameraman :--" + ConstantsHolder.xanaConstants.isCameraMan);
                     //if (!roomNames.Contains(info.Name)) // create new room btn
                     //{
                     //    Debug.Log("Initiate Room");
@@ -373,13 +373,13 @@ namespace Photon.Pun.Demo.PunBasics
            
             if (joinedRoom == false)
             {
-                Debug.Log("Player has not joined any room "+ XanaConstants.xanaConstants.isCameraMan);
+                Debug.Log("Player has not joined any room "+ ConstantsHolder.xanaConstants.isCameraMan);
                 string temp;
                 do
                 {
                     temp = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
                 } while (roomNames.Contains(temp));
-                if (!XanaConstants.xanaConstants.isCameraMan)
+                if (!ConstantsHolder.xanaConstants.isCameraMan)
                     PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
                 else
                 {
@@ -401,8 +401,8 @@ namespace Photon.Pun.Demo.PunBasics
         public RoomOptions RoomOptionsRequest()
         {
 			roomOptions = new RoomOptions();
-			roomOptions.MaxPlayers = (byte)(int.Parse(XanaConstants.xanaConstants.userLimit));
-			//if (XanaConstants.xanaConstants.EnviornmentName == "DJ Event")
+			roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+			//if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
 			//{
 			//	roomOptions.MaxPlayers = (byte)3;
 			//}
@@ -420,7 +420,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
             print("Launcher " + "OnJoinRandomFailed");
-            if (!XanaConstants.xanaConstants.isCameraMan)
+            if (!ConstantsHolder.xanaConstants.isCameraMan)
             {
                 PhotonNetwork.CreateRoom(null, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
             }
@@ -494,14 +494,14 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (newPlayer.NickName == "XANA_XANA")
             {
-                XanaConstants.xanaConstants.isCameraManInRoom = true;
+                ConstantsHolder.xanaConstants.isCameraManInRoom = true;
             }
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             if (otherPlayer.NickName == "XANA_XANA")
             {
-                XanaConstants.xanaConstants.isCameraManInRoom = false;
+                ConstantsHolder.xanaConstants.isCameraManInRoom = false;
             }
 
             print("A player left room");
@@ -516,7 +516,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion

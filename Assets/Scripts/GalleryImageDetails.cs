@@ -123,7 +123,7 @@ public class GalleryImageDetails : MonoBehaviour
                 UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
             }
 
-            if(XanaConstants.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
+            if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
             {
                 DataType myType = DataType.Image;
                 if (m_IsVideo)

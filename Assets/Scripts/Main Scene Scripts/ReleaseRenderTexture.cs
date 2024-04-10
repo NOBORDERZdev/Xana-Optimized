@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RenderTextureReleaser : MonoBehaviour
+public class ReleaseRenderTexture : MonoBehaviour
 {
     private RenderTexture renderTexture;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
     private void OnEnable()
     {
         if (!renderTexture)

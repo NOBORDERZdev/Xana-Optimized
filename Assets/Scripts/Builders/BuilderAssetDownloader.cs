@@ -537,7 +537,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         dataArranged = false;
         dataSorted = false;
 
-        // BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, SetConstant.isLogin);
+        // BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
     }
 

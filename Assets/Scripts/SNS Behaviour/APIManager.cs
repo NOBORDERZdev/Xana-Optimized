@@ -10,7 +10,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class APIManager : MonoBehaviour
 {
@@ -979,7 +979,7 @@ public class APIManager : MonoBehaviour
                 }
                 else
                 {
-                    if (string.IsNullOrEmpty(XanaConstants.xanaConstants.userProfileLink) || XanaConstants.xanaConstants.userProfileLink.Contains("Profil") || XanaConstants.xanaConstants.userProfileLink.Contains("userProfile"))
+                    if (string.IsNullOrEmpty(ConstantsHolder.xanaConstants.userProfileLink) || ConstantsHolder.xanaConstants.userProfileLink.Contains("Profil") || ConstantsHolder.xanaConstants.userProfileLink.Contains("userProfile"))
                     {
                         // Profile is not Modified by User
                             ProfilePictureManager.instance.MakeProfilePicture(setName_name);

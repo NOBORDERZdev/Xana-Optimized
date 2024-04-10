@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
-public class PopupMessageController : MonoBehaviour
+public class PopupMessageHandler : MonoBehaviour
 {
     #region Varibales
     //Instance
-    public static PopupMessageController Instance;
+    public static PopupMessageHandler Instance;
 
     //Gameobject References
     public GameObject dialoguePanel;

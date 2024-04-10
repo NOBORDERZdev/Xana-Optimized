@@ -43,10 +43,10 @@ public class UGCUIManager : MonoBehaviour
 
     void Start()
     {
-        CharacterHandler.instance.ActivateAvatarByGender(SavaCharacterProperties.instance.SaveItemList.gender);
+        CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
         UGCCharacter = CharacterHandler.instance.GetActiveAvatarData().avatar_parent.GetComponent<AvatarController>();
 
-        XanaConstants.xanaConstants.returnedFromGamePlay = true;
+        ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         DisableLoadingPanel();
         // BGMat = new Material(BG.material);
     }

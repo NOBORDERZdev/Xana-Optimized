@@ -87,7 +87,7 @@ namespace Toyota
             }
             InRoomSoundHandler.playerInRoom += UpdateNFTData;
 
-            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBasepointManager.instance && APIBasepointManager.instance.IsXanaLive)
                 PMY_RoomId = PMY_RoomId_main;
             else
                 PMY_RoomId = PMY_RoomId_test;

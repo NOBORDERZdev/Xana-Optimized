@@ -9,9 +9,9 @@ using UnityEngine.Networking;
 using WebSocketSharp;
 using UnityEngine.UI;
 
-public class CustomLocalization : MonoBehaviour
+public class LocalizationManager : MonoBehaviour
 {
-    public static CustomLocalization _instance;
+    public static LocalizationManager _instance;
     public string LocalizeURL,LocalizeDateStamp;
     private string _path;
     private Coroutine prevCoroutine;
@@ -49,8 +49,12 @@ public class CustomLocalization : MonoBehaviour
     IEnumerator CheckIfSheetUpdated()
     {
         var www = UnityWebRequest.Get(LocalizeDateStamp);
-        yield return www.SendWebRequest();
-        if (www.isHttpError || www.isNetworkError) 
+        www.SendWebRequest();
+        while(!www.isDone)
+        {
+            yield return null; 
+        }
+        if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError) 
         {
             Debug.Log(www.error);
             StopAllCoroutines();

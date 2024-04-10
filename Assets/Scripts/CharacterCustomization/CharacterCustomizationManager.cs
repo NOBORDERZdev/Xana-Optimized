@@ -31,7 +31,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
     GameObject PlayerCharacter;
     CharacterBodyParts _chbodyparts;
-    public CheckInternet checkInternet;
+    public InternetChecker checkInternet;
     private void Awake()
     {
         Instance = this;
@@ -50,7 +50,7 @@ public class CharacterCustomizationManager : MonoBehaviour
 
         _ChFrontPos = GameManager.Instance.mainCharacter.transform;
         CamFrontPos = _facemorphCamPosition;
-        checkInternet = CheckInternet.instance;
+        checkInternet = InternetChecker.instance;
     }
 
     private void Update()
@@ -181,7 +181,7 @@ public class CharacterCustomizationManager : MonoBehaviour
         //Commented By WaqasAhmad
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0f, -1.34f, 4.905974f);
 
-        ChangeCameraForZoomFace.instance.ChangePosition(true);
+        SetCameraPosForFaceCustomization.instance.ChangePosition(true);
     }
     public void OnLeftSide()
     {
@@ -196,7 +196,7 @@ public class CharacterCustomizationManager : MonoBehaviour
        
         // Commented By WaqasAhmad
         //GameManager.Instance.mainCharacter.transform.localPosition = new Vector3(0.14f, -1.34f, 4.83f);
-        ChangeCameraForZoomFace.instance.ChangePosition(false);
+        SetCameraPosForFaceCustomization.instance.ChangePosition(false);
     }
 
     public void UpdateChBodyShape(int value)

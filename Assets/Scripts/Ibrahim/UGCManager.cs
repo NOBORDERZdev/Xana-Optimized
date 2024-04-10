@@ -200,7 +200,7 @@ public class UGCManager : MonoBehaviour
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
                     Debug.Log(response.description_Eng);
-                    if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese) { warningText.text = response.description_Eng; }
+                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese) { warningText.text = response.description_Eng; }
                     else { warningText.text = response.description_Jap; }
                     warningPanel.SetActive(true);
                     StoreManager.instance.loaderPanel.SetActive(false);

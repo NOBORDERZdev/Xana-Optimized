@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class FlexibleRect : MonoBehaviour
+public class RectModifier : MonoBehaviour
 {
     public RectTransform[] Children;
     public float Offset;

@@ -44,7 +44,7 @@ public class StreamingCamera : MonoBehaviour
     }
 
     public void TriggerStreamCam(){ 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (ConstantsHolder.xanaConstants.isCameraMan)
         {
            
             if (Cameras.Count>0)

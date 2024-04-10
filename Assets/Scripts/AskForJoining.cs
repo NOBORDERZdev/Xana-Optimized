@@ -28,13 +28,13 @@ public class AskForJoining : MonoBehaviour
 
     void LoadMain()
     {
-        XanaConstants.xanaConstants.isFromXanaLobby =false;
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        ConstantsHolder.xanaConstants.isFromXanaLobby =false;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingHandler.Instance.randCurrentValue = _rand;
         StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
-        XanaConstants.xanaConstants.isBackFromWorld = true;  
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;  
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");

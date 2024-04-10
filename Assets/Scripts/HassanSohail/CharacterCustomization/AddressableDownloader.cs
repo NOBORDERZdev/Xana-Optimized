@@ -60,14 +60,14 @@ public class AddressableDownloader : MonoBehaviour
         }
         else
         {
-            XanaConstants.isAddressableCatalogDownload = true;
+            ConstantsHolder.isAddressableCatalogDownload = true;
             isDownloading = false;
         }
     }
     IEnumerator CheckCatalogs()
     {
         yield return Addressables.InitializeAsync();
-        XanaConstants.isAddressableCatalogDownload = true;
+        ConstantsHolder.isAddressableCatalogDownload = true;
 
     }
     /// <summary>
@@ -77,7 +77,7 @@ public class AddressableDownloader : MonoBehaviour
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             Debug.LogError("Waiting for Addressable Catalog to download");
             yield return new WaitForSeconds(1f);
@@ -206,7 +206,7 @@ public class AddressableDownloader : MonoBehaviour
     public IEnumerator DownloadAddressableTexture(string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
     {
         int _counter = 0;
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             yield return new WaitForSeconds(1f);
         }
@@ -416,7 +416,7 @@ public class AddressableDownloader : MonoBehaviour
             PlayerPrefs.SetInt("presetPanel", 0);
             PlayerPrefs.SetInt("FristPresetSet", 1);
             PlayerPrefs.Save();
-            ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+            DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
         }
     }
 }

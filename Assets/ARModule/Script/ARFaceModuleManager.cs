@@ -112,9 +112,9 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 mainAvatar.SetActive(true);
             }
-            if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+            if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                GameObject mainSceneAvatar = Instantiate(XanaConstants.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
+                GameObject mainSceneAvatar = Instantiate(ConstantsHolder.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
                // mainSceneAvatar.GetComponent<AvatarControllerHome>().UpdateState(true);
                 mainSceneAvatar.GetComponent<AvatarController>().SetAvatarForAR();
                 mainSceneAvatar.transform.localScale = Vector3.one;
@@ -141,10 +141,10 @@ public class ARFaceModuleManager : MonoBehaviour
 
     private void OnDisable()
     {
-        /*if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        /*if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }*/
     }
 
@@ -229,10 +229,10 @@ public class ARFaceModuleManager : MonoBehaviour
             videoCaptureButton.CancelingVideoToBackButtonPress();
             return;
         }
-        if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }
         Initiate.Fade("Main", loadToColor, 1.0f);
     }

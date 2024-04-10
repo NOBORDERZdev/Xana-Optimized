@@ -32,7 +32,7 @@ public class WalletLogin: MonoBehaviour
 
 
     void SetChainSafeInfo() {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             projectConfigSO = (ProjectConfigScriptableObject)Resources.Load("ProjectConfigDataMainNet", typeof(ScriptableObject));
         }
@@ -48,7 +48,7 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
-        XanaConstants.xanaConstants.isWalletLoadingbool = true;
+        ConstantsHolder.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
         try
@@ -167,11 +167,11 @@ public class WalletLogin: MonoBehaviour
     // //               print("Success in name  field ");
     // //               PlayerPrefs.SetInt("IsLoggedIn", 1);
     // //               PlayerPrefs.SetInt("FristPresetSet", 1);
-    // //               ServerSIdeCharacterHandling.Instance.GetDataFromServer();  
+    // //               ServerSideUserDataHandler.Instance.GetDataFromServer();  
     // //               PlayerPrefs.SetString("PlayerName", localUsername);
     // //               if (GameManager.Instance.UiManager != null)//rik  
     // //               {
-    // //                   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+    // //                   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
     // //               }
     // //            }
     // //       }

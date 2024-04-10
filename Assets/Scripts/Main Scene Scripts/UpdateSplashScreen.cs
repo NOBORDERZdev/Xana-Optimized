@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
-public class LoadingSavingAvatar : MonoBehaviour
+public class UpdateSplashScreen : MonoBehaviour
 {
     //public Image LoadingImg;
     public GameObject tabBG;
@@ -21,7 +21,7 @@ public class LoadingSavingAvatar : MonoBehaviour
         Once = false;
         time = 0;
         versionText.text = "Ver." + Application.version;
-        if (XanaConstants.xanaConstants.screenType==XanaConstants.ScreenType.TabScreen)
+        if (ConstantsHolder.xanaConstants.screenType==ConstantsHolder.ScreenType.TabScreen)
         {
             tabBG.SetActive(true);
         }

@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class MaintenanceScreenHandler : MonoBehaviour
+public class MaintenanceScreenManager : MonoBehaviour
 {
 
     public GameObject m_ScreenUI;
@@ -45,7 +45,7 @@ public class MaintenanceScreenHandler : MonoBehaviour
 
         //Debug.Log(uwr.downloadHandler.text);
 
-        if (uwr.isNetworkError)
+        if (uwr.result==UnityWebRequest.Result.ConnectionError || uwr.result==UnityWebRequest.Result.ProtocolError)
         {
             Debug.Log("Error While Sending: " + uwr.error);
         }

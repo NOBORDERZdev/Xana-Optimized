@@ -6,10 +6,10 @@ using UnityEngine.Networking;
 //using MoralisUnity;
 
 //[ExecuteInEditMode]
-public class APIBaseUrlChange : MonoBehaviour
+public class APIBasepointManager : MonoBehaviour
 {
     public bool IsXanaLive = false;
-    public static APIBaseUrlChange instance;
+    public static APIBasepointManager instance;
     private bool firsttimecallXanaLive = false;
     public string apiversion = "";
     public string apiversionForAnimation = "2";

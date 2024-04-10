@@ -17,7 +17,7 @@ public class FeedUIController : MonoBehaviour
 
     [Header("-------FooterCan-------")]
     public GameObject footerCan;
-    public BottomTabManager bottomTabManager;
+    public HomeFooterHandler bottomTabManager;
     [Space]
     [Header("-------All Screens-------")]
     public GameObject feedUiScreen;
@@ -305,7 +305,7 @@ public class FeedUIController : MonoBehaviour
                 case "FollowerFollowingListScreen":
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
                     break;
                 default:
                     feedUiScreen.SetActive(false);

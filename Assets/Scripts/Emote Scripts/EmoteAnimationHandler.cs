@@ -13,12 +13,12 @@ using static EmoteFilterManager;
 using UnityEngine.InputSystem.OnScreen;
 using System.IO;
 
-public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
+public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
 {
     public bool alreadyRuning = true;
     private int counter = 0;
     public GameObject AnimHighlight;
-    public static EmoteAnimationPlay Instance;
+    public static EmoteAnimationHandler Instance;
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject popupPenal;
@@ -175,7 +175,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
         //    counter = 0;
         //}
 
-        string bundlePath = Path.Combine(XanaConstants.xanaConstants.r_EmoteStoragePersistentPath, BundleURL + ".unity3d");
+        string bundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, BundleURL + ".unity3d");
 
 
         //  StartCoroutine(GetAssetBundleFromServerUrl(url, bundlePath, _gameObject));
@@ -948,7 +948,7 @@ public class EmoteAnimationPlay : MonoBehaviour, IInRoomCallbacks, IOnEventCallb
 
     public IEnumerator getAllAnimations()
     {
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBaseUrlChange.instance.apiversionForAnimation);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBasepointManager.instance.apiversionForAnimation);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

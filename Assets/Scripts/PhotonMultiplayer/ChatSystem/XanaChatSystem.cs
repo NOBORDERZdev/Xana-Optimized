@@ -270,7 +270,7 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
+        XanaChatSocket.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
         npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
@@ -301,7 +301,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine, CallBy.User, "");
+        XanaChatSocket.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID, inputLine, CallBy.User, "");
     }
 
     #region Photon Chat Region
@@ -342,7 +342,7 @@ public class XanaChatSystem : MonoBehaviour
     //    PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
     //    Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-    //    XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
+    //    XanaChatSocket.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text);
     //    ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
     //    this.InputFieldChat.text = "";
     //}
@@ -370,7 +370,7 @@ public class XanaChatSystem : MonoBehaviour
     //            this.testBytes = new byte[this.TestLength];
     //        }
 
-    //        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID,inputLine);
+    //        XanaChatSocket.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID,inputLine);
     //    }
     //}
     //public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)
@@ -394,7 +394,7 @@ public class XanaChatSystem : MonoBehaviour
 
     //    //if (this.ChannelsToJoinOnConnect != null)
     //    //{
-    //    //    if (!XanaConstants.xanaConstants.isBuilderScene)
+    //    //    if (!ConstantsHolder.xanaConstants.isBuilderScene)
     //    //    {
     //    //        if (SceneManager.GetActiveScene().name == "AddressableScene")
     //    //        {
@@ -407,7 +407,7 @@ public class XanaChatSystem : MonoBehaviour
     //    //    }
     //    //    else
     //    //    {
-    //    //        this.ChannelsToJoinOnConnect = XanaConstants.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
+    //    //        this.ChannelsToJoinOnConnect = ConstantsHolder.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
     //    //    }
     //    //  //  this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
     //    //    //Debug.Log(this.ChannelsToJoinOnConnect);

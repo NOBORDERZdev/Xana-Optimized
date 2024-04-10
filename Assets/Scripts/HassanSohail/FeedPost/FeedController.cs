@@ -46,7 +46,7 @@ public class FeedController : MonoBehaviour
         feedContentParent.gameObject.SetActive(true);
         SerchBarObj.SetActive(false);
         searchInputField.Text = "";
-        SocketController.instance.updateFeedLike += UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedUIController.Instance;
         if (!isFeedInitialized)
@@ -385,13 +385,13 @@ public class FeedController : MonoBehaviour
             }
             else
             {
-                if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese) // for English 
+                if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese) // for English 
                 {
                     noFeedText.text = "We couldn’t find a match for “ "+
                                        SerchStringToEllipsis( input)
                                         +"”.\r\nPlease try another search.";
                 }
-                else if(GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)   // for Jp 
+                else if(GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)   // for Jp 
                 {
                     noFeedText.text = SerchStringToEllipsis( input) + "に一致するものが見つかりませんでした。\r\n" +
                                         "別のキーワードで試してみてください。";
@@ -449,12 +449,12 @@ public class FeedController : MonoBehaviour
             noFeedSerach.gameObject.SetActive(false);
             noFeedsScreen.gameObject.SetActive(false);
             FeedLoader.gameObject.SetActive(false);
-            feedUIController.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+            feedUIController.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
         }
      }
     private void OnDisable()
     {
-        SocketController.instance.updateFeedLike -= UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike -= UpdateFeedLike;
         ResetFeedController();
     }
 

@@ -30,7 +30,7 @@ public class AWSHandler : MonoBehaviour
     }
 
     //this method is used to check internet....... 
-    private void CheckInternet(Action<bool> action)
+    private void InternetChecker(Action<bool> action)
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -45,7 +45,7 @@ public class AWSHandler : MonoBehaviour
     //this method is used to upload file useing upload api.......
     public void PostObjectMethod(Byte[] imageData, string fileName, Action<UploadFileRoot> response)
     {
-        CheckInternet(status =>
+        InternetChecker(status =>
         {
             if (status)
                 StartCoroutine(PostObjectIEnum(imageData, fileName, response));
@@ -113,7 +113,7 @@ public class AWSHandler : MonoBehaviour
     //this method is used to upload avatar image.......
     public void PostObjectMethodAvatar(Byte[] imageData, string fileName, Action<UploadFileRoot> response)
     {
-        CheckInternet(status =>
+        InternetChecker(status =>
         {
             if (status)
                 StartCoroutine(PostObjectIEnumAvatar(imageData, fileName, response));

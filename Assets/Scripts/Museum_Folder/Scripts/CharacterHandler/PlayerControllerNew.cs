@@ -166,7 +166,7 @@ public class PlayerControllerNew : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = LoadFromFile.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
@@ -388,7 +388,7 @@ public class PlayerControllerNew : MonoBehaviour
                 transforms[i].GetComponent<CanvasGroup>().alpha = 1;
         }
 
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (GamificationComponentData.instance.isAvatarChanger ||
                 GamificationComponentData.instance.isBlindfoldedFootPrinting)
@@ -430,21 +430,21 @@ public class PlayerControllerNew : MonoBehaviour
         {
             if (isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
+                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationPlay.Instance.StopAnimation();
-                    EmoteAnimationPlay.Instance.StopAllCoroutines();
+                    EmoteAnimationHandler.Instance.StopAnimation();
+                    EmoteAnimationHandler.Instance.StopAllCoroutines();
                 }
                 FirstPersonCameraMove(); // FOR FIRST PERSON MOVEMENT XX
             }
             if (!isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationPlay.Instance.isAnimRunning && isJoystickDragging)
+                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
                 {
                     if (ReferrencesForDynamicMuseum.instance.moveWhileDanceCheck == 0)
                     {
-                        EmoteAnimationPlay.Instance.StopAnimation();
-                        EmoteAnimationPlay.Instance.StopAllCoroutines();
+                        EmoteAnimationHandler.Instance.StopAnimation();
+                        EmoteAnimationHandler.Instance.StopAllCoroutines();
                     }
                 }
                 Move();
@@ -803,7 +803,7 @@ public class PlayerControllerNew : MonoBehaviour
 
         if (isFirstPerson)
         {
-            if (!XanaConstants.xanaConstants.isBuilderScene)
+            if (!ConstantsHolder.xanaConstants.isBuilderScene)
                 animator.GetComponent<IKMuseum>().m_ConsoleObjOther.SetActive(false);
             else if (!b)
             {
@@ -815,7 +815,7 @@ public class PlayerControllerNew : MonoBehaviour
 
     public void StopBuilderComponent()
     {
-        if (XanaConstants.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             if (isNinjaMotion)
             {
@@ -984,7 +984,7 @@ public class PlayerControllerNew : MonoBehaviour
             if (movementInput.sqrMagnitude >= sprintThresold)
             {
                 //checking moving platform
-                if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                 {
                     characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                 }
@@ -1019,7 +1019,7 @@ public class PlayerControllerNew : MonoBehaviour
                         animator.SetFloat("BlendY", 3f, speedSmoothTime, Time.deltaTime); // applying values to animator.
                     }
                     //checking moving platform
-                    if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                    if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                     {
                         characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                     }
@@ -1039,7 +1039,7 @@ public class PlayerControllerNew : MonoBehaviour
                     if (!_IsGrounded) // is in jump
                     {
                         //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                         {
                             characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                         }
@@ -1050,7 +1050,7 @@ public class PlayerControllerNew : MonoBehaviour
                     else // walk start state
                     {
                         //checking moving platform
-                        if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+                        if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
                         {
                             characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
                         }
@@ -1066,7 +1066,7 @@ public class PlayerControllerNew : MonoBehaviour
             PlayerIsIdle?.Invoke();
             UpdateSefieBtn(!LoadEmoteAnimations.animClick);
             //checking moving platform
-            if (movedPosition.sqrMagnitude != 0 && XanaConstants.xanaConstants.isBuilderScene)
+            if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {
                 characterController.Move(movedPosition.normalized * (movedPosition.magnitude / Time.deltaTime) * Time.deltaTime);
             }
@@ -1162,7 +1162,7 @@ public class PlayerControllerNew : MonoBehaviour
         }
 
 
-        if (EmoteAnimationPlay.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
+        if (EmoteAnimationHandler.Instance.animatorremote != null && ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<Animator>().GetBool("EtcAnimStart"))    //Added by Ali Hamza
             ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<RpcManager>().BackToIdleAnimBeforeJump();
 
         if (ReferrencesForDynamicMuseum.instance.m_34player)
@@ -1219,10 +1219,10 @@ public class PlayerControllerNew : MonoBehaviour
             }
         }
 
-        if (EmoteAnimationPlay.Instance.isAnimRunning)
+        if (EmoteAnimationHandler.Instance.isAnimRunning)
         {
-            EmoteAnimationPlay.Instance.StopAnimation();
-            EmoteAnimationPlay.Instance.StopAllCoroutines();
+            EmoteAnimationHandler.Instance.StopAnimation();
+            EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
     }
@@ -1325,10 +1325,10 @@ public class PlayerControllerNew : MonoBehaviour
         }
         Invoke(nameof(UpdateVelocity), .1f);
 
-        if (EmoteAnimationPlay.Instance.isAnimRunning)
+        if (EmoteAnimationHandler.Instance.isAnimRunning)
         {
-            EmoteAnimationPlay.Instance.StopAnimation();
-            EmoteAnimationPlay.Instance.StopAllCoroutines();
+            EmoteAnimationHandler.Instance.StopAnimation();
+            EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
     }
 
@@ -1365,7 +1365,7 @@ public class PlayerControllerNew : MonoBehaviour
     bool canDoubleJump = false;
     void SpecialItemDoubleJump()
     {
-        if (!XanaConstants.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
             return;
 
         if ((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && !_IsGrounded && !canDoubleJump && specialItem)
@@ -2022,7 +2022,7 @@ public class PlayerControllerNew : MonoBehaviour
     internal bool isOnMovingPlatform;
     private void CalculateMovingPlatformSpeed()
     {
-        if (!XanaConstants.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
             return;
 
         if (!characterController.isGrounded)

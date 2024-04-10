@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class TutorialsManager : MonoBehaviour
+public class TutorialsHandler : MonoBehaviour
 {
-    public static TutorialsManager instance;
+    public static TutorialsHandler instance;
     private CanvasScaler canvasScaler;
     public Button skipButton;
     public Button rightNextButton;
@@ -40,11 +40,11 @@ public class TutorialsManager : MonoBehaviour
     }
     public void ShowTutorials()
     {
-       /* if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !XanaConstants.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
+       /* if (PlayerPrefs.GetInt("ShowTutorial") == 0 && !ConstantsHolder.xanaConstants.isTutorialLoaded && !XanaEventDetails.eventDetails.DataIsInitialized)
         {
             this.transform.GetChild(0).gameObject.SetActive(true);
             DisplayPanel(currentPanelIndex);
-            XanaConstants.xanaConstants.isTutorialLoaded = true;
+            ConstantsHolder.xanaConstants.isTutorialLoaded = true;
         }*/
     }
     private void HandleButtons(int index)

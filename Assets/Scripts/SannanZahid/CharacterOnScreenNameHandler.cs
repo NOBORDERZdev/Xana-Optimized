@@ -32,7 +32,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             while (true)
             {
                 yield return new WaitForSeconds(1f);
-                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (XanaConstants.xanaConstants != null && !XanaConstants.xanaConstants.LoginasGustprofile))
+                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (ConstantsHolder.xanaConstants != null && !ConstantsHolder.xanaConstants.LoginasGustprofile))
                 {
                     break;
                 }

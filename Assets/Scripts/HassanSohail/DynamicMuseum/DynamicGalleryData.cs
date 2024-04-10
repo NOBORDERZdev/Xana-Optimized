@@ -353,7 +353,7 @@ public class DynamicGalleryData : MonoBehaviour
                             spriteObject.transform.localScale = new Vector3(0.50f, 0.42f, 0.44f);
                         }
 
-                        if((APIBaseUrlChange.instance.IsXanaLive && XanaEventDetails.eventDetails.DataIsInitialized) || (APIBaseUrlChange.instance.IsXanaLive && !XanaEventDetails.eventDetails.DataIsInitialized))
+                        if((APIBasepointManager.instance.IsXanaLive && XanaEventDetails.eventDetails.DataIsInitialized) || (APIBasepointManager.instance.IsXanaLive && !XanaEventDetails.eventDetails.DataIsInitialized))
                         {
                             spriteObject.transform.localScale = new Vector3(0.44f, 0.44f, 0.44f);
                         }
@@ -735,7 +735,7 @@ public class DynamicGalleryData : MonoBehaviour
     //            if (Input.touchCount == 1)
     //            {
     //#endif
-    //            if (EmoteAnimationPlay.Instance.isEmoteActive || CameraLook.IsPointerOverUIObject()) return;
+    //            if (EmoteAnimationHandler.Instance.isEmoteActive || CameraLook.IsPointerOverUIObject()) return;
 
     //            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 

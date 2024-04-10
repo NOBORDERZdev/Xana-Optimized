@@ -36,16 +36,16 @@ public class ChangeOrientation_waqas : MonoBehaviour
 
     void CheckOrienataionWhenComeFromLobby()
     {
-        if (XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.orientationchanged)
+        if (ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.orientationchanged)
         {
             MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
         else
         {
-            XanaConstants.xanaConstants.orientationchanged = false;
+            ConstantsHolder.xanaConstants.orientationchanged = false;
         }
 
-        isPotrait = XanaConstants.xanaConstants.orientationchanged;
+        isPotrait = ConstantsHolder.xanaConstants.orientationchanged;
     }
 
     private void OnEnable()
@@ -80,7 +80,7 @@ public class ChangeOrientation_waqas : MonoBehaviour
     IEnumerator ChangeOrientation(bool orientation)
     {
         isPotrait = orientation;
-        XanaConstants.xanaConstants.orientationchanged = isPotrait;
+        ConstantsHolder.xanaConstants.orientationchanged = isPotrait;
         BuilderEventManager.BuilderSceneOrientationChange?.Invoke(orientation);
         landscapeCanvas.DOKill();
         landscapeCanvas.alpha = 0;

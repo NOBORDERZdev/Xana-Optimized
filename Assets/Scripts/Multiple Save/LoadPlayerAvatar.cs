@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-public class LoadPlayerAvatar : ServerSIdeCharacterHandling
+public class LoadPlayerAvatar : ServerSideUserDataHandler
 {
     public GameObject mainPanel;
     public ScrollRect avatarScrollRect;
@@ -430,15 +430,15 @@ public class LoadPlayerAvatar : ServerSIdeCharacterHandling
             //DefaultEnteriesforManican.instance.ResetForPresets();
             //DownloadPlayerAssets();
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-            SavaCharacterProperties.instance.LoadMorphsfromFile();
+            SaveCharacterProperties.instance.LoadMorphsfromFile();
             loadprevious();
-            StartCoroutine(ItemDatabase.instance.WaitAndDownloadFromRevert(0));
+            StartCoroutine(DefaultClothDatabase.instance.WaitAndDownloadFromRevert(0));
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
             //StoreManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
             //if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
@@ -505,7 +505,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
 
                 if (_CharacterData.myItemObj[i].ItemID == 0)
                 {
-                    ItemDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
+                    DefaultClothDatabase.instance.BindDefaultItems(_CharacterData.myItemObj[i]);
                 }
                 else
                 {
@@ -551,9 +551,9 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
         if (avatarId != null)
         {
             PlayerPrefs.SetInt("presetPanel", 0);
-            SavaCharacterProperties.instance.SavePlayerPropertiesInClassObj();
+            SaveCharacterProperties.instance.SavePlayerPropertiesInClassObj();
             OnUpdateExistingRemoveOld(avatarId);
-            ServerSIdeCharacterHandling.Instance.UpdateUserOccupiedAsset(avatarId);
+            ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
         }
     }
 
@@ -614,7 +614,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                 File.WriteAllText((Application.persistentDataPath + "/SavingCharacterDataClass.json"), JsonUtility.ToJson(_CharacterData));
                 DownloadPlayerAssets();
                 //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-                SavaCharacterProperties.instance.LoadMorphsfromFile();
+                SaveCharacterProperties.instance.LoadMorphsfromFile();
 
                 isAlreadyRunning = true;
             }

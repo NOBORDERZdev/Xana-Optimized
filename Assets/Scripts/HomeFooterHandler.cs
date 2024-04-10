@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class BottomTabManager : MonoBehaviour
+public class HomeFooterHandler : MonoBehaviour
 {
     public List<Image> allButtonIcon = new List<Image>();
     public List<Sprite> allButtonUnSelected = new List<Sprite>();
@@ -24,7 +24,7 @@ public class BottomTabManager : MonoBehaviour
     public Image PostButton;
     public GameObject chatMessageUnReadCountObj;
     public TextMeshProUGUI chatMessageUnReadCountText;
-    AdditiveScenesManager additiveScenesManager;
+    AdditiveScenesLoader additiveScenesManager;
     GameManager gameManager;
     private void Awake()
     {
@@ -59,9 +59,9 @@ public class BottomTabManager : MonoBehaviour
         {
             additiveScenesManager = gameManager.additiveScenesManager;
         }
-        if (XanaConstants.xanaConstants.CurrentSceneName == "Addressable" && !XanaConstants.xanaConstants.isFromXanaLobby)
+        if (ConstantsHolder.xanaConstants.CurrentSceneName == "Addressable" && !ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            XanaConstants.xanaConstants.CurrentSceneName = "";
+            ConstantsHolder.xanaConstants.CurrentSceneName = "";
             GameManager.Instance.defaultSelection = 10;
             Invoke(nameof(OnClickHomeWorldButton), 5);
         }
@@ -266,8 +266,8 @@ public class BottomTabManager : MonoBehaviour
             }
             ////---->>>Sannan   if (gameManager.UiManager != null)
             //   {
-            //     gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().defaultSelection = 0;
-            //     gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            //     gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().defaultSelection = 0;
+            //     gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
             // }
             if (gameManager.UiManager != null)
             {
@@ -295,9 +295,9 @@ public class BottomTabManager : MonoBehaviour
             //WorldManager.instance.AllWorldTabReference.ScrollEnableDisable(0);
         }
 
-        if (WorldSearchManager.IsSearchBarActive)
+        if (SearchWorldUIController.IsSearchBarActive)
         {
-            WorldSearchManager.IsSearchBarActive = false;
+            SearchWorldUIController.IsSearchBarActive = false;
             WorldManager.instance.worldSearchManager.ClearInputField();
         }
     }
@@ -311,15 +311,15 @@ public class BottomTabManager : MonoBehaviour
             {
                // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
                 OnSelectedClick(1);
-                if (FindObjectOfType<AdditiveScenesManager>() != null)
+                if (FindObjectOfType<AdditiveScenesLoader>() != null)
                 {
-                    FindObjectOfType<AdditiveScenesManager>().SNSmodule.SetActive(false);
-                    FindObjectOfType<AdditiveScenesManager>().SNSMessage.SetActive(false);
+                    FindObjectOfType<AdditiveScenesLoader>().SNSmodule.SetActive(false);
+                    FindObjectOfType<AdditiveScenesLoader>().SNSMessage.SetActive(false);
                 }
                 if (gameManager.UiManager != null)
                 {
                     gameManager.defaultSelection = 1;
-                    gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
+                    gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(1);
                 }
                // gameManager.UiManager.Canvas.SetActive(true);
                 gameManager.UiManager.SwitchToScreen(1);
@@ -348,7 +348,7 @@ public class BottomTabManager : MonoBehaviour
             if (gameManager.UiManager != null)
             {
                 gameManager.defaultSelection = 0;
-                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
             }
 
             // gameManager.UiManager.Canvas.SetActive(true);
@@ -385,7 +385,7 @@ public class BottomTabManager : MonoBehaviour
                // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
-                //MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(1);
+                //MessageController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(1);
             }
             else
             {
@@ -420,10 +420,10 @@ public class BottomTabManager : MonoBehaviour
             //OnSelectedClick(5);
             gameManager.defaultSelection = 5;
             gameManager.ActorManager.IdlePlayerAvatorForMenu(true);
-            if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+            if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-                XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+                Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+                ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
             }
             GameObject MainSceneAvatar = Instantiate(gameManager.mainCharacter);
             Transform rootRotationObj = MainSceneAvatar.transform.Find("mixamorig:Hips");
@@ -437,7 +437,7 @@ public class BottomTabManager : MonoBehaviour
             MainSceneAvatar.SetActive(false);
             //MainSceneAvatar.transform.parent.transform.eulerAngles= new Vector3(0,180,0);
             Initiate.Fade("ARModuleRoomScene", Color.black, 1.0f, true);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = MainSceneAvatar;
 
         }
     }
@@ -472,8 +472,8 @@ public class BottomTabManager : MonoBehaviour
                 //additiveScenesManager.SNSMessage.SetActive(false);
                 gameManager.defaultSelection = 3;
                 FeedUIController.Instance.feedUiScreen.SetActive(true);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(3);
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 gameManager.UiManager.HomeWorldScreen.SetActive(false);
                 gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0;
                 gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
@@ -542,7 +542,7 @@ public class BottomTabManager : MonoBehaviour
         // gameManager.ActorManager.IdlePlayerAvatorForMenu(true);
         gameManager.HomeCameraInputHandler(false);
 
-        if (!XanaConstants.loggedIn) // Show login page for not sign in
+        if (!ConstantsHolder.loggedIn) // Show login page for not sign in
         {
             //show popup here to login for adding friends
             //UserRegisterationManager.instance.OpenUIPanal(17);
@@ -575,7 +575,7 @@ public class BottomTabManager : MonoBehaviour
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
             FeedUIController.Instance.OnClickHotFrnd();
             FeedUIController.Instance.ResetAllFeedScreen(true);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
 
 
             //Invoke(nameof(InvokeDisableFeed),1f);
@@ -680,7 +680,7 @@ public class BottomTabManager : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                // additiveScenesManager.SNSMessage.SetActive(false);
                 gameManager.defaultSelection = 4;
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
             }
             else
             {
@@ -710,7 +710,7 @@ public class BottomTabManager : MonoBehaviour
                 gameManager.UiManager.Canvas.SetActive(false);
 
                 gameManager.UiManager.HomeWorldScreen.SetActive(false);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha= 1;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
                 FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -745,8 +745,8 @@ public class BottomTabManager : MonoBehaviour
         {
             additiveScenesManager.SNSmodule.SetActive(false);
            // additiveScenesManager.SNSMessage.SetActive(false);
-            // FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().gameManager.defaultSelection = 4;
-            //  FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+            // FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().gameManager.defaultSelection = 4;
+            //  FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
         }
         // gameManager.ActorManager.IdlePlayerAvatorForMenu(true);
         //  gameManager.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
@@ -791,7 +791,7 @@ public class BottomTabManager : MonoBehaviour
 
     public void createBackFromSns()
     {
-        XanaConstants.xanaConstants.isBackfromSns = true;
+        ConstantsHolder.xanaConstants.isBackfromSns = true;
     }
 
 

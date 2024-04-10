@@ -2,9 +2,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CheckInternet : MonoBehaviour
+public class InternetChecker : MonoBehaviour
 {
-    public static CheckInternet instance;
+    public static InternetChecker instance;
     public GameObject PopUp,loader;
     private bool once;
 

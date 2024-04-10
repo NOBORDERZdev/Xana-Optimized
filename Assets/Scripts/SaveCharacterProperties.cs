@@ -6,9 +6,9 @@ using System.IO;
 using Newtonsoft.Json;
 using System;
 
-public class SavaCharacterProperties : MonoBehaviour
+public class SaveCharacterProperties : MonoBehaviour
 {
-    public static SavaCharacterProperties instance;
+    public static SaveCharacterProperties instance;
     public SavingCharacterDataClass SaveItemList = new SavingCharacterDataClass();
     public FilterBlendShapeSettings _sliderindexes;
     [HideInInspector]
@@ -203,11 +203,11 @@ public class SavaCharacterProperties : MonoBehaviour
             Transform bone = charcterBodyParts.BonesData[i].Obj.transform;
             SaveItemList.SavedBones.Add(new BoneDataContainer(charcterBodyParts.BonesData[i].Name, bone.localPosition, bone.localEulerAngles, bone.localScale));
         }
-        SaveItemList.faceMorphed = XanaConstants.xanaConstants.isFaceMorphed;
-        SaveItemList.eyeBrowMorphed = XanaConstants.xanaConstants.isEyebrowMorphed;
-        SaveItemList.eyeMorphed = XanaConstants.xanaConstants.isEyeMorphed;
-        SaveItemList.noseMorphed = XanaConstants.xanaConstants.isNoseMorphed;
-        SaveItemList.lipMorphed = XanaConstants.xanaConstants.isLipMorphed;
+        SaveItemList.faceMorphed = ConstantsHolder.xanaConstants.isFaceMorphed;
+        SaveItemList.eyeBrowMorphed = ConstantsHolder.xanaConstants.isEyebrowMorphed;
+        SaveItemList.eyeMorphed = ConstantsHolder.xanaConstants.isEyeMorphed;
+        SaveItemList.noseMorphed = ConstantsHolder.xanaConstants.isNoseMorphed;
+        SaveItemList.lipMorphed = ConstantsHolder.xanaConstants.isLipMorphed;
         SaveItemList.gender = CharacterHandler.instance.activePlayerGender.ToString();
 
         SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
@@ -301,7 +301,7 @@ public class SavaCharacterProperties : MonoBehaviour
     {
         SavePlayerPropertiesInClassObj();
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() =>
+            ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
             {
             });
     }

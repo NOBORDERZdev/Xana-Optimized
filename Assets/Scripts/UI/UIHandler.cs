@@ -4,7 +4,7 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIHandler : MonoBehaviour
 {
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
@@ -85,12 +85,12 @@ public class UIManager : MonoBehaviour
     }
     public void AvaterButtonCustomPushed()
     {
-        WorldItemPreviewTab.m_WorldIsClicked = false;
-        WorldItemPreviewTab.m_MuseumIsClicked = false;
+        WorldDescriptionPopupPreview.m_WorldIsClicked = false;
+        WorldDescriptionPopupPreview.m_MuseumIsClicked = false;
     }
     public void IsWorldClicked()
     {
-        if(WorldItemPreviewTab.m_WorldIsClicked || WorldItemPreviewTab.m_MuseumIsClicked || XanaConstants.loggedIn)
+        if(WorldDescriptionPopupPreview.m_WorldIsClicked || WorldDescriptionPopupPreview.m_MuseumIsClicked || ConstantsHolder.loggedIn)
             WorldManager.instance.PlayWorld();
     }
     public void ShowFooter(bool _state)
@@ -99,7 +99,7 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
-        if (SavaCharacterProperties.NeedToShowSplash == 1)
+        if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
@@ -115,7 +115,7 @@ public class UIManager : MonoBehaviour
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
     {
-        SavaCharacterProperties.NeedToShowSplash = 2;
+        SaveCharacterProperties.NeedToShowSplash = 2;
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
         LoadingHandler.Instance.worldLoadingScreen.GetComponent<CanvasGroup>().alpha = 0.0f;
         _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;

@@ -323,7 +323,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (StoreManager.instance.CheckColorPanelEnabled(ConstantsHolder.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> Hair Color Panel already enabled");
                             previousInd--;
@@ -357,7 +357,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>() != null)
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (StoreManager.instance.CheckColorPanelEnabled(ConstantsHolder.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> Lips Color Panel already enabled");
                             previousInd--;
@@ -400,7 +400,7 @@ public class AR_UndoRedo : MonoBehaviour
                     {
                         if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                         {
-                            if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                            if (StoreManager.instance.CheckColorPanelEnabled(ConstantsHolder.xanaConstants.currentButtonIndex))
                             {
                                 //Debug.Log("<color=blue> Eye Color Panel already enabled");
                                 previousInd--;
@@ -457,7 +457,7 @@ public class AR_UndoRedo : MonoBehaviour
 
                     if (btnObj.GetComponent<ItemDetail>().name == "ColorButton")
                     {
-                        if (StoreManager.instance.CheckColorPanelEnabled(XanaConstants.xanaConstants.currentButtonIndex))
+                        if (StoreManager.instance.CheckColorPanelEnabled(ConstantsHolder.xanaConstants.currentButtonIndex))
                         {
                             //Debug.Log("<color=blue> EyeBrow Color Panel already enabled");
                             previousInd--;

@@ -6,7 +6,7 @@ using EnhancedScrollerDemos.Pagination;
 using EnhancedUI;
 using UnityEngine.EventSystems;
 
-public class SearchWorldController : MonoBehaviour, IEnhancedScrollerDelegate
+public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
 {
     public WorldManager worldManagerRef;
     /// <summary>

@@ -816,8 +816,8 @@ public class ConnectingWallet : MonoBehaviour
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
-                XanaConstants.xanaToken = VerifySignatureReadObj.data.token;
-                //XanaConstants.loggedIn = true; // Updating Value in LoginWithWallet();
+                ConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
+                //ConstantsHolder.loggedIn = true; // Updating Value in LoginWithWallet();
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
 
                 UserLoginSignupManager.instance.LoginWithWallet();
@@ -1139,7 +1139,7 @@ public class ConnectingWallet : MonoBehaviour
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
         print("Useridxanalia " + PlayerPrefs.GetString("Useridxanalia"));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
-        XanaConstants.xanaConstants.LoginasGustprofile = true;
+        ConstantsHolder.xanaConstants.LoginasGustprofile = true;
     }
 
     IEnumerator HitNameAPIWithNewTechnique(string url, string Jsondata, string localUsername)
@@ -1167,11 +1167,11 @@ public class ConnectingWallet : MonoBehaviour
                     print("Success in name  field ");
                     PlayerPrefs.SetInt("IsLoggedIn", 1);
                     PlayerPrefs.SetInt("FristPresetSet", 1);
-                    ServerSIdeCharacterHandling.Instance.GetDataFromServer();
+                    ServerSideUserDataHandler.Instance.GetDataFromServer();
                     PlayerPrefs.SetString("PlayerName", localUsername);
                     if (GameManager.Instance.UiManager != null)//rik  
                     {
-                        GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                        GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                     }
                 }
             }

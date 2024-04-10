@@ -71,7 +71,7 @@ public class EmoteFilterManager : MonoBehaviour
         Debug.Log("local manage====");
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
+        //EmoteAnimationHandler.Instance.alreadyRuning = true;
 
         taboneclick = true;
         tabtwoclick = false;
@@ -88,7 +88,7 @@ public class EmoteFilterManager : MonoBehaviour
         Debug.Log("local manage====");
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
+        //EmoteAnimationHandler.Instance.alreadyRuning = true;
 
         taboneclick = true;
         tabtwoclick = false;
@@ -113,7 +113,7 @@ public class EmoteFilterManager : MonoBehaviour
         Debug.Log("local manage====");
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
+        //EmoteAnimationHandler.Instance.alreadyRuning = true;
 
         //taboneclick = true;
         //tabtwoclick = false;
@@ -147,7 +147,7 @@ public class EmoteFilterManager : MonoBehaviour
 
     public void PopupTextClik(Button TextBtn)
     {
-       // EmoteAnimationPlay.Instance.alreadyRuning = true;
+       // EmoteAnimationHandler.Instance.alreadyRuning = true;
         //Caching.ClearCache();
         //Debug.Log("text btn===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn===="+ GestureBtn.GetComponent<Text>().text);
         //Debug.Log("text btn2===="+ TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn 2===="+ PoseBtn.GetComponent<Text>().text);
@@ -220,27 +220,27 @@ public class EmoteFilterManager : MonoBehaviour
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
 
-        Debug.Log("Response Emote===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
-            if (EmoteAnimationPlay.Instance.emoteAnim.Count > 0)
+        Debug.Log("Response Emote===" + EmoteAnimationHandler.Instance.emoteAnim.Count);
+            if (EmoteAnimationHandler.Instance.emoteAnim.Count > 0)
             {
-                for (int i = 0; i < EmoteAnimationPlay.Instance.emoteAnim.Count; i++)
+                for (int i = 0; i < EmoteAnimationHandler.Instance.emoteAnim.Count; i++)
             {
-                //    Debug.Log("GROUP NAME====" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
+                //    Debug.Log("GROUP NAME====" + EmoteAnimationHandler.Instance.emoteAnim[i].group);
                 //    Debug.Log("GROUP NAME MY====" + animationTabNameLang);
                 valueget = true;
-                        //Debug.Log("data for load==" + animationTabNameLang + "group name===" + EmoteAnimationPlay.Instance.emoteAnim[i].group);
+                        //Debug.Log("data for load==" + animationTabNameLang + "group name===" + EmoteAnimationHandler.Instance.emoteAnim[i].group);
 
-                        //Debug.Log("animation count===" + EmoteAnimationPlay.Instance.emoteAnim.Count);
+                        //Debug.Log("animation count===" + EmoteAnimationHandler.Instance.emoteAnim.Count);
 
                         animObject = Instantiate(ListItemPrefab);
                         animObject.transform.SetParent(ContentPanel.transform);
                         animObject.transform.localPosition = Vector3.zero;
                         animObject.transform.localScale = Vector3.one;
                         animObject.transform.localRotation = Quaternion.identity;
-                        if (EmoteAnimationPlay.Instance.emoteAnim[i].name.Contains("React")){
-                            EmoteAnimationPlay.Instance.emoteAnim[i].name = EmoteAnimationPlay.Instance.emoteAnim[i].name.Replace("React", "Reaction");
+                        if (EmoteAnimationHandler.Instance.emoteAnim[i].name.Contains("React")){
+                            EmoteAnimationHandler.Instance.emoteAnim[i].name = EmoteAnimationHandler.Instance.emoteAnim[i].name.Replace("React", "Reaction");
                         }
-                        animObject.transform.name = EmoteAnimationPlay.Instance.emoteAnim[i].name;
+                        animObject.transform.name = EmoteAnimationHandler.Instance.emoteAnim[i].name;
 
                         //animObject.GetComponent<Image>().color= emoteBGs[(UnityEngine.Random.Range(0, emoteBGs.Length))];
 
@@ -248,12 +248,12 @@ public class EmoteFilterManager : MonoBehaviour
                 int i1 = i;
               
                 Image ima = animObject.transform.GetChild(0).gameObject.GetComponent<Image>();
-                AssetCache.Instance.EnqueueOneResAndWait(EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail.ToString(), (success) =>
+                AssetCache.Instance.EnqueueOneResAndWait(EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail.ToString(), EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail.ToString(), (success) =>
                 {
                  
                     if (success)
                     {
-                        AssetCache.Instance.LoadSpriteIntoImage(ima, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail, changeAspectRatio: true);
+                        AssetCache.Instance.LoadSpriteIntoImage(ima, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail, changeAspectRatio: true);
                         // CheckAndSetResolutionOfImage(imgFeed.sprite);
                         //  isImageSuccessDownloadAndSave = true;
                         progressbar.SetActive(false);
@@ -263,7 +263,7 @@ public class EmoteFilterManager : MonoBehaviour
                         Debug.Log("Download Failed");
                     }
                 });
-              //  StartCoroutine(LoadSpriteEnv(EmoteAnimationPlay.Instance.emoteAnim[i].thumbnail, animObject.transform.GetChild(1).gameObject, i));
+              //  StartCoroutine(LoadSpriteEnv(EmoteAnimationHandler.Instance.emoteAnim[i].thumbnail, animObject.transform.GetChild(1).gameObject, i));
 
                         LoadButtonClick LBC = animObject.GetComponent<LoadButtonClick>();
 
@@ -274,9 +274,9 @@ public class EmoteFilterManager : MonoBehaviour
 
 #if UNITY_ANDROID
 
-                        LBC.Initializ(EmoteAnimationPlay.Instance.emoteAnim[i1].android_file, EmoteAnimationPlay.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail);
+                        LBC.Initializ(EmoteAnimationHandler.Instance.emoteAnim[i1].android_file, EmoteAnimationHandler.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail);
 #elif UNITY_IOS
-                                LBC.Initializ(EmoteAnimationPlay.Instance.emoteAnim[i1].ios_file, EmoteAnimationPlay.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationPlay.Instance.emoteAnim[i1].thumbnail);
+                                LBC.Initializ(EmoteAnimationHandler.Instance.emoteAnim[i1].ios_file, EmoteAnimationHandler.Instance.emoteAnim[i1].name, this, ContentPanel.gameObject, EmoteAnimationHandler.Instance.emoteAnim[i1].thumbnail);
 
 #endif 
             }
@@ -320,13 +320,13 @@ public class EmoteFilterManager : MonoBehaviour
         }
         // }
         StartCoroutine(DelayToClose(panel));
-        EmoteAnimationPlay.Instance.isEmoteActive = false;
+        EmoteAnimationHandler.Instance.isEmoteActive = false;
         LoadEmoteAnimations.animClick = false;
         if (animObject.transform.GetChild(3).gameObject.activeInHierarchy)
         {
             animObject.transform.GetChild(3).gameObject.SetActive(false);
         }
-        if (EmoteAnimationPlay.Instance.AnimObject == null || EmoteAnimationPlay.Instance.currentAnimationTab == "Sit & lying")
+        if (EmoteAnimationHandler.Instance.AnimObject == null || EmoteAnimationHandler.Instance.currentAnimationTab == "Sit & lying")
         {
             emoteAnimationHighlightButton.SetActive(false);
             if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimationsPanelUpdate(false);
@@ -477,7 +477,7 @@ public class EmoteFilterManager : MonoBehaviour
 
         }
 
-        EmoteAnimationPlay.Instance.currentAnimationTab = animationTabNameLang;
+        EmoteAnimationHandler.Instance.currentAnimationTab = animationTabNameLang;
     }
    
   

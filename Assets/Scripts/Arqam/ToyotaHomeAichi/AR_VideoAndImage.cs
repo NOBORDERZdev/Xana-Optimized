@@ -387,12 +387,12 @@ namespace Toyota
 
             if (nftMAnager != null && _videoType != PMY_VideoTypeRes.islive)
             {
-                if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+                if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
                 {
                     nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[0], nftMAnager.worldInfos[id].Aurthor[0], nftMAnager.worldInfos[id].Des[0], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
                         nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType, roomNumber);
                 }
-                else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+                else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
                 {
                     nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[1], nftMAnager.worldInfos[id].Aurthor[1], nftMAnager.worldInfos[id].Des[1], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
                         nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType, roomNumber);

@@ -12,7 +12,7 @@ public class DisableAndEnableControls : MonoBehaviour
     {
         if (!isSetToValue)
         {
-            if (XanaConstants.xanaConstants.IsMuseum)
+            if (ConstantsHolder.xanaConstants.IsMuseum)
             {
                 if (ReferrencesForDynamicMuseum.instance.disableObjects.Length > 0)
                 {

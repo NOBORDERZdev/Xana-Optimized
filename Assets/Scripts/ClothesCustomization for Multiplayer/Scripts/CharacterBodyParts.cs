@@ -170,7 +170,7 @@ public class CharacterBodyParts : MonoBehaviour
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask, _gender);
@@ -1239,7 +1239,7 @@ public class CharacterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
         {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 

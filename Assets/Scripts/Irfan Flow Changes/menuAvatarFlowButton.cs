@@ -33,9 +33,9 @@ public class menuAvatarFlowButton : MonoBehaviour
 
     public void StoreBtnController()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
                 OnNFTAvatarDisableStore();
             else
                 OnNFTAvatarEnableStore();

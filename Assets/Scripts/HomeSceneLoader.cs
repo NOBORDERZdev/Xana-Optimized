@@ -7,7 +7,7 @@ using Metaverse;
 using System.Collections;
 using System;
 
-public class SceneManage : MonoBehaviourPunCallbacks
+public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
     public static bool callRemove;
     public bool isAddressableScene = true;
@@ -47,7 +47,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     public void disableSoundXanalobby() // Disabling Audio Sources in Xana Lobby on exit to avoid sound increase on Loding screen after exit
     {
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             if (SoundManagerSettings.soundManagerSettings != null)
             {
@@ -63,11 +63,11 @@ public class SceneManage : MonoBehaviourPunCallbacks
     public void LoadMain(bool changeOritentationChange)
     {
         disableSoundXanalobby();
-        XanaConstants.xanaConstants.isBackFromWorld = true;
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
             exitOnce = false;
-            if (XanaConstants.xanaConstants.isFromXanaLobby && !XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+            if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
@@ -76,9 +76,9 @@ public class SceneManage : MonoBehaviourPunCallbacks
 
                 if (changeOritentationChange)
                 {
-                    XanaConstants.xanaConstants.JjWorldSceneChange = false;
-                    XanaConstants.xanaConstants.orientationchanged = false;
-                    XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                    ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
+                    ConstantsHolder.xanaConstants.orientationchanged = false;
+                    ConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
                 }
                 if (GameManager.currentLanguage == "ja")
                 {
@@ -91,10 +91,10 @@ public class SceneManage : MonoBehaviourPunCallbacks
                 LoadingHandler.Instance.ShowLoading();
                 //LoadingHandler.Instance.ShowLoading(ScreenOrientation.LandscapeLeft);
 
-                if (XanaConstants.xanaConstants.needToClearMemory)
+                if (ConstantsHolder.xanaConstants.needToClearMemory)
                     AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
                 else
-                    XanaConstants.xanaConstants.needToClearMemory = true;
+                    ConstantsHolder.xanaConstants.needToClearMemory = true;
 
                 GC.Collect();
                 AssetBundle.UnloadAllAssetBundles(true);
@@ -106,21 +106,21 @@ public class SceneManage : MonoBehaviourPunCallbacks
     private IEnumerator LobbySceneSwitch()
     {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
 
         yield return new WaitForSeconds(.2f);
-        XanaConstants.xanaConstants.isBuilderScene = false;
-        XanaConstants.xanaConstants.JjWorldSceneChange = true;
-        XanaConstants.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+        ConstantsHolder.xanaConstants.isBuilderScene = false;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 
         // While Retruing from sub world to Xana Lobby
         // Storing Xana Lobby Ids
 
         if ((ConstantsGod.API_BASEURL.Contains("test")))
-            XanaConstants.xanaConstants.MuseumID = "406";
+            ConstantsHolder.xanaConstants.MuseumID = "406";
         else
-            XanaConstants.xanaConstants.MuseumID = "38";
+            ConstantsHolder.xanaConstants.MuseumID = "38";
 
         StartCoroutine(LoadMainEnumerator());
     }
@@ -128,8 +128,8 @@ public class SceneManage : MonoBehaviourPunCallbacks
     {
         LeaveRoom();
         yield return new WaitForSeconds(.5f);
-        if (XanaConstants.xanaConstants.museumAssetLoaded != null)
-            XanaConstants.xanaConstants.museumAssetLoaded.Unload(true);
+        if (ConstantsHolder.xanaConstants.museumAssetLoaded != null)
+            ConstantsHolder.xanaConstants.museumAssetLoaded.Unload(true);
     }
     public void LoadWorld()
     {
@@ -164,16 +164,16 @@ public class SceneManage : MonoBehaviourPunCallbacks
     }
     IEnumerator LoadMianScene()
     {
-        XanaConstants.xanaConstants.returnedFromGamePlay = true;
-        XanaConstants.xanaConstants.CurrentSceneName = "Addressable";
+        ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
+        ConstantsHolder.xanaConstants.CurrentSceneName = "Addressable";
         yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
         print("mian scne " + mainScene);
-        XanaConstants.xanaConstants.isBackFromWorld = true;
-        if (XanaConstants.xanaConstants.JjWorldSceneChange)
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;
+        if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             float _rand;
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (ConstantsHolder.xanaConstants.isBuilderScene)
                 _rand = UnityEngine.Random.Range(25f, 30f);
             else
                 _rand = UnityEngine.Random.Range(6f, 10f);
@@ -184,7 +184,7 @@ public class SceneManage : MonoBehaviourPunCallbacks
         }
         else
         {
-            if (XanaConstants.xanaConstants.isBuilderScene)
+            if (ConstantsHolder.xanaConstants.isBuilderScene)
             {
                 float _rand = UnityEngine.Random.Range(10f, 15f);
                 LoadingHandler.Instance.randCurrentValue = _rand;

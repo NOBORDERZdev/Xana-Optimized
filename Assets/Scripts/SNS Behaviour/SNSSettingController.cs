@@ -73,7 +73,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to terms and policy.......
     public void OpenPrivacyPolicyHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
         }
@@ -82,7 +82,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Tearms and condition button click.......
     public void OpenTermsAndConditionHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
         }
@@ -174,7 +174,7 @@ public class SNSSettingController : MonoBehaviour
     public void LogoutSuccess()
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
-        XanaConstants.xanaConstants.userProfileLink = "";
+        ConstantsHolder.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
@@ -199,13 +199,13 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.ResetAllFeedScreen(false);
             FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
             PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
             if (GameManager.Instance.UiManager != null)
             {
-                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<HomeFooterHandler>().OnClickHomeButton();
             }
             CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)

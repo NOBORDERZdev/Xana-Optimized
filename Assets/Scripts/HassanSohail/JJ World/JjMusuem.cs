@@ -33,7 +33,7 @@ public class JjMusuem : MonoBehaviour
 
     void SetPlayerPos()
     {
-        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+        SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
     }
     /// <summary>
     /// Set player position in room according to the point on which the player enter
@@ -61,7 +61,7 @@ public class JjMusuem : MonoBehaviour
     //    if (manager.allowTeleportation && (other.CompareTag("PhotonLocalPlayer") /*|| other.CompareTag("Player")*/) && player.allowTeleport)
     //    {
     //        print("player enter");
-    //        SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
+    //        SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
     //    }
     //}
 
@@ -109,7 +109,7 @@ public class JjMusuem : MonoBehaviour
         // isAlreadyRunning = true;
         manager.allowTeleportation = true;
         player.allowTeleport = true;
-        if (XanaConstants.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
+        if (ConstantsHolder.xanaConstants.mussuemEntry == JJMussuemEntry.Astro)
         {
             LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(180f, 0.5f));
         }

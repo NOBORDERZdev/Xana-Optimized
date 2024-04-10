@@ -85,7 +85,7 @@ namespace Metaverse
         private void OnApplicationQuit()
         {
             PhotonNetwork.Destroy(currentDummyPlayer);
-            SceneManage.callRemove = true;
+            HomeSceneLoader.callRemove = true;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
@@ -118,7 +118,7 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
-                XanaConstants.xanaConstants.needToClearMemory = false;    
+                ConstantsHolder.xanaConstants.needToClearMemory = false;    
                 if (LoadingHandler.Instance)
                     LoadingHandler.Instance.HideLoading();
             GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
@@ -407,7 +407,7 @@ namespace Metaverse
 
                     currentDummyPlayer.transform.GetChild(4).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = PhotonNetwork.NickName;
                     spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
-                    // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
+                    // spawnPoint.GetComponent<EmoteAnimationHandler>().animator = currentDummyPlayer.GetComponent<Animator>();
 
                     currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
                     //Defaultanimator  = currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
@@ -551,7 +551,7 @@ namespace Metaverse
             spawnPoint.GetComponent<PlayerControllerNew>().animator = currentDummyPlayer.GetComponent<Animator>();
             spawnPoint.GetComponent<PlayerControllerNew>().playerRig = currentDummyPlayer.GetComponent<FirstPersonJump>().jumpRig;
 
-            // spawnPoint.GetComponent<EmoteAnimationPlay>().animator = currentDummyPlayer.GetComponent<Animator>();
+            // spawnPoint.GetComponent<EmoteAnimationHandler>().animator = currentDummyPlayer.GetComponent<Animator>();
             avatarID = _characterIndex;
             HighLighter();
             PlayerPrefs.SetInt("SelectedAvatarID", avatarID);

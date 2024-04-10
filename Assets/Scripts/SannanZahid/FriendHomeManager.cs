@@ -20,14 +20,14 @@ public class FriendHomeManager : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(BuildMoodDialog());
-        SocketController.instance.updateFriendPostDelegate += UpdateFriendPost;
+        HomeScoketHandler.instance.updateFriendPostDelegate += UpdateFriendPost;
 
         MainSceneEventHandler.OnSucessFullLogin += SpawnFriends;
     }
     private void OnDisable()
     {
-        if (SocketController.instance != null)
-            SocketController.instance.updateFriendPostDelegate -= UpdateFriendPost;
+        if (HomeScoketHandler.instance != null)
+            HomeScoketHandler.instance.updateFriendPostDelegate -= UpdateFriendPost;
 
         MainSceneEventHandler.OnSucessFullLogin -= SpawnFriends;
     }
@@ -43,7 +43,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     string PrepareApiURL()
     {
-        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + XanaConstants.userId;
+        return ConstantsGod.API_BASEURL + "/social/get-close-friends/" + ConstantsHolder.userId;
     }
    IEnumerator BuildMoodDialog()
     {

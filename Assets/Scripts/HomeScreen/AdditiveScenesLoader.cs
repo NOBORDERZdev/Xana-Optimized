@@ -3,7 +3,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class AdditiveScenesManager : MonoBehaviour
+public class AdditiveScenesLoader : MonoBehaviour
 {
     public float sceneDelay;
     public string sceneTest;
@@ -12,14 +12,14 @@ public class AdditiveScenesManager : MonoBehaviour
     public string sceneTest4;
     public GameObject SNSmodule;
     public GameObject SNSMessage;
-    public BottomTabManager homeBottomTab;
+    public HomeFooterHandler homeBottomTab;
     
 
     public static bool isAppOpen = false;
 
     private void Start()
     {
-        if(!XanaConstants.xanaConstants.JjWorldSceneChange)
+        if(!ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;
             StartCoroutine(AddDelayStore(sceneDelay / 3));
@@ -52,10 +52,10 @@ public class AdditiveScenesManager : MonoBehaviour
         {
             yield return null;
         }
-        if (XanaConstants.xanaConstants.isBackfromSns)
+        if (ConstantsHolder.xanaConstants.isBackfromSns)
         {
             homeBottomTab.OnClickFeedButton();
-            XanaConstants.xanaConstants.isBackfromSns=false;
+            ConstantsHolder.xanaConstants.isBackfromSns=false;
         }
         LoadingHandler.Instance.HideLoading();
 
@@ -76,12 +76,12 @@ public class AdditiveScenesManager : MonoBehaviour
     //        yield return null;
     //    }
     //    //GameManager.Instance.mainCharacter.GetComponent<AvatarController>().IntializeAvatar();
-    //    if (XanaConstants.xanaConstants.isBackfromSns)
+    //    if (ConstantsHolder.xanaConstants.isBackfromSns)
     //    {
     //        homeBottomTab.OnClickFeedButton();
-    //        XanaConstants.xanaConstants.isBackfromSns=false;
+    //        ConstantsHolder.xanaConstants.isBackfromSns=false;
     //    }
     //    LoadingHandler.Instance.HideLoading();
-    //   // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, XanaConstants.xanaConstants.isBackFromWorld);
+    //   // LoadingHandler.Instance.HideLoading(ScreenOrientation.Portrait, ConstantsHolder.xanaConstants.isBackFromWorld);
     //}
 }

@@ -35,7 +35,7 @@ public class StayTimeTracker : MonoBehaviour
             else if (worldName.Contains("FiveElement"))
                 worldName = FirebaseTrigger.StayTime_FiveElement.ToString();
 
-            else if (XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || XanaConstants.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
+            else if (ConstantsHolder.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Astro) || ConstantsHolder.xanaConstants.mussuemEntry.Equals(JJMussuemEntry.Rental))
                 worldName = FirebaseTrigger.StayTime_AtomRental.ToString();
 
             else if (worldName.Contains("D_Infinity_Labo"))

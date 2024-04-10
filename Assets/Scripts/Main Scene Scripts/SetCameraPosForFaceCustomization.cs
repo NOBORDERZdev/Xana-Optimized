@@ -5,9 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChangeCameraForZoomFace : MonoBehaviour
+public class SetCameraPosForFaceCustomization : MonoBehaviour
 {
-    public static ChangeCameraForZoomFace instance;
+    public static SetCameraPosForFaceCustomization instance;
     CinemachineBrain cineMachineBrainScript;
     Camera workingCamera;
     public Camera switchCamera;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PopupClick : MonoBehaviour
+public class VersionControlPopup : MonoBehaviour
 {
     public GameObject VersionPopup;
     public GameObject FooterTabs;

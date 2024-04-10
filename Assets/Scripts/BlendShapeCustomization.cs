@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BlendShapeCustom : MonoBehaviour
+public class BlendShapeCustomization : MonoBehaviour
 {
 
 

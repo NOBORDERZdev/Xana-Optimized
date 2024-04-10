@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 
-public class WorldItemPreviewTab : MonoBehaviour
+public class WorldDescriptionPopupPreview : MonoBehaviour
 {
     public string worldId;
     public GameObject thumbnailPrefabRef;
