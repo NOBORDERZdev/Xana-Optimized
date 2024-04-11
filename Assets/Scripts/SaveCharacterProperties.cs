@@ -82,7 +82,7 @@ public class SaveCharacterProperties : MonoBehaviour
                     GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, _CharacterData.FaceBlendsShapes[i]);
             }
 
-            CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);// Implementing Save Skin Color
+            AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);// Implementing Save Skin Color
             if (_CharacterData.Skin != null && _CharacterData.SssIntensity != null)
             {
                 charcterBodyParts.ImplementSavedSkinColor(_CharacterData.Skin, _CharacterData.SssIntensity);
@@ -115,7 +115,7 @@ public class SaveCharacterProperties : MonoBehaviour
                 if (_CharacterData.FaceBlendsShapes != null && i < _CharacterData.FaceBlendsShapes.Length)
                     GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, _CharacterData.FaceBlendsShapes[i]);
             }
-            CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
+            AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
         }
     }
 
@@ -150,7 +150,7 @@ public class SaveCharacterProperties : MonoBehaviour
                     _CharacterData.FaceBlendsShapes[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
             }
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), JsonUtility.ToJson(_CharacterData));
-            StoreManager.instance.OnSaveBtnClicked();
+            InventoryManager.instance.OnSaveBtnClicked();
         }
     }
 
@@ -163,9 +163,9 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.id = LoadPlayerAvatar.avatarId;
         SaveItemList.name = LoadPlayerAvatar.avatarName;
         SaveItemList.thumbnail = LoadPlayerAvatar.avatarThumbnailUrl;
-        StoreManager.instance.GreyRibbonImage.SetActive(true);
-        StoreManager.instance.WhiteRibbonImage.SetActive(false);
-        StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
+        InventoryManager.instance.GreyRibbonImage.SetActive(true);
+        InventoryManager.instance.WhiteRibbonImage.SetActive(false);
+        InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
         SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
         SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
@@ -210,16 +210,16 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.lipMorphed = ConstantsHolder.xanaConstants.isLipMorphed;
         SaveItemList.gender = CharacterHandler.instance.activePlayerGender.ToString();
 
-        SaveItemList.ai_gender = StoreManager.instance.itemData.gender;
-        SaveItemList.charactertypeAi = StoreManager.instance.itemData.CharactertypeAi;
-        SaveItemList.hair_color = StoreManager.instance.itemData.hair_color;
-        SaveItemList.lip_color = StoreManager.instance.itemData.lips_color;
-        SaveItemList.skin_color = StoreManager.instance.itemData.skin_color;
-        SaveItemList.faceItemData = StoreManager.instance.itemData.faceItemData;
-        SaveItemList.lipItemData = StoreManager.instance.itemData.lipItemData;
-        SaveItemList.noseItemData = StoreManager.instance.itemData.noseItemData;
-        SaveItemList.hairItemData = StoreManager.instance.itemData._hairItemData;
-        SaveItemList.eyeItemData = StoreManager.instance.itemData._eyeItemData;
+        SaveItemList.ai_gender = InventoryManager.instance.itemData.gender;
+        SaveItemList.charactertypeAi = InventoryManager.instance.itemData.CharactertypeAi;
+        SaveItemList.hair_color = InventoryManager.instance.itemData.hair_color;
+        SaveItemList.lip_color = InventoryManager.instance.itemData.lips_color;
+        SaveItemList.skin_color = InventoryManager.instance.itemData.skin_color;
+        SaveItemList.faceItemData = InventoryManager.instance.itemData.faceItemData;
+        SaveItemList.lipItemData = InventoryManager.instance.itemData.lipItemData;
+        SaveItemList.noseItemData = InventoryManager.instance.itemData.noseItemData;
+        SaveItemList.hairItemData = InventoryManager.instance.itemData._hairItemData;
+        SaveItemList.eyeItemData = InventoryManager.instance.itemData._eyeItemData;
 
 
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
@@ -355,7 +355,7 @@ public class SaveCharacterProperties : MonoBehaviour
             }
 
             SaveItemList.FaceBlendsShapes = blendValues;
-            CharacterCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
+            AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
 
             for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
             {

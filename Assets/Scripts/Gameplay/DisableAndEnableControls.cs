@@ -14,10 +14,10 @@ public class DisableAndEnableControls : MonoBehaviour
         {
             if (ConstantsHolder.xanaConstants.IsMuseum)
             {
-                if (ReferrencesForDynamicMuseum.instance.disableObjects.Length > 0)
+                if (ReferencesForGamePlay.instance.disableObjects.Length > 0)
                 {
                     disableObjectOnEnableOfthis.Clear();
-                    foreach (GameObject go in ReferrencesForDynamicMuseum.instance.disableObjects)
+                    foreach (GameObject go in ReferencesForGamePlay.instance.disableObjects)
                     {
                         disableObjectOnEnableOfthis.Add(go);
                     }

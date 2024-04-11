@@ -102,13 +102,13 @@ public class DefaultClothDatabase : MonoBehaviour
     //    print("Assign Saved Cloth FUnction");
 
     //    // itemList.Add(new Item(0, "", "", "MDpants", "Legs", (GameObject)Resources.Load("Gear/MDpants"), "", "Bottom"));
-    //    StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpants", 0);
+    //    InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpants", 0);
     //    // itemList.Add(new Item(0, "", "", "FDboots", "Feet", (GameObject)Resources.Load("Gear/FDboots"), "", "Shoes"));
-    //    StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "FDboots", 7);
+    //    InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "FDboots", 7);
     //    // itemList.Add(new Item(0, "", "", "MDgambeson", "Chest", (GameObject)Resources.Load("Gear/MDgambeson"), "", "Outer"));
-    //    StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDgambeson", 1);
+    //    InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDgambeson", 1);
     //    // itemList.Add(new Item(0, "", "", "FDhair", "Hair", (GameObject)Resources.Load("Gear/FDhair"), "", "Hair"));
-    //    StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "FDhair", 2);
+    //    InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "FDhair", 2);
 
     //}
     public void RevertSavedCloths()
@@ -163,7 +163,7 @@ public class DefaultClothDatabase : MonoBehaviour
         //                        itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
         //                        itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
 
-        //                        //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+        //                        //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
         //                        if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
         //                        {
         //                            downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID,_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.GetComponent<AvatarController>()));
@@ -190,10 +190,10 @@ public class DefaultClothDatabase : MonoBehaviour
         //        }
         //        else if (RevertBool)
         //        {
-        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpant", 0);
-        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "MDshoes", 7);
-        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDshirt", 1);
-        //            //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "MDhairs", 2);
+        //            //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_legs", "Legs", "MDpant", 0);
+        //            //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_slug", "Feet", "MDshoes", 7);
+        //            //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("naked_chest", "Chest", "MDshirt", 1);
+        //            //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes("bald_head", "Hair", "MDhairs", 2);
 
         //            // Commented By Talha Now use texture for Body
         //            //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornChest.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
@@ -355,7 +355,7 @@ public class DefaultClothDatabase : MonoBehaviour
     //                    itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
     //                    itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
     //                    itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
-    //                    StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+    //                    InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
 
     //                }
     //            }
@@ -372,7 +372,7 @@ public class DefaultClothDatabase : MonoBehaviour
                     itemList.Add(new Item(0, "", "", "MDpant", "Legs", (GameObject)Resources.Load("Gear/MDpant"), "", "", "Bottom"));
 
                     // Commented By Talha Now use texture for Body
-                    //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDpant"), "naked_legs", "Legs", _getItem.Slug, 0);
+                    //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDpant"), "naked_legs", "Legs", _getItem.Slug, 0);
                     //GameManager.Instance.mainCharacter.GetComponent<Equipment>().wornLegs.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(0,
                     //  GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>().m_BodyParts[2].GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(0));
                     break;
@@ -380,7 +380,7 @@ public class DefaultClothDatabase : MonoBehaviour
             case "Outer":
                 {
                     itemList.Add(new Item(0, "", "", "MDshirt", "Chest", (GameObject)Resources.Load("Gear/MDshirt"), "", "", "Outer"));
-                   // StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDshirt"), "naked_chest", "Chest", _getItem.Slug, 1);
+                   // InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDshirt"), "naked_chest", "Chest", _getItem.Slug, 1);
 
 
                     // Commented By Talha Now use texture for Body
@@ -392,14 +392,14 @@ public class DefaultClothDatabase : MonoBehaviour
             case "Shoes":
                 {
                     itemList.Add(new Item(0, "", "", "MDshoes", "Feet", (GameObject)Resources.Load("Gear/MDshoes"), "", "", "Shoes"));
-                    //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDshoes"), "naked_slug", "Feet", _getItem.Slug, 7);
+                    //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDshoes"), "naked_slug", "Feet", _getItem.Slug, 7);
 
                     break;
                 }
             case "Hair":
                 {
                     itemList.Add(new Item(0, "", "", "MDhairs", "Hair", (GameObject)Resources.Load("Gear/MDhairs"), "", "", "Hair"));
-                    //StoreManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDhairs"), "bald_head", "Hair", _getItem.Slug, 2);
+                    //InventoryManager.instance._DownloadRigClothes.ui.AddOrRemoveClothes((GameObject)Resources.Load("Gear/MDhairs"), "bald_head", "Hair", _getItem.Slug, 2);
                     break;
                 }
 
@@ -491,7 +491,7 @@ public class DefaultClothDatabase : MonoBehaviour
 //                    itemobj.id = _CharacterData.myItemObj[i].ItemID.ToString();
 //                    itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
 //                    itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
-//                    // StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+//                    // InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].SubCategoryname, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
 //                    GameObject item = null;
 //                    downloader.StartCoroutine(downloader.DownloadAddressableObj(_CharacterData.eyeTextureName, (GameObject callback) => {
 //                        item = callback;

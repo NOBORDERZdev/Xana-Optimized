@@ -358,7 +358,7 @@ public class HomeFooterHandler : MonoBehaviour
     //this method is used to Explore button click.......
     public void OnClickWorldButton()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("WorldButton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("WorldButton"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -378,14 +378,14 @@ public class HomeFooterHandler : MonoBehaviour
             OnSelectedClick(1);
             if(additiveScenesManager != null)
             {
-                //if (MessageController.Instance != null)
+                //if (SNS_MessageController.Instance != null)
                 //{
-                //    MessageController.Instance.isChatDetailsScreenDeactive = true;
+                //    SNS_MessageController.Instance.isChatDetailsScreenDeactive = true;
                 //}
                // additiveScenesManager.SNSMessage.SetActive(true);
                 additiveScenesManager.SNSmodule.SetActive(false);
                 gameManager.defaultSelection = 1;
-                //MessageController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(1);
+                //SNS_MessageController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(1);
             }
             else
             {
@@ -406,7 +406,7 @@ public class HomeFooterHandler : MonoBehaviour
     /*public void OnclickEventButton()
     {
         Debug.Log("OnclickEventButton");
-        PremiumUsersDetails.Instance.OpenComingSoonPopUp();
+        UserPassManager.Instance.OpenComingSoonPopUp();
     }*/
 
     //this method is used to create button click.......
@@ -445,7 +445,7 @@ public class HomeFooterHandler : MonoBehaviour
     //this method is used to feed button click.......
     public void OnClickFeedButton()
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("sns_feed"))
         //{
         //    print("Please Upgrade to Premium account");
         //    return;
@@ -499,7 +499,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
             //else
             //{
-            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //    SNS_APIManager.Instance.RequestGetUserDetails("myProfile");
             //}
 
             if (FeedUIController.Instance != null)
@@ -530,7 +530,7 @@ public class HomeFooterHandler : MonoBehaviour
 
     public void OnClickAddFriends()
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("AdFriends"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("AdFriends"))
         //{
         //    print("Please Upgrade to Premium account");
         //    return;
@@ -569,7 +569,7 @@ public class HomeFooterHandler : MonoBehaviour
             //below camera line was Commented before but i uncommented it in order to make profile 2.0 work ------- UMER
             gameManager.m_MainCamera.gameObject.SetActive(true);
             FeedUIController.Instance.SetAddFriendScreen(true);
-            APIManager.Instance.SetHotFriend();
+            SNS_APIManager.Instance.SetHotFriend();
             FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
             FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
             //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
@@ -587,7 +587,7 @@ public class HomeFooterHandler : MonoBehaviour
             //}
             //else
             //{
-            //    APIManager.Instance.RequestGetUserDetails("myProfile");
+            //    SNS_APIManager.Instance.RequestGetUserDetails("myProfile");
             //}
 
             //if (FeedUIController.Instance != null)
@@ -797,6 +797,6 @@ public class HomeFooterHandler : MonoBehaviour
 
     public void ComingSoon()
     {
-        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 }

@@ -59,11 +59,11 @@ public class NpcToNpcChat : MonoBehaviour
 
     private void OnEnable()
     {
-        //XanaChatSocket.instance.npcSendMsg += NpcReply;
+        //ChatSocketManager.instance.npcSendMsg += NpcReply;
     }
     private void OnDisable()
     {
-        //XanaChatSocket.instance.npcSendMsg -= NpcReply;
+        //ChatSocketManager.instance.npcSendMsg -= NpcReply;
     }
 
     void Start()
@@ -128,7 +128,7 @@ public class NpcToNpcChat : MonoBehaviour
                 responseFeed = responseData.response_en;
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.NpcToNpc, id.ToString());
+                ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.NpcToNpc, id.ToString());
             Debug.Log("Communication Response(Npc Message)(NpcToNpc): " + responseFeed);
         }
         else
@@ -178,7 +178,7 @@ public class NpcToNpcChat : MonoBehaviour
                 responseFeed = feed.output_data.user_msg_en;
 
             if (XanaChatSystem.instance)
-                XanaChatSocket.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
+                ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.FreeSpeechNpc, id.ToString());
             Debug.Log("Communication Response(Npc Reply)(NpcToNpc): " + responseFeed);
         }
         else

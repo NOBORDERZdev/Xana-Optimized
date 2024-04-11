@@ -155,7 +155,7 @@ public class MyProfileDataManager : MonoBehaviour
     public string permissionCheck = "";
     public string TestingJasonForTags;
     UserLoginSignupManager userLoginSignupManager;
-    APIManager apiManager;
+    SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
     FeedUIController feedUIController;
     private void Awake()
@@ -185,7 +185,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         ClearDummyData();//clear dummy data.......
         userLoginSignupManager = UserLoginSignupManager.instance;
-        apiManager= APIManager.Instance;
+        apiManager= SNS_APIManager.Instance;
         profileUIHandler = ProfileUIHandler.instance;
         feedUIController = FeedUIController.Instance;
         string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
@@ -231,7 +231,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (apiManager == null)
         {
-            apiManager = APIManager.Instance;
+            apiManager = SNS_APIManager.Instance;
         }
         apiManager.RequestGetUserDetails("myProfile");//Get My Profile data       
         MyProfileSceenShow(true);//active myprofile screen
@@ -326,7 +326,7 @@ public class MyProfileDataManager : MonoBehaviour
             jobText.gameObject.SetActive(false);
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
             {
-                textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+                textUserBio.text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
                 if (textUserBio.text == " ")
                     _alignment_space.SetActive(false);
                 else
@@ -495,7 +495,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (seeMoreButtonTextObj.activeSelf)
         {
-            textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            textUserBio.text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             SeeMoreLessBioTextSetup(false);
         }
         else
@@ -643,7 +643,7 @@ public class MyProfileDataManager : MonoBehaviour
         GetAvailableTagsFromServer();
         if (myProfileData.userProfile != null)
         {
-            editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            editProfileBioInputfield.Text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             if (string.IsNullOrWhiteSpace(editProfileBioInputfield.Text))
             {
                 editProfileBioInputfield.Text = "";
@@ -831,9 +831,9 @@ public class MyProfileDataManager : MonoBehaviour
         if (myProfileData.userProfile != null)
         {
             //job = myProfileData.userProfile.job;
-            job = APIManager.DecodedString(myProfileData.userProfile.job);
+            job = SNS_APIManager.DecodedString(myProfileData.userProfile.job);
             website = myProfileData.userProfile.website;
-            bio = APIManager.DecodedString(myProfileData.userProfile.bio);
+            bio = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             gender = myProfileData.userProfile.gender;
             uniqueUsername = myProfileData.userProfile.username;
         }
@@ -896,8 +896,8 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            apiManager.RequestUpdateUserProfile(uniqueUsername ?? "", gender ?? "Male", APIManager.EncodedString(job ?? ""),
-                countryName ?? "", website ?? "", APIManager.EncodedString(bio ?? ""), tempTags);
+            apiManager.RequestUpdateUserProfile(uniqueUsername ?? "", gender ?? "Male", SNS_APIManager.EncodedString(job ?? ""),
+                countryName ?? "", website ?? "", SNS_APIManager.EncodedString(bio ?? ""), tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))

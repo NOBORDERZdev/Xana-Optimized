@@ -42,13 +42,13 @@ public class MiniMapOnOff : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.minimap == 1)
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(false);
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
             PlayerPrefs.SetInt("minimap", 0);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
         }
         else
         {
-            ReferrencesForDynamicMuseum.instance.minimap.SetActive(true);
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
         }

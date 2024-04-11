@@ -49,12 +49,12 @@ public class LoadButtonClick : MonoBehaviour
                 AnimationData d = JsonUtility.FromJson<AnimationData>(data);
                 if (animationName == d.animationName)
                 {
-                    StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                    StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                     return;
                 }
                 else
                 {
-                    StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                    StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                 }
             }
         }
@@ -70,16 +70,16 @@ public class LoadButtonClick : MonoBehaviour
                 AnimationData d = JsonUtility.FromJson<AnimationData>(data);
                 if (animationName == d.animationName)
                 {
-                    StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                    StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                     return;
                 }
                 else
                 {
-                    StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                    StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                 }
             }
             else                                                     // AH Working
-                StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
 
         //EmoteAnimationHandler.AnimationStopped += AnimationStopped;
@@ -92,7 +92,7 @@ public class LoadButtonClick : MonoBehaviour
     public bool danceAnim;
     public void OnButtonClick() //add by kamran
     {
-        if (PlayerControllerNew.isJoystickDragging == true)
+        if (PlayerController.isJoystickDragging == true)
         {
             return;
         }
@@ -122,7 +122,7 @@ public class LoadButtonClick : MonoBehaviour
 
             if (EmoteAnimationHandler.Instance.alreadyRuning)
             {
-                //LoadFromFile.animClick = true;
+                //GameplayEntityLoader.animClick = true;
                 EmoteAnimationHandler.remoteUrlAnimation = objectUrl;
                 EmoteAnimationHandler.remoteUrlAnimationName = animationName;
                 //  PlayerPrefs.Save();
@@ -140,7 +140,7 @@ public class LoadButtonClick : MonoBehaviour
             }
             try
             {
-                LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
             }
             catch (Exception e)
@@ -176,7 +176,7 @@ public class LoadButtonClick : MonoBehaviour
 
                 if (EmoteAnimationHandler.Instance.alreadyRuning)
                 {
-                    //LoadFromFile.animClick = true;
+                    //GameplayEntityLoader.animClick = true;
                     EmoteAnimationHandler.remoteUrlAnimation = objectUrl;
                     EmoteAnimationHandler.remoteUrlAnimationName = animationName;
                     //  PlayerPrefs.Save();
@@ -194,7 +194,7 @@ public class LoadButtonClick : MonoBehaviour
                 }
                 try
                 {
-                    LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                    GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
                 }
                 catch (Exception e)
@@ -217,7 +217,7 @@ public class LoadButtonClick : MonoBehaviour
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
         AnimationData animData = new AnimationData();
-        //StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+        //StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
         animData.animationName = animationName;
         animData.animationURL = objectUrl;
         animData.thumbURL = thumbUrl;

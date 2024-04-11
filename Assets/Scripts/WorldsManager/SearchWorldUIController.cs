@@ -31,7 +31,7 @@ public class SearchWorldUIController : MonoBehaviour
     }
     public void GetSearchBarStatus()
     {
-        Debug.Log("GetSearchBarStatus => " + PremiumUsersDetails.Instance.CheckSpecificItem("WorldSearchFeature"));
+        Debug.Log("GetSearchBarStatus => " + UserPassManager.Instance.CheckSpecificItem("WorldSearchFeature"));
         searchWorldInput.Select();
         searchWorldInput.Clear();
     }

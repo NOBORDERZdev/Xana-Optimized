@@ -45,7 +45,7 @@ namespace Metaverse
        
         public void SelectAvatar()
         {
-           AvatarManager.Instance.SelectedAvatarPreview(_character, _characterIndex);
+           AvatarSpawnerOnDisconnect.Instance.SelectedAvatarPreview(_character, _characterIndex);
            // _character.GetComponent<PlayerSendController>().ChangeAvatar(_characterIndex);
         }
     }

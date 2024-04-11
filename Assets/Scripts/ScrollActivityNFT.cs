@@ -76,9 +76,9 @@ public class ScrollActivityNFT : MonoBehaviour
     public async void EquipBtnClicked()
     {
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("EquipButton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("EquipButton"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             return;
@@ -130,7 +130,7 @@ public class ScrollActivityNFT : MonoBehaviour
             PlayerPrefs.DeleteKey("nftID");
             ConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+            SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);

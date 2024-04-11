@@ -191,7 +191,7 @@ public class LoadingHandler : MonoBehaviour
             //isFedderActive = true;
             if (ConstantsHolder.xanaConstants.isBackFromWorld)
             {
-                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+                if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
                 {
                     ActivateFadder_AtLoadingStart();
                 }
@@ -259,9 +259,9 @@ public class LoadingHandler : MonoBehaviour
    
     public void ResetLoadingValues()
     {
-        //if (LoadFromFile.instance)
+        //if (GameplayEntityLoader.instance)
         //{
-        //    LoadFromFile.instance.isEnvLoaded = false;
+        //    GameplayEntityLoader.instance.isEnvLoaded = false;
         //}
         currentValue = 0;
         isLoadingComplete = false;
@@ -308,7 +308,7 @@ public class LoadingHandler : MonoBehaviour
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;
 
 
-                //if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !ConstantsHolder.xanaConstants.JjWorldSceneChange)
+                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !ConstantsHolder.xanaConstants.JjWorldSceneChange)
                 //{
                 //    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
                 //    Screen.orientation = ScreenOrientation.Portrait;
@@ -337,8 +337,8 @@ public class LoadingHandler : MonoBehaviour
         blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
 
 
-        if (ReferrencesForDynamicMuseum.instance != null)
-            ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
+        if (ReferencesForGamePlay.instance != null)
+            ReferencesForGamePlay.instance.workingCanvas.SetActive(true);
         //loadingPanel.SetActive(false);
 
         if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
@@ -536,9 +536,9 @@ public class LoadingHandler : MonoBehaviour
             }
 
 
-            if (LoadFromFile.instance && !loadMainScene)
+            if (GameplayEntityLoader.instance && !loadMainScene)
             {
-                if (LoadFromFile.instance.isEnvLoaded)
+                if (GameplayEntityLoader.instance.isEnvLoaded)
                 {
                     isLoadingComplete = true;
                 }

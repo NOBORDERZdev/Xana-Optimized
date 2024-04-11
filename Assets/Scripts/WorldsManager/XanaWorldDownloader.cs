@@ -97,7 +97,7 @@ public class XanaWorldDownloader : MonoBehaviour
         if (!ConstantsHolder.xanaConstants.isBuilderScene)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
+            ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
 
     }
@@ -106,7 +106,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
 
         BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
-        ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+        ScreenOrientationManager.switchOrientation -= OnOrientationChange;
         ResetAll();
 
     }
@@ -472,7 +472,7 @@ public class XanaWorldDownloader : MonoBehaviour
         CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -499,7 +499,7 @@ public class XanaWorldDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -544,7 +544,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);

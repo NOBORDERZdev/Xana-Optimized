@@ -174,13 +174,13 @@ public class UserRegisterationManager : MonoBehaviour
     public userRoleScript userRoleObj;
     /// <Web 3.0 and Web 2.0>
     public bool XanaliaBool;
-    public Web3APIforWeb2 _web3APIforWeb2;
+    public Web3Web2Handler _web3APIforWeb2;
     /// </Web 3.0 and Web 2.0>
     /// 
     public int btnClickedNo = 0;
     public void ShowCommingsoonPopup()
     {
-        SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 
     #region WelcomeScreen
@@ -238,7 +238,7 @@ public class UserRegisterationManager : MonoBehaviour
             {
                 PlayerPrefs.SetInt("presetPanel", 1);
                 DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
-                StoreManager.instance.OnSaveBtnClicked();  // reg complete go home
+                InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
             }
         }
         else
@@ -248,7 +248,7 @@ public class UserRegisterationManager : MonoBehaviour
             shownWelcome = false;
             if (!PlayerPrefs.HasKey("shownWelcome"))
             {
-                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
 
@@ -295,14 +295,14 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("IsProcessComplete", 1);
             PlayerPrefs.SetInt("shownWelcome", 1);
         }
-        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
     //private void Awake()
     //{
     //    int x = ReturnNftRole("Free");
     //    checkbool_preser_start = true;
-    //    _web3APIforWeb2 = this.gameObject.GetComponent<Web3APIforWeb2>();
+    //    _web3APIforWeb2 = this.gameObject.GetComponent<Web3Web2Handler>();
     //    instance = this;
     //    if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
     //    {
@@ -334,12 +334,12 @@ public class UserRegisterationManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Web3APIforWeb2.AllDataFetchedfromServer -= eventcalled;
+        Web3Web2Handler.AllDataFetchedfromServer -= eventcalled;
     }
 
     public void BacktoAvatarSelectionPanel()
     {
-        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
     public void LoginScreenClicked(int btn)
@@ -437,8 +437,8 @@ public class UserRegisterationManager : MonoBehaviour
             Invoke(nameof(showPresetPanel), 1f);
             DynamicEventManager.deepLink?.Invoke("Moralis side");
 
-            if (StoreManager.instance != null)
-                StoreManager.instance.WalletLoggedinCall();
+            if (InventoryManager.instance != null)
+                InventoryManager.instance.WalletLoggedinCall();
         }
         else
         {
@@ -470,7 +470,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (_CharacterData.myItemObj.Count <= 0)
             {
                 PlayerPrefs.SetInt("presetPanel", 1);
-                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             }
         }
     }
@@ -479,7 +479,7 @@ public class UserRegisterationManager : MonoBehaviour
     //void Start()
     //{
     //    UserNFTlistClass.AllDataFetchedfromServer += eventcalled;
-    //    Web3APIforWeb2.AllDataFetchedfromServer += eventcalled;
+    //    Web3Web2Handler.AllDataFetchedfromServer += eventcalled;
 
     //    mainfieldOTPNew.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
 
@@ -503,7 +503,7 @@ public class UserRegisterationManager : MonoBehaviour
     //        Debug.LogError(PlayerPrefs.GetString("LoginToken"));
     //        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
     //        LoggedInAsGuest = false;
-    //        StoreManager.instance.WalletLoggedinCall();
+    //        InventoryManager.instance.WalletLoggedinCall();
     //        LoginWithMoralisSDK(true);
     //        StartCoroutine(WalletLoggedInAccessGroup(true));
     //        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
@@ -567,32 +567,32 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     case "alpha-pass":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                            UserPassManager.Instance.GetGroupDetails("Access Pass");
                             break;
                         }
                     case "premium":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+                            UserPassManager.Instance.GetGroupDetails("Extra NFT");
                             break;
                         }
                     case "dj-event":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("djevent");
+                            UserPassManager.Instance.GetGroupDetails("djevent");
                             break;
                         }
                     case "free":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+                            UserPassManager.Instance.GetGroupDetails("freeuser");
                             break;
                         }
                     case "vip-pass":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("vip-pass");
+                            UserPassManager.Instance.GetGroupDetails("vip-pass");
                             break;
                         }
                     case "astroboy":
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("astroboy");
+                            UserPassManager.Instance.GetGroupDetails("astroboy");
                             break;
                         }
                 }
@@ -601,9 +601,9 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
             //print("you have no Premium Access ");
-            PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+            UserPassManager.Instance.GetGroupDetails("freeuser");
         }
-        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+        UserPassManager.Instance.GetGroupDetailsForComingSoon();
     }
 
     #region Sign Up Animations
@@ -619,7 +619,7 @@ public class UserRegisterationManager : MonoBehaviour
         WalletScreen.SetActive(false);
 
         EmailFieldNew.Text = "";
-        if (ConnectingWallet.instance.walletFunctionalitybool)
+        if (ConnectWallet.instance.walletFunctionalitybool)
         {
             StartCoroutine(Animate(EmailSelectedImg.rectTransform));
         }
@@ -645,7 +645,7 @@ public class UserRegisterationManager : MonoBehaviour
         numberScreen.SetActive(true);
         WalletScreen.SetActive(false);
         PhoneFieldNew.Text = "";
-        if (ConnectingWallet.instance.walletFunctionalitybool)
+        if (ConnectWallet.instance.walletFunctionalitybool)
         {
             StartCoroutine(Animate(PhoneSelectedImg.rectTransform));
         }
@@ -795,7 +795,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (!checkbool_preser_start && PlayerPrefs.GetInt("WalletLogin") != 1)  // guest
         {
             PresetData_Jsons.clickname = null;
-            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
             usernamePanal.SetActive(false);
 
             if (GameManager.Instance.isStoreAssetDownloading)
@@ -920,7 +920,7 @@ public class UserRegisterationManager : MonoBehaviour
                     if (PlayerPrefs.GetInt("WalletLogin") != 1)
                     {
                         RegistrationCompletePanal.SetActive(true);
-                        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                     }
                     if (shownWelcome)
                         ShowWelcomeClosed();
@@ -950,7 +950,7 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (PlayerPrefs.GetInt("WalletLogin") != 1)
                         {
-                            StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+                            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                         }
                         if (shownWelcome)
                             ShowWelcomeClosed();
@@ -1198,7 +1198,7 @@ public class UserRegisterationManager : MonoBehaviour
             }
             LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
             LoadingHandler.Instance.HideLoading();
-            StoreManager.instance.CheckWhenUserLogin();
+            InventoryManager.instance.CheckWhenUserLogin();
         }
         CallBack(false);
     }
@@ -1254,18 +1254,18 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         PlayerPrefs.Save();
-        PremiumUsersDetails.Instance.testing = false;
+        UserPassManager.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
-        if (StoreManager.instance.MultipleSave)
+        if (InventoryManager.instance.MultipleSave)
             LoadPlayerAvatar.instance_loadplayer.avatarButton.gameObject.SetActive(false);
 
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
         LoadingHandler.Instance.HideLoading();
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
-        StoreManager.instance.CheckWhenUserLogin();
+        InventoryManager.instance.CheckWhenUserLogin();
     }
 
 
@@ -1273,18 +1273,18 @@ public class UserRegisterationManager : MonoBehaviour
     {
         shownWelcome = false;
         PresetData_Jsons.clickname = "";
-        if (StoreManager.instance.PresetArrayContent)
+        if (InventoryManager.instance.PresetArrayContent)
         {
-            for (int i = 0; i < StoreManager.instance.PresetArrayContent.transform.childCount; i++)
+            for (int i = 0; i < InventoryManager.instance.PresetArrayContent.transform.childCount; i++)
             {
-                StoreManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
+                InventoryManager.instance.PresetArrayContent.transform.GetChild(i).transform.GetChild(0).gameObject.SetActive(false);
             }
-            StoreManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
+            InventoryManager.instance.PresetArrayContent.transform.parent.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1;
         }
         //end reset
-        if (StoreManager.instance != null)
+        if (InventoryManager.instance != null)
         {
-            StoreManager.instance.GetComponent<SpeicalPresetManager>().turnAllPresetOff();
+            InventoryManager.instance.GetComponent<RioPresetHandler>().turnAllPresetOff();
         }
     }
 
@@ -2794,7 +2794,7 @@ public class UserRegisterationManager : MonoBehaviour
             PlayerPrefs.SetInt("shownWelcome", 1);
             if (PlayerPrefs.GetInt("shownWelcome") == 1)
             {
-                StoreManager.instance.OnSaveBtnClicked();
+                InventoryManager.instance.OnSaveBtnClicked();
             }
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             return;
@@ -3367,16 +3367,16 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
                         {
                             if (PlayerPrefs.GetInt("WalletLogin") != 1)
                             {
-                                PremiumUsersDetails.Instance.GetGroupDetails("guest");
+                                UserPassManager.Instance.GetGroupDetails("guest");
                             }
                         }
-                        PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
 
@@ -3431,15 +3431,15 @@ public class UserRegisterationManager : MonoBehaviour
 
                     if (myObject1.data.isAdmin)
                     {
-                        PremiumUsersDetails.Instance.testing = true;
+                        UserPassManager.Instance.testing = true;
                     }
                     else
                     {
-                        PremiumUsersDetails.Instance.testing = false;
+                        UserPassManager.Instance.testing = false;
                     }
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
-                        ConnectServerDataExtraction.NFTListMainNet NFTCreateJsonMain = new ConnectServerDataExtraction.NFTListMainNet();
+                        WalletConnectDataClasses.NFTListMainNet NFTCreateJsonMain = new WalletConnectDataClasses.NFTListMainNet();
 
                         string xanaliaNetworkType = "mainnet";
                         if (APIBasepointManager.instance != null)
@@ -3466,11 +3466,11 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
                         {
-                            PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+                            UserPassManager.Instance.GetGroupDetails("freeuser");
                         }
                     }
 
@@ -3480,7 +3480,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
                     GetOwnedNFTsFromAPI();
-                    PremiumUsersDetails.Instance.GetGroupDetailsForComingSoon();
+                    UserPassManager.Instance.GetGroupDetailsForComingSoon();
                     SubmitSetDeviceToken();
                     LoggedInAsGuest = false;
                     getdatafromserver();
@@ -3510,7 +3510,7 @@ public class UserRegisterationManager : MonoBehaviour
                         ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                         CheckCameraMan();
                         PlayerPrefs.Save();
-                        StoreManager.instance.CheckWhenUserLogin();
+                        InventoryManager.instance.CheckWhenUserLogin();
                         if (!AutoLoginBool)
                         {
                             OpenUIPanal(7);
@@ -3681,8 +3681,8 @@ public class UserRegisterationManager : MonoBehaviour
         {
             yield return null;
         }
-        ConnectServerDataExtraction.RootNonCryptoNFTRole myObject = new ConnectServerDataExtraction.RootNonCryptoNFTRole();
-        myObject = ConnectServerDataExtraction.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
+        WalletConnectDataClasses.RootNonCryptoNFTRole myObject = new WalletConnectDataClasses.RootNonCryptoNFTRole();
+        myObject = WalletConnectDataClasses.RootNonCryptoNFTRole.CreateFromJSON(request.downloadHandler.text);
 
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
@@ -3706,32 +3706,32 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             case "alpha-pass":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("Access Pass");
+                                    UserPassManager.Instance.GetGroupDetails("Access Pass");
                                     break;
                                 }
                             case "premium":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("Extra NFT");
+                                    UserPassManager.Instance.GetGroupDetails("Extra NFT");
                                     break;
                                 }
                             case "dj-event":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("djevent");
+                                    UserPassManager.Instance.GetGroupDetails("djevent");
                                     break;
                                 }
                             case "free":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("freeuser");
+                                    UserPassManager.Instance.GetGroupDetails("freeuser");
                                     break;
                                 }
                             case "vip-pass":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("vip-pass");
+                                    UserPassManager.Instance.GetGroupDetails("vip-pass");
                                     break;
                                 }
                             case "astroboy":
                                 {
-                                    PremiumUsersDetails.Instance.GetGroupDetails("astroboy");
+                                    UserPassManager.Instance.GetGroupDetails("astroboy");
                                     break;
                                 }
                         }

@@ -45,14 +45,14 @@ public class userNameOnOff : MonoBehaviour
 
             ArrowManager.OnInvokeUsername(0);
            ConstantsHolder.xanaConstants.userNameVisibilty = 0;
-           ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(false);
+           ReferencesForGamePlay.instance.onBtnUsername.SetActive(false);
         }
         else
         {
             ArrowManager.OnInvokeUsername(1);
            
             ConstantsHolder.xanaConstants.userNameVisibilty = 1;
-            ReferrencesForDynamicMuseum.instance.onBtnUsername.SetActive(true);
+            ReferencesForGamePlay.instance.onBtnUsername.SetActive(true);
         }
         //OnEnable();
     }

@@ -28,11 +28,11 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         mainScene = "Main";
         if (SceneManager.GetActiveScene().name == "Main")
         {
-            AvatarManager.sendDataValue = false;
+            AvatarSpawnerOnDisconnect.sendDataValue = false;
         }
-        if (LoadFromFile.instance)
+        if (GameplayEntityLoader.instance)
         {
-            LoadFromFile.instance._uiReferences = this;
+            GameplayEntityLoader.instance._uiReferences = this;
         }
     }
 
@@ -49,14 +49,14 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     {
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            if (SoundManagerSettings.soundManagerSettings != null)
+            if (SoundSettings.soundManagerSettings != null)
             {
-                if (SoundManagerSettings.soundManagerSettings.bgmSource)
-                SoundManagerSettings.soundManagerSettings.bgmSource.enabled = false;
-                if (SoundManagerSettings.soundManagerSettings.videoSource)
-                SoundManagerSettings.soundManagerSettings.videoSource.enabled = false;
-                if (SoundManagerSettings.soundManagerSettings.effectsSource)
-                SoundManagerSettings.soundManagerSettings.effectsSource.enabled = false;
+                if (SoundSettings.soundManagerSettings.bgmSource)
+                SoundSettings.soundManagerSettings.bgmSource.enabled = false;
+                if (SoundSettings.soundManagerSettings.videoSource)
+                SoundSettings.soundManagerSettings.videoSource.enabled = false;
+                if (SoundSettings.soundManagerSettings.effectsSource)
+                SoundSettings.soundManagerSettings.effectsSource.enabled = false;
             }
         }
     }
@@ -148,7 +148,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (isAddressableScene)
         {
             callRemove = true;
-            Launcher.instance.working = ScenesList.MainMenu;
+            MutiplayerController.instance.working = ScenesList.MainMenu;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);

@@ -209,7 +209,7 @@ public class NpcChatSystem : MonoBehaviour
 
             if (XanaChatSystem.instance)
             {
-                XanaChatSocket.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
+                ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, responseFeed, CallBy.UserNpc, id.ToString());
                 //Debug.Log("Communication Response(UserAI): " + responseFeed);
 
                 if (NpcSpawner.npcSpawner)

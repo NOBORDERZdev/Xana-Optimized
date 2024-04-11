@@ -1288,7 +1288,7 @@ public class AvatarController : MonoBehaviour
             {
                 string tempKey = _NFTData.Eye_Shapes.Replace(" - ", "_");
                 tempKey = tempKey.Split('_')[0].Replace(" ", "");
-                NFTBoxerEyeData.instance.SetNFTData(tempKey);
+                BoxerEyeData.instance.SetNFTData(tempKey);
 
                 // Add Values in current Object
                 for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
@@ -1612,12 +1612,12 @@ public class AvatarController : MonoBehaviour
                     else
                         item.layer = 26;
 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+                    SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
                 }
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
+                    SwitchToShoesHirokoKoshino.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
             }
@@ -1742,8 +1742,8 @@ public class AvatarController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
-            if (StoreManager.instance != null && StoreManager.instance.loaderForItems)
-                StoreManager.instance.loaderForItems.SetActive(false);
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
+                InventoryManager.instance.loaderForItems.SetActive(false);
         }
     }
 
@@ -2554,7 +2554,7 @@ public class AvatarController : MonoBehaviour
     //    //body fats
     //    SaveCharacterProperties.instance.SaveItemList.BodyFat = 0;
     //    //body blends
-    //    CharacterCustomizationManager.Instance.UpdateChBodyShape(0);
+    //    AvatarCustomizationManager.Instance.UpdateChBodyShape(0);
 
     //    itemDatabase.RevertSavedCloths();
     //}

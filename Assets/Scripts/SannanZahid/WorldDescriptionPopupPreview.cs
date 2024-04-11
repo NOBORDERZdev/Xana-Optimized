@@ -224,25 +224,25 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
         {
             EnvironmentName = "DJ Event";
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName, false))
+            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
             {
                 if (EnvironmentName == "DJ Event")
                 {
-                    PremiumUsersDetails.Instance.PremiumUserUIDJEvent.SetActive(true);
+                    UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
                 }
                 return;
             }
         }
         else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
         {
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName, true))
+            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
             {
                 return;
             }
         }
         else if (!_isBuilderScene)
         {
-            if (!PremiumUsersDetails.Instance.CheckSpecificItem(EnvironmentName))
+            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
             {
                 return;
             }
@@ -349,7 +349,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
     public void FavoriteWorldBtnClicked()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("Favorite Worlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("Favorite Worlds"))
         {
             print("Please Upgrade to Premium account");
             return;

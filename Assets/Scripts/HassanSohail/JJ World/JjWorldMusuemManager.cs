@@ -12,7 +12,7 @@ public class JjWorldMusuemManager : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.orientationchanged)
         {
-            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
     }
 }

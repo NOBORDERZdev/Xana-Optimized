@@ -29,8 +29,8 @@ public class YoutubeSimplified : MonoBehaviour
 
     private void Start()
     {
-        Metaverse.AvatarManager.OninternetDisconnect += OnInternetDisconnect;
-        Metaverse.AvatarManager.OninternetConnected += OnInternetConnect;
+        Metaverse.AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+        Metaverse.AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
     }
 
     public void Play()

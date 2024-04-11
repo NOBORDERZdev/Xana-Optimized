@@ -53,7 +53,7 @@ public class StreamingCamera : MonoBehaviour
             }
             else // there is no any streaming camera in scene so back to main menu
             {
-                  LoadFromFile.instance._uiReferences.LoadMain(false);
+                  GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             }
         }    
     }
@@ -70,7 +70,7 @@ public class StreamingCamera : MonoBehaviour
             visibleCount=0;
             cam.gameObject.SetActive(true);
             yield return new WaitForSeconds(2f);
-            foreach (var avatar in Launcher.instance.playerobjects)
+            foreach (var avatar in MutiplayerController.instance.playerobjects)
             {
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
@@ -88,10 +88,10 @@ public class StreamingCamera : MonoBehaviour
        int crowdedCamIndex=  avatarCount.IndexOf(avatarCount.Max());
        Cameras[crowdedCamIndex].gameObject.SetActive(true);
       // LoadingHandler.Instance.HideLoading();
-       ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-       ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
+       ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
+       ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-       LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+       GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.BackToMainmenuforAutoSwtiching());
     }
 
    

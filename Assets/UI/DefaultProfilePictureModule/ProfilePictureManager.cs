@@ -115,7 +115,7 @@ public class ProfilePictureManager : MonoBehaviour
     public IEnumerator UpdateUserAvatar()
     {
         yield return new WaitForSeconds(2f);
-        //APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
+        //SNS_APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
         WWWForm form = new WWWForm();
 
         form.AddField("avatar", uploadFileRoot.cdn_link);

@@ -12,7 +12,7 @@ public class WalletLogin: MonoBehaviour
     ProjectConfigScriptableObject projectConfigSO = null;
     //public Toggle rememberMe;
     //UserRegisterationManager registerationManager;
-    [SerializeField] ConnectingWallet connectingWallet;
+    [SerializeField] ConnectWallet connectingWallet;
     //[SerializeField] GameObject SuccessfulPopUp;
     
     void Start() {

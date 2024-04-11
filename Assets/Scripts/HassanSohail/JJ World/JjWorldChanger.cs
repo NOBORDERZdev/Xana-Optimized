@@ -32,16 +32,16 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+            if (ReferencesForGamePlay.instance.m_34player)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
             if (isEnteringPopup)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
 
     }
@@ -92,7 +92,7 @@ public class JjWorldChanger : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         //ConstantsHolder.xanaConstants.EnviornmentName = worldName;
         //FeedEventPrefab.m_EnvName = worldName;
-        //Launcher.sceneName = worldName;
+        //MutiplayerController.sceneName = worldName;
 
         // Added by WaqasAhmad
         // For Live User Count
@@ -146,7 +146,7 @@ public class JjWorldChanger : MonoBehaviour
         yield return new WaitForSeconds(1f);
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = worldName;
-        LoadFromFile.instance._uiReferences.LoadMain(false);
+        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
 
 
     }
@@ -154,7 +154,7 @@ public class JjWorldChanger : MonoBehaviour
 
     private bool checkWorldComingSoon(string worldName)
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(worldName, true))
+        if (!UserPassManager.Instance.CheckSpecificItem(worldName, true))
         {
 
             return false;

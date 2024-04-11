@@ -28,7 +28,7 @@ public class CommonAPIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("SNS_APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         SetUpBottomUnReadCount(0);//default message footer message unread count set false.......
         ConnetSocketManagerAndListener();
     }
@@ -85,16 +85,16 @@ public class CommonAPIManager : MonoBehaviour
     //public void MessageReceivedResponse(string s)
     //{
     //   Debug.Log("Common Socket Handler MessageReceivedResponce.......");
-    //    if (MessageController.Instance != null)
+    //    if (SNS_MessageController.Instance != null)
     //    {
-    //        if (MessageController.Instance.ChatScreen.activeInHierarchy)
+    //        if (SNS_MessageController.Instance.ChatScreen.activeInHierarchy)
     //        {
     //            return;
     //        }
 
-    //        if (!MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
+    //        if (!SNS_MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
     //        {
-    //            MessageController.Instance.isNeedToRefreshConversationAPI = true;
+    //            SNS_MessageController.Instance.isNeedToRefreshConversationAPI = true;
     //        }
     //    }
     //   Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");

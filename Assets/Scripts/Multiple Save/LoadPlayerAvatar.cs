@@ -50,16 +50,16 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
     // Start is called before the first frame update
     void Start()
     {
-        avatarButton = StoreManager.instance.myAvatarButton;
+        avatarButton = InventoryManager.instance.myAvatarButton;
         loader.SetActive(false);
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
                 avatarButton.gameObject.SetActive(false);
         }
         else
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
                 avatarButton.gameObject.SetActive(true);
         }
 
@@ -71,7 +71,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
 
     void waitCall()
     {
-        if (StoreManager.instance.MultipleSave)
+        if (InventoryManager.instance.MultipleSave)
             loadAllAvatar += (pageNo, NoOfRecords) => { LoadPlayerAvatar_onAvatarSaved(pageNo, NoOfRecords); };
     }
     //Event will be called when user loged In and new Avatar is saved by user.
@@ -81,11 +81,11 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
         //disable the button for current release enable this feature later.
         if (avatarButton == null)
         {
-            avatarButton = StoreManager.instance.myAvatarButton;
+            avatarButton = InventoryManager.instance.myAvatarButton;
         }
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
         {
-            if (StoreManager.instance.MultipleSave)
+            if (InventoryManager.instance.MultipleSave)
             {
                 avatarButton.gameObject.SetActive(true);
             }
@@ -109,7 +109,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
 
     public void OpenAvatarPanel()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("MyAvatar"))
+        if (!UserPassManager.Instance.CheckSpecificItem("MyAvatar"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -146,7 +146,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
     public void ClosePlayerNamePanel()
     {
         playerNamePanel.SetActive(false);
-        StoreManager.instance.isSaveFromreturnHomePopUp = false;
+        InventoryManager.instance.isSaveFromreturnHomePopUp = false;
     }
 
     public void CloseDeleteAvatarPanel()
@@ -262,9 +262,9 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
                     yield return StartCoroutine(offLoader());
                     www.Dispose();
                     NewAvatarBtn.transform.SetSiblingIndex(0);// to set new avatar button always on top
-                    //if (StoreManager.instance.isSaveFromreturnHomePopUp)
+                    //if (InventoryManager.instance.isSaveFromreturnHomePopUp)
                     //{
-                    //    StoreManager.instance.OnClickHomeButton();
+                    //    InventoryManager.instance.OnClickHomeButton();
                     //}
                 }
             }
@@ -434,13 +434,13 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
             loadprevious();
             StartCoroutine(DefaultClothDatabase.instance.WaitAndDownloadFromRevert(0));
             GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
-            //StoreManager.instance.UndoSelection();
+            //InventoryManager.instance.UndoSelection();
 
             isAlreadyRunning = true;
             OnUpdateExistingRemoveOld(avatarId);
             ServerSideUserDataHandler.Instance.UpdateUserOccupiedAsset(avatarId);
             //Enable save button
-            //if (StoreManager.instance.StartPanel_PresetParentPanel.activeSelf)
+            //if (InventoryManager.instance.StartPanel_PresetParentPanel.activeSelf)
             //{
 
             //    if (PlayerPrefs.GetInt("iSignup") == 1)
@@ -448,13 +448,13 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
 
             //        Invoke("abcd", 2.0f);
 
-            //        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+            //        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
             //    }
             //    else                // as a guest
             //    {
 
 
-            //        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+            //        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
             //        UserRegisterationManager.instance.usernamePanal.SetActive(true);
             //        // enable check so that it will know that index is comming from start of the game
             //        UserRegisterationManager.instance.checkbool_preser_start = false;
@@ -462,9 +462,9 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
             //}
             //else
             //{
-            //    StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-            //    StoreManager.instance.GreyRibbonImage.SetActive(false);
-            //    StoreManager.instance.WhiteRibbonImage.SetActive(true);
+            //    InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+            //    InventoryManager.instance.GreyRibbonImage.SetActive(false);
+            //    InventoryManager.instance.WhiteRibbonImage.SetActive(true);
             //}
         }
         //        }
@@ -531,7 +531,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                                 GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                             }
 
-                            //StoreManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
+                            //InventoryManager.instance._DownloadRigClothes.NeedToDownloadOrNot(itemobj, _CharacterData.myItemObj[i].ItemLinkAndroid, _CharacterData.myItemObj[i].ItemLinkIOS, _CharacterData.myItemObj[i].ItemType, _CharacterData.myItemObj[i].ItemName.ToLower(), _CharacterData.myItemObj[i].ItemID);
                         }
                     }
                     catch (Exception e)

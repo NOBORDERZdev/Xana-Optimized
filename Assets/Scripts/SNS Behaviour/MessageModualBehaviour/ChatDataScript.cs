@@ -50,7 +50,7 @@ public class ChatDataScript : MonoBehaviour
     //        attechmentImage.sprite = null;
     //        //Resources.UnloadUnusedAssets();//every clear.......
     //        //Caching.ClearCache();
-    //        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //        SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //    }
     //}
 
@@ -60,7 +60,7 @@ public class ChatDataScript : MonoBehaviour
     //    double minuts = (System.DateTime.Now - MessageRow.createdAt).TotalMinutes;
     //    if (!string.IsNullOrEmpty(MessageRow.message.msg))
     //    {
-    //        chatMessageText.text = APIManager.DecodedString(MessageRow.message.msg);
+    //        chatMessageText.text = SNS_APIManager.DecodedString(MessageRow.message.msg);
     //        //CheckAndSetTextMinWidth();
     //        Invoke("CheckAndSetTextMinWidth", 0.013f);
     //    }
@@ -77,7 +77,7 @@ public class ChatDataScript : MonoBehaviour
     //        {
     //            senderName.gameObject.SetActive(true);
     //        }
-    //        if (MessageRow.senderId != APIManager.Instance.userId)
+    //        if (MessageRow.senderId != SNS_APIManager.Instance.userId)
     //        {
     //            senderName.text = MessageRow.sender.name;
     //        }
@@ -156,7 +156,7 @@ public class ChatDataScript : MonoBehaviour
     //        entryBegin.callback.AddListener((data) =>
     //        {
     //            pressed = false;
-    //            MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnBeginDrag((PointerEventData)data);
+    //            SNS_MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnBeginDrag((PointerEventData)data);
     //        });
     //        trigger.triggers.Add(entryBegin);
 
@@ -164,28 +164,28 @@ public class ChatDataScript : MonoBehaviour
     //        entryDrag.callback.AddListener((data) =>
     //        {
     //            pressed = false;
-    //            MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnDrag((PointerEventData)data);
+    //            SNS_MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnDrag((PointerEventData)data);
     //        });
     //        trigger.triggers.Add(entryDrag);
 
     //        entryEnd.eventID = EventTriggerType.EndDrag;
     //        entryEnd.callback.AddListener((data) =>
     //        {
-    //            MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnEndDrag((PointerEventData)data);
+    //            SNS_MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnEndDrag((PointerEventData)data);
     //        });
     //        trigger.triggers.Add(entryEnd);
 
     //        entrypotential.eventID = EventTriggerType.InitializePotentialDrag;
     //        entrypotential.callback.AddListener((data) =>
     //        {
-    //            MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnInitializePotentialDrag((PointerEventData)data);
+    //            SNS_MessageController.Instance.chatScrollMain.GetComponent<ScrollRectFasterEx>().OnInitializePotentialDrag((PointerEventData)data);
     //        });
     //        trigger.triggers.Add(entrypotential);
 
     //        entryScroll.eventID = EventTriggerType.Scroll;
     //        entryScroll.callback.AddListener((data) =>
     //        {
-    //            MessageController.Instance.chatScrollMain.GetComponent<ScrollRectEx>().OnScroll((PointerEventData)data);
+    //            SNS_MessageController.Instance.chatScrollMain.GetComponent<ScrollRectEx>().OnScroll((PointerEventData)data);
     //        });
     //        trigger.triggers.Add(entryScroll);
     //    }
@@ -196,11 +196,11 @@ public class ChatDataScript : MonoBehaviour
     //{
     //    if (isVideo)
     //    {
-    //        MessageController.Instance.OnShowChatVideoOrImage(null, mediaPlayer.GetComponent<MediaPlayer>());
+    //        SNS_MessageController.Instance.OnShowChatVideoOrImage(null, mediaPlayer.GetComponent<MediaPlayer>());
     //    }
     //    else
     //    {
-    //        MessageController.Instance.OnShowChatVideoOrImage(attechmentImage.sprite, null);
+    //        SNS_MessageController.Instance.OnShowChatVideoOrImage(attechmentImage.sprite, null);
     //    }
     //} 
 
@@ -212,7 +212,7 @@ public class ChatDataScript : MonoBehaviour
     //    //Debug.LogError("currentExtention:   " + currentExtention);
     //    if (currentExtention == ExtentionType.Image)
     //    {
-    //        bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(key);
+    //        bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(key);
     //        //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 
     //        if (isAvatarUrlFromDropbox)

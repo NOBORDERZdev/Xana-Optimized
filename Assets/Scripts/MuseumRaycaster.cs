@@ -28,7 +28,7 @@ public class MuseumRaycaster : MonoBehaviour
         canOpenPicture = true;
         if (playerCamera == null)
         {
-            playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
+            playerCamera = ReferencesForGamePlay.instance.randerCamera;
         }
     }
 

@@ -25,7 +25,7 @@ public class CollectibleComponent : ItemComponent
     #region BehaviourControl
     public void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
         //this.gameObject.SetActive(false);
         //Toast.Show(ConstantsHolder.collectibleMsg);
     }

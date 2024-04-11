@@ -70,11 +70,11 @@ public class FeedController : MonoBehaviour
         //FeedUIController.Instance.ShowLoader(true);
         FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
-        if (APIManager.Instance.userId == 0)
+        if (SNS_APIManager.Instance.userId == 0)
         {
-           APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
+           SNS_APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
         }
-        await GetFeedData(APIManager.Instance.userId);
+        await GetFeedData(SNS_APIManager.Instance.userId);
     }
 
     async Task GetFeedData(int userId)
@@ -144,7 +144,7 @@ public class FeedController : MonoBehaviour
 
     public void PullNewPlayerPost(){ 
         FeedLoader.SetActive(true);
-        GetPlayerNewPosts(APIManager.Instance.userId);
+        GetPlayerNewPosts(SNS_APIManager.Instance.userId);
     }
 
     async void GetPlayerNewPosts(int userId){ 
@@ -227,7 +227,7 @@ public class FeedController : MonoBehaviour
     /// To get next page player post
     /// </summary>
     public void GetPlayerNextPostPage(){ 
-        GetFeedDataByPage(APIManager.Instance.userId);
+        GetFeedDataByPage(SNS_APIManager.Instance.userId);
     }
 
     async void GetFeedDataByPage(int userId)
@@ -342,7 +342,7 @@ public class FeedController : MonoBehaviour
 
     IEnumerator FeedSearch(string input)
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+APIManager.Instance.userId +"/"+ input +"/1/20";
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+SNS_APIManager.Instance.userId +"/"+ input +"/1/20";
         UnityWebRequest response = UnityWebRequest.Get(url);
         yield return response.SendWebRequest();
         if (response.isNetworkError)

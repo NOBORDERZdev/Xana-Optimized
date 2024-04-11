@@ -98,7 +98,7 @@ public class SNSSettingController : MonoBehaviour
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {
             FeedUIController.Instance.ShowLoader(true);
-            APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
+            SNS_APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
         }
         else
         {
@@ -201,7 +201,7 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
             FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
             FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
-            PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
+            UserPassManager.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
             if (GameManager.Instance.UiManager != null)
             {

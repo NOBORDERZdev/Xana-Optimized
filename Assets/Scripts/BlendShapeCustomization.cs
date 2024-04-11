@@ -17,7 +17,7 @@ public class BlendShapeCustomization : MonoBehaviour
     public List<ReduUnduCLass> red1;
     public int count, listcount;
     SkinnedMeshRenderer characterHead;
-    BlendShapeImporter shapeImporter;
+    BlendShapeManager shapeImporter;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -33,7 +33,7 @@ public class BlendShapeCustomization : MonoBehaviour
 
     private void Awake()
     {
-        shapeImporter= GameManager.Instance.BlendShapeImporter;
+        shapeImporter= GameManager.Instance.BlendShapeManager;
     }
 
     public void ResettoLastSavedMorphsOnly()

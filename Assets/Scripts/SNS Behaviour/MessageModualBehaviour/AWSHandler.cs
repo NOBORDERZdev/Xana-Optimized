@@ -190,10 +190,10 @@ public class AWSHandler : MonoBehaviour
                         case "CreateGroupAvatar":
                             break;
                         case "UpdateUserAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
                         case "EditProfileAvatar":
-                            APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
+                            SNS_APIController.Instance.UpdateAvatarOnServer(fileUrl, CallingFrom);
                             break;
                         default:
                             break;
@@ -205,7 +205,7 @@ public class AWSHandler : MonoBehaviour
                     switch (CallingFrom)
                     {
                         case "EditProfileAvatar":
-                            APIManager.Instance.RequestGetUserDetails(CallingFrom);
+                            SNS_APIManager.Instance.RequestGetUserDetails(CallingFrom);
                             break;
                         default:
                             break;

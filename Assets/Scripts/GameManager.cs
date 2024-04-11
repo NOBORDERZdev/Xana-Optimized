@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     public GameObject ShadowPlane;
     public SaveCharacterProperties SaveCharacterProperties;
     public EquipUI EquipUiObj;
-    public BlendShapeImporter BlendShapeImporter;
+    public BlendShapeManager BlendShapeManager;
     public bool UserStatus_;   //if its true user is logged in else its as a guest
     public static string currentLanguage = "";
     public bool isStoreAssetDownloading = false;
@@ -170,22 +170,22 @@ public class GameManager : MonoBehaviour
         else
         {
             if (!WorldBool && !BottomAvatarButtonBool)
-                StoreManager.instance.SignUpAndLoginPanel(2);
+                InventoryManager.instance.SignUpAndLoginPanel(2);
             else
             {
-                StoreManager.instance.SignUpAndLoginPanel(3);
+                InventoryManager.instance.SignUpAndLoginPanel(3);
             }
         }
     }
     public void AvatarMenuBtnPressed()
     {
         UiManager.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyClothCustomizationPanel();
+        AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
         if (ConstantsHolder.loggedIn) 
         {
             UiManager.HomePage.SetActive(false);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
         else
@@ -196,19 +196,19 @@ public class GameManager : MonoBehaviour
 
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
-        StoreManager.instance.AvatarUpdated.SetActive(false);
-        StoreManager.instance.AvatarSaved.SetActive(false);
-        StoreManager.instance.AvatarSavedGuest.SetActive(false);
+        InventoryManager.instance.AvatarUpdated.SetActive(false);
+        InventoryManager.instance.AvatarSaved.SetActive(false);
+        InventoryManager.instance.AvatarSavedGuest.SetActive(false);
     }
     public void BottomAvatarBtnPressed()
     {
         UiManager.AvaterButtonCustomPushed();
-        CharacterCustomizationUIManager.Instance.LoadMyFaceCustomizationPanel();
+        AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
         BottomAvatarButtonBool = true;
         if (ConstantsHolder.loggedIn || (PlayerPrefs.GetInt("IsLoggedIn") == 1))
         {
             UiManager.HomePage.SetActive(false);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
         else
@@ -218,8 +218,8 @@ public class GameManager : MonoBehaviour
 
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         }
-        StoreManager.instance.AvatarSaved.SetActive(false);
-        StoreManager.instance.AvatarSavedGuest.SetActive(false);
+        InventoryManager.instance.AvatarSaved.SetActive(false);
+        InventoryManager.instance.AvatarSavedGuest.SetActive(false);
     }
     public void SignInSignUpCompleted()
     {
@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
         {
             UiManager.HomePage.SetActive(false);
             BGPlane.SetActive(true);
-            StoreManager.instance.SignUpAndLoginPanel(3);
+            InventoryManager.instance.SignUpAndLoginPanel(3);
         }
     }
     public void BackFromStoreofCharacterCustom()

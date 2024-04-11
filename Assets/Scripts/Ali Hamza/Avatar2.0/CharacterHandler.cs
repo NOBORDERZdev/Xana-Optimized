@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static StoreManager;
+using static InventoryManager;
 
 public class CharacterHandler : MonoBehaviour
 {
