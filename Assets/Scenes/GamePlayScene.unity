@@ -9125,6 +9125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -20197,7 +20198,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641495, y: -0.0008924867, z: 0.000009499795, w: 0.999943}
+  m_LocalRotation: {x: 0.0106414985, y: -0.00089248695, z: 0.000009499802, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30495,41 +30496,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93cb85c0fbecdfe4faca243119952468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InternetLost: {fileID: 0}
-  GameCanvas: {fileID: 1231922861008966070}
-  MenuCanvas: {fileID: 0}
   Defaultanimator: {fileID: 0}
-  PrefabObject: {fileID: 5241757998442564520, guid: bea40b17c82471d4494580d7bf568dab, type: 3}
-  contentPanel: {fileID: 0}
-  spawnPoint: {fileID: 1808683680640967398}
-  avatarPreview: {fileID: 0}
-  AvatarList:
-  - prefab: {fileID: 0}
-    Controller: {fileID: 0}
-    ModelNumber: 0
-    avatarImage: {fileID: 0}
-    isHost: 0
-  selectAvatarBtn: {fileID: 0}
-  currentselected: {fileID: 0}
-  avatarRefs: []
-  isMainScene: 0
-  clientMat: {fileID: 2100000, guid: 0b8875029ccf2ad43a6e77f268567244, type: 2}
-  arrow: {fileID: 919132149155446097, guid: fce02d4c98c39ab489bf35a9eb06c7d4, type: 3}
-  Currentplayer: {fileID: 0}
-  parentobjPlayer: {fileID: 1808683680640967398}
   currentDummyPlayer: {fileID: 0}
-  dummyPlayerParent: {fileID: 0}
-  main_AnimatorController: {fileID: 9100000, guid: d72f727cbdf6ccf45b29ed094be5670d, type: 2}
-  fordummy: {fileID: 9100000, guid: 5771aaf5c23be154a957c37cab41d23e, type: 2}
-  value: 0
-  PlayerPrefab: {fileID: 6636531596179502979, guid: b02c2862a1946de4982bd324e287c542, type: 3}
-  reconnectAndRejoin: 0
-  clone_dummy: {fileID: 0}
-  clonPlayer: {fileID: 0}
-  temp1: {fileID: 0}
-  temp2: {fileID: 0}
+  spawnPoint: {fileID: 1808683680640967398}
   JoinCurrentRoomPanel: {fileID: 4120509113057873630, guid: 6474c4ca0bd4bc4449d46e6437d6d2c7, type: 3}
-  FavouriteAnimationSprite: {fileID: 21300000, guid: 9c02e031495570447adf13c1b2267188, type: 3}
+  FavouriteAnimationSprite: {fileID: 21300000, guid: 29bf006f4afa71e41a9a7fa53622b8b5, type: 3}
   NormalAnimationSprite: {fileID: 21300000, guid: 29bf006f4afa71e41a9a7fa53622b8b5, type: 3}
 --- !u!114 &4914879506903825438
 MonoBehaviour:

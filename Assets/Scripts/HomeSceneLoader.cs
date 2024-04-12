@@ -26,10 +26,6 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     private void OnEnable()
     {
         mainScene = "Home";
-        if (SceneManager.GetActiveScene().name == "Home")
-        {
-            AvatarSpawnerOnDisconnect.sendDataValue = false;
-        }
         if (GameplayEntityLoader.instance)
         {
             GameplayEntityLoader.instance._uiReferences = this;

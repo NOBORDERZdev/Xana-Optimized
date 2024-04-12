@@ -91,15 +91,6 @@ public class RpcManager : MonoBehaviourPunCallbacks
         }
     }
     
-
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Publictest)
-        //{
-        //    CheckRpcPlayer();
-        //}
-    }
     public void CheckRpcPlayer()
     {
        this.GetComponent<PhotonView>().RPC("CheckRpc", RpcTarget.All);
@@ -138,8 +129,6 @@ public class RpcManager : MonoBehaviourPunCallbacks
 
     private void OnApplicationQuit()
     {
-        Debug.Log("App quit call");
-        AvatarSpawnerOnDisconnect.sendDataValue = false;
         if (this.GetComponent<PhotonView>().IsMine)
         {
                  this.GetComponent<PhotonView>().RPC("CheckRpc",RpcTarget.All,this.GetComponent<PhotonView>().ViewID);

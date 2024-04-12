@@ -43,24 +43,15 @@ namespace Photon.Pun.Demo.PunBasics
         [SerializeField]
         byte maxPlayersPerRoom = 20;
 
-        public static bool isRoom = false;
-        public static bool isLoading = false;
         [HideInInspector]
-        public LoadingManager Loader;
         public RoomOptions roomOptions;
-
-        public bool lobbyJoined, roomJoined, movingToScene;
 
         public GameplayEntityLoader LFF;
         public List<GameObject> playerobjects;
         public static string sceneName;
         string lobbyName;
-        private bool currentRoom = false;
 
         #endregion
-
-        [Header("Population Elements")]
-        public GameObject[] populationPrefab;
 
         #region Private Fields
         /// <summary>
@@ -70,30 +61,21 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public bool isConnecting;
 
-		/// <summary>
-		/// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
-		/// </summary>
-		string gameVersion = "12";
-		private int count;
-
-
+        /// <summary>
+        /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
+        /// </summary>
+        string gameVersion = "12";
         #endregion
 
         #region MonoBehaviour CallBacks
 
         void Awake()
-		{
-			print("MutiplayerController "+ "Awake");
-			//if(SceneManager.GetActiveScene().name != "AddressableScene")//AddressableScene
-			//ConstantsHolder.xanaConstants.EnviornmentName = SceneManager.GetActiveScene().name;
-			//print("Envirornment "+ConstantsHolder.xanaConstants.EnviornmentName);
-			if (instance == null)
-			{
-				instance = this;
-			//	DontDestroyOnLoad(this);
-				currentRoom = false;
-				working = ScenesList.MainMenu;
-				if(Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            if (instance == null)
+            {
+                instance = this;
+                working = ScenesList.MainMenu;
+                if (Application.internetReachability == NetworkReachability.NotReachable)
                 {
                     internetState = NetworkStates.NotConnectedToInternet;
                     StartCoroutine(WaitForInternetToConnect());
@@ -106,7 +88,6 @@ namespace Photon.Pun.Demo.PunBasics
                         connectionState = ServerConnectionStates.ConnectingToServer;
                         PhotonNetwork.ConnectUsingSettings();
                         PhotonNetwork.GameVersion = this.gameVersion;
-                        //StartCoroutine(CheckConnectionToServer());
                     }
                 }
                 // #Critical
@@ -120,10 +101,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-
-            Loader = LoadingManager.Instance;
             Connect(ConstantsHolder.xanaConstants.EnviornmentName);
-            print(ConstantsHolder.xanaConstants.EnviornmentName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -142,30 +120,11 @@ namespace Photon.Pun.Demo.PunBasics
             }
         }
 
-        IEnumerator CheckConnectionToServer()
-        {
-            yield return new WaitForSeconds(1);
-        }
-
         #endregion
         #region Public Methods
         public void SetMaxPlayer(int max)
         {
-            print("MutiplayerController " + "SetMaxPlayer");
             maxPlayersPerRoom = (byte)max;
-        }
-        public void JoinCurrentRoom()
-        {
-            print("MutiplayerController " + "JoinCurrentRoom");
-            print("Join Current room in MutiplayerController");
-            currentRoom = true;
-            Connect(PlayerPrefs.GetString("lb"));
-
-        }
-        public void LeaveGoToMainMenu()
-        {
-            print("MutiplayerController " + "LeaveGoToMainMenu");
-            print("Go To Menu MutiplayerController");
         }
         /// <summary>
         /// Start the connection process. 
@@ -177,20 +136,10 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (isConnecting)
                 return;
-            print("MutiplayerController " + "Connect");
             working = ScenesList.AddressableScene;
-            lobbyJoined = false;
             lastSceneName = SceneManager.GetActiveScene().name;
             lastLobbyName = lobbyN;
-            print("Connecting: ");
-            AvatarSpawnerOnDisconnect.timercall = false;
-            //	RPCCallforBufferPlayers.playerobjects = null;
 
-            Guid guid = System.Guid.NewGuid();
-
-
-
-            Debug.Log("Login check===" + PlayerPrefs.GetString(ConstantsGod.PLAYERNAME));
             if (!PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("ゲスト") &&
                     !PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("Guest") && !string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.PLAYERNAME)))
             {
@@ -200,12 +149,7 @@ namespace Photon.Pun.Demo.PunBasics
             else
             {
                 PhotonNetwork.NickName = "Guest";
-
             }
-
-            //LoadingManager.Instance.ShowLoading();
-            //LoadingHandler.Instance.ShowLoading();
-            isRoom = true;
             if (XanaEventDetails.eventDetails.DataIsInitialized)
             {
                 string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
@@ -228,19 +172,17 @@ namespace Photon.Pun.Demo.PunBasics
             if (PhotonNetwork.IsConnected)
             {
                 isConnecting = false;
-                print("Join Random Room in: " + lobbyName);
                 PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
             }
             else
             {
-                print("Connecting: to Server using settings");
                 PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = this.gameVersion;
             }
 
-			SetMaxPlayer(int.Parse(ConstantsHolder.xanaConstants.userLimit));
-			//SetMaxPlayer(10);
-		}
+            SetMaxPlayer(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+            //SetMaxPlayer(10);
+        }
 
         void LogFeedback(string message)
         {
@@ -259,8 +201,6 @@ namespace Photon.Pun.Demo.PunBasics
             connectionState = ServerConnectionStates.ConnectedToServer;
             if (working == ScenesList.MainMenu)
                 return;
-            rejoin = true;
-            print("MutiplayerController " + "OnConnectedToMaster");
             // we don't want to do anything if we are not attempting to join a room. 
             // this case where isConnecting is false is typically when you lost or quit the game, when this level is loaded, OnConnectedToMaster will be called, in that case
             // we don't want to do anything.
@@ -268,8 +208,6 @@ namespace Photon.Pun.Demo.PunBasics
             if (isConnecting)
             {
                 LogFeedback("OnConnectedToMaster: Next -> try to Join Random Room");
-                print("OnConnectedToMaster: Next -> try to Join Random Room");
-
             }
 
 
@@ -277,43 +215,31 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
-            print("MutiplayerController " + "OnJoinedLobby");
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.75f, true);
-            //LoadingHandler.Instance.UpdateLoadingStatusText("Joining World");
 
         }
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            print("MutiplayerController " + "OnJoinRoomFailed : Returining Main" );
-            print(returnCode.ToString() + "	" + message);
             GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
         public override void OnCreatedRoom()
         {
-            print("MutiplayerController " + "OnCreatedRoom");
             print("OnCreatedRoom called");
         }
         public override void OnLeftLobby()
         {
-            print("MutiplayerController " + "OnLeftLobby");
             if (working == ScenesList.AddressableScene)
             {
                 working = ScenesList.MainMenu;
             }
         }
-        bool rejoin = true;
-       
+
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-          
             bool joinedRoom = false;
-            string CameraManRoomName=null;
+            string CameraManRoomName = null;
             foreach (RoomInfo info in roomList)
             {
-                Debug.Log("Max player :- "+info.Name+"--"+info.MaxPlayers+"--"+info.PlayerCount);
-               // print("Max Players can Join " + info.MaxPlayers);
                 int maxPlayer;
-                //if (info.PlayerCount < info.MaxPlayers) {
                 if (ConstantsHolder.xanaConstants.EnviornmentName == "Xana Festival") // to reserve the place for camera man (Show room is full to other players)
                 {
                     maxPlayer = info.MaxPlayers - 1;
@@ -324,94 +250,56 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 if (info.PlayerCount < maxPlayer)
                 {
-                    print(info.MaxPlayers + "	" + info.Name);
                     lastRoomName = info.Name;
                     if (!ConstantsHolder.xanaConstants.isCameraMan)
                     {
-                        Debug.Log("joining room here-----");
                         PhotonNetwork.JoinRoom(lastRoomName);
                         joinedRoom = true;
                         break;
                     }
-                   
                 }
-                
-                //roomNames.Add(info.Name);
             }
             if (ConstantsHolder.xanaConstants.isCameraMan)
             {
-                if (roomList.Count>0)
+                if (roomList.Count > 0)
                 {
                     List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
                     tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
-                    //PhotonNetwork.JoinRoom(tempRooms[0].Name);
-                    CameraManRoomName= tempRooms[0].Name;
-                    //print(" VALUE IS "+tempRooms);
-                    //Debug.Log("Is cameraman :--" + ConstantsHolder.xanaConstants.isCameraMan);
-                    //if (!roomNames.Contains(info.Name)) // create new room btn
-                    //{
-                    //    Debug.Log("Initiate Room");
-                    //    LoadingHandler.Instance.GetComponent<ManualRoomController>().InitiateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                    //}
-                    //else// update previous room data
-                    //{
-                    //    if (info.PlayerCount > 0)
-                    //    {
-                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().UpdateRoomBtn(info.Name, info.PlayerCount + "/" + maxPlayer);
-                    //    }
-                    //    else
-                    //    {
-                    //        LoadingHandler.Instance.GetComponent<ManualRoomController>().DeleteRoomBtn(info.Name);
-                    //    }
-                    //}
-                } else
-                { 
+                    CameraManRoomName = tempRooms[0].Name;
+                }
+                else
+                {
                     // there is no room for stremaing so move to main menu to switch other world
-                    GameplayEntityLoader.instance._uiReferences.LoadMain(false); 
+                    GameplayEntityLoader.instance._uiReferences.LoadMain(false);
                 }
             }
-           
+
             if (joinedRoom == false)
             {
-                Debug.Log("Player has not joined any room "+ ConstantsHolder.xanaConstants.isCameraMan);
                 string temp;
                 do
                 {
                     temp = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
-                } while (roomNames.Contains(temp));
+                } 
+                while (roomNames.Contains(temp));
                 if (!ConstantsHolder.xanaConstants.isCameraMan)
                     PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
                 else
                 {
-                   // List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
-                   // tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
-                   if(!CameraManRoomName.IsNullOrEmpty())
-                    PhotonNetwork.JoinRoom(CameraManRoomName);
+                    if (!CameraManRoomName.IsNullOrEmpty())
+                        PhotonNetwork.JoinRoom(CameraManRoomName);
                 }
             }
-    }
-
-        private void JoinRoomOrCreateRoom()
-        {
-            print("MutiplayerController " + "JoinRoomOrCreateRoom");
         }
 
         public List<string> roomNames;
 
         public RoomOptions RoomOptionsRequest()
         {
-			roomOptions = new RoomOptions();
-			roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
-			//if (ConstantsHolder.xanaConstants.EnviornmentName == "DJ Event")
-			//{
-			//	roomOptions.MaxPlayers = (byte)3;
-			//}
-			//else
-			//{
-			//	roomOptions.MaxPlayers = (byte)20;
-			//}
-			roomOptions.IsOpen = true;
-			roomOptions.IsVisible = true;
+            roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+            roomOptions.IsOpen = true;
+            roomOptions.IsVisible = true;
 
             roomOptions.PublishUserId = true;
             roomOptions.CleanupCacheOnLeave = true;
@@ -419,7 +307,6 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
-            print("MutiplayerController " + "OnJoinRandomFailed");
             if (!ConstantsHolder.xanaConstants.isCameraMan)
             {
                 PhotonNetwork.CreateRoom(null, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
@@ -428,31 +315,16 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnDisconnected(DisconnectCause cause)
         {
             playerobjects.Clear();
-            print("MutiplayerController " + "OnDisconnected");
             LogFeedback("<Color=Red>OnDisconnected</Color> " + cause);
-            Debug.Log("PUN Basics Tutorial/MutiplayerController:Disconnected");
             PlayerPrefs.SetInt("leftRoom", 1);
             // #Critical: we failed to connect or got disconnected. There is not much we can do. Typically, a UI system should be in place to let the user attemp to connect again.
             isConnecting = false;
-            checkInternet();
         }
 
-        public void checkInternet()
-        {
-            print("MutiplayerController " + "checkInternet");
-            if (Application.internetReachability == NetworkReachability.NotReachable)
-            {
-                Invoke("checkInternet", 1);
-            }
-        }
+
 
         public override void OnJoinedRoom()
         {
-            print("MutiplayerController " + "OnJoinedRoom");
-            
-            //LoadingHandler.Instance.UpdateLoadingSlider(0.8f, true);
-            //LoadingHandler.Instance.UpdateLoadingStatusText("Joining World");
-
             lastRoomName = PhotonNetwork.CurrentRoom.Name;
 
             if (PhotonNetwork.CurrentRoom.PlayerCount >= 1)
@@ -476,15 +348,10 @@ namespace Photon.Pun.Demo.PunBasics
             else
             {
                 LFF.LoadFile();
-                //StartCoroutine(LFF.VoidCalculation());
             }
-
-
-            
         }
         public void Disconnect()
         {
-            Debug.Log("MutiplayerController Disconnect...");
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
@@ -503,8 +370,6 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
             }
-
-            print("A player left room");
             for (int x = 0; x < playerobjects.Count; x++)
             {
                 if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
@@ -522,11 +387,9 @@ namespace Photon.Pun.Demo.PunBasics
         #endregion
         public string lastSceneName, lastLobbyName, lastRoomName;
 
-        public void JoinRoomManually(string name) {
-            print("!! Room Name !!"+name);
-           // PhotonNetwork.JoinOrCreateRoom(name, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
-           PhotonNetwork.JoinRoom(name);
-            //PhotonNetwork.JoinRoom(PhotonNetwork.CurrentRoom.Name, true);
+        public void JoinRoomManually(string name)
+        {
+            PhotonNetwork.JoinRoom(name);
         }
 
     }

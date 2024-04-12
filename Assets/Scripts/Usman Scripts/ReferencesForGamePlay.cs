@@ -13,8 +13,8 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject[] overlayPanels;
     public GameObject workingCanvas, PlayerParent, MainPlayerParent;
     public GameObject[] disableObjects;
-    public GameObject[] potraitHiddenBtnObjects , potraitdissableBtnObjects;
-    public GameObject[] hiddenBtnObjects , disableBtnObjects;
+    public GameObject[] potraitHiddenBtnObjects, potraitdissableBtnObjects;
+    public GameObject[] hiddenBtnObjects, disableBtnObjects;
     public static ReferencesForGamePlay instance;
     public Camera randerCamera;
     public List<GameObject> disableObjectsInMuseums;
@@ -31,7 +31,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject FirstPersonCam;
     public Button RotateBtn;
     public GameObject JoyStick;
-    public int RoomMaxPlayerCount=0;
+    public int RoomMaxPlayerCount = 0;
     public int PlayerCount = 0;
     public float MonitorDistance;
     //MoveWhileDancing add kamran
@@ -93,11 +93,11 @@ public class ReferencesForGamePlay : MonoBehaviour
     IEnumerator counterCoroutine;
     private void OnEnable()
     {
-       
+        instance = this;
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit)-1 ;
-            if (PhotonNetwork.CurrentRoom!=null)
+            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
+            if (PhotonNetwork.CurrentRoom != null)
             {
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
             }
@@ -120,13 +120,9 @@ public class ReferencesForGamePlay : MonoBehaviour
                 totalCounter.text = totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
-
-        instance = this;
-        print("Waqas : Reference : Instance : " + instance);
-
+      
         if (ReferenceObject.activeInHierarchy && m_34player != null)
         {
-            Debug.Log("call hua texture Landscap");
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
@@ -134,7 +130,6 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null)
         {
-            Debug.Log("call hua texture potriat");
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
@@ -170,7 +165,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 ReferencesForGamePlay.instance.minimap.SetActive(false);
         }
         moveWhileDanceCheck = PlayerPrefs.GetInt("dancebutton"); //add kamran
-        if (moveWhileDanceCheck == 0) 
+        if (moveWhileDanceCheck == 0)
         {
             landscapeMoveWhileDancingButton.SetActive(false);
             instance.portraitMoveWhileDancingButton.SetActive(false);
@@ -200,11 +195,11 @@ public class ReferencesForGamePlay : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateCanvasForMuseum(true);
     }
 
-    
+
     public bool isHidebtn = false;
 
     /// Added by Abdullah Rashid 23/07/05           
-  public void hiddenButtonDisable()
+    public void hiddenButtonDisable()
     {
         //To Hide Buttons
         foreach (GameObject go in hiddenBtnObjects)
@@ -215,8 +210,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             }
             go.GetComponent<CanvasGroup>().alpha = 0;
         }
-       
-      //To disable Buttons  
+
+        //To disable Buttons  
         foreach (GameObject go in disableBtnObjects)
         {
             go.SetActive(false);
@@ -246,9 +241,9 @@ public class ReferencesForGamePlay : MonoBehaviour
         //To enable disable Buttons
         foreach (GameObject go in disableBtnObjects)
         {
-           
-                go.SetActive(true);
-           
+
+            go.SetActive(true);
+
         }
 
     }
@@ -295,13 +290,11 @@ public class ReferencesForGamePlay : MonoBehaviour
         //To enable disable potrait Buttons
         foreach (GameObject go in potraitdissableBtnObjects)
         {
-           
-                go.SetActive(true);
-           
+            go.SetActive(true);
         }
 
     }
-  
+
     ////////////////////////////////////
 
     //private void Start()
@@ -311,7 +304,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     IEnumerator SetPlayerCounter()
     {
-        CheckAgain:
+    CheckAgain:
         try
         {
             if (totalCounter != null)
@@ -320,14 +313,14 @@ public class ReferencesForGamePlay : MonoBehaviour
                 {
                     if (ConstantsHolder.xanaConstants.isCameraManInRoom || ConstantsHolder.xanaConstants.isCameraMan)
                     {
-                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount-1);
+                        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount - 1);
                     }
                     else
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
-                    
+                    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
+
                     //if (ConstantsHolder.xanaConstants.isCameraMan)
                     //{
                     //    print("NAMES ARE " + PhotonNetwork.CurrentRoom.Name);
@@ -345,12 +338,12 @@ public class ReferencesForGamePlay : MonoBehaviour
                     //{
                     //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     //}
-                  // print("!!! PlayerCount"+ PlayerCount);
+                    // print("!!! PlayerCount"+ PlayerCount);
                 }
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) +5);
+                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
                 }
                 //else
                 //{
@@ -367,7 +360,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
-   
+
 }
 
 
