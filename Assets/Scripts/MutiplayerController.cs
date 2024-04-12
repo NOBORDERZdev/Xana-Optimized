@@ -460,7 +460,7 @@ namespace Photon.Pun.Demo.PunBasics
                 PlayerPrefs.SetString("roomname", PhotonNetwork.CurrentRoom.Name);
                 PlayerPrefs.Save();
             }
-            if (!(SceneManager.GetActiveScene().name == "AddressableScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
+            if (!(SceneManager.GetActiveScene().name == "GamePlayScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
             {
                 AvatarSpawnerOnDisconnect.Instance.InitCharacter();
             }

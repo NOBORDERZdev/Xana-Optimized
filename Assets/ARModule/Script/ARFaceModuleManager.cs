@@ -234,7 +234,7 @@ public class ARFaceModuleManager : MonoBehaviour
             Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
             ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }
-        Initiate.Fade("Main", loadToColor, 1.0f);
+        Initiate.Fade("Home", loadToColor, 1.0f);
     }
 
     public void ARFaceManagerDisable(bool isDisable)

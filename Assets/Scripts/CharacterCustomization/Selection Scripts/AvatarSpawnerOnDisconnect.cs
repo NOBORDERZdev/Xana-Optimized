@@ -101,7 +101,7 @@ namespace Metaverse
         IEnumerator WaitforUsertoConnect()
         {
             yield return new WaitForSeconds(2f);
-            if (!(SceneManager.GetActiveScene().name == "AddressableScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
+            if (!(SceneManager.GetActiveScene().name == "GamePlayScene") || !(SceneManager.GetActiveScene().name.Contains("Museum")))
             {
                 InitCharacter();
             }
@@ -180,7 +180,7 @@ namespace Metaverse
             value = PlayerPrefs.GetInt("SelectedAvatarID");
             if (OnDisconnectedValue)
             {
-                if (SceneManager.GetActiveScene().name != "Main")
+                if (SceneManager.GetActiveScene().name != "Home")
                 {
                     if (Application.internetReachability != NetworkReachability.NotReachable)
                     {
@@ -202,7 +202,7 @@ namespace Metaverse
                     }
                 }
             }
-            if (currentDummyPlayer == null && SceneManager.GetActiveScene().name != "Main" && Application.internetReachability != NetworkReachability.NotReachable)
+            if (currentDummyPlayer == null && SceneManager.GetActiveScene().name != "Home" && Application.internetReachability != NetworkReachability.NotReachable)
             {
                 timer += Time.deltaTime;
             }
@@ -217,7 +217,7 @@ namespace Metaverse
             print("AvatarSpawnerOnDisconnect " + "checkPlayerInorOut");
             yield return new WaitForSeconds(waittime);
             LoadingManager.Instance.ShowLoading();
-            StartCoroutine(LoadingManager.Instance.LoadAsncScene("Main"));
+            StartCoroutine(LoadingManager.Instance.LoadAsncScene("Home"));
         }
         public void initStates()
         {
@@ -230,7 +230,7 @@ namespace Metaverse
             {
                 avatarID = 0;
             }
-            if (SceneManager.GetActiveScene().name.Equals("Main"))
+            if (SceneManager.GetActiveScene().name.Equals("Home"))
             {
                 SelectedAvatarPreview(AvatarList[avatarID].prefab, avatarID);
             }
@@ -368,7 +368,7 @@ namespace Metaverse
             {
                 //Debug.Log("Local player===" + PlayerControllerPhoton.LocalPlayerInstance);
                 Scene scene = SceneManager.GetActiveScene();
-                if (scene.name != "AddressableScene" || !scene.name.Contains("Museum"))
+                if (scene.name != "GamePlayScene" || !scene.name.Contains("Museum"))
                 {
                     //if (PlayerControllerPhoton.LocalPlayerInstance == null)
                     //{
@@ -470,7 +470,7 @@ namespace Metaverse
 
 
             // User Analatics 
-            if (!SceneManager.GetActiveScene().name.Contains("Main"))
+            if (!SceneManager.GetActiveScene().name.Contains("Home"))
             {
                 //UserAnalyticsHandler.onUserJoinedLeaved?.Invoke(isGameFocus);
                 if (isGameFocus)
@@ -527,7 +527,7 @@ namespace Metaverse
                 Destroy(currentDummyPlayer);
 
             }
-            if (!SceneManager.GetActiveScene().name.Equals("Main"))
+            if (!SceneManager.GetActiveScene().name.Equals("Home"))
             {
                 foreach (Transform child in avatarPreview.transform)
                 {

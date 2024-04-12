@@ -16,7 +16,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     public GameObject spawnCharacterObject;
     public GameObject spawnCharacterObjectRemote;
     public GameObject EventEndedPanel;
-    public string mainScene = "Main";
+    public string mainScene = "Home";
     bool exitOnce = true;
     GameManager gameManager;
     private void Awake()
@@ -25,8 +25,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     private void OnEnable()
     {
-        mainScene = "Main";
-        if (SceneManager.GetActiveScene().name == "Main")
+        mainScene = "Home";
+        if (SceneManager.GetActiveScene().name == "Home")
         {
             AvatarSpawnerOnDisconnect.sendDataValue = false;
         }
@@ -180,7 +180,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
             yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene("Main");
+            SceneManager.LoadScene("Home");
         }
         else
         {

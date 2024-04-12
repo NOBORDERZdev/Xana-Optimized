@@ -698,8 +698,8 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }
         ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
         if (WorldItemView.m_EnvName == "ZONE-X")
@@ -832,8 +832,8 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-            Photon.Pun.PhotonHandler.levelName = "AddressableScene";
-            LoadingHandler.Instance.LoadSceneByIndex("AddressableScene");
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }
     }
 

@@ -47,7 +47,7 @@ public class AskForJoining : MonoBehaviour
         {
             LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
-        asyncLoading = SceneManager.LoadSceneAsync("Main");
+        asyncLoading = SceneManager.LoadSceneAsync("Home");
         //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count

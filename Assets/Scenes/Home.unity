@@ -315,6 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -19820,7 +19821,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -25299,6 +25300,7 @@ MonoBehaviour:
     msg: 
   _moodstr: 
   postButton: {fileID: 1110079592}
+  postButtonText: {fileID: 0}
   MoodDataTab: {fileID: 269840616}
   MoodTabList: []
   InstantiateMoodTabCount: 10
@@ -30699,12 +30701,16 @@ PrefabInstance:
       value: AdditiveSceneManager
       objectReference: {fileID: 0}
     - target: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
+      propertyPath: sceneTest
+      value: LoginSignupScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
       propertyPath: sceneDelay
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
       propertyPath: sceneTest2
-      value: StoreScene
+      value: InventoryScene
       objectReference: {fileID: 0}
     - target: {fileID: 5216034492529369645, guid: 0711dc268816db243af2ab55e78196dd, type: 3}
       propertyPath: homeBottomTab

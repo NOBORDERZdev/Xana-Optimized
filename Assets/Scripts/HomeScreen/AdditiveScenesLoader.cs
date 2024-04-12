@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class AdditiveScenesLoader : MonoBehaviour
 {
     public float sceneDelay;
-    public string sceneTest;
-    public string sceneTest2;
-    public string sceneTest3;
-    public string sceneTest4;
+    string sceneTest= "LoginSignupScene";
+    string sceneTest2= "InventoryScene";
+    string sceneTest3= "SNSFeedModuleScene";
+    string sceneTest4= "SNSMessageModuleScene";
+    [HideInInspector]
     public GameObject SNSmodule;
+    [HideInInspector]
     public GameObject SNSMessage;
     public HomeFooterHandler homeBottomTab;
     

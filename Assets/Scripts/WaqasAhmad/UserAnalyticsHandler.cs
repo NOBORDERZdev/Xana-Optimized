@@ -359,7 +359,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         Manager.Socket.Emit("get_all_world_data");
         Manager.Socket.Emit("enter_world");
 
-        if (!SceneManager.GetActiveScene().name.Contains("Main"))
+        if (!SceneManager.GetActiveScene().name.Contains("Home"))
         {
             //Debug.Log("<color=green> Analatics -- Again Sending Call " + "</color>");
             Call_UpdateWorldRelatedStats_Courtine(true, false);

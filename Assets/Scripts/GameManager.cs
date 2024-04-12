@@ -135,9 +135,9 @@ public class GameManager : MonoBehaviour
     public IEnumerator HitReloadUnloadScene()
     {
         yield return new WaitForSeconds(.01f);
-        SceneManager.UnloadSceneAsync("UserRegistration");
+        SceneManager.UnloadSceneAsync("LoginSignupScene");
         print("Unload");
-        SceneManager.LoadScene("UserRegistration", LoadSceneMode.Additive);
+        SceneManager.LoadScene("LoginSignupScene", LoadSceneMode.Additive);
          yield return new WaitForSeconds(1f);
         print("wait");
         print("Loaded");
@@ -253,7 +253,7 @@ public class GameManager : MonoBehaviour
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            SceneManager.LoadSceneAsync("Main");
+            SceneManager.LoadSceneAsync("Home");
         }
     }
     public void UpdatePlayerName(string newName)

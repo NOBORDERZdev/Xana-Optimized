@@ -539,7 +539,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             ConstantsHolder.xanaConstants.isBuilderScene = true;
             //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-            //SceneManager.LoadScene("AddressableScene");
+            //SceneManager.LoadScene("GamePlayScene");
             LoadingHandler.Instance.LoadSceneByIndex("Builder", true);
         }
         else
@@ -564,7 +564,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
             //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false); 
-            SceneManager.LoadScene("AddressableScene");
+            SceneManager.LoadScene("GamePlayScene");
         }
 
     }

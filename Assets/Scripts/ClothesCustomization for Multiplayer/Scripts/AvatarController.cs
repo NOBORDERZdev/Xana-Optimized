@@ -105,7 +105,7 @@ public class AvatarController : MonoBehaviour
 
         if (xanaConstants != null)
         {
-            if (sceneName.Contains("Main") || sceneName.Contains("UGC")) // For Home
+            if (sceneName.Contains("Home") || sceneName.Contains("UGC")) // For Home
             {
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -149,7 +149,7 @@ public class AvatarController : MonoBehaviour
     IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
     {
         yield return new WaitForEndOfFrame();  //WaitForSeconds(0.1f);
-        if (SceneManager.GetActiveScene().name != "Main" && !isWearOrNot)
+        if (SceneManager.GetActiveScene().name != "Home" && !isWearOrNot)
         {
             //Debug.LogError(_obj.GetComponent<PhotonView>().ViewID + ":Wear Default cloth manually");
             SetAvatarClothDefault(_obj, _gender);
@@ -429,7 +429,7 @@ public class AvatarController : MonoBehaviour
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
-            if (sceneName.Equals("Main") || sceneName.Equals("UGC")) // for store/ main menu
+            if (sceneName.Equals("Home") || sceneName.Equals("UGC")) // for store/ main menu
             {
                 if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
                 {
@@ -1591,7 +1591,7 @@ public class AvatarController : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (SceneManager.GetActiveScene().name != "Home")
         {
             item.layer = 22;
         }

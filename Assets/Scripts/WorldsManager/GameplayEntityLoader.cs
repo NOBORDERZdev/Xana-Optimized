@@ -1065,7 +1065,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("AddressableScene"));
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("GamePlayScene"));
         StartCoroutine(spwanPlayerWithWait());
     }
 

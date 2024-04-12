@@ -133,7 +133,7 @@ public class AddressableDownloader : MonoBehaviour
                     }
                     else
                     {
-                        if (SceneManager.GetActiveScene().name != "Main")
+                        if (SceneManager.GetActiveScene().name != "Home")
                         {
                             applyOn.isWearOrNot = true;
                         }
@@ -271,7 +271,7 @@ public class AddressableDownloader : MonoBehaviour
                 GameManager.Instance.isStoreAssetDownloading = false;
                 yield return null;
             }
-            if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems  && PlayerPrefs.GetInt("presetPanel") != 1)
                 InventoryManager.instance.loaderForItems.SetActive(true);
             while (true)
             {
@@ -359,7 +359,7 @@ public class AddressableDownloader : MonoBehaviour
                             default:
                                 break;
                         }
-                        if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
+                        if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems && PlayerPrefs.GetInt("presetPanel") != 1)
                             InventoryManager.instance.loaderForItems.SetActive(false);
                         GameManager.Instance.isStoreAssetDownloading = false;
                         yield break;

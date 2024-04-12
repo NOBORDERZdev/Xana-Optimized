@@ -292,7 +292,7 @@ public class FeedUIController : MonoBehaviour
 
     public void OnBackToMainXanaBtnClick()
     {
-        Initiate.Fade("Main", Color.black, 1.0f);
+        Initiate.Fade("Home", Color.black, 1.0f);
     }
 
     public void OnClickCheckOtherPlayerProfile(bool _callFromFindFriendWithName=false)
