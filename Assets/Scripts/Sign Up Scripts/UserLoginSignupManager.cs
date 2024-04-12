@@ -1513,6 +1513,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
+        UserLoginSignupManager.instance.ShowWelcomeScreen();
         yield return null;
     }
 

@@ -178,7 +178,7 @@ public class SNSSettingController : MonoBehaviour
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-            if(NftDataScript.Instance)
+            if (NftDataScript.Instance)
                 NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {
@@ -207,7 +207,8 @@ public class SNSSettingController : MonoBehaviour
             {
                 GameManager.Instance.UiManager._footerCan.GetComponentInChildren<HomeFooterHandler>().OnClickHomeButton();
             }
-            CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
+            if (CommonAPIManager.Instance != null)
+                CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
                 LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();
