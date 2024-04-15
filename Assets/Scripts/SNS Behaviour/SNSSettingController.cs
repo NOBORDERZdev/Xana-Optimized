@@ -73,7 +73,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to terms and policy.......
     public void OpenPrivacyPolicyHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
         }
@@ -82,7 +82,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Tearms and condition button click.......
     public void OpenTermsAndConditionHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
         }
@@ -98,7 +98,7 @@ public class SNSSettingController : MonoBehaviour
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {
             FeedUIController.Instance.ShowLoader(true);
-            APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
+            SNS_APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
         }
         else
         {
@@ -174,11 +174,11 @@ public class SNSSettingController : MonoBehaviour
     public void LogoutSuccess()
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
-        XanaConstants.xanaConstants.userProfileLink = "";
+        ConstantsHolder.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-            if(NftDataScript.Instance)
+            if (NftDataScript.Instance)
                 NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {
@@ -199,15 +199,16 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.ResetAllFeedScreen(false);
             FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
-            PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
+            UserPassManager.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
             if (GameManager.Instance.UiManager != null)
             {
-                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<HomeFooterHandler>().OnClickHomeButton();
             }
-            CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
+            if (CommonAPIManager.Instance != null)
+                CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
                 LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();

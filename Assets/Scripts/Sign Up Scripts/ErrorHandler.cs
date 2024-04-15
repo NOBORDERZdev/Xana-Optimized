@@ -117,11 +117,11 @@ namespace Sign_Up_Scripts
         //    //}
         //    //SetActiveText(errorMessage);
 
-        //    if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
+        //    if (LocalizationManager.localisationDict == null || LocalizationManager.localisationDict.Count <= 0) return;
 
-        //    if (CustomLocalization.localisationDict.TryGetValue(errorCode, out RecordsLanguage find))
+        //    if (LocalizationManager.localisationDict.TryGetValue(errorCode, out RecordsLanguage find))
         //    {
-        //        if (!CustomLocalization.forceJapanese)
+        //        if (!LocalizationManager.forceJapanese)
         //        {
         //            switch (GameManager.currentLanguage)
         //            {

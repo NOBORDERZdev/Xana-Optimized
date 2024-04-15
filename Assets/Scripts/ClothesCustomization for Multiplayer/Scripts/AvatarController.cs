@@ -46,11 +46,11 @@ public class AvatarController : MonoBehaviour
 
     #region private var
     public Stitcher stitcher;
-    private ItemDatabase itemDatabase;
+    private DefaultClothDatabase itemDatabase;
     private string sceneName;
     private Color presetHairColor;
     AddressableDownloader addressableDownloader;
-    XanaConstants xanaConstants;
+    ConstantsHolder xanaConstants;
     //FriendAvatarController friendController;
     #endregion
 
@@ -67,7 +67,7 @@ public class AvatarController : MonoBehaviour
         stitcher = new Stitcher();
         sceneName = SceneManager.GetActiveScene().name;
         characterBodyParts = this.GetComponent<CharacterBodyParts>();
-        itemDatabase = ItemDatabase.instance;
+        itemDatabase = DefaultClothDatabase.instance;
         if (sceneName.Equals("ARModuleActionScene") || sceneName.Equals("ARModuleRoomScene") || sceneName.Equals("ARModuleRealityScene") ) // Manually scalling object to match old XANA character 1.0
         {
             transform.localScale *= 2;
@@ -79,7 +79,7 @@ public class AvatarController : MonoBehaviour
     private void Start()
     {
         addressableDownloader = AddressableDownloader.Instance;
-        xanaConstants = XanaConstants.xanaConstants;
+        xanaConstants = ConstantsHolder.xanaConstants;
         
     }
     public void OnEnable()
@@ -99,13 +99,13 @@ public class AvatarController : MonoBehaviour
             }
         }
         if (xanaConstants== null)
-            xanaConstants = XanaConstants.xanaConstants;
+            xanaConstants = ConstantsHolder.xanaConstants;
         if(addressableDownloader==null)
             addressableDownloader = AddressableDownloader.Instance;
 
         if (xanaConstants != null)
         {
-            if (sceneName.Contains("Main") || sceneName.Contains("UGC")) // For Home
+            if (sceneName.Contains("Home") || sceneName.Contains("UGC")) // For Home
             {
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -149,7 +149,7 @@ public class AvatarController : MonoBehaviour
     IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
     {
         yield return new WaitForEndOfFrame();  //WaitForSeconds(0.1f);
-        if (SceneManager.GetActiveScene().name != "Main" && !isWearOrNot)
+        if (SceneManager.GetActiveScene().name != "Home" && !isWearOrNot)
         {
             //Debug.LogError(_obj.GetComponent<PhotonView>().ViewID + ":Wear Default cloth manually");
             SetAvatarClothDefault(_obj, _gender);
@@ -252,7 +252,7 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     public async void InitializeAvatar(bool canWriteFile = false)
     {
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -405,7 +405,7 @@ public class AvatarController : MonoBehaviour
         {
             var filePath = Path.Combine(Application.persistentDataPath, "logIn.json");
             File.WriteAllText(filePath, JsonUtility.ToJson(savingCharacterDataClass));
-            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() => {});
+            ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() => {});
         }
     }
 
@@ -429,7 +429,7 @@ public class AvatarController : MonoBehaviour
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
-            if (sceneName.Equals("Main") || sceneName.Equals("UGC")) // for store/ main menu
+            if (sceneName.Equals("Home") || sceneName.Equals("UGC")) // for store/ main menu
             {
                 if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
                 {
@@ -1288,7 +1288,7 @@ public class AvatarController : MonoBehaviour
             {
                 string tempKey = _NFTData.Eye_Shapes.Replace(" - ", "_");
                 tempKey = tempKey.Split('_')[0].Replace(" ", "");
-                NFTBoxerEyeData.instance.SetNFTData(tempKey);
+                BoxerEyeData.instance.SetNFTData(tempKey);
 
                 // Add Values in current Object
                 for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
@@ -1361,7 +1361,7 @@ public class AvatarController : MonoBehaviour
         CharacterBodyParts bodyParts = applyOn.GetComponent<CharacterBodyParts>();
         if (itemDatabase== null)
         {
-            itemDatabase = ItemDatabase.instance;
+            itemDatabase = DefaultClothDatabase.instance;
         }
         if (gender == "Male") // if avatar is Male
         {
@@ -1591,7 +1591,7 @@ public class AvatarController : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (SceneManager.GetActiveScene().name != "Home")
         {
             item.layer = 22;
         }
@@ -1599,7 +1599,7 @@ public class AvatarController : MonoBehaviour
         {
             if (xanaConstants == null)
             {
-                xanaConstants = XanaConstants.xanaConstants;
+                xanaConstants = ConstantsHolder.xanaConstants;
             }
 
             if (xanaConstants.isNFTEquiped)
@@ -1612,12 +1612,12 @@ public class AvatarController : MonoBehaviour
                     else
                         item.layer = 26;
 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+                    SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
                 }
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
+                    SwitchToShoesHirokoKoshino.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
             }
@@ -1742,8 +1742,8 @@ public class AvatarController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
-            if (StoreManager.instance != null && StoreManager.instance.loaderForItems)
-                StoreManager.instance.loaderForItems.SetActive(false);
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
+                InventoryManager.instance.loaderForItems.SetActive(false);
         }
     }
 
@@ -2022,7 +2022,7 @@ public class AvatarController : MonoBehaviour
                             }
                             else
                             {
-                                if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+                                if (PlayerPrefs.HasKey("Equiped") || ConstantsHolder.xanaConstants.isNFTEquiped)
                                 {
                                     if (type.Contains("Chest"))
                                     {
@@ -2089,7 +2089,7 @@ public class AvatarController : MonoBehaviour
                     }
                     else // wear the default item of that specific part.
                     {
-                        if (XanaConstants.xanaConstants.isNFTEquiped && type.Contains("Chest"))
+                        if (ConstantsHolder.xanaConstants.isNFTEquiped && type.Contains("Chest"))
                         {
                             if (wornShirt)
                                 UnStichItem("Chest");
@@ -2185,7 +2185,7 @@ public class AvatarController : MonoBehaviour
             //if (_CharacterData.Skin != null)
             //{
             //    StartCoroutine(bodyParts.ImplementColors(_CharacterData.Skin, SliderType.Skin, this.gameObject));
-            //    if (XanaConstants.xanaConstants.isNFTEquiped)
+            //    if (ConstantsHolder.xanaConstants.isNFTEquiped)
             //    {
             //        BoxerNFTEventManager._lightPresetNFT = GetLightPresetValue(_CharacterData.Skin);
             //        BoxerNFTEventManager.NFTLightUpdate?.Invoke(BoxerNFTEventManager._lightPresetNFT);
@@ -2552,9 +2552,9 @@ public class AvatarController : MonoBehaviour
     //public void ResetForLastSaved()
     //{
     //    //body fats
-    //    SavaCharacterProperties.instance.SaveItemList.BodyFat = 0;
+    //    SaveCharacterProperties.instance.SaveItemList.BodyFat = 0;
     //    //body blends
-    //    CharacterCustomizationManager.Instance.UpdateChBodyShape(0);
+    //    AvatarCustomizationManager.Instance.UpdateChBodyShape(0);
 
     //    itemDatabase.RevertSavedCloths();
     //}

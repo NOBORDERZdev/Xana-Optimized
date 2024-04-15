@@ -10,9 +10,9 @@ public class JjWorldMusuemManager : MonoBehaviour
 
     private void Awake()
     {
-        if (XanaConstants.xanaConstants.orientationchanged)
+        if (ConstantsHolder.xanaConstants.orientationchanged)
         {
-            ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
+            ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.Portrait);
         }
     }
 }

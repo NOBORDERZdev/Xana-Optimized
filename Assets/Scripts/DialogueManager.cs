@@ -106,7 +106,7 @@ public class DialogueManager : MonoBehaviour
     public void PlayReceptionGirlDialogue(int l_NPCID) // NPC stands for non player character
     {
         //MuseumManager.Instance.m_LobbyDialogueCamera.SetActive(true);
-        //SoundManager.Instance.PlayNPCAudio(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
+        //SoundController.Instance.PlayNPCAudio(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
         //m_NonPlayerCharacters[l_NPCID].m_HeadButton.SetActive(true);
 
         //MuseumManager.Instance.m_MainPlayerCamera.SetActive(false);
@@ -151,7 +151,7 @@ public class DialogueManager : MonoBehaviour
     {
         MuseumManager.Instance.m_MainPlayerCamera.SetActive(true);
         MuseumManager.Instance.m_LobbyDialogueCamera.SetActive(false);
-        SoundManager.Instance.StopNPCAudio();
+        SoundController.Instance.StopNPCAudio();
         EndDialogue();
         m_MessageBox.SetActive(false);
     }
@@ -186,8 +186,8 @@ public class DialogueManager : MonoBehaviour
 
     public void PlayNonPlayerCharacterDialogue(int l_NPCID, NPC_DialogueTrigger _dialogueTrigger)
     {
-        ////SoundManager.Instance.Play(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
-        //SoundManager.Instance.PlayNPCAudio(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
+        ////SoundController.Instance.Play(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
+        //SoundController.Instance.PlayNPCAudio(m_NonPlayerCharacters[l_NPCID].m_AudioClip);
         //m_NonPlayerCharacters[l_NPCID].m_HeadButton.SetActive(true);
 
         //StartDialogue(l_NPCID, m_InfoTextTemp, _dialogueTrigger);
@@ -209,22 +209,22 @@ public class DialogueManager : MonoBehaviour
 
     public void PlayMayorAndJudgeDialogue(int l_AudioClipIndex)
     {
-        //SoundManager.Instance.Play(m_MayorJudgeAudioClips[l_AudioClipIndex]);
+        //SoundController.Instance.Play(m_MayorJudgeAudioClips[l_AudioClipIndex]);
     }
 
     public void PlayStaffDialogue(int l_AudioClipIndex)
     {
-        //SoundManager.Instance.Play(m_StaffMembersAudioClips[l_AudioClipIndex]);
+        //SoundController.Instance.Play(m_StaffMembersAudioClips[l_AudioClipIndex]);
     }
 
     public void PlayGalleryPictureAudio(int l_PictureIndex)
     {
-      //  SoundManager.Instance.Play(m_AudioClips[l_PictureIndex]);
+      //  SoundController.Instance.Play(m_AudioClips[l_PictureIndex]);
     }
 
     public void StopGalleryPictureAudio()
     {
-        SoundManager.Instance.EffectsSource.Stop();
+        SoundController.Instance.EffectsSource.Stop();
     }
 
 
@@ -368,7 +368,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
 
-        SoundManager.Instance.EffectsSource.Stop();
+        SoundController.Instance.EffectsSource.Stop();
 
 
         CancelInvoke();
@@ -423,12 +423,12 @@ public class DialogueManager : MonoBehaviour
         CanvusHandler.canvusHandlerInstance.Display();
 
 
-        SoundManager.Instance.EffectsSource.Stop();
+        SoundController.Instance.EffectsSource.Stop();
 
         CanvusHandler.canvusHandlerInstance.info_Panel.SetActive(false);
         Gamemanager._InstanceGM._isNPCMoving = true;
         mainCam.SetActive(true);
-        SoundManager.Instance.VolumeMethodForVideo();
+        SoundController.Instance.VolumeMethodForVideo();
 
 
         CanvusHandler.canvusHandlerInstance.offallVcam();

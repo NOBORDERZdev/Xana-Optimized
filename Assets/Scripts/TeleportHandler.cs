@@ -59,7 +59,7 @@ public class TeleportHandler : MonoBehaviour
             //CanvusHandler.canvusHandlerInstance._VcamClear.gameObject.SetActive(true);
 
             TelePos = Gamemanager._InstanceGM.teleportPoints[1].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
             
             Gamemanager._InstanceGM.env_Subparts[0].SetActive(false);
@@ -81,7 +81,7 @@ public class TeleportHandler : MonoBehaviour
             transform.localEulerAngles = EV3;
             
             TelePos = Gamemanager._InstanceGM.teleportPoints[0].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
             //DialogueManager.Instance.AndroidNonXRcanvas.gameObject.SetActive(false);
             Gamemanager._InstanceGM.env_Subparts[0].SetActive(true);
@@ -108,7 +108,7 @@ public class TeleportHandler : MonoBehaviour
             transform.localEulerAngles = EV3;
             
             TelePos = Gamemanager._InstanceGM.teleportPoints[2].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
             Gamemanager._InstanceGM.UnMute(true);
             Gamemanager._InstanceGM.env_Subparts[2].SetActive(true);
@@ -118,8 +118,8 @@ public class TeleportHandler : MonoBehaviour
             Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
             Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
 
-            //SoundManager.Instance.MusicSource.volume = 0.2f;
-            SoundManager.Instance.MusicSource.mute = false;
+            //SoundController.Instance.MusicSource.volume = 0.2f;
+            SoundController.Instance.MusicSource.mute = false;
 
             Invoke("Test", 0.5f);
 
@@ -134,7 +134,7 @@ public class TeleportHandler : MonoBehaviour
             transform.localEulerAngles = EV3;
             
             TelePos = Gamemanager._InstanceGM.teleportPoints[1].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
 
             Gamemanager._InstanceGM.env_Subparts[1].SetActive(true);
@@ -154,7 +154,7 @@ public class TeleportHandler : MonoBehaviour
             transform.localEulerAngles = EV3;
             
             TelePos = Gamemanager._InstanceGM.teleportPoints[5].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
 
             Gamemanager._InstanceGM.env_Subparts[2].SetActive(true);
@@ -162,7 +162,7 @@ public class TeleportHandler : MonoBehaviour
             Gamemanager._InstanceGM.minimapParent.SetActive(true);
             
             Gamemanager._InstanceGM.UnMute(false);
-            SoundManager.Instance.videoPlayerSource.gameObject.SetActive(false);
+            SoundController.Instance.videoPlayerSource.gameObject.SetActive(false);
 
             Invoke("Test", 0.5f);
 
@@ -177,7 +177,7 @@ public class TeleportHandler : MonoBehaviour
             transform.localEulerAngles = EV3;
             
             TelePos = Gamemanager._InstanceGM.teleportPoints[3].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
 
             Gamemanager._InstanceGM.env_Subparts[3].SetActive(true);
@@ -185,7 +185,7 @@ public class TeleportHandler : MonoBehaviour
             Gamemanager._InstanceGM.env_Subparts[2].SetActive(false);
             Gamemanager._InstanceGM.UnMute(true);
 
-            SoundManager.Instance.videoPlayerSource.gameObject.SetActive(false);
+            SoundController.Instance.videoPlayerSource.gameObject.SetActive(false);
             Invoke("Test", 0.5f);
         }
 
@@ -196,19 +196,19 @@ public class TeleportHandler : MonoBehaviour
             cameraTransitionobj[5].CamActive(true);
 
             TelePos = Gamemanager._InstanceGM.teleportPoints[4].transform.position;
-            transform.GetComponent<PlayerControllerNew>().enabled = false;
+            transform.GetComponent<PlayerController>().enabled = false;
             transform.position = new Vector3(TelePos.x, TelePos.y, TelePos.z);
 
             Gamemanager._InstanceGM.env_Subparts[2].SetActive(true);
             Gamemanager._InstanceGM.env_Subparts[3].SetActive(false);
             Gamemanager._InstanceGM.minimapParent.SetActive(true);
-            //SoundManager.Instance.MusicSource.volume = 0.2f;
+            //SoundController.Instance.MusicSource.volume = 0.2f;
 
             Invoke("Test", 0.5f);
         }
         else if (other.CompareTag("ExitCollider"))
         {
-            ButtonsPressController.Instance.SetPress(3);
+            TopMenuButtonController.Instance.SetPress(3);
         }
     }
 
@@ -222,7 +222,7 @@ public class TeleportHandler : MonoBehaviour
         if (other.CompareTag("reseption"))
         {
             Gamemanager._InstanceGM.animationController.StatBow(false);
-            SoundManager.Instance.EffectsSource.Stop();
+            SoundController.Instance.EffectsSource.Stop();
             CanvusHandler.canvusHandlerInstance.andoridCanvus.SetActive(true);
 
         }
@@ -230,8 +230,8 @@ public class TeleportHandler : MonoBehaviour
 
     void Test()
     {
-        Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerControllerNew>().enabled = true;
-        transform.GetComponent<PlayerControllerNew>().enabled = true;
+        Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerController>().enabled = true;
+        transform.GetComponent<PlayerController>().enabled = true;
     }
 
     void HeadSet()

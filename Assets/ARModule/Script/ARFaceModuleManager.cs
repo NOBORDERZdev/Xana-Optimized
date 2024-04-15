@@ -112,9 +112,9 @@ public class ARFaceModuleManager : MonoBehaviour
             {
                 mainAvatar.SetActive(true);
             }
-            if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+            if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
             {
-                GameObject mainSceneAvatar = Instantiate(XanaConstants.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
+                GameObject mainSceneAvatar = Instantiate(ConstantsHolder.xanaConstants.r_MainSceneAvatar, mainAvatar.transform);
                // mainSceneAvatar.GetComponent<AvatarControllerHome>().UpdateState(true);
                 mainSceneAvatar.GetComponent<AvatarController>().SetAvatarForAR();
                 mainSceneAvatar.transform.localScale = Vector3.one;
@@ -141,10 +141,10 @@ public class ARFaceModuleManager : MonoBehaviour
 
     private void OnDisable()
     {
-        /*if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        /*if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }*/
     }
 
@@ -229,12 +229,12 @@ public class ARFaceModuleManager : MonoBehaviour
             videoCaptureButton.CancelingVideoToBackButtonPress();
             return;
         }
-        if (XanaConstants.xanaConstants.r_MainSceneAvatar != null)
+        if (ConstantsHolder.xanaConstants.r_MainSceneAvatar != null)
         {
-            Destroy(XanaConstants.xanaConstants.r_MainSceneAvatar);
-            XanaConstants.xanaConstants.r_MainSceneAvatar = null;
+            Destroy(ConstantsHolder.xanaConstants.r_MainSceneAvatar);
+            ConstantsHolder.xanaConstants.r_MainSceneAvatar = null;
         }
-        Initiate.Fade("Main", loadToColor, 1.0f);
+        Initiate.Fade("Home", loadToColor, 1.0f);
     }
 
     public void ARFaceManagerDisable(bool isDisable)
@@ -367,7 +367,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnActionModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_body"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_body"))
         {            
             print("Please Upgrade to Premium account");
             return;
@@ -383,7 +383,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnRealityModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_face"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_face"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -400,7 +400,7 @@ public class ARFaceModuleManager : MonoBehaviour
 
     public void OnPlanDetectionModeBtnClick()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("ar_ar"))
+        if (!UserPassManager.Instance.CheckSpecificItem("ar_ar"))
         {
             print("Please Upgrade to Premium account");
             return;
@@ -493,9 +493,9 @@ public class ARFaceModuleManager : MonoBehaviour
         {
             LiveVideoRoomManager.Instance.ImageSelectionAllUIDisable(false);
         }
-        if (SNSNotificationManager.Instance != null)
+        if (SNSNotificationHandler.Instance != null)
         {
-            SNSNotificationManager.Instance.ResetAndInstantHideNotificationBar();
+            SNSNotificationHandler.Instance.ResetAndInstantHideNotificationBar();
         }
         Capture();
     }
@@ -552,9 +552,9 @@ public class ARFaceModuleManager : MonoBehaviour
         }
         else
         {
-            if (SNSNotificationManager.Instance != null)
+            if (SNSNotificationHandler.Instance != null)
             {
-                SNSNotificationManager.Instance.ShowNotificationMsg("Save Photo success");
+                SNSNotificationHandler.Instance.ShowNotificationMsg("Save Photo success");
             }
             else
             {
@@ -755,9 +755,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void OnFilterSelectionBtnClick()
     {
         print("Filter btn clicked");
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("filter button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("filter button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -785,9 +785,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void OnCharacterSelectionBtnClick()
     {
         print("Gesture btn clicked");
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("SNS Emote"))
+        if (!UserPassManager.Instance.CheckSpecificItem("SNS Emote"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }  
@@ -985,9 +985,9 @@ public class ARFaceModuleManager : MonoBehaviour
     {
         print("Post btn clicked");
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("post button"))
+        if (!UserPassManager.Instance.CheckSpecificItem("post button"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -1061,7 +1061,7 @@ public class ARFaceModuleManager : MonoBehaviour
     //        case "Image":
     //            //string s1 = createFeedTitle.text;
     //            //string s1 = createFeedTitleAdvance.RichText;
-    //            string s1 = APIManager.Instance.userName;
+    //            string s1 = SNS_APIManager.Instance.userName;
     //            //string s2 = createFeedDescription.text;
     //            string s2 = createFeedDescriptionAdvance.RichText;
 
@@ -1079,12 +1079,12 @@ public class ARFaceModuleManager : MonoBehaviour
     //                s2 = "  ";
     //            }
 
-    //            //APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s1), APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
+    //            //SNS_APIManager.Instance.RequestCreateFeed(SNS_APIManager.EncodedString(s1), SNS_APIManager.EncodedString(s2), url, "", thumbnail, "true", "", "RoomCreateFeed");
     //            break;
     //        case "Video":
     //            //string s11 = createFeedTitle.text;
     //            //string s11 = createFeedTitleAdvance.RichText;
-    //            string s11 = APIManager.Instance.userName;
+    //            string s11 = SNS_APIManager.Instance.userName;
     //            //string s22 = createFeedDescription.text;
     //            string s22 = createFeedDescriptionAdvance.RichText;
 
@@ -1101,7 +1101,7 @@ public class ARFaceModuleManager : MonoBehaviour
     //            {
     //                s22 = "  ";
     //            }
-    //            APIManager.Instance.RequestCreateFeed(APIManager.EncodedString(s11), APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
+    //            SNS_APIManager.Instance.RequestCreateFeed(SNS_APIManager.EncodedString(s11), SNS_APIManager.EncodedString(s22), "", url, thumbnail, "true", "", "RoomCreateFeed");
     //            break;
     //        default:
     //            break;
@@ -1127,9 +1127,9 @@ public class ARFaceModuleManager : MonoBehaviour
     public void CreateFeedSuccess()
     {        
         ShowLoader(false);
-        if (SNSNotificationManager.Instance != null)
+        if (SNSNotificationHandler.Instance != null)
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Feed Created");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Feed Created");
         }
         else
         {

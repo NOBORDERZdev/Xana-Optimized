@@ -71,7 +71,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
-        BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
 
@@ -290,7 +290,7 @@ public class BuilderMapDownload : MonoBehaviour
                 GetObject(_async, levelData.otherItems[i]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
             //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
             //}
@@ -689,8 +689,8 @@ public class BuilderMapDownload : MonoBehaviour
         reflectionProbe.enabled = true;
         if (levelData.skyProperties.skyId != -1)
         {
-            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
-            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+            GameplayEntityLoader.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            GameplayEntityLoader.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
     }
 
@@ -849,11 +849,11 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
         //}
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
             // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
