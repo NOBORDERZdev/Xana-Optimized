@@ -600,7 +600,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
-            if (!XanaConstants.xanaConstants.returnedFromGamePlay)
+            if (!ConstantsHolder.xanaConstants.returnedFromGamePlay)
             {
                 ApiHolderContainsData = true;
             }
@@ -721,7 +721,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         ApiHolderContainsData = false;
         apiResponseHolder.apiResponses.Clear();
         GameManager.Instance.isTabSwitched = false;
-        XanaConstants.xanaConstants.returnedFromGamePlay = false;
+        ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
     }
 
     [Serializable]

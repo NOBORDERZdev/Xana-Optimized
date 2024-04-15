@@ -32,16 +32,16 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-            if (ReferrencesForDynamicMuseum.instance.m_34player)
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+            if (ReferencesForGamePlay.instance.m_34player)
             {
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             }
             triggerObject = other.gameObject;
             if (isEnteringPopup)
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-                CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
 
     }
@@ -81,72 +81,72 @@ public class JjWorldChanger : MonoBehaviour
             worldName = name;
         }
 
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
-            XanaConstants.xanaConstants.isFromXanaLobby = true;
+            ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+        if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-        //XanaConstants.xanaConstants.EnviornmentName = worldName;
+        //ConstantsHolder.xanaConstants.EnviornmentName = worldName;
         //FeedEventPrefab.m_EnvName = worldName;
-        //Launcher.sceneName = worldName;
+        //MutiplayerController.sceneName = worldName;
 
         // Added by WaqasAhmad
         // For Live User Count
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
-            XanaConstants.xanaConstants.customWorldId = MainNet;
-            XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
+            ConstantsHolder.xanaConstants.customWorldId = MainNet;
+            ConstantsHolder.xanaConstants.MuseumID = MainNet.ToString();
         }
         else
         {
-            XanaConstants.xanaConstants.customWorldId = testNet;
-            XanaConstants.xanaConstants.MuseumID = testNet.ToString();
+            ConstantsHolder.xanaConstants.customWorldId = testNet;
+            ConstantsHolder.xanaConstants.MuseumID = testNet.ToString();
         }
         //
 
         if (isMusuem)
         {
-            XanaConstants.xanaConstants.IsMuseum = true;
-            //if (APIBaseUrlChange.instance.IsXanaLive)
+            ConstantsHolder.xanaConstants.IsMuseum = true;
+            //if (APIBasepointManager.instance.IsXanaLive)
             //{
-            //    XanaConstants.xanaConstants.MuseumID = MainNet.ToString();
+            //    ConstantsHolder.xanaConstants.MuseumID = MainNet.ToString();
             //}
             //else
             //{
-            //    XanaConstants.xanaConstants.MuseumID = testNet.ToString();
+            //    ConstantsHolder.xanaConstants.MuseumID = testNet.ToString();
             //}
         }
         else if (isBuilderWorld)
         {
-            XanaConstants.xanaConstants.isBuilderScene = true;
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            ConstantsHolder.xanaConstants.isBuilderScene = true;
+            if (APIBasepointManager.instance.IsXanaLive)
             {
-                XanaConstants.xanaConstants.builderMapID = MainNet;
+                ConstantsHolder.xanaConstants.builderMapID = MainNet;
             }
             else
             {
-                XanaConstants.xanaConstants.builderMapID = testNet;
+                ConstantsHolder.xanaConstants.builderMapID = testNet;
             }
         }
         else // FOR JJ WORLD
         {
             if (HaveMultipleSpwanPoint)
             {
-                XanaConstants.xanaConstants.mussuemEntry = mussuemEntry;
+                ConstantsHolder.xanaConstants.mussuemEntry = mussuemEntry;
             }
             else
             {
-                XanaConstants.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                ConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
             }
         }
         yield return new WaitForSeconds(1f);
-        XanaConstants.xanaConstants.JjWorldSceneChange = true;
-        XanaConstants.xanaConstants.JjWorldTeleportSceneName = worldName;
-        LoadFromFile.instance._uiReferences.LoadMain(false);
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = worldName;
+        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
 
 
     }
@@ -154,7 +154,7 @@ public class JjWorldChanger : MonoBehaviour
 
     private bool checkWorldComingSoon(string worldName)
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem(worldName, true))
+        if (!UserPassManager.Instance.CheckSpecificItem(worldName, true))
         {
 
             return false;

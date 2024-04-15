@@ -23,7 +23,7 @@ public class AttechmentData : MonoBehaviour
     //    {
     //        AssetCache.Instance.RemoveFromMemory(attechmentImage.sprite);
     //        attechmentImage.sprite = null;
-    //        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //        SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //    }
     //}
 
@@ -35,7 +35,7 @@ public class AttechmentData : MonoBehaviour
     //        attechmentImage.sprite = null;
     //        //Resources.UnloadUnusedAssets();//every clear.......
     //        //Caching.ClearCache();
-    //        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //        SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //    }
     //}
 
@@ -55,7 +55,7 @@ public class AttechmentData : MonoBehaviour
     //    //Debug.LogError("currentExtention:   " + currentExtention);
     //    if (currentExtention == ExtentionType.Image)
     //    {
-    //        bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(key);
+    //        bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(key);
     //        if (isUrlContainsHttpAndHttps)
     //        {
     //            AssetCache.Instance.EnqueueOneResAndWait(key, key, (success) =>
@@ -80,26 +80,26 @@ public class AttechmentData : MonoBehaviour
 
     //public void OnClickSeeFullImage()
     //{        
-    //    foreach (Transform item in MessageController.Instance.saveAttechmentParent)
+    //    foreach (Transform item in SNS_MessageController.Instance.saveAttechmentParent)
     //    {
     //        Destroy(item.gameObject);
     //    }
     //    int index = 0;
     //    int pageIndex = 0;
     //    bool isMatch = false;
-    //    for (int i = 0; i < APIManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
+    //    for (int i = 0; i < SNS_APIManager.Instance.AllChatAttachmentsRoot.data.rows.Count; i++)
     //    {
-    //        GameObject attechment = Instantiate(APIController.Instance.saveAttechmentPrefab, MessageController.Instance.saveAttechmentParent);
-    //        attechment.GetComponent<SaveAttechmentScript>().attachmentsRow = APIManager.Instance.AllChatAttachmentsRoot.data.rows[i];
+    //        GameObject attechment = Instantiate(SNS_APIController.Instance.saveAttechmentPrefab, SNS_MessageController.Instance.saveAttechmentParent);
+    //        attechment.GetComponent<SaveAttechmentScript>().attachmentsRow = SNS_APIManager.Instance.AllChatAttachmentsRoot.data.rows[i];
     //        attechment.GetComponent<SaveAttechmentScript>().LoadData();
 
-    //        //Debug.LogError("id:" + APIManager.Instance.AllChatAttachmentsRoot.data.rows[i].id);
+    //        //Debug.LogError("id:" + SNS_APIManager.Instance.AllChatAttachmentsRoot.data.rows[i].id);
     //        //Debug.LogError("ids: " + attachmentsRow.id);
-    //        if (APIManager.Instance.AllChatAttachmentsRoot.data.rows[i].id == attachmentsRow.id && !isMatch)
+    //        if (SNS_APIManager.Instance.AllChatAttachmentsRoot.data.rows[i].id == attachmentsRow.id && !isMatch)
     //        {
     //            pageIndex = index;
-    //            MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().startingPage = pageIndex;
-    //            MessageController.Instance.SaveAttachmentDetailsSetup(pageIndex);
+    //            SNS_MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().startingPage = pageIndex;
+    //            SNS_MessageController.Instance.SaveAttachmentDetailsSetup(pageIndex);
     //            isMatch = true;
     //        }
     //        else
@@ -108,8 +108,8 @@ public class AttechmentData : MonoBehaviour
     //            index += 1;
     //        }
     //    }
-    //    MessageController.Instance.AttechmentDownloadScreen.SetActive(true);
-    //    MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().StartScrollSnap();
+    //    SNS_MessageController.Instance.AttechmentDownloadScreen.SetActive(true);
+    //    SNS_MessageController.Instance.saveAttechmentParent.transform.parent.GetComponent<ScrollSnapRect>().StartScrollSnap();
     //}
 
     //public void SetVideoUi(bool isVideo)

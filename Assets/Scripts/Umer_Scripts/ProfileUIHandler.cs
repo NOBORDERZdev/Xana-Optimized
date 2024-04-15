@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
-using static StoreManager;
+using static InventoryManager;
 
 public class ProfileUIHandler : MonoBehaviour
 {

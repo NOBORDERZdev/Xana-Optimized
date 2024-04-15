@@ -192,7 +192,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.job))
                 {
-                    jobText.text = APIManager.DecodedString(singleUserProfileData.userProfile.job);
+                    jobText.text = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.job);
                     jobText.gameObject.SetActive(true);
                 }
                 else
@@ -202,7 +202,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.bio))
                 {
-                    textUserBio.text = APIManager.DecodedString(singleUserProfileData.userProfile.bio);
+                    textUserBio.text = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.bio);
                     SetupBioPart(textUserBio.text);//check and show only 10 line.......
                 }
                 else
@@ -235,7 +235,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
             if (!string.IsNullOrEmpty(singleUserProfileData.avatar))//set avatar image.......
             {
-                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(singleUserProfileData.avatar);
+                bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(singleUserProfileData.avatar);
                 //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isAvatarUrlFromDropbox)
                 {
@@ -372,7 +372,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         if (seeMoreButtonTextObj.activeSelf)
         {
-            textUserBio.text = APIManager.DecodedString(singleUserProfileData.userProfile.bio);
+            textUserBio.text = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.bio);
             SeeMoreLessBioTextSetup(false);
         }
         else
@@ -428,7 +428,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 //Debug.Log("isDataLoad False");
                 isFeedLoaded = false;
-                APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData.id, (profileFeedAPiCurrentPageIndex + 1), 10, "OtherPlayerFeed");
+                SNS_APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData.id, (profileFeedAPiCurrentPageIndex + 1), 10, "OtherPlayerFeed");
             }
         }
     }
@@ -436,7 +436,7 @@ public class OtherPlayerProfileData : MonoBehaviour
   
     public void AllFeedWithUserId(int pageNumb, bool _callFromFindFriendWithName = false)
     {
-        currentPageAllTextPostWithUserIdRoot = APIManager.Instance.allTextPostWithUserIdRoot;
+        currentPageAllTextPostWithUserIdRoot = SNS_APIManager.Instance.allTextPostWithUserIdRoot;
         FeedUIController.Instance.OnClickCheckOtherPlayerProfile(_callFromFindFriendWithName);
 
         for (int i = 0; i <= currentPageAllTextPostWithUserIdRoot.data.rows.Count; i++)
@@ -592,7 +592,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
@@ -609,7 +609,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from message module group details screen");
                     isProfiletranzistFromMessage = true;
                     RemoveAndCheckBackKey();
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickWorldButton();
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickWorldButton();
                     break;
                 default:
                     FeedUIController.Instance.feedUiScreen.SetActive(true);
@@ -679,13 +679,13 @@ public class OtherPlayerProfileData : MonoBehaviour
         if (isFollowFollowing)
         {
             //unfollow.......
-            APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+            SNS_APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
         }
         else
         {
             //follow.......
-            APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+            SNS_APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
             profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
         }
     }
@@ -700,7 +700,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         LoadUserData(true);
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(singleUserProfileData1.id));
-        APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 40, "OtherPlayerFeed", _callFromFindFriendWithName);
+        SNS_APIManager.Instance.RequestGetFeedsByUserId(singleUserProfileData1.id, 1, 40, "OtherPlayerFeed", _callFromFindFriendWithName);
     }
 
     public void RequestGetUserDetails(int id)
@@ -710,7 +710,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         LoadUserData(true);
         //Debug.Log("RequestGetUserDetails:" + singleUserProfileData1.id);
         StartCoroutine(IERequestGetUserDetails(id));
-        APIManager.Instance.RequestGetFeedsByUserId(id, 1, 40, "OtherPlayerFeed");
+        SNS_APIManager.Instance.RequestGetFeedsByUserId(id, 1, 40, "OtherPlayerFeed");
     }
 
     public bool isUserProfileDataDiff = false;
@@ -721,7 +721,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         isUserProfileDataDiff = false;
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetSingleUserProfile), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
             // Start the stopwatch
             //Stopwatch stopwatch = Stopwatch.StartNew();
             www.SendWebRequest();

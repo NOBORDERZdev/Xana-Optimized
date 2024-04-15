@@ -53,7 +53,7 @@ public class FollowerItemController : MonoBehaviour
             profileImage.sprite = null;
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -64,7 +64,7 @@ public class FollowerItemController : MonoBehaviour
         userNameText.text = followerRawData.follower.name;
         if (!string.IsNullOrEmpty(followerRawData.follower.avatar))
         {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(followerRawData.follower.avatar);
+            bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(followerRawData.follower.avatar);
             if (isUrlContainsHttpAndHttps)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(followerRawData.follower.avatar, followerRawData.follower.avatar, (success) =>
@@ -87,7 +87,7 @@ public class FollowerItemController : MonoBehaviour
     {
         print("Follower id :"+followerRawData.follower.id);
         FeedUIController.Instance.ShowLoader(true);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FollowerItemController>(followerRawData.follower.id.ToString(), this);
+        SNS_APIManager.Instance.RequestGetUserLatestAvatarData<FollowerItemController>(followerRawData.follower.id.ToString(), this);
         MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
         OtherPlayerProfileData.Instance.ResetMainScrollDefaultTopPos();
         MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
@@ -106,9 +106,9 @@ public class FollowerItemController : MonoBehaviour
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
         ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("sns_feed",false))
+        if (!UserPassManager.Instance.CheckSpecificItem("sns_feed",false))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -116,9 +116,9 @@ public class FollowerItemController : MonoBehaviour
         {
             print("Horayyy you have Access");
         }
-        //if (XanaConstants.xanaConstants != null)
+        //if (ConstantsHolder.xanaConstants != null)
         //{
-        //    if (XanaConstants.xanaConstants.r_isSNSComingSoonActive)
+        //    if (ConstantsHolder.xanaConstants.r_isSNSComingSoonActive)
         //    {
         //        print("sns features coming soon.......");
         //        return;
@@ -146,7 +146,7 @@ public class FollowerItemController : MonoBehaviour
 
         OtherPlayerProfileData.Instance.backKeyManageList.Add("FollowerFollowingListScreen");//For back mamages.......
 
-        //APIManager.Instance.RequestGetFeedsByUserId(followerRawData.follower.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIManager.Instance.RequestGetFeedsByUserId(followerRawData.follower.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -178,9 +178,9 @@ public class FollowerItemController : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
@@ -239,9 +239,13 @@ public class FollowerItemController : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             FeedUIController.Instance.ShowLoader(false);//false api loader
 
@@ -258,7 +262,7 @@ public class FollowerItemController : MonoBehaviour
                 FollowFollowingSetUp(true);
 
                 //refresh Feed API.......
-                //APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
+                //SNS_APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
             }
         }
     }
@@ -275,20 +279,23 @@ public class FollowerItemController : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UnFollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
             FeedUIController.Instance.ShowLoader(false);//false api loader
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
                 string data = www.downloadHandler.text;
-               Debug.Log("user unfollow success data:" + data);
                 //searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
             }

@@ -9,7 +9,7 @@ public class StreamingLoadingText : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!XanaConstants.xanaConstants.isCameraMan)
+        if (!ConstantsHolder.xanaConstants.isCameraMan)
         {
             gameObject.SetActive(false);
         }
@@ -17,10 +17,10 @@ public class StreamingLoadingText : MonoBehaviour
     public void UpdateLoadingText(bool movingToWorld)
     {
        
-            if (XanaConstants.xanaConstants.isCameraMan)
+            if (ConstantsHolder.xanaConstants.isCameraMan)
             {
                  if (movingToWorld)
-                TmpText.text= loadingScreenTxt+XanaConstants.xanaConstants.JjWorldTeleportSceneName.ToString();
+                TmpText.text= loadingScreenTxt+ConstantsHolder.xanaConstants.JjWorldTeleportSceneName.ToString();
                  else
                 TmpText.text = "Switching world";
             }

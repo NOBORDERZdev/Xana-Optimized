@@ -47,7 +47,7 @@ public class IKMuseum : MonoBehaviour
         }
         else
         {
-            SelfieController.Instance.InitializeCharacter(m_SelfieStick, this.transform.parent.gameObject, m_TargetPosition, this.gameObject,Lookatorder);
+            PlayerSelfieController.Instance.InitializeCharacter(m_SelfieStick, this.transform.parent.gameObject, m_TargetPosition, this.gameObject,Lookatorder);
            
         }
 
@@ -180,7 +180,7 @@ public class IKMuseum : MonoBehaviour
     {
         if (gameObject.GetComponent<PhotonView>().ViewID == _viewID)
         {
-            if(!ReferrencesForDynamicMuseum.instance.playerControllerNew.isFirstPerson)
+            if(!ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
                 m_ConsoleObjOther.SetActive(true);
             m_Animator.SetBool("freecam", true);
            
