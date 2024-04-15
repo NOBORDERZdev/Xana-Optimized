@@ -82,8 +82,11 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3APIforWeb2.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        EyesBlinking.instance.StoreBlendShapeValues();
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        if (EyesBlinking.instance != null)
+        {
+            EyesBlinking.instance.StoreBlendShapeValues();
+            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+        }
     }
 
     private void OnDisable()
@@ -1497,9 +1500,9 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         PremiumUsersDetails.Instance.testing = false;
-        if (SNSSettingController.Instance != null)
+        if (FeedUIController.Instance.SNSSettingController != null)
         {
-            SNSSettingController.Instance.LogoutSuccess();
+            FeedUIController.Instance.SNSSettingController.LogoutSuccess();
         }
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (StoreManager.instance.MultipleSave)

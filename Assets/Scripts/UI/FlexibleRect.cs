@@ -10,20 +10,18 @@ public class FlexibleRect : MonoBehaviour
     public RectTransform[] Children;
     public float Offset;
 
-    public RectTransform MyRect;
     public ScrollRect srcollRect;
 
-    public static Action<bool> OnAdjustSize;
-    private float defaultHeight;
+    //public static Action<bool> OnAdjustSize;
+    //private float defaultHeight;
 
     private void OnEnable()
     {
-        OnAdjustSize += AdjustSize;
-        defaultHeight = MyRect.sizeDelta.y;
+        //OnAdjustSize += AdjustSize;
     }
     private void OnDisable()
     {
-        OnAdjustSize -= AdjustSize;
+        //OnAdjustSize -= AdjustSize;
     }
 
     public void AdjustSize(bool isSearchPanel)
@@ -38,16 +36,16 @@ public class FlexibleRect : MonoBehaviour
                     TotalHeight += rectTransform.rect.height;
                 }
             }
-            if (TotalHeight > defaultHeight)
-            {
-                MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
-            }
+            //if (TotalHeight > defaultHeight)
+            //{
+            //    MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, (TotalHeight) + Offset);
+            //}
             srcollRect.verticalNormalizedPosition = 1;
 
         }
         else
         {
-            MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, defaultHeight);
+            //MyRect.sizeDelta = new Vector2(MyRect.sizeDelta.x, defaultHeight);
             srcollRect.verticalNormalizedPosition = 1;
             Debug.LogWarning("No Children Found to scale against or Rect Transform not found");
         }

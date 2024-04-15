@@ -14,13 +14,10 @@ public class QuizComponent : ItemComponent
             this.quizComponentData.correctAnswerRate = 100;
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-        }
+        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        PlayBehaviour();
     }
 
     private void OnDisable()
@@ -40,10 +37,10 @@ public class QuizComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -70,6 +67,16 @@ public class QuizComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.QuizComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

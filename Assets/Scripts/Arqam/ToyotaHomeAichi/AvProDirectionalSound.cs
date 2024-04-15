@@ -25,12 +25,12 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void OnEnable()
     {
-        InRoomSoundHandler.playerInRoom += Mute_UnMute_Sound;
+        InRoomSoundHandler.soundAction += Mute_UnMute_Sound;
         ChangeOrientation_waqas.switchOrientation += ChangeOrientation;
     }
     private void OnDisable()
     {
-        InRoomSoundHandler.playerInRoom -= Mute_UnMute_Sound;
+        InRoomSoundHandler.soundAction -= Mute_UnMute_Sound;
         ChangeOrientation_waqas.switchOrientation -= ChangeOrientation;
         if (volumeCoroutine != null)
             StopCoroutine(volumeCoroutine);
@@ -83,7 +83,7 @@ public class AvProDirectionalSound : MonoBehaviour
             sliderValue = value;
     }
 
-    private void Mute_UnMute_Sound(bool flag, string roomName)
+    private void Mute_UnMute_Sound(bool flag)
     {
         audioSource.mute = flag;
 
@@ -97,7 +97,7 @@ public class AvProDirectionalSound : MonoBehaviour
         else
         {
             volumeCoroutine = StartCoroutine(AdjustScreenVolume());
-            maxDistance = defaultMaxDis;
+            //maxDistance = defaultMaxDis;
         }
     }
 

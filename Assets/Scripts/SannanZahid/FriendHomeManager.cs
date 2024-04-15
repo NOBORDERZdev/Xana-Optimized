@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using static StoreManager;
 
 public class FriendHomeManager : MonoBehaviour
 {
-    public Transform FriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
+    public Transform maleFriendAvatarPrefab, femaleFriendAvatarPrefab, NameTagFriendAvatarPrefab, PostBubbleFriendAvatarPrefab;
     [NonReorderable]
     [SerializeField]
     BestFriendData _friendsDataFetched;
@@ -74,7 +75,21 @@ public class FriendHomeManager : MonoBehaviour
     IEnumerator CreateFriend(FriendsDetail friend)
     {
         FriendSpawnData FriendSpawn = new FriendSpawnData();
-        Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
+        Transform CreatedFriend;
+        GameObject avatarPrefab;
+        if (friend.userOccupiedAssets.Count > 0 && friend.userOccupiedAssets[0].json != null)
+        {
+            if (friend.userOccupiedAssets[0].json.gender == "Male")
+                avatarPrefab= maleFriendAvatarPrefab.gameObject;
+            else
+                avatarPrefab = femaleFriendAvatarPrefab.gameObject;
+        }
+        else
+        {
+            avatarPrefab = (UnityEngine.Random.Range(0, 2) == 0 ? femaleFriendAvatarPrefab : maleFriendAvatarPrefab).gameObject;
+        }
+        CreatedFriend = Instantiate(avatarPrefab, avatarPrefab.transform.parent).transform;
+        //Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
         yield return null; // Wait for the next frame to continue execution
 
         Transform CreatedFriendPostBubble = Instantiate(PostBubbleFriendAvatarPrefab, PostBubbleFriendAvatarPrefab.parent).transform;
@@ -90,7 +105,7 @@ public class FriendHomeManager : MonoBehaviour
         }
         else
         {
-            int _rand = UnityEngine.Random.Range(0, 13);
+            int _rand = UnityEngine.Random.Range(0, CreatedFriend.GetComponent<CharacterBodyParts>().randomPresetData.Length);
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
