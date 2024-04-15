@@ -83,7 +83,7 @@ public class HelpButtonComponentResizer : MonoBehaviour
     private IEnumerator CheckJapaneseRoutine()
     {
         yield return new WaitForSeconds(1f); //Wait for the text to be set
-        switch (CustomLocalization._instance.IsJapanese(contentText.text))
+        switch (LocalizationManager._instance.IsJapanese(contentText.text))
         {
             case false:
                 viewportRectT.offsetMin = new Vector2(0, 0);

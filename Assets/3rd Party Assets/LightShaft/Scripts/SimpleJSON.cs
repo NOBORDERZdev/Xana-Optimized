@@ -724,7 +724,7 @@ namespace SimpleJSON
             }
         }
 
-        public static JSONNode LoadFromFile(string aFileName)
+        public static JSONNode GameplayEntityLoader(string aFileName)
         {
 #if USE_FileIO
             using (var F = System.IO.File.OpenRead(aFileName))

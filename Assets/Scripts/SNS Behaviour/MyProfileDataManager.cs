@@ -155,7 +155,7 @@ public class MyProfileDataManager : MonoBehaviour
     public string permissionCheck = "";
     public string TestingJasonForTags;
     UserLoginSignupManager userLoginSignupManager;
-    APIManager apiManager;
+    SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
     FeedUIController feedUIController;
     SocketController socketController;
@@ -186,7 +186,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         ClearDummyData();//clear dummy data.......
         userLoginSignupManager = UserLoginSignupManager.instance;
-        apiManager= APIManager.Instance;
+        apiManager= SNS_APIManager.Instance;
         profileUIHandler = ProfileUIHandler.instance;
         feedUIController = FeedUIController.Instance;
         socketController = SocketController.instance;
@@ -233,7 +233,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (apiManager == null)
         {
-            apiManager = APIManager.Instance;
+            apiManager = SNS_APIManager.Instance;
         }
         apiManager.RequestGetUserDetails("myProfile");//Get My Profile data       
         MyProfileSceenShow(true);//active myprofile screen
@@ -328,7 +328,7 @@ public class MyProfileDataManager : MonoBehaviour
             jobText.gameObject.SetActive(false);
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
             {
-                textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+                textUserBio.text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
                 if (textUserBio.text == " ")
                     _alignment_space.SetActive(false);
                 else
@@ -371,14 +371,14 @@ public class MyProfileDataManager : MonoBehaviour
                     if (success)
                     {
                         AssetCache.Instance.LoadSpriteIntoImage(profileImage, myProfileData.avatar, changeAspectRatio: true);
-                        XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                        ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
                     }
                 });
             }
             else
             {
                 GetImageFromAWS(myProfileData.avatar, profileImage);
-                XanaConstants.xanaConstants.userProfileLink = myProfileData.avatar;
+                ConstantsHolder.xanaConstants.userProfileLink = myProfileData.avatar;
             }
         }
     }
@@ -497,7 +497,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         if (seeMoreButtonTextObj.activeSelf)
         {
-            textUserBio.text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            textUserBio.text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             SeeMoreLessBioTextSetup(false);
         }
         else
@@ -645,7 +645,7 @@ public class MyProfileDataManager : MonoBehaviour
         GetAvailableTagsFromServer();
         if (myProfileData.userProfile != null)
         {
-            editProfileBioInputfield.Text = APIManager.DecodedString(myProfileData.userProfile.bio);
+            editProfileBioInputfield.Text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             if (string.IsNullOrWhiteSpace(editProfileBioInputfield.Text))
             {
                 editProfileBioInputfield.Text = "";
@@ -682,7 +682,13 @@ public class MyProfileDataManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get(api))
         {
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+                
 
             if (www.result != UnityWebRequest.Result.ConnectionError && www.result != UnityWebRequest.Result.ProtocolError)
             {
@@ -827,9 +833,9 @@ public class MyProfileDataManager : MonoBehaviour
         if (myProfileData.userProfile != null)
         {
             //job = myProfileData.userProfile.job;
-            job = APIManager.DecodedString(myProfileData.userProfile.job);
+            job = SNS_APIManager.DecodedString(myProfileData.userProfile.job);
             website = myProfileData.userProfile.website;
-            bio = APIManager.DecodedString(myProfileData.userProfile.bio);
+            bio = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);
             gender = myProfileData.userProfile.gender;
             uniqueUsername = myProfileData.userProfile.username;
         }
@@ -892,8 +898,8 @@ public class MyProfileDataManager : MonoBehaviour
         if (checkEditInfoUpdated == 1)
         {
             string countryName = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
-            apiManager.RequestUpdateUserProfile(uniqueUsername ?? "", gender ?? "Male", APIManager.EncodedString(job ?? ""),
-                countryName ?? "", website ?? "", APIManager.EncodedString(bio ?? ""), tempTags);
+            apiManager.RequestUpdateUserProfile(uniqueUsername ?? "", gender ?? "Male", SNS_APIManager.EncodedString(job ?? ""),
+                countryName ?? "", website ?? "", SNS_APIManager.EncodedString(bio ?? ""), tempTags);
         }
 
         if (string.IsNullOrEmpty(setImageAvatarTempPath))
@@ -922,11 +928,15 @@ public class MyProfileDataManager : MonoBehaviour
         Debug.Log("Web URL:" + url);
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_WebsiteValidation), form))
         {
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
 
             //feedUIController.ShowLoader(false);
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
                 EditProfileErrorMessageShow(websiteErrorObj);
@@ -935,7 +945,6 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                Debug.Log("Website Validation success data:" + data);
                 WebSiteValidRoot webSiteValidRoot = JsonConvert.DeserializeObject<WebSiteValidRoot>(data);
                 if (webSiteValidRoot.success)
                 {
@@ -1566,9 +1575,13 @@ public class MyProfileDataManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", apiManager.userAuthorizeToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log("IERequestGetUserDetails error:" + www.error);
             }
@@ -1592,7 +1605,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileMakedFlag = true;
             ProfilePictureManager.instance.MakeProfilePicture(tempMyProfileDataRoot.data.name);
         }
-        else if (XanaConstants.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
+        else if (ConstantsHolder.xanaConstants.userProfileLink != tempMyProfileDataRoot.data.avatar)
         {
             UpdateProfilePic();
         }

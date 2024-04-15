@@ -130,16 +130,16 @@ public class NpcAssetLoader : MonoBehaviour
         switch (type)
         {
             case "Chest":
-                StichItem(ItemDatabase.instance.DefaultShirt, "Chest", this.gameObject, false);
+                StichItem(DefaultClothDatabase.instance.DefaultShirt, "Chest", this.gameObject, false);
                 break;
             case "Legs":
-                StichItem(ItemDatabase.instance.DefaultPent, "Legs", this.gameObject, false);
+                StichItem(DefaultClothDatabase.instance.DefaultPent, "Legs", this.gameObject, false);
                 break;
             case "Feet":
-                StichItem(ItemDatabase.instance.DefaultShoes, "Feet", this.gameObject, false);
+                StichItem(DefaultClothDatabase.instance.DefaultShoes, "Feet", this.gameObject, false);
                 break;
             case "Hair":
-                StichItem(ItemDatabase.instance.DefaultHair, "Hair", this.gameObject, false);
+                StichItem(DefaultClothDatabase.instance.DefaultHair, "Hair", this.gameObject, false);
                 break;
             default:
                 break;
