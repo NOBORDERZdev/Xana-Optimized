@@ -81,12 +81,12 @@ public class JjInfoManager : MonoBehaviour
             Instance = this;
         }
 
-        if (SoundManager.Instance)
+        if (SoundController.Instance)
         {
-            SoundManager.Instance.videoPlayerSource = videoPlayerSource;
-            SoundManager.Instance.livePlayerSource = livePlayerSource;
-            SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerSource;
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.videoPlayerSource = videoPlayerSource;
+            SoundController.Instance.livePlayerSource = livePlayerSource;
+            SoundSettings.soundManagerSettings.videoSource = videoPlayerSource;
+            SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
@@ -106,7 +106,7 @@ public class JjInfoManager : MonoBehaviour
     {
         if (IsJjWorld)
         {
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBasepointManager.instance.IsXanaLive)
                 JJMusuemId = JJMusuemId_main;
             else
                 JJMusuemId = JJMusuemId_test;
@@ -152,7 +152,7 @@ public class JjInfoManager : MonoBehaviour
         //}
         //catch
         //{
-        //    //Debug.Log("<color=red>jj APi not call in " + XanaConstants.xanaConstants.EnviornmentName + "</color>");
+        //    //Debug.Log("<color=red>jj APi not call in " + ConstantsHolder.xanaConstants.EnviornmentName + "</color>");
         //}
         //finally
         //{
@@ -432,7 +432,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -523,9 +523,9 @@ public class JjInfoManager : MonoBehaviour
             }
 
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
 
         #region For firebase analytics
@@ -579,7 +579,7 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
             //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
-        if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+        if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             LandscapeObj.SetActive(true);
             PotraiteObj.SetActive(false);
@@ -593,14 +593,14 @@ public class JjInfoManager : MonoBehaviour
             ratioReferences[ratioId].l_obj.SetActive(false);
             ratioReferences[ratioId].p_obj.SetActive(true);
         }
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
-        string worldName = XanaConstants.xanaConstants.EnviornmentName;
+        string worldName = ConstantsHolder.xanaConstants.EnviornmentName;
         //if (!string.IsNullOrEmpty(firebaseEventName))
         //{
         //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
@@ -665,9 +665,9 @@ public class JjInfoManager : MonoBehaviour
         ratioReferences[ratioId].l_Loader.SetActive(false);
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
-        if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+        if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
         {
-            CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
 
     }

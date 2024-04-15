@@ -69,7 +69,7 @@ public class GlobalConstants
 
         string prefix = "T_";
 
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             prefix = "L_"; environmentType = EnvironmentType.Live; 
         }
