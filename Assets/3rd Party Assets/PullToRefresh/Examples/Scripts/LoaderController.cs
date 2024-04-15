@@ -42,11 +42,11 @@ public class LoaderController : MonoBehaviour
             //        {
             //            if (i == 1)
             //            {
-            //                //APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
+            //                //SNS_APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10, "PullRefresh");
             //            }
             //            else
             //            {
-            //                APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
+            //                SNS_APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10, "PullRefresh");
             //            }
             //        }
             //    }

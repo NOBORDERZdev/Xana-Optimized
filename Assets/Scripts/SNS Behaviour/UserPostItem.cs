@@ -40,7 +40,7 @@ public class UserPostItem : MonoBehaviour
     //        isReleaseFromMemoryOrNot = true;
     //        //Resources.UnloadUnusedAssets();//every clear.......
     //        //Caching.ClearCache();
-    //        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //        SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //    }
     //    /*else
     //    {
@@ -64,7 +64,7 @@ public class UserPostItem : MonoBehaviour
 
     //private void Update()//delete image after object out of screen
     //{
-    //    /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+    //    /*if (SNS_APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
     //    {
     //        return;
     //    }
@@ -143,7 +143,7 @@ public class UserPostItem : MonoBehaviour
     //                imgFeed.sprite = null;
     //                //Resources.UnloadUnusedAssets();//every clear.......
     //                //Caching.ClearCache();
-    //                APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //                SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //            }
     //        }
     //    }
@@ -152,7 +152,7 @@ public class UserPostItem : MonoBehaviour
     //public void LoadFeed()
     //{
     //    isVisible = true;
-    //    /*if (!APIManager.Instance.isTestDefaultToken)
+    //    /*if (!SNS_APIManager.Instance.isTestDefaultToken)
     //    {
     //        isVisible = true;
     //    }
@@ -168,7 +168,7 @@ public class UserPostItem : MonoBehaviour
     ////    {
     ////        if (!string.IsNullOrEmpty(userData.Image))
     ////        {
-    ////            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
+    ////            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
     ////            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox);
     ////            if (isImageUrlFromDropbox)
     ////            {
@@ -200,7 +200,7 @@ public class UserPostItem : MonoBehaviour
     ////        {
     ////            if (!string.IsNullOrEmpty(userData.thumbnail))
     ////            {
-    ////                bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.thumbnail);
+    ////                bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.thumbnail);
     ////                //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox);
     ////                if (isImageUrlFromDropbox)
     ////                {
@@ -234,7 +234,7 @@ public class UserPostItem : MonoBehaviour
     ////            }
     ////            else
     ////            {
-    ////                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
+    ////                bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
     ////                isVideoFeed = true;
 
     ////                //Debug.Log("FeedData.video " + userData.Video);
@@ -262,7 +262,7 @@ public class UserPostItem : MonoBehaviour
     ////    {
     ////        if (!string.IsNullOrEmpty(tagUserData.feed.image))
     ////        {
-    ////            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.image);
+    ////            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.image);
     ////            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox);
     ////            if (isImageUrlFromDropbox)
     ////            {
@@ -287,7 +287,7 @@ public class UserPostItem : MonoBehaviour
     ////        }
     ////        else if (!string.IsNullOrEmpty(tagUserData.feed.video))
     ////        {
-    ////            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.video);
+    ////            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.video);
     ////            isVideoFeed = true;
 
     ////            //Debug.Log("FeedData.video " + tagUserData.feed.video);
@@ -378,19 +378,19 @@ public class UserPostItem : MonoBehaviour
     //            //{
     //            //    feedRowsDataList = MyProfileDataManager.Instance.allMyFeedImageRootDataList;
     //            //}
-    //            feedRowsDataList = APIManager.Instance.allFeedWithUserIdRoot.Data.Rows;
+    //            feedRowsDataList = SNS_APIManager.Instance.allFeedWithUserIdRoot.Data.Rows;
     //        }
     //        else
     //        {
     //           Debug.Log("H4 > ");
     //            FeedUIController.Instance.feedFullViewScreenCallingFrom = "";
-    //            feedRowsDataList = APIManager.Instance.allFeedWithUserIdRoot.Data.Rows;
+    //            feedRowsDataList = SNS_APIManager.Instance.allFeedWithUserIdRoot.Data.Rows;
     //        }
     //       Debug.Log("FeedUIController.Instance.feedFullViewScreenCallingFrom= > " + FeedUIController.Instance.feedFullViewScreenCallingFrom);
 
     //        for (int i = 0; i < feedRowsDataList.Count; i++)
     //        {
-    //            GameObject videofeedObject = Instantiate(APIController.Instance.PostVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
+    //            GameObject videofeedObject = Instantiate(SNS_APIController.Instance.PostVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
 
     //            PostFeedVideoItem postFeedVideoItem = videofeedObject.GetComponent<PostFeedVideoItem>();
 
@@ -410,14 +410,14 @@ public class UserPostItem : MonoBehaviour
     //    }
     //    else if (tagUserData.id != 0)
     //    {
-    //        for (int i = 0; i < APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
+    //        for (int i = 0; i < SNS_APIManager.Instance.taggedFeedsByUserIdRoot.data.rows.Count; i++)
     //        {
-    //            GameObject videofeedObject = Instantiate(APIController.Instance.PostVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
-    //            videofeedObject.GetComponent<PostFeedVideoItem>().tagUserData = APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
+    //            GameObject videofeedObject = Instantiate(SNS_APIController.Instance.PostVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
+    //            videofeedObject.GetComponent<PostFeedVideoItem>().tagUserData = SNS_APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i];
     //            //videofeedObject.GetComponent<PostFeedVideoItem>().avatarUrl = avtarUrl;
     //            videofeedObject.GetComponent<PostFeedVideoItem>().LoadFeed();
 
-    //            if (APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i].id == tagUserData.id)
+    //            if (SNS_APIManager.Instance.taggedFeedsByUserIdRoot.data.rows[i].id == tagUserData.id)
     //            {
     //                pageIndex = index;
     //                FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().startingPage = pageIndex;

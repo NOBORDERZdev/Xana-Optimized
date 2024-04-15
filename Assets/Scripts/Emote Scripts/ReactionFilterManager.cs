@@ -104,7 +104,7 @@ public class ReactionFilterManager : MonoBehaviour
     }
     public void PopupTextClik(Button TextBtn)
     {
-        // EmoteAnimationPlay.Instance.alreadyRuning = true;
+        // EmoteAnimationHandler.Instance.alreadyRuning = true;
         //Caching.ClearCache();
         Debug.Log("text btn====" + TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn====" + GestureBtn.GetComponent<Text>().text);
         Debug.Log("text btn2====" + TextBtn.gameObject.transform.GetChild(0).GetComponent<Text>().text + "GestureBtn 2====" + EmoteBtn.GetComponent<Text>().text);
@@ -139,7 +139,7 @@ public class ReactionFilterManager : MonoBehaviour
         Debug.Log("local manage====");
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        //EmoteAnimationPlay.Instance.alreadyRuning = true;
+        //EmoteAnimationHandler.Instance.alreadyRuning = true;
 
         taboneclick = true;
         tabtwoclick = false;

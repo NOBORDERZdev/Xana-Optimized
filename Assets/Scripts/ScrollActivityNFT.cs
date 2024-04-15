@@ -76,9 +76,9 @@ public class ScrollActivityNFT : MonoBehaviour
     public async void EquipBtnClicked()
     {
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("EquipButton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("EquipButton"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             return;
@@ -110,7 +110,7 @@ public class ScrollActivityNFT : MonoBehaviour
             SubButtonText.text = "Unequip";
             SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Unequip");
             subButtonTextToCheck = "Unequip";
-            XanaConstants.xanaConstants.isNFTEquiped = true;
+            ConstantsHolder.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
@@ -128,9 +128,9 @@ public class ScrollActivityNFT : MonoBehaviour
             subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
-            XanaConstants.xanaConstants.isNFTEquiped = false;
+            ConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+            SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
             EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
@@ -277,6 +277,6 @@ public class ScrollActivityNFT : MonoBehaviour
         nftAttributes.defence = _OwnedNFTDataObj._Attributes[_NFTIndex].defence;
         nftAttributes.special_move = _OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
         string attributesJson = JsonUtility.ToJson(nftAttributes);
-        File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
+        File.WriteAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

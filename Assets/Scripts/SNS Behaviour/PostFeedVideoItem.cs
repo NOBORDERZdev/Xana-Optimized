@@ -89,13 +89,13 @@ public class PostFeedVideoItem : MonoBehaviour
     //    }
     //    //Resources.UnloadUnusedAssets();//every clear.......
     //    //Caching.ClearCache();
-    //    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //    SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //}
 
     //public Vector3 mousePosNR;
     //private void Update()//delete image after object out of screen
     //{
-    //    /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+    //    /*if (SNS_APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
     //    {
     //        return;
     //    }*/
@@ -173,7 +173,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //                    Resources.UnloadUnusedAssets();//Every clear
     //                    //Caching.ClearCache();
     //                    GC.Collect();
-    //                    //APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //                    //SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //                }
     //                else
     //                {
@@ -251,7 +251,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //    timeText.text = "";
     //    if (userData.Id != 0)
     //    {
-    //        userName.text = APIManager.DecodedString(userData.Title);
+    //        userName.text = SNS_APIManager.DecodedString(userData.Title);
 
     //        //for comment count.......
     //        CommentCountUISetup(userData.commentCount);
@@ -261,7 +261,7 @@ public class PostFeedVideoItem : MonoBehaviour
 
     //        if (!string.IsNullOrEmpty(userData.Descriptions))//new
     //        {
-    //            descriptionText.text = APIManager.DecodedString(userData.Descriptions);
+    //            descriptionText.text = SNS_APIManager.DecodedString(userData.Descriptions);
     //            SetupDecPart(descriptionText.text);
     //        }
     //        else
@@ -283,7 +283,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //        //commentBtn.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = tagUserData.feed.commentCount.ToString();
     //        if (!string.IsNullOrEmpty(userData.Descriptions))//new
     //        {
-    //            descriptionText.text = APIManager.DecodedString(tagUserData.feed.descriptions);
+    //            descriptionText.text = SNS_APIManager.DecodedString(tagUserData.feed.descriptions);
     //            SetupDecPart(descriptionText.text);
     //        }
     //        else
@@ -300,7 +300,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //    GetShareURL();
 
     //    isVisible = true;
-    //    /*if (!APIManager.Instance.isTestDefaultToken)
+    //    /*if (!SNS_APIManager.Instance.isTestDefaultToken)
     //    {
     //        isVisible = true;
     //    }
@@ -322,7 +322,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //{
     //    if (!string.IsNullOrEmpty(avatarUrl))//set avatar image.......
     //    {
-    //        bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(avatarUrl);
+    //        bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(avatarUrl);
     //       Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + feedUserData.Name);
     //        if (isAvatarUrlFromDropbox)
     //        {
@@ -366,7 +366,7 @@ public class PostFeedVideoItem : MonoBehaviour
 
     //        if (!string.IsNullOrEmpty(userData.Image))
     //        {
-    //            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
+    //            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
     //            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
     //            if (isImageUrlFromDropbox)
     //            {
@@ -388,7 +388,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //        }
     //        else if (!string.IsNullOrEmpty(userData.Video))
     //        {
-    //            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
+    //            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
     //            isVideoOrImage = true;
 
     //            //Debug.Log("FeedData.video " + userData.Image);
@@ -428,7 +428,7 @@ public class PostFeedVideoItem : MonoBehaviour
 
     //        if (!string.IsNullOrEmpty(tagUserData.feed.image))
     //        {
-    //            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.image);
+    //            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.image);
     //            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
     //            if (isImageUrlFromDropbox)
     //            {
@@ -450,7 +450,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //        }
     //        else if (!string.IsNullOrEmpty(tagUserData.feed.video))
     //        {
-    //            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.video);
+    //            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(tagUserData.feed.video);
     //            isVideoOrImage = true;
 
     //            SetVideoUi(true);
@@ -647,11 +647,11 @@ public class PostFeedVideoItem : MonoBehaviour
     //    {
     //        if (userData.Id != 0)
     //        {
-    //            descriptionText.text = APIManager.DecodedString(userData.Descriptions);
+    //            descriptionText.text = SNS_APIManager.DecodedString(userData.Descriptions);
     //        }
     //        else if (tagUserData.id != 0)
     //        {
-    //            descriptionText.text = APIManager.DecodedString(tagUserData.feed.descriptions);
+    //            descriptionText.text = SNS_APIManager.DecodedString(tagUserData.feed.descriptions);
     //        }
     //        SeeMoreLessBioTextSetup(false);
     //    }
@@ -742,7 +742,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //{
     //    if (!string.IsNullOrEmpty(userData.Image))
     //    {
-    //        bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
+    //        bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Image);
     //        if (isImageUrlFromDropbox)
     //        {
     //            shareMediaUrl = userData.Image;
@@ -754,7 +754,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //    }
     //    else if (!string.IsNullOrEmpty(userData.Video))
     //    {
-    //        bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
+    //        bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(userData.Video);
     //        if (isVideoUrlFromDropbox)
     //        {
     //            shareMediaUrl = userData.Video;
@@ -850,7 +850,7 @@ public class PostFeedVideoItem : MonoBehaviour
     //public void OnClickCommentButton(bool isRefresh)
     //{
     //    //this method is get comment list and check if current feed this on multiple time not get comment list.......
-    //    APIManager.Instance.CommentListGetAndClickFeedCommentButton(userData.Id, isRefresh, userData.commentCount);
+    //    SNS_APIManager.Instance.CommentListGetAndClickFeedCommentButton(userData.Id, isRefresh, userData.commentCount);
     //    if (!isRefresh)
     //    {
     //        FeedUIController.Instance.OpenCommentPanel();
@@ -888,7 +888,7 @@ public class PostFeedVideoItem : MonoBehaviour
     ////this method is used to like or dislike button click.......
     //public void OnClickLikeOrDisLikeButton()
     //{
-    //    APIManager.Instance.RequestLikeOrDisLikeFeed(userData.Id.ToString(), likeCountBtn.GetComponent<Button>());
+    //    SNS_APIManager.Instance.RequestLikeOrDisLikeFeed(userData.Id.ToString(), likeCountBtn.GetComponent<Button>());
     //}
     //#endregion
 }
