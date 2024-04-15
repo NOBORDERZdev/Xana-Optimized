@@ -1305,7 +1305,7 @@ public class InventoryManager : MonoBehaviour
             UpdateXanaConstants();
             SaveCharacterProperties.instance.AssignCustomSlidersData();
             SaveCharacterProperties.instance.AssignSavedPresets();
-            GameManager.Instance.BlendShapeManager.DismissPoints();
+            //GameManager.Instance.BlendShapeManager.DismissPoints();
 
             GameManager.Instance.BackFromStoreofCharacterCustom();
             MainPanelCloth.SetActive(false);
@@ -3388,13 +3388,11 @@ public class InventoryManager : MonoBehaviour
         // Getting int values from Server for assets Gender 0 for male and 1 for female
         // In Xana we are uisng string for geneder specificaton
 
-        if ((SavaCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
-            (SavaCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
+        if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
+            (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
         {
-            Debug.Log(localcount + ": Item Not Match with Gender: " + SavaCharacterProperties.instance.SaveItemList.gender + " -- "+ dataListOfItems[objId].assetGender);
             return;
         }
-        Debug.Log(localcount + ": Item Match with Gender: " + SavaCharacterProperties.instance.SaveItemList.gender + " -- " + dataListOfItems[objId].assetGender);
 
         GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, parentObj);
         L_ItemBtnObj.transform.parent = parentObj;

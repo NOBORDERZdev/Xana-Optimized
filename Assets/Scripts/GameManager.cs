@@ -195,8 +195,7 @@ public class GameManager : MonoBehaviour
         //    //PlayerPrefs.SetInt("IsChanged", 0);  
         //    //UserRegisterationManager.instance.OpenUIPanal(17);
 
-            UserLoginSignupManager.instance.ShowWelcomeScreen();
-        }
+        //UserLoginSignupManager.instance.ShowWelcomeScreen();
         InventoryManager.instance.AvatarUpdated.SetActive(false);
         InventoryManager.instance.AvatarSaved.SetActive(false);
         InventoryManager.instance.AvatarSavedGuest.SetActive(false);

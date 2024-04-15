@@ -24,11 +24,10 @@ public class menuAvatarFlowButton : MonoBehaviour
  
     void OnClickMenuAvatarBtn()
     {
-        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        /* comment out due to new avatar not having store for now
-        GameManager.Instance.AvatarMenuBtnPressed();
-        InventoryManager.instance.SubmitUserDetailAPI();
-        */
+        //InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+
+       GameManager.Instance.AvatarMenuBtnPressed();
+       InventoryManager.instance.SubmitUserDetailAPI();
     }
 
     public void StoreBtnController()

@@ -22,8 +22,8 @@ public class SubBottons : MonoBehaviour
 
     public void ClickBtnFtn(int m_Index)
     {
-        if(customizationUIManager == null)
-            customizationUIManager = CharacterCustomizationUIManager.Instance;
+        //if(customizationUIManager == null)
+        //    customizationUIManager = CharacterCustomizationUIManager.Instance;
 
         for (int i = 0; i < TotalBtns.Length; i++)
         {
