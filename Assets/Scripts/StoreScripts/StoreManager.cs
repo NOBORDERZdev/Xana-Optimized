@@ -3379,14 +3379,22 @@ public class StoreManager : MonoBehaviour
         //    UpdateStoreSelection(0);
         //}
     }
-
+    int localcount = 0;
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
+
+        localcount++;
         // Initilize Item Specific for Gender
-        if ((int)_avatarController?.avatarGender != int.Parse(dataListOfItems[objId].assetGender))
+        // Getting int values from Server for assets Gender 0 for male and 1 for female
+        // In Xana we are uisng string for geneder specificaton
+
+        if ((SavaCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
+            (SavaCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
         {
+            Debug.Log(localcount + ": Item Not Match with Gender: " + SavaCharacterProperties.instance.SaveItemList.gender + " -- "+ dataListOfItems[objId].assetGender);
             return;
         }
+        Debug.Log(localcount + ": Item Match with Gender: " + SavaCharacterProperties.instance.SaveItemList.gender + " -- " + dataListOfItems[objId].assetGender);
 
         GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, parentObj);
         L_ItemBtnObj.transform.parent = parentObj;
