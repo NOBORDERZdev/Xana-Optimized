@@ -34,19 +34,16 @@ public class BlindfoldedDisplayComponent : ItemComponent
         childMesh = transform.GetComponentsInChildren<MeshRenderer>();
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void CollisionEnter()
     {
-        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
+        if (GamificationComponentData.instance.withMultiplayer)
         {
-            if (GamificationComponentData.instance.withMultiplayer)
-            {
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
-            }
-
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-            GamificationComponentData.instance.activeComponent = this;
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
         }
+
+        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        PlayBehaviour();
+        GamificationComponentData.instance.activeComponent = this;
     }
 
     private void SetFootPrinting()
@@ -70,7 +67,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
         skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        //other.gameObject.GetComponent<PlayerControllerNew>().isThrow = false;
+        //other.gameObject.GetComponent<PlayerController>().isThrow = false;
         footstepsBool = true;
         for (int i = 0; i < childCollider.Length; i++)
         {
@@ -193,7 +190,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         //GamificationComponentData.instance.playerControllerNew.isThrow = false;
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
         if (!gameObject.activeInHierarchy)
@@ -249,6 +246,16 @@ public class BlindfoldedDisplayComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.BlindfoldedDisplayComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

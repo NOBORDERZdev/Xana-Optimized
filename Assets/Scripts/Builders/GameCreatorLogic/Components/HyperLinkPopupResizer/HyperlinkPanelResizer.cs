@@ -23,7 +23,7 @@ public class HyperlinkPanelResizer : MonoBehaviour
     private IEnumerator CheckJapaneseRoutine()
     {
         yield return new WaitForSeconds(1f); //Wait for the text to be set
-        switch (CustomLocalization._instance.IsJapanese(text.text))
+        switch (LocalizationManager._instance.IsJapanese(text.text))
         {
             case false:
                 viewportRectT.offsetMin = new Vector2(0, 0);

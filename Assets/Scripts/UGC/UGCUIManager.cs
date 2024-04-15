@@ -43,9 +43,14 @@ public class UGCUIManager : MonoBehaviour
 
     void Start()
     {
+        CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
+        UGCCharacter = CharacterHandler.instance.GetActiveAvatarData().avatar_parent.GetComponent<AvatarController>();
+
+        ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         DisableLoadingPanel();
-       // BGMat = new Material(BG.material);
+        // BGMat = new Material(BG.material);
     }
+
 
     public void DisableLoadingPanel()
     {
@@ -232,7 +237,7 @@ public class UGCUIManager : MonoBehaviour
     public void BackToHomeScreen()
     {
         //Initiate.Fade("Main", Color.black, 1.0f);
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("Home");
     }
     public IEnumerator PlayRecordedVideo()
     {

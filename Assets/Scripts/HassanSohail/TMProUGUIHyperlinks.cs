@@ -46,9 +46,6 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         mainCamera = Camera.main;
         if (textMeshPro.canvas.renderMode == RenderMode.ScreenSpaceOverlay) mainCamera = null;
         else if (textMeshPro.canvas.worldCamera != null) mainCamera = textMeshPro.canvas.worldCamera;
-
-        if (linkType.Equals(LinkType.Other_Link))
-            nftManager = GetComponentInParent<AR_Nft_Manager>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -106,21 +103,21 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
         //}
 
-        string eventName = XanaConstants.xanaConstants.EnviornmentName;
+        string eventName = ConstantsHolder.xanaConstants.EnviornmentName;
         if (linkType.Equals(LinkType.JJ_Link))
         {
-            if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
             {
                 // we don't have this museum yet
                 ////worldName = "1F_Mainloby_NFTclick";
             }
-            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
             {
                 //// we don't have this museum yet
                 //worldName = "1F_ZoneX_NFTclick";
                 eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
             }
-            else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
             {
                 //// worldName = "1F_FiveElement_NFTclick";
                 // we don't have this museum yet
@@ -139,17 +136,19 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
         }
         else if (linkType.Equals(LinkType.Other_Link))
         {
+            nftManager = NFT_Holder_Manager.instance.currentRoom;
+
             if (nftManager.roomName == "Stage")
                 eventName = FirebaseTrigger.URL_Stage.ToString() + "_" + (nftManager.clickedNftInd + 1);
             else if (nftManager.roomName == "FactoryTour")
                 eventName = FirebaseTrigger.URL_Factory.ToString() + "_" + (nftManager.clickedNftInd + 1);
             else if (nftManager.roomName == "HomeConsulting")
                 eventName = FirebaseTrigger.URL_Consult.ToString() + "_" + (nftManager.clickedNftInd + 1);
-            else if (nftManager.roomName == "Architectural")
-                eventName = FirebaseTrigger.URL_LandInfo.ToString() + "_" + (nftManager.clickedNftInd + 1);
             else if (nftManager.roomName == "LandInfo")
+                eventName = FirebaseTrigger.URL_LandInfo.ToString() + "_" + (nftManager.clickedNftInd + 1);
+            else if (nftManager.roomName == "Architectural")
                 eventName = FirebaseTrigger.URL_Architec.ToString() + "_" + (nftManager.clickedNftInd + 1);
-
+            
             SendFirebaseEvent(eventName);
         }
     }

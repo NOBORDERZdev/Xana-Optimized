@@ -25,7 +25,7 @@ public class UserPostFeature : MonoBehaviour
     {
         if (_postInputField.text == "" && GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
             return;
         }
         GameManager.Instance.UiManager.SwitchToPostScreen(false);
@@ -112,7 +112,7 @@ public class UserPostFeature : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        string FinalUrl = PrepareApiURL("Receive") + XanaConstants.userId;
+        string FinalUrl = PrepareApiURL("Receive") + ConstantsHolder.userId;
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
 

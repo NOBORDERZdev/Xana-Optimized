@@ -92,7 +92,7 @@ public class ProfilePictureManager : MonoBehaviour
             savePath = Application.persistentDataPath + "/Profile/userProfile.png";
 
             byte[] fileData = File.ReadAllBytes(savePath);
-            while (string.IsNullOrEmpty(XanaConstants.xanaToken) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
+            while (string.IsNullOrEmpty(ConstantsHolder.xanaToken) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
             {
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
@@ -115,23 +115,27 @@ public class ProfilePictureManager : MonoBehaviour
     public IEnumerator UpdateUserAvatar()
     {
         yield return new WaitForSeconds(2f);
-        //APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
+        //SNS_APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
         WWWForm form = new WWWForm();
 
         form.AddField("avatar", uploadFileRoot.cdn_link);
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
         {
-            string tempToken = XanaConstants.xanaToken;
+            string tempToken = ConstantsHolder.xanaToken;
 
             if (string.IsNullOrEmpty(tempToken))
                 tempToken = ConstantsGod.AUTH_TOKEN;
 
             www.SetRequestHeader("Authorization", tempToken);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
 
-            if (www.isNetworkError || www.isHttpError)
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }

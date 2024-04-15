@@ -13,24 +13,21 @@ public class SpecialItemComponent : ItemComponent
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void CollisionEnter()
     {
-        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
             if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
-        }
     }
 
     #region BehaviourControl
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.SpecialItem);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.SpecialItem);
 
         GamificationComponentData.instance.buildingDetect.
                     SpecialItemPowerUp(specialItemComponentData.setTimer, specialItemComponentData.playerSpeed, specialItemComponentData.playerHeight);
@@ -74,6 +71,16 @@ public class SpecialItemComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.SpecialItemComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

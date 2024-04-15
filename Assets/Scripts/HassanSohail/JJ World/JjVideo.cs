@@ -23,11 +23,11 @@ public class JjVideo : MonoBehaviour
         //videoplayer.playOnAwake = false;
         //videoplayer.errorReceived += ErrorOnVideo;
         //videoplayer.frameReady += SetSound;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             Invoke(nameof(WaitPlay), 5);
         }
-        else if (XanaConstants.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
         {
             if (screenMesh)
                 screenMesh.enabled = false;

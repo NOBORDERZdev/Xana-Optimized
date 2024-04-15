@@ -7,8 +7,9 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
+using EnhancedUI.EnhancedScroller;
 
-public class WorldItemView : MonoBehaviour
+public class WorldItemView : EnhancedScrollerCellView
 {
     /*[SerializeField] private DynamicScrollRect.DynamicScrollRect _dynamicScroll = null;*/
     /*public int Index;
@@ -122,7 +123,7 @@ public class WorldItemView : MonoBehaviour
     public string CreatorDescription;
     public string worldVisitCount;
     public bool isFavourite;
-    public WorldItemPreviewTab worldItemPreview;
+    public WorldDescriptionPopupPreview worldItemPreview;
     UserAnalyticsHandler userAnalyticsHandler;
     bool isBannerLoaded = false;
     //private void OnEnable()
@@ -149,7 +150,7 @@ public class WorldItemView : MonoBehaviour
         GetEventType(entityType);
         //if (!m_EnvironmentName.Contains("XANA Lobby"))
         //    this.GetComponent<Button>().interactable = false;
-        userAnalyticsHandler = APIBaseUrlChange.instance.GetComponent<UserAnalyticsHandler>();
+        userAnalyticsHandler = APIBasepointManager.instance.GetComponent<UserAnalyticsHandler>();
         //UpdateUserCount();
         SetWorldName();
         worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
@@ -263,14 +264,13 @@ public class WorldItemView : MonoBehaviour
     }
     int CheckServerForID()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
             return 38; // Xana Lobby Id Mainnet
         else
             return 406; // Xana Lobby Id Testnet
     }
     public IEnumerator DownloadAndLoadFeed(int worlditemcount, int _loopcount)
     {
-        yield return null;
         if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
         {
             AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
@@ -296,6 +296,7 @@ public class WorldItemView : MonoBehaviour
             /*LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);*/
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         }
+        yield return null;
     }
     void GetEventType(string entityType)
     {
@@ -355,10 +356,10 @@ public class WorldItemView : MonoBehaviour
     {
         m_EnvName = m_EnvironmentName;
         m_CreaName = Creator_Name;
-        XanaConstants.xanaConstants.builderMapID = int.Parse(idOfObject);
-        XanaConstants.xanaConstants.IsMuseum = isMuseumScene;
-        XanaConstants.xanaConstants.isBuilderScene = isBuilderScene;
-        Launcher.sceneName = m_EnvName;
+        ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
+        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
+        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+        MutiplayerController.sceneName = m_EnvName;
 
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{
@@ -373,22 +374,24 @@ public class WorldItemView : MonoBehaviour
     entityType, Creator_Name, CreatorDescription, CreatorAvatarURL, isFavourite, idOfObject);
         //}
 
-        XanaConstants.xanaConstants.EnviornmentName = m_EnvironmentName;
-        XanaConstants.xanaConstants.buttonClicked = this.gameObject;
+        ConstantsHolder.xanaConstants.EnviornmentName = m_EnvironmentName;
+        ConstantsHolder.xanaConstants.buttonClicked = this.gameObject;
         if (isMuseumScene)
-            WorldItemPreviewTab.m_MuseumIsClicked = true;
+            WorldDescriptionPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
-            XanaConstants.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
         }
         else
         {
-            XanaConstants.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.xanaConstants.userLimit = userLimit;
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
+        else if (m_EnvironmentName == "D +  Infinity Labo")
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail.ToString());
 
-        XanaConstants.xanaConstants.MuseumID = idOfObject;
+        ConstantsHolder.xanaConstants.MuseumID = idOfObject;
         worldItemPreview.CallAnalytics(idOfObject, entityType);
     }
     Sprite XanaWorldBanner;

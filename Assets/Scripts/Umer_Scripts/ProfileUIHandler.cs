@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering.Universal;
+using static InventoryManager;
 
 public class ProfileUIHandler : MonoBehaviour
 {
@@ -16,14 +17,14 @@ public class ProfileUIHandler : MonoBehaviour
     public Button followingBtn;
     public GameObject editProfileBtn;
     public GameObject followProfileBtn;
-
-
     public GameObject avatarBgObject;
 
 
     [Space]
     [Header("User Avatar Preview Objects")]
-    public GameObject AvatarRef;
+    public GameObject avatarRef;
+    public GameObject maleAvatarRef;
+    public GameObject femaleAvatarRef;
     public Transform _renderTexCamera;
     RenderTexture newRenderTexture;
     public RawImage AvatarPreviewImgRef;
@@ -36,9 +37,7 @@ public class ProfileUIHandler : MonoBehaviour
     public GameObject OtherProfileUserPostPartObj;
 
     [Space]
-    [Header("User Data Tabs Immitating Buttons")]
-    public GameObject myProfileImitateTopPartButton;
-    public GameObject OtherProfileImitateTopPartButton;
+    [Header("User Data Tabs Imitating Buttons")]
 
     [Space]
     [Header("Script References")]
@@ -50,87 +49,145 @@ public class ProfileUIHandler : MonoBehaviour
 
     private GameObject menuLightingObj;
     private GameObject lightingObj;
+
+    private FriendHomeManager ref_FriendHomeManager;
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
-        InstantiateUserPreviewAvatar();
+        //InstantiateUserPreviewAvatar();
     }
 
     private void OnEnable()
     {
         GameManager.Instance.defaultSelection = 10;
         SetCameraRenderTexture();
-        if (AvatarRef)
+
+        if ((CharacterHandler.instance.activePlayerGender == AvatarGender.Male && !maleAvatarRef) ||
+            (CharacterHandler.instance.activePlayerGender == AvatarGender.Female && !femaleAvatarRef))
         {
-            menuLightingObj.SetActive(false);
-            lightingObj.SetActive(true);
-            AvatarRef.SetActive(true);
+            InstantiateUserPreviewAvatar(CharacterHandler.instance.activePlayerGender);
+        }
+        else
+        {
+            if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+            {
+                maleAvatarRef.SetActive(true);
+                avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
+            }
+            else
+            {
+                femaleAvatarRef.SetActive(true);
+                avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
+            }
         }
     }
 
     private void OnDisable()
     {
-        _renderTexCamera.GetComponent<Camera>().targetTexture = null;
-        _renderTexCamera.gameObject.SetActive(false);
+        if (_renderTexCamera != null)
+        {
+            _renderTexCamera.GetComponent<Camera>().targetTexture = null;
+            _renderTexCamera.gameObject.SetActive(false);
+        }
+        
         Object.Destroy(newRenderTexture);
 
         //newRenderTexture.Release();
-        if (AvatarRef)
-        {
-            menuLightingObj.SetActive(true);
-            lightingObj.SetActive(false);
-            AvatarRef.SetActive(false);
-        }
+        menuLightingObj.SetActive(true);
+        lightingObj.SetActive(false);
+        if (maleAvatarRef)
+            maleAvatarRef.SetActive(false);
+        if(femaleAvatarRef)
+            femaleAvatarRef.SetActive(false);
     }
 
     private void Start()
     {
         mainButtonPanelScriptRef.sameSelectionScript = immitateMainButtonPanelScriptRef;
         otherUserButtonPanelScriptRef.sameSelectionScript = immitateOtherUserButtonPanelScriptRef;
+        //ref_FriendHomeManager = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>();
     }
-
-    public void InstantiateUserPreviewAvatar()
+    public void ActivateProfileAvatarByGender(string gender)
     {
-        _renderTexCamera.parent = null;
-        //_renderTexCamera.position = new Vector3(0f, 0.8f, -6f);
-        _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
-        lightingObj = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().profileLightingObj;
-        menuLightingObj = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().menuLightObj;
-        AvatarRef = Instantiate(GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().FriendAvatarPrefab.gameObject);
-        AvatarRef.GetComponent<FootStaticIK>().ikActive = true;
-        AvatarRef.name = "UserPreviewAvatar";
-        AvatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
-        AvatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
-        Destroy(AvatarRef.GetComponent<CharacterOnScreenNameHandler>());
-        Destroy(AvatarRef.GetComponent<Actor>());
-        Destroy(AvatarRef.GetComponent<PlayerPostBubbleHandler>());
+        switch (gender)
+        {
+            case "Male":
+                if (maleAvatarRef)
+                    maleAvatarRef.SetActive(true);
+                else
+                    InstantiateUserPreviewAvatar(AvatarGender.Male);
 
-        GameObject temp = Instantiate(avatarBgObject, AvatarRef.transform);
-        //Destroy(AvatarRef.GetComponent<AvatarController>());
-        //_userAvatarData = GameManager.Instance.mainCharacter.GetComponent<AvatarController>()._PCharacterData;
-        //SetUserAvatarClothing();
+                if (femaleAvatarRef)
+                    femaleAvatarRef.SetActive(false);
+                avatarRef = maleAvatarRef.gameObject;
+                break;
+            case "Female":
+                if (femaleAvatarRef)
+                    femaleAvatarRef.SetActive(true);
+                else
+                    InstantiateUserPreviewAvatar(AvatarGender.Female);
+
+                if (maleAvatarRef)
+                    maleAvatarRef.SetActive(false);
+                avatarRef = femaleAvatarRef.gameObject;
+                break;
+        }
+        menuLightingObj.SetActive(false);
+        lightingObj.SetActive(true);
     }
+    public void InstantiateUserPreviewAvatar(AvatarGender gender)
+    {
+        ref_FriendHomeManager = GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>();
+        _renderTexCamera.parent = null;
+        _renderTexCamera.position = new Vector3(5000f, 0.86f, -5.27f);
+        lightingObj = ref_FriendHomeManager.profileLightingObj;
+        menuLightingObj = ref_FriendHomeManager.menuLightObj;
+        if (gender == AvatarGender.Male)
+        {
+            maleAvatarRef = Instantiate(ref_FriendHomeManager.maleFriendAvatarPrefab.gameObject);
+            avatarRef = maleAvatarRef;
+            avatarRef.name = "MaleUserPreviewAvatar_Parent";
+        }
+        else
+        {
+            femaleAvatarRef = Instantiate(ref_FriendHomeManager.femaleFriendAvatarPrefab.gameObject);
+            avatarRef = femaleAvatarRef;
+            avatarRef.name = "FemaleUserPreviewAvatar_Parent";
+        }
+
+        avatarRef.GetComponent<FootStaticIK>().ikActive = true;
+        avatarRef.transform.position = new Vector3(5000f, 0.069f, 0f);
+        avatarRef.GetComponent<Animator>().runtimeAnimatorController = _userIdleAnimator.runtimeAnimatorController;
+        Destroy(avatarRef.GetComponent<CharacterOnScreenNameHandler>());
+        Destroy(avatarRef.GetComponent<Actor>());
+        Destroy(avatarRef.GetComponent<PlayerPostBubbleHandler>());
+
+        avatarRef.gameObject.SetActive(true);
+
+        Instantiate(avatarBgObject, avatarRef.transform);
+    }
+
 
     public void SetCameraRenderTexture()
     {
-        if (!newRenderTexture)
+        if (newRenderTexture == null)
         {
-            newRenderTexture = new RenderTexture(1024, 1024, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm);
-            newRenderTexture.antiAliasing = 4;
-            newRenderTexture.useMipMap = true;
-            newRenderTexture.filterMode = FilterMode.Trilinear;
-            //if (Application.platform == RuntimePlatform.Android)
-            //{
-                UniversalAdditionalCameraData _uaCamData = _renderTexCamera.GetComponent<Camera>().GetComponent<UniversalAdditionalCameraData>();
-                _uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
-                _uaCamData.antialiasingQuality = AntialiasingQuality.High; //AntialiasingQuality.Low;
-            //}
+            newRenderTexture = new RenderTexture(1024, 1024, 0, UnityEngine.Experimental.Rendering.GraphicsFormat.R8G8B8A8_UNorm)
+            {
+                antiAliasing = 4,
+                useMipMap = true,
+                filterMode = FilterMode.Trilinear
+            };
 
-            //Graphics.Blit(m_RenderTexture, newRenderTexture);
-            _renderTexCamera.GetComponent<Camera>().targetTexture = newRenderTexture;   // my changes
+            var camera = _renderTexCamera.GetComponent<Camera>();
+            var uaCamData = camera.GetComponent<UniversalAdditionalCameraData>();
+            uaCamData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
+            uaCamData.antialiasingQuality = AntialiasingQuality.High;
+
+            camera.targetTexture = newRenderTexture;
             AvatarPreviewImgRef.texture = newRenderTexture;
             _renderTexCamera.gameObject.SetActive(true);
         }
@@ -138,54 +195,34 @@ public class ProfileUIHandler : MonoBehaviour
 
     public void SetUserAvatarClothing(SavingCharacterDataClass _userAvatarData)
     {
-        if (AvatarRef)
+        ActivateProfileAvatarByGender(_userAvatarData.gender);
+        if (avatarRef)
         {
-                _tempAvatarData = _userAvatarData;
-                AvatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,AvatarRef);
+            _tempAvatarData = _userAvatarData;
+            
+            avatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,avatarRef);
         }
     }
 
     public void SetUserAvatarDefaultClothing()
     {
-        int _rand = Random.Range(0, 13);
-        AvatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
+        ActivateProfileAvatarByGender(Random.Range(0f, 2f) <= 1f ? "Male" : "Female");
+        int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);   
+        avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
     }
 
-    public void SetMainScrolRefs()
+    public void SetMainScrollRefs()
     {
-        if (MyProfileDataManager.Instance.gameObject.activeSelf)
-        {
-            mainscrollControllerRef.TopFixedObj = myProfileImitateTopPartButton;
-            mainscrollControllerRef.headerObj = myProfileTopPartButton;
-            mainscrollControllerRef.containerobj = myProfileUserPostPartObj.GetComponent<RectTransform>();
-        }
-        else
-        {
-            mainscrollControllerRef.TopFixedObj = OtherProfileImitateTopPartButton;
-            mainscrollControllerRef.headerObj = OtherProfileTopPartButton;
-            mainscrollControllerRef.containerobj = OtherProfileUserPostPartObj.GetComponent<RectTransform>();
-        }
+        bool isMyProfileActive = MyProfileDataManager.Instance.gameObject.activeSelf;
+        mainscrollControllerRef.headerObj = isMyProfileActive ? myProfileTopPartButton : OtherProfileTopPartButton;
+        mainscrollControllerRef.containerobj = (isMyProfileActive ? myProfileUserPostPartObj : OtherProfileUserPostPartObj).GetComponent<RectTransform>();
     }
 
-    public void SwitchBetwenUserAndOtherProfileUI(bool _state)
+    public void SwitchBetweenUserAndOtherProfileUI(bool _state)
     {
-        if (_state)
-        {
-            myProfileTopPartButton.SetActive(_state);
-            myProfileUserPostPartObj.SetActive(_state);
-            myProfileImitateTopPartButton.SetActive(_state);
-            OtherProfileTopPartButton.SetActive(!_state);
-            OtherProfileUserPostPartObj.SetActive(!_state);
-            OtherProfileImitateTopPartButton.SetActive(!_state);
-        }
-        else
-        {
-            myProfileTopPartButton.SetActive(_state);
-            myProfileUserPostPartObj.SetActive(_state);
-            myProfileImitateTopPartButton.SetActive(_state);
-            OtherProfileTopPartButton.SetActive(!_state);
-            OtherProfileUserPostPartObj.SetActive(!_state);
-            OtherProfileImitateTopPartButton.SetActive(!_state);
-        }
+        myProfileTopPartButton.SetActive(_state);
+        myProfileUserPostPartObj.SetActive(_state);
+        OtherProfileTopPartButton.SetActive(!_state);
+        OtherProfileUserPostPartObj.SetActive(!_state);
     }
 }

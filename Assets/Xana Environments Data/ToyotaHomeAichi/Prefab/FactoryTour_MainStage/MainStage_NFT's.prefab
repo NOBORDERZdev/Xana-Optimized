@@ -2409,16 +2409,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -2537,7 +2527,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -2896,7 +2889,7 @@ MonoBehaviour:
     stereoPacking: 0
   _autoOpen: 1
   _autoPlayOnStart: 1
-  _loop: 0
+  _loop: 1
   _audioVolume: 1
   _audioBalance: 0
   _audioMuted: 0
@@ -2908,16 +2901,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -3036,7 +3019,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -3636,16 +3622,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -3764,7 +3740,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -4036,95 +4015,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &3570165301484259747
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 971071576159563819}
-  - component: {fileID: 8380076577302196608}
-  - component: {fileID: 7805945894558048790}
-  m_Layer: 23
-  m_Name: YoutubePlayer-DontEdit
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &971071576159563819
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3570165301484259747}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 5026257659759755854}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8380076577302196608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3570165301484259747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fff3c7be5a953945843ab394d52e8cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showPlayerControl: 0
-  playbackSlider: {fileID: 0}
-  progressRectangle: {fileID: 0}
-  speedSlider: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  currentTime: {fileID: 0}
-  totalTime: {fileID: 0}
-  loading: {fileID: 0}
-  nextVideoButton: {fileID: 0}
-  previousVideoButton: {fileID: 0}
-  controllerMainUI: {fileID: 0}
-  hideScreenControlTime: 0
-  useSliderToProgressVideo: 1
---- !u!114 &7805945894558048790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3570165301484259747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b121d95bc3e711f4fad11014675bfd8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnYoutubeUrlAreReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoReadyToStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoResumed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoPaused:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  videoTimeEvents: []
 --- !u!1 &3959996119721727368
 GameObject:
   m_ObjectHideFlags: 0
@@ -4285,16 +4175,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -4413,7 +4293,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -4759,6 +4642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddBtnCompOnScreen: 1
   id: 3
   imgVideo16x9: {fileID: 7855809191213857397}
   imgVideo9x16: {fileID: 96882464630968517}
@@ -4798,6 +4682,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &4555282112127552841
@@ -4899,38 +4786,6 @@ Transform:
   m_Father: {fileID: 3352185233278213324}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -2.058, z: 0}
---- !u!1 &5026257659759755855
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5026257659759755854}
-  m_Layer: 23
-  m_Name: YoutubeSimplified
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
---- !u!4 &5026257659759755854
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5026257659759755855}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -4.49775, y: -3.470161, z: -3.283307}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 971071576159563819}
-  m_Father: {fileID: 5026257660853740472}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5026257659777904424
 GameObject:
   m_ObjectHideFlags: 0
@@ -5246,6 +5101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b4e521a20a9114fad769f07acb3789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nftName: 0
+  isShowDataAtStart: 1
   RetryChances: 3
   PMY_RoomId_test: 3
   PMY_RoomId_main: 1
@@ -5676,7 +5533,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2507505394166159391}
-  - {fileID: 5026257659759755854}
   m_Father: {fileID: 5026257661413201835}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0.185, y: -141.277, z: -0.268}
@@ -5946,6 +5802,7 @@ GameObject:
   - component: {fileID: 5026257661121068992}
   - component: {fileID: 5026257661121068993}
   - component: {fileID: 5026257661121069021}
+  - component: {fileID: 3027891534380114231}
   m_Layer: 23
   m_Name: '16 : 9'
   m_TagString: Untagged
@@ -6139,6 +5996,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3027891534380114231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5026257661121068995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f3c773d2606c2243a40238e1ca43d68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenRotation: {x: 0, y: 219.207, z: 0}
 --- !u!1 &5026257661413201836
 GameObject:
   m_ObjectHideFlags: 0
@@ -6186,6 +6056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddBtnCompOnScreen: 0
   id: 1
   imgVideo16x9: {fileID: 5026257661121068995}
   imgVideo9x16: {fileID: 5026257660917194773}
@@ -6211,6 +6082,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   enableFrame:
+    m_PersistentCalls:
+      m_Calls: []
+  disableFrame:
     m_PersistentCalls:
       m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
@@ -6980,6 +6854,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddBtnCompOnScreen: 1
   id: 2
   imgVideo16x9: {fileID: 6444771116353898451}
   imgVideo9x16: {fileID: 1782227948418931345}
@@ -7019,6 +6894,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &7855809191213857397
@@ -7177,6 +7055,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddBtnCompOnScreen: 1
   id: 0
   imgVideo16x9: {fileID: 5769877842880492678}
   imgVideo9x16: {fileID: 3271314702293262456}
@@ -7216,6 +7095,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  disableFrame:
+    m_PersistentCalls:
+      m_Calls: []
   nftMAnager: {fileID: 6716941609068905385}
   roomNumber: 1
 --- !u!1 &8550141001658258278

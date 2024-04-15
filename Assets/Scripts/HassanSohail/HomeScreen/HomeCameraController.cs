@@ -52,7 +52,7 @@ public class HomeCameraController : MonoBehaviour
     
      void HandleTouch()
     {
-        print("iNPUT " + Input.touchCount);
+        //print("iNPUT " + Input.touchCount);
         if (Input.touchCount>1)
         {
             // get current touch positions
@@ -67,7 +67,7 @@ public class HomeCameraController : MonoBehaviour
 
             // get offset value
             float deltaDistance =currentTouchDistance - oldTouchDistance  ;
-            print("DISTANCE IS "+deltaDistance);
+            //print("DISTANCE IS "+deltaDistance);
         }
         else if (Input.touchCount>0)
         {

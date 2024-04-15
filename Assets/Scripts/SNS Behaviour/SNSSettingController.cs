@@ -7,15 +7,11 @@ using System.IO;
 
 public class SNSSettingController : MonoBehaviour
 {
-    public static SNSSettingController Instance;
+    //public static SNSSettingController Instance;
 
     [Header("Setting Screen Reference")]
     public GameObject settingScreen;
     public TextMeshProUGUI versionText;
-
-    //private string privacyPolicyLink = "https://cdn.xana.net/xanaprod/privacy-policy/PRIVACYPOLICY-2.pdf";
-    //private string termsAndConditionLink = "https://cdn.xana.net/xanaprod/privacy-policy/termsofuse.pdf";
-
     [Space]
     [Header("My Account Screen Reference")]
     public GameObject myAccountScreen;
@@ -40,13 +36,6 @@ public class SNSSettingController : MonoBehaviour
     public Image btnImageOff;
     //public Sprite offBtn, onBtn;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-    }
 
     #region Setting Screen.......
     //this method is used to Open Setting Screen.......
@@ -71,8 +60,6 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to My Account Button click.......
     public void OnClickMyAccountButton()
     {
-        MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(true);
-
         OnClickSettingClose();
         myAccountScreen.SetActive(true);
     }
@@ -81,13 +68,12 @@ public class SNSSettingController : MonoBehaviour
     public void OnClickMyAccountBackButton()
     {
         OnClickSettingOpen();
-        //MyProfileDataManager.Instance.CreateFirstFeedPlusAnimStop(false);//check profile post empty or not and start bottom create plus icon anim
     }
 
     //this method is used to terms and policy.......
     public void OpenPrivacyPolicyHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_privacyPolicyLink);
         }
@@ -96,7 +82,7 @@ public class SNSSettingController : MonoBehaviour
     //this method is used to Tearms and condition button click.......
     public void OpenTermsAndConditionHyperLink()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
             Application.OpenURL(ConstantsGod.r_termsAndConditionLink);
         }
@@ -112,7 +98,7 @@ public class SNSSettingController : MonoBehaviour
         if (MyProfileDataManager.Instance.myProfileData.id == 0)
         {
             FeedUIController.Instance.ShowLoader(true);
-            APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
+            SNS_APIManager.Instance.RequestGetUserDetails("MyAccount");//Get My Profile data    
         }
         else
         {
@@ -176,12 +162,11 @@ public class SNSSettingController : MonoBehaviour
         {
             SimultaneousConnectionButton();
         }
-        //SimultaneousConnectionButton();
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
         PlayerPrefs.SetInt("shownWelcome", 0);
         PlayerPrefs.SetString("UserNameAndPassword", "");
         GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
-
+        GameManager.Instance.SpaceWorldManagerRef.worldSpaceHomeScreenRef.OnLogoutClearSpaceData();
         GlobalVeriableClass.callingScreen = "";
     }
 
@@ -189,11 +174,12 @@ public class SNSSettingController : MonoBehaviour
     public void LogoutSuccess()
     {
         GameManager.Instance.PostManager.GetComponent<UserPostFeature>().Bubble.gameObject.SetActive(false);
-        XanaConstants.xanaConstants.userProfileLink = "";
+        ConstantsHolder.xanaConstants.userProfileLink = "";
         if (FeedUIController.Instance != null)
         {
             MyProfileDataManager.Instance.ClearAndResetAfterLogout();
-            NftDataScript.Instance.ResetNftData();
+            if (NftDataScript.Instance)
+                NftDataScript.Instance.ResetNftData();
             if (File.Exists(Application.persistentDataPath + "/NftData.txt"))
             {
                 FileInfo file_info = new FileInfo(Application.persistentDataPath + "/NftData.txt");
@@ -213,15 +199,16 @@ public class SNSSettingController : MonoBehaviour
             FeedUIController.Instance.ResetAllFeedScreen(false);
             FeedUIController.Instance.feedController.ResetFeedController();
             FeedUIController.Instance.ClearAllFeedDataAfterLogOut();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().CheckLoginOrNotForFooterButton();
-            PremiumUsersDetails.Instance.combinedUserFeatures.Clear();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
+            UserPassManager.Instance.combinedUserFeatures.Clear();
             ConstantsGod.UserPriorityRole = "free";
             if (GameManager.Instance.UiManager != null)
             {
-                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<BottomTabManager>().OnClickHomeButton();
+                GameManager.Instance.UiManager._footerCan.GetComponentInChildren<HomeFooterHandler>().OnClickHomeButton();
             }
-            CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
+            if (CommonAPIManager.Instance != null)
+                CommonAPIManager.Instance.SetUpBottomUnReadCount(0);
             if (LoadPlayerAvatar.instance_loadplayer != null)
             {
                 LoadPlayerAvatar.instance_loadplayer.EmptyAvatarContainer();
@@ -260,7 +247,6 @@ public class SNSSettingController : MonoBehaviour
         if (status == 0)
         {
             // Currently Btn is OFF, enable Btn Here
-            // btnImageOn = onBtn;
             btnImageOn.gameObject.SetActive(true);
             btnImageOff.gameObject.SetActive(false);
             status = 1;
@@ -269,7 +255,6 @@ public class SNSSettingController : MonoBehaviour
         {
             // Currently Btn is ON, disable Btn Here
             status = 0;
-            //btnImage.sprite = offBtn;
             btnImageOn.gameObject.SetActive(false);
             btnImageOff.gameObject.SetActive(true);
         }
@@ -279,13 +264,11 @@ public class SNSSettingController : MonoBehaviour
     {
         if (status == 0)
         {
-            //btnImage.sprite = offBtn;
             btnImageOn.gameObject.SetActive(false);
             btnImageOff.gameObject.SetActive(true);
         }
         else
         {
-            //btnImage.sprite = onBtn;
             btnImageOn.gameObject.SetActive(true);
             btnImageOff.gameObject.SetActive(false);
         }

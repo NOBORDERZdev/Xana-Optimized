@@ -304,15 +304,15 @@ public class JJVideoAndImage : MonoBehaviour
             //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
             if(streamYoutubeVideo!=null)
                 streamYoutubeVideo.StreamYtVideo(videoLink, true);
-            SoundManager.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+            SoundSettings.soundManagerSettings.setNewSliderValues();
         }
         else if(_videoType == VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
         {
             RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
-            SoundManager.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-            SoundManagerSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+            SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+            SoundSettings.soundManagerSettings.setNewSliderValues();
             JjInfoManager.Instance.videoRenderObject = imgVideo16x9;
             renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture= renderTexture;
@@ -463,17 +463,17 @@ public class JJVideoAndImage : MonoBehaviour
 
     public void OpenWorldInfo()
     {
-        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
-        if (PlayerControllerNew.isJoystickDragging == true)
+        if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
+        if (PlayerController.isJoystickDragging == true)
             return;
         //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
         if (JjInfoManager.Instance != null && _videoType!=VideoTypeRes.islive)
         {
-            if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
             {
                 JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[0], JjInfoManager.Instance.worldInfos[id].Aurthor[0], JjInfoManager.Instance.worldInfos[id].Des[0], JjInfoManager.Instance.worldInfos[id].url, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);       
             }
-            else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 JjInfoManager.Instance.SetInfo(_imgVideoRatio, JjInfoManager.Instance.worldInfos[id].Title[1], JjInfoManager.Instance.worldInfos[id].Aurthor[1], JjInfoManager.Instance.worldInfos[id].Des[1], JjInfoManager.Instance.worldInfos[id].url, _texture, JjInfoManager.Instance.worldInfos[id].Type, JjInfoManager.Instance.worldInfos[id].VideoLink, JjInfoManager.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
 

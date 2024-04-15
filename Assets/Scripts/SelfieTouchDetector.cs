@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class SelfieTouchDetector : MonoBehaviour
 {
-    SelfieController controller;
+    PlayerSelfieController controller;
 
     private void Start()
     {
-        controller = GetComponent<SelfieController>();
+        controller = GetComponent<PlayerSelfieController>();
     }
 
     private void Update()

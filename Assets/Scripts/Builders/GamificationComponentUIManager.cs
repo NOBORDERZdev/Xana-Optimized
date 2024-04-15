@@ -781,7 +781,7 @@ public class GamificationComponentUIManager : MonoBehaviour
                     options[i - 1].GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
                 if (!isPotrait)
                 {
-                    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
+                    if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese || ContainsJapaneseText(sb))
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 11.3f;
                     else
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 12;
@@ -817,7 +817,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
 
                 colorString = "#36C34E";
                 break;
@@ -825,7 +825,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 1:
                 wrong++;
                 image = wrongImage;
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
 
                 break;
 
