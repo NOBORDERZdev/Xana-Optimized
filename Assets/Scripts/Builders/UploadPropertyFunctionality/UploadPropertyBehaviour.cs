@@ -1,6 +1,7 @@
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
-using LightShaft.Scripts;
+using UnityEngine.Video;
+//using LightShaft.Scripts;
 
 
 public class UploadPropertyBehaviour : MonoBehaviour
@@ -11,23 +12,30 @@ public class UploadPropertyBehaviour : MonoBehaviour
     public bool liveStream;
     public bool addFrame;
     public bool isRepeat;
-    public YoutubePlayerLivestream youtubePlayerLivestream;
-    public YoutubePlayer youtubePlayer;
+    //public YoutubePlayerLivestream youtubePlayerLivestream;
+    //public YoutubePlayer youtubePlayer;
+    public MediaPlayer mediaPlayer;
+    public VideoPlayer videoPlayer;
     public MediaPlayer feedMediaPlayer;
     public DisplayImage displayImage;
     public GameObject loadingScreen;
     //[HideInInspector] public int index;
     public MediaTypeBuilder mediaType;
+    public StreamYoutubeVideo streamYoutubeVideo;
+    AudioSource videoAudioSource;
 
     private void OnEnable()
     {
         BuilderEventManager.YoutubeVideoLoadedCallback += TurnOffLoading;
+        BuilderEventManager.BGMVolume += BGMVolume;
         feedMediaPlayer.Events.AddListener(HandleEvent);
+        videoAudioSource = videoPlayer.GetComponent<AudioSource>();
     }
 
     private void OnDisable()
     {
         BuilderEventManager.YoutubeVideoLoadedCallback -= TurnOffLoading;
+        BuilderEventManager.BGMVolume -= BGMVolume;
         feedMediaPlayer.Events.RemoveAllListeners();
     }
 
@@ -38,10 +46,11 @@ public class UploadPropertyBehaviour : MonoBehaviour
         {
             case MediaTypeBuilder.YouTube:
                 {
-                    if (liveStream)
-                        PlayLiveYoutubeVideo();
-                    else
-                        PlayYoutubeVideo();
+                    //if (liveStream)
+                    //    PlayLiveYoutubeVideo();
+                    //else
+                    //    PlayYoutubeVideo();
+                    PlayYTvideo();
                     break;
                 }
             case MediaTypeBuilder.LocalVideo:
@@ -53,19 +62,37 @@ public class UploadPropertyBehaviour : MonoBehaviour
         }
     }
 
-    public void PlayYoutubeVideo()
+    void BGMVolume(float value)
     {
-        ResetPlayer();
-        youtubePlayer.gameObject.SetActive(true);
-        youtubePlayerLivestream.gameObject.SetActive(false);
-        youtubePlayer.videoPlayer.isLooping = isRepeat;
-        youtubePlayer.uploadPropertyID = id;
-        new Delayed.Action(() => youtubePlayer.Play(url), 1f);
+        mediaPlayer.AudioVolume = value;
+        videoAudioSource.volume = value;
     }
-    void ResetPlayer()
+
+    void PlayYTvideo()
     {
-        youtubePlayer.loadYoutubeUrlsOnly = false;
+        videoPlayer.gameObject.SetActive(!liveStream);
+        mediaPlayer.gameObject.SetActive(liveStream);
+        videoPlayer.isLooping = isRepeat;
+        if (streamYoutubeVideo != null)
+        {
+            streamYoutubeVideo.id = id;
+            streamYoutubeVideo.StreamYtVideo(url, liveStream);
+        }
     }
+
+    //public void PlayYoutubeVideo()
+    //{
+    //    ResetPlayer();
+    //    youtubePlayer.gameObject.SetActive(true);
+    //    youtubePlayerLivestream.gameObject.SetActive(false);
+    //    youtubePlayer.videoPlayer.isLooping = isRepeat;
+    //    youtubePlayer.uploadPropertyID = id;
+    //    new Delayed.Action(() => youtubePlayer.Play(url), 1f);
+    //}
+    //void ResetPlayer()
+    //{
+    //    youtubePlayer.loadYoutubeUrlsOnly = false;
+    //}
     void TurnOffLoading(string _id)
     {
         if (_id != id)
@@ -84,8 +111,7 @@ public class UploadPropertyBehaviour : MonoBehaviour
     }
     public void PlayUploadedVideo()
     {
-        youtubePlayer.gameObject.SetActive(false);
-        youtubePlayerLivestream.enabled = false;
+        videoPlayer.gameObject.SetActive(false);
         feedMediaPlayer.gameObject.SetActive(true);
         feedMediaPlayer.OpenMedia(new MediaPath(url, MediaPathType.AbsolutePathOrURL), autoPlay: false);
         feedMediaPlayer.VideoPrepared += OnVideoPrepared;
@@ -96,19 +122,19 @@ public class UploadPropertyBehaviour : MonoBehaviour
     {
         Debug.LogError("I was Left Clicked");
     }
-    public void PlayLiveYoutubeVideo()
-    {
-        youtubePlayer.gameObject.SetActive(false);
-        new Delayed.Action(() =>
-        {
-            youtubePlayerLivestream.gameObject.SetActive(true);
-            youtubePlayerLivestream._livestreamUrl = url;
-            youtubePlayerLivestream.GetLivestreamUrl(url);
-            youtubePlayerLivestream.mPlayer.Play();
-            youtubePlayerLivestream.mPlayer.Loop = isRepeat;
-        }, 1); // 1 second delay is given because on first time Live streaming was not working
+    //public void PlayLiveYoutubeVideo()
+    //{
+    //    youtubePlayer.gameObject.SetActive(false);
+    //    new Delayed.Action(() =>
+    //    {
+    //        youtubePlayerLivestream.gameObject.SetActive(true);
+    //        youtubePlayerLivestream._livestreamUrl = url;
+    //        youtubePlayerLivestream.GetLivestreamUrl(url);
+    //        youtubePlayerLivestream.mPlayer.Play();
+    //        youtubePlayerLivestream.mPlayer.Loop = isRepeat;
+    //    }, 1); // 1 second delay is given because on first time Live streaming was not working
 
-    }
+    //}
     public void CheckMediaScreen(string _id, MediaTypeBuilder mediaType, string _url)
     {
         if (id == _id)
@@ -130,7 +156,7 @@ public class UploadPropertyBehaviour : MonoBehaviour
     }
     public void DisplayUploadedImage()
     {
-        youtubePlayer.gameObject.SetActive(false);
+        videoPlayer.gameObject.SetActive(false);
         feedMediaPlayer.gameObject.SetActive(false);
         displayImage.gameObject.SetActive(true);
         loadingScreen.SetActive(true);
@@ -147,9 +173,9 @@ public class UploadPropertyBehaviour : MonoBehaviour
     public void DisplayYoutubeVideo()
     {
         if (liveStream)
-            youtubePlayerLivestream.gameObject.SetActive(true);
+            mediaPlayer.gameObject.SetActive(true);
         else
-            youtubePlayer.gameObject.SetActive(true);
+            videoPlayer.gameObject.SetActive(true);
 
         feedMediaPlayer.gameObject.SetActive(false);
         displayImage.gameObject.SetActive(false);
@@ -158,8 +184,8 @@ public class UploadPropertyBehaviour : MonoBehaviour
     public void DisplayLocalVideo()
     {
         displayImage.gameObject.SetActive(false);
-        youtubePlayer.gameObject.SetActive(false);
-        youtubePlayerLivestream.enabled = false;
+        videoPlayer.gameObject.SetActive(false);
+        mediaPlayer.enabled = false;
         feedMediaPlayer.gameObject.SetActive(true);
         loadingScreen.SetActive(true);
         feedMediaPlayer.OpenMedia(new MediaPath(url, MediaPathType.AbsolutePathOrURL), autoPlay: false);

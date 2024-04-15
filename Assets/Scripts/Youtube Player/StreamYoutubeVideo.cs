@@ -15,13 +15,16 @@ public class StreamYoutubeVideo : MonoBehaviour
     public VideoPlayer videoPlayer;
     public UnityEvent liveVideoPlay;
 
-    public void StreamYtVideo(string Url,bool isLive)
+    //Store ID for Builder Scene
+    public string id;
+
+    public void StreamYtVideo(string Url, bool isLive)
     {
         if (oldUrl != Url)
         {
             oldUrl = Url;
-            StartCoroutine(GetStreamableUrl(Url,isLive));
-        }   
+            StartCoroutine(GetStreamableUrl(Url, isLive));
+        }
     }
     public IEnumerator GetStreamableUrl(string Url, bool isLive)
     {
@@ -43,19 +46,28 @@ public class StreamYoutubeVideo : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
-                GetYoutubeStreamableVideo getYoutubeStreamableVideo= JsonConvert.DeserializeObject<GetYoutubeStreamableVideo>(data);
-                streamAbleUrl =getYoutubeStreamableVideo.data.downloadableUrl;
+                GetYoutubeStreamableVideo getYoutubeStreamableVideo = JsonConvert.DeserializeObject<GetYoutubeStreamableVideo>(data);
+                streamAbleUrl = getYoutubeStreamableVideo.data.downloadableUrl;
                 if (isLive)
                 {
                     mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
                     mediaPlayer.Play();
                     liveVideoPlay.Invoke();
+                    BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
                 }
                 else
                 {
                     videoPlayer.source = VideoSource.Url;
                     videoPlayer.url = streamAbleUrl;
                     videoPlayer.Play();
+                    if (ConstantsHolder.xanaConstants.isBuilderScene)
+                    {
+                        new Delayed.Action(() =>
+                           {
+                               if (videoPlayer.isPrepared)
+                                   BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
+                           }, 2);
+                    }
                 }
             }
         }

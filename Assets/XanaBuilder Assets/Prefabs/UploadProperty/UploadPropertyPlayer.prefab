@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 916627079940695803}
   - component: {fileID: 2150042521532428133}
+  - component: {fileID: 6078168968255710192}
   - component: {fileID: 7631278723476995697}
   m_Layer: 0
   m_Name: UploadPropertyPlayer
@@ -133,12 +134,32 @@ MonoBehaviour:
   liveStream: 0
   addFrame: 0
   isRepeat: 0
-  youtubePlayerLivestream: {fileID: 7627902506293395929}
-  youtubePlayer: {fileID: 3454070389582610863}
+  mediaPlayer: {fileID: 3433836251880016732}
+  videoPlayer: {fileID: 6493192803215284683}
   feedMediaPlayer: {fileID: 3433836251880016732}
   displayImage: {fileID: 4836074986427109957}
   loadingScreen: {fileID: 4004891770739573690}
   mediaType: 0
+  streamYoutubeVideo: {fileID: 6078168968255710192}
+--- !u!114 &6078168968255710192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701209940026606156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 3433836251880016732}
+  videoPlayer: {fileID: 6493192803215284683}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!65 &7631278723476995697
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1342,18 +1363,15 @@ GameObject:
   - component: {fileID: 4089087568113439517}
   - component: {fileID: 8518711939056999024}
   - component: {fileID: 2160019637972979763}
-  - component: {fileID: 3454070389582610863}
   - component: {fileID: 6493192803215284683}
   - component: {fileID: 7560108197685070802}
-  - component: {fileID: 8105760203860525246}
-  - component: {fileID: 6272728539816087562}
   m_Layer: 0
   m_Name: YoutubePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1049635786217200057
 Transform:
   m_ObjectHideFlags: 0
@@ -1433,71 +1451,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &3454070389582610863
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178128154859001366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7418089f4181645b5df8f90e317bf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _controller: {fileID: 0}
-  _events: {fileID: 0}
-  youtubeUrl: 
-  videoQuality: 0
-  is360: 0
-  dontForceFullscreen: 1
-  autoPlayOnStart: 1
-  startFromSecond: 0
-  startFromSecondTime: 20
-  showThumbnailBeforeVideoLoad: 0
-  thumbnailObject: {fileID: 3476779859716909669}
-  customPlaylist: 0
-  autoPlayNextVideo: 0
-  youtubeUrls: []
-  videoFormat: 0
-  autoPlayOnEnable: 1
-  playUsingInternalDevicePlayer: 0
-  loadYoutubeUrlsOnly: 0
-  objectsToRenderTheVideoImage: []
-  is3DLayoutVideo: 0
-  layout3d: 0
-  mainCamera: {fileID: 0}
-  videoPlayer: {fileID: 6493192803215284683}
-  mPlayer: {fileID: 0}
-  playInAVPRO: 0
-  audioPlayer: {fileID: 6493192803215284683}
-  debug: 0
-  ignoreTimeout: 0
-  _skipOnDrop: 1
-  videoUrl: 
-  audioUrl: 
-  ForceGetWebServer: 0
-  progressStartDrag: 0
-  skyboxMaterial3D: {fileID: 0}
-  skyboxMaterialNormal: {fileID: 0}
-  skyboxMaterial3DSide: {fileID: 0}
-  forceLocal: 0
-  videoTitle: 
-  EACMaterial: {fileID: 0}
-  Material360: {fileID: 0}
-  audioDelayOffset: 0
-  pauseCalled: 0
-  isSyncing: 0
-  encryptedSignatureVideo: 
-  encryptedSignatureAudio: 
-  decryptedUrlForVideo: 0
-  decryptedUrlForAudio: 0
-  decryptedVideoUrlResult: 
-  decryptedAudioUrlResult: 
-  EncryptUrlForVideo: 
-  EncryptUrlForAudio: 
-  jsonForHtmlVersion: 
-  checkIfSync: 0
 --- !u!328 &6493192803215284683
 VideoPlayer:
   m_ObjectHideFlags: 0
@@ -1527,9 +1480,9 @@ VideoPlayer:
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_SkipOnDrop: 1
-  m_Looping: 1
+  m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
@@ -1629,62 +1582,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &8105760203860525246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178128154859001366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fff3c7be5a953945843ab394d52e8cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showPlayerControl: 0
-  playbackSlider: {fileID: 0}
-  progressRectangle: {fileID: 0}
-  speedSlider: {fileID: 0}
-  volumeSlider: {fileID: 0}
-  currentTime: {fileID: 0}
-  totalTime: {fileID: 0}
-  loading: {fileID: 0}
-  nextVideoButton: {fileID: 0}
-  previousVideoButton: {fileID: 0}
-  controllerMainUI: {fileID: 0}
-  hideScreenControlTime: 0
-  useSliderToProgressVideo: 1
---- !u!114 &6272728539816087562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7178128154859001366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b121d95bc3e711f4fad11014675bfd8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnYoutubeUrlAreReady:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoReadyToStart:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoStarted:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoResumed:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoPaused:
-    m_PersistentCalls:
-      m_Calls: []
-  OnVideoFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  videoTimeEvents: []
 --- !u!1 &7729091271310444016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1797,7 +1694,6 @@ GameObject:
   - component: {fileID: 854279515907760481}
   - component: {fileID: 6129634721144644684}
   - component: {fileID: 3433836251880016732}
-  - component: {fileID: 7627902506293395929}
   - component: {fileID: 5975590294647308262}
   - component: {fileID: 4929145585370904188}
   m_Layer: 0
@@ -1924,7 +1820,7 @@ MonoBehaviour:
   _mediaReference: {fileID: 0}
   _mediaPath:
     _pathType: 0
-    _path: https://manifest.googlevideo.com/api/manifest/hls_playlist/expire/1632745971/ei/k2VRYcfAAoKnxgKB3qvgDg/ip/103.125.70.203/id/J0hEg4Fym1I.1/itag/96/source/yt_live_broadcast/requiressl/yes/ratebypass/yes/live/1/sgoap/gir%3Dyes%3Bitag%3D140/sgovp/gir%3Dyes%3Bitag%3D137/hls_chunk_host/rr2---sn-fpugpcx23-aixl.googlevideo.com/vprv/1/playlist_type/LIVE/initcwndbps/1430/mh/8k/mm/44/mn/sn-fpugpcx23-aixl/ms/lva/mv/m/mvi/2/pl/24/dover/11/keepalive/yes/fexp/24001373,24007246/beids/9466585/mt/1632724105/sparams/expire,ei,ip,id,itag,source,requiressl,ratebypass,live,sgoap,sgovp,vprv,playlist_type/sig/AOq0QJ8wRQIgHt4sFoyCnMwSXirGbv8-aSqYl4qLNXipiyX0DPhB7MECIQCoKcdoHaLBhSMxagg3c9mFB-Nied-1Bd4swmF7sXk1LA%3D%3D/lsparams/hls_chunk_host,initcwndbps,mh,mm,mn,ms,mv,mvi,pl/lsig/AG3C_xAwRgIhAOtXxnnQgTfw7Xd9m7pQix2dELMXbe2661D_GLl0fzc5AiEA_MnPTXRR75gMxyupl5LE8lODAdBoDzuUrCL9YAQ78z8%3D/playlist/index.m3u8
+    _path: 
   _fallbackMediaHints:
     transparency: 0
     alphaPacking: 0
@@ -2101,25 +1997,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &7627902506293395929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7995507085264838646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 1
-  _livestreamUrl: 
-  mPlayer: {fileID: 3433836251880016732}
-  rotateScreen: 0
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &5975590294647308262
 AudioSource:
   m_ObjectHideFlags: 0
