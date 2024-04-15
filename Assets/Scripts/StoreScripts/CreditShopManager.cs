@@ -114,7 +114,7 @@ public class CreditShopManager : MonoBehaviour
             if (m_ItemList[i].InAppKey == _product.definition.id)
             {
  
-                StoreManager.instance.SubmitSendCoinstoServer(int.Parse(m_ItemList[i].ProductAmount.text));   
+                InventoryManager.instance.SubmitSendCoinstoServer(int.Parse(m_ItemList[i].ProductAmount.text));   
                 // PlayerPrefs.SetInt("TotalCoins", PlayerPrefs.GetInt("TotalCoins") + int.Parse(m_ItemList[i].ProductAmount.text));
                 // UpdateCoinsAmount();
             }

@@ -56,7 +56,7 @@ public class FeedCommentItemController : MonoBehaviour
     //            profileImage.sprite = null;
     //            //Resources.UnloadUnusedAssets();//every clear.......
     //            //Caching.ClearCache();
-    //            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //        }
     //    }
     //}
@@ -83,7 +83,7 @@ public class FeedCommentItemController : MonoBehaviour
     //        userNameText.text = commentRow.user.name;
     //        if (!string.IsNullOrEmpty(commentRow.user.avatar))
     //        {
-    //            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(commentRow.user.avatar);
+    //            bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(commentRow.user.avatar);
     //            if (isUrlContainsHttpAndHttps)
     //            {
     //                AssetCache.Instance.EnqueueOneResAndWait(commentRow.user.avatar, commentRow.user.avatar, (success) =>
@@ -100,7 +100,7 @@ public class FeedCommentItemController : MonoBehaviour
     //            }
     //        }
     //    }
-    //    descriptionText.text = APIManager.DecodedString(commentRow.comment);
+    //    descriptionText.text = SNS_APIManager.DecodedString(commentRow.comment);
     //    //timeText.text = commentRow.updatedAt.ToString();
     //    timeText.text = FeedUIController.Instance.GetConvertedTimeString(commentRow.updatedAt);
     //    //timeText.text = FeedUIController.Instance.GetConvertedTimeStringSpecifyKind(commentRow.updatedAt);

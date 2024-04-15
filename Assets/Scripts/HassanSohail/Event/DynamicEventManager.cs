@@ -13,8 +13,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 {
     #region Variables
 
-    [SerializeField] SceneManage sceneManage;
-
     //Json data response properties
     string data;
 
@@ -87,7 +85,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 // Set a flag here for indicating that your project is ready to use Firebase.
                 
                 BindAfterInitilization();
-                XanaConstants.xanaConstants.isFirebaseInit = true;
+                ConstantsHolder.xanaConstants.isFirebaseInit = true;
                 InvokeDeepLink("focus");
             }
             else
@@ -137,7 +135,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     private void OnDynamicLink(object sender, EventArgs args)
     {
-        if (StartFocusCounter == 0 && XanaConstants.xanaConstants.isFirebaseInit)
+        if (StartFocusCounter == 0 && ConstantsHolder.xanaConstants.isFirebaseInit)
         {
             return;
         }
@@ -224,15 +222,15 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
             if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
             else if (eventDetails.data.environmentId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
             }
             else if (eventDetails.data.museumId != 0)
             {
-                XanaConstants.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
             }
 
 
@@ -526,47 +524,47 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     {
         if (XanaEventDetails.eventDetails.environmentName.Contains("Xana Festival"))
         {
-            XanaConstants.xanaConstants.userLimit = "16";
+            ConstantsHolder.xanaConstants.userLimit = "16";
         }
         else
         {
-            XanaConstants.xanaConstants.userLimit = "15";
+            ConstantsHolder.xanaConstants.userLimit = "15";
         }
         //Set These Settings after loading Json Data
         
         if (XanaEventDetails.eventDetails.eventType.Equals("XANA_WORLD"))
         {
             WorldItemView.m_EnvName = "Builder";
-            XanaConstants.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
-            XanaConstants.xanaConstants.isBuilderScene = true;
-            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
+            ConstantsHolder.xanaConstants.builderMapID = int.Parse(XanaEventDetails.eventDetails.xana_world_id);
+            ConstantsHolder.xanaConstants.isBuilderScene = true;
+            //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-            //SceneManager.LoadScene("AddressableScene");
+            //SceneManager.LoadScene("GamePlayScene");
             LoadingHandler.Instance.LoadSceneByIndex("Builder", true);
         }
         else
         {
-            if (!XanaConstants.xanaConstants.JjWorldSceneChange && !XanaConstants.xanaConstants.orientationchanged)
+            if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             {
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
             }
             if (XanaEventDetails.eventDetails.museumId.Equals(0))
             {
-                XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
+                ConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.environmentName;
                 WorldItemView.m_EnvName = XanaEventDetails.eventDetails.environmentName;
-                //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                //ConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
             else
             {
-                XanaConstants.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
+                ConstantsHolder.xanaConstants.EnviornmentName = XanaEventDetails.eventDetails.museumName;
                 WorldItemView.m_EnvName = XanaEventDetails.eventDetails.museumName;
-                //XanaConstants.xanaConstants.EnviornmentName = "XANA Festival Stage";
+                //ConstantsHolder.xanaConstants.EnviornmentName = "XANA Festival Stage";
                 //FeedEventPrefab.m_EnvName = "XANA Festival Stage";
             }
-            //print("***Scene is loading from deep linking***" + XanaConstants.xanaConstants.EnviornmentName);
+            //print("***Scene is loading from deep linking***" + ConstantsHolder.xanaConstants.EnviornmentName);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false); 
-            SceneManager.LoadScene("AddressableScene");
+            SceneManager.LoadScene("GamePlayScene");
         }
 
     }
@@ -575,13 +573,13 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     public void SetEventPopUpDialog(string _headingtext = "", string _descriptiontext = "", string _timertext = "", bool _panelstate = false)
     {
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.headingText, _headingtext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.headingText, _headingtext);
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.descriptionText, _descriptiontext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.descriptionText, _descriptiontext);
 
-        PopupMessageController.Instance.SetText(PopupMessageController.Instance.timerText, _timertext);
+        PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.timerText, _timertext);
 
-        PopupMessageController.Instance.SetPanelState(_panelstate);
+        PopupMessageHandler.Instance.SetPanelState(_panelstate);
 
     }
 

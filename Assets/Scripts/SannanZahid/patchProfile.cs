@@ -11,12 +11,12 @@ public class patchProfile : MonoBehaviour
     }
     private void OnEnable()
     {
-        if (!XanaConstants.xanaConstants.LoginasGustprofile)
+        if (!ConstantsHolder.xanaConstants.LoginasGustprofile)
         {
             if (gameManager.UiManager != null)//rik
             {
-                // GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+                // GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
                 
             }
         }
