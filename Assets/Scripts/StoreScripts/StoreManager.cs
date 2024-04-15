@@ -4810,14 +4810,14 @@ public class StoreManager : MonoBehaviour
             _charcterBodyParts.head.materials[2].SetTexture("_Base_Texture", itemData.default_male_face_color);
             _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_male_lips_color);
             _charcterBodyParts.body.materials[0].SetTexture("_Base_Texture", itemData.default_male_body_color);
-            _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.maleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
+            _charcterBodyParts.ApplyEyeLenTexture(CharacterHandler.instance.maleAvatarData.DEye_texture, _charcterBodyParts.gameObject);
         }
         else
         {
             _charcterBodyParts.head.materials[2].SetTexture("_Base_Texture", itemData.default_female_face_color);
             _charcterBodyParts.head.materials[2].SetColor("_Lips_Color", itemData.default_female_lips_color);
             _charcterBodyParts.body.materials[0].SetTexture("_Base_Texture", itemData.default_female_body_color);
-            _charcterBodyParts.ApplyEyeLenTexture(_charcterBodyParts.femaleAvatarMeshes.Eye_texture, _charcterBodyParts.gameObject);
+            _charcterBodyParts.ApplyEyeLenTexture(CharacterHandler.instance.femaleAvatarData.DEye_texture, _charcterBodyParts.gameObject);
         }
         for (int i = 0; i < _charcterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
         {

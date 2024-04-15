@@ -9,9 +9,9 @@ public class MouseLook : MonoBehaviour
 
     public float mouseSensitivity = 100f;
     public Transform playerBody;
-   
+
     private float xRotation = 0f;
-    
+
     public PlayerControllerNew playerController;
     [Header("Gyro")]
     private float x;
@@ -39,7 +39,7 @@ public class MouseLook : MonoBehaviour
 
         gyroEnabled = EnableGyro();
         playerBody = transform.GetComponentInParent<PlayerControllerNew>().gameObject.transform;
-        
+
     }
     // Update is called once per frame
     void Update()
@@ -49,7 +49,7 @@ public class MouseLook : MonoBehaviour
         if (!Application.isEditor && IsPointerOverUI() && !_allowSyncedControl)
         {
             _allowRotation = false;
-            _allowSyncedControl =false;
+            _allowSyncedControl = false;
         }
         else
         {
@@ -303,21 +303,24 @@ public class MouseLook : MonoBehaviour
     }
 
 
-     public  bool IsPointerOverUI(){
+    public bool IsPointerOverUI()
+    {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
 
-        if (results.Count>0)
+        for (int i = 0; i < results.Count; i++)
         {
-            return true;
+            if (results[i].gameObject.layer == LayerMask.NameToLayer("NFTDisplayPanel") || results[i].gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
+            {
+                ////Debug.Log("Object is hover===" + results[i].gameObject.name);
+                return true;
+            }
         }
-        else
-        {
-            return false;
-        }
-        
+
+        return false;
     }
+
 }

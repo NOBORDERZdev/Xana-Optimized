@@ -63,7 +63,7 @@ public class WarpFunctionComponent : ItemComponent
     IEnumerator PositionUpdating()
     {
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         isPortalUsed = false;
     }
 

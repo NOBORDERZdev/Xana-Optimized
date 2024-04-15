@@ -475,6 +475,7 @@ public class SelfieController : MonoBehaviour
     public void DisableSelfieFeature()
     {
 
+        GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
         m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton.SetActive(false);
         m_PlayerController.GetComponent<PlayerControllerNew>().gyroButton_Portait.SetActive(false);
 
