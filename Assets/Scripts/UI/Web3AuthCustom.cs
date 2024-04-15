@@ -37,7 +37,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     private void Start()
     {
-        if (APIBaseUrlChange.instance.IsXanaLive) {
+       if (APIBasepointManager.instance.IsXanaLive) {
             //For Mainnet
             ClientId = "BPnWnv68o43X4uLNUNrBEWgu6GgletwK5bOU4SLpHFrKrkATivj36lOX3B1DE7u3qeFTksKqK30arrFLYAzAgGY";
             network = Web3Auth.Network.SAPPHIRE_MAINNET;
@@ -46,15 +46,15 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole = "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-            loginSubVerifierLine = "ppp-line-login";
+           // loginSubVerifierLine = "ppp-line-login";
             //...
             clientIdEmail = "fr46GR3TzfOJFNvgEcIcQKLtLi48cm3c";
             clientIdGoole = "1041808867611-576ma9t6bva7b94irmvbt88n02tvoujn.apps.googleusercontent.com";
             clientIdApple = "bJgmFBdg8eSa2gAzh1yv3ABinO9NIq1z";
-            clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
+           // clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
             //...
             domains = "https://dev-i7bsu7bon4og1n64.us.auth0.com";
-            domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+           // domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
         }
         else {
             //For Testnet
@@ -65,15 +65,15 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole= "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-            loginSubVerifierLine = "ppp-line-login";
+           // loginSubVerifierLine = "ppp-line-login";
             //...
             clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
             clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
             clientIdApple = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0";
-            clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
+            //clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
             //...
             domains = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
-            domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+          //  domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
         }
 
         var EmailPasswordlessConfigItem = new LoginConfigItem()
@@ -97,13 +97,13 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientId = clientIdApple,
             typeOfLogin = TypeOfLogin.APPLE,
         };
-        var LineConfigItem = new LoginConfigItem()
-        {
-            verifier = loginVerifier,
-            verifierSubIdentifier = loginSubVerifierLine,
-            clientId = clientIdLine,
-            typeOfLogin = TypeOfLogin.LINE,
-        };
+        //var LineConfigItem = new LoginConfigItem()
+        //{
+        //    verifier = loginVerifier,
+        //    verifierSubIdentifier = loginSubVerifierLine,
+        //    clientId = clientIdLine,
+        //    typeOfLogin = TypeOfLogin.LINE,
+        //};
 
 
         web3Auth.setOptions(new Web3AuthOptions()
@@ -122,7 +122,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                  { "google", GoogleConfig },
                 { "jwt", EmailPasswordlessConfigItem },
                 { "apple", AppleConfigItem },
-                { "line" , LineConfigItem }
+               // { "line" , LineConfigItem }
             }
         });
         web3Auth.onLogin += onLogin;
@@ -186,26 +186,26 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.login(options);
     }
 
-    public void LineLogin(bool isnewreg)
-    {
-        var selectedProvider = Provider.LINE;
-        isNewReg = isnewreg;
-        var options = new LoginParams()
-        {
-            loginProvider = selectedProvider,
-            extraLoginOptions = new ExtraLoginOptions()
-            {
-                domain = domainsLine,
-                verifierIdField = "email",
-                isVerifierIdCaseSensitive = false,
-                connection = "line",
-               prompt = Prompt.LOGIN,
-            }
-        };
+    //public void LineLogin(bool isnewreg)
+    //{
+    //    var selectedProvider = Provider.LINE;
+    //    isNewReg = isnewreg;
+    //    var options = new LoginParams()
+    //    {
+    //        loginProvider = selectedProvider,
+    //        extraLoginOptions = new ExtraLoginOptions()
+    //        {
+    //            domain = domainsLine,
+    //            verifierIdField = "email",
+    //            isVerifierIdCaseSensitive = false,
+    //            connection = "line",
+    //           prompt = Prompt.LOGIN,
+    //        }
+    //    };
 
 
-        web3Auth.login(options);
-    }
+    //    web3Auth.login(options);
+    //}
 
     private void onLogin(Web3AuthResponse response)
     {
@@ -238,14 +238,14 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
                 case Web3AuthSociallogin.Login:
                     UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
-                    ConnectingWallet.instance.StartCoroutine(ConnectingWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
+                    ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
 
 
                 case Web3AuthSociallogin.NewRegistration:
                     UserLoginSignupManager.instance.signUpPanel.SetActive(false);
-                    ConnectingWallet.instance.StartCoroutine(ConnectingWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
+                    ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
 
