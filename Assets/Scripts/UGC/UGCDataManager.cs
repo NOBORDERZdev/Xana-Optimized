@@ -61,7 +61,7 @@ public class UGCDataManager : MonoBehaviour
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + APIBasepointManager.instance.apiversion);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

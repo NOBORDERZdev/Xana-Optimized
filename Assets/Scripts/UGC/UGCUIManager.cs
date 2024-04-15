@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -41,6 +42,28 @@ public class UGCUIManager : MonoBehaviour
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
 
+    //new changes
+    public UGCDataManager ugcDataManager;
+    [Header("Background Panel")]
+    public GameObject bgScreenPanel;
+    public Renderer bgMat;
+    public Texture defaultTexture;
+    public string bgDefaultTextureKey = "";
+
+    public GameObject tagsPrefab;
+    public Transform tagsPrefabParent;
+    public Transform bgPrefabParent;
+    public List<GameObject> tagsObjects;
+    public List<GameObject> tagsbuttons;
+    bool saveVideo = false;
+    public GameObject loadingTexture;
+    SavingCharacterDataClass _CharacterData;
+
+    public Color normalColor, highlightedColor;
+    public Color normalTextColor, highlightedTextColor;
+    public GameObject ItemPrefab;
+
+
     void Start()
     {
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
@@ -63,6 +86,25 @@ public class UGCUIManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
         }
+        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+        {
+            _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            if (_CharacterData.isBgApply)
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(_CharacterData.bgKeyValue));
+                bgDefaultTextureKey = _CharacterData.bgKeyValue;
+            }
+            else if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
+            }
+            else
+            {
+                ApplyDefaultTexture();
+            }
+        }
+
         yield return new WaitForSeconds(1f);
         loadingScreen.SetActive(false);
     }
@@ -227,17 +269,89 @@ public class UGCUIManager : MonoBehaviour
         videoRecordingTimerText.gameObject.SetActive(false);
         recordScreen.SetActive(true);
         videoImageResultScreen.SetActive(false);
-        if (isVideo)
+        if (!saveVideo && isVideo)
         {
             File.Delete(ugcRecordVideoBehaviour.videoRecordingPath);
             ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
         }
+        else if (!saveVideo && isPhoto)
+        {
+            File.Delete(snapSavePath);
+            snapSavePath = "";
+            saveVideo = false;
+        }
+        else
+        {
+            snapSavePath = "";
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+
     }
 
     public void BackToHomeScreen()
     {
-        //Initiate.Fade("Main", Color.black, 1.0f);
-        SceneManager.LoadScene("Home");
+        if (bgScreenPanel.activeInHierarchy)
+        {
+            bgScreenPanel.SetActive(false);
+            screenUI[1].SetActive(true);
+            if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
+            }
+            else
+            {
+                ApplyDefaultTexture();
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Home");
+        }
+
+    }
+    public void CancelVideoSreen()
+    {
+        if (!saveVideo && isVideo)
+        {
+            File.Delete(ugcRecordVideoBehaviour.videoRecordingPath);
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+        else if (!saveVideo && isPhoto)
+        {
+            File.Delete(snapSavePath);
+            snapSavePath = "";
+            saveVideo = false;
+        }
+        else
+        {
+            snapSavePath = "";
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+    }
+    public void OnClickTags(GameObject _gameObject, string _category)
+    {
+        for (int i = 0; i < tagsPrefabParent.childCount; i++)
+        {
+            tagsbuttons[i].GetComponent<Image>().color = normalColor;
+            tagsbuttons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = normalTextColor;
+        }
+        _gameObject.GetComponent<Image>().color = highlightedColor;
+        _gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = highlightedTextColor;
+        for (int i = 0; i < tagsObjects.Count; i++)
+        {
+            if (tagsObjects[i].GetComponent<BgTagsView>().tagName == _category)
+            {
+                tagsObjects[i].SetActive(true);
+            }
+            else
+            {
+                tagsObjects[i].SetActive(false);
+            }
+        }
     }
     public IEnumerator PlayRecordedVideo()
     {
@@ -267,7 +381,11 @@ public class UGCUIManager : MonoBehaviour
 
     public void OnTapBackGroundButton()
     {
-        ChangeBG();
+        ugcDataManager.GetAllBackGroundCategory();
+        loadingTexture.SetActive(true);
+        bgScreenPanel.SetActive(true);
+        screenUI[1].SetActive(false);
+
     }
     Material BGMat;
     public  void ChangeBG()
@@ -286,6 +404,7 @@ public class UGCUIManager : MonoBehaviour
             FileInfo file = new FileInfo(ugcRecordVideoBehaviour.videoRecordingPath);
             NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", "") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
         }
+        saveVideo = true;
         savePopup.SetActive(true);
     }
 
@@ -307,4 +426,36 @@ public class UGCUIManager : MonoBehaviour
 
         }
     }
+    public void OnClickSaveBackgroundButton()
+    {
+        bgScreenPanel.SetActive(false);
+        screenUI[1].SetActive(true);
+        bgDefaultTextureKey = _CharacterData.bgKeyValue;
+    }
+    public void ApplyBgTexture(Texture _texture, string _key)
+    {
+        //bgMat.mainTexture = texture;
+        bgMat.material.mainTexture = _texture;
+        _CharacterData.isBgApply = true;
+        _CharacterData.bgKeyValue = _key;
+        string bodyJson = JsonUtility.ToJson(_CharacterData);
+        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
+        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
+        {
+        });
+    }
+    public void ApplyDefaultTexture()
+    {
+        //bgMat.mainTexture = texture;
+        bgMat.material.mainTexture = defaultTexture;
+    }
+    public void OnClickSelectBackgroundButton(GameObject _gameObject, string key)
+    {
+        loadingTexture.SetActive(true);
+        //_gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        key = Regex.Replace(key, @"\s", "");
+        key = key.ToLower();
+        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(key));
+    }
+
 }
