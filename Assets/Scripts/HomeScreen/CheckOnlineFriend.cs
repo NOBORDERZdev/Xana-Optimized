@@ -15,16 +15,17 @@ public class CheckOnlineFriend : MonoBehaviour
     private void OnEnable()
     {
         SocketController.instance.spaceJoinedFriendStatus += SpaceJoinedFriends;
-        SocketController.instance.spaceJoinedFriendStatus += SpaceExitFriends;
+        SocketController.instance.spaceExitFriendStatus += SpaceExitFriends;
     }
     private void OnDisable()
     {
         SocketController.instance.spaceJoinedFriendStatus -= SpaceJoinedFriends;
-        SocketController.instance.spaceJoinedFriendStatus -= SpaceExitFriends;
+        SocketController.instance.spaceExitFriendStatus -= SpaceExitFriends;
     }
     private void Start()
     {
         offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
+        onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
     }
     public void SpaceJoinedFriends(FriendOnlineStatus friendOnlineStatus)
     {
@@ -67,6 +68,10 @@ public class CheckOnlineFriend : MonoBehaviour
             APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
         else
             GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
+    }
+    public void GotoSpace()
+    {
+
     }
     public void SetupHomeFriendProfile(SearchUserRow searchUserRow)
     {

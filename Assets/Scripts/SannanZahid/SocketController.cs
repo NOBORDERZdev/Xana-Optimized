@@ -19,6 +19,9 @@ public class SocketController : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
+
+    public Action<FriendOnlineStatus> spaceJoinedFriendStatus;
+    public Action<FriendOnlineStatus> spaceExitFriendStatus;
     private void Awake()
     {
         instance = this;
@@ -49,7 +52,21 @@ public class SocketController : MonoBehaviour
         Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
         //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
         Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
+        Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
+        Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
 
+        var data = new {userId=XanaConstants.userId};
+        Manager.Socket.Emit("userFriendJoined", data);
+    }
+    void FriendJoinedSpace(string msg)
+    {
+        FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        spaceJoinedFriendStatus?.Invoke(data);
+    }
+    void FriendExitSpace(string msg)
+    {
+        FriendOnlineStatus data=JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        spaceExitFriendStatus?.Invoke(data);
     }
     void ReceivePost(string msg)
     {
@@ -179,4 +196,13 @@ class ErrorData
 {
     public int code;
     public string content;
+}
+public class FriendOnlineStatus
+{
+    public int userId;
+    public string name;
+    public string avatar;
+    public int worldId;
+    public string msg;
+    public bool isOnline;
 }

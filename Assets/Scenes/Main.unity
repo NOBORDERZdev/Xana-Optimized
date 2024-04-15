@@ -7785,6 +7785,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1549620715}
     m_Modifications:
+    - target: {fileID: 1558925941328440567, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -58.297424
+      objectReference: {fileID: 0}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
       value: Description Panel Parent
@@ -23597,6 +23601,17 @@ MonoBehaviour:
       count: 0
       rows: []
     msg: 
+  _onlineFriendsDataFetched:
+    success: 0
+    data:
+      id: 0
+      userId: 0
+      isOnline: 0
+      user:
+        id: 0
+        name: 
+        avatar: 
+    msg: 
   SpawnFriendsAgain: 0
   SpawnFriendsObj: []
   menuLightObj: {fileID: 2302478907513791517}
@@ -24875,6 +24890,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1842184961bde643a1033336799fcdf, type: 3}
+--- !u!1 &2302478908623662707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1776973824093630736, guid: a1842184961bde643a1033336799fcdf, type: 3}
+  m_PrefabInstance: {fileID: 2302478908623662706}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2302478908623662708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2930285206891764574, guid: a1842184961bde643a1033336799fcdf, type: 3}
+  m_PrefabInstance: {fileID: 2302478908623662706}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2302478908636221901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24978,6 +25003,7 @@ GameObject:
   - component: {fileID: 2302478909030753276}
   - component: {fileID: 2302478909030753251}
   - component: {fileID: 2302478909030753250}
+  - component: {fileID: 2302478909030753278}
   m_Layer: 11
   m_Name: Name_Canvas
   m_TagString: Untagged
@@ -25079,7 +25105,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 6865225312712738178}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -25090,6 +25116,88 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &2302478909030753278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2302478909030753248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dac4fb6341af29e4cac765706c546eab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  friendId: 0
+  json:
+    id: 
+    name: 
+    thumbnail: 
+    gender: 
+    avatarType: OldAvatar
+    myItemObj: []
+    ai_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
+    charactertypeAi: 0
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
+  randomPreset: 0
+  offlineFriendName: {fileID: 2302478908623662708}
+  onlineFriendName: {fileID: 2302478908623662707}
 --- !u!1 &2302478909060364513
 GameObject:
   m_ObjectHideFlags: 0
@@ -25299,6 +25407,7 @@ MonoBehaviour:
     msg: 
   _moodstr: 
   postButton: {fileID: 1110079592}
+  postButtonText: {fileID: 0}
   MoodDataTab: {fileID: 269840616}
   MoodTabList: []
   InstantiateMoodTabCount: 10
@@ -31174,6 +31283,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f52f87a1dfa1465a8611981cc8d9036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!20 &6865225312712738178 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1825815853, guid: f3078e16c739540fe9ff3726bfee5cbb, type: 3}
+  m_PrefabInstance: {fileID: 6865225312712738176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6887193601434130947
 GameObject:
   m_ObjectHideFlags: 0
