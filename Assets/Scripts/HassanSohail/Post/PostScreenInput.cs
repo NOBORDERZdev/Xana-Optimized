@@ -24,7 +24,6 @@ public class PostScreenInput : MonoBehaviour
     TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
     bool bubbleHeightCheck = false;
-    
     string emojiRegexPattern = @"[\uD83C-\uDBFF\uDC00-\uDFFF]+";
     public bool ContainsEmoji(string _text)
     {
@@ -64,6 +63,11 @@ public class PostScreenInput : MonoBehaviour
         ShowText.text = "";
         if (inputField.text.Count()>0) // if the input field is not empty
         {
+            if (inputField.text.Count() > 0 || GameManager.Instance.userAnimationPostFeature.MoodSelected != "")
+            {
+                GameManager.Instance.userAnimationPostFeature.postButton.interactable = true;
+                GameManager.Instance.userAnimationPostFeature.postButtonText.color=Color.white;
+            }
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
 
@@ -81,6 +85,11 @@ public class PostScreenInput : MonoBehaviour
         }
         else
         {
+            if (GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
+            {
+                GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
+                GameManager.Instance.userAnimationPostFeature.postButtonText.color = Color.black;
+            }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
             if (GameManager.currentLanguage.Equals("en"))

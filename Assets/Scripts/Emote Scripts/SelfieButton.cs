@@ -28,9 +28,10 @@ public class SelfieButton : MonoBehaviour
 
     private void OnSelfieClick()
     {
+        GamePlayButtonEvents.inst.UpdateSelfieBtn(false);
+        BuilderEventManager.UIToggle?.Invoke(true);
         ReferrencesForDynamicMuseum.instance.playerControllerNew.StopBuilderComponent();
         GamePlayButtonEvents.inst.OnSelfieClick();
-        BuilderEventManager.UIToggle?.Invoke(true);
     }
 
     private void SelfieBtnUpdated(bool canClick)

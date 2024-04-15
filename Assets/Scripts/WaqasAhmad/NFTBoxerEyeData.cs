@@ -6,14 +6,14 @@ public class NFTBoxerEyeData : MonoBehaviour
 {
     public List<BoneBlendContainer> items;
     public static NFTBoxerEyeData instance;
-    CharacterBodyParts bodyParts;
+    public CharacterBodyParts bodyParts;
     private void Awake()
     {
         instance = this;
     }
     void Start()
     {
-        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+       // bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
     /// <summary>
     /// Find Item of item
