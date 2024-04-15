@@ -137,6 +137,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         var options = new LoginParams()
         {
             loginProvider = selectedProvider,
+            mfaLevel = MFALevel.NONE,
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
@@ -155,10 +156,12 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     {
         var selectedProvider = Provider.GOOGLE;
         isNewReg = isnewreg;
+
         var options = new LoginParams()
         {
             loginProvider = selectedProvider,
-           
+            mfaLevel = MFALevel.NONE,
+
         };
 
 
@@ -172,6 +175,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         var options = new LoginParams()
         {
             loginProvider = selectedProvider,
+            mfaLevel=MFALevel.NONE,
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
@@ -263,19 +267,21 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     }
     private void OnDestroy()
     {
+        Debug.Log("Logged out!");
         logout();
     }
 
     public void logout()
     {
         web3Auth.logout();
+        
     }
 
     private void onLogout()
     {
         privateKey = null;
         userInfo = null;
-
+        
         Debug.Log("Logged out!");
         updateConsole("Logged out!");
     }
