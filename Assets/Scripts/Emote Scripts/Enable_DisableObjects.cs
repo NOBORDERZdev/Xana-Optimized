@@ -26,14 +26,14 @@ public class Enable_DisableObjects : MonoBehaviour
     // Start is called before the first frame update
     private void OnEnable()
     {
-        PlayerControllerNew.PlayerIsWalking += OnPlayerWalking;
-        PlayerControllerNew.PlayerIsIdle += OnPlayerIdle;
+        PlayerController.PlayerIsWalking += OnPlayerWalking;
+        PlayerController.PlayerIsIdle += OnPlayerIdle;
 
     }
     private void OnDisable()
     {
-        PlayerControllerNew.PlayerIsWalking -= OnPlayerWalking;
-        PlayerControllerNew.PlayerIsIdle -= OnPlayerIdle;
+        PlayerController.PlayerIsWalking -= OnPlayerWalking;
+        PlayerController.PlayerIsIdle -= OnPlayerIdle;
     }
 
     private void OnPlayerWalking()

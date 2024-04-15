@@ -45,10 +45,10 @@ public class AllConversationData : MonoBehaviour
     //{
     //    defaultSP = profileImage.sprite;
 
-    //    currentScrollRect = MessageController.Instance.searchManagerAllConversation.mainScrollView.GetComponent<ScrollRect>();
+    //    currentScrollRect = SNS_MessageController.Instance.searchManagerAllConversation.mainScrollView.GetComponent<ScrollRect>();
     //    if (this.transform.parent.name== "searchContainer")
     //    {
-    //        currentScrollRect = MessageController.Instance.searchManagerAllConversation.searchScrollView.GetComponent<ScrollRect>();
+    //        currentScrollRect = SNS_MessageController.Instance.searchManagerAllConversation.searchScrollView.GetComponent<ScrollRect>();
     //    }
 
     //    EventTrigger trigger = GetComponent<EventTrigger>();
@@ -121,7 +121,7 @@ public class AllConversationData : MonoBehaviour
     //        profileImage.sprite = null;
     //        //Resources.UnloadUnusedAssets();//every clear.......
     //        //Caching.ClearCache();
-    //        APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+    //        SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
     //    }
     //}
 
@@ -142,7 +142,7 @@ public class AllConversationData : MonoBehaviour
     //        if (!string.IsNullOrEmpty(allChatGetConversationDatum.group.avatar))//rik Get and set Avatar From AWS.......
     //        {
     //            avatarUrl = allChatGetConversationDatum.group.avatar;
-    //            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.group.avatar);
+    //            bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.group.avatar);
     //            if (isUrlContainsHttpAndHttps)
     //            {
     //                AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.group.avatar, allChatGetConversationDatum.group.avatar, (success) =>
@@ -165,7 +165,7 @@ public class AllConversationData : MonoBehaviour
     //        defaultSP = circleSP;
     //        profileImage.sprite = defaultSP;
 
-    //        if (allChatGetConversationDatum.ConReceiver != null && allChatGetConversationDatum.ConReceiver.id == APIManager.Instance.userId)
+    //        if (allChatGetConversationDatum.ConReceiver != null && allChatGetConversationDatum.ConReceiver.id == SNS_APIManager.Instance.userId)
     //        {
     //            //Debug.LogError("ConReciver:" + allChatGetConversationDatum.ConSender.name);
     //            if (!string.IsNullOrEmpty(allChatGetConversationDatum.ConSender.name))
@@ -180,7 +180,7 @@ public class AllConversationData : MonoBehaviour
     //            {
     //                avatarUrl = allChatGetConversationDatum.ConSender.avatar;
     //                //Debug.LogError("AllConversation ConSender:" + allChatGetConversationDatum.ConSender.name);
-    //                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
+    //                bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
     //                if (isUrlContainsHttpAndHttps)
     //                {
     //                    AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConSender.avatar, allChatGetConversationDatum.ConSender.avatar, (success) =>
@@ -212,7 +212,7 @@ public class AllConversationData : MonoBehaviour
     //            {
     //                avatarUrl = allChatGetConversationDatum.ConReceiver.avatar;
     //                //Debug.LogError("AllConversation ConR1:" + allChatGetConversationDatum.ConReceiver.name);
-    //                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
+    //                bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
     //                if (isUrlContainsHttpAndHttps)
     //                {
     //                    AssetCache.Instance.EnqueueOneResAndWait(allChatGetConversationDatum.ConReceiver.avatar, allChatGetConversationDatum.ConReceiver.avatar, (success) =>
@@ -232,8 +232,8 @@ public class AllConversationData : MonoBehaviour
     //    }
     //    if (!string.IsNullOrEmpty(allChatGetConversationDatum.lastMsg))
     //    {
-    //        //allChatGetConversationDatum.lastMsg = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
-    //        string lastMSG = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
+    //        //allChatGetConversationDatum.lastMsg = SNS_APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
+    //        string lastMSG = SNS_APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
     //        //Debug.LogError("LastMSG:" + lastMSG + " :DataLastMSG:" + allChatGetConversationDatum.lastMsg);
     //        if (lastMSG.Contains("Left"))
     //        {
@@ -250,7 +250,7 @@ public class AllConversationData : MonoBehaviour
     //    }
     //    else
     //    {
-    //        textLastMessage.text = APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
+    //        textLastMessage.text = SNS_APIManager.DecodedString(allChatGetConversationDatum.lastMsg);
     //    }
 
     //    DateTime timeUtc = allChatGetConversationDatum.updatedAt;
@@ -311,7 +311,7 @@ public class AllConversationData : MonoBehaviour
     //        textTime.text = today.Date.ToString("yyyy/MM/dd");
     //        //textTime.text ="long time ago";
     //    }
-    //    APIController.Instance.allConversationList.Add(textTitle.text);
+    //    SNS_APIController.Instance.allConversationList.Add(textTitle.text);
     //}
 
     ////this method is used to reset message unread count.......
@@ -340,7 +340,7 @@ public class AllConversationData : MonoBehaviour
     //public void OnClickStartMessage()
     //{
     //    //Debug.LogError(currentScrollRect.velocity);
-    //    if (MessageController.Instance.deleteConfirmationScreen.activeSelf || currentScrollRect.velocity != Vector2.zero)
+    //    if (SNS_MessageController.Instance.deleteConfirmationScreen.activeSelf || currentScrollRect.velocity != Vector2.zero)
     //    {
     //        //Debug.LogError("Do not open Chat screen.......");
     //        return;
@@ -348,45 +348,45 @@ public class AllConversationData : MonoBehaviour
     //    pressed = false;
     //    StopCountDownCo();//this is used to stop countdown coroutine if is started.......
 
-    //    MessageController.Instance.chatPrefabParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+    //    SNS_MessageController.Instance.chatPrefabParent.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
-    //    APIController.Instance.allChatMessageId.Clear();
-    //    APIController.Instance.chatTimeList.Clear();
-    //    MessageController.Instance.currentConversationData = this;
-    //    MessageController.Instance.currentChatPage = 1;
-    //    MessageController.Instance.isChatDataLoaded = false;
+    //    SNS_APIController.Instance.allChatMessageId.Clear();
+    //    SNS_APIController.Instance.chatTimeList.Clear();
+    //    SNS_MessageController.Instance.currentConversationData = this;
+    //    SNS_MessageController.Instance.currentChatPage = 1;
+    //    SNS_MessageController.Instance.isChatDataLoaded = false;
 
-    //    string TempChatTitle = MessageController.Instance.chatTitleText.text.ToString();
+    //    string TempChatTitle = SNS_MessageController.Instance.chatTitleText.text.ToString();
 
-    //    foreach (Transform item in MessageController.Instance.chatPrefabParent)
+    //    foreach (Transform item in SNS_MessageController.Instance.chatPrefabParent)
     //    {
     //        Destroy(item.gameObject);
     //    }
 
     //    if (allChatGetConversationDatum.receiverId != 0)
     //    {
-    //        MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //        SNS_MessageController.Instance.LoaderShow(true);//rik loader active.......
 
     //        //Debug.LogError("receiverId" + allChatGetConversationDatum.receiverId);
-    //        if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+    //        if (allChatGetConversationDatum.receiverId == SNS_APIManager.Instance.userId)
     //        {
-    //            APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "Conversation");
+    //            SNS_APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.senderId, 0, "Conversation");
     //        }
     //        else
     //        {
-    //            APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "Conversation");
+    //            SNS_APIManager.Instance.RequestChatGetMessages(1, 50, allChatGetConversationDatum.receiverId, 0, "Conversation");
     //        }
-    //        MessageController.Instance.chatTitleText.text = textTitle.text;
+    //        SNS_MessageController.Instance.chatTitleText.text = textTitle.text;
     //    }
     //    else if (allChatGetConversationDatum.receivedGroupId != 0)
     //    {
-    //        MessageController.Instance.LoaderShow(true);//rik loader active.......
+    //        SNS_MessageController.Instance.LoaderShow(true);//rik loader active.......
 
     //        //Debug.LogError("receivedGroupId" + allChatGetConversationDatum.receivedGroupId);
-    //        APIManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "Conversation");
+    //        SNS_APIManager.Instance.RequestChatGetMessages(1, 50, 0, allChatGetConversationDatum.receivedGroupId, "Conversation");
     //        if (!string.IsNullOrEmpty(allChatGetConversationDatum.group.name))
     //        {
-    //            MessageController.Instance.chatTitleText.text = allChatGetConversationDatum.group.name;
+    //            SNS_MessageController.Instance.chatTitleText.text = allChatGetConversationDatum.group.name;
     //        }
     //        else
     //        {
@@ -395,41 +395,41 @@ public class AllConversationData : MonoBehaviour
     //                groupName.Add(allChatGetConversationDatum.group.groupUsers[i].user.name);
     //            }
     //            CreateChatTitleString(groupName);
-    //            MessageController.Instance.chatTitleText.text = chatTitlestr;
+    //            SNS_MessageController.Instance.chatTitleText.text = chatTitlestr;
     //        }
     //    }
-    //    MessageController.Instance.allChatGetConversationDatum = allChatGetConversationDatum;
+    //    SNS_MessageController.Instance.allChatGetConversationDatum = allChatGetConversationDatum;
 
-    //    if (MessageController.Instance.chatTitleText.text != TempChatTitle)
+    //    if (SNS_MessageController.Instance.chatTitleText.text != TempChatTitle)
     //    {
-    //        //MessageController.Instance.typeMessageText.text = "";
-    //        MessageController.Instance.chatTypeMessageInputfield.Text = "";
-    //        MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+    //        //SNS_MessageController.Instance.typeMessageText.text = "";
+    //        SNS_MessageController.Instance.chatTypeMessageInputfield.Text = "";
+    //        SNS_MessageController.Instance.OnChatVoiceOrSendButtonEnable();
     //    }
 
     //    bool isGroup = false;
     //    if (allChatGetConversationDatum.group != null && allChatGetConversationDatum.receivedGroupId != 0)
     //    {
     //        isGroup = true;
-    //        MessageController.Instance.defaultChatScreenTopUserImage = MessageController.Instance.defaultUserImageSquare;
+    //        SNS_MessageController.Instance.defaultChatScreenTopUserImage = SNS_MessageController.Instance.defaultUserImageSquare;
     //    }
     //    else
     //    {
     //        isGroup = false;
-    //        MessageController.Instance.defaultChatScreenTopUserImage = MessageController.Instance.defaultUserImageRound;
+    //        SNS_MessageController.Instance.defaultChatScreenTopUserImage = SNS_MessageController.Instance.defaultUserImageRound;
     //    }
 
-    //    MessageController.Instance.ChatScreenTopUserProfileBGSetUp(isGroup);//set default bg for user profile(round or square)
+    //    SNS_MessageController.Instance.ChatScreenTopUserProfileBGSetUp(isGroup);//set default bg for user profile(round or square)
         
     //    if (!string.IsNullOrEmpty(avatarUrl))
     //    {
-    //        AssetCache.Instance.LoadSpriteIntoImage(MessageController.Instance.chatScreenTopUserImage, avatarUrl, changeAspectRatio: true);
+    //        AssetCache.Instance.LoadSpriteIntoImage(SNS_MessageController.Instance.chatScreenTopUserImage, avatarUrl, changeAspectRatio: true);
     //    }
     //    else
     //    {            
-    //        MessageController.Instance.ChatScreenTopUserProfileSetUp(MessageController.Instance.defaultChatScreenTopUserImage, isGroup);
+    //        SNS_MessageController.Instance.ChatScreenTopUserProfileSetUp(SNS_MessageController.Instance.defaultChatScreenTopUserImage, isGroup);
     //    }
-    //    MessageController.Instance.isDirectMessage = false;
+    //    SNS_MessageController.Instance.isDirectMessage = false;
     //}
 
     //public string chatTitlestr;
@@ -567,21 +567,21 @@ public class AllConversationData : MonoBehaviour
     //        }
 
     //        //Debug.LogError("conversation item seleted for delete and enable delete conversation popup");
-    //        MessageController.Instance.deleteConfirmationCurrentConversationDataScript = this;
+    //        SNS_MessageController.Instance.deleteConfirmationCurrentConversationDataScript = this;
     //        if (allChatGetConversationDatum.group != null && allChatGetConversationDatum.receivedGroupId != 0)
     //        {
-    //            if (allChatGetConversationDatum.group.createdBy == APIManager.Instance.userId)//group admin is this user.......
+    //            if (allChatGetConversationDatum.group.createdBy == SNS_APIManager.Instance.userId)//group admin is this user.......
     //            {
-    //                MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete group?");
+    //                SNS_MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete group?");
     //            }
     //            else//group admin is not this user.......
     //            {
-    //                MessageController.Instance.ShowSetupDeleteConfirmationScreen("Leave", "Are you sure you want to leave group?");
+    //                SNS_MessageController.Instance.ShowSetupDeleteConfirmationScreen("Leave", "Are you sure you want to leave group?");
     //            }
     //        }
     //        else//one to one conversation.......
     //        {
-    //            MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete conversation?");
+    //            SNS_MessageController.Instance.ShowSetupDeleteConfirmationScreen("Delete", "Are you sure you want to delete conversation?");
     //        }
     //    }
     //}

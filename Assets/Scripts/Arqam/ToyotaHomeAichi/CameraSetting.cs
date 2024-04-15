@@ -17,7 +17,7 @@ public class CameraSetting : MonoBehaviour
 
     private void UpdateCamNear()
     {
-        LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = nearValue;
+        GameplayEntityLoader.instance.PlayerCamera.m_Lens.NearClipPlane = nearValue;
     }
 
 

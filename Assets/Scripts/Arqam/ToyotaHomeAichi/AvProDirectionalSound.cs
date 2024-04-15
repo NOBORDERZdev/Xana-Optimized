@@ -26,12 +26,12 @@ public class AvProDirectionalSound : MonoBehaviour
     private void OnEnable()
     {
         InRoomSoundHandler.soundAction += Mute_UnMute_Sound;
-        ChangeOrientation_waqas.switchOrientation += ChangeOrientation;
+        ScreenOrientationManager.switchOrientation += ChangeOrientation;
     }
     private void OnDisable()
     {
         InRoomSoundHandler.soundAction -= Mute_UnMute_Sound;
-        ChangeOrientation_waqas.switchOrientation -= ChangeOrientation;
+        ScreenOrientationManager.switchOrientation -= ChangeOrientation;
         if (volumeCoroutine != null)
             StopCoroutine(volumeCoroutine);
     }
@@ -42,16 +42,16 @@ public class AvProDirectionalSound : MonoBehaviour
 
         defaultMaxDis = maxDistance;
 
-        sliderValue = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
-        landscapeSlider = SoundManagerSettings.soundManagerSettings.totalVolumeSlider;
+        sliderValue = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        landscapeSlider = SoundSettings.soundManagerSettings.totalVolumeSlider;
 
         //Landscape mode
-        SoundManagerSettings.soundManagerSettings.totalVolumeSlider.onValueChanged.AddListener((float vol) =>
+        SoundSettings.soundManagerSettings.totalVolumeSlider.onValueChanged.AddListener((float vol) =>
         {
             UpdateSliderValue(vol);
         });
         //Potrait mode
-        SoundManagerSettings.soundManagerSettings.totalVolumeSliderPotrait.onValueChanged.AddListener((float vol) =>
+        SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.onValueChanged.AddListener((float vol) =>
         {
             UpdateSliderValue(vol);
         });
@@ -62,7 +62,7 @@ public class AvProDirectionalSound : MonoBehaviour
     private void AddTriggerOnSlider(Slider slider)
     {
         EventTrigger eventTrigger = slider.gameObject.AddComponent<EventTrigger>();
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
             AddEventTrigger(eventTrigger, EventTriggerType.PointerUp, OnPointerUp2);
         else
             AddEventTrigger(eventTrigger, EventTriggerType.PointerUp, OnPointerUp);
@@ -110,7 +110,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
     IEnumerator AdjustScreenVolume()
     {
-        playerCam = ReferrencesForDynamicMuseum.instance.m_34player.transform;
+        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
 
         while (true)
         {
@@ -163,15 +163,15 @@ public class AvProDirectionalSound : MonoBehaviour
 
     private void ChangeOrientation()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
-            sliderValue = SoundManagerSettings.soundManagerSettings.totalVolumeSliderPotrait.value;
-            AddTriggerOnSlider(SoundManagerSettings.soundManagerSettings.totalVolumeSliderPotrait);
+            sliderValue = SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.value;
+            AddTriggerOnSlider(SoundSettings.soundManagerSettings.totalVolumeSliderPotrait);
         }
         else
         {
-            sliderValue = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
-            AddTriggerOnSlider(SoundManagerSettings.soundManagerSettings.totalVolumeSlider);
+            sliderValue = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+            AddTriggerOnSlider(SoundSettings.soundManagerSettings.totalVolumeSlider);
         }
     }
 

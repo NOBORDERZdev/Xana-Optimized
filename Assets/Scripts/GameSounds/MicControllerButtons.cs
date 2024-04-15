@@ -31,7 +31,7 @@ public class MicControllerButtons : MonoBehaviour
     private void OnEnable()
     {
 
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1)
         {
             if (this.gameObject.name == "OffButton")
             {
@@ -62,16 +62,16 @@ public class MicControllerButtons : MonoBehaviour
 
     public void ClickMicMain()
     {
-        if (XanaConstants.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1)
         {
-            XanaConstants.xanaConstants.StopMic();
+            ConstantsHolder.xanaConstants.StopMic();
             XanaVoiceChat.instance.TurnOffMic();
             micOnButtonGameplay.SetActive(false);
             micOffButtonGameplay.SetActive(true);
         }
         else
         {
-            XanaConstants.xanaConstants.PlayMic();
+            ConstantsHolder.xanaConstants.PlayMic();
             XanaVoiceChat.instance.TurnOnMic();
             micOnButtonGameplay.SetActive(true);
             micOffButtonGameplay.SetActive(false);

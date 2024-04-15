@@ -15,26 +15,26 @@ public class AskForJoining : MonoBehaviour
     // Start is called before the first frame update
 
     AsyncOperation asyncLoading;
-    private CameraLook[] _cameraLooks;
+    private PlayerCameraController[] _cameraLooks;
 
 
 
     private void Awake()
     {
-        _cameraLooks = FindObjectsOfType<CameraLook>();
+        _cameraLooks = FindObjectsOfType<PlayerCameraController>();
 
     }
 
 
     void LoadMain()
     {
-        XanaConstants.xanaConstants.isFromXanaLobby =false;
-        XanaConstants.xanaConstants.JjWorldSceneChange = false;
+        ConstantsHolder.xanaConstants.isFromXanaLobby =false;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingHandler.Instance.randCurrentValue = _rand;
         StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
-        XanaConstants.xanaConstants.isBackFromWorld = true;  
+        ConstantsHolder.xanaConstants.isBackFromWorld = true;  
         LoadingHandler.Instance.ShowLoading();
         print("Hello Ask to Join");
         //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
@@ -47,7 +47,7 @@ public class AskForJoining : MonoBehaviour
         {
             LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
         }
-        asyncLoading = SceneManager.LoadSceneAsync("Main");
+        asyncLoading = SceneManager.LoadSceneAsync("Home");
         //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
         // Connection Lost Going To Main Update User Count
@@ -88,22 +88,22 @@ public class AskForJoining : MonoBehaviour
         }
         else
         {
-            if (ReferrencesForDynamicMuseum.instance != null)
-                ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
+            if (ReferencesForGamePlay.instance != null)
+                ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
 
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
             LoadingHandler.Instance.ShowLoading();
-            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
-                ChangeOrientation_waqas._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
+                ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            Launcher.instance.Connect(Launcher.instance.lastLobbyName);
-            AvatarManager.Instance.InstantiatePlayerAgain();
+            MutiplayerController.instance.Connect(MutiplayerController.instance.lastLobbyName);
+            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
             Destroy(this.gameObject);
@@ -116,11 +116,11 @@ public class AskForJoining : MonoBehaviour
     {
         if (active)
         {
-            CameraLook.instance.AllowControl();
+            PlayerCameraController.instance.AllowControl();
         }
         else
         {
-            CameraLook.instance.DisAllowControl();
+            PlayerCameraController.instance.DisAllowControl();
         }
     }
 }

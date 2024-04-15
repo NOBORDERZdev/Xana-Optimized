@@ -75,12 +75,12 @@ public class FeedVideoItem : MonoBehaviour
 //            AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
 //            profileImage.sprite = null;
 //        }
-//        APIManager.Instance.ResourcesUnloadAssetFile();
+//        SNS_APIManager.Instance.ResourcesUnloadAssetFile();
 //    }
 
 //    private void Update()//delete image after object out of screen
 //    {
-//        /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+//        /*if (SNS_APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
 //        {
 //            return;
 //        }*/
@@ -164,7 +164,7 @@ public class FeedVideoItem : MonoBehaviour
 //                        Resources.UnloadUnusedAssets();//Every clear
 //                        //Caching.ClearCache();
 //                        //GC.Collect();
-//                        //APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+//                        //SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
 //                    }
 //                    else
 //                    {
@@ -187,7 +187,7 @@ public class FeedVideoItem : MonoBehaviour
 //            feedUserData.Email = FeedRawData.email;
 //            feedUserData.Avatar = FeedRawData.avatar;
 //        }
-//        userName.text = APIManager.DecodedString(FeedData.title);
+//        userName.text = SNS_APIManager.DecodedString(FeedData.title);
 //        //TRiken
 //        if (hotFeed != null)
 //        {
@@ -195,7 +195,7 @@ public class FeedVideoItem : MonoBehaviour
 //            feedUserData.Name = hotFeed.user.name;
 //            feedUserData.Email = hotFeed.user.email;
 //            feedUserData.Avatar = hotFeed.user.avatar;
-//            userName.text = APIManager.DecodedString(hotFeed.title);
+//            userName.text = SNS_APIManager.DecodedString(hotFeed.title);
 //        }
 
 //        Invoke("UserNameSizeSetUp", 0.2f);
@@ -218,7 +218,7 @@ public class FeedVideoItem : MonoBehaviour
 
 //        if (!string.IsNullOrEmpty(FeedData.descriptions))//new
 //        {
-//            descriptionText.text = APIManager.DecodedString(FeedData.descriptions);
+//            descriptionText.text = SNS_APIManager.DecodedString(FeedData.descriptions);
 //            SetupDecPart(descriptionText.text);
 //        }
 //        else
@@ -242,7 +242,7 @@ public class FeedVideoItem : MonoBehaviour
 //        GetShareURL();
 
 //        isVisible = true;
-//        /*if (!APIManager.Instance.isTestDefaultToken)
+//        /*if (!SNS_APIManager.Instance.isTestDefaultToken)
 //        {
 //            isVisible = true;
 //        }
@@ -265,7 +265,7 @@ public class FeedVideoItem : MonoBehaviour
 //        //Riken
 //        /*if (!string.IsNullOrEmpty(FeedRawData.avatar))//set avatar image.......
 //        {
-//            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
+//            bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedRawData.avatar);
 //            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 //            if (isAvatarUrlFromDropbox)
 //            {
@@ -283,7 +283,7 @@ public class FeedVideoItem : MonoBehaviour
 
 //        if (!string.IsNullOrEmpty(FeedData.image))
 //        {
-//            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
+//            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
 //            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 //            if (isImageUrlFromDropbox)
 //            {
@@ -307,7 +307,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }
 //        else if (!string.IsNullOrEmpty(FeedData.video))
 //        {
-//            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
+//            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
 //            isVideoOrImage = true;
 
 //            //Debug.Log("FeedData.video " + FeedData.video);
@@ -331,7 +331,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }*/
 //        if (!string.IsNullOrEmpty(hotFeed.user.avatar))//set avatar image.......
 //        {
-//            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.user.avatar);
+//            bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.user.avatar);
 //            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 //            if (isAvatarUrlFromDropbox)
 //            {
@@ -349,7 +349,7 @@ public class FeedVideoItem : MonoBehaviour
 
 //        if (!string.IsNullOrEmpty(hotFeed.image))
 //        {
-//            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.image);
+//            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.image);
 //            //Debug.Log("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
 //            if (isImageUrlFromDropbox)
 //            {
@@ -373,7 +373,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }
 //        else if (!string.IsNullOrEmpty(hotFeed.video))
 //        {
-//            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.video);
+//            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.video);
 //            isVideoOrImage = true;
 
 //            //Debug.Log("FeedData.video " + FeedData.video);
@@ -408,7 +408,7 @@ public class FeedVideoItem : MonoBehaviour
 
 //        OtherPlayerProfileData.Instance.backKeyManageList.Add("HotTabScreen");//For back mamages.......
 
-//        //APIManager.Instance.RequestGetFeedsByUserId(FeedRawData.id, 1, 30, "OtherPlayerFeed");
+//        //SNS_APIManager.Instance.RequestGetFeedsByUserId(FeedRawData.id, 1, 30, "OtherPlayerFeed");
 
 //        //this api get any user profile data and feed for other player profile....... 
 //        SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -593,8 +593,8 @@ public class FeedVideoItem : MonoBehaviour
 //        if (seeMoreButtonTextObj.activeSelf)
 //        {
 //            //Riken
-//            //descriptionText.text = APIManager.DecodedString(FeedData.descriptions);
-//            descriptionText.text = APIManager.DecodedString(hotFeed.descriptions);
+//            //descriptionText.text = SNS_APIManager.DecodedString(FeedData.descriptions);
+//            descriptionText.text = SNS_APIManager.DecodedString(hotFeed.descriptions);
 //            SeeMoreLessBioTextSetup(false);
 //        }
 //        else
@@ -673,7 +673,7 @@ public class FeedVideoItem : MonoBehaviour
 //        //Riken
 //        /*if (!string.IsNullOrEmpty(FeedData.image))
 //        {
-//            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
+//            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedData.image);
 //            if (isImageUrlFromDropbox)
 //            {
 //                shareMediaUrl = FeedData.image;
@@ -685,7 +685,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }
 //        else if (!string.IsNullOrEmpty(FeedData.video))
 //        {
-//            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
+//            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedData.video);
 //            if (isVideoUrlFromDropbox)
 //            {
 //                shareMediaUrl = FeedData.video;
@@ -697,7 +697,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }*/
 //        if (!string.IsNullOrEmpty(hotFeed.image))
 //        {
-//            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.image);
+//            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.image);
 //            if (isImageUrlFromDropbox)
 //            {
 //                shareMediaUrl = hotFeed.image;
@@ -709,7 +709,7 @@ public class FeedVideoItem : MonoBehaviour
 //        }
 //        else if (!string.IsNullOrEmpty(hotFeed.video))
 //        {
-//            bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.video);
+//            bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(hotFeed.video);
 //            if (isVideoUrlFromDropbox)
 //            {
 //                shareMediaUrl = hotFeed.video;
@@ -785,8 +785,8 @@ public class FeedVideoItem : MonoBehaviour
 //    {
 //        //this method is get comment list and check if current feed this on multiple time not get comment list.......
 //        //Riken
-//        //APIManager.Instance.CommentListGetAndClickFeedCommentButton(FeedData.id, isRefresh, FeedData.commentCount);
-//        APIManager.Instance.CommentListGetAndClickFeedCommentButton(hotFeed.id, isRefresh, hotFeed.commentCount);
+//        //SNS_APIManager.Instance.CommentListGetAndClickFeedCommentButton(FeedData.id, isRefresh, FeedData.commentCount);
+//        SNS_APIManager.Instance.CommentListGetAndClickFeedCommentButton(hotFeed.id, isRefresh, hotFeed.commentCount);
 //        if (!isRefresh)
 //        {
 //            FeedUIController.Instance.OpenCommentPanel();
@@ -825,8 +825,8 @@ public class FeedVideoItem : MonoBehaviour
 //    public void OnClickLikeOrDisLikeButton()
 //    {
 //        //Riken
-//        //APIManager.Instance.RequestLikeOrDisLikeFeed(FeedData.id.ToString(), likeCountBtn.GetComponent<Button>());
-//        APIManager.Instance.RequestLikeOrDisLikeFeed(hotFeed.id.ToString(), likeCountBtn.GetComponent<Button>());
+//        //SNS_APIManager.Instance.RequestLikeOrDisLikeFeed(FeedData.id.ToString(), likeCountBtn.GetComponent<Button>());
+//        SNS_APIManager.Instance.RequestLikeOrDisLikeFeed(hotFeed.id.ToString(), likeCountBtn.GetComponent<Button>());
 //    }
 //    #endregion
 //}
