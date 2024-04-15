@@ -592,7 +592,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
-                    FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
+                    //FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
