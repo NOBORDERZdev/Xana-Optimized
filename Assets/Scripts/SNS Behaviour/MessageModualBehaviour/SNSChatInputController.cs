@@ -62,7 +62,7 @@ public class SNSChatInputController : MonoBehaviour
 	//	if (!string.IsNullOrEmpty(message))
 	//	{
 	//		view.MessageInput.Clear();
-	//		MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+	//		SNS_MessageController.Instance.OnChatVoiceOrSendButtonEnable();
 	//	}
 	//	StartCoroutine(WaitToResetScroll());
 	//}

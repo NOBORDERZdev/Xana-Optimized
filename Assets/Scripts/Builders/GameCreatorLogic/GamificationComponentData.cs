@@ -23,7 +23,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    internal PlayerControllerNew playerControllerNew;
+    internal PlayerController playerControllerNew;
     internal AvatarController avatarController;
     internal CharacterBodyParts charcterBodyParts;
     internal IKMuseum ikMuseum;

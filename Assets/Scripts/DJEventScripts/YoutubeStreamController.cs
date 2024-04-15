@@ -56,21 +56,21 @@ public class YoutubeStreamController : MonoBehaviour
     {
 
         Instance = this;
-        if (SoundManager.Instance)
+        if (SoundController.Instance)
         {
             //if (NormalPlayer.GetComponent<YoutubeSimplified>().player.GetComponent<YoutubePlayer>().playInAVPRO)
             //{
-            //    SoundManager.Instance.videoPlayerSource = mediaPlayerAudioSource;
-            //    SoundManagerSettings.soundManagerSettings.videoSource = mediaPlayerAudioSource;
+            //    SoundController.Instance.videoPlayerSource = mediaPlayerAudioSource;
+            //    SoundSettings.soundManagerSettings.videoSource = mediaPlayerAudioSource;
             //}
             //else
             //{
-                SoundManager.Instance.videoPlayerSource = videoPlayerAudioSource;
-                SoundManagerSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+                SoundController.Instance.videoPlayerSource = videoPlayerAudioSource;
+                SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             //}
             
-            SoundManager.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
-            SoundManagerSettings.soundManagerSettings.setNewSliderValues();
+            SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
+            SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 

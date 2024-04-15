@@ -23,13 +23,13 @@ public class WarpFunctionComponent : ItemComponent
 
     private void CollisionEnter()
     {
-        characterControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<CharacterController>();
+        characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
 
 
         if (warpFunctionComponentData.isWarpPortalStart && !isPortalUsed)
         {
             StartCoroutine(PositionUpdating());
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             isPortalUsed = true;
             for (int i = 0; i < warpFunctionComponentData.warpPortalDataEndPoint.Count; i++)
             {
@@ -44,7 +44,7 @@ public class WarpFunctionComponent : ItemComponent
         }
         else if (warpFunctionComponentData.isWarpPortalEnd && warpFunctionComponentData.isReversible && !isPortalUsed)
         {
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
             StartCoroutine(PositionUpdating());
             isPortalUsed = true;
             for (int i = 0; i < warpFunctionComponentData.warpPortalDataStartPoint.Count; i++)
