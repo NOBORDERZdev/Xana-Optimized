@@ -220,7 +220,10 @@ public class SavaCharacterProperties : MonoBehaviour
         SaveItemList.noseItemData = StoreManager.instance.itemData.noseItemData;
         SaveItemList.hairItemData = StoreManager.instance.itemData._hairItemData;
         SaveItemList.eyeItemData = StoreManager.instance.itemData._eyeItemData;
+        SaveItemList.eyeShapeItemData = StoreManager.instance.itemData.eyeShapeItemData;
 
+        SaveItemList.isBgApply = true;
+        SaveItemList.bgKeyValue = "ai_dusky_blue";
 
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
@@ -286,6 +289,10 @@ public class SavaCharacterProperties : MonoBehaviour
             _CharacterData.noseItemData = SaveItemList.noseItemData;
             _CharacterData.hairItemData = SaveItemList.hairItemData;
             _CharacterData.eyeItemData = SaveItemList.eyeItemData;
+            _CharacterData.eyeShapeItemData = SaveItemList.eyeShapeItemData;
+
+            _CharacterData.isBgApply = SaveItemList.isBgApply;
+            _CharacterData.bgKeyValue = SaveItemList.bgKeyValue;
 
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
@@ -390,6 +397,7 @@ public class SavingCharacterDataClass
     public int noseItemData;
     public string hairItemData;
     public string eyeItemData;
+    public int eyeShapeItemData;
     public bool charactertypeAi;
 
     public List<BoneDataContainer> SavedBones;
@@ -446,6 +454,9 @@ public class SavingCharacterDataClass
     public int special_move;
     public int punch;
     public int kick;
+
+    public bool isBgApply;
+    public string bgKeyValue;
 
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {

@@ -151,8 +151,8 @@ public class UGCManager : MonoBehaviour
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
-        //UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
+        //UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
+        UnityWebRequest www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
         www.SetRequestHeader("Accept", "application/json");
         // Start the request
         AsyncOperation operation = www.SendWebRequest();
@@ -217,7 +217,8 @@ public class UGCManager : MonoBehaviour
                     isSelfieTaken = true;
                     SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
                         StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
-                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
+                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color), StoreManager.instance.ugcItemsData.GetEyeShapeData(response.eye_shape)
+                      );
                     //StoreManager.instance.ApplyUGCValueOnCharacter();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
                     GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
@@ -234,7 +235,8 @@ public class UGCManager : MonoBehaviour
         }
     }
 
-    public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
+    public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye,
+        UGCItemsData.ItemData _itemEyeShapes)
     {
         StoreManager.instance.itemData.gender = ugcItems.gender.ToLower();
         StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
@@ -267,6 +269,10 @@ public class UGCManager : MonoBehaviour
         {
             StoreManager.instance.itemData._eyeItemData = _itemEye.keyValue;
         }
+        if (_itemEyeShapes != null)
+        {
+            StoreManager.instance.itemData.eyeShapeItemData = _itemEyeShapes.index;
+        }       
     }
     Color HexToColor(string hex)
     {
@@ -360,11 +366,12 @@ public class UGCItemsClass
     public string skin_color;
     public string lips_color;
     public string hair_style;
+    public string eye_shape;
     public string gender;
 
     public override string ToString()
     {
-        return face_type + lip_shape + nose_shape + eyes_color + hair_color + skin_color + lips_color + hair_style + gender;
+        return face_type + lip_shape + nose_shape + hair_color + skin_color + lips_color + eyes_color + gender + hair_style + eye_shape;// + chinShapes_type;
     }
 }
 

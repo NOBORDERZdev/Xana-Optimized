@@ -468,6 +468,7 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public int noseItemData;
         public string hairItemData;
         public string eyeItemData;
+        public int eyeShapeItemData;
         public bool charactertypeAi;
 
         public List<BoneDataContainer> SavedBones;
@@ -509,7 +510,8 @@ public class ServerSIdeCharacterHandling : MonoBehaviour
         public Color EyebrowColor;
         public Color EyeColor;
 
-
+        public bool isBgApply;
+        public string bgKeyValue;
         public Json CreateFromJSON(string jsonString)
         {
             return JsonUtility.FromJson<Json>(jsonString);

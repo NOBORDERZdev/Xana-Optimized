@@ -1942,6 +1942,7 @@ public class AvatarController : MonoBehaviour
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         characterBodyParts.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+        characterBodyParts.head.SetBlendShapeWeight(_CharacterData.eyeShapeItemData, 100);
         string gender=_CharacterData.gender != null ? _CharacterData.gender : "Male";
         if (_CharacterData.lip_color != null)
         {
