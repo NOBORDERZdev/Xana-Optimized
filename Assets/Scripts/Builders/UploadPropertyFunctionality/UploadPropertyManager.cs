@@ -5,7 +5,7 @@ public class UploadPropertyManager : MonoBehaviour
 {
     public GameObject upLoadPlayerPrefab;
     public List<GameObject> mediaScreens;
-    public Transform mediaParent;
+    Transform mediaParent;
 
     private void OnEnable()
     {
@@ -15,6 +15,12 @@ public class UploadPropertyManager : MonoBehaviour
     {
         BuilderEventManager.UploadPropertiesLoad -= UploadPropertiesLoad;
     }
+
+    void Start()
+    {
+        mediaParent= this.transform;
+    }
+
     private void UploadPropertiesLoad(UploadProperties uploadProperties)
     {
         if (uploadProperties == null) return;

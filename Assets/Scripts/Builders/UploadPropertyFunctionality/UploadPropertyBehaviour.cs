@@ -98,13 +98,15 @@ public class UploadPropertyBehaviour : MonoBehaviour
     }
     public void PlayLiveYoutubeVideo()
     {
-        youtubePlayerLivestream._livestreamUrl = url;
-        youtubePlayerLivestream.mPlayer.Play();
-        youtubePlayerLivestream.mPlayer.Loop = isRepeat;
         youtubePlayer.gameObject.SetActive(false);
-        youtubePlayerLivestream.gameObject.SetActive(true);
-        youtubePlayerLivestream.gameObject.SetActive(false);
-        new Delayed.Action(() => { youtubePlayerLivestream.gameObject.SetActive(true); }, 1); // 1 second delay is given because on first time Live streaming was not working
+        new Delayed.Action(() =>
+        {
+            youtubePlayerLivestream.gameObject.SetActive(true);
+            youtubePlayerLivestream._livestreamUrl = url;
+            youtubePlayerLivestream.GetLivestreamUrl(url);
+            youtubePlayerLivestream.mPlayer.Play();
+            youtubePlayerLivestream.mPlayer.Loop = isRepeat;
+        }, 1); // 1 second delay is given because on first time Live streaming was not working
 
     }
     public void CheckMediaScreen(string _id, MediaTypeBuilder mediaType, string _url)
