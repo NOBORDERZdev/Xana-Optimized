@@ -87,7 +87,7 @@ namespace Toyota
             }
             InRoomSoundHandler.playerInRoom += UpdateNFTData;
 
-            if (APIBaseUrlChange.instance && APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBasepointManager.instance && APIBasepointManager.instance.IsXanaLive)
                 PMY_RoomId = PMY_RoomId_main;
             else
                 PMY_RoomId = PMY_RoomId_test;
@@ -371,7 +371,7 @@ namespace Toyota
                     nftHolder.ratioReferences[ratioId].p_image.gameObject.SetActive(false);
                     nftHolder.ratioReferences[ratioId].p_videoPlayer.url = videoLink;
                 }
-                if (!ChangeOrientation_waqas._instance.isPotrait) // for Landscape
+                if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
                 {
                     nftHolder.LandscapeObj.SetActive(true);
                     nftHolder.PotraiteObj.SetActive(false);
@@ -466,9 +466,9 @@ namespace Toyota
 
                 }
             }
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(false);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
             }
             nftHolder.currentRoom = this;
             #region For firebase analytics
@@ -517,9 +517,9 @@ namespace Toyota
             nftHolder.ratioReferences[ratioId].l_Loader.SetActive(false);
             nftHolder.LandscapeObj.SetActive(false);
             nftHolder.PotraiteObj.SetActive(false);
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
         }
 
@@ -546,25 +546,25 @@ namespace Toyota
 
         public void Enable_PDF_Panel()
         {
-            if (!ChangeOrientation_waqas._instance.isPotrait)
+            if (!ScreenOrientationManager._instance.isPotrait)
                 nftHolder.pdfPanel_L.SetActive(true);
             else
                 nftHolder.pdfPanel_P.SetActive(true);
 
-            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(false);
-            CameraLook.instance.isReturn = true;
+            ReferencesForGamePlay.instance.eventSystemObj.SetActive(false);
+            PlayerCameraController.instance.isReturn = true;
         }
 
         public void EnableControlls()
         {
             ActionOnExitBtn();
-            if (CanvasButtonsHandler.inst.gameObject.activeInHierarchy)
+            if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)
             {
-                CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
+                GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
-            ReferrencesForDynamicMuseum.instance.eventSystemObj.SetActive(true);
-            CameraLook.instance.isReturn = false;
+            ReferencesForGamePlay.instance.eventSystemObj.SetActive(true);
+            PlayerCameraController.instance.isReturn = false;
         }
 
         private void OnDisable()

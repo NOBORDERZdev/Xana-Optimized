@@ -54,7 +54,7 @@ public class FeedFollowingItemController : MonoBehaviour
                 AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
                 profileImage.sprite = null;
             }
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -85,7 +85,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
     private void Update()//delete image after object out of screen
     {
-        /*if (APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
+        /*if (SNS_APIManager.Instance.isTestDefaultToken)//for direct SNS Scene Test....... 
         {
             return;
         }*/
@@ -172,7 +172,7 @@ public class FeedFollowingItemController : MonoBehaviour
                     }
                     //Resources.UnloadUnusedAssets();//every clear.......
                     //Caching.ClearCache();
-                    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                    SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                 }
             }
         }
@@ -181,7 +181,7 @@ public class FeedFollowingItemController : MonoBehaviour
     public void LoadFeed()
     {
         feedLike.text = FeedsByFollowingUserRowData.LikeCount.ToString();
-        feedTitle.text = APIManager.DecodedString(FeedsByFollowingUserRowData.Title);
+        feedTitle.text = SNS_APIManager.DecodedString(FeedsByFollowingUserRowData.Title);
 
         if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.Image) || !string.IsNullOrEmpty(FeedsByFollowingUserRowData.thumbnail))//Feed Following Items Initiate Total Count Set.......
         {
@@ -189,7 +189,7 @@ public class FeedFollowingItemController : MonoBehaviour
         }
 
         isVisible = true;
-        /*if (!APIManager.Instance.isTestDefaultToken)
+        /*if (!SNS_APIManager.Instance.isTestDefaultToken)
         {
             isVisible = true;
         }
@@ -207,7 +207,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
             if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.User.Avatar))//set avatar image.......
             {
-                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.User.Avatar);
+                bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.User.Avatar);
                 //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
                 if (isAvatarUrlFromDropbox)
                 {
@@ -226,7 +226,7 @@ public class FeedFollowingItemController : MonoBehaviour
 
         if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.Image))//Feed Following Image
         {
-            bool isImageUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Image);
+            bool isImageUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Image);
             //Debug.LogError("isImageUrlFromDropbox:  " + isImageUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isImageUrlFromDropbox)
             {
@@ -261,7 +261,7 @@ public class FeedFollowingItemController : MonoBehaviour
         {
             if (!string.IsNullOrEmpty(FeedsByFollowingUserRowData.thumbnail))
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.thumbnail);
+                bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.thumbnail);
                 if (isVideoUrlFromDropbox)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(FeedsByFollowingUserRowData.thumbnail, FeedsByFollowingUserRowData.thumbnail, (success) =>
@@ -290,7 +290,7 @@ public class FeedFollowingItemController : MonoBehaviour
             }
             else
             {
-                bool isVideoUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Video);
+                bool isVideoUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(FeedsByFollowingUserRowData.Video);
 
                 cameraIcon.gameObject.SetActive(true);
                 videoDisplay.gameObject.SetActive(true);
@@ -334,17 +334,17 @@ public class FeedFollowingItemController : MonoBehaviour
     //    int index = 0;
     //    //int pageIndex = 0;
     //    //FeedUIController.Instance.ShowLoader(true);
-    //    for (int i = 0; i < APIManager.Instance.allFollowingUserRootList.Count; i++)
+    //    for (int i = 0; i < SNS_APIManager.Instance.allFollowingUserRootList.Count; i++)
     //    {
-    //        GameObject videofeedObject = Instantiate(APIController.Instance.FollowingUserVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
+    //        GameObject videofeedObject = Instantiate(SNS_APIController.Instance.FollowingUserVideoFeedPrefab, FeedUIController.Instance.videofeedParent);
 
     //        FollowingUserFeedItem followingUserFeedItem = videofeedObject.GetComponent<FollowingUserFeedItem>();
 
-    //        followingUserFeedItem.FollowingUserFeedData = APIManager.Instance.allFollowingUserRootList[i];
-    //        // followingUserFeedItem.FeedData = APIManager.Instance.saveRootList[i].feeds[j];
+    //        followingUserFeedItem.FollowingUserFeedData = SNS_APIManager.Instance.allFollowingUserRootList[i];
+    //        // followingUserFeedItem.FeedData = SNS_APIManager.Instance.saveRootList[i].feeds[j];
     //        followingUserFeedItem.LoadFeed();
 
-    //        if (APIManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
+    //        if (SNS_APIManager.Instance.allFollowingUserRootList[i].Id == FeedsByFollowingUserRowData.Id)
     //        {
     //            //pageIndex = index;
     //            //Debug.LogError("pageIndex :" + pageIndex);
@@ -359,10 +359,10 @@ public class FeedFollowingItemController : MonoBehaviour
     //    FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().StartScrollSnap();
 
     //    //FeedUIController.Instance.videoFeedRect.GetComponent<ScrollSnapRect>().LerpToPage(pageIndex);
-    //    //Debug.LogError("name : " + APIController.Instance.videofeedParent.name);
+    //    //Debug.LogError("name : " + SNS_APIController.Instance.videofeedParent.name);
     //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
     //    yield return new WaitForSeconds(0.1f);
-    //    //Debug.LogError("name11 : " + APIController.Instance.videofeedParent.name);
+    //    //Debug.LogError("name11 : " + SNS_APIController.Instance.videofeedParent.name);
     //    FeedUIController.Instance.videofeedParent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     //    FeedUIController.Instance.feedUiScreen.SetActive(false);
     //}

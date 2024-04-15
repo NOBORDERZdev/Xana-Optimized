@@ -10,12 +10,12 @@ public class SubBottons : MonoBehaviour
     public bool ClothBool;
     public bool AvatarBool;
 
-    private CharacterCustomizationUIManager customizationUIManager;
+    private AvatarCustomizationUIHandler customizationUIManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        customizationUIManager = CharacterCustomizationUIManager.Instance;
+        customizationUIManager = FindObjectOfType<AvatarCustomizationUIHandler>();
     }
 
     private int currentSelectedCategoryIndex;
@@ -37,30 +37,30 @@ public class SubBottons : MonoBehaviour
 
         if (ClothBool)
         {
-            StoreManager.instance.OpenClothContainerPanel(m_Index);
+            InventoryManager.instance.OpenClothContainerPanel(m_Index);
             if (m_Index == 2)
             {
-                customizationUIManager.LoadMyFaceCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(1);
             }
             else
             {
-                customizationUIManager.LoadMyClothCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
                 GameManager.Instance.mainCharacter.GetComponent<FaceIK>().SetLookPos(2);
             }
         }
         else if (AvatarBool)
         {
-            StoreManager.instance.OpenAvatarContainerPanel(m_Index);
+            InventoryManager.instance.OpenAvatarContainerPanel(m_Index);
             currentSelectedCategoryIndex = m_Index;
 
             if (m_Index == 10 || m_Index == 6)
             {
-                customizationUIManager.LoadMyClothCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
             }
             else
             {
-                customizationUIManager.LoadMyFaceCustomizationPanel();
+                AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
             }
         }
         // print(m_Index);

@@ -146,7 +146,7 @@ namespace LightShaft.Scripts
             {
                 videoPlayer.Play();
 
-                audioPlayer.GetTargetAudioSource(0).volume = SoundManagerSettings.soundManagerSettings.totalVolumeSlider.value;
+                audioPlayer.GetTargetAudioSource(0).volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
 
                 //if (_controller.volumeSlider != null)
                 //    audioPlayer.GetTargetAudioSource(0).volume = _controller.volumeSlider.value;

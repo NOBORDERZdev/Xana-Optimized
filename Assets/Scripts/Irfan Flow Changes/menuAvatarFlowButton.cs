@@ -24,16 +24,18 @@ public class menuAvatarFlowButton : MonoBehaviour
  
     void OnClickMenuAvatarBtn()
     {
-        //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        /* comment out due to new avatar not having store for now
         GameManager.Instance.AvatarMenuBtnPressed();
-        StoreManager.instance.SubmitUserDetailAPI();
+        InventoryManager.instance.SubmitUserDetailAPI();
+        */
     }
 
     public void StoreBtnController()
     {
-        if (XanaConstants.xanaConstants != null)
+        if (ConstantsHolder.xanaConstants != null)
         {
-            if (XanaConstants.xanaConstants.isNFTEquiped)
+            if (ConstantsHolder.xanaConstants.isNFTEquiped)
                 OnNFTAvatarDisableStore();
             else
                 OnNFTAvatarEnableStore();

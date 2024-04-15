@@ -172,16 +172,16 @@ namespace XanaAi
             switch (type)
             {
                 case "Chest":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultShirt, "Chest", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultShirt, "Chest", ai.gameObject, false);
                     break;
                 case "Legs":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultPent, "Legs", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultPent, "Legs", ai.gameObject, false);
                     break;
                 case "Feet":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultShoes, "Feet", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultShoes, "Feet", ai.gameObject, false);
                     break;
                 case "Hair":
-                    ai.StichItem(-1, ItemDatabase.instance.DefaultHair, "Hair", ai.gameObject, false);
+                    ai.StichItem(-1, DefaultClothDatabase.instance.DefaultHair, "Hair", ai.gameObject, false);
                     break;
                 default:
                     break;

@@ -14,7 +14,7 @@ public class AddListnerToColorBtns : MonoBehaviour
     }
     private void ColorBtnPressed()
     {
-        ActivePanelCallStack.obj.UpdateColorPanelStatus(colorPanelNum, true);
+        StoreStackHandler.obj.UpdateColorPanelStatus(colorPanelNum, true);
     }
 
 
