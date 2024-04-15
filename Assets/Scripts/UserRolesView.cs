@@ -154,7 +154,7 @@ public class UserRolesView : MonoBehaviour
         userRoleButtonCanvas.overrideSorting = true;
         userRoleButtonCanvas.sortingOrder = 6;
 
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().canvasGroup.interactable = false;
+        FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().canvasGroup.interactable = false;
     }
 
     public void OnUserRolesPanelClose()
@@ -170,7 +170,7 @@ public class UserRolesView : MonoBehaviour
         Destroy(graphicRaycaster);
         Destroy(canvas);
         Destroy(userRoleButtonCanvas);
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().canvasGroup.interactable = true;
+        FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().canvasGroup.interactable = true;
     }
 
     public ScrollRectFasterEx profileMainScrollRect;

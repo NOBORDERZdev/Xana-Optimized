@@ -67,7 +67,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
         skinMesh = GamificationComponentData.instance.playerControllerNew.GetComponentsInChildren<SkinnedMeshRenderer>();
 
-        //other.gameObject.GetComponent<PlayerControllerNew>().isThrow = false;
+        //other.gameObject.GetComponent<PlayerController>().isThrow = false;
         footstepsBool = true;
         for (int i = 0; i < childCollider.Length; i++)
         {
@@ -190,7 +190,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         //GamificationComponentData.instance.playerControllerNew.isThrow = false;
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Invisible);
         BuilderEventManager.OnAvatarInvisibilityComponentCollisionEnter?.Invoke(blindfoldedDisplayComponentData.blindfoldSliderValue);
         raycast = GamificationComponentData.instance.raycast;
         if (!gameObject.activeInHierarchy)

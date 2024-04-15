@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.Extensions;
 using UnityEngine.UI.Extensions.Tweens;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class Swipe_menu : MonoBehaviour
 {
