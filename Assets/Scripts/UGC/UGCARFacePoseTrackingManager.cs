@@ -81,6 +81,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     public void ToggleFaceDetection()
     {
+        if (m_ARFaceManager == null)
+            return;
+
         m_ARFaceManager.enabled = !m_ARFaceManager.enabled;
 
         if (m_ARFaceManager.enabled)
