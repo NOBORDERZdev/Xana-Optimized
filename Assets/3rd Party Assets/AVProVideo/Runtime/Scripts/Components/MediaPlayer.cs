@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 //-----------------------------------------------------------------------------
 // Copyright 2015-2022 RenderHeads Ltd.  All rights reserved.
@@ -26,13 +27,13 @@ namespace RenderHeads.Media.AVProVideo
 	[HelpURL("https://www.renderheads.com/products/avpro-video/")]
 	public partial class MediaPlayer : MonoBehaviour
 	{
-		// These fields are just used to setup the default properties for a new video that is about to be loaded
-		// Once a video has been loaded you should use the interfaces exposed in the properties to
-		// change playback properties (eg volume, looping, mute)
+        // These fields are just used to setup the default properties for a new video that is about to be loaded
+        // Once a video has been loaded you should use the interfaces exposed in the properties to
+        // change playback properties (eg volume, looping, mute)
 
-		// Media source
-
-		[SerializeField] MediaSource _mediaSource = MediaSource.Reference;
+        // Media source
+        public Action<MediaPlayer> VideoPrepared;
+        [SerializeField] MediaSource _mediaSource = MediaSource.Reference;
 		public MediaSource MediaSource { get { return _mediaSource; } internal set { _mediaSource = value; } }
 
 		[SerializeField] MediaReference _mediaReference = null;
