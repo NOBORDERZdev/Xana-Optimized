@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using UnityEngine.Video;
+using SuperStar.Helpers;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class DisplayImage : MonoBehaviour
 {
@@ -34,7 +36,7 @@ public class DisplayImage : MonoBehaviour
             videoPlayer.targetTexture = renderTexture;
             videoPlayer.frame = 0;
             videoPlayer.Play();
-            videoPlayer.SetDirectAudioMute(0,true);
+            videoPlayer.SetDirectAudioMute(0, true);
 
             // Wait for a moment to ensure the frame is captured
             await Task.Delay(800);
@@ -74,7 +76,7 @@ public class DisplayImage : MonoBehaviour
                 imageFrame.sizeDelta = new Vector2(newWidth, newHeight);
 
                 if (gameObject.GetComponentInParent<BoxCollider>() != null)
-                   gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newWidth, newHeight, gameObject.GetComponentInParent<BoxCollider>().size.z);
+                    gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newWidth, newHeight, gameObject.GetComponentInParent<BoxCollider>().size.z);
             }
             imageComponent.color = Color.white;
             bufferPanel.SetActive(false);
@@ -85,58 +87,61 @@ public class DisplayImage : MonoBehaviour
         }
         else
         {
-            using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
+            if (AssetCache.Instance.HasFile(url))
             {
-                await www.SendWebRequest();
-
-                if (www.result == UnityWebRequest.Result.Success)
+                await Task.Delay(Random.Range(100, 500));
+                AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
+                ResizeImage();
+            }
+            else
+            {
+                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
                 {
-                    // Get the downloaded texture
-                    Texture2D texture = DownloadHandlerTexture.GetContent(www);
-                    // Create a sprite from the downloaded texture
-                    Sprite sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-
-                    // Set the sprite to the image component
-                    imageComponent.sprite = sprite;
-                    imageComponent.enabled = true;
-                    imageComponent.preserveAspect = true;
-                    if (_SetframeRatio)
+                    if (success)
                     {
-                        // Calculate desired dimensions based on sprite's aspect ratio
-                        float spriteAspectRatio = sprite.rect.width / sprite.rect.height;
-                        float frameAspectRatio = imageFrame.rect.width / imageFrame.rect.height;
-                        float newWidth, newHeight;
-                        if (spriteAspectRatio >= frameAspectRatio)
-                        {
-                            // Calculate dimensions based on width
-                            newWidth = imageFrame.rect.width;
-                            newHeight = newWidth / spriteAspectRatio;
-                        }
-                        else
-                        {
-                            // Calculate dimensions based on height
-                            newHeight = imageFrame.rect.height;
-                            newWidth = newHeight * spriteAspectRatio;
-                        }
-                        // Update the sizeDelta of the imageFrame
-                        imageFrame.sizeDelta = new Vector2(newWidth, newHeight);
-                        if (gameObject.GetComponentInParent<BoxCollider>() != null)
-                            gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newWidth, newHeight, gameObject.GetComponentInParent<BoxCollider>().size.z);
+                        AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
+                        ResizeImage();
                     }
-                    bufferPanel.SetActive(false);
-                    imageComponent.color = Color.white;
-                }
-                else
-                {
-                    Debug.LogError("Error downloading image: " + www.error);
-                }
+                });
             }
         }
         return null;
     }
+
+    void ResizeImage()
+    {
+        Sprite sprite = imageComponent.sprite;
+        imageComponent.enabled = true;
+        imageComponent.preserveAspect = true;
+        if (_SetframeRatio)
+        {
+            // Calculate desired dimensions based on sprite's aspect ratio
+            float spriteAspectRatio = sprite.rect.width / sprite.rect.height;
+            float frameAspectRatio = imageFrame.rect.width / imageFrame.rect.height;
+            float newWidth, newHeight;
+            if (spriteAspectRatio >= frameAspectRatio)
+            {
+                // Calculate dimensions based on width
+                newWidth = imageFrame.rect.width;
+                newHeight = newWidth / spriteAspectRatio;
+            }
+            else
+            {
+                // Calculate dimensions based on height
+                newHeight = imageFrame.rect.height;
+                newWidth = newHeight * spriteAspectRatio;
+            }
+            // Update the sizeDelta of the imageFrame
+            imageFrame.sizeDelta = new Vector2(newWidth, newHeight);
+            if (gameObject.GetComponentInParent<BoxCollider>() != null)
+                gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newWidth, newHeight, gameObject.GetComponentInParent<BoxCollider>().size.z);
+        }
+        bufferPanel.SetActive(false);
+        imageComponent.color = Color.white;
+    }
     public void ResetImgage()
     {
         imageComponent.sprite = null;
-        imageComponent.color = new Color32(38,40,46,255);
+        imageComponent.color = new Color32(38, 40, 46, 255);
     }
 }
