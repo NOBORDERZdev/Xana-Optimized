@@ -124,7 +124,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                Invoke(nameof(Custom_InitializeAvatar), 0.5f);
+                Invoke(nameof(Custom_InitializeAvatar), 0.02f);
                 if (xanaConstants.isNFTEquiped)
                 {
                     this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
