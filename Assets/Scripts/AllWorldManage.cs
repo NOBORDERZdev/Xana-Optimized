@@ -217,9 +217,9 @@ public class AllWorldManage : MonoBehaviour
 
     public void CategorySpacesLoadMore(string tag)
     {
-        WorldManager.instance.SearchKey = tag;
         SearchScreenLoad();
         WorldManager.instance.SearchTagPageNumb = 1;
+        WorldManager.instance.SearchKey = tag;
         WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }

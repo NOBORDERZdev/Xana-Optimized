@@ -317,9 +317,16 @@ public class WorldManager : MonoBehaviour
                     else
                     {
                         if (!string.IsNullOrEmpty(worldSearchManager.searchWorldInput.Text))
+                        {
                             WorldLoadingText(APIURL.SearchWorld);
+                        }
                         else
-                            WorldLoadingText(aPIURL);
+                        {
+                            if (_WorldInfo.data.count <= 0 )
+                            {
+                                WorldLoadingText(aPIURL);
+                            }
+                        }
                     }
                     CallBack(false);
                 }
