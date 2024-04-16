@@ -74,7 +74,7 @@ public class FeedData : MonoBehaviour
                 }
                 else
                 {
-                    PostHieghtUpdateForProfileVisit();
+                    Invoke(nameof(SetProfileFeedWithWait), 0.08f);
                 }
             }
             else
@@ -83,20 +83,26 @@ public class FeedData : MonoBehaviour
             }
         }
     }
-   
+
+    void SetProfileFeedWithWait()
+    {
+         PostHieghtUpdateForProfileVisit();
+    }
+
+
     public void onclickFeedUserProfileButton()
     {
         if (isProfileScene)
             return;
         //print("Getting Click here" + _data.user_id);
-        APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
+        SNS_APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
     }
 
     public void SetupFeedUserProfile(SearchUserRow _feedUserData)
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
+        SNS_APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
@@ -116,8 +122,8 @@ public class FeedData : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
         if (_feedUserData.am_i_following)
         {
@@ -149,8 +155,8 @@ public class FeedData : MonoBehaviour
 
         //OtherPlayerProfileData.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
 
-        //APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
-        //APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
+        //SNS_APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -184,9 +190,9 @@ public class FeedData : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
@@ -263,7 +269,7 @@ public class FeedData : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (!string.IsNullOrEmpty(url))
         {
-           // bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
+           // bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(url);
              AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
              {
                     if (success)

@@ -103,16 +103,16 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
 
         // init
         SetPagePositions();
-        SetPage(startingPage);
+        //SetPage(startingPage);
         InitPageSelection();
         SetPageSelection(startingPage);
 
         // prev and next buttons
-        if (nextButton)
-            nextButton.GetComponent<Button>().onClick.AddListener(() => { NextScreen(); });
+        //if (nextButton)
+        //    nextButton.GetComponent<Button>().onClick.AddListener(() => { NextScreen(); });
 
-        if (prevButton)
-            prevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
+        //if (prevButton)
+        //    prevButton.GetComponent<Button>().onClick.AddListener(() => { PreviousScreen(); });
     }
 
     //------------------------------------------------------------------------
@@ -200,48 +200,48 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     }
 
     //------------------------------------------------------------------------
-    private void SetPage(int aPageIndex)
-    {
-        aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
-        _container.anchoredPosition = _pagePositions[aPageIndex];
-        _currentPage = aPageIndex;
+    //private void SetPage(int aPageIndex)
+    //{
+    //    aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
+    //    _container.anchoredPosition = _pagePositions[aPageIndex];
+    //    _currentPage = aPageIndex;
 
-        if (FeedUIController.Instance != null)//vishal
-        {
-            //Debug.Log("SetPage:" + _currentPage);
-            StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
-        }        
-    }
+    //    if (FeedUIController.Instance != null)//vishal
+    //    {
+    //        //Debug.Log("SetPage:" + _currentPage);
+    //        StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
+    //    }        
+    //}
 
     //------------------------------------------------------------------------
-    public void LerpToPage(int aPageIndex)
-    {
-        //Debug.Log("LerpToPage:" + aPageIndex);
-        aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
-        _lerpTo = _pagePositions[aPageIndex];
-        _lerp = true;
-        _currentPage = aPageIndex;
+    //public void LerpToPage(int aPageIndex)
+    //{
+    //    //Debug.Log("LerpToPage:" + aPageIndex);
+    //    aPageIndex = Mathf.Clamp(aPageIndex, 0, _pageCount - 1);
+    //    _lerpTo = _pagePositions[aPageIndex];
+    //    _lerp = true;
+    //    _currentPage = aPageIndex;
 
-        if (FeedUIController.Instance != null && FeedUIController.Instance.gameObject.activeSelf)//vishal
-        {
-            if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-            {
-                FeedUIController.Instance.OnSetSelectionLine();//vishal
-                StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
-            }
-            else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
-            {
-                FeedUIController.Instance.ProfileFFSelectionOnValueChange();
-            }
-        }
-        else if (MessageController.Instance != null && MessageController.Instance.gameObject.activeSelf)
-        {
-            if (MessageController.Instance.AttechmentDownloadScreen.activeSelf)
-            {
-                MessageController.Instance.SaveAttachmentDetailsSetup(_currentPage);
-            }
-        }
-    }
+    //    if (FeedUIController.Instance != null && FeedUIController.Instance.gameObject.activeSelf)//vishal
+    //    {
+    //        if (!FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+    //        {
+    //            FeedUIController.Instance.OnSetSelectionLine();//vishal
+    //            StartCoroutine(FeedUIController.Instance.ActiveFeedUi(_currentPage, 0));
+    //        }
+    //        else if (FeedUIController.Instance.profileFollowerFollowingListScreen.activeSelf)
+    //        {
+    //            FeedUIController.Instance.ProfileFFSelectionOnValueChange();
+    //        }
+    //    }
+    //    else if (SNS_MessageController.Instance != null && SNS_MessageController.Instance.gameObject.activeSelf)
+    //    {
+    //        if (SNS_MessageController.Instance.AttechmentDownloadScreen.activeSelf)
+    //        {
+    //            SNS_MessageController.Instance.SaveAttachmentDetailsSetup(_currentPage);
+    //        }
+    //    }
+    //}
     //------------------------------------------------------------------------
     private void InitPageSelection()
     {
@@ -297,23 +297,23 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
     }
 
     //------------------------------------------------------------------------
-    public void NextScreen()
-    {
-        //Debug.Log("NextScreenScroll:" + _currentPage);
-        LerpToPage(_currentPage + 1);
-    }
+    //public void NextScreen()
+    //{
+    //    //Debug.Log("NextScreenScroll:" + _currentPage);
+    //    LerpToPage(_currentPage + 1);
+    //}
 
-    //------------------------------------------------------------------------
-    public void PreviousScreen()
-    {
-        LerpToPage(_currentPage - 1);
-    }
+    ////------------------------------------------------------------------------
+    //public void PreviousScreen()
+    //{
+    //    LerpToPage(_currentPage - 1);
+    //}
 
-    public void OnCLickTabButton(int pageIndex)
-    {
-       Debug.Log("OnCLickTabButton:" + pageIndex);
-        LerpToPage(pageIndex);
-    }
+    //public void OnCLickTabButton(int pageIndex)
+    //{
+    //   Debug.Log("OnCLickTabButton:" + pageIndex);
+    //    LerpToPage(pageIndex);
+    //}
 
     //------------------------------------------------------------------------
     private int GetNearestPage()
@@ -344,10 +344,10 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         // not dragging yet
         _dragging = false;
 
-        if (FeedUIController.Instance != null)//vishal
-        {
-            FeedUIController.Instance.CloseAllFeed(true);
-        }
+        //if (FeedUIController.Instance != null)//vishal
+        //{
+        //    FeedUIController.Instance.CloseAllFeed(true);
+        //}
     }
 
     //------------------------------------------------------------------------
@@ -365,25 +365,25 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
         }
 
         // test for fast swipe - swipe that moves only +/-1 item
-        if (Time.unscaledTime - _timeStamp < fastSwipeThresholdTime &&
-            Mathf.Abs(difference) > fastSwipeThresholdDistance &&
-            Mathf.Abs(difference) < _fastSwipeThresholdMaxLimit)
-        {
-            if (difference > 0)
-            {
-                NextScreen();
-            }
-            else
-            {
-                PreviousScreen();
-            }
-        }
-        else
-        {
-            // if not fast time, look to which page we got to
-            //Debug.Log("OnEndDrag else");
-            LerpToPage(GetNearestPage());
-        }
+        //if (Time.unscaledTime - _timeStamp < fastSwipeThresholdTime &&
+        //    Mathf.Abs(difference) > fastSwipeThresholdDistance &&
+        //    Mathf.Abs(difference) < _fastSwipeThresholdMaxLimit)
+        //{
+        //    if (difference > 0)
+        //    {
+        //        NextScreen();
+        //    }
+        //    else
+        //    {
+        //        PreviousScreen();
+        //    }
+        //}
+        //else
+        //{
+        //    // if not fast time, look to which page we got to
+        //    //Debug.Log("OnEndDrag else");
+        //    LerpToPage(GetNearestPage());
+        //}
         _dragging = false;
     }
 
@@ -407,9 +407,9 @@ public class ScrollSnapRect : MonoBehaviour, IBeginDragHandler, IEndDragHandler,
             }
         }
 
-        if (FeedUIController.Instance != null)//vishal
-        {
-            FeedUIController.Instance.CloseAllFeed(true);
-        }
+        //if (FeedUIController.Instance != null)//vishal
+        //{
+        //    FeedUIController.Instance.CloseAllFeed(true);
+        //}
     }
 }

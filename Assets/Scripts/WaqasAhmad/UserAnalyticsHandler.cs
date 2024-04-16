@@ -155,7 +155,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         if (!www.isHttpError && !www.isNetworkError)
         {
             response = JsonUtility.FromJson<APIResponse>(str);
-            XanaConstants.xanaConstants.worldIdFromApi = response.data;
+            ConstantsHolder.xanaConstants.worldIdFromApi = response.data;
             Debug.Log("<color=green> Analytics -- Record ID : " + response.data + "</color>");
         }
         else
@@ -214,13 +214,13 @@ public class UserAnalyticsHandler : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        form.AddField("record_id", XanaConstants.xanaConstants.worldIdFromApi);
+        form.AddField("record_id", ConstantsHolder.xanaConstants.worldIdFromApi);
 
         if (isJoined)
         {
             form.AddField("is_joined", isJoined.ToString());
-            if(!string.IsNullOrEmpty(XanaConstants.xanaConstants.playerSocketID))
-                form.AddField("socket_id", XanaConstants.xanaConstants.playerSocketID);
+            if(!string.IsNullOrEmpty(ConstantsHolder.xanaConstants.playerSocketID))
+                form.AddField("socket_id", ConstantsHolder.xanaConstants.playerSocketID);
         }
 
         if (nftClicked)
@@ -232,7 +232,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         if (isExit)
             form.AddField("is_exit", "" + isExit.ToString());
 
-        Debug.Log("####### " + XanaConstants.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
+        Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + nftClicked + "   -  " + urlClicked + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -265,18 +265,18 @@ public class UserAnalyticsHandler : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
 
-        form.AddField("record_id", XanaConstants.xanaConstants.worldIdFromApi);
+        form.AddField("record_id", ConstantsHolder.xanaConstants.worldIdFromApi);
         form.AddField("is_joined", isJoined.ToString());
         form.AddField("is_exit", "" + isExit.ToString());
 
         //if (isJoined)
         //{
-        //    if(!string.IsNullOrEmpty(XanaConstants.xanaConstants.playerSocketID))
-        //        form.AddField("socket_id", XanaConstants.xanaConstants.playerSocketID);
+        //    if(!string.IsNullOrEmpty(ConstantsHolder.xanaConstants.playerSocketID))
+        //        form.AddField("socket_id", ConstantsHolder.xanaConstants.playerSocketID);
         //}
 
 
-        Debug.Log("####### " + XanaConstants.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
+        Debug.Log("####### " + ConstantsHolder.xanaConstants.worldIdFromApi + "   -  " + isJoined + "   -  " + isExit);
 
         UnityWebRequest www;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -359,7 +359,7 @@ public class UserAnalyticsHandler : MonoBehaviour
         Manager.Socket.Emit("get_all_world_data");
         Manager.Socket.Emit("enter_world");
 
-        if (!SceneManager.GetActiveScene().name.Contains("Main"))
+        if (!SceneManager.GetActiveScene().name.Contains("Home"))
         {
             //Debug.Log("<color=green> Analatics -- Again Sending Call " + "</color>");
             Call_UpdateWorldRelatedStats_Courtine(true, false);
@@ -407,7 +407,7 @@ public class UserAnalyticsHandler : MonoBehaviour
     void PlayerSocketID(string socketId)
     {
         //Debug.Log("<color=green> Analytics-- SocketId: " + socketId + "</color>");
-        XanaConstants.xanaConstants.playerSocketID = socketId;
+        ConstantsHolder.xanaConstants.playerSocketID = socketId;
     }
 #endregion
 
@@ -416,10 +416,10 @@ public class UserAnalyticsHandler : MonoBehaviour
     /// </summary>
     /// <param name="isStart"> true on applicaiton start and false on application kill</param>
     IEnumerator SetSession( bool isStart){
-        while (XanaConstants.userId == "") {
+        while (ConstantsHolder.userId == "") {
             yield return new WaitForSeconds(2f);
         }
-        string userId = XanaConstants.userId;
+        string userId = ConstantsHolder.userId;
         string product ;
 #if !UNITY_EDITOR
     #if UNITY_ANDROID

@@ -6,7 +6,7 @@ public class NinjaComponent : ItemComponent
 {
     NinjaComponentData ninjaComponentData;
     string RuntimeItemID = "";
-    PlayerControllerNew pc;
+    PlayerController pc;
 
     public void Init(NinjaComponentData ninjaComponentData)
     {
@@ -16,39 +16,21 @@ public class NinjaComponent : ItemComponent
         pc = GamificationComponentData.instance.playerControllerNew;
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            //return;
-            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-
-            // Special Item Component Stops
-            //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
-            // Special Item Component Stops
-
-            //PlayerControllerNew pc = GamificationComponentData.instance.playerControllerNew;
-            //pc.Ninja_Throw(true);
-            //pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);
-            //BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(ninjaComponentData.setTimerNinjaEffect);
-
-            //pc.movementSpeed = ninjaComponentData.ninjaSpeedVar;
-            //pc.sprintSpeed = ninjaComponentData.ninjaSpeedVar;
-            //pc.jumpHeight = 5;
-            //Destroy(this.gameObject);
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-            if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
-        }
+        BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        PlayBehaviour();
+        if (GamificationComponentData.instance.withMultiplayer)
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+        else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
     }
 
     #region BehaviourControl
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Ninja);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Ninja);
 
         pc.Ninja_Throw(true);
         pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);
@@ -94,6 +76,16 @@ public class NinjaComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.NinjaComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

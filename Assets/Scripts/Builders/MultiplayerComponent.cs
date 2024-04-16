@@ -86,6 +86,8 @@ public class MultiplayerComponent : MonoBehaviourPun
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
+            if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+                GamificationComponentData.instance.xanaItems.Add(xanaItem);
         }
     }
 }

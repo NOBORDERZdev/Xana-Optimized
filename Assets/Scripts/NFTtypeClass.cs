@@ -112,7 +112,7 @@ public class NFTtypeClass : MonoBehaviour
                     //tt imgFeedRaw.texture = null;
                     //Resources.UnloadUnusedAssets();//every clear.......
                     //Caching.ClearCache();
-                    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                    SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                 }
             }
         }
@@ -164,7 +164,7 @@ public class NFTtypeClass : MonoBehaviour
         scrollActivityNFTRef._NFTIndex = _indexNumber;
 
         //  if(CollectionAddress)
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             if (NftDataScript.Instance.EquipCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {

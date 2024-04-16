@@ -46,7 +46,7 @@ public class FeedController : MonoBehaviour
         feedContentParent.gameObject.SetActive(true);
         SerchBarObj.SetActive(false);
         searchInputField.Text = "";
-        SocketController.instance.updateFeedLike += UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedUIController.Instance;
         if (!isFeedInitialized)
@@ -64,17 +64,17 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
-         FeedUIController.Instance.feedUiScreen.SetActive(true);
+         feedUIController.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
         //FeedUIController.Instance.ShowLoader(true);
         FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
-        if (APIManager.Instance.userId == 0)
+        if (SNS_APIManager.Instance.userId == 0)
         {
-           APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
+           SNS_APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
         }
-        await GetFeedData(APIManager.Instance.userId);
+        await GetFeedData(SNS_APIManager.Instance.userId);
     }
 
     async Task GetFeedData(int userId)
@@ -144,7 +144,7 @@ public class FeedController : MonoBehaviour
 
     public void PullNewPlayerPost(){ 
         FeedLoader.SetActive(true);
-        GetPlayerNewPosts(APIManager.Instance.userId);
+        GetPlayerNewPosts(SNS_APIManager.Instance.userId);
     }
 
     async void GetPlayerNewPosts(int userId){ 
@@ -188,12 +188,9 @@ public class FeedController : MonoBehaviour
                 }
                 if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
-                    //scrollerController._data.InsertRange(0,tempData);
                     AddDataToTopScroller(FeedAPIData);
                 }
                 else{
-                    //noFeedsScreen.gameObject.SetActive(true);
-                    //FeedLoader.SetActive(false);
                     if (_isNameChanged)
                     {
                         AddDataToTopScroller(FeedAPIData);
@@ -230,7 +227,7 @@ public class FeedController : MonoBehaviour
     /// To get next page player post
     /// </summary>
     public void GetPlayerNextPostPage(){ 
-        GetFeedDataByPage(APIManager.Instance.userId);
+        GetFeedDataByPage(SNS_APIManager.Instance.userId);
     }
 
     async void GetFeedDataByPage(int userId)
@@ -287,7 +284,6 @@ public class FeedController : MonoBehaviour
         {
             if (scrollerController._data[i].id == feedLikeSocket.textPostId)
             {
-                //scrollerController._data[i].UpdateLikeCount(feedLikeSocket.likeCount);
                 scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
                 //scrollerController.scroller.ReloadData();
                 foreach (Transform item in feedContentParent.GetChild(0).transform )
@@ -300,14 +296,6 @@ public class FeedController : MonoBehaviour
                 break;
             }
         }
-        //foreach (var item in scrollerController._data)
-        //{
-        //    if (item.GetFeedId() == feedLikeSocket.textPostId)
-        //    {
-        //      item.UpdateLikeCount(feedLikeSocket.likeCount);
-        //      scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
-        //    }
-        //}
     }
 
     public void OnClickSerachBtn(){
@@ -337,7 +325,6 @@ public class FeedController : MonoBehaviour
     } 
 
     public void SearchFeed(){
-        print("~~~~~");
         noFeedSerach. gameObject.SetActive(false);
         FeedLoader.SetActive(true);
         EmptySearchPanel();   
@@ -355,7 +342,7 @@ public class FeedController : MonoBehaviour
 
     IEnumerator FeedSearch(string input)
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+APIManager.Instance.userId +"/"+ input +"/1/20";
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+SNS_APIManager.Instance.userId +"/"+ input +"/1/20";
         UnityWebRequest response = UnityWebRequest.Get(url);
         yield return response.SendWebRequest();
         if (response.isNetworkError)
@@ -398,13 +385,13 @@ public class FeedController : MonoBehaviour
             }
             else
             {
-                if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese) // for English 
+                if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese) // for English 
                 {
                     noFeedText.text = "We couldn’t find a match for “ "+
                                        SerchStringToEllipsis( input)
                                         +"”.\r\nPlease try another search.";
                 }
-                else if(GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)   // for Jp 
+                else if(GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)   // for Jp 
                 {
                     noFeedText.text = SerchStringToEllipsis( input) + "に一致するものが見つかりませんでした。\r\n" +
                                         "別のキーワードで試してみてください。";
@@ -462,12 +449,12 @@ public class FeedController : MonoBehaviour
             noFeedSerach.gameObject.SetActive(false);
             noFeedsScreen.gameObject.SetActive(false);
             FeedLoader.gameObject.SetActive(false);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
+            feedUIController.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
         }
      }
     private void OnDisable()
     {
-        SocketController.instance.updateFeedLike -= UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike -= UpdateFeedLike;
         ResetFeedController();
     }
 

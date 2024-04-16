@@ -23,7 +23,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    internal PlayerControllerNew playerControllerNew;
+    internal PlayerController playerControllerNew;
     internal AvatarController avatarController;
     internal CharacterBodyParts charcterBodyParts;
     internal IKMuseum ikMuseum;
@@ -94,6 +94,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     //platformLayers
     public LayerMask platformLayers;
+
+    [Tooltip("What layers the character uses as ground")]
+    public LayerMask GroundLayers;
+
     private void Awake()
     {
         instance = this;

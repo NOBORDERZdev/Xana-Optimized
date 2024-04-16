@@ -71,29 +71,18 @@ public class CharacterBodyParts : MonoBehaviour
     public Color PresetGredientColor;
     //public List<BoneDataContainer> DefaultBones = new List<BoneDataContainer>();
     public Texture2D defaultMakeup, defaultEyelashes, defaultEyebrow;
-    private Material characterHeadMat, characterBodyMat;
+    public Material characterHeadMat, characterBodyMat;
 
 
     public AvatarController avatarController;
 
-    //public AvatarGender avatarGender;
-    public AvatarMeshes maleAvatarMeshes;
-    public AvatarMeshes femaleAvatarMeshes;
     public SkinnedMeshRenderer boxerBody;
     public SkinnedMeshRenderer boxerHead;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer body;
-    [HideInInspector]
+    //[HideInInspector]
     public SkinnedMeshRenderer head;
 
-    [Serializable]
-    public class AvatarMeshes
-    {
-        public GameObject avatar_parent;
-        public SkinnedMeshRenderer avatar_body;
-        public SkinnedMeshRenderer avatar_head;
-        public Texture Shirt_Texture, Pent_Texture, Shoe_Texture, Eye_texture, Face_Texture, Skin_Texture;
-    }
 
     public RandomPreset[] randomPresetData;
 
@@ -108,7 +97,7 @@ public class CharacterBodyParts : MonoBehaviour
         Shoes_TextureName = "_Shoes_Mask";
         Glove_TextureName = "_Gloves_Mask";
         Skin_ColorName = "_BaseColor";
-        Hair_ColorName = "_Color";
+        Hair_ColorName = "_BaseColor";
         Lip_ColorName = "_Lips_Color";
         Eyebrow_ColorName = "_BaseColor";
         Eye_ColorName = "_Mask_Color";
@@ -146,80 +135,30 @@ public class CharacterBodyParts : MonoBehaviour
 
     private void Start()
     {
-        blend = GameManager.Instance.BlendShapeImporter;
-        //avatarController = GetComponent<AvatarController>();
-        head = maleAvatarMeshes.avatar_head;
-        body = maleAvatarMeshes.avatar_body;
+        blend = GameManager.Instance.BlendShapeManager;
+
         characterHeadMat = head.materials[2];
         characterBodyMat = body.materials[0];
         // To remove old character customization
         //IntCharacterBones();
     }
 
-
-    public void SetAvatarByGender(string _gender)
-    {
-
-        if (_gender == AvatarGender.Male.ToString())
-        {
-            avatarController.avatarGender = AvatarGender.Male;
-            maleAvatarMeshes.avatar_parent.SetActive(true);
-            femaleAvatarMeshes.avatar_parent.SetActive(false);
-            body = maleAvatarMeshes.avatar_body;
-            head = maleAvatarMeshes.avatar_head;
-        }
-        else if (_gender == AvatarGender.Female.ToString())
-        {
-            avatarController.avatarGender = AvatarGender.Female;
-            maleAvatarMeshes.avatar_parent.SetActive(false);
-            femaleAvatarMeshes.avatar_parent.SetActive(true);
-            body = femaleAvatarMeshes.avatar_body;
-            head = femaleAvatarMeshes.avatar_head;
-        }
-
-        if (XanaConstants.xanaConstants.isNFTEquiped)
-        {
-            body = boxerBody;
-            head = boxerHead;
-        }
-    }
-
-    //Set Texture For Shirt
+    
     public void TextureForShirt(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
-            body.materials[0].SetTexture(shirt_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(shirt_TextureName, texture);
-
-        //Body.materials[0].SetTexture(shirt_TextureName, texture);
+        body.materials[0].SetTexture(shirt_TextureName, texture);
     }
 
 
     // Set texture For 
     public void TextureForPant(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
-            body.materials[0].SetTexture(Pent_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Pent_TextureName, texture);
-        //Body.materials[0].SetTexture(Pent_TextureName, texture);
+        body.materials[0].SetTexture(Pent_TextureName, texture);
     }
 
     public void TextureForShoes(Texture texture)
     {
-        if (XanaConstants.xanaConstants.isNFTEquiped)
-            body.materials[0].SetTexture(Shoes_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Male)
-            maleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
-        else if (avatarController.avatarGender == AvatarGender.Female)
-            femaleAvatarMeshes.avatar_body.materials[0].SetTexture(Shoes_TextureName, texture);
-
-        //Body.materials[0].SetTexture(Shoes_TextureName, texture);
+        body.materials[0].SetTexture(Shoes_TextureName, texture);
     }
 
     public void TextureForGlove(Texture texture)
@@ -231,7 +170,7 @@ public class CharacterBodyParts : MonoBehaviour
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask, _gender);
@@ -251,9 +190,6 @@ public class CharacterBodyParts : MonoBehaviour
 
         SkinnedMeshRenderer HeadMeshComponent = head;
 
-        //HeadMeshComponent.material.SetColor(Skin_ColorName, DefaultSkinColor);
-        //HeadMeshComponent.material.SetColor(Lip_ColorName, DefaultLipColor);
-        //HeadMeshComponent.material.SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
         HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
         HeadMeshComponent.materials[2].SetColor(Lip_ColorName, DefaultLipColor);
@@ -283,56 +219,18 @@ public class CharacterBodyParts : MonoBehaviour
 
     void DefaultTextureForNewCharacter(bool ApplyClothMask = true, string _gender = "")
     {
-        SkinnedMeshRenderer HeadMeshComponent;
-        SkinnedMeshRenderer Body;
-        //if (avatarController.avatarGender == AvatarGender.Female)
-        //{
-        //    Body= femaleAvatarMeshes.avatar_body;
-        //    HeadMeshComponent = femaleAvatarMeshes.avatar_head;
-        //}
-        //else
-        //{
-        if (_gender == "Female")
+        CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
+        
+        body.materials[0].SetTexture(Shoes_TextureName, null);
+        if (ApplyClothMask)
         {
-            Body = femaleAvatarMeshes.avatar_body;
-            HeadMeshComponent = femaleAvatarMeshes.avatar_head;
-            Body.materials[0].SetTexture(Shoes_TextureName, null);
-            if (ApplyClothMask)
-            {
-                if (femaleAvatarMeshes.Pent_Texture != null)
-                    Body.materials[0].SetTexture(Pent_TextureName, femaleAvatarMeshes.Pent_Texture);
-                if (femaleAvatarMeshes.Shirt_Texture != null)
-                    Body.materials[0].SetTexture(shirt_TextureName, femaleAvatarMeshes.Shirt_Texture);
-                if (femaleAvatarMeshes.Shoe_Texture != null)
-                    Body.materials[0].SetTexture(Shoes_TextureName, femaleAvatarMeshes.Shoe_Texture);
-            }
+            if (avatarData.DPent_Texture != null)
+                body.materials[0].SetTexture(Pent_TextureName, avatarData.DPent_Texture);
+            if (avatarData.DShirt_Texture != null)
+                body.materials[0].SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
+            if (avatarData.DShoe_Texture != null)
+                body.materials[0].SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
         }
-        else
-        {
-            Body = maleAvatarMeshes.avatar_body;
-            HeadMeshComponent = maleAvatarMeshes.avatar_head;
-            Body.materials[0].SetTexture(Shoes_TextureName, null);
-            if (ApplyClothMask)
-            {
-                if (maleAvatarMeshes.Pent_Texture != null)
-                    Body.materials[0].SetTexture(Pent_TextureName, maleAvatarMeshes.Pent_Texture);
-                if (maleAvatarMeshes.Shirt_Texture != null)
-                    Body.materials[0].SetTexture(shirt_TextureName, maleAvatarMeshes.Shirt_Texture);
-                if (maleAvatarMeshes.Shoe_Texture != null)
-                    Body.materials[0].SetTexture(Shoes_TextureName, maleAvatarMeshes.Shoe_Texture);
-            }
-        }
-        //}
-
-        //Body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
-        //Body.materials[0].SetColor(GredientColorName, DefaultGredientColor);
-        //Body.materials[0].SetFloat(SssIntensity, defaultSssValue);
-
-        //SkinnedMeshRenderer HeadMeshComponent = Head.GetComponent<SkinnedMeshRenderer>();
-
-        //HeadMeshComponent.material.SetColor(Skin_ColorName, DefaultSkinColor);
-        //HeadMeshComponent.material.SetColor(Lip_ColorName, DefaultLipColor);
-        //HeadMeshComponent.material.SetColor(Eyebrow_ColorName, DefaultEyebrowColor);
 
         #region #region Xana Avatar 1.0 //--> remove for xana avatar2.0
         //HeadMeshComponent.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
@@ -362,7 +260,7 @@ public class CharacterBodyParts : MonoBehaviour
     }
 
 
-    BlendShapeImporter blend;
+    BlendShapeManager blend;
     public void ValuesForSliderXY(List<int> morphsList)
     {
         float min = 0;
@@ -371,17 +269,17 @@ public class CharacterBodyParts : MonoBehaviour
         int blendIndex = 0;
 
         #region Comment Section 
-        //if (BlendShapeController.instance.allBlendShapes[morphsList[0]].boneAvailable)
+        //if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneAvailable)
         //{
         //    print("Yes Bone");
-        //    foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[0]].boneData)
+        //    foreach (var item in BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneData)
         //    {
         //        print("---- AxesDetails : " + item.workingAxes);
 
 
         //        if (item.workingAxes == AxesDetails.z)
         //        {
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // X-Slider
         //                if (item.workingAxes == AxesDetails.x)
@@ -391,7 +289,7 @@ public class CharacterBodyParts : MonoBehaviour
         //                    blend.SliderX.minValue = item.minValue;
 
         //                    // Setting Slider Value
-        //                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
+        //                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //                    blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
         //                }
         //            }
@@ -405,7 +303,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderX.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderX.onValueChanged.AddListener(delegate { BoneSliderCallBack('x', item.workingTransform, bone, blend.SliderX.value); });
@@ -420,7 +318,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderY.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderY.onValueChanged.AddListener(delegate { BoneSliderCallBack('y', item.workingTransform, bone, blend.SliderY.value); });
@@ -431,12 +329,12 @@ public class CharacterBodyParts : MonoBehaviour
         //        else if (item.workingAxes == AxesDetails.xy)
         //        {
         //            // Get Bone Reference
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].maleBoneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
 
-        //            print("Sub Axis :" + BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType);
+        //            print("Sub Axis :" + BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType);
         //            // Check which slider require 
         //            // X Slider or Y Slider
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // Set Min Max Values
         //                blend.SliderX.maxValue = item.maxValue;
@@ -459,7 +357,7 @@ public class CharacterBodyParts : MonoBehaviour
 
         //                // all axis has same value so use anyone of them
         //                blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
-        //                print("Assigning Listners : " + BlendShapeController.instance.allBlendShapes[morphsList[0]].itemName);
+        //                print("Assigning Listners : " + BlendShapeHolder.instance.allBlendShapes[morphsList[0]].itemName);
         //                blend.SliderY.onValueChanged.AddListener(delegate
         //                {
         //                    // Need to modify values for all axis
@@ -475,14 +373,14 @@ public class CharacterBodyParts : MonoBehaviour
         //    //Blend Shape Working
         //    foreach (var item in morphsList)
         //    {
-        //        min = BlendShapeController.instance.allBlendShapes[item].minValue;
-        //        max = BlendShapeController.instance.allBlendShapes[item].maxValue;
-        //        blendIndex = BlendShapeController.instance.allBlendShapes[item].index;
+        //        min = BlendShapeHolder.instance.allBlendShapes[item].minValue;
+        //        max = BlendShapeHolder.instance.allBlendShapes[item].maxValue;
+        //        blendIndex = BlendShapeHolder.instance.allBlendShapes[item].index;
 
         //        currentValue = Head.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(blendIndex);
 
         //        // X-Slider
-        //        if (BlendShapeController.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
+        //        if (BlendShapeHolder.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
         //        {
         //            // Set Min Max Values
         //            blend.SliderX.maxValue = max;
@@ -521,27 +419,19 @@ public class CharacterBodyParts : MonoBehaviour
 
         for (int i = 0; i < morphsList.Count; i++)
         {
-            if (BlendShapeController.instance.allBlendShapes[morphsList[i]].boneAvailable)
+            if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneAvailable)
             {
                 print("Yes Bone");
-                foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[i]].boneData)
+                foreach (var item in BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneData)
                 {
                     print("---- AxesDetails : " + item.workingAxes);
-                    Transform bone = null;
-                    if (avatarController.avatarGender == AvatarGender.Male)
-                    {
-                        bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
 
-                    }
-                    else
-                    {
-                        bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].femaleBoneObj.transform;
-                    }
+                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneObj.transform;
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)
                     {
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'z', 'z', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'z', 'z', item, bone);
@@ -564,7 +454,7 @@ public class CharacterBodyParts : MonoBehaviour
                     else if (item.workingAxes == AxesDetails.xy)
                     {
                         // char 'a' stand for All Axis
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'x', 'a', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'x', 'a', item, bone);
@@ -575,15 +465,15 @@ public class CharacterBodyParts : MonoBehaviour
             {
                 print("No Bone");
                 //Blend Shape Working
-                min = BlendShapeController.instance.allBlendShapes[morphsList[i]].minValue;
-                max = BlendShapeController.instance.allBlendShapes[morphsList[i]].maxValue;
-                blendIndex = BlendShapeController.instance.allBlendShapes[morphsList[i]].index;
+                min = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].minValue;
+                max = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].maxValue;
+                blendIndex = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].index;
 
                 currentValue = head.GetBlendShapeWeight(blendIndex);
-                bool localReverse = BlendShapeController.instance.allBlendShapes[morphsList[i]].reverseMyValue;
+                bool localReverse = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].reverseMyValue;
 
                 // X-Slider
-                if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                 {
                     if (!localReverse)
                     {
@@ -797,14 +687,11 @@ public class CharacterBodyParts : MonoBehaviour
 
     public void ChangeSkinColor(int colorInd)
     {
-        //Head.GetComponent<SkinnedMeshRenderer>().materials[2].color = skinColor[colorInd];
-        //Body.materials[0].color = skinColor[colorInd];
 
         head.materials[2].SetColor(Skin_ColorName, skinColor[colorInd]);
         ApplyGredientColor(skinGredientColor[colorInd], this.gameObject);
         body.materials[0].SetColor(Skin_ColorName, skinColor[colorInd]);
         head.materials[2].SetFloat(SssIntensity, defaultSssValue);
-        //Head.GetComponent<SkinnedMeshRenderer>().materials[2].SetFloat(SssIntensity, 0f);
 
         body.materials[0].SetFloat(SssIntensity, defaultSssValue);
 
@@ -876,7 +763,6 @@ public class CharacterBodyParts : MonoBehaviour
         else
             avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
 
-        //avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
     }
     public void ChangeHairColor(int colorId)
     {
@@ -898,7 +784,6 @@ public class CharacterBodyParts : MonoBehaviour
         else
             avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
 
-        //avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
     }
     public void ChangeEyeColor(Color color)
     {
@@ -1354,7 +1239,7 @@ public class CharacterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
         {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
@@ -1381,8 +1266,8 @@ public class CharacterBodyParts : MonoBehaviour
     public void ApplyEyeBrowTexture(Texture texture, GameObject applyOn)
     {
         applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
-        if (BlendShapeController.instance != null)
-            BlendShapeController.instance.ResetEyeBrowBlendValues();
+        if (BlendShapeHolder.instance != null)
+            BlendShapeHolder.instance.ResetEyeBrowBlendValues();
     }
 
     public void ApplyEyeBrow(Texture texture, GameObject applyOn)
@@ -1766,16 +1651,10 @@ public class CharacterBodyParts : MonoBehaviour
                 applyOn.GetComponent<CharacterBodyParts>().ApplyEyeBrowTexture(applyOn.GetComponent<CharacterBodyParts>().defaultEyebrow, applyOn);
                 break;
             case CurrentTextureType.Skin:
-                if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Skin_Texture, applyOn);
-                else
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Skin_Texture, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyBodyTexture(CharacterHandler.instance.GetActiveAvatarData().DSkin_Texture, applyOn);
                 break;
             case CurrentTextureType.Face:
-                if (avatarController.avatarGender == AvatarGender.Male)
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().maleAvatarMeshes.Face_Texture, applyOn);
-                else
-                    applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(applyOn.GetComponent<CharacterBodyParts>().femaleAvatarMeshes.Face_Texture, applyOn);
+                applyOn.GetComponent<CharacterBodyParts>().ApplyFaceTexture(CharacterHandler.instance.GetActiveAvatarData().DFace_Texture, applyOn);
                 break;
             case CurrentTextureType.Lip:
                 applyOn.GetComponent<CharacterBodyParts>().RemoveEyeLidTexture(null, applyOn);

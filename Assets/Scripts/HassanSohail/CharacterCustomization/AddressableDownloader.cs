@@ -60,14 +60,14 @@ public class AddressableDownloader : MonoBehaviour
         }
         else
         {
-            XanaConstants.isAddressableCatalogDownload = true;
+            ConstantsHolder.isAddressableCatalogDownload = true;
             isDownloading = false;
         }
     }
     IEnumerator CheckCatalogs()
     {
         yield return Addressables.InitializeAsync();
-        XanaConstants.isAddressableCatalogDownload = true;
+        ConstantsHolder.isAddressableCatalogDownload = true;
 
     }
     /// <summary>
@@ -77,7 +77,7 @@ public class AddressableDownloader : MonoBehaviour
     public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             Debug.LogError("Waiting for Addressable Catalog to download");
             yield return new WaitForSeconds(1f);
@@ -90,9 +90,9 @@ public class AddressableDownloader : MonoBehaviour
                 string tempName = key.Replace("gambeson", "shirt");
                 key = tempName;
             }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
             {
-                StoreManager.instance.loaderForItems.SetActive(true);
+                InventoryManager.instance.loaderForItems.SetActive(true);
             }
             while (true)
             {
@@ -103,13 +103,13 @@ public class AddressableDownloader : MonoBehaviour
                 if (!flag)
                     loadOp = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
 
-                SwitchToShoesHirokoKoshinoNFT.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
+                SwitchToShoesHirokoKoshino.Instance?.SwitchLightFor_HirokoKoshino(key.ToLower());
                 yield return loadOp;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                     Debug.Log("Fail To load");
-                    if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                        StoreManager.instance.loaderForItems.SetActive(false);
+                    if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                        InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
                     DisableLoadingPanel();
@@ -133,7 +133,7 @@ public class AddressableDownloader : MonoBehaviour
                     }
                     else
                     {
-                        if (SceneManager.GetActiveScene().name != "Main")
+                        if (SceneManager.GetActiveScene().name != "Home")
                         {
                             applyOn.isWearOrNot = true;
                         }
@@ -194,8 +194,8 @@ public class AddressableDownloader : MonoBehaviour
         GameManager.Instance.isStoreAssetDownloading = false;
         DisableLoadingPanel();
 
-        if (StoreManager.instance.loaderForItems)
-            StoreManager.instance.loaderForItems.SetActive(false);
+        if (InventoryManager.instance.loaderForItems)
+            InventoryManager.instance.loaderForItems.SetActive(false);
         yield return null;
     }
     ///// <summary>
@@ -206,7 +206,7 @@ public class AddressableDownloader : MonoBehaviour
     public IEnumerator DownloadAddressableTexture(string key, GameObject applyOn, CurrentTextureType nFTOjectType = 0)
     {
         int _counter = 0;
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             yield return new WaitForSeconds(1f);
         }
@@ -271,8 +271,8 @@ public class AddressableDownloader : MonoBehaviour
                 GameManager.Instance.isStoreAssetDownloading = false;
                 yield return null;
             }
-            if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                StoreManager.instance.loaderForItems.SetActive(true);
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems  && PlayerPrefs.GetInt("presetPanel") != 1)
+                InventoryManager.instance.loaderForItems.SetActive(true);
             while (true)
             {
                 AsyncOperationHandle loadOp;
@@ -290,8 +290,8 @@ public class AddressableDownloader : MonoBehaviour
                 {
                     if (PlayerPrefs.GetInt("presetPanel") != 1)
                     {
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null)
-                            StoreManager.instance.loaderForItems.SetActive(false);
+                        if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                            InventoryManager.instance.loaderForItems.SetActive(false);
 
                         GameManager.Instance.isStoreAssetDownloading = false;
                         DisableLoadingPanel();
@@ -359,8 +359,8 @@ public class AddressableDownloader : MonoBehaviour
                             default:
                                 break;
                         }
-                        if (StoreManager.instance.loaderForItems && StoreManager.instance != null && PlayerPrefs.GetInt("presetPanel") != 1)
-                            StoreManager.instance.loaderForItems.SetActive(false);
+                        if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems && PlayerPrefs.GetInt("presetPanel") != 1)
+                            InventoryManager.instance.loaderForItems.SetActive(false);
                         GameManager.Instance.isStoreAssetDownloading = false;
                         yield break;
                     }
@@ -416,7 +416,7 @@ public class AddressableDownloader : MonoBehaviour
             PlayerPrefs.SetInt("presetPanel", 0);
             PlayerPrefs.SetInt("FristPresetSet", 1);
             PlayerPrefs.Save();
-            ItemDatabase.instance.GetComponent<SavaCharacterProperties>().SavePlayerProperties();
+            DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
         }
     }
 }

@@ -28,17 +28,14 @@ public class RandomNumberComponent : ItemComponent
         GenerateNumber();
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void CollisionEnter()
     {
-        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            if (!IsAgainTouchable) return;
+        if (!IsAgainTouchable) return;
 
-            IsAgainTouchable = false;
+        IsAgainTouchable = false;
 
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-        }
+        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        PlayBehaviour();
     }
 
     private void OnCollisionStay(Collision collision)
@@ -60,7 +57,7 @@ public class RandomNumberComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.RandomNumber);
 
         BuilderEventManager.OnRandomCollisionEnter?.Invoke(GeneratedNumber);
         GenerateNumber();
@@ -99,6 +96,16 @@ public class RandomNumberComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.RandomNumberComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

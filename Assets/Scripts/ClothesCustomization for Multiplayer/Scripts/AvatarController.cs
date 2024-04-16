@@ -27,7 +27,6 @@ public class AvatarController : MonoBehaviour
     public string staticClothJson;
     public string clothJson;
     public string presetValue;
-    public AvatarGender avatarGender;
     public GameObject wornHair, wornPant, wornShirt, wornShoes, wornEyeWearable, wornGloves, wornChain;
     public GameObject[] wornEyebrow;
     public NFTColorCodes _nftAvatarColorCodes;
@@ -46,12 +45,12 @@ public class AvatarController : MonoBehaviour
     #endregion
 
     #region private var
-    private Stitcher stitcher;
-    private ItemDatabase itemDatabase;
+    public Stitcher stitcher;
+    private DefaultClothDatabase itemDatabase;
     private string sceneName;
     private Color presetHairColor;
     AddressableDownloader addressableDownloader;
-    XanaConstants xanaConstants;
+    ConstantsHolder xanaConstants;
     //FriendAvatarController friendController;
     #endregion
 
@@ -68,7 +67,7 @@ public class AvatarController : MonoBehaviour
         stitcher = new Stitcher();
         sceneName = SceneManager.GetActiveScene().name;
         characterBodyParts = this.GetComponent<CharacterBodyParts>();
-        itemDatabase = ItemDatabase.instance;
+        itemDatabase = DefaultClothDatabase.instance;
         if (sceneName.Equals("ARModuleActionScene") || sceneName.Equals("ARModuleRoomScene") || sceneName.Equals("ARModuleRealityScene") ) // Manually scalling object to match old XANA character 1.0
         {
             transform.localScale *= 2;
@@ -80,7 +79,7 @@ public class AvatarController : MonoBehaviour
     private void Start()
     {
         addressableDownloader = AddressableDownloader.Instance;
-        xanaConstants = XanaConstants.xanaConstants;
+        xanaConstants = ConstantsHolder.xanaConstants;
         
     }
     public void OnEnable()
@@ -89,6 +88,7 @@ public class AvatarController : MonoBehaviour
         BoxerNFTEventManager.OnNFTUnequip += UnequipNFT;
         if (IsInit) // init avatar according to the Avatar Type (Friend/Self player). 
         {
+
             if (!isPlayerAvatar) // to check is friend or player avatar in Home Scene.
             {
                 SetAvatarClothDefault(this.gameObject, "Male");
@@ -99,22 +99,13 @@ public class AvatarController : MonoBehaviour
             }
         }
         if (xanaConstants== null)
-        {
-            xanaConstants = XanaConstants.xanaConstants;
-        }
+            xanaConstants = ConstantsHolder.xanaConstants;
         if(addressableDownloader==null)
             addressableDownloader = AddressableDownloader.Instance;
+
         if (xanaConstants != null)
         {
-            if (!sceneName.Contains("Main")) // call for spaces only
-            {
-                Invoke(nameof(Custom_InitializeAvatar), 0.5f);
-                if (xanaConstants.isNFTEquiped)
-                {
-                    this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
-                }
-            }
-            else // For Home
+            if (sceneName.Contains("Home") || sceneName.Contains("UGC")) // For Home
             {
                 if (xanaConstants.isNFTEquiped)
                 {
@@ -131,6 +122,15 @@ public class AvatarController : MonoBehaviour
                 }
 
             }
+            else
+            {
+                Invoke(nameof(Custom_InitializeAvatar), 0.5f);
+                if (xanaConstants.isNFTEquiped)
+                {
+                    this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                }
+            }
+            
         }
     }
     private void OnDisable()
@@ -149,7 +149,7 @@ public class AvatarController : MonoBehaviour
     IEnumerator SetAvatarDefaultClothDelay(GameObject _obj, string _gender)
     {
         yield return new WaitForEndOfFrame();  //WaitForSeconds(0.1f);
-        if (SceneManager.GetActiveScene().name != "Main" && !isWearOrNot)
+        if (SceneManager.GetActiveScene().name != "Home" && !isWearOrNot)
         {
             //Debug.LogError(_obj.GetComponent<PhotonView>().ViewID + ":Wear Default cloth manually");
             SetAvatarClothDefault(_obj, _gender);
@@ -252,7 +252,7 @@ public class AvatarController : MonoBehaviour
     /// </summary>
     public async void InitializeAvatar(bool canWriteFile = false)
     {
-        while (!XanaConstants.isAddressableCatalogDownload)
+        while (!ConstantsHolder.isAddressableCatalogDownload)
         {
             await Task.Yield();
         }
@@ -273,6 +273,7 @@ public class AvatarController : MonoBehaviour
     /// <param name="_rand"> Random numbe of the preset</param>
     void DownloadRandomPresets(SavingCharacterDataClass _CharacterData, int _rand)
     {
+        CharacterHandler.instance.ActivateAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
         SetAvatarClothDefault(gameObject, characterBodyParts.randomPresetData[_rand].GenderType); //Set Default Cloth and Set texture according to it.
         if (_CharacterData.myItemObj == null || _CharacterData.myItemObj.Count == 0)
         {
@@ -290,9 +291,9 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[2].ItemType = randomPresetData.HairPresetData.ObjectType;
 
         _CharacterData.myItemObj[3].ItemName = randomPresetData.ShoesPresetData.ObjectName;
-        _CharacterData.myItemObj[3].ItemType = randomPresetData.ShoesPresetData.ObjectType; 
+        _CharacterData.myItemObj[3].ItemType = randomPresetData.ShoesPresetData.ObjectType;
 
-        characterBodyParts.SetAvatarByGender(randomPresetData.GenderType);
+        CharacterHandler.instance.ActivateAvatarByGender(randomPresetData.GenderType);
 
         if (_CharacterData.myItemObj.Count > 0)
         {
@@ -404,7 +405,7 @@ public class AvatarController : MonoBehaviour
         {
             var filePath = Path.Combine(Application.persistentDataPath, "logIn.json");
             File.WriteAllText(filePath, JsonUtility.ToJson(savingCharacterDataClass));
-            ServerSIdeCharacterHandling.Instance.CreateUserOccupiedAsset(() => {});
+            ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() => {});
         }
     }
 
@@ -428,17 +429,17 @@ public class AvatarController : MonoBehaviour
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
-            if (sceneName.Equals("Main")) // for store/ main menu
+            if (sceneName.Equals("Home") || sceneName.Equals("UGC")) // for store/ main menu
             {
                 if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
                 {
-                    int _rand = Random.Range(0, 13);
+                    int _rand = Random.Range(0, characterBodyParts.randomPresetData.Length);
                     DownloadRandomPresets(_CharacterData, _rand);
                 }
                 else
                 {
+                    CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
                     SetAvatarClothDefault(gameObject, _CharacterData.gender);
-                    characterBodyParts.SetAvatarByGender(_CharacterData.gender);
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
@@ -665,7 +666,6 @@ public class AvatarController : MonoBehaviour
                 if (this.GetComponent<PhotonView>() && this.GetComponent<PhotonView>().IsMine || staticPlayer) // self
                 {
                     SetAvatarClothDefault(gameObject, gender);
-                    characterBodyParts.SetAvatarByGender(gender);
 
                     if (_CharacterData.myItemObj.Count > 0)
                     {
@@ -1288,7 +1288,7 @@ public class AvatarController : MonoBehaviour
             {
                 string tempKey = _NFTData.Eye_Shapes.Replace(" - ", "_");
                 tempKey = tempKey.Split('_')[0].Replace(" ", "");
-                NFTBoxerEyeData.instance.SetNFTData(tempKey);
+                BoxerEyeData.instance.SetNFTData(tempKey);
 
                 // Add Values in current Object
                 for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
@@ -1361,7 +1361,7 @@ public class AvatarController : MonoBehaviour
         CharacterBodyParts bodyParts = applyOn.GetComponent<CharacterBodyParts>();
         if (itemDatabase== null)
         {
-            itemDatabase = ItemDatabase.instance;
+            itemDatabase = DefaultClothDatabase.instance;
         }
         if (gender == "Male") // if avatar is Male
         {
@@ -1386,8 +1386,6 @@ public class AvatarController : MonoBehaviour
                 default:
                     break;
             }
-            bodyParts.maleAvatarMeshes.avatar_parent.SetActive(true);
-            bodyParts.femaleAvatarMeshes.avatar_parent.SetActive(false);
         }
         else if (gender == "Female") // if avatar is female
         {
@@ -1412,8 +1410,6 @@ public class AvatarController : MonoBehaviour
                 default:
                     break;
             }
-            bodyParts.maleAvatarMeshes.avatar_parent.SetActive(false);
-            bodyParts.femaleAvatarMeshes.avatar_parent.SetActive(true);
         }
         else
         {
@@ -1595,7 +1591,7 @@ public class AvatarController : MonoBehaviour
             }
         }
 
-        if (SceneManager.GetActiveScene().name != "Main")
+        if (SceneManager.GetActiveScene().name != "Home")
         {
             item.layer = 22;
         }
@@ -1603,7 +1599,7 @@ public class AvatarController : MonoBehaviour
         {
             if (xanaConstants == null)
             {
-                xanaConstants = XanaConstants.xanaConstants;
+                xanaConstants = ConstantsHolder.xanaConstants;
             }
 
             if (xanaConstants.isNFTEquiped)
@@ -1616,12 +1612,12 @@ public class AvatarController : MonoBehaviour
                     else
                         item.layer = 26;
 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+                    SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
                 }
                 if (PlayerPrefs.GetInt("IsNFTCollectionBreakingDown") == 2)
                 {
                     // HIROKO KOSHINO NFT 
-                    SwitchToShoesHirokoKoshinoNFT.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
+                    SwitchToShoesHirokoKoshino.Instance.SwitchLightFor_HirokoKoshino(PlayerPrefs.GetString("HirokoLight"));
                     item.layer = 11;
                 }
             }
@@ -1732,7 +1728,7 @@ public class AvatarController : MonoBehaviour
             if (wornChain)
                 wornChain.SetActive(false);
 
-            if (gameObject.GetComponent<SwitchToBoxerAvatar>())
+            if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
                 gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
         }
         else
@@ -1746,8 +1742,8 @@ public class AvatarController : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
-            if (StoreManager.instance != null && StoreManager.instance.loaderForItems)
-                StoreManager.instance.loaderForItems.SetActive(false);
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
+                InventoryManager.instance.loaderForItems.SetActive(false);
         }
     }
 
@@ -1993,13 +1989,12 @@ public class AvatarController : MonoBehaviour
         CharacterBodyParts bodyParts = applyOn.GetComponent<CharacterBodyParts>();
         if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
         {
-            int _rand = Random.Range(0, 13); 
+            int _rand = Random.Range(0, 7); 
             DownloadRandomFrndPresets(_rand);
         }
         else
         {
-            SetAvatarClothDefault(gameObject, _CharacterData.gender);
-            bodyParts.SetAvatarByGender(_CharacterData.gender);
+            SetAvatarClothDefault(applyOn.gameObject,_CharacterData.gender);
                     
 
             if (_CharacterData.myItemObj.Count > 0)
@@ -2027,7 +2022,7 @@ public class AvatarController : MonoBehaviour
                             }
                             else
                             {
-                                if (PlayerPrefs.HasKey("Equiped") || XanaConstants.xanaConstants.isNFTEquiped)
+                                if (PlayerPrefs.HasKey("Equiped") || ConstantsHolder.xanaConstants.isNFTEquiped)
                                 {
                                     if (type.Contains("Chest"))
                                     {
@@ -2094,7 +2089,7 @@ public class AvatarController : MonoBehaviour
                     }
                     else // wear the default item of that specific part.
                     {
-                        if (XanaConstants.xanaConstants.isNFTEquiped && type.Contains("Chest"))
+                        if (ConstantsHolder.xanaConstants.isNFTEquiped && type.Contains("Chest"))
                         {
                             if (wornShirt)
                                 UnStichItem("Chest");
@@ -2190,7 +2185,7 @@ public class AvatarController : MonoBehaviour
             //if (_CharacterData.Skin != null)
             //{
             //    StartCoroutine(bodyParts.ImplementColors(_CharacterData.Skin, SliderType.Skin, this.gameObject));
-            //    if (XanaConstants.xanaConstants.isNFTEquiped)
+            //    if (ConstantsHolder.xanaConstants.isNFTEquiped)
             //    {
             //        BoxerNFTEventManager._lightPresetNFT = GetLightPresetValue(_CharacterData.Skin);
             //        BoxerNFTEventManager.NFTLightUpdate?.Invoke(BoxerNFTEventManager._lightPresetNFT);
@@ -2265,7 +2260,6 @@ public class AvatarController : MonoBehaviour
         _CharacterData.myItemObj[3].ItemName = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectName;
         _CharacterData.myItemObj[3].ItemType = characterBodyParts.randomPresetData[_rand].ShoesPresetData.ObjectType;
 
-        characterBodyParts.SetAvatarByGender(characterBodyParts.randomPresetData[_rand].GenderType);
        if (_CharacterData.myItemObj.Count > 0)
         {
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
@@ -2370,7 +2364,14 @@ public class AvatarController : MonoBehaviour
             characterBodyParts.head.materials[2].SetColor("_BaseColor", new Color(1,1,1,1));
             characterBodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
             characterBodyParts.body.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 1));
-            characterBodyParts.ApplyEyeLenTexture(characterBodyParts.maleAvatarMeshes.Eye_texture, characterBodyParts.gameObject);
+            characterBodyParts.ApplyEyeLenTexture(CharacterHandler.instance.maleAvatarData.DEye_texture, characterBodyParts.gameObject);
+        }
+        else
+        {
+            characterBodyParts.head.materials[2].SetColor("_BaseColor", new Color(1, 1, 1, 1));
+            characterBodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
+            characterBodyParts.body.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 1));
+            characterBodyParts.ApplyEyeLenTexture(CharacterHandler.instance.femaleAvatarData.DEye_texture, characterBodyParts.gameObject);
         }
         if (_CharacterData.skin_color != "" && _CharacterData.Skin != null)
         {
@@ -2390,7 +2391,7 @@ public class AvatarController : MonoBehaviour
             characterBodyParts.head.materials[2].SetColor("_BaseColor", new Color(1, 1, 1, 1));
             characterBodyParts.head.materials[2].SetColor("_Lips_Color", new Color(0.9137255f, 0.4431373f, 0.4352941f, 1));
             characterBodyParts.body.materials[0].SetColor("_BaseColor", new Color(1, 1, 1, 1));
-            characterBodyParts.ApplyEyeLenTexture(characterBodyParts.femaleAvatarMeshes.Eye_texture, characterBodyParts.gameObject);
+            characterBodyParts.ApplyEyeLenTexture(CharacterHandler.instance.femaleAvatarData.DEye_texture, characterBodyParts.gameObject);
         }
         for (int i = 0; i < characterBodyParts.head.sharedMesh.blendShapeCount - 1; i++)
         {
@@ -2551,9 +2552,9 @@ public class AvatarController : MonoBehaviour
     //public void ResetForLastSaved()
     //{
     //    //body fats
-    //    SavaCharacterProperties.instance.SaveItemList.BodyFat = 0;
+    //    SaveCharacterProperties.instance.SaveItemList.BodyFat = 0;
     //    //body blends
-    //    CharacterCustomizationManager.Instance.UpdateChBodyShape(0);
+    //    AvatarCustomizationManager.Instance.UpdateChBodyShape(0);
 
     //    itemDatabase.RevertSavedCloths();
     //}

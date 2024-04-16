@@ -8,7 +8,7 @@ public class UpdatePositionOnStart : MonoBehaviour
     //IEnumerator Start()
     //{
       //  yield return new WaitForSeconds(1);
-       // Debug.Log(">>>>>>>>>>>>>>>>>>>>>" + ChangeOrientation_waqas._instance.joystickInitPosY);
-      //  ChangeOrientation_waqas._instance.joystickInitPosY= gameObject.transform.localPosition.y;
+       // Debug.Log(">>>>>>>>>>>>>>>>>>>>>" + ScreenOrientationManager._instance.joystickInitPosY);
+      //  ScreenOrientationManager._instance.joystickInitPosY= gameObject.transform.localPosition.y;
     //}
 }

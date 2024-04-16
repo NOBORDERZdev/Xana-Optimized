@@ -42,6 +42,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
         }
         //defaultRotation = RootAnimTargetObj.transform.rotation;
         defaultRotation = new Quaternion(0, 0, 0, 1f);
+
+        playerHead= CharacterHandler.instance.GetActiveAvatarData().avatar_face.gameObject;
+        playerBody = CharacterHandler.instance.GetActiveAvatarData().avatar_body.gameObject;
     }
 
     private void Update()
