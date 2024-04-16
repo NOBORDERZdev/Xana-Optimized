@@ -132,12 +132,10 @@ public class HomeScoketHandler : MonoBehaviour
     /// To connect SNS Sockets
     /// </summary>
     /// <param name="userId"></param>
-    public void ConnectSNSSockets(/*int userId*/) {
-        //DisscountSNSSockets();
+    public void ConnectSNSSockets() {
         Manager.Socket.On<string>("user-updated", SnSUpate);
         Manager.Socket.On<string>("user-follow", UpdateFollowerFollowing);
         Manager.Socket.On<string>("user-occupied-assets", AvatarUpdate);
-        //isSnsSocketConnnected = true;
 
     }
 
@@ -148,18 +146,7 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void SnSUpate(string response) {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
-        //if (ConstantsHolder.xanaConstants.IsProfileVisit && userInfoUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
-        //{
-        //    if (ConstantsHolder.xanaConstants.IsOtherProfileVisit) // check is other profile page open
-        //    {
-        //        OtherPlayerProfileData.Instance.SocketOtherProfileUpdate(ConstantsHolder.xanaConstants.SnsProfileID);
-        //    }
-        //    else
-        //    {
-        //        MyProfileDataManager.Instance.RequestGetUserDetails();
-        //    }
-        //}
-         SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
@@ -169,17 +156,6 @@ public class HomeScoketHandler : MonoBehaviour
     void UpdateFollowerFollowing(string response)
     {
         userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
-        //if (ConstantsHolder.xanaConstants.IsProfileVisit && userInfoUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID )
-        //{
-        //    if (ConstantsHolder.xanaConstants.IsOtherProfileVisit) // check is other profile page open
-        //    {
-        //        OtherPlayerProfileData.Instance.SocketOtherProfileUpdate(ConstantsHolder.xanaConstants.SnsProfileID);
-        //    }
-        //    else
-        //    {
-        //        MyProfileDataManager.Instance.RequestGetUserDetails();
-        //    }
-        //}
         SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
