@@ -200,6 +200,10 @@ public class ConstantsGod
     public static readonly string userMy_Collection_Xanalia = "/user/my-collection";
     public static readonly string getUserProfile_Xanalia = "/user/get-user-profile";
 
+    public const string xanaliaTestAPI = "https://backend.xanalia.com";
+    public const string xanaliaProductionAPI = "https://prod-backend.xanalia.com";
+    public static readonly string loginExternalWalletURL = "/auth/login-external-wallet";
+
     public static readonly string GetUserNounceURL = "/auth/get-user-nonce";
     public static readonly string VerifySignedURL = "/auth/verify-signature";
     //public static readonly string NameAPIURL = "";
