@@ -135,7 +135,7 @@ public class CharacterBodyParts : MonoBehaviour
 
     private void Start()
     {
-        blend = GameManager.Instance.BlendShapeImporter;
+        blend = GameManager.Instance.BlendShapeManager;
 
         characterHeadMat = head.materials[2];
         characterBodyMat = body.materials[0];
@@ -170,7 +170,7 @@ public class CharacterBodyParts : MonoBehaviour
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
             DefaultTextureForNewCharacter(ApplyClothMask, _gender);
@@ -260,7 +260,7 @@ public class CharacterBodyParts : MonoBehaviour
     }
 
 
-    BlendShapeImporter blend;
+    BlendShapeManager blend;
     public void ValuesForSliderXY(List<int> morphsList)
     {
         float min = 0;
@@ -269,17 +269,17 @@ public class CharacterBodyParts : MonoBehaviour
         int blendIndex = 0;
 
         #region Comment Section 
-        //if (BlendShapeController.instance.allBlendShapes[morphsList[0]].boneAvailable)
+        //if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneAvailable)
         //{
         //    print("Yes Bone");
-        //    foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[0]].boneData)
+        //    foreach (var item in BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneData)
         //    {
         //        print("---- AxesDetails : " + item.workingAxes);
 
 
         //        if (item.workingAxes == AxesDetails.z)
         //        {
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // X-Slider
         //                if (item.workingAxes == AxesDetails.x)
@@ -289,7 +289,7 @@ public class CharacterBodyParts : MonoBehaviour
         //                    blend.SliderX.minValue = item.minValue;
 
         //                    // Setting Slider Value
-        //                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //                    blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
         //                }
         //            }
@@ -303,7 +303,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderX.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderX.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderX.onValueChanged.AddListener(delegate { BoneSliderCallBack('x', item.workingTransform, bone, blend.SliderX.value); });
@@ -318,7 +318,7 @@ public class CharacterBodyParts : MonoBehaviour
         //            blend.SliderY.minValue = item.minValue;
 
         //            // Setting Slider Value
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
         //            blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
 
         //            blend.SliderY.onValueChanged.AddListener(delegate { BoneSliderCallBack('y', item.workingTransform, bone, blend.SliderY.value); });
@@ -329,12 +329,12 @@ public class CharacterBodyParts : MonoBehaviour
         //        else if (item.workingAxes == AxesDetails.xy)
         //        {
         //            // Get Bone Reference
-        //            Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[0]].boneObj.transform;
+        //            Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[0]].boneObj.transform;
 
-        //            print("Sub Axis :" + BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType);
+        //            print("Sub Axis :" + BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType);
         //            // Check which slider require 
         //            // X Slider or Y Slider
-        //            if (BlendShapeController.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
+        //            if (BlendShapeHolder.instance.allBlendShapes[morphsList[0]].AxisType == AxisType.X_Axis)
         //            {
         //                // Set Min Max Values
         //                blend.SliderX.maxValue = item.maxValue;
@@ -357,7 +357,7 @@ public class CharacterBodyParts : MonoBehaviour
 
         //                // all axis has same value so use anyone of them
         //                blend.SliderY.value = GetBoneCurrentValue('x', item.workingTransform, bone);
-        //                print("Assigning Listners : " + BlendShapeController.instance.allBlendShapes[morphsList[0]].itemName);
+        //                print("Assigning Listners : " + BlendShapeHolder.instance.allBlendShapes[morphsList[0]].itemName);
         //                blend.SliderY.onValueChanged.AddListener(delegate
         //                {
         //                    // Need to modify values for all axis
@@ -373,14 +373,14 @@ public class CharacterBodyParts : MonoBehaviour
         //    //Blend Shape Working
         //    foreach (var item in morphsList)
         //    {
-        //        min = BlendShapeController.instance.allBlendShapes[item].minValue;
-        //        max = BlendShapeController.instance.allBlendShapes[item].maxValue;
-        //        blendIndex = BlendShapeController.instance.allBlendShapes[item].index;
+        //        min = BlendShapeHolder.instance.allBlendShapes[item].minValue;
+        //        max = BlendShapeHolder.instance.allBlendShapes[item].maxValue;
+        //        blendIndex = BlendShapeHolder.instance.allBlendShapes[item].index;
 
         //        currentValue = Head.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(blendIndex);
 
         //        // X-Slider
-        //        if (BlendShapeController.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
+        //        if (BlendShapeHolder.instance.allBlendShapes[item].AxisType == AxisType.X_Axis)
         //        {
         //            // Set Min Max Values
         //            blend.SliderX.maxValue = max;
@@ -419,19 +419,19 @@ public class CharacterBodyParts : MonoBehaviour
 
         for (int i = 0; i < morphsList.Count; i++)
         {
-            if (BlendShapeController.instance.allBlendShapes[morphsList[i]].boneAvailable)
+            if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneAvailable)
             {
                 print("Yes Bone");
-                foreach (var item in BlendShapeController.instance.allBlendShapes[morphsList[i]].boneData)
+                foreach (var item in BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneData)
                 {
                     print("---- AxesDetails : " + item.workingAxes);
 
-                    Transform bone = BlendShapeController.instance.allBlendShapes[morphsList[i]].boneObj.transform;
+                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneObj.transform;
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)
                     {
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'z', 'z', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'z', 'z', item, bone);
@@ -454,7 +454,7 @@ public class CharacterBodyParts : MonoBehaviour
                     else if (item.workingAxes == AxesDetails.xy)
                     {
                         // char 'a' stand for All Axis
-                        if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                        if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                             SetSliderReleatedDataForBone(blend.SliderX, 'x', 'a', item, bone);
                         else
                             SetSliderReleatedDataForBone(blend.SliderY, 'x', 'a', item, bone);
@@ -465,15 +465,15 @@ public class CharacterBodyParts : MonoBehaviour
             {
                 print("No Bone");
                 //Blend Shape Working
-                min = BlendShapeController.instance.allBlendShapes[morphsList[i]].minValue;
-                max = BlendShapeController.instance.allBlendShapes[morphsList[i]].maxValue;
-                blendIndex = BlendShapeController.instance.allBlendShapes[morphsList[i]].index;
+                min = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].minValue;
+                max = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].maxValue;
+                blendIndex = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].index;
 
                 currentValue = head.GetBlendShapeWeight(blendIndex);
-                bool localReverse = BlendShapeController.instance.allBlendShapes[morphsList[i]].reverseMyValue;
+                bool localReverse = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].reverseMyValue;
 
                 // X-Slider
-                if (BlendShapeController.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
+                if (BlendShapeHolder.instance.allBlendShapes[morphsList[i]].AxisType == AxisType.X_Axis)
                 {
                     if (!localReverse)
                     {
@@ -1239,7 +1239,7 @@ public class CharacterBodyParts : MonoBehaviour
         // _Main_Trexture
         // _Mask_texture
         // _Emission_Texture
-        if (XanaConstants.xanaConstants.isNFTEquiped)
+        if (ConstantsHolder.xanaConstants.isNFTEquiped)
         {
             mainMaterial.SetTexture(eyeLen_TextureName, texture);
 
@@ -1266,8 +1266,8 @@ public class CharacterBodyParts : MonoBehaviour
     public void ApplyEyeBrowTexture(Texture texture, GameObject applyOn)
     {
         applyOn.GetComponent<CharacterBodyParts>().head.materials[1].SetTexture(EyeBrrow_TextureName, texture);
-        if (BlendShapeController.instance != null)
-            BlendShapeController.instance.ResetEyeBrowBlendValues();
+        if (BlendShapeHolder.instance != null)
+            BlendShapeHolder.instance.ResetEyeBrowBlendValues();
     }
 
     public void ApplyEyeBrow(Texture texture, GameObject applyOn)

@@ -42,15 +42,15 @@ public class EmoteActionBtn : MonoBehaviour {
             GamePlayButtonEvents.inst.AnimationDataUpdated += LoadAnimData;
         }
 
-        EmoteAnimationPlay.AnimationStarted += AnimationStarted;
-        EmoteAnimationPlay.AnimationStopped += AnimationStopped;
+        EmoteAnimationHandler.AnimationStarted += AnimationStarted;
+        EmoteAnimationHandler.AnimationStopped += AnimationStopped;
         LoadAnimData(transform.parent.GetSiblingIndex());
          animName = PlayerPrefsUtility.GetEncryptedString(ConstantsGod.SELECTED_ANIMATION_NAME);
         if (animName != null)
         {
             if (animData != null && animData.animationName.Equals(animName))
             {
-                isAnimRunning = EmoteAnimationPlay.Instance.isAnimRunning;
+                isAnimRunning = EmoteAnimationHandler.Instance.isAnimRunning;
                 highlightObj.SetActive(false);
             }
             else
@@ -80,8 +80,8 @@ public class EmoteActionBtn : MonoBehaviour {
         {
             GamePlayButtonEvents.inst.AnimationDataUpdated -= LoadAnimData;
         }
-        EmoteAnimationPlay.AnimationStarted -= AnimationStarted;
-        EmoteAnimationPlay.AnimationStopped -= AnimationStopped;
+        EmoteAnimationHandler.AnimationStarted -= AnimationStarted;
+        EmoteAnimationHandler.AnimationStopped -= AnimationStopped;
        
 
     }
@@ -94,9 +94,9 @@ public class EmoteActionBtn : MonoBehaviour {
 
     void UpdateActionBtn()
     {
-        if (EmoteAnimationPlay.Instance != null)
+        if (EmoteAnimationHandler.Instance != null)
         {
-            if(animData != null) btnClickNHold.interactable = !EmoteAnimationPlay.Instance.isFetchingAnim;
+            if(animData != null) btnClickNHold.interactable = !EmoteAnimationHandler.Instance.isFetchingAnim;
         }
         if (isAnimRunning)
         {
@@ -145,7 +145,7 @@ public class EmoteActionBtn : MonoBehaviour {
             ArrowManager.OnInvokeReactionButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
             return;
         }
-        if (isAnimRunning && EmoteAnimationPlay.Instance.isAnimRunning)
+        if (isAnimRunning && EmoteAnimationHandler.Instance.isAnimRunning)
         {
             //print("Stoping Animation");
             StopEmoteAnimation();
@@ -160,21 +160,21 @@ public class EmoteActionBtn : MonoBehaviour {
 
     IEnumerator StartEmoteAnim()
     {
-        while(EmoteAnimationPlay.Instance.isAnimRunning)
+        while(EmoteAnimationHandler.Instance.isAnimRunning)
         {
             yield return null;
         }
         if (animData != null)
         {
-            EmoteAnimationPlay.remoteUrlAnimation = animData.animationURL;
-            EmoteAnimationPlay.remoteUrlAnimationName = animData.animationName;
-            EmoteAnimationPlay.Instance.Load(animData.animationURL, null);
+            EmoteAnimationHandler.remoteUrlAnimation = animData.animationURL;
+            EmoteAnimationHandler.remoteUrlAnimationName = animData.animationName;
+            EmoteAnimationHandler.Instance.Load(animData.animationURL, null);
             isAnimRunning = true;
             PlayerPrefsUtility.SetEncryptedString(ConstantsGod.SELECTED_ANIMATION_NAME, animData.animationName);
             //actionBtn.Select();
             try
             {
-                LoadFromFile.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
+                GameplayEntityLoader.instance.leftJoyStick.transform.GetChild(0).GetComponent<OnScreenStick>().movementRange = 0;
 
             }
             catch (Exception e)
@@ -192,7 +192,7 @@ public class EmoteActionBtn : MonoBehaviour {
     void StopEmoteAnimation()
     {
         // if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnEmoteAnimationStop();
-        EmoteAnimationPlay.Instance.StopAnimation();
+        EmoteAnimationHandler.Instance.StopAnimation();
     }
 
     private void OnLongBtnClick()
@@ -202,7 +202,7 @@ public class EmoteActionBtn : MonoBehaviour {
         if (dragDectector.isDragging)
             return;
         PlayerPrefsUtility.SetEncryptedInt(ConstantsGod.EMOTE_SELECTION_INDEX, transform.parent.GetSiblingIndex());
-        CanvasButtonsHandler.inst.OnOpenAnimationPanel();
+        GamePlayUIHandler.inst.OnOpenAnimationPanel();
     }
 
     private void AnimationStopped(string animName)
@@ -217,7 +217,7 @@ public class EmoteActionBtn : MonoBehaviour {
         //Debug.Log("animation call hua new  " + animName);
         if (animData != null && animData.animationName.Equals(animName))
         {
-            isAnimRunning = EmoteAnimationPlay.Instance.isAnimRunning;
+            isAnimRunning = EmoteAnimationHandler.Instance.isAnimRunning;
             highlightObj.SetActive(true);
         }
         else

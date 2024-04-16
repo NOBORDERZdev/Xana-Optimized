@@ -6,7 +6,7 @@ public class NinjaComponent : ItemComponent
 {
     NinjaComponentData ninjaComponentData;
     string RuntimeItemID = "";
-    PlayerControllerNew pc;
+    PlayerController pc;
 
     public void Init(NinjaComponentData ninjaComponentData)
     {
@@ -30,7 +30,7 @@ public class NinjaComponent : ItemComponent
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Ninja);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Ninja);
 
         pc.Ninja_Throw(true);
         pc.NinjaComponentTimerStart(ninjaComponentData.setTimerNinjaEffect);

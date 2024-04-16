@@ -2787,7 +2787,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2507505394166159384}
-  m_Mesh: {fileID: -5597002278806442958, guid: 978a395811b45c4419bbf8c995d6ba36, type: 3}
+  m_Mesh: {fileID: -5597002278806442958, guid: 52154b95de264d4498b1993384cc9762, type: 3}
 --- !u!23 &2507505394166159392
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3924,7 +3924,7 @@ GameObject:
   - component: {fileID: 7849410659210853840}
   - component: {fileID: 29212619505695990}
   m_Layer: 23
-  m_Name: NFT_Frames
+  m_Name: NFT_Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4737,6 +4737,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_filter: {fileID: 5051530094858942697}
   iosScreen: {fileID: -5597002278806442958, guid: 88104de8519295941b4a518f8b2178a3, type: 3}
+  androidScreen: {fileID: 0}
 --- !u!114 &5334004791375985493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5549,7 +5550,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_filter: {fileID: 2507505394166159399}
-  iosScreen: {fileID: -5597002278806442958, guid: 88104de8519295941b4a518f8b2178a3, type: 3}
+  iosScreen: {fileID: -5597002278806442958, guid: 52154b95de264d4498b1993384cc9762, type: 3}
+  androidScreen: {fileID: -5597002278806442958, guid: 52154b95de264d4498b1993384cc9762, type: 3}
 --- !u!114 &4192378118116164945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5583,7 +5585,6 @@ MonoBehaviour:
   updateInterval: 0.5
   activePlayer: {fileID: 2507505394166159395}
   audioSource: {fileID: 5026257661121069021}
-  LiveStreamPlayer: {fileID: 2507505394166159384}
 --- !u!1 &5026257660917194773
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,14 +15,14 @@ public class PatchForProfileWallet : MonoBehaviour
     {
         if (gameManager.UiManager != null)//rik
         {
-            // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().SetProfileButton();
+            // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
         }
     }
 
     private void Start()
     {
-        if (XanaConstants.xanaConstants.isWalletLoadingbool)
+        if (ConstantsHolder.xanaConstants.isWalletLoadingbool)
         {
             Invoke("OpenCrossbtn", 8f);
         }
@@ -34,7 +34,7 @@ public class PatchForProfileWallet : MonoBehaviour
     }
     public void CloseCrossbtn()
     {
-        if (!XanaConstants.loggedIn)
+        if (!ConstantsHolder.loggedIn)
             UserLoginSignupManager.instance.ShowWelcomeScreen();
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
     }
