@@ -5,6 +5,7 @@ using BestHTTP.SocketIO3.Events;
 using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
+using SimpleJSON;
 
 public class HomeScoketHandler : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
-    bool isSnsSocketConnnected = false;
+    bool isConnected=false;
+    //bool isSnsSocketConnnected = false;
     private void Awake()
     {
         instance = this;
@@ -24,10 +26,10 @@ public class HomeScoketHandler : MonoBehaviour
 
     void Start()
     {
-        //Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
-        //Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        Manager = new SocketManager(new Uri(PrepareApiURL("Socket")));
+        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
     }
     void OnSocketDisconnect(CustomError args)
     {
@@ -35,18 +37,23 @@ public class HomeScoketHandler : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-       // Debug.Log("<color=blue> Post -- Connection Error  </color>");
+        Debug.Log("<color=blue> Post -- Connection Error  </color>" +args.message);
     }
     void OnConnected(ConnectResponse resp)
     {
-        socketId = resp.sid;
-       // Debug.Log("<color=blue> Post -- Connected  </color>");
-        EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
+        
+            isConnected=true;
+            socketId = resp.sid;
+           // Debug.Log("<color=blue> Post -- Connected  </color>");
+            EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
 
-        // Bind Events to listen
-        Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
-        //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
-        Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
+            // Bind Events to listen
+            Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
+            //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
+            Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
+
+            ConnectSNSSockets();
+        
     }
     void ReceivePost(string msg)
     {
@@ -83,12 +90,14 @@ public class HomeScoketHandler : MonoBehaviour
     }
     IEnumerator SendSocketIdOfUserForPost()
     {
+        yield return new WaitForSeconds(2f);
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
-
+        while (ConstantsHolder.userId == "")
+            yield return new WaitForSeconds(0.5f);
       //  Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
@@ -112,6 +121,7 @@ public class HomeScoketHandler : MonoBehaviour
             }
             else
             {
+                Manager.Socket.On<string>("send_new_cloth_info", HomeFriendClothUpdate);
                // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
@@ -122,12 +132,12 @@ public class HomeScoketHandler : MonoBehaviour
     /// To connect SNS Sockets
     /// </summary>
     /// <param name="userId"></param>
-    public void ConnectSNSSockets(int userId) {
-        DisscountSNSSockets();
-        Manager.Socket.On<userInfoUpdate>("user-updated", SnSUpate);
-        Manager.Socket.On<userFollowerFollowing>("user-follow", UpdateFollowerFollowing);
-        Manager.Socket.On<string>("send_new_cloth_info", AvatarUpdate);
-        isSnsSocketConnnected = true;
+    public void ConnectSNSSockets(/*int userId*/) {
+        //DisscountSNSSockets();
+        Manager.Socket.On<string>("user-updated", SnSUpate);
+        Manager.Socket.On<string>("user-follow", UpdateFollowerFollowing);
+        Manager.Socket.On<string>("user-occupied-assets", AvatarUpdate);
+        //isSnsSocketConnnected = true;
 
     }
 
@@ -136,37 +146,72 @@ public class HomeScoketHandler : MonoBehaviour
     /// Call on SNS info Update
     /// </summary>
     /// <param name="response"></param>
-    void SnSUpate(userInfoUpdate response) { 
-    
+    void SnSUpate(string response) {
+        userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
+        //if (ConstantsHolder.xanaConstants.IsProfileVisit && userInfoUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
+        //{
+        //    if (ConstantsHolder.xanaConstants.IsOtherProfileVisit) // check is other profile page open
+        //    {
+        //        OtherPlayerProfileData.Instance.SocketOtherProfileUpdate(ConstantsHolder.xanaConstants.SnsProfileID);
+        //    }
+        //    else
+        //    {
+        //        MyProfileDataManager.Instance.RequestGetUserDetails();
+        //    }
+        //}
+         SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
     /// Call on update Follower and Following Count
     /// </summary>
     /// <param name="response"></param>
-    void UpdateFollowerFollowing(userFollowerFollowing response)
+    void UpdateFollowerFollowing(string response)
     {
-
+        userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
+        //if (ConstantsHolder.xanaConstants.IsProfileVisit && userInfoUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID )
+        //{
+        //    if (ConstantsHolder.xanaConstants.IsOtherProfileVisit) // check is other profile page open
+        //    {
+        //        OtherPlayerProfileData.Instance.SocketOtherProfileUpdate(ConstantsHolder.xanaConstants.SnsProfileID);
+        //    }
+        //    else
+        //    {
+        //        MyProfileDataManager.Instance.RequestGetUserDetails();
+        //    }
+        //}
+        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
     /// Call when Avatar assets update like shirt, pent etc
     /// </summary>
     /// <param name="response"></param>
-    void AvatarUpdate(string response) { 
-    
+    void AvatarUpdate(string response)
+    {
+        snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
+        
+        ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
     }
 
-    /// <summary>
-    /// To disconnect sns socket 
-    /// </summary>
-    public void DisscountSNSSockets() {
-        if (isSnsSocketConnnected && Manager != null)
-        {
-            Manager.Socket.Off("user-updated");/*<string>("likeTextPost", FeedLikeUpdate);*/
-            Manager.Socket.Off("user-follow");
-            Manager.Socket.Off("send_new_cloth_info");
-        }
+    ///// <summary>
+    ///// To disconnect sns socket 
+    ///// </summary>
+    //public void DisscountSNSSockets() {
+    //    if (isSnsSocketConnnected && Manager != null)
+    //    {
+    //        Manager.Socket.Off("user-updated");/*<string>("likeTextPost", FeedLikeUpdate);*/
+    //        Manager.Socket.Off("user-follow");
+    //        Manager.Socket.Off("send_new_cloth_info");
+    //    }
+    //}
+
+    void HomeFriendClothUpdate(string response)
+    {
+        Debug.Log("RESPONSE " + response);
+        HomeFriendAvatarData homeFriendAvatarData = JsonConvert.DeserializeObject<HomeFriendAvatarData>(response);
+       // SavingCharacterDataClass avatarJson = JsonConvert.DeserializeObject<SavingCharacterDataClass>(homeFriendAvatarData.json);
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().UpdateFrendAvatar(homeFriendAvatarData.creatorId, homeFriendAvatarData.json);
     }
 
     private void OnDisable()
@@ -227,19 +272,37 @@ class ErrorData
 }
 
 class userFollowerFollowing{
-    int userId;
-    int followerCount;
-    int followingCount;
-    int followerId;
-    bool isFollowing;
+    public int userId;
+    public int followerCount;
+    public int followingCount;
+    public int followerId;
+    public bool isFollowing;
 }
 
 class userInfoUpdate {
-    int userId;
-    string name;
-    string avatar;
-    string[] tags;
-    string bio;
-    string username;
+    public int userId;
+    public string name;
+    public string avatar;
+    public string[] tags;
+    public string bio;
+    public string username;
+}
 
+class snsAvatarUpdate{
+    public int userId;
+    public string name;
+    public string thumbnail;
+    public string description;
+    public SavingCharacterDataClass json;
+    public int id;
+}
+
+class HomeFriendAvatarData
+{
+    public string msg;
+    public int creatorId;
+    public string description;
+    public string thumnmail;
+    public string name;
+    public SavingCharacterDataClass json;
 }

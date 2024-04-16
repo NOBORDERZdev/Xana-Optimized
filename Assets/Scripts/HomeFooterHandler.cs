@@ -26,11 +26,11 @@ public class HomeFooterHandler : MonoBehaviour
     public TextMeshProUGUI chatMessageUnReadCountText;
     AdditiveScenesLoader additiveScenesManager;
     GameManager gameManager;
-    SocketController socketController;
+    HomeScoketHandler socketController;
     private void Awake()
     {
         gameManager = GameManager.Instance;
-        socketController = SocketController.instance;
+        socketController = HomeScoketHandler.instance;
         if (gameManager.defaultSelection == 3)
         {
             if (GlobalVeriableClass.callingScreen == "Profile")
@@ -200,7 +200,7 @@ public class HomeFooterHandler : MonoBehaviour
     {
         if (!(GlobalVeriableClass.callingScreen == "Home"))
         {
-            socketController.DisscountSNSSockets();
+            //socketController.DisscountSNSSockets();
             GlobalVeriableClass.callingScreen = "Home";
             if (/*gameManager.defaultSelection != 0*/ true)
             {
@@ -237,6 +237,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
             gameManager.ActorManager.IdlePlayerAvatorForPostMenu(false);
             gameManager.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            ConstantsHolder.xanaConstants.IsProfileVisit = false;
             DisableSubScreen();
         }
         gameManager.HomeCameraInputHandler(true);
@@ -255,7 +256,7 @@ public class HomeFooterHandler : MonoBehaviour
         Debug.Log("Home button onclick");
         if (gameManager.defaultSelection != 1)
         {
-            socketController.DisscountSNSSockets();
+            //socketController.DisscountSNSSockets();
 
             gameManager.ActorManager._cinemaCam.SetActive(false);
             gameManager.defaultSelection = 1;
@@ -289,7 +290,7 @@ public class HomeFooterHandler : MonoBehaviour
                 }
 
             }
-           
+            ConstantsHolder.xanaConstants.IsProfileVisit = false;
             WorldManager.LoadHomeScreenWorlds?.Invoke();
             //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
@@ -460,7 +461,7 @@ public class HomeFooterHandler : MonoBehaviour
 
         if (gameManager.defaultSelection != 3)
         {
-            socketController.DisscountSNSSockets();
+            //socketController.DisscountSNSSockets();
             gameManager.ActorManager._cinemaCam.SetActive(false);
             // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
             // LoaderShow(true);
@@ -504,7 +505,7 @@ public class HomeFooterHandler : MonoBehaviour
             //{
             //    SNS_APIManager.Instance.RequestGetUserDetails("myProfile");
             //}
-
+            ConstantsHolder.xanaConstants.IsProfileVisit = false;
             if (FeedUIController.Instance != null)
             {
                 FeedUIController.Instance.SetAddFriendScreen(false);
@@ -554,8 +555,8 @@ public class HomeFooterHandler : MonoBehaviour
         gameManager.ActorManager._cinemaCam.SetActive(false);
         if (gameManager.defaultSelection != 5)
         {
-            socketController.DisscountSNSSockets();
-
+           // socketController.DisscountSNSSockets();
+           ConstantsHolder.xanaConstants.IsProfileVisit = false;
             gameManager.defaultSelection = 5;
             GlobalVeriableClass.callingScreen = "Feed";
 
@@ -733,6 +734,9 @@ public class HomeFooterHandler : MonoBehaviour
             {
                 MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
             }
+            ConstantsHolder.xanaConstants.SnsProfileID = SNS_APIManager.Instance.userId;
+            ConstantsHolder.xanaConstants.IsProfileVisit = true;
+            ConstantsHolder.xanaConstants.IsOtherProfileVisit= false;
             ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
             ProfileUIHandler.instance.SetMainScrollRefs();
             ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);

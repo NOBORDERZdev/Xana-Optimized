@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using static InventoryManager;
+using static UnityEngine.Rendering.DebugUI;
 
 public class FriendHomeManager : MonoBehaviour
 {
@@ -214,8 +215,21 @@ public class FriendHomeManager : MonoBehaviour
             }
         }
 
-       
+
     }
+
+    public void UpdateFrendAvatar(int id, SavingCharacterDataClass json)
+    {
+        foreach (var frnd in SpawnFriendsObj)
+        {
+            if ( frnd.id == id && json!=null && frnd.friendObj.gameObject.activeInHierarchy)
+            {
+                frnd.friendObj.GetComponent<AvatarController>().InitializeFrndAvatar(json,frnd.friendObj.gameObject);
+            }
+
+        }
+    }
+
 
     int GetPostRandomDefaultAnim(){ 
         float _rand = UnityEngine.Random.Range(0.1f, 3.0f);
