@@ -21,7 +21,7 @@ public class WorldManager : MonoBehaviour
     private string finalAPIURL;
     private string status = "Publish";
     [HideInInspector]
-    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1;
+    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1, seeAllPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -142,9 +142,10 @@ public class WorldManager : MonoBehaviour
         yield return new WaitForEndOfFrame();
         CheckWorldTabAndReset(tab);
     }*/
-    public void ChangeWorldTab(APIURL tab)
+    public void ChangeWorldTab(APIURL tab, string _searchKey)
     {
         aPIURLGlobal = tab;
+        SearchKey = _searchKey;
         GetBuilderWorlds(tab, (a) => { });
     }
     public void SetaPIURLGlobal(APIURL chnager)
@@ -227,62 +228,86 @@ public class WorldManager : MonoBehaviour
         switch (aPIURL)
         {
             case APIURL.FeaturedSpaces:
-                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotFeatSpacePN + "/" + recordPerPage;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + hotFeatSpacePN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.FEATUREDSPACES + seeAllPN + "/" + recordPerPage;
             case APIURL.HotSpaces:
-                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + seeAllPN + "/" + recordPerPage;
+
             case APIURL.HotGames:
-                return ConstantsGod.API_BASEURL + ConstantsGod.HOTGAMES /*+ status + "/" */+ hotGamesPN + "/" + recordPerPage;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.HOTGAMES /*+ status + "/" */+ hotGamesPN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTGAMES /*+ status + "/" */+ seeAllPN + "/" + recordPerPage;
+
             case APIURL.MySpace:
-                return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + mySpacesPN + "/" + recordPerPage;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + mySpacesPN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.MYBUILDERWORLDS + status + "/" + seeAllPN + "/" + recordPerPage;
+
             case APIURL.FolloingSpace:
-                return ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWINGSPACES + followingPN + "/" + recordPerPage; //+ "/" + status + "/GAME";
+                //return ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWINGSPACES + followingPN + "/" + recordPerPage; //+ "/" + status + "/GAME";
+                return ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWINGSPACES + seeAllPN + "/" + recordPerPage; //+ "/" + status + "/GAME";
+
             //case APIURL.EventWorld:
             //    return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberEventWorld + "/" + pageCount + "/" + status + "/EVENT";
             //case APIURL.TestWorld:
             //    return ConstantsGod.API_BASEURL + ConstantsGod.WORLDSBYCATEGORY + pageNumberTestWorld + "/" + pageCount + "/" + status + "/TEST";
             case APIURL.SearchWorld:
-                return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + SearchKey + "/" + SearchPageNumb + "/" + SearchPageSize;
+                return ConstantsGod.API_BASEURL + ConstantsGod.SearchWorldAPI + SearchKey + "/" + seeAllPN + "/" + SearchPageSize;
+
             case APIURL.SearchWorldByTag:
-                return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + SearchKey + "/" + SearchTagPageNumb + "/" + SearchTagPageSize;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + SearchKey + "/" + SearchTagPageNumb + "/" + SearchTagPageSize;
+                return ConstantsGod.API_BASEURL + ConstantsGod.SEARCHWORLDBYTAG + SearchKey + "/" + seeAllPN + "/" + SearchTagPageSize;
+
             default:
-                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
+                //return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + hotSpacePN + "/" + recordPerPage;
+                return ConstantsGod.API_BASEURL + ConstantsGod.HOTSPACES + seeAllPN + "/" + recordPerPage;
+
         }
     }
     void UpdatePageNumber(APIURL aPIURL)
     {
-        switch (aPIURL)
-        {
-            case APIURL.FeaturedSpaces:
-                hotFeatSpacePN += 1;
-                return;
-            case APIURL.HotSpaces:
-                hotSpacePN += 1;
-                return;
-            case APIURL.HotGames:
-                hotGamesPN += 1;
-                return;
-            case APIURL.MySpace:
-                mySpacesPN += 1;
-                return;
-            case APIURL.FolloingSpace:
-                followingPN += 1;
-                return;
-            /*case APIURL.EventWorld:
-                pageNumberEventWorld += 1;
-                return;*/
-            case APIURL.SearchWorld:
-                SearchPageNumb += 1;
-                return;
-            case APIURL.SearchWorldByTag:
-                SearchTagPageNumb += 1;
-                return;
-            /*case APIURL.TestWorld:
-                pageNumberTestWorld += 1;
-                return;*/
-            default:
-                hotSpacePN += 1;
-                return;
-        }
+        seeAllPN += 1;
+        //switch (aPIURL)
+        //{
+        //    case APIURL.FeaturedSpaces:
+        //        //hotFeatSpacePN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    case APIURL.HotSpaces:
+        //        //hotSpacePN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    case APIURL.HotGames:
+        //        //hotGamesPN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    case APIURL.MySpace:
+        //        //mySpacesPN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    case APIURL.FolloingSpace:
+        //        //followingPN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    /*case APIURL.EventWorld:
+        //        pageNumberEventWorld += 1;
+        //        return;*/
+        //    case APIURL.SearchWorld:
+        //        //SearchPageNumb += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    case APIURL.SearchWorldByTag:
+        //        //SearchTagPageNumb += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //    /*case APIURL.TestWorld:
+        //        pageNumberTestWorld += 1;
+        //        return;*/
+        //    default:
+        //        //hotSpacePN += 1;
+        //        seeAllPN += 1;
+        //        return;
+        //}
     }
     bool NotProcessRequest = false;
     int CallBackCheck = 0;
@@ -517,7 +542,7 @@ public class WorldManager : MonoBehaviour
 
         LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
         LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
-        searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count);
+        searchWorldControllerRef.LoadData(_WorldInfo.data.rows.Count, seeAllPN);
         //if (!GameManager.Instance.UiManager.IsSplashActive)
         //{
         //    Invoke(nameof(ShowTutorial), 1f);
@@ -561,9 +586,6 @@ public class WorldManager : MonoBehaviour
                 return;
         }
     }
-
-
-
 
     public void ShowTutorial()
     {
