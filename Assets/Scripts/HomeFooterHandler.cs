@@ -67,7 +67,7 @@ public class HomeFooterHandler : MonoBehaviour
         }
         else
         {
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
         }
     }
 
@@ -206,7 +206,7 @@ public class HomeFooterHandler : MonoBehaviour
     {
         if (!(GlobalVeriableClass.callingScreen == "Home"))
         {
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(0);
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
             if (FeedUIController.Instance)
             {
                 FeedUIController.Instance.bottomTabManager.OnSelectedClick(0);
@@ -268,7 +268,7 @@ public class HomeFooterHandler : MonoBehaviour
             gameManager.ActorManager._cinemaCam.SetActive(false);
             gameManager.defaultSelection = 1;
             //  gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(1);
             if (FeedUIController.Instance)
             {
                 FeedUIController.Instance.bottomTabManager.OnSelectedClick(1);
@@ -353,7 +353,7 @@ public class HomeFooterHandler : MonoBehaviour
         if (gameManager.defaultSelection != 0)
         {
             // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(1);
             if (FeedUIController.Instance)
             {
                 FeedUIController.Instance.bottomTabManager.OnSelectedClick(1);
@@ -397,7 +397,7 @@ public class HomeFooterHandler : MonoBehaviour
         {
             gameManager.ActorManager._cinemaCam.SetActive(false);
             // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(1);
+            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(1);
             if (FeedUIController.Instance)
             {
                 FeedUIController.Instance.bottomTabManager.OnSelectedClick(1);
@@ -583,8 +583,8 @@ public class HomeFooterHandler : MonoBehaviour
                 additiveScenesManager.SNSmodule.SetActive(true);
                 gameManager.defaultSelection = 3;
                 gameManager.defaultSelection = 3;
-                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<BottomTabManager>().OnSelectedClick(3);
-                FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(3);
+                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(3);
+                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(3);
                 GlobalVeriableClass.callingScreen = "Feed";
                 // additiveScenesManager.SNSMessage.SetActive(false);
             }
