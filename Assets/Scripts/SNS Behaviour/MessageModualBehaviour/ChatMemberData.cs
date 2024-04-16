@@ -31,7 +31,7 @@ public class ChatMemberData : MonoBehaviour
 
     //public void LoadData(int index)
     //{
-    //    if(createdGroupId == APIManager.Instance.userId)//if user is admin then show member menu button otherwise disable.......
+    //    if(createdGroupId == SNS_APIManager.Instance.userId)//if user is admin then show member menu button otherwise disable.......
     //    {
     //        menuButton.SetActive(true);
     //    }
@@ -56,7 +56,7 @@ public class ChatMemberData : MonoBehaviour
 
     //        if (!string.IsNullOrEmpty(chatGetConversationUser.user.avatar))//rik for avatar user
     //        {
-    //            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(chatGetConversationUser.user.avatar);
+    //            bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(chatGetConversationUser.user.avatar);
     //            //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
     //            if (isAvatarUrlFromDropbox)
     //            {
@@ -77,13 +77,13 @@ public class ChatMemberData : MonoBehaviour
     //    }
     //    else if (index == 1)
     //    {
-    //        if (allChatGetConversationDatum.receiverId == APIManager.Instance.userId)
+    //        if (allChatGetConversationDatum.receiverId == SNS_APIManager.Instance.userId)
     //        {
     //            userNameText.text = allChatGetConversationDatum.ConSender.name;
     //            if (!string.IsNullOrEmpty(allChatGetConversationDatum.ConSender.avatar))
     //            {
     //                //Debug.Log("AllConversation ConSender11:" + allChatGetConversationDatum.ConSender.name);
-    //                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
+    //                bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConSender.avatar);
     //                //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
     //                if (isAvatarUrlFromDropbox)
     //                {
@@ -107,7 +107,7 @@ public class ChatMemberData : MonoBehaviour
     //            {
     //                //Debug.Log("AllConversation ConReceiver:" + allChatGetConversationDatum.ConReceiver.name);
 
-    //                bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
+    //                bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allChatGetConversationDatum.ConReceiver.avatar);
     //                //Debug.Log("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
     //                if (isAvatarUrlFromDropbox)
     //                {
@@ -148,11 +148,11 @@ public class ChatMemberData : MonoBehaviour
     ////this method is user to Update main messagecontroller conversation data groupuser follow, following.......
     //void GroupUserResponceUpdateAfterFollowOrUnFollow(bool isFollow)
     //{
-    //    int index = MessageController.Instance.allChatGetConversationDatum.group.groupUsers.IndexOf(chatGetConversationUser);
+    //    int index = SNS_MessageController.Instance.allChatGetConversationDatum.group.groupUsers.IndexOf(chatGetConversationUser);
     //    //Debug.Log("GroupUserResponceUpdateAfterFollowOrUnFollow Index:" + index);
-    //    if (index < MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count)
+    //    if (index < SNS_MessageController.Instance.allChatGetConversationDatum.group.groupUsers.Count)
     //    {
-    //        MessageController.Instance.allChatGetConversationDatum.group.groupUsers[index].isFollowing = isFollow;
+    //        SNS_MessageController.Instance.allChatGetConversationDatum.group.groupUsers[index].isFollowing = isFollow;
     //    }
     //}
 
@@ -160,14 +160,14 @@ public class ChatMemberData : MonoBehaviour
     //public void OnClickMenuButton()
     //{
     //   Debug.Log("Menu button click.......");
-    //    MessageController.Instance.currentSelectedGroupMemberDataScript = this;
-    //    MessageController.Instance.removeGroupmemberConfirmationScreen.SetActive(true);
+    //    SNS_MessageController.Instance.currentSelectedGroupMemberDataScript = this;
+    //    SNS_MessageController.Instance.removeGroupmemberConfirmationScreen.SetActive(true);
     //}
 
     ////this method is used to follow following button click
     //public void OnClickFollowFollowingBtn()
     //{
-    //    MessageController.Instance.LoaderShow(true);//active loader.......
+    //    SNS_MessageController.Instance.LoaderShow(true);//active loader.......
     //    if (isFollowFollowing)
     //    {
     //       Debug.Log("UnFollow User Id:"+ chatGetConversationUser.user.id);
@@ -193,11 +193,11 @@ public class ChatMemberData : MonoBehaviour
 
     //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FollowAUser), form))
     //    {
-    //        www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+    //        www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
     //        yield return www.SendWebRequest();
 
-    //        MessageController.Instance.LoaderShow(false);//false loader.......
+    //        SNS_MessageController.Instance.LoaderShow(false);//false loader.......
 
     //        if (www.isNetworkError || www.isHttpError)
     //        {
@@ -211,9 +211,9 @@ public class ChatMemberData : MonoBehaviour
     //            GroupUserResponceUpdateAfterFollowOrUnFollow(true);
 
     //            //Refresh Get following api.......
-    //            MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
-    //            //MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
-    //            //APIManager.Instance.RequestGetAllFollowing(1, 100, "message");
+    //            SNS_MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
+    //            //SNS_MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
+    //            //SNS_APIManager.Instance.RequestGetAllFollowing(1, 100, "message");
     //        }
     //    }
     //}
@@ -229,11 +229,11 @@ public class ChatMemberData : MonoBehaviour
 
     //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UnFollowAUser), form))
     //    {
-    //        www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+    //        www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
     //        yield return www.SendWebRequest();
 
-    //        MessageController.Instance.LoaderShow(false);//false loader.......
+    //        SNS_MessageController.Instance.LoaderShow(false);//false loader.......
 
     //        if (www.isNetworkError || www.isHttpError)
     //        {
@@ -246,9 +246,9 @@ public class ChatMemberData : MonoBehaviour
     //            SetFolloButton(false);
     //            GroupUserResponceUpdateAfterFollowOrUnFollow(false);
     //            //Refresh Get following api.......
-    //            MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
-    //            //MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
-    //            //APIManager.Instance.RequestGetAllFollowing(1, 100, "message");
+    //            SNS_MessageController.Instance.GetAllFollowingForSelectFriends();//request Get All Following api call.......
+    //            //SNS_MessageController.Instance.SelectFriendFollowinPaginationResetData();//Reset select friends following api pagination.......
+    //            //SNS_APIManager.Instance.RequestGetAllFollowing(1, 100, "message");
     //        }
     //    }
     //}
@@ -324,8 +324,8 @@ public class ChatMemberData : MonoBehaviour
     //   Debug.Log("OnClickPlayerProfileButton User Id:" + chatGetConversationUser.userId + "   :Calling Index:" + callingIndex);
     //    if (callingIndex == 0)
     //    {
-    //        MessageController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickFeedButton();
-    //        if (!PremiumUsersDetails.Instance.PremiumUserUI.activeSelf)
+    //        SNS_MessageController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnClickFeedButton();
+    //        if (!UserPassManager.Instance.PremiumUserUI.activeSelf)
     //        {
     //            if (OtherPlayerProfileData.Instance != null)
     //            {

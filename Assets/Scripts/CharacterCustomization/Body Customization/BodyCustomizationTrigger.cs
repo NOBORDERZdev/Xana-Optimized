@@ -32,12 +32,12 @@ public class BodyCustomizationTrigger : MonoBehaviour
     public void CustomizationTriggerTwo()
     {
         //-----------------------------------
-        //StoreManager.instance.BuyStoreBtn.SetActive(false);
-        StoreManager.instance.SaveStoreBtn.SetActive(true);
-        StoreManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
-        StoreManager.instance.GreyRibbonImage.SetActive(false);
-        StoreManager.instance.WhiteRibbonImage.SetActive(true);
-        StoreManager.instance.ClearBuyItems();
+        //InventoryManager.instance.BuyStoreBtn.SetActive(false);
+        InventoryManager.instance.SaveStoreBtn.SetActive(true);
+        InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
+        InventoryManager.instance.GreyRibbonImage.SetActive(false);
+        InventoryManager.instance.WhiteRibbonImage.SetActive(true);
+        InventoryManager.instance.ClearBuyItems();
         //-------------------------------------
 
         if (m_FaceMorphFeature == FaceMorphFeature.Lips || m_FaceMorphFeature == FaceMorphFeature.Nose || m_FaceMorphFeature == FaceMorphFeature.Face || m_FaceMorphFeature == FaceMorphFeature.Eyes)
@@ -47,7 +47,7 @@ public class BodyCustomizationTrigger : MonoBehaviour
         }
         if (m_FaceMorphFeature == FaceMorphFeature.EyeBrows)
         {
-            BodyCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
+            BodyFaceCustomizer.Instance.ApplyEyeBrowsBlendShapes(eyebrowBlendValues);
 
         }
 
@@ -105,11 +105,11 @@ public class BodyCustomizationTrigger : MonoBehaviour
 
     void ResetBlendShapeForFace()
     {
-        SkinnedMeshRenderer _head = BlendShapeController.instance.blendHolder;
+        SkinnedMeshRenderer _head = BlendShapeHolder.instance.blendHolder;
         // Face blend References [0-9]
         for (int i = 0; i < 10; i++)
         {
-            _head.SetBlendShapeWeight(BlendShapeController.instance.allBlendShapes[i].index, 0);
+            _head.SetBlendShapeWeight(BlendShapeHolder.instance.allBlendShapes[i].index, 0);
         }
     }
 }

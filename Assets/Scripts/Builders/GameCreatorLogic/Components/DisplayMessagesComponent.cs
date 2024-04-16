@@ -31,7 +31,7 @@ public class DisplayMessagesComponent : ItemComponent
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DisplayMessage);
 
         if (displayMessageComponentData.isStart)
         {

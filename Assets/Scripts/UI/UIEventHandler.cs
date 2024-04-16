@@ -9,13 +9,13 @@ public class UIEventHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        //CameraLook.instance.m_PressCounter++;
-        m_Camera.GetComponent<CameraLook>().m_PressCounter++;
+        //PlayerCameraController.instance.m_PressCounter++;
+        m_Camera.GetComponent<PlayerCameraController>().m_PressCounter++;
         //print("inside");
     }
     public void OnPointerUp(PointerEventData eventData)
     {
-        //CameraLook.instance.m_PressCounter--;
-        m_Camera.GetComponent<CameraLook>().m_PressCounter--;
+        //PlayerCameraController.instance.m_PressCounter--;
+        m_Camera.GetComponent<PlayerCameraController>().m_PressCounter--;
     }
 }

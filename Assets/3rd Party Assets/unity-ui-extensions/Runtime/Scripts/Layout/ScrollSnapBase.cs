@@ -384,12 +384,12 @@ namespace UnityEngine.UI.Extensions
         //    {
         //        if (_currentPage == 0)
         //        {
-        //            APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
+        //            SNS_APIManager.Instance.RequestGetFeedsByFollowingUser(1, 10);
         //        }
         //        else
         //        {
         //            Debug.LogError("OnRequestFollowingApi.......");
-        //            APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10);
+        //            SNS_APIManager.Instance.RequestGetAllUsersWithFeeds(1, 10);
         //        }
         //    }
         //}
