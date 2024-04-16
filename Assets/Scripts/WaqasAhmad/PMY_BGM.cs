@@ -26,15 +26,17 @@ public class PMY_BGM : MonoBehaviour
         PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
         BuilderEventManager.AfterPlayerInstantiated -= SetBgm;
+
+        PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, MusicSource.volume);
     }
 
     private void SetBgm()
     {
-
         // Set Referece for Slider to control controller
         MusicSource.clip = bgmAudioSource;
         MusicSource.Play();
         MusicSource.loop = true;
+        MusicSource.volume = PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME);
 
         // Get Current Parameters of Music Source
         if (soundType.Equals(SoundType.ThreeD))

@@ -23,7 +23,6 @@ namespace PMY
         public GameObject liveVideoPlayer;
         public GameObject preRecordedPlayer;
 
-
         public string videoLink;
         public string imageLink;
 
@@ -367,27 +366,10 @@ namespace PMY
                         imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     }
                 }
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
-                //VideoPlayer tempVideoPlayer;
-                //if (applyVideoMesh)
-                //{
-                //    tempVideoPlayer = videoMesh;
-                //}
-                //else
-                //{
-                //    tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
-                //}
 
                 preRecordedPlayer.GetComponent<FetchSteamableURL>().youtubeVideoURL = videoLink;
                 preRecordedPlayer.SetActive(true);
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
 
-                //imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
-                //imgVideo16x9.SetActive(true);
                 if (imgVideoFrame16x9)
                 {
                     EnableImageVideoFrame(imgVideoFrame16x9);
@@ -407,7 +389,7 @@ namespace PMY
                         imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_16x9);
                         renderTexture_temp = renderTexture;
-                        imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        //imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
                         imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                         imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                         imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
@@ -426,7 +408,7 @@ namespace PMY
                         imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_9x16);
                         renderTexture_temp = renderTexture;
-                        imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        //imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
                         imgVideo9x16.GetComponent<RawImage>().texture = renderTexture;
                         imgVideo9x16.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                         imgVideo9x16.GetComponent<VideoPlayer>().url = videoLink;
@@ -445,7 +427,7 @@ namespace PMY
                         imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_1x1);
                         renderTexture_temp = renderTexture;
-                        imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        //imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
                         imgVideo1x1.GetComponent<RawImage>().texture = renderTexture;
                         imgVideo1x1.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                         imgVideo1x1.GetComponent<VideoPlayer>().url = videoLink;
@@ -464,7 +446,7 @@ namespace PMY
                         imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
                         RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager_Extension.Instance.renderTexture_4x3);
                         renderTexture_temp = renderTexture;
-                        imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        //imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
                         imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
                         imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                         imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;

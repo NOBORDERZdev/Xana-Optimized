@@ -59,13 +59,20 @@ public class SoundManagerSettings : MonoBehaviour
         OldSliderRange = (OldSliderMax - OldSliderMin);
         NewSliderRange = (NewSliderMax - NewSliderMin);
 
-        
+        if(!PlayerPrefs.HasKey(ConstantsGod.TOTAL_AUDIO_VOLUME))
+            PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
+        if (!PlayerPrefs.HasKey(ConstantsGod.BGM_VOLUME))
+            PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
+        if (!PlayerPrefs.HasKey(ConstantsGod.VIDEO_VOLUME))
+            PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
+
         if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby")){
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.015f);
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.015f);
         }
-        else{
+        else if(XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.XANA)
+        {
             PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, 0.5f);
             PlayerPrefs.SetFloat(ConstantsGod.VIDEO_VOLUME, 0.5f);
