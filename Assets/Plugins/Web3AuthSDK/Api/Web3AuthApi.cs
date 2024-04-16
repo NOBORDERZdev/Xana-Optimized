@@ -25,8 +25,12 @@ public class Web3AuthApi
         data.AddField("key", key);
 
         var request = UnityWebRequest.Post($"{baseAddress}/store/get", data);
-
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
+      
         // Debug.Log("baseAddress =>" + baseAddress);
         // Debug.Log("key =>" + key);
         // //Debug.Log("request URL =>"+ requestURL);
@@ -54,7 +58,11 @@ public class Web3AuthApi
         // Debug.Log("key during logout session =>" + logoutApiRequest.key);
 
         var request = UnityWebRequest.Post($"{baseAddress}/store/set", data);
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
 
         // Debug.Log("baseAddress =>" + baseAddress);
         // Debug.Log("key =>" + logoutApiRequest.key);
@@ -83,7 +91,11 @@ public class Web3AuthApi
         data.AddField("timeout", logoutApiRequest.timeout.ToString());
         // Debug.Log("key during create session =>" + logoutApiRequest.key);
         var request = UnityWebRequest.Post($"{baseAddress}/store/set", data);
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+        {
+            yield return null;
+        }
 
         if (request.result == UnityWebRequest.Result.Success)
         {
