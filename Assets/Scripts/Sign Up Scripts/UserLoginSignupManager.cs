@@ -1495,7 +1495,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
-
+        Web3AuthCustom.Instance.logout();
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
@@ -1506,8 +1506,9 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (InventoryManager.instance.MultipleSave)
+        {
             LoadPlayerAvatar.instance_loadplayer.avatarButton.gameObject.SetActive(false);
-
+        }
         LoadingHandler.Instance.characterLoading.gameObject.SetActive(false);
         LoadingHandler.Instance.HideLoading();
         ConstantsHolder.xanaConstants.isCameraMan = false;
