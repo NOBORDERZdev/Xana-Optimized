@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System;
 using Random = UnityEngine.Random;
 using UnityEditor;
+using static InventoryManager;
 
 public class AvatarController : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class AvatarController : MonoBehaviour
     public int wornHairId, hairColorPaletteId, wornPantId, wornShirtId, wornShoesId, wornEyewearableId, skinId,
         faceId, eyeBrowId, eyeBrowColorPaletteId, eyesId, eyesColorId, eyesColorPaletteId, noseId, lipsId,
         lipsColorId, lipsColorPaletteId, bodyFat, makeupId, eyeLashesId, wornGlovesId, wornChainId;
-    [HideInInspector]
+    //[HideInInspector]
     public List<Texture> masks = new List<Texture>();
     #endregion
 
@@ -1358,7 +1359,8 @@ public class AvatarController : MonoBehaviour
     /// <param name="gender"></param>
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
-        CharacterBodyParts bodyParts = applyOn.GetComponent<CharacterBodyParts>();
+        CharacterBodyParts bodyParts = characterBodyParts;
+
         if (itemDatabase== null)
         {
             itemDatabase = DefaultClothDatabase.instance;
@@ -1538,13 +1540,13 @@ public class AvatarController : MonoBehaviour
         //FriendAvatarController friendAvatarController = applyOn.GetComponent<FriendAvatarController>();
         EffectedParts effectedParts = item.GetComponent<EffectedParts>();
         UnStichItem(type);
+        
         if (effectedParts && effectedParts.texture != null)
         {
             Texture tempTex = item.GetComponent<EffectedParts>().texture;
             masks.Add(tempTex);
             tempBodyParts.ApplyMaskTexture(type, tempTex, this.gameObject);
         }
-
         if (effectedParts && effectedParts.variation_Texture != null)
         {
             item.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetTexture("_BaseMap", item.GetComponent<EffectedParts>().variation_Texture);
@@ -1626,110 +1628,85 @@ public class AvatarController : MonoBehaviour
                 item.layer = 11;
             }
         }
+       
         switch (type)
         {
             case "Chest":
                 wornShirt = item;
                 wornShirtId = itemId;
                 wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornShirt = item;
-                //    friendAvatarController.wornShirtId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "Legs":
                 wornPant = item;
                 wornPantId = itemId;
                 wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornPant = item;
-                //    friendAvatarController.wornPantId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornHair = item;
-                //    friendAvatarController.wornHairId = itemId;
-                //}
                 break;
+
             case "Feet":
                 wornShoes = item;
                 wornShoesId = itemId;
                 wornShoes.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornShose = item;
-                //    friendAvatarController.wornShoesId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "EyeWearable":
                 wornEyeWearable = item;
                 wornEyewearableId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornEyewearable = item;
-                //    friendAvatarController.wornEyewearableId = itemId;
-                //}
                 break;
+
             case "Chain":
                 wornChain = item;
                 wornChainId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornChain = item;
-                //    friendAvatarController.wornChainId = itemId;
-                //}
                 break;
+
             case "Glove":
                 wornGloves = item;
                 Material m = new Material(wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
                 wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m;
                 wornGlovesId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornGloves = item;
-                //    Material m1 = new Material(friendAvatarController.wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
-                //    friendAvatarController.wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m1;
-                //    friendAvatarController.wornGlovesId = itemId;
-                //}
                 break;
         }
-        if (item.name.Contains("arabic"))
+
+        
+        if (item.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
         {
             // Disable Pant
             if (wornPant)
                 wornPant.SetActive(false);
 
-            // Disable Hair
-            if (wornHair)
-                wornHair.SetActive(false);
+            // Also Remove Pant Mask
+            tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (wornShirt && (wornShirt.name.Contains("arabic") || wornShirt.name.Contains("Arabic")))
+        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // Yes Arabic Wear , new pant or hair disable
-            if (wornPant)
-                wornPant.SetActive(false);
+            // User Has wear Full Costume 
+            // Change Full costume to Default shirt 
 
-            if (wornHair)
-                wornHair.SetActive(false);
-        }
-        else if (wornShirt && item.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
-        {
-            if (wornPant)
-                wornPant.SetActive(false);
-            if (wornChain)
-                wornChain.SetActive(false);
+            WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
 
-            if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
-                gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
+            // Apply Mask For Default Shirt
+            tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
+
+            #region Xana1.0 Boxer currently Not using In Xana2.0
+            //if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
+            //{
+            //    if (wornPant)
+            //        wornPant.SetActive(false);
+
+            //    // Also Remove Pant Mask
+            //    tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
+
+            //    if (wornChain)
+            //        wornChain.SetActive(false);
+
+            //    gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
+            //}
+            #endregion
         }
         else
         {

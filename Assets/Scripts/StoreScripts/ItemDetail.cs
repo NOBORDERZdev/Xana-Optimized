@@ -54,15 +54,247 @@ public class ItemDetail : MonoBehaviour
     private AddressableDownloader downloader;
     CharacterBodyParts characterBodyParts;
     InventoryManager store;
+   
+    
     private void Awake()
     {
         store = InventoryManager.instance;
         characterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
     }
+    private void Start()
+    {
+        if (CategoriesEnumVar.Equals(EnumClass.CategoryEnum.HairAvatar) && this.id == ConstantsHolder.xanaConstants.hair)
+        {
+            isHairItem = true;
+            // //Debug.Log("IsStartItem=true");
+        }
+        CheckDeemoNft();
+    }
+
+
+    private void OnEnable()
+    {
+        downloader = AddressableDownloader.Instance;
+        if (enableUpdate)
+            StartRun();
+
+        Invoke("Delay", 0.1f);    // AR changes
+    }
+    private void OnDisable()
+    {
+        if (this.name == "ColorButton")
+            return;
+        if (runningCoroutine != null)
+        {
+            StopCoroutine(runningCoroutine);
+        }
+
+        //AssetCache.Instance.RemoveFromMemory(iconLink, true);       // AR changes
+        //Destroy(this.gameObject);                                   // AR changes
+
+
+        //this.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+    }
+
+
+    public void CheckDeemoNft()
+    {
+        if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
+        {
+            if (name.Contains("deemotshirt"))
+            {
+                //Debug.Log("yES dEEMO dEEMO");
+                this.gameObject.SetActive(false);
+            }
+
+        }
+    }
+    void Delay()
+    {
+        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+        {
+            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+
+            string CurrentString = "";
+            CurrentString = CategoriesEnumVar.ToString();
+
+            switch (CurrentString)
+            {
+                case "HairAvatar":
+                    {
+                        ////Debug.Log(this.id + " xanaConstantsHairs: " + ConstantsHolder.xanaConstants.hair);
+                        ////Debug.Log("wornHairId: " + SaveCharacterProperties.instance.characterController.wornHairId.ToString());
+                        if ((isHairItem && this.id == ConstantsHolder.xanaConstants.hair) ||
+                            (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.hair))
+                        {
+                            isHairItem = false;
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.HairAvatar);
+                                //Debug.Log("<color=red> Set Default Hair </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "EyeBrowAvatar":
+                    {
+                        ////Debug.Log(id.ParseToInt() + " EyeBrowValue: " + _CharacterData.EyeBrowValue);
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == _CharacterData.EyeBrowValue)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
+                                //Debug.Log("<color=red> Set Default EyeBrow </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "SkinToneAvatar":
+                    {
+                        ////Debug.Log(MyIndex + " SkinValue: " + _CharacterData.SkinId);
+                        if (StoreStackHandler.obj.IsCallByBtn() && MyIndex == _CharacterData.SkinId)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.SkinToneAvatar);
+                                //Debug.Log("<color=red> Set Default Skin Color </color>");
+                            }
+                        }
+                    }
+                    break;
+                case "HairAvatarColor":
+                    {
+                        ////Debug.Log(id + " XanaHairColoPalette: " + ConstantsHolder.xanaConstants.hairColoPalette);
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.hairColoPalette)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.HairAvatarColor);
+                                //Debug.Log("<color=red> Set Default HairColor:::: </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "EyeBrowAvatarColor":
+                    {
+                        //Debug.Log("XanaEyeBrowColorPaletteIndex: " + ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex);
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyeBrowAvatarColor);
+                                //Debug.Log("<color=red> Set Default EyeBrowColorPalette::::" + this.gameObject.name + " </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "EyesAvatarColor":
+                    {
+                        //Debug.Log("XanaEyeColorPalette: " + ConstantsHolder.xanaConstants.eyeColorPalette);
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.eyeColorPalette)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyesAvatarColor);
+                                //Debug.Log("<color=red> Set Default EyeColorPalette:::: </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "LipsAvatarColor":
+                    {
+                        //Debug.Log("XanaLipColorPalette: " + ConstantsHolder.xanaConstants.lipColorPalette);
+                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.lipColorPalette)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.LipsAvatarColor);
+                                //Debug.Log("<color=red> Set Default LipsColorPalette:::: </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "EyeLashesAvatar":
+                    {
+                        ////Debug.Log(id.ParseToInt() + " EyeLashesValue: " + ConstantsHolder.xanaConstants.eyeLashesIndex);
+                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == ConstantsHolder.xanaConstants.eyeLashesIndex)
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
+                                //Debug.Log("<color=red> Set Default EyeLashes </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "Outer":
+                    {
+                        ////Debug.Log("Enter In outer: " + ConstantsHolder.xanaConstants.shirt);
+                        if (id == ConstantsHolder.xanaConstants.shirt)  // StoreStackHandler.obj.IsCallByBtn() && 
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Outer);
+                                //Debug.Log("<color=red> Set Default Shirts </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "Shoes":
+                    {
+                        ////Debug.Log("Enter In Shose: " + ConstantsHolder.xanaConstants.shoes);
+                        if (id == ConstantsHolder.xanaConstants.shoes)  // StoreStackHandler.obj.IsCallByBtn() && 
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Shoes);
+                                //Debug.Log("<color=red> Set Default Shoes </color>");
+                            }
+                        }
+                        break;
+                    }
+                case "Bottom":
+                    {
+                        ////Debug.Log("Enter In Shose: " + ConstantsHolder.xanaConstants.pants);
+                        if (id == ConstantsHolder.xanaConstants.pants)  // StoreStackHandler.obj.IsCallByBtn() && 
+                        {
+                            if (!StoreUndoRedo.obj.addToList)
+                                StoreUndoRedo.obj.addToList = true;
+                            else
+                            {
+                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Bottom);
+                                //Debug.Log("<color=red> Set Default Pents </color>");
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+    }
 
     public void StartRun()
     {
-
         if (!runOnce)
         {
 
@@ -236,234 +468,6 @@ public class ItemDetail : MonoBehaviour
         }
 
     }
-    private void OnEnable()
-    {
-        downloader = AddressableDownloader.Instance;
-        if (enableUpdate)
-            StartRun();
-
-        Invoke("Delay", 0.1f);    // AR changes
-    }
-    private void Start()
-    {
-        if (CategoriesEnumVar.Equals(EnumClass.CategoryEnum.HairAvatar) && this.id == ConstantsHolder.xanaConstants.hair)
-        {
-            isHairItem = true;
-           // //Debug.Log("IsStartItem=true");
-        }
-        CheckDeemoNft();
-    }
-    public void CheckDeemoNft()
-    {
-        if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
-        {
-            if (name.Contains("deemotshirt"))
-            {
-                //Debug.Log("yES dEEMO dEEMO");
-               this.gameObject.SetActive(false);
-            }
-
-        } 
-    }
-        void Delay()
-    {
-        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-        {
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-
-            string CurrentString = "";
-            CurrentString = CategoriesEnumVar.ToString();
-            
-            switch (CurrentString)
-            {
-                case "HairAvatar":
-                    {
-                        ////Debug.Log(this.id + " xanaConstantsHairs: " + ConstantsHolder.xanaConstants.hair);
-                        ////Debug.Log("wornHairId: " + SaveCharacterProperties.instance.characterController.wornHairId.ToString());
-                        if ((isHairItem && this.id == ConstantsHolder.xanaConstants.hair) ||
-                            (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.hair))
-                        {
-                            isHairItem = false;
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.HairAvatar);
-                                //Debug.Log("<color=red> Set Default Hair </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "EyeBrowAvatar":
-                    {
-                        ////Debug.Log(id.ParseToInt() + " EyeBrowValue: " + _CharacterData.EyeBrowValue);
-                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == _CharacterData.EyeBrowValue)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeBrowAvatar);
-                                //Debug.Log("<color=red> Set Default EyeBrow </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "SkinToneAvatar":
-                    {
-                        ////Debug.Log(MyIndex + " SkinValue: " + _CharacterData.SkinId);
-                        if (StoreStackHandler.obj.IsCallByBtn() && MyIndex == _CharacterData.SkinId)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.SkinToneAvatar);
-                                //Debug.Log("<color=red> Set Default Skin Color </color>");
-                            }                          
-                        }
-                    }
-                    break;
-                case "HairAvatarColor":
-                    {
-                        ////Debug.Log(id + " XanaHairColoPalette: " + ConstantsHolder.xanaConstants.hairColoPalette);
-                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.hairColoPalette)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.HairAvatarColor);
-                                //Debug.Log("<color=red> Set Default HairColor:::: </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "EyeBrowAvatarColor":
-                    {
-                        //Debug.Log("XanaEyeBrowColorPaletteIndex: " + ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex);
-                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyeBrowAvatarColor);
-                                //Debug.Log("<color=red> Set Default EyeBrowColorPalette::::" + this.gameObject.name + " </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "EyesAvatarColor":
-                    {
-                        //Debug.Log("XanaEyeColorPalette: " + ConstantsHolder.xanaConstants.eyeColorPalette);
-                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.eyeColorPalette)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.EyesAvatarColor);
-                                //Debug.Log("<color=red> Set Default EyeColorPalette:::: </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "LipsAvatarColor":
-                    {
-                        //Debug.Log("XanaLipColorPalette: " + ConstantsHolder.xanaConstants.lipColorPalette);
-                        if (StoreStackHandler.obj.IsCallByBtn() && this.id == ConstantsHolder.xanaConstants.lipColorPalette)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ColorBtnClicked", StoreUndoRedo.ActionType.ChangeColor, _iconImg.color, EnumClass.CategoryEnum.LipsAvatarColor);
-                                //Debug.Log("<color=red> Set Default LipsColorPalette:::: </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "EyeLashesAvatar":
-                    {
-                        ////Debug.Log(id.ParseToInt() + " EyeLashesValue: " + ConstantsHolder.xanaConstants.eyeLashesIndex);
-                        if (StoreStackHandler.obj.IsCallByBtn() && id.ParseToInt() == ConstantsHolder.xanaConstants.eyeLashesIndex)
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.EyeLashesAvatar);
-                                //Debug.Log("<color=red> Set Default EyeLashes </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "Outer":
-                    {
-                        ////Debug.Log("Enter In outer: " + ConstantsHolder.xanaConstants.shirt);
-                        if (id == ConstantsHolder.xanaConstants.shirt)  // StoreStackHandler.obj.IsCallByBtn() && 
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Outer);
-                                //Debug.Log("<color=red> Set Default Shirts </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "Shoes":
-                    {
-                        ////Debug.Log("Enter In Shose: " + ConstantsHolder.xanaConstants.shoes);
-                        if (id == ConstantsHolder.xanaConstants.shoes)  // StoreStackHandler.obj.IsCallByBtn() && 
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Shoes);
-                                //Debug.Log("<color=red> Set Default Shoes </color>");
-                            }
-                        }
-                        break;
-                    }
-                case "Bottom":
-                    {
-                        ////Debug.Log("Enter In Shose: " + ConstantsHolder.xanaConstants.pants);
-                        if (id == ConstantsHolder.xanaConstants.pants)  // StoreStackHandler.obj.IsCallByBtn() && 
-                        {
-                            if (!StoreUndoRedo.obj.addToList)
-                                StoreUndoRedo.obj.addToList = true;
-                            else
-                            {
-                                StoreUndoRedo.obj.ActionWithParametersAdd(this.gameObject, -1, "ItemBtnClicked", StoreUndoRedo.ActionType.ChangeItem, Color.white, EnumClass.CategoryEnum.Bottom);
-                                //Debug.Log("<color=red> Set Default Pents </color>");
-                            }
-                        }
-                        break;
-                    }
-            }
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (this.name == "ColorButton")
-            return;
-        if (runningCoroutine != null)
-        {
-            StopCoroutine(runningCoroutine);
-        }
-
-        //AssetCache.Instance.RemoveFromMemory(iconLink, true);       // AR changes
-        //Destroy(this.gameObject);                                   // AR changes
-
-
-        //this.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-    }
 
     public void UpdateValues()
     {
@@ -527,15 +531,15 @@ public class ItemDetail : MonoBehaviour
             InventoryManager.instance.GetSelectedBtn(MyIndex, CategoriesEnumVar);
         }
     }
-   
+
     public void ItemBtnClicked()
     {
         if (GameManager.Instance.isStoreAssetDownloading || GetComponent<Image>().enabled is true)
             return;
-        
+
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
-         
+
 
         switch (CurrentString)
         {
@@ -635,11 +639,11 @@ public class ItemDetail : MonoBehaviour
                     {
                         //if (!InventoryManager.instance.CheckColorPanelEnabled(ConstantsHolder.xanaConstants.currentButtonIndex))
                         //{
-                            //Debug.Log("<color=blue> Open Hair Color Panel: </color>");
-                            InventoryManager.instance.OpenColorPanel(ConstantsHolder.xanaConstants.currentButtonIndex);
-                            InventoryManager.instance.colorMode = true;
-                            InventoryManager.instance.PutDataInOurAPPNewAPI();
-                            InventoryManager.instance.colorMode = false;
+                        //Debug.Log("<color=blue> Open Hair Color Panel: </color>");
+                        InventoryManager.instance.OpenColorPanel(ConstantsHolder.xanaConstants.currentButtonIndex);
+                        InventoryManager.instance.colorMode = true;
+                        InventoryManager.instance.PutDataInOurAPPNewAPI();
+                        InventoryManager.instance.colorMode = false;
                         //}
                         //else   
                         //{
@@ -794,7 +798,7 @@ public class ItemDetail : MonoBehaviour
                         else if (name.Contains("eyelash"))
                             downloader.StartCoroutine(downloader.DownloadAddressableTexture(name, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
                         else
-                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype,"Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(),Color.clear, false));
+                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, false));
                     }
                     else
                     {
@@ -1219,6 +1223,6 @@ public class ItemDetail : MonoBehaviour
         InventoryManager.instance.GreyRibbonImage.SetActive(false);
         InventoryManager.instance.WhiteRibbonImage.SetActive(true);
     }
-  
-    
+
+
 }

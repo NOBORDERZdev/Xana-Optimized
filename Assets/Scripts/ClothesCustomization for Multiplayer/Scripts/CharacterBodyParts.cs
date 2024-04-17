@@ -143,7 +143,7 @@ public class CharacterBodyParts : MonoBehaviour
         //IntCharacterBones();
     }
 
-    
+
     public void TextureForShirt(Texture texture)
     {
         body.materials[0].SetTexture(shirt_TextureName, texture);
@@ -166,16 +166,15 @@ public class CharacterBodyParts : MonoBehaviour
         body.materials[0].SetTexture(Glove_TextureName, texture);
     }
 
-    // Set Default Texture for player
+    // Set Default Texture for all Items player
     public void DefaultTexture(bool ApplyClothMask = true, string _gender = "")
     {
 
         if (ConstantsHolder.xanaConstants.isNFTEquiped)
             DefaultTextureForBoxer(ApplyClothMask);
         else
-            DefaultTextureForNewCharacter(ApplyClothMask, _gender);
+            DefaultTextureForNewCharacter();
     }
-
     void DefaultTextureForBoxer(bool ApplyClothMask = true)
     {
         if (ApplyClothMask)
@@ -215,14 +214,12 @@ public class CharacterBodyParts : MonoBehaviour
         RemoveMustacheTexture(null, null);
         RemoveEyeLidTexture(null, null);
     }
-
-
-    void DefaultTextureForNewCharacter(bool ApplyClothMask = true, string _gender = "")
+    void DefaultTextureForNewCharacter()
     {
         CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
-        
+
         body.materials[0].SetTexture(Shoes_TextureName, null);
-        if (ApplyClothMask)
+        //if (ApplyClothMask)
         {
             if (avatarData.DPent_Texture != null)
                 body.materials[0].SetTexture(Pent_TextureName, avatarData.DPent_Texture);
@@ -257,6 +254,34 @@ public class CharacterBodyParts : MonoBehaviour
         //RemoveMustacheTexture(null, null);
         //RemoveEyeLidTexture(null, null);
         #endregion
+    }
+
+    // Set Default Texture for Sinfle Item player
+    public void DefaultTextureForNewCharacter_Single(string itemType)
+    {
+        CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
+
+        Material mat = this.body.materials[0];
+        switch (itemType)
+        {
+            case "Pent":
+                if (avatarData.DPent_Texture != null)
+                    mat.SetTexture(Pent_TextureName, avatarData.DPent_Texture);
+                break;
+
+            case "Shirt":
+                if (avatarData.DShirt_Texture != null)
+                    mat.SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
+                break;
+
+            case "Shoes":
+                if (avatarData.DShoe_Texture != null)
+                    mat.SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
+                break;
+
+            default:
+                break;
+        }
     }
 
 
