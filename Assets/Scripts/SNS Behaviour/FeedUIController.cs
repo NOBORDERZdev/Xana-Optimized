@@ -305,7 +305,7 @@ public class FeedUIController : MonoBehaviour
                 case "FollowerFollowingListScreen":
                     //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
                     profileFollowerFollowingListScreen.SetActive(false);
-                    footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
+                    //footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
                     break;
                 default:
                     feedUiScreen.SetActive(false);
