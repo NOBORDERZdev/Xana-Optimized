@@ -90,9 +90,9 @@ public class HomeScoketHandler : MonoBehaviour
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
-        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
-            yield return new WaitForSeconds(0.5f);
-        while (ConstantsHolder.userId == "")
+        //while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+        //    yield return new WaitForSeconds(0.5f);
+        while (ConstantsHolder.userId == null)
             yield return new WaitForSeconds(0.5f);
         Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.userId + " --- Socket Id :---- >  " + socketId);
 
