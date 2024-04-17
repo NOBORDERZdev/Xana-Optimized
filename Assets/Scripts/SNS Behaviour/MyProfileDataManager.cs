@@ -1077,6 +1077,10 @@ public class MyProfileDataManager : MonoBehaviour
             }
             Invoke(nameof(ProfileTabButtonClick), 5);
         }
+        else
+        {
+             Invoke(nameof(ProfileTabButtonClick), 5);
+        }
     }
 
 
