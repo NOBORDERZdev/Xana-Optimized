@@ -17,8 +17,6 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
-    bool isConnected=false;
-    //bool isSnsSocketConnnected = false;
     private void Awake()
     {
         instance = this;
@@ -41,8 +39,6 @@ public class HomeScoketHandler : MonoBehaviour
     }
     void OnConnected(ConnectResponse resp)
     {
-        
-            isConnected=true;
             socketId = resp.sid;
            // Debug.Log("<color=blue> Post -- Connected  </color>");
             EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
@@ -90,7 +86,7 @@ public class HomeScoketHandler : MonoBehaviour
     }
     IEnumerator SendSocketIdOfUserForPost()
     {
-        yield return new WaitForSeconds(2f);
+        //yield return new WaitForSeconds(2f);
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
@@ -98,7 +94,7 @@ public class HomeScoketHandler : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         while (ConstantsHolder.userId == "")
             yield return new WaitForSeconds(0.5f);
-      //  Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.xanaConstants.userId + " --- Socket Id :---- >  " + socketId);
+        Debug.Log(" ----> OnConnected --- User ---- >  " + ConstantsHolder.userId + " --- Socket Id :---- >  " + socketId);
 
         string FinalUrl = PrepareApiURL("SocketFriendUpdate");
         // Debug.LogError("Prepared URL SendSocketIdOfUserForPost ----> " + FinalUrl);
@@ -112,8 +108,6 @@ public class HomeScoketHandler : MonoBehaviour
             while (!www.isDone)
                 yield return new WaitForSecondsRealtime(Time.deltaTime);
 
-            // while (!www.isDone)
-            //     yield return null;
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 //Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
@@ -166,27 +160,15 @@ public class HomeScoketHandler : MonoBehaviour
     void AvatarUpdate(string response)
     {
         snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
-        
-        ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
+         if (ConstantsHolder.xanaConstants.IsProfileVisit && snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID ){ 
+                ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
+         }
     }
 
-    ///// <summary>
-    ///// To disconnect sns socket 
-    ///// </summary>
-    //public void DisscountSNSSockets() {
-    //    if (isSnsSocketConnnected && Manager != null)
-    //    {
-    //        Manager.Socket.Off("user-updated");/*<string>("likeTextPost", FeedLikeUpdate);*/
-    //        Manager.Socket.Off("user-follow");
-    //        Manager.Socket.Off("send_new_cloth_info");
-    //    }
-    //}
 
     void HomeFriendClothUpdate(string response)
     {
-        Debug.Log("RESPONSE " + response);
         HomeFriendAvatarData homeFriendAvatarData = JsonConvert.DeserializeObject<HomeFriendAvatarData>(response);
-       // SavingCharacterDataClass avatarJson = JsonConvert.DeserializeObject<SavingCharacterDataClass>(homeFriendAvatarData.json);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().UpdateFrendAvatar(homeFriendAvatarData.creatorId, homeFriendAvatarData.json);
     }
 
