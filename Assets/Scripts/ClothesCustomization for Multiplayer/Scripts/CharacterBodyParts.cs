@@ -426,7 +426,15 @@ public class CharacterBodyParts : MonoBehaviour
                 {
                     print("---- AxesDetails : " + item.workingAxes);
 
-                    Transform bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].boneObj.transform;
+                    Transform bone = null;
+                    if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                    {
+                        bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].maleBoneObj.transform;
+                    }
+                    else
+                    {
+                        bone = BlendShapeHolder.instance.allBlendShapes[morphsList[i]].femaleBoneObj.transform;
+                    }
                     // Has only 2 slider x & y
                     // If z axis need to modify than use above mention sliders[x,y]
                     if (item.workingAxes == AxesDetails.z)
