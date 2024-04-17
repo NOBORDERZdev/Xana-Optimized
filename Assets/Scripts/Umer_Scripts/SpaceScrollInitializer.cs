@@ -83,6 +83,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                     MasterScrollRowInit(initializeCategoryRow, _categTitles[i], _tagsCategData[i]._tagAsCategoryData[j]);
                 }
             }
+            Debug.Log("Added log message here in order to get loader turned off as without it loader wont get turned off");//UMER
             LoadDataInPool();
             Debug.Log("Added log message here in order to get loader turned off as without it loader wont get turned off");//UMER
             paginationLoaderRef.ShowApiLoader(false);
