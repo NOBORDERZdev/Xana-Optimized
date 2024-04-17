@@ -180,6 +180,9 @@ public class BuilderMapDownload : MonoBehaviour
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
+        if (levelData.uploadProperties != null)
+            BuilderEventManager.UploadPropertiesLoad?.Invoke(levelData.uploadProperties);
+
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
@@ -516,7 +519,7 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
-                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId==32)
+                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
                     {
                         //Set texture when getting null from addressable
                         _mat.SetTexture("_Tex", GamificationComponentData.instance.defaultSkyTex);
@@ -934,6 +937,7 @@ public class LevelData
     public SkyProperties skyProperties;
     public PlayerProperties playerProperties;
     public TerrainProperties terrainProperties;
+    public UploadProperties uploadProperties;
     public AudioPropertiesBGM audioPropertiesBGM = new AudioPropertiesBGM();
 }
 
@@ -1154,8 +1158,8 @@ public class TerrainProperties
         texturePath = "";
         waterTexturePath = "";
         meshDeformationPath = "";
-        planeScale = new Vector3(0f, 1f, 0f);
-        planePos = new Vector3(0.0f, 0f, 0.0f);
+        planeScale = new UnityEngine.Vector3(0f, 1f, 0f);
+        planePos = new UnityEngine.Vector3(0.0f, 0f, 0.0f);
         upMovesAllowed = downMovesAllowed = leftMovesAllowed = rightMovesAllowed = 2;
         planeHeightLimit = 5;
         terrainTextureSelected = 0;
@@ -1190,4 +1194,41 @@ public class RealisticMaterialData
     //public Material material;
     public string shaderName;
     //public Sprite thumbnail;
+}
+public enum MediaTypeBuilder
+{
+    YouTube, LocalVideo, LocalImage
+}
+[Serializable]
+public class UploadProperties
+{
+    #region Data Variables
+    public List<UploadData> uploadData;
+    #endregion
+}
+
+[Serializable]
+public class UploadData
+{
+    #region Data Variables
+    public string uploadMediaId;
+    public Vector3 position;
+    public Quaternion rotation;
+    // public Vector3 scale;
+    public float scale;
+    public string url;
+    public string localFileName;
+    public int index;
+    public MediaTypeBuilder mediaType;
+    public bool isLivestream;
+    public bool addFrame;
+    public bool isRepeat;
+
+    #endregion
+
+    public UploadData()
+    {
+        url = "";
+        mediaType = MediaTypeBuilder.YouTube;
+    }
 }

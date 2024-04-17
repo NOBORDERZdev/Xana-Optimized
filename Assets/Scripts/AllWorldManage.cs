@@ -150,76 +150,39 @@ public class AllWorldManage : MonoBehaviour
             transform.GetComponent<RectTransform>().offsetMin.x,
             transform.GetComponent<RectTransform>().offsetMin.y + 342);
     }
-
-
     public void CategoryLoadMore(string _categType)
     {
         Debug.Log("Selected Category Type: " + _categType);
+        WorldManager.instance.seeAllPN = 1;
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorldTab(ApiUrlSelect(_categType), _categType);
+    }
+
+    APIURL ApiUrlSelect(string _categType)
+    {
         if (_categType.Contains("Featured Spaces"))
         {
-            FeaturedSpacesLoadMore();
-        }else if (_categType.Contains("Hot Spaces"))
+            return APIURL.FeaturedSpaces;
+        }
+        else if (_categType.Contains("Hot Spaces"))
         {
-            HotSpacesLoadMore();
+            return APIURL.HotSpaces;
         }
         else if (_categType.Contains("Hot Games"))
         {
-            HotGamesLoadMore();
+            return APIURL.HotGames;
         }
         else if (_categType.Contains("Following Spaces"))
         {
-            FollowingSpacesLoadMore();
+            return APIURL.FolloingSpace;
         }
         else if (_categType.Contains("My Spaces"))
         {
-            MySpacesLoadMore();
+            return APIURL.MySpace;
         }
         else
         {
-            CategorySpacesLoadMore(_categType);
+            return APIURL.SearchWorldByTag;
         }
-    }
-
-    public void FeaturedSpacesLoadMore()
-    {
-        SearchScreenLoad();
-        WorldManager.instance.hotFeatSpacePN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.FeaturedSpaces);
-    }
-
-    public void HotSpacesLoadMore()
-    {
-        SearchScreenLoad();
-        WorldManager.instance.hotSpacePN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.HotSpaces);
-    }
-
-    public void HotGamesLoadMore()
-    {
-        SearchScreenLoad();
-        WorldManager.instance.hotGamesPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.HotGames);
-    }
-
-    public void FollowingSpacesLoadMore()
-    {
-        SearchScreenLoad();
-        WorldManager.instance.followingPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.FolloingSpace);
-    }
-
-    public void MySpacesLoadMore()
-    {
-        SearchScreenLoad();
-        WorldManager.instance.mySpacesPN = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.MySpace);
-    }
-
-    public void CategorySpacesLoadMore(string tag)
-    {
-        WorldManager.instance.SearchKey = tag;
-        SearchScreenLoad();
-        WorldManager.instance.SearchTagPageNumb = 1;
-        WorldManager.instance.ChangeWorldTab(APIURL.SearchWorldByTag);
     }
 }
