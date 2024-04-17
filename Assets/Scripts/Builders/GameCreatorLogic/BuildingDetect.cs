@@ -147,7 +147,7 @@ public class BuildingDetect : MonoBehaviour
             defaultHairMat = playerHair.sharedMaterials;
         if (playerShoes)
             defaultShoesMat = playerShoes.material;
-        if (playerEyebrow.Length > 0)
+        if (playerEyebrow != null)
         {
             defaltEyebrowMat = new Material[playerEyebrow.Length];
             foreach (var eyeBrowMat in playerEyebrow)
