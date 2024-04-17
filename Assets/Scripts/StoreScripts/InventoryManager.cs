@@ -1288,7 +1288,7 @@ public class InventoryManager : MonoBehaviour
 
         GameManager.Instance.mainCharacter.GetComponent<Animator>().SetBool("Customization", false);
 
-
+        PatchForStore.isCustomizationPanelOpen = false;
         GreyRibbonImage.SetActive(true);
         WhiteRibbonImage.SetActive(false);
         SaveStoreBtn.GetComponent<Image>().color = Color.white;
@@ -1316,6 +1316,7 @@ public class InventoryManager : MonoBehaviour
             DeletePreviousItems();
 
         }
+        BackToMain();
 
         //Transform parentEyeBrowAvatar = ParentOfBtnsAvatarEyeBrows;                 // AH Working
         //if (parentEyeBrowAvatar.childCount > 1)
