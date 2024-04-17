@@ -259,7 +259,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 //}
                 //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                 //{
-                //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, otherPlayer.gameObject, CurrentTextureType.EyeLashes));
+                //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, otherPlayer.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
                 ////if (_CharacterData.eyeBrowName != "" && _CharacterData.eyeBrowName != null)
                 ////{
