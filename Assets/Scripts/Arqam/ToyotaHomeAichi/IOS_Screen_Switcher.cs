@@ -13,7 +13,7 @@ public class IOS_Screen_Switcher : MonoBehaviour
     {
         if (Application.isEditor)
         {
-            m_filter.transform.localRotation = Quaternion.Euler(0f, 0.426f, 0f);
+            m_filter.transform.localRotation = Quaternion.Euler(0f, 0.426f, 180f);
         }
         //else if (Application.platform == RuntimePlatform.IPhonePlayer)
         //{
