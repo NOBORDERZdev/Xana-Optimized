@@ -166,10 +166,14 @@ public class SaveCharacterProperties : MonoBehaviour
         InventoryManager.instance.GreyRibbonImage.SetActive(true);
         InventoryManager.instance.WhiteRibbonImage.SetActive(false);
         InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = Color.white;
-        SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
-        SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
-        SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
-        SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
+        if(characterController.wornPant!=null)
+            SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
+        if(characterController.wornShirt!=null)
+            SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
+        if(characterController.wornHair!=null)
+            SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
+        if(characterController.wornShoes!=null)
+            SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
         if (characterController.wornEyeWearable != null)
         {
             SaveItemList.myItemObj.Add(new Item(characterController.wornEyewearableId, characterController.wornEyeWearable.name, "EyeWearable"));
