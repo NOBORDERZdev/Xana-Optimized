@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using static InventoryManager;
-using static UnityEngine.Rendering.DebugUI;
 
 public class FriendHomeManager : MonoBehaviour
 {
