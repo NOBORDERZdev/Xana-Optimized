@@ -166,7 +166,7 @@ public class AvatarController : MonoBehaviour
         // .Step to do After Equipt NFT
         // .Add Data into NFTBoxerJson 
         // .Disable Store BTN
-        // .Make All Items Default [Eyebrow, EyeLashes, Bones, BlendShapes, Items Color[hair,eyebrow,eyes,lip,skin]]
+        // .Make All Items Default [Eyebrow, EyeBrowPoints, Bones, BlendShapes, Items Color[hair,eyebrow,eyes,lip,skin]]
         // .Reset BodyFat
         // .Read Data From Json & load its Properties
 
@@ -574,7 +574,7 @@ public class AvatarController : MonoBehaviour
 
                 //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                 //{
-                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
                 //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
                 //{
@@ -785,7 +785,7 @@ public class AvatarController : MonoBehaviour
                     //}
                     //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                     //{
-                    //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                    //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                     //}
 
                     //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
@@ -993,7 +993,7 @@ public class AvatarController : MonoBehaviour
         //}
         //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
         //{
-        //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+        //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
         //}
 
         //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
@@ -2117,7 +2117,7 @@ public class AvatarController : MonoBehaviour
 
             //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
             //{
-            //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+            //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
             //}
             //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
             //{
@@ -2445,7 +2445,7 @@ public class AvatarController : MonoBehaviour
     //    //}
     //    //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
     //    //{
-    //    //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+    //    //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
     //    //}
     //    //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
     //    //{
