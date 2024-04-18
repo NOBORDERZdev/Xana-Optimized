@@ -62,7 +62,7 @@ public class UGCUIManager : MonoBehaviour
     //public Color normalColor, highlightedColor;
     //public Color normalTextColor, highlightedTextColor;
     public GameObject ItemPrefab;
-
+    public Button videoBtn,photoBtn;
 
     void Start()
     {
@@ -76,7 +76,16 @@ public class UGCUIManager : MonoBehaviour
         // BGMat = new Material(BG.material);
     }
 
-
+    private void OnEnable()
+    {
+        videoBtn.onClick.AddListener(OnTapVideoButton);
+        photoBtn.onClick.AddListener(OnTapphotoButton);
+    }
+    private void OnDisable()
+    {
+        videoBtn.onClick.RemoveListener(OnTapVideoButton);
+        photoBtn.onClick.RemoveListener(OnTapphotoButton);
+    }
     public void DisableLoadingPanel()
     {
         StartCoroutine(IEHandleLoadingPanel());
@@ -148,7 +157,8 @@ public class UGCUIManager : MonoBehaviour
             else 
             {
                 StopRecording();
-               // holdTime = 0;
+                StopCoroutine(VideoButtonDownCoroutine);
+                // holdTime = 0;
                 isPressed = false;
             }
         }
@@ -161,11 +171,19 @@ public class UGCUIManager : MonoBehaviour
     {
         isPhoto = false;
         isVideo = true;
+        photoBtn.GetComponent<Image>().color = Color.white;
+        photoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+        videoBtn.GetComponent<Image>().color = Color.black;
+        videoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
     }
     public void OnTapphotoButton()
     {
         isPhoto = true;
         isVideo = false;
+        videoBtn.GetComponent<Image>().color = Color.white;
+        videoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+        photoBtn.GetComponent<Image>().color = Color.black;
+        photoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
     }
     Coroutine VideoButtonDownCoroutine;
     public void OnVideoButtonUp()
