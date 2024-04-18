@@ -61,7 +61,7 @@ public class UGCDataManager : MonoBehaviour
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + APIBasepointManager.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES);
         try
         {
             uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -95,7 +95,6 @@ public class UGCDataManager : MonoBehaviour
                     //animObject.transform.GetChild(1).gameObject.SetActive(false);
                     animObject.name = _info.data.backgroundList[i].name;
                     animObject.transform.GetChild(0).GetComponent<Image>().sprite = null;
-                    animObject.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = _info.data.backgroundList[i].name;
                     animObject.GetComponent<BgTagsView>().InitBg(_info.data.backgroundList[i]);
                     string url = _info.data.backgroundList[i].thumbnail;
                     if (url != "")
@@ -134,9 +133,10 @@ public class UGCDataManager : MonoBehaviour
                     {
                         categorizedBackgrounds[category] = new List<GameObject>();
                         GameObject tags = Instantiate(ugcUIManager.tagsPrefab, ugcUIManager.tagsPrefabParent);
+                        tags.name = category;
                         tags.GetComponent<BgTagsView>().InitBgTags(_info.data.backgroundList[i]);
                         ugcUIManager.tagsbuttons.Add(tags);
-                        tags.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickTags(tags, category));
+                        //tags.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickTags(tags, category));
                     }
                     // Add the instantiated background object to the corresponding category list
                     categorizedBackgrounds[category].Add(animObject);

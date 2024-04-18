@@ -19,6 +19,5 @@ public class BgTagsView : MonoBehaviour
     {
         index = _backgroundList.id;
         tagName = _backgroundList.category;
-        _name = _backgroundList.name;
     }
 }

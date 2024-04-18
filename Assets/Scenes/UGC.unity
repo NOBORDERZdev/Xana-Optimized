@@ -510,7 +510,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 18b20ccbb67fee140a002709cae5df26, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1081,6 +1081,7 @@ GameObject:
   - component: {fileID: 1500612079}
   - component: {fileID: 1500612080}
   - component: {fileID: 1500612081}
+  - component: {fileID: 1500612082}
   m_Layer: 0
   m_Name: UGCUIManager
   m_TagString: Untagged
@@ -1120,9 +1121,7 @@ MonoBehaviour:
   isVideo: 0
   snapSavePath: 
   VideoRecordTimer: 0
-  holdTime: 0
   isRecording: 0
-  holdTimeForPhoto: 0.3
   UGCCharacter: {fileID: 0}
   videoPlayer: {fileID: 229192383}
   characterRT: {fileID: 8400000, guid: 9c2b1af7995adaa4e9a10e7bb576d0a8, type: 2}
@@ -1151,10 +1150,6 @@ MonoBehaviour:
   tagsObjects: []
   tagsbuttons: []
   loadingTexture: {fileID: 3744563397186325843}
-  normalColor: {r: 0.80784315, g: 0.80784315, b: 0.80784315, a: 1}
-  highlightedColor: {r: 0.16078432, g: 0.16078432, b: 0.1882353, a: 1}
-  normalTextColor: {r: 0, g: 0, b: 0, a: 1}
-  highlightedTextColor: {r: 1, g: 1, b: 1, a: 1}
   ItemPrefab: {fileID: 1570658853751365644, guid: 4f773466418db924aa8a76582cd341b7, type: 3}
 --- !u!114 &1500612081
 MonoBehaviour:
@@ -1169,6 +1164,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ugcUIManager: {fileID: 1500612080}
+--- !u!114 &1500612082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1500612078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0d31580422022428a74074509dccad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserIDfromServer: 0
+  localindexfilebuffer: 0
 --- !u!1 &1541594209
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,6 +1700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HasnainLightandBGSetup
       objectReference: {fileID: 0}
+    - target: {fileID: 8597682781975170516, guid: deca5c34dcced0447b4cf15a0db85668, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8597682781975170517, guid: deca5c34dcced0447b4cf15a0db85668, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -1775,10 +1788,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1500612080}
-    - target: {fileID: 2595951382548297746, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnTapBackGroundButton
-      objectReference: {fileID: 0}
     - target: {fileID: 4189069363540374563, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1879,26 +1888,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: VideoRecordScreen
       objectReference: {fileID: 0}
-    - target: {fileID: 4675554739943507935, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4675554740066401431, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4675554741701488442, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6064051581133620623, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1500612080}
-    - target: {fileID: 8292733104090952581, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 6643951817578094541, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1500612080}
+    - target: {fileID: 6863588673753827328, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1500612080}
+    - target: {fileID: 7371094282535833229, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1500612080}
     - target: {fileID: 9068677742653855691, guid: e0758fedb001aba46b17cf0552c36882, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
