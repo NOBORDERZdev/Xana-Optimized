@@ -448,7 +448,7 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default"))
                             {
                                
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
@@ -1103,6 +1103,8 @@ public class AvatarController : MonoBehaviour
             _CharacterData1.LipsValue = this.lipsId;
             _CharacterData1.LipsColorValue = this.lipsColorId;
             _CharacterData1.BodyFat = this.bodyFat;
+
+            // These Are using for save implemted obj index
             _CharacterData1.MakeupValue = this.makeupId;
             _CharacterData1.faceMorphed = xanaConstants.isFaceMorphed;
             _CharacterData1.eyeBrowMorphed = xanaConstants.isEyebrowMorphed;
@@ -1574,7 +1576,11 @@ public class AvatarController : MonoBehaviour
                         }
                     }
                     else
-                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                    {
+                        //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                        // Hairs Default Color
+                        StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f,1f), SliderType.HairColor, applyOn));
+                    }
                 }
                 if (_CharacterData?.charactertypeAi == true)
                 {
@@ -1582,7 +1588,8 @@ public class AvatarController : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                    //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                    StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f, 1f), SliderType.HairColor, applyOn));
                 }
             }
             else if (type == "Hair" && xanaConstants.isPresetHairColor && presetHairColor != null)

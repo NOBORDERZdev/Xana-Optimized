@@ -782,6 +782,7 @@ public class HomeFooterHandler : MonoBehaviour
         //  gameManager.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
         // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         gameManager.UiManager.HomeWorldScreen.SetActive(false);
+        ConstantsHolder.xanaConstants.isStoreActive = true;
     }
     public void SetDefaultButtonSelection(int index)
     {

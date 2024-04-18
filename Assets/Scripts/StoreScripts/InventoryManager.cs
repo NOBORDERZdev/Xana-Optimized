@@ -1358,7 +1358,7 @@ public class InventoryManager : MonoBehaviour
     public void OnClickHomeButton()
     {
         //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
-
+        ConstantsHolder.xanaConstants.isStoreActive = false;
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);
@@ -1504,7 +1504,7 @@ public class InventoryManager : MonoBehaviour
             AvatarPanel[i].SetActive(false);
         }
         AvatarPanel[m_GetIndex].SetActive(true);
-        CheckColorProperty(m_GetIndex);
+        //CheckColorProperty(m_GetIndex);    // Temperarlily Disble Color Panel
         if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeBrowPoints*/|| m_GetIndex == 9) //its a preset do nothing
         {
             // When Preset click than update the panel index
@@ -3294,6 +3294,9 @@ public class InventoryManager : MonoBehaviour
                     yield return new WaitForEndOfFrame();
                     InstantiateStoreItems(TempSubcategoryParent.transform, i, "", TempitemDetail, false);
                 }
+
+                // Enable Gender Specific Items
+
             }
 
             if (TempitemDetail.Count > 0)

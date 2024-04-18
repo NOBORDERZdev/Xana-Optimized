@@ -631,6 +631,9 @@ public class ItemDetail : MonoBehaviour
                         ConstantsHolder.xanaConstants.hair = id;
                         ConstantsHolder.xanaConstants.avatarStoreSelection[ConstantsHolder.xanaConstants.currentButtonIndex] = gameObject;
                         saveIndex = 2;
+                        //ConstantsHolder.xanaConstants.isPresetHairColor = true; presetHairColor;
+
+
                         ////Debug.Log("ConstantsHolder Hairs: " + ConstantsHolder.xanaConstants.hair);
                         ////Debug.Log("wornHairId: " + SaveCharacterProperties.instance.characterController.wornHairId.ToString());
                         break;
@@ -798,7 +801,7 @@ public class ItemDetail : MonoBehaviour
                         else if (name.Contains("eyelash"))
                             downloader.StartCoroutine(downloader.DownloadAddressableTexture(name, GameManager.Instance.mainCharacter, CurrentTextureType.EyeLashes));
                         else
-                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, false));
+                            downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, true));
                     }
                     else
                     {
