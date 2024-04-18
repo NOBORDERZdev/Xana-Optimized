@@ -235,7 +235,7 @@ public class XanaChatSocket : MonoBehaviour
 
         // //Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
         var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
-        //Debug.Log("Data:::" + data);
+        //Debug.Log("XanaChat --:" + data);
         Manager.Socket.Emit("chatMessage", data);
     }
 
@@ -250,8 +250,8 @@ public class XanaChatSocket : MonoBehaviour
             return;
 
         string tempUser = msg.name;//msg.username;
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
-            tempUser = msg.username;
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0 || string.IsNullOrEmpty(msg.name))
+            tempUser = msg.guestusername; //msg.username;
 
         receivedMsgForTesting = msg;
 
@@ -382,7 +382,7 @@ public class XanaChatSocket : MonoBehaviour
         string jsonData = JsonUtility.ToJson(requestData);
 
 
-        // //Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
+        //Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
         // //Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
 
         // Create a UnityWebRequest for the POST request
@@ -426,6 +426,7 @@ public class ChatUserData
     public string emotion;
     public string time;
     public string timestamp;
+    public string guestusername;
     public string profileIconColor;
     public string image;
     public string video;
