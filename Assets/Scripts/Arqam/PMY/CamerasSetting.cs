@@ -6,8 +6,8 @@ using UnityEngine.Rendering.Universal;
 
 public class CamerasSetting : MonoBehaviour
 {
-    public enum SceneType { Lobby, Other };
-    public SceneType sceneType;
+    //public enum SceneType { Lobby, Other };
+    //public SceneType sceneType;
 
     private void OnEnable()
     {
@@ -22,11 +22,12 @@ public class CamerasSetting : MonoBehaviour
 
     private void SetCamerasSetting()
     {
-        if (sceneType.Equals(SceneType.Other))
-        {
-            LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.01f;
-            return;
-        }
+        //if (sceneType.Equals(SceneType.Other))
+        //{
+        //    LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.3f;
+        //    return;
+        //}
+
         // For TPC camera
         LoadFromFile.instance.PlayerCamera.m_Lens.FarClipPlane = 630;
         LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.01f;
