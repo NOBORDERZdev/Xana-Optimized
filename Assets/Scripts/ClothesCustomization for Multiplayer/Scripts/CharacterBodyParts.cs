@@ -1495,6 +1495,13 @@ public class CharacterBodyParts : MonoBehaviour
         }
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
+
+    public void ApplyBlendShapesFromStore(GameObject applyOn, int blendshapeIndex, int value)
+    {
+        SkinnedMeshRenderer blendRender = applyOn.GetComponent<SkinnedMeshRenderer>();
+        blendRender.SetBlendShapeWeight(blendshapeIndex, value);
+    }
+
     public void ApplyBlendShapeEyesValues(GameObject applyOn, List<BlendShapeContainer> data, Vector3 eyesPos, float rotationz)
     {
         SkinnedMeshRenderer blendRender = applyOn.GetComponent<SkinnedMeshRenderer>();
