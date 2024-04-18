@@ -181,7 +181,7 @@ public class BuilderMapDownload : MonoBehaviour
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
         if (levelData.uploadProperties != null)
-            BuilderEventManager.UploadPropertiesLoad?.Invoke(levelData.uploadProperties);
+            BuilderEventManager.UploadPropertiesData?.Invoke(levelData.uploadProperties);
 
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
