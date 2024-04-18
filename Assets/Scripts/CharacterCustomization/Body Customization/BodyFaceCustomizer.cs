@@ -80,40 +80,40 @@ public class BodyFaceCustomizer : MonoBehaviour
     }
     public void BodyCustomCallFromStore()
     {  
-        #region populating Body blend values from store manager script
-        InventoryManager _sManager = FindObjectOfType<InventoryManager>();    // Getting InventoryManager Ref
+        //#region populating Body blend values from store manager script
+        //InventoryManager _sManager = FindObjectOfType<InventoryManager>();    // Getting InventoryManager Ref
 
-        // Setting blend Shape values for morphs
-        m_FaceBlendShapeIndex = new int[_sManager.faceAvatarButton.Length];   // populate the length of blend as per no of buttons
-        for (int i = 0; i < _sManager.faceAvatarButton.Length; i++)       // 
-        {
-            m_FaceBlendShapeIndex[i] = _sManager.faceAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-        }
-        //Eyebrow set indexing for blend shapes
-        m_EyeBrowsBlendShapeIndex = new int[_sManager.eyeBrowsAvatarButton.Length];
-        for (int i = 0; i < _sManager.eyeBrowsAvatarButton.Length; i++)
-        {
-            m_EyeBrowsBlendShapeIndex[i] = _sManager.eyeBrowsAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-        }
-        //EYE
-        m_EyesBlendShapeIndex = new int[_sManager.eyeAvatarButton.Length];
-        for (int i = 0; i < _sManager.eyeAvatarButton.Length; i++)
-        {
-            m_EyesBlendShapeIndex[i] = _sManager.eyeAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-        }
-        //LIP
-        m_LipsBlendShapeIndex = new int[_sManager.lipAvatarButton.Length];
-        for (int i = 0; i < _sManager.lipAvatarButton.Length; i++)
-        {
-            m_LipsBlendShapeIndex[i] = _sManager.lipAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-        }
-        //Nose
-        m_NoseBlendShapeIndex = new int[_sManager.noseAvatarButton.Length];
-        for (int i = 0; i < _sManager.noseAvatarButton.Length; i++)
-        {
-            m_NoseBlendShapeIndex[i] = _sManager.noseAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
-        }
-        #endregion
+        //// Setting blend Shape values for morphs
+        //m_FaceBlendShapeIndex = new int[_sManager.faceAvatarButton.Length];   // populate the length of blend as per no of buttons
+        //for (int i = 0; i < _sManager.faceAvatarButton.Length; i++)       // 
+        //{
+        //    m_FaceBlendShapeIndex[i] = _sManager.faceAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+        //}
+        ////Eyebrow set indexing for blend shapes
+        //m_EyeBrowsBlendShapeIndex = new int[_sManager.eyeBrowsAvatarButton.Length];
+        //for (int i = 0; i < _sManager.eyeBrowsAvatarButton.Length; i++)
+        //{
+        //    m_EyeBrowsBlendShapeIndex[i] = _sManager.eyeBrowsAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+        //}
+        ////EYE
+        //m_EyesBlendShapeIndex = new int[_sManager.eyeAvatarButton.Length];
+        //for (int i = 0; i < _sManager.eyeAvatarButton.Length; i++)
+        //{
+        //    m_EyesBlendShapeIndex[i] = _sManager.eyeAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+        //}
+        ////LIP
+        //m_LipsBlendShapeIndex = new int[_sManager.lipAvatarButton.Length];
+        //for (int i = 0; i < _sManager.lipAvatarButton.Length; i++)
+        //{
+        //    m_LipsBlendShapeIndex[i] = _sManager.lipAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+        //}
+        ////Nose
+        //m_NoseBlendShapeIndex = new int[_sManager.noseAvatarButton.Length];
+        //for (int i = 0; i < _sManager.noseAvatarButton.Length; i++)
+        //{
+        //    m_NoseBlendShapeIndex[i] = _sManager.noseAvatarButton[i].GetComponent<BodyCustomizationTrigger>().f_BlendShapeOne;
+        //}
+        //#endregion
     }
 
     public void save()
