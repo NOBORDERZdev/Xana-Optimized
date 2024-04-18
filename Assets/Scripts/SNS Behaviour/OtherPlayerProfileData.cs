@@ -111,6 +111,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     ProfileUIHandler profileUIHandler;
     public List<int> loadedMyPostAndVideoId = new List<int>();
     [SerializeField] FeedUIController  feedUIController;
+    //HomeScoketHandler socketController;
     private void Awake()
     {
         if (Instance == null)
@@ -126,6 +127,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             feedUIController = FeedUIController.Instance;
         }
+        //socketController = HomeScoketHandler.instance;
         profileUIHandler = ProfileUIHandler.instance;
         ClearDummyData();//clear dummy data.......
         RefreshUserData();
@@ -150,6 +152,9 @@ public class OtherPlayerProfileData : MonoBehaviour
         }
     }
 
+    public void SocketOtherProfileUpdate(int id){
+           StartCoroutine(IERequestGetUserDetails(id, false));  
+    }
 
     //this method is used to clear the dummy data.......
     public void ClearDummyData()
@@ -258,6 +263,9 @@ public class OtherPlayerProfileData : MonoBehaviour
 
             if(gameObject.activeSelf)
             StartCoroutine(WaitToRefreshProfileScreen());
+            ConstantsHolder.xanaConstants.SnsProfileID = singleUserProfileData.id;
+            ConstantsHolder.xanaConstants.IsProfileVisit = true;
+            ConstantsHolder.xanaConstants.IsOtherProfileVisit= true;
         }
     }
 
@@ -592,7 +600,7 @@ public class OtherPlayerProfileData : MonoBehaviour
                    Debug.Log("Last Comes from Follower Following list screen my profile");
                     MyProfileDataManager.Instance.myProfileScreen.SetActive(true);
                     FeedUIController.Instance.profileFollowerFollowingListScreen.SetActive(true);
-                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
+                    //FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().SetDefaultButtonSelection(4);
                     RefreshDataFollowerAndFollowingScreen();
                     break;
                 case "HotTabScreen":
@@ -740,7 +748,7 @@ public class OtherPlayerProfileData : MonoBehaviour
             {
                 //// Print the elapsed time
                 string data = www.downloadHandler.text;
-               Debug.Log("IERequestGetSingleUserDetails data:" + data);
+                Debug.Log("IERequestGetSingleUserDetails data:" + data);
                 SingleUserProfileRoot singleUserProfileRoot = JsonConvert.DeserializeObject<SingleUserProfileRoot>(data);
                 if (singleUserProfileRoot != null)
                 {
@@ -768,6 +776,13 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //Riken
             LoadUserData(true);
+          
+            //if (socketController == null)
+            //{
+            //    socketController = HomeScoketHandler.instance;
+            //}
+            //socketController.ConnectSNSSockets(userId);
+
         }
     }
 

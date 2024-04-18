@@ -77,7 +77,7 @@ public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
     /// Populates the data with a lot of records
     /// </summary>
     float scrollPosition;
-    public void LoadData(int pageStartIndex)
+    public void LoadData(int pageStartIndex, int _pageNumb)
     {
         //if (pageStartIndex == 0)
         //    scroller.isScrollEnded = true;
@@ -104,8 +104,14 @@ public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
 
         // cache the scroller's position so that we can set it back after the reload
 
-
-        scrollPosition = scroller.ScrollPosition;
+        if (_pageNumb == 1)
+        {
+            scrollPosition = 0;
+        }
+        else
+        {
+            scrollPosition = scroller.ScrollPosition;
+        }
         // tell the scroller to reload now that we have the data.
         //if (pageStartIndex != 0)
         //{
