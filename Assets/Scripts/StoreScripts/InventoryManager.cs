@@ -1627,7 +1627,7 @@ public class InventoryManager : MonoBehaviour
         if (_index == 3 || _index == 5 /*|| _index == 8*/)
         {
             SwitchColorMode(_index);
-            colorBtn.SetActive(true);
+            //colorBtn.SetActive(true);
             colorBtn.GetComponent<Button>().onClick.RemoveAllListeners();
             colorBtn.GetComponent<Button>().onClick.AddListener(() => OnColorButtonClicked(_index));
 
@@ -3230,7 +3230,7 @@ public class InventoryManager : MonoBehaviour
         if (TempEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar)
         {
             eyeBrowTapButton.SetActive(true);
-            eyeBrowsColorButton.gameObject.SetActive(true);
+            //eyeBrowsColorButton.gameObject.SetActive(true);
         }
         else if (TempEnumVar == EnumClass.CategoryEnum.HairAvatar)
         {
