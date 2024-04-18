@@ -188,6 +188,8 @@ public class BuilderAssetDownloader : MonoBehaviour
             assetDownloadingText.transform.parent.gameObject.SetActive(false);
             assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
         }
+
+        BuilderEventManager.UploadPropertiesInit?.Invoke();
     }
 
     IEnumerator DownloadAssetsFromSortedList()
