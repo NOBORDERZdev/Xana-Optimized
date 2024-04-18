@@ -391,10 +391,13 @@ namespace AdvancedInputFieldPlugin
 			processedTextRenderer.ViewportTransform = InputField.TextAreaTransform;
 
 			TextRenderer placeholderTextRenderer = InputField.PlaceholderTextRenderer;
-			placeholderTextRenderer.CaretWidth = caretWidth;
-			placeholderTextRenderer.Multiline = multiline;
-			placeholderTextRenderer.RichTextEnabled = shouldUseRichText;
-			placeholderTextRenderer.ViewportTransform = InputField.TextAreaTransform;
+			if(placeholderTextRenderer!=null)
+			{
+				placeholderTextRenderer.CaretWidth = caretWidth;
+				placeholderTextRenderer.Multiline = multiline;
+				placeholderTextRenderer.RichTextEnabled = shouldUseRichText;
+				placeholderTextRenderer.ViewportTransform = InputField.TextAreaTransform;
+			}
 
 #if ADVANCEDINPUTFIELD_TEXTMESHPRO
 			if(placeholderTextRenderer is TMProTextRenderer && string.IsNullOrEmpty(placeholderTextRenderer.Text))

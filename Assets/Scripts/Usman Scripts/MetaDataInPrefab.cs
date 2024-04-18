@@ -40,7 +40,7 @@ public class MetaDataInPrefab : MonoBehaviour
 
     //private bool canOpenPicture = true;
 
-    public PlayerControllerNew playerControllerNew;
+    public PlayerController playerControllerNew;
     /// <summary>
     /// variables for gif 
     /// </summary>
@@ -56,10 +56,10 @@ public class MetaDataInPrefab : MonoBehaviour
     private void Start()
     {
         mat = (Material)Resources.Load("FramMaterial");
-        playerControllerNew = ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>();
+        playerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
         if (playerCamera == null)
         {
-            playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
+            playerCamera = ReferencesForGamePlay.instance.randerCamera;
         }
     }
     public void StartNow()
@@ -655,8 +655,8 @@ public class MetaDataInPrefab : MonoBehaviour
         if (playerControllerNew.isFirstPerson)
             playerCamera = playerControllerNew.firstPersonCameraObj.GetComponent<Camera>();
         else
-            playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
-        if (CameraLook.IsPointerOverUIObject()) return;
+            playerCamera = ReferencesForGamePlay.instance.randerCamera;
+        if (PlayerCameraController.IsPointerOverUIObject()) return;
 
         Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -664,16 +664,20 @@ public class MetaDataInPrefab : MonoBehaviour
         {
             if (hit.collider.gameObject.name == this.gameObject.name)
             {
-                if (isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
+                if (isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
                 {
                     print("showing video");
                     videoPlayer.Play();
                     ShowNFTDetails.instance.ShowVideo(this);
+                    if (ReferencesForGamePlay.instance.playerControllerNew)
+                        ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
                 }
-                else if (!isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
+                else if (!isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
                 {
-                    print(SelfieController.Instance.m_IsSelfieFeatureActive);
+                    print(PlayerSelfieController.Instance.m_IsSelfieFeatureActive);
                     ShowNFTDetails.instance.ShowImage(this);
+                    if (ReferencesForGamePlay.instance.playerControllerNew)
+                        ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
                     isVisible = true;
                 }
             }
@@ -695,7 +699,7 @@ public class MetaDataInPrefab : MonoBehaviour
         //            if (Input.touchCount == 1)
         //            {
         //#endif
-        //            if (EmoteAnimationPlay.Instance.isEmoteActive || CameraLook.IsPointerOverUIObject()) return;
+        //            if (EmoteAnimationHandler.Instance.isEmoteActive || PlayerCameraController.IsPointerOverUIObject()) return;
 
         //            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
@@ -703,14 +707,14 @@ public class MetaDataInPrefab : MonoBehaviour
         //            {
         //                if (hit.collider.gameObject.name == this.gameObject.name)
         //                {
-        //                    if (isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
+        //                    if (isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
         //                    {
         //                        print("showing video");
         //                        ShowNFTDetails.instance.ShowVideo(this);
         //                    }
-        //                    else if (!isVideo && !SelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !ButtonsPressController.Instance.Settings_pressed)
+        //                    else if (!isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
         //                    {
-        //                        print(SelfieController.Instance.m_IsSelfieFeatureActive);
+        //                        print(PlayerSelfieController.Instance.m_IsSelfieFeatureActive);
         //                        ShowNFTDetails.instance.ShowImage(this);
         //                        isVisible = true;
         //                    }

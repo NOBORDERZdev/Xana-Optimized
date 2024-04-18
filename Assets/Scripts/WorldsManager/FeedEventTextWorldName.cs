@@ -26,14 +26,14 @@ public class FeedEventTextWorldName : MonoBehaviour
 
     void Start()
     {
-        if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)
+        if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)
         {
-            if (XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+            if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
                 PreferredLength = 40;
             else
                 PreferredLength = 12;
         }
-        else if(XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        else if(ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
             PreferredLength = 40;
         _myText = GetComponent<Text>();
         //Length = _myText.text.Length;

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
 using XanaNFT;
-using static ServerSIdeCharacterHandling;
+using static ServerSideUserDataHandler;
 
 public class NFTFromServer : MonoBehaviour
 {
@@ -27,7 +27,7 @@ public class NFTFromServer : MonoBehaviour
     public int testnetMussuemId;
     public int mainnetMussuemId;
     private string dynamicMusuemApi = "/item/get-museum-all-assets/";
-    private string dynamicEventFeedApi = "";
+    private string dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
     public string eventid;
     string MussuemLink;
     //public List<Datum> TestList;
@@ -38,26 +38,16 @@ public class NFTFromServer : MonoBehaviour
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
 
-
-        if (APIBaseUrlChange.instance.IsXanaLive)
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/12/";
-        }
-        else
-        {
-            dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/14/";
-        }
-
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             eventid = XanaEventDetails.eventDetails.id.ToString();
-            MussuemLink = dynamicEventFeedApi+eventid;
+            MussuemLink = dynamicEventFeedApi + XanaEventDetails.eventDetails.museumId + "/" + XanaEventDetails.eventDetails.id;
             Debug.Log("Event Lunching");
             Debug.Log("MussuemLink"+ MussuemLink);
         }
         else 
         {
-            MussuemLink = dynamicMusuemApi + XanaConstants.xanaConstants.MuseumID;
+            MussuemLink = dynamicMusuemApi + ConstantsHolder.xanaConstants.MuseumID;
             Debug.Log("Openning Mussuem");
         }
 

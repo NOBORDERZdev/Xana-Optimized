@@ -15,9 +15,7 @@ public class DoorKeySyncing : MonoBehaviourPun
 
     private void OnEnable()
     {
-        if (photonView.IsMine)
-            return;
-        if (!GamificationComponentData.instance.withMultiplayer)
+        if (!GamificationComponentData.instance.withMultiplayer || photonView.IsMine)
         {
             gameObject.SetActive(false);
             return;
@@ -39,7 +37,7 @@ public class DoorKeySyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             transform.SetParent(playerObj.GetComponent<ArrowManager>().nameCanvas.transform);
             transform.localPosition = Vector3.up * 18.5f;
-            transform.eulerAngles = Vector3.zero;
+            transform.localEulerAngles = new Vector3(180, 0, -45);
             keyImage.SetActive(true);
             StartCoroutine(KeyCounterCO());
         }
@@ -48,7 +46,7 @@ public class DoorKeySyncing : MonoBehaviourPun
     GameObject FindPlayerusingPhotonView(PhotonView pv)
     {
         Player player = pv.Owner;
-        foreach (GameObject playerObject in Launcher.instance.playerobjects)
+        foreach (GameObject playerObject in MutiplayerController.instance.playerobjects)
         {
             PhotonView _photonView = playerObject.GetComponent<PhotonView>();
             if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
@@ -67,6 +65,8 @@ public class DoorKeySyncing : MonoBehaviourPun
         {
             KeyCounter();
             yield return new WaitForSeconds(1f);
+            if (playerObj != null)
+                transform.localRotation = playerObj.GetComponent<ArrowManager>().PhotonUserName.transform.localRotation;
         }
     }
 

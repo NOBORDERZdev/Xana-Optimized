@@ -28,7 +28,7 @@ public class HelpButtonComponent : ItemComponent
             infoPopup = go.GetComponent<HelpButtonComponentResizer>();
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
-            infoPopup.msg= helpButtonComponentData.helpButtonData.Length == 0 ? "Define Rules here !" : helpButtonComponentData.helpButtonData + "\n";
+            infoPopup.msg = helpButtonComponentData.helpButtonData.Length == 0 ? "Define Rules here !" : helpButtonComponentData.helpButtonData + "\n";
             //infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
             infoPopup.scrollView.enabled = false;
             infoPopup.scrollbar.SetActive(false);
@@ -38,21 +38,21 @@ public class HelpButtonComponent : ItemComponent
         }
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
+        if (!this.helpButtonComponentData.IsAlwaysOn)
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
 
             }
         }
     }
 
-    private void OnCollisionExit(Collision _other)
+    private void CollisionExit()
     {
-        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
+        if (!this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }
@@ -98,6 +98,16 @@ public class HelpButtonComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.HelpButtonComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        CollisionExit();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

@@ -5,7 +5,7 @@ namespace DynamicScrollRect
 {
     public class ScrollContent : MonoBehaviour
     {
-        public Vector2 Spacing = Vector2.zero;
+       /* public Vector2 Spacing = Vector2.zero;
         [Min(1)][SerializeField] private int _fixedItemCount = 1;
         public int TotalItems = 0;
         private DynamicScrollRect _dynamicScrollRect;
@@ -83,8 +83,9 @@ namespace DynamicScrollRect
             {
                 case 0:
                     {
-                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
+                        if (GameManager.Instance.UiManager.PreviousScreen == 0 && (Worlds.Count > 0 && Worlds.Count < 5))
                         {
+                            Debug.LogError("here locking");
                             DynamicScrollRect.RestrictFlag = true;
                             DynamicScrollRect.TopScroller.verticalNormalizedPosition = 1f;
                             RestrictState = 1;
@@ -93,14 +94,14 @@ namespace DynamicScrollRect
                     }
                 case 1:
                     {
-                        if (UIManager.Instance.PreviousScreen == 0 && (Worlds.Count > 5))
+                        if (GameManager.Instance.UiManager.PreviousScreen == 0 && (Worlds.Count > 5))
                         {
                             DynamicScrollRect.RestrictFlag = false;
                             DynamicScrollRect.TopScroller.vertical = true;
                             RestrictState = 0;
                            
                         }
-                        else if (UIManager.Instance.PreviousScreen == 1)
+                        else if (GameManager.Instance.UiManager.PreviousScreen == 1)
                         {
                             DynamicScrollRect.RestrictFlag = false;
                             RestrictState = 0;
@@ -121,9 +122,14 @@ namespace DynamicScrollRect
                 {
                     if (itemCount == count)
                     {
+                        if (count == 0)
+                        {
+                            //LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+                            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+                        }
                         return;
                     }
-                    ActivateItem(itemCount);
+                    ActivateItem(itemCount, count);
                     itemCount++;
                 }
             }
@@ -132,7 +138,7 @@ namespace DynamicScrollRect
         {
             return new Vector2Int(_fixedItemCount, 9);
         }
-        private WorldItemView ActivateItem(int itemIndex)
+        private WorldItemView ActivateItem(int itemIndex, int _loopcount=0)
         {
             Vector2 gridPos = GetGridPosition(itemIndex);
             Vector2 anchoredPos = GetAnchoredPosition(gridPos);
@@ -149,7 +155,7 @@ namespace DynamicScrollRect
             scrollItem.gameObject.SetActive(true);
             scrollItem.gameObject.name = $"{gridPos.x}_{gridPos.y}";
             scrollItem.RectTransform.anchoredPosition = anchoredPos;
-            scrollItem.InitItem(itemIndex, gridPos, Worlds[itemIndex]);
+            scrollItem.InitItem(itemIndex, gridPos, Worlds[itemIndex],_loopcount);
             bool insertHead = (_activatedItems.Count == 0 ||
                                (_activatedItems.Count > 0 && _activatedItems[0].Index > itemIndex));
 
@@ -267,6 +273,11 @@ namespace DynamicScrollRect
         {
             if (!CanAddNewItemIntoTail())
             {
+                //Debug.LogError("Can't add new item into tail");
+                if (WorldManager.instance.dataIsFatched)
+                {
+                    WorldManager.instance.WorldPageLoading();
+                }
                 return;
             }
             int itemIndex = _activatedItems[_activatedItems.Count - 1].Index + 1;
@@ -278,7 +289,8 @@ namespace DynamicScrollRect
             if(itemIndex >= (int)(TotalItems *.75) && TotalItems > previousItems)
             {
                 previousItems = TotalItems;
-                if(WorldManager.instance.dataIsFatched)
+                //Debug.LogError("Fetch data again");
+                if (WorldManager.instance.dataIsFatched)
                 {
                     WorldManager.instance.WorldPageLoading();
                 }
@@ -307,6 +319,6 @@ namespace DynamicScrollRect
         {
             ClearContent();
             InitItemsVertical(Worlds.Count);
-        }
+        }*/
     }
 }

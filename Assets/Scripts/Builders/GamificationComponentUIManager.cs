@@ -171,6 +171,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     void EnableNarrationUI(string narrationText, bool isStory, bool closeNarration)
     {
         DisableAllComponentUIObject(Constants.ItemComponentType.NarrationComponent);
+        isStoryWritten = true;
+        Invoke(nameof(NarrationUILinesCount), 0.01f);
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
 
@@ -198,6 +200,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
         }
         //}
+
     }
 
     public void NarrationUILinesCount()
@@ -223,7 +226,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
-        isStoryWritten = true;
         while (storyCharCount < msg.Length && !isAgainCollided)
         {
             narrationTextUI.text += msg[storyCharCount];
@@ -232,14 +234,9 @@ public class GamificationComponentUIManager : MonoBehaviour
             storyCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForScrollingOption());
+            //StartCoroutine(WaitForScrollingOption());
         }
         isStoryWritten = false;
-        NarrationUILinesCount();
-    }
-    IEnumerator WaitForScrollingOption()
-    {
-        yield return new WaitForEndOfFrame();
         NarrationUILinesCount();
     }
     IEnumerator WaitDelayStatement()
@@ -297,7 +294,8 @@ public class GamificationComponentUIManager : MonoBehaviour
                 StopCoroutine(TimeCoroutine);
             TimeCoroutine = StartCoroutine(nameof(IETimeLimit), time);
         }
-        BuilderEventManager.OnTimerLimitEnd += OnTimerLimitEnd;
+        if (time > 0)
+            BuilderEventManager.OnTimerLimitEnd += OnTimerLimitEnd;
 
     }
 
@@ -305,13 +303,6 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (TimeCoroutine != null)
             StopCoroutine(TimeCoroutine);
-        StartCoroutine(OnDisableTimeLimitUI());
-    }
-
-    public IEnumerator OnDisableTimeLimitUI()
-    {
-        yield return new WaitForSeconds(5f);
-        DisableTimeLimitUI();
     }
 
     public IEnumerator IETimeLimit(float time)
@@ -332,7 +323,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         TimeLimitText.text = "";
         if (TimeCoroutine != null)
             StopCoroutine(TimeCoroutine);
-
         BuilderEventManager.OnTimerLimitEnd -= OnTimerLimitEnd;
     }
 
@@ -412,13 +402,6 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (ElapsedTimerCoroutine != null)
             StopCoroutine(ElapsedTimerCoroutine);
-        StartCoroutine(OnDisableDisableElapseTimeUI());
-    }
-
-    public IEnumerator OnDisableDisableElapseTimeUI()
-    {
-        yield return new WaitForSeconds(5f);
-        DisableElapseTimeCounDownUI();
     }
     public IEnumerator IEElapsedTimer(float time, bool isRunning)
     {
@@ -439,7 +422,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         ElapseTimerText.text = "00:00";
         if (ElapsedTimerCoroutine != null)
             StopCoroutine(ElapsedTimerCoroutine);
-
         BuilderEventManager.elapsedEndTime -= ElapsedEndTime;
     }
 
@@ -542,15 +524,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (timer > 0)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.SituationChangerComponent);
-            if (SituationChangerCoroutine == null)
-            {
-                SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
-            }
-            else
-            {
-                StopCoroutine(SituationChangerCoroutine);
-                SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
-            }
+            //if (SituationChangerCoroutine == null)
+            //{
+            //    SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
+            //}
+            //else
+            //{
+            //    StopCoroutine(SituationChangerCoroutine);
+            //    SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
+            //}
+            SituationChangerTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            SituationChangerParentUI.SetActive(true);
         }
         else
         {
@@ -569,7 +553,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             SituationChangerParentUI.SetActive(true);
             yield return new WaitForSeconds(1f);
         }
-        TimeStats._intensityChangerStop?.Invoke();
+        //TimeStats._intensityChangerStop?.Invoke();
         SituationChangerParentUI.SetActive(false);
         SituationChangerTimeText.text = "00:00";
     }
@@ -797,7 +781,7 @@ public class GamificationComponentUIManager : MonoBehaviour
                     options[i - 1].GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
                 if (!isPotrait)
                 {
-                    if (GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese || ContainsJapaneseText(sb))
+                    if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese || ContainsJapaneseText(sb))
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 11.3f;
                     else
                         options[i - 1].GetComponentInChildren<TextMeshProUGUI>().fontSize = 12;
@@ -833,7 +817,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 0:
                 correct++;
                 image = correctImage;
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizCorrect);
 
                 colorString = "#36C34E";
                 break;
@@ -841,7 +825,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             case 1:
                 wrong++;
                 image = wrongImage;
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.QuizWrong);
 
                 break;
 
@@ -1213,6 +1197,8 @@ public class GamificationComponentUIManager : MonoBehaviour
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
         string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
+
+        isHyperlinkWritten = true;
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
         hyperLinkCharCount = 0;
@@ -1233,7 +1219,6 @@ public class GamificationComponentUIManager : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainHyperLinkCollided = false;
         #endregion
-        isHyperlinkWritten = true;
         while (hyperLinkCharCount < msg.Length && !isAgainHyperLinkCollided)
         {
             hyperLinkPopupText.text += msg[hyperLinkCharCount];
@@ -1243,14 +1228,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             hyperLinkCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForHyperLinkScrollingOption());
         }
         isHyperlinkWritten = false;
-        HyperLinkUILinesCount();
-    }
-    IEnumerator WaitForHyperLinkScrollingOption()
-    {
-        yield return new WaitForEndOfFrame();
         HyperLinkUILinesCount();
     }
 
@@ -1306,15 +1285,17 @@ public class GamificationComponentUIManager : MonoBehaviour
         if (timer > 0)
         {
             DisableAllComponentUIObject(Constants.ItemComponentType.BlindComponent);
-            if (BlindComponentCoroutine == null)
-            {
-                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
-            }
-            else
-            {
-                StopCoroutine(BlindComponentCoroutine);
-                BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
-            }
+            //if (BlindComponentCoroutine == null)
+            //{
+            //    BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            //}
+            //else
+            //{
+            //    StopCoroutine(BlindComponentCoroutine);
+            //    BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
+            //}
+            BlindComponentTimeText.text = ConvertTimetoSecondsandMinute(timer);
+            BlindComponentParentUI.SetActive(true);
         }
         else
         {
@@ -1333,7 +1314,7 @@ public class GamificationComponentUIManager : MonoBehaviour
             BlindComponentParentUI.SetActive(true);
             yield return new WaitForSeconds(1f);
         }
-        TimeStats._blindComponentStop?.Invoke();
+        //TimeStats._blindComponentStop?.Invoke();
         BlindComponentParentUI.SetActive(false);
         BlindComponentTimeText.text = "00:00";
     }
@@ -1479,8 +1460,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableAvatarInvisibilityUI();
         if (componentType != Constants.ItemComponentType.ThrowThingsComponent)
             DisableThrowThingUI();
-        if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
-            DisableHyperLinkPopupUI();
+        //if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
+        //    DisableHyperLinkPopupUI();
         if (componentType != Constants.ItemComponentType.BlindComponent)
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)

@@ -23,9 +23,13 @@ public class HelpButtonComponentResizer : MonoBehaviour
     float singleLineHeight;
     bool isInfoTextWritten;
 
+    private RectTransform viewportRectT;
+    private int rightPosition = 23;
+    private int bottomPosition = -9;
     internal void Init()
     {
-        //Invoke(nameof(InfoPopupUILinesCount), 0.1f);
+        isInfoTextWritten = true;
+        Invoke(nameof(InfoPopupUILinesCount), 0.01f);
         StartCoroutine(StoryNarration());
     }
 
@@ -56,7 +60,6 @@ public class HelpButtonComponentResizer : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isAgainCollided = false;
         #endregion
-        isInfoTextWritten = true;
         while (textCharCount < msg.Length && !isAgainCollided)
         {
             contentText.text += msg[textCharCount];
@@ -65,15 +68,33 @@ public class HelpButtonComponentResizer : MonoBehaviour
             textCharCount++;
 
             yield return new WaitForSeconds(letterDelay);
-            StartCoroutine(WaitForScrollingOption());
+            //StartCoroutine(WaitForScrollingOption());
         }
         isInfoTextWritten = false;
         InfoPopupUILinesCount();
     }
-    IEnumerator WaitForScrollingOption()
+
+    private void OnEnable()
     {
-        yield return new WaitForEndOfFrame();
-        InfoPopupUILinesCount();
+        viewportRectT = scrollView.viewport.GetComponent<RectTransform>();
+        StartCoroutine(CheckJapaneseRoutine());
+    }
+
+    private IEnumerator CheckJapaneseRoutine()
+    {
+        yield return new WaitForSeconds(1f); //Wait for the text to be set
+        switch (LocalizationManager._instance.IsJapanese(contentText.text))
+        {
+            case false:
+                viewportRectT.offsetMin = new Vector2(0, 0);
+                viewportRectT.offsetMax = new Vector2(0, 0);
+                break;
+            case true:
+                viewportRectT.offsetMin = new Vector2(viewportRectT.offsetMin.x, bottomPosition);
+                viewportRectT.offsetMax = new Vector2(-rightPosition, viewportRectT.offsetMax.y);
+                break;
+        }
+        StopCoroutine(CheckJapaneseRoutine());
     }
 
     public void DisplayDownText()

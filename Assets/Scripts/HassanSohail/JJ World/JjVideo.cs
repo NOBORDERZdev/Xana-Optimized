@@ -14,15 +14,23 @@ public class JjVideo : MonoBehaviour
     public bool isLiveVideo;
     public bool isPrerecoreded;
     public bool isFromAws;
+
+    MeshRenderer screenMesh;
     // Start is called before the first frame update
     void OnEnable()
     {
+        screenMesh = GetComponent<MeshRenderer>();
         //videoplayer.playOnAwake = false;
         //videoplayer.errorReceived += ErrorOnVideo;
         //videoplayer.frameReady += SetSound;
-        if (XanaConstants.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
         {
             Invoke(nameof(WaitPlay), 5);
+        }
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+        {
+            if (screenMesh)
+                screenMesh.enabled = false;
         }
     }
 
@@ -54,7 +62,7 @@ public class JjVideo : MonoBehaviour
         }
         else if (isFromAws && awsVideoplayer.gameObject != null)
         {
-           // Debug.LogError(videoLink);
+            // Debug.LogError(videoLink);
             if (liveVideoPlayer)
                 liveVideoPlayer.SetActive(false);
             if (preRecordedPlayer)
@@ -91,6 +99,7 @@ public class JjVideo : MonoBehaviour
 
     private void OnDisable()
     {
-        awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
+        if (awsVideoplayer)
+            awsVideoplayer.GetComponent<VideoPlayer>().errorReceived -= ErrorOnVideo;
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 //-----------------------------------------------------------------------------
 // Copyright 2015-2022 RenderHeads Ltd.  All rights reserved.
@@ -26,13 +27,13 @@ namespace RenderHeads.Media.AVProVideo
 	[HelpURL("https://www.renderheads.com/products/avpro-video/")]
 	public partial class MediaPlayer : MonoBehaviour
 	{
-		// These fields are just used to setup the default properties for a new video that is about to be loaded
-		// Once a video has been loaded you should use the interfaces exposed in the properties to
-		// change playback properties (eg volume, looping, mute)
+        // These fields are just used to setup the default properties for a new video that is about to be loaded
+        // Once a video has been loaded you should use the interfaces exposed in the properties to
+        // change playback properties (eg volume, looping, mute)
 
-		// Media source
-
-		[SerializeField] MediaSource _mediaSource = MediaSource.Reference;
+        // Media source
+        public Action<MediaPlayer> VideoPrepared;
+        [SerializeField] MediaSource _mediaSource = MediaSource.Reference;
 		public MediaSource MediaSource { get { return _mediaSource; } internal set { _mediaSource = value; } }
 
 		[SerializeField] MediaReference _mediaReference = null;
@@ -254,17 +255,17 @@ namespace RenderHeads.Media.AVProVideo
 			}
 		}
 
+#if AVPRO_FEATURE_VIDEORESOLVE
 		[SerializeField] bool _useVideoResolve = false;
 		public bool UseVideoResolve { get { return _useVideoResolve; } set { _useVideoResolve = value; } }
 
 		[SerializeField] VideoResolveOptions _videoResolveOptions = VideoResolveOptions.Create();
 		public VideoResolveOptions VideoResolveOptions { get { return _videoResolveOptions; } set { _videoResolveOptions = value; } }
 
-#if AVPRO_FEATURE_VIDEORESOLVE
 		[SerializeField] VideoResolve _videoResolve = new VideoResolve();
 #endif
-		// Sideloaded subtitles
 
+		// Sideloaded subtitles
 		[FormerlySerializedAs("m_LoadSubtitles")]
 		[SerializeField] bool _sideloadSubtitles;
 		public bool SideloadSubtitles { get { return _sideloadSubtitles; } set { _sideloadSubtitles = value; } }
@@ -781,6 +782,7 @@ namespace RenderHeads.Media.AVProVideo
 			if (_playerInterface != null)
 			{
 				Update();
+				_playerInterface.BeginRender();
 				_playerInterface.Render();
 				return true;
 			}

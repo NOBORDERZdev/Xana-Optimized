@@ -11,7 +11,7 @@ public class HomeScreenScrollHandler : ScrollRect
     public DynamicScrollRect.DynamicScrollRect DynamicGrid;
     protected override void Start()
     {
-        DynamicGrid.ParentSliderFlag = false;
+        /*DynamicGrid.ParentSliderFlag = false;*/
       //  DynamicGrid.enabled = false;
         //DynamicGrid.scrollSensitivity = 0;
         // scrollSensitivity = 3;

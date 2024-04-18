@@ -36,6 +36,21 @@ public class GalleryImageManager : MonoBehaviour
     public GameObject m_DescriptionText;
     public GameObject m_LoadingIcon;
     public GameObject m_ExceptionText;
+    public GameObject NFTLoader
+    {
+        get
+        {
+            if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
+            {
+                m_LoadingIcon.transform.localScale = Vector3.one * 0.5f;
+            }
+            else
+            {
+                m_LoadingIcon.transform.localScale = Vector3.one;
+            }
+            return m_LoadingIcon;
+        }
+    }
 
     [Header("Pictures Sprites")]
     public Sprite[] m_PictureSprites;
@@ -109,7 +124,7 @@ public class GalleryImageManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.Log(e.ToString());
+            //Debug.Log(e.ToString());
         }
 
     }
@@ -120,7 +135,7 @@ public class GalleryImageManager : MonoBehaviour
         {
             for (int i = 0; i < overlayPanels.Length; i++)
             {
-                overlayPanels[i] = ReferrencesForDynamicMuseum.instance.overlayPanels[i];
+                overlayPanels[i] = ReferencesForGamePlay.instance.overlayPanels[i];
             }
         }
 
@@ -149,7 +164,6 @@ public class GalleryImageManager : MonoBehaviour
         {
             m_LoadingIcon.GetComponent<RectTransform>().rotation *= Quaternion.Euler(Vector3.forward * -4);
         }
-
     }
 
     private void OnEnable()
@@ -159,7 +173,7 @@ public class GalleryImageManager : MonoBehaviour
 
         //if (m_MuseumCanvas == null)
         {
-            m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+            m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         }
     }
 
@@ -172,7 +186,7 @@ public class GalleryImageManager : MonoBehaviour
     private void M_VideoPlayerOnprepareCompleted(VideoPlayer source)
     {
         m_VideoPlayer.gameObject.SetActive(true);
-        if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+        if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
             cancel_Portrait.SetActive(true);
         else
             cancel.SetActive(true);
@@ -260,17 +274,17 @@ public class GalleryImageManager : MonoBehaviour
         m_SpecialCertificate.SetActive(false);
         m_PictureBannerCanvas.SetActive(false);
 
-        print("Waqas : Reference : " + ReferrencesForDynamicMuseum.instance + "  " + ReferrencesForDynamicMuseum.instance.workingCanvas);
+        print("Waqas : Reference : " + ReferencesForGamePlay.instance + "  " + ReferencesForGamePlay.instance.workingCanvas);
 
         // Update Museum Panel reference
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(true);
         m_PictureDescriptionPanel.SetActive(false);
 
         cancel.SetActive(false);
 
-        if(cancel_Portrait != null)
-        cancel_Portrait.SetActive(false);
+        if (cancel_Portrait != null)
+            cancel_Portrait.SetActive(false);
 
         StartCoroutine(museumRaycaster.WaitForCooldown());
     }
@@ -312,7 +326,7 @@ public class GalleryImageManager : MonoBehaviour
         m_PictureIndex = l_PictureIndex;
         m_IsSpecialPainting = l_IsSpecialPainting;
 
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(false);
         m_IsDescriptionPanelActive = true;
 
@@ -356,12 +370,12 @@ public class GalleryImageManager : MonoBehaviour
         if (m_IsLoadingImagesFromServerSide)
         {
             m_IsShowingLoadingBar = true; // showing loading icon
-            m_LoadingIcon.SetActive(true);
+            NFTLoader.SetActive(true);
 
             //m_LoadingIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(-350, 0);
 
             StopAllCoroutines();
-            Debug.Log("Picture Index: " + l_PictureIndex);
+            //Debug.Log("Picture Index: " + l_PictureIndex);
             if (m_PictureSpriteDownloadLinks[l_PictureIndex - 1] != "")
             {
                 StartCoroutine(DownloadImage(m_PictureSpriteDownloadLinks[l_PictureIndex - 1]));
@@ -369,14 +383,14 @@ public class GalleryImageManager : MonoBehaviour
             else
             {
                 m_IsShowingLoadingBar = false; // hidding loading icon
-                m_LoadingIcon.SetActive(false);
+                NFTLoader.SetActive(false);
                 //m_ExceptionText.SetActive(true);
             }
         }
         else
         {
             m_Picture.SetActive(true);
-            if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+            if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
                 cancel_Portrait.SetActive(true);
             else
                 cancel.SetActive(true);
@@ -417,14 +431,14 @@ public class GalleryImageManager : MonoBehaviour
         yield return null;
 
         m_Picture.SetActive(true);
-       
-        if (ChangeOrientation_waqas._instance.isPotrait && cancel_Portrait != null)
+
+        if (ScreenOrientationManager._instance.isPotrait && cancel_Portrait != null)
             cancel_Portrait.SetActive(true);
         else
             cancel.SetActive(true);
 
         m_Picture.GetComponent<Image>().sprite = m_DownloadedSprite; // applying downloaded sprite to the picture object
-        m_LoadingIcon.SetActive(false);
+        NFTLoader.SetActive(false);
     }
 
 
@@ -436,7 +450,7 @@ public class GalleryImageManager : MonoBehaviour
         m_IsPortrait = l_IsPortrait;
 
         // Update Museum Panel reference
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(false);
 
         m_IsDescriptionPanelActive = true;
@@ -445,8 +459,8 @@ public class GalleryImageManager : MonoBehaviour
         m_BannerPicturePanel.SetActive(true);
 
         m_IsShowingLoadingBar = true; // showing loading icon
-        m_LoadingIcon.SetActive(true);
-        m_LoadingIcon.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        NFTLoader.SetActive(true);
+        NFTLoader.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
 
         StopAllCoroutines();
 
@@ -466,7 +480,7 @@ public class GalleryImageManager : MonoBehaviour
             {
                 //m_ExceptionText.SetActive(true);
                 m_ExceptionText.GetComponent<Text>().text = uwr.error;
-                Debug.Log(uwr.error);
+                //Debug.Log(uwr.error);
                 HandleErrors();
             }
             else
@@ -494,7 +508,7 @@ public class GalleryImageManager : MonoBehaviour
 
         //m_Picture.SetActive(true);
         //m_Picture.GetComponent<Image>().sprite = m_DownloadedSprite; // applying downloaded sprite to the picture object
-        m_LoadingIcon.SetActive(false);
+        NFTLoader.SetActive(false);
     }
 
 
@@ -506,9 +520,9 @@ public class GalleryImageManager : MonoBehaviour
         m_PictureBannerCanvas.SetActive(false);
         m_IsDescriptionPanelActive = false;
 
-        print("Waqas : Reference : " + ReferrencesForDynamicMuseum.instance);
+        print("Waqas : Reference : " + ReferencesForGamePlay.instance);
         // Update Museum Panel reference
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(true);
 
         certificate.SetActive(false);
@@ -524,7 +538,7 @@ public class GalleryImageManager : MonoBehaviour
     public void LoadMayorAndJudgeFrame(int l_FrameIndex)
     {
         // Update Museum Panel reference
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(false);
 
         m_IsDescriptionPanelActive = true;
@@ -540,7 +554,7 @@ public class GalleryImageManager : MonoBehaviour
         this.l_VideoIndex = l_VideoIndex;
         m_VideoPlayer.targetTexture = m_RenderTexture;
         m_IsShowingLoadingBar = true;
-        m_LoadingIcon.SetActive(true);
+        NFTLoader.SetActive(true);
         m_VideoPlayer.url = m_PictureSpriteDownloadLinks[l_VideoIndex];
         m_VideoPlayer.gameObject.SetActive(true);
         m_PictureBannerCanvas.SetActive(true);
@@ -548,13 +562,13 @@ public class GalleryImageManager : MonoBehaviour
         m_VideoPlayer.Prepare();
 
         // Update References For for switching Orientation
-        m_MuseumCanvas = ReferrencesForDynamicMuseum.instance.workingCanvas;
+        m_MuseumCanvas = ReferencesForGamePlay.instance.workingCanvas;
         m_MuseumCanvas.SetActive(false);
     }
 
     void ActiveVideo()
     {
-        m_LoadingIcon.SetActive(false);
+        NFTLoader.SetActive(false);
         m_IsShowingLoadingBar = false;
         m_VideoPanel.SetActive(true);
 

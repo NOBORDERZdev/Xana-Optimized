@@ -65,6 +65,9 @@ public class LoadingHandler : MonoBehaviour
     public CanvasGroup teleportFeader;
     public GameObject teleportFeaderLandscape, teleportFeaderPotraite;
 
+    [Header("Store Loading")]
+    public GameObject storeLoadingScreen;
+
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
 
@@ -75,6 +78,8 @@ public class LoadingHandler : MonoBehaviour
     private float sliderFinalValue = 0;
     private float sliderCompleteValue = 0f;
 
+    public GameObject SearchLoadingCanvas;
+    private CanvasGroup canvasGroup;
     private void Awake()
     {
         if (Instance == null)
@@ -87,11 +92,11 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-
+      //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
-                Debug.unityLogger.filterLogType = LogType.Error;
+                        Debug.unityLogger.filterLogType = LogType.Error;
 #endif
     }
 
@@ -100,6 +105,7 @@ public class LoadingHandler : MonoBehaviour
         sliderFinalValue = Random.Range(80f, 95f);
         sliderCompleteValue = Random.Range(96f, 99f);
         StartCoroutine(StartBGChange());
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     IEnumerator StartBGChange()
@@ -173,19 +179,19 @@ public class LoadingHandler : MonoBehaviour
     public void ShowLoading()
     {
         //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + " ~~~~~~~  Activated Loading ~~~~~~~ ");
-        if (teleportFeader.gameObject.activeInHierarchy) // XanaConstants.xanaConstants.JjWorldSceneChange
+        if (teleportFeader.gameObject.activeInHierarchy) // ConstantsHolder.xanaConstants.JjWorldSceneChange
         {
             return;
         }
         ResetLoadingValues();
         //Debug.LogError(Screen.orientation + " ~~~~~~~  Activated Loading ~~~~~~~ " + oriantation);
         //bool isFedderActive = false;
-        //if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
             //isFedderActive = true;
-            if (XanaConstants.xanaConstants.isBackFromWorld)
+            if (ConstantsHolder.xanaConstants.isBackFromWorld)
             {
-                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
+                if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
                 {
                     ActivateFadder_AtLoadingStart();
                 }
@@ -245,17 +251,17 @@ public class LoadingHandler : MonoBehaviour
         isScreenRefresh = true;
         gameplayLoadingUIRefreshCo = StartCoroutine(IEGameplayLoadingScreenUIRefresh());
 
-        if (XanaConstants.xanaConstants.needToClearMemory)
+        if (ConstantsHolder.xanaConstants.needToClearMemory)
             AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
         else
-            XanaConstants.xanaConstants.needToClearMemory = true;
+            ConstantsHolder.xanaConstants.needToClearMemory = true;
     }
    
     public void ResetLoadingValues()
     {
-        //if (LoadFromFile.instance)
+        //if (GameplayEntityLoader.instance)
         //{
-        //    LoadFromFile.instance.isEnvLoaded = false;
+        //    GameplayEntityLoader.instance.isEnvLoaded = false;
         //}
         currentValue = 0;
         isLoadingComplete = false;
@@ -268,25 +274,25 @@ public class LoadingHandler : MonoBehaviour
 
     public void HideLoading()
     {
-        //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + "  isFromXanaLobby: " +  XanaConstants.xanaConstants.isFromXanaLobby +  " ~~~~~~~  Deactivated Loading ~~~~~~~ ");
+        //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + "  isFromXanaLobby: " +  ConstantsHolder.xanaConstants.isFromXanaLobby +  " ~~~~~~~  Deactivated Loading ~~~~~~~ ");
 
-        if (isFirstTime || teleportFeader.gameObject.activeInHierarchy) //XanaConstants.xanaConstants.JjWorldSceneChange
+        if (isFirstTime || teleportFeader.gameObject.activeInHierarchy) //ConstantsHolder.xanaConstants.JjWorldSceneChange
         {
             isFirstTime = false;
-            XanaConstants.xanaConstants.isBackFromWorld = false;    
+            ConstantsHolder.xanaConstants.isBackFromWorld = false;    
             return;
         }
         
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!XanaConstants.xanaConstants.isFromXanaLobby && XanaConstants.xanaConstants.isBackFromWorld)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
             blackScreen.DOFade(1, 0.2f).OnComplete(delegate
             {
-                if (XanaConstants.xanaConstants.isBackFromWorld)
+                if (ConstantsHolder.xanaConstants.isBackFromWorld)
                 {
                     //Debug.LogError(" ~~~~~~~  BackFromWOrld: Portrait  ~~~~~~~ ");
                     //Debug.LogError("8 ~~~~~~~~~~~~~~~~ Portrait");
@@ -299,10 +305,10 @@ public class LoadingHandler : MonoBehaviour
                     //Screen.orientation = ScreenOrientation.LandscapeLeft;
                 }
 
-                XanaConstants.xanaConstants.isBackFromWorld = false;
+                ConstantsHolder.xanaConstants.isBackFromWorld = false;
 
 
-                //if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait && !XanaConstants.xanaConstants.JjWorldSceneChange)
+                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !ConstantsHolder.xanaConstants.JjWorldSceneChange)
                 //{
                 //    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
                 //    Screen.orientation = ScreenOrientation.Portrait;
@@ -331,8 +337,8 @@ public class LoadingHandler : MonoBehaviour
         blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
 
 
-        if (ReferrencesForDynamicMuseum.instance != null)
-            ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
+        if (ReferencesForGamePlay.instance != null)
+            ReferencesForGamePlay.instance.workingCanvas.SetActive(true);
         //loadingPanel.SetActive(false);
 
         if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
@@ -374,7 +380,7 @@ public class LoadingHandler : MonoBehaviour
         // Debug.LogError("~~~~~~~  Fadder Out ~~~~~~~ " );
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.5f).SetDelay(delay);
-        XanaConstants.xanaConstants.isBackFromWorld = false;
+        ConstantsHolder.xanaConstants.isBackFromWorld = false;
     }
 
     private IEnumerator Check_Orientation(ScreenOrientation oriantation)
@@ -382,9 +388,9 @@ public class LoadingHandler : MonoBehaviour
     CheckAgain:
         //  Debug.LogError(Screen.orientation + " ~~~~~~~ Oriantation Checking ~~~~~~~ " + oriantation);
         yield return new WaitForSeconds(.2f);
-        if (Screen.orientation == oriantation || XanaConstants.xanaConstants.JjWorldSceneChange)
+        if (Screen.orientation == oriantation || ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
-            //if(!XanaConstants.xanaConstants.isBackFromWorld)
+            //if(!ConstantsHolder.xanaConstants.isBackFromWorld)
             //    HideFadderAfterOriantationChanged();
         }
         else
@@ -459,6 +465,8 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
+        if(canvasGroup.alpha == 0)
+            canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
         characterLoading.SetActive(false);
@@ -493,7 +501,7 @@ public class LoadingHandler : MonoBehaviour
     public void LoadSceneByIndex(string sceneName, bool isBuilder = false)
     {
         //UpdateLoadingSlider(.2f);
-        if (XanaConstants.xanaConstants.JjWorldSceneChange)
+        if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             StartCoroutine(IncrementSliderValue((randCurrentValue > 0) ? randCurrentValue : Random.Range(6f, 10f)));
         }
@@ -515,7 +523,7 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+            if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                 teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
@@ -528,9 +536,9 @@ public class LoadingHandler : MonoBehaviour
             }
 
 
-            if (LoadFromFile.instance && !loadMainScene)
+            if (GameplayEntityLoader.instance && !loadMainScene)
             {
-                if (LoadFromFile.instance.isEnvLoaded)
+                if (GameplayEntityLoader.instance.isEnvLoaded)
                 {
                     isLoadingComplete = true;
                 }
@@ -549,7 +557,7 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((XanaConstants.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                     teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
@@ -583,10 +591,10 @@ public class LoadingHandler : MonoBehaviour
                 });
                 break;
             case FadeAction.In:
-                if (XanaConstants.xanaConstants != null)
+                if (ConstantsHolder.xanaConstants != null)
                 {
-                    teleportFeaderLandscape.SetActive(!XanaConstants.xanaConstants.orientationchanged);
-                    teleportFeaderPotraite.SetActive(XanaConstants.xanaConstants.orientationchanged);
+                    teleportFeaderLandscape.SetActive(!ConstantsHolder.xanaConstants.orientationchanged);
+                    teleportFeaderPotraite.SetActive(ConstantsHolder.xanaConstants.orientationchanged);
                 }
                 else
                 {

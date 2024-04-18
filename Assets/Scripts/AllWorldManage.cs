@@ -1,10 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using AdvancedInputFieldPlugin;
-using static Photon.Pun.UtilityScripts.TabViewManager;
 
 public class AllWorldManage : MonoBehaviour
 {
@@ -16,53 +12,69 @@ public class AllWorldManage : MonoBehaviour
     [Header("World Page Scrollviews and Component")]
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
+    GameManager gameManager;
+
+    private void Awake()
+    {
+        gameManager = GameManager.Instance;
+    }
+
+    public delegate void SeeAllBtndelegate(string _categType);
+    public SeeAllBtndelegate _seeAllBtnDelegate;
 
     private void OnEnable()
     {
-        WorldSearchManager.OpenSearchPanel += SearchScreenLoad;
+        SearchWorldUIController.OpenSearchPanel += SearchScreenLoad;
+        _seeAllBtnDelegate += CategoryLoadMore;
     }
 
     private void OnDisable()
     {
-        WorldSearchManager.OpenSearchPanel -= SearchScreenLoad;
+        SearchWorldUIController.OpenSearchPanel -= SearchScreenLoad;
+        _seeAllBtnDelegate -= CategoryLoadMore;
     }
 
     public void ToggleLobbyOnHomeScreen(bool flag)
     {
-        UIManager.Instance.LobbyTabHolder.gameObject.SetActive(flag);
+        /*gameManager.UiManager.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
     public void SearchScreenLoad()
     {
-        UIManager.Instance.SwitchToScreen(2);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        SearchWorldUIController.IsSearchBarActive = true;
+        gameManager.UiManager.SwitchToScreen(2);
+        //FlexibleRect.OnAdjustSize?.Invoke(true);
+        WorldManager.instance.WorldScrollReset();
+        WorldManager.instance.SearchPageNumb = 1;
     }
 
     public void SearchScreenLoad(string searchKey)
     {
-        UIManager.Instance.SwitchToScreen(2);
-        WorldManager.instance.ClearWorldScrollWorlds();
+        SearchWorldUIController.IsSearchBarActive = true;
+        gameManager.UiManager.SwitchToScreen(2);
+        //FlexibleRect.OnAdjustSize?.Invoke(true);
+        WorldManager.instance.WorldScrollReset();
     }
 
     public void BackToPreviousScreen()
     {
-        WorldManager.instance.ClearWorldScrollWorlds();
-        UIManager.Instance.SwitchToScreen(UIManager.Instance.PreviousScreen);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
-        ScrollEnableDisable(0);
+        WorldManager.instance.WorldScrollReset();
+        gameManager.UiManager.SwitchToScreen(gameManager.UiManager.PreviousScreen);
+        //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        //ScrollEnableDisable(0);
     }
-    public void XanaWorldLoad()
+    /*public void XanaWorldLoad()
     {
         ScrollEnableDisable(0);
-        WorldManager.instance.ChangeWorld(APIURL.Hot);
-        if(UIManager.Instance.PreviousScreen==0)
+        WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
+        if(GameManager.Instance.UiManager.PreviousScreen==0)
         {
-            UIManager.Instance.LobbyTabHolder.gameObject.SetActive(UIManager.Instance.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
+            GameManager.Instance.UiManager.LobbyTabHolder.gameObject.SetActive(GameManager.Instance.UiManager.LobbyTabHolder.GetComponent<LobbyWorldViewFlagHandler>().ActivityInApp());
         }
     }
 
     public void GameWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("GameWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("GameWorlds"))
         {
             return;
         }
@@ -71,7 +83,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void CustomWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("NewBuilderWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("NewBuilderWorlds"))
         {
             return;
         }
@@ -80,7 +92,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void EventWorldLoadNew()   //my worlds method name is also same so add new here for event category
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("EventWrolds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("EventWrolds"))
         {
             return;
         }
@@ -89,7 +101,7 @@ public class AllWorldManage : MonoBehaviour
     }
     public void EventWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("MyBuilderWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("MyBuilderWorlds"))
         {
             return;
         }
@@ -105,13 +117,13 @@ public class AllWorldManage : MonoBehaviour
     }
     public void TestWorldLoad()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("TestWorlds"))
+        if (!UserPassManager.Instance.CheckSpecificItem("TestWorlds"))
         {
             return;
         }
         ScrollEnableDisable(5);
         WorldManager.instance.ChangeWorld(APIURL.TestWorld);
-    }
+    }*/
 
     void SetTextForScroller(string textToChange, TextMeshProUGUI text)
     {
@@ -137,5 +149,40 @@ public class AllWorldManage : MonoBehaviour
         transform.GetComponent<RectTransform>().offsetMin = new Vector2(
             transform.GetComponent<RectTransform>().offsetMin.x,
             transform.GetComponent<RectTransform>().offsetMin.y + 342);
+    }
+    public void CategoryLoadMore(string _categType)
+    {
+        Debug.Log("Selected Category Type: " + _categType);
+        WorldManager.instance.seeAllPN = 1;
+        SearchScreenLoad();
+        WorldManager.instance.ChangeWorldTab(ApiUrlSelect(_categType), _categType);
+    }
+
+    APIURL ApiUrlSelect(string _categType)
+    {
+        if (_categType.Contains("Featured Spaces"))
+        {
+            return APIURL.FeaturedSpaces;
+        }
+        else if (_categType.Contains("Hot Spaces"))
+        {
+            return APIURL.HotSpaces;
+        }
+        else if (_categType.Contains("Hot Games"))
+        {
+            return APIURL.HotGames;
+        }
+        else if (_categType.Contains("Following Spaces"))
+        {
+            return APIURL.FolloingSpace;
+        }
+        else if (_categType.Contains("My Spaces"))
+        {
+            return APIURL.MySpace;
+        }
+        else
+        {
+            return APIURL.SearchWorldByTag;
+        }
     }
 }
