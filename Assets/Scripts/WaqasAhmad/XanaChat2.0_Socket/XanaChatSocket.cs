@@ -250,7 +250,7 @@ public class XanaChatSocket : MonoBehaviour
             return;
 
         string tempUser = msg.name;//msg.username;
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 0 || string.IsNullOrEmpty(msg.name))
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0 && string.IsNullOrEmpty(msg.name))
             tempUser = msg.guestusername; //msg.username;
 
         receivedMsgForTesting = msg;
