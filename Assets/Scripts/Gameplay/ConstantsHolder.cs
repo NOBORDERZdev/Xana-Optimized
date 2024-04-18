@@ -145,6 +145,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID=0; // Id of user profile when the user visit the profile section.
     public bool IsOtherProfileVisit = false; // to Check is other profile player visit
+    public bool newStreamEntery = false;
     public string r_EmoteReactionPersistentPath
     {
         get
