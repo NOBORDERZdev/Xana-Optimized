@@ -128,7 +128,7 @@ public class XanaChatSocket : MonoBehaviour
 
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
-        //StartCoroutine(FetchOldMessages());
+        StartCoroutine(FetchOldMessages());
     }
     private void OnEnable()
     {
@@ -295,7 +295,7 @@ public class XanaChatSocket : MonoBehaviour
         WWWForm form = new WWWForm();
 
         string api = fetchAllMsgApi + XanaConstants.xanaConstants.MuseumID + "/" + eventId + "/" + socketId + "/" + pageNumber + "/" + dataLimit;
-        //Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
+        Debug.Log("<color=red> XanaChat -- API : " + api + "</color>");
 
         UnityWebRequest www;
         www = UnityWebRequest.Get(api);
