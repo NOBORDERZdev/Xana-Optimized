@@ -143,12 +143,10 @@ public class CharacterBodyParts : MonoBehaviour
         //IntCharacterBones();
     }
 
-
     public void TextureForShirt(Texture texture)
     {
         body.materials[0].SetTexture(shirt_TextureName, texture);
     }
-
 
     // Set texture For 
     public void TextureForPant(Texture texture)
@@ -1164,59 +1162,59 @@ public class CharacterBodyParts : MonoBehaviour
     {
         // BonesData.Clear();
         // Eye
-        foreach (var bone in BothEyes)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //foreach (var bone in BothEyes)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Eye Inner
-        foreach (var bone in EyeIner)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Eye Inner
+        //foreach (var bone in EyeIner)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Eye out
-        foreach (var bone in EyesOut)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Eye out
+        //foreach (var bone in EyesOut)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
-        // Lips
-        foreach (var bone in BothLips)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //// Lips
+        //foreach (var bone in BothLips)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
 
         Transform singleBone;
-        // jaw
-        singleBone = JBone.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // head
-        singleBone = head.gameObject.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // nose
-        singleBone = Nose.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // mouth
-        singleBone = Lips.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // Fore head
-        singleBone = ForeHead.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        // Head all
+        //// Head all
         singleBone = headAll.transform;
         BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
-        //[WaqasAhmad] New Bone Add After character Scaling From Design End
-        singleBone = headAll.transform.transform.parent.transform;
-        BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        // jaw
+        //singleBone = JBone.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// head
+        //singleBone = head.gameObject.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// nose
+        //singleBone = Nose.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// mouth
+        //singleBone = Lips.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        //// Fore head
+        //singleBone = ForeHead.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
+        ////[WaqasAhmad] New Bone Add After character Scaling From Design End
+        //singleBone = headAll.transform.transform.parent.transform;
+        //BonesData.Add(new BoneDataContainer(singleBone.name, singleBone.gameObject, singleBone.transform.localPosition, singleBone.transform.localEulerAngles, singleBone.transform.localScale));
 
 
 
         // Fat
-        foreach (var bone in _scaleBodyParts)
-        {
-            BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
-        }
+        //foreach (var bone in _scaleBodyParts)
+        //{
+        //    BonesData.Add(new BoneDataContainer(bone.name, bone.gameObject, bone.transform.localPosition, bone.transform.localEulerAngles, bone.transform.localScale));
+        //}
         //// saving default Transfrom of bones
         //foreach (var item in BonesData)
         //{
@@ -1462,23 +1460,14 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void LoadBlendShapes(SavingCharacterDataClass data, GameObject applyOn)
     {
-        SkinnedMeshRenderer effectedHead = applyOn.GetComponent<CharacterBodyParts>().head;
+        CharacterBodyParts applyOnBodyParts = applyOn.GetComponent<CharacterBodyParts>();
+        SkinnedMeshRenderer effectedHead = applyOnBodyParts.head;
+
         //blend shapes
         for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
         {
             if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
             {
-                //if (i < data.FaceBlendsShapes.Length)
-                //{
-
-                //    if (i == 32)
-                //        effectedHead.SetBlendShapeWeight(i, 0);
-                //    else
-                //        effectedHead.SetBlendShapeWeight(i, data.FaceBlendsShapes[i]);
-                //}
-                //else
-                //    effectedHead.SetBlendShapeWeight(i, 0);
-
                 // Added By WaqasAhmad
                 // if BlendCount & Blend In File are Same Then Assign Blend Value
                 // Else Set Blend Values to Default
@@ -1492,6 +1481,11 @@ public class CharacterBodyParts : MonoBehaviour
                     effectedHead.SetBlendShapeWeight(i, 0);
                 }
             }
+        }
+        //appling bones data
+        for (int i = 0; i < data.SavedBones.Count; i++)
+        {
+            applyOnBodyParts.headAll.transform.localScale = data.SavedBones[i].Scale;
         }
         EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
