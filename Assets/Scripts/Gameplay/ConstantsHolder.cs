@@ -92,6 +92,9 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    // Is in Store
+    public bool isStoreActive = false;
+
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;

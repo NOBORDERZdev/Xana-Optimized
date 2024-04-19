@@ -38,6 +38,9 @@ public class CharacterHandler : MonoBehaviour
                 UpdateAvatarRefrences(femaleAvatarData);
                 break;
         }
+
+        //if(ConstantsHolder.xanaConstants.isStoreActive)
+            
     }
 
     private void UpdateAvatarRefrences(AvatarData _avatarData)
@@ -51,8 +54,18 @@ public class CharacterHandler : MonoBehaviour
             GameManager.Instance.m_CharacterAnimator = _avatarData.avatar_animator;
             GameManager.Instance.avatarController = _avatarData.avatar_parent.GetComponent<AvatarController>();
             GameManager.Instance.characterBodyParts = _avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
-            GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
-            GameManager.Instance.ActorManager.Init();
+
+            Debug.Log("Waqas Here : " + PlayerPrefs.GetInt("presetPanel"));
+
+            if (!ConstantsHolder.xanaConstants.isStoreActive)
+            {
+                GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
+                GameManager.Instance.ActorManager.Init();
+            }
+            else
+            {
+                GameManager.Instance.m_CharacterAnimator.SetBool("IdleMenu", true);
+            }
 
         }
         if (SaveCharacterProperties.instance != null)
@@ -61,7 +74,7 @@ public class CharacterHandler : MonoBehaviour
             SaveCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
         }
         
-        if (playerNameCanvas && playerPostCanvas)
+        if (playerNameCanvas && playerPostCanvas && !ConstantsHolder.xanaConstants.isStoreActive)
         {
             UpdateNameAndPostTarget(_avatarData.avatar_parent);   // Update the target of the name and post canvas to the active player
         }
