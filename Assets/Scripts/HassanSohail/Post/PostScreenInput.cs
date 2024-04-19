@@ -42,11 +42,11 @@ public class PostScreenInput : MonoBehaviour
     {
         if (GameManager.currentLanguage.Equals("en"))
         {
-            placeHolderText = "Enter the text";
+            placeHolderText = "How are you feeling?";
         }
         else
         {
-            placeHolderText = "テキストを入力してください";
+            placeHolderText = "今、どんな気分ですか？";
         }
         
         ActiveInputFeild();
@@ -94,7 +94,7 @@ public class PostScreenInput : MonoBehaviour
             ShowText.color = placeHolderColor;
             if (GameManager.currentLanguage.Equals("en"))
             {
-                if (ShowText.text == "Enter the text")
+                if (ShowText.text == "How are you feeling?")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                     bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
@@ -103,7 +103,7 @@ public class PostScreenInput : MonoBehaviour
             }
             else
             {
-                if (ShowText.text == "テキストを入力してください")
+                if (ShowText.text == "今、どんな気分ですか？")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                     bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
