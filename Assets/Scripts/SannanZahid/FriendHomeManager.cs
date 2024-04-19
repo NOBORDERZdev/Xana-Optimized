@@ -35,7 +35,7 @@ public class FriendHomeManager : MonoBehaviour
     }
     public void GetOnlineFriends()
     {
-        print("online api called...");
+        //print("online api called...");
         StartCoroutine(IEGetOnlineFriends());
     }
     IEnumerator IEGetOnlineFriends()
@@ -52,10 +52,25 @@ public class FriendHomeManager : MonoBehaviour
             else
             {
                 _onlineFriendsDataFetched = JsonUtility.FromJson<OnlineFriends>(www.downloadHandler.text);
-
+                for (int i = 0; i < SpawnFriendsObj.Count; i++)
+                {
+                    for (int j = 0; j < _onlineFriendsDataFetched.data.Count; j++)
+                    {
+                        if (_onlineFriendsDataFetched.data[j].userId.Equals(SpawnFriendsObj[i].id))
+                        {
+                            if (_onlineFriendsDataFetched.data[j].isOnline && _onlineFriendsDataFetched.data[j].isWorldJoin)
+                            {
+                                SpawnFriendsObj[i].friendNameObj.GetComponent<CheckOnlineFriend>().ToggleOnlineStatus(true);
+                                WorldManager.instance.SetFriendsJoinedWorldInfo(_onlineFriendsDataFetched.data[j].worldDetails, SpawnFriendsObj[i].friendNameObj.GetComponent<WorldItemView>());
+                            }
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
+    
     public void SpawnFriends()
     {
         if(SpawnFriendsAgain)
@@ -89,6 +104,7 @@ public class FriendHomeManager : MonoBehaviour
                         StartCoroutine(CreateFriend(friend));
                     }
                 }
+                GetOnlineFriends();
             }
             else
             {
@@ -121,6 +137,7 @@ public class FriendHomeManager : MonoBehaviour
         Transform CreatedNameTag = Instantiate(NameTagFriendAvatarPrefab, NameTagFriendAvatarPrefab.parent).transform;
         CreatedNameTag.GetComponent<FollowUser>().targ = CreatedFriend;
         CreatedNameTag.GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
+        CreatedNameTag.GetChild(0).GetChild(1).GetChild(0).GetComponent<TMPro.TMP_Text>().text = friend.name;
         CreatedNameTag.GetComponent<CheckOnlineFriend>().friendId = friend.id;
         CreatedFriend.GetComponent<Actor>().NameTagHolderObj = CreatedNameTag;
         CreatedFriend.gameObject.SetActive(true);
@@ -325,22 +342,24 @@ public class FriendSpawnData
 
 }
 [Serializable]
-public class OnlineFriends
+class OnlineFriends
 {
     public bool success;
-    public OnlineriendsData data;
+    public List<OnlineriendsData> data;
     public string msg;
 }
 [Serializable]
-public class OnlineriendsData
+class OnlineriendsData
 {
     public int id;
     public int userId;
     public bool isOnline;
+    public bool isWorldJoin;
     public OnlineFriendsUser user;
+    public RowList worldDetails;
 }
 [Serializable]
-public class OnlineFriendsUser
+class OnlineFriendsUser
 {
     public int id;
     public string name;

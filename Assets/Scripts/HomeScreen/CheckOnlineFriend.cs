@@ -12,51 +12,54 @@ public class CheckOnlineFriend : MonoBehaviour
     public int randomPreset;
     [SerializeField]
     GameObject offlineFriendName, onlineFriendName;
+    WorldItemView worldItemView;
     private void OnEnable()
     {
-        SocketController.instance.spaceJoinedFriendStatus += SpaceJoinedFriends;
-        SocketController.instance.spaceJoinedFriendStatus += SpaceExitFriends;
+        HomeScoketHandler.instance.spaceJoinedFriendStatus += SpaceJoinedFriend;
+        HomeScoketHandler.instance.spaceExitFriendStatus += SpaceExitFriend;
     }
     private void OnDisable()
     {
-        SocketController.instance.spaceJoinedFriendStatus -= SpaceJoinedFriends;
-        SocketController.instance.spaceJoinedFriendStatus -= SpaceExitFriends;
+        HomeScoketHandler.instance.spaceJoinedFriendStatus -= SpaceJoinedFriend;
+        HomeScoketHandler.instance.spaceExitFriendStatus -= SpaceExitFriend;
     }
     private void Start()
     {
+        worldItemView = GetComponent<WorldItemView>();
         offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
+        onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
     }
-    public void SpaceJoinedFriends(FriendOnlineStatus friendOnlineStatus)
+    public void SpaceJoinedFriend(FriendOnlineStatus friendOnlineStatus)
     {
         if(friendOnlineStatus.userId==friendId)
         {
-            if (friendOnlineStatus.isOnline)
-            {
-                onlineFriendName.SetActive(true);
-                offlineFriendName.SetActive(false);
-            }
-            else
-            {
-                onlineFriendName.SetActive(false);
-                offlineFriendName.SetActive(true);
-            }
+            ToggleOnlineStatus(friendOnlineStatus.isOnline);
+            WorldManager.instance.SetFriendsJoinedWorldInfo(friendOnlineStatus.worldDetails, worldItemView);
         }
     }
-    public void SpaceExitFriends(FriendOnlineStatus friendOnlineStatus)
+    public void SpaceExitFriend(FriendOnlineStatus friendOnlineStatus)
     {
         if (friendOnlineStatus.userId == friendId)
         {
-            if (friendOnlineStatus.isOnline)
-            {
-                onlineFriendName.SetActive(true);
-                offlineFriendName.SetActive(false);
-            }
-            else
-            {
-                onlineFriendName.SetActive(false);
-                offlineFriendName.SetActive(true);
-            }
+            ToggleOnlineStatus(friendOnlineStatus.isOnline);
         }
+    }
+    public void ToggleOnlineStatus(bool toggle)
+    {
+        if (toggle) {
+            onlineFriendName.SetActive(true);
+            offlineFriendName.SetActive(false);
+        }
+        else
+        {
+            onlineFriendName.SetActive(false);
+            offlineFriendName.SetActive(true);
+        }
+    }
+    void GotoSpace()
+    {
+        ConstantsHolder.xanaConstants.isFromHomeTab = true;
+        worldItemView.OnClickPrefab();
     }
     public void onclickFriendNameButton()
     {
@@ -64,7 +67,7 @@ public class CheckOnlineFriend : MonoBehaviour
         FeedUIController.Instance.ShowLoader(true);
         //print("Getting Click here" + _data.user_id);
         if(friendId!= 0)
-            APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
+            SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
         else
             GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
     }
@@ -72,7 +75,7 @@ public class CheckOnlineFriend : MonoBehaviour
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
-        APIManager.Instance.RequestGetUserLatestAvatarData<CheckOnlineFriend>(searchUserRow.id.ToString(), this);
+        SNS_APIManager.Instance.RequestGetUserLatestAvatarData<CheckOnlineFriend>(searchUserRow.id.ToString(), this);
         //DressUpUserAvatar();
         if (MyProfileDataManager.Instance)
         {
@@ -160,9 +163,9 @@ public class CheckOnlineFriend : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {

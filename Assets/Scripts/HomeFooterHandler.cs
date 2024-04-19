@@ -62,7 +62,14 @@ public class HomeFooterHandler : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.CurrentSceneName = "";
             GameManager.Instance.defaultSelection = 10;
-            Invoke(nameof(OnClickHomeWorldButton), 5);
+            if (ConstantsHolder.xanaConstants.isFromHomeTab)
+            {
+                Invoke(nameof(OnClickHomeButton), 5);
+                ConstantsHolder.xanaConstants.isFromHomeTab= false;
+
+            }
+            else
+                Invoke(nameof(OnClickHomeWorldButton), 5);
         }
         else
         {
@@ -801,7 +808,7 @@ public class HomeFooterHandler : MonoBehaviour
             additiveScenesManager.SNSmodule.SetActive(true);
             // additiveScenesManager.SNSMessage.SetActive(false);
             gameManager.defaultSelection = 4;
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnSelectedClick(4);
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
         }
         else
         {
@@ -819,7 +826,7 @@ public class HomeFooterHandler : MonoBehaviour
             gameManager.UiManager.Canvas.SetActive(false);
 
             gameManager.UiManager.HomeWorldScreen.SetActive(false);
-            FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
             FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;

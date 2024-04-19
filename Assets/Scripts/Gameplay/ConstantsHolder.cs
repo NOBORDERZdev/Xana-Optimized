@@ -120,6 +120,7 @@ public class ConstantsHolder : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
+    public bool isFromHomeTab = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;

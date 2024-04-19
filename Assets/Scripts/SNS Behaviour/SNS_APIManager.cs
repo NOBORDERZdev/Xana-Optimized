@@ -518,7 +518,14 @@ public class SNS_APIManager : MonoBehaviour
             _feedUserData.SetupFeedUserProfile(result);
         }));
     }
-
+    public void GetHomeFriendProfileData<T>(int _userid, T obj) where T : class
+    {
+        StartCoroutine(IERequestFeedUserProfileData(_userid, result =>
+        {
+            CheckOnlineFriend checkOnlineFriend = obj as CheckOnlineFriend;
+            checkOnlineFriend.SetupHomeFriendProfile(result);
+        }));
+    }
     IEnumerator IERequestFeedUserProfileData(int _userid, Action<SearchUserRow> result)
     {
         WWWForm form = new WWWForm();

@@ -17,6 +17,9 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
+
+    public Action<FriendOnlineStatus> spaceJoinedFriendStatus;
+    public Action<FriendOnlineStatus> spaceExitFriendStatus;
     private void Awake()
     {
         instance = this;
@@ -49,7 +52,20 @@ public class HomeScoketHandler : MonoBehaviour
             Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
 
             ConnectSNSSockets();
-        
+            Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
+            Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
+    }
+    void FriendJoinedSpace(string msg)
+    {
+        FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        Debug.Log("Friens is Online " + data.isOnline);
+        spaceJoinedFriendStatus?.Invoke(data);
+    }
+    void FriendExitSpace(string msg)
+    {
+        FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        Debug.Log("Friens is Offline " + data.isOnline);
+        spaceExitFriendStatus?.Invoke(data);
     }
     void ReceivePost(string msg)
     {
@@ -263,4 +279,14 @@ class HomeFriendAvatarData
     public string thumnmail;
     public string name;
     public SavingCharacterDataClass json;
+}
+public class FriendOnlineStatus
+{
+    public int userId;
+    public string name;
+    public string avatar;
+    public int worldId;
+    public string msg;
+    public RowList worldDetails;
+    public bool isOnline;
 }
