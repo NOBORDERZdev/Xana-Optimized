@@ -26,6 +26,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     [SerializeField] Web3Auth web3Auth;
 
     string console;
+    String ExternalApitoCall;
     internal string Userresponsce;
     internal string mysignature1 , mysignature2;
     private string privateKey;
@@ -51,10 +52,11 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientIdEmail = "fr46GR3TzfOJFNvgEcIcQKLtLi48cm3c";
             clientIdGoole = "1041808867611-576ma9t6bva7b94irmvbt88n02tvoujn.apps.googleusercontent.com";
             clientIdApple = "bJgmFBdg8eSa2gAzh1yv3ABinO9NIq1z";
-           // clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
+            // clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
             //...
             domains = "https://dev-i7bsu7bon4og1n64.us.auth0.com";
-           // domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+            // domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+            ExternalApitoCall = ConstantsGod.xanaliaProductionAPI;
         }
         else {
             //For Testnet
@@ -73,7 +75,8 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             //clientIdLine = "Y0EkN53ZYHQmE3BTlv3ylvKAg5dt38CP";
             //...
             domains = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
-          //  domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+            //  domainsLine = "https://dev-px4cfed8eh5nu1bn.jp.auth0.com";
+            ExternalApitoCall = ConstantsGod.xanaliaTestAPI;
         }
 
         var EmailPasswordlessConfigItem = new LoginConfigItem()
@@ -327,7 +330,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         
         string jsonData = JsonUtility.ToJson(dataToSend);
 
-        using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.xanaliaTestAPI + ConstantsGod.loginExternalWalletURL, "POST"))
+        using (UnityWebRequest www = UnityWebRequest.Post(ExternalApitoCall + ConstantsGod.loginExternalWalletURL, "POST"))
         {
             www.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
             www.downloadHandler = new DownloadHandlerBuffer();
