@@ -101,7 +101,7 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         //ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 0);
+        Invoke(nameof(LoadJjworld), 4);
     }
     /*public void CheckWorldTabAndReset(APIURL tab)
     {

@@ -434,6 +434,7 @@ public class UserLoginSignupManager : MonoBehaviour
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
+        StartCoroutine(CheckCameraMan());
     }
 
     public void CheckForValidationAndSignUp(bool resendOtp = false)
@@ -1054,7 +1055,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 GetOwnedNFTsFromAPI();
                 SubmitSetDeviceToken();
                 GetUserClothData();
-                CheckCameraMan(myObject1.data.user.email);
+                StartCoroutine( CheckCameraMan() );
                 OpenUIPanel(21);
 
                 DynamicEventManager.deepLink?.Invoke("Login user here");
@@ -1110,12 +1111,22 @@ public class UserLoginSignupManager : MonoBehaviour
         request.Dispose();
     }
 
-    void CheckCameraMan(string email)
+    public IEnumerator CheckCameraMan()
     {
-        if (email.Contains("xanacameraman@yopmail.com"))
+        //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+        //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+        while (PlayerPrefs.GetString("publicID")==null)
+            yield return new WaitForSeconds(0.1f);
+
+        string publicAddress = PlayerPrefs.GetString("publicID");
+        if (publicAddress.Equals("0xc6C14b153205A391b0e71c6c5De03972C84079E4"))
+        {
             ConstantsHolder.xanaConstants.isCameraMan = true;
+        }
         else
+        {
             ConstantsHolder.xanaConstants.isCameraMan = false;
+        }
     }
 
     public void GetOwnedNFTsFromAPI()

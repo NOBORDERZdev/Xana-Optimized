@@ -251,7 +251,7 @@ namespace Photon.Pun.Demo.PunBasics
                 if (info.PlayerCount < maxPlayer)
                 {
                     lastRoomName = info.Name;
-                    if (!ConstantsHolder.xanaConstants.isCameraMan)
+                    if (/*!ConstantsHolder.xanaConstants.isCameraMan*/true)
                     {
                         PhotonNetwork.JoinRoom(lastRoomName);
                         joinedRoom = true;
@@ -259,20 +259,20 @@ namespace Photon.Pun.Demo.PunBasics
                     }
                 }
             }
-            if (ConstantsHolder.xanaConstants.isCameraMan)
-            {
-                if (roomList.Count > 0)
-                {
-                    List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
-                    tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
-                    CameraManRoomName = tempRooms[0].Name;
-                }
-                else
-                {
-                    // there is no room for stremaing so move to main menu to switch other world
-                    GameplayEntityLoader.instance._uiReferences.LoadMain(false);
-                }
-            }
+            //if (ConstantsHolder.xanaConstants.isCameraMan)
+            //{
+            //    if (roomList.Count > 0)
+            //    {
+            //        List<RoomInfo> tempRooms = new List<RoomInfo>(roomList);
+            //        tempRooms.Sort((a, b) => b.PlayerCount.CompareTo(a.PlayerCount));
+            //        CameraManRoomName = tempRooms[0].Name;
+            //    }
+            //    else
+            //    {
+            //        // there is no room for stremaing so move to main menu to switch other world
+            //        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+            //    }
+            //}
 
             if (joinedRoom == false)
             {
@@ -282,13 +282,14 @@ namespace Photon.Pun.Demo.PunBasics
                     temp = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
                 } 
                 while (roomNames.Contains(temp));
-                if (!ConstantsHolder.xanaConstants.isCameraMan)
-                    PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
-                else
-                {
-                    if (!CameraManRoomName.IsNullOrEmpty())
-                        PhotonNetwork.JoinRoom(CameraManRoomName);
-                }
+                //if (!ConstantsHolder.xanaConstants.isCameraMan)
+                //    PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
+                //else
+                //{
+                //    if (!CameraManRoomName.IsNullOrEmpty())
+                //        PhotonNetwork.JoinRoom(CameraManRoomName);
+                //}
+                 PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
             }
         }
 

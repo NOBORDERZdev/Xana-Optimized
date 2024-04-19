@@ -271,7 +271,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     private void OnDestroy()
     {
         Debug.Log("Logged out!");
-        logout();
+       // logout();
     }
 
     public void logout()

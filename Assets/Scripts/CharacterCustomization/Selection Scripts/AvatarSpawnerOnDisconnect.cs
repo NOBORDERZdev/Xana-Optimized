@@ -132,7 +132,8 @@ namespace Metaverse
         {
             if (OninternetDisconnect != null)
                 OninternetDisconnect.Invoke();
-            ShowJoinRoomPanel();
+            //ShowJoinRoomPanel();
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.BackToMainmenuforAutoSwtiching());
         }
 
 

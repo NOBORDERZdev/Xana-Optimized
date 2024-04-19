@@ -523,20 +523,23 @@ public class UserRegisterationManager : MonoBehaviour
     //        welcomeScreen.SetActive(true);
     //}
 
-    void CheckCameraMan()
-    {
-        MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-        LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-        if (LoginObj.email.Contains("xanacameraman@yopmail.com" /*"xanavip1@gmail.com"*/))
-        {
-            ConstantsHolder.xanaConstants.isCameraMan = true;
+    //public IEnumerator CheckCameraMan()
+    //{
+    //    ////MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+    //    ////LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+    //    //while (PlayerPrefs.GetString("publicID")==null)
+    //    //    yield return new WaitForSeconds(0.1f);
 
-        }
-        else
-        {
-            ConstantsHolder.xanaConstants.isCameraMan = false;
-        }
-    }
+    //    //string publicAddress = PlayerPrefs.GetString("publicID");
+    //    //if (publicAddress.Equals("0xc6C14b153205A391b0e71c6c5De03972C84079E4"))
+    //    //{
+    //    //    ConstantsHolder.xanaConstants.isCameraMan = true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    ConstantsHolder.xanaConstants.isCameraMan = false;
+    //    //}
+    //}
 
 
     IEnumerator WalletLoggedInAccessGroup(bool loadData = false)
@@ -3508,7 +3511,7 @@ public class UserRegisterationManager : MonoBehaviour
                         usernamePanal.SetActive(false);
                         usernamePanal.SetActive(false);
                         ConstantsHolder.xanaConstants.LoginasGustprofile = true;
-                        CheckCameraMan();
+                        //CheckCameraMan();
                         PlayerPrefs.Save();
                         InventoryManager.instance.CheckWhenUserLogin();
                         if (!AutoLoginBool)
