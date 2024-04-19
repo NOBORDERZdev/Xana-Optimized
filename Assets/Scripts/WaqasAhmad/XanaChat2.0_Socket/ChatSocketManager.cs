@@ -241,6 +241,11 @@ public class ChatSocketManager : MonoBehaviour
             return;
 
         string tempUser = msg.name;
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0 && string.IsNullOrEmpty(msg.name))
+            tempUser = msg.guestusername;
+        else if (string.IsNullOrEmpty(msg.name))
+            tempUser = msg.username;
+
         receivedMsgForTesting = msg;
 
         if (CheckUserNameIsValid(tempUser))
@@ -404,6 +409,8 @@ public class ChatUserData
     public string socket_id;
     public string username;
     public string name;
+    public string guestusername;
+
     public string avatar;
     public string message;
     public string world;
