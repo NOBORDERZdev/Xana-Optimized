@@ -278,9 +278,8 @@ public class SaveCharacterProperties : MonoBehaviour
                 //_CharacterData.eyeLashesName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture("_BaseMap").name;
                 //_CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
-                //_CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             }
-
+            _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
             _CharacterData.hair_color = SaveItemList.hair_color;

@@ -143,12 +143,10 @@ public class CharacterBodyParts : MonoBehaviour
         //IntCharacterBones();
     }
 
-
     public void TextureForShirt(Texture texture)
     {
         body.materials[0].SetTexture(shirt_TextureName, texture);
     }
-
 
     // Set texture For 
     public void TextureForPant(Texture texture)
@@ -1482,6 +1480,32 @@ public class CharacterBodyParts : MonoBehaviour
                 // Added By WaqasAhmad
                 // if BlendCount & Blend In File are Same Then Assign Blend Value
                 // Else Set Blend Values to Default
+
+                if (data.FaceBlendsShapes.Length == effectedHead.sharedMesh.blendShapeCount || data.FaceBlendsShapes.Length == effectedHead.sharedMesh.blendShapeCount - 1)
+                {
+                    effectedHead.SetBlendShapeWeight(i, data.FaceBlendsShapes[i]);
+                }
+                else
+                {
+                    effectedHead.SetBlendShapeWeight(i, 0);
+                }
+            }
+        }
+        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+    }
+
+    public void LoadBlendShapesFromLocalJSON(SkinnedMeshRenderer applyOn)
+    {
+        string folderPath = GameManager.Instance.GetStringFolderPath();
+
+        SavingCharacterDataClass data = new SavingCharacterDataClass();
+        data = data.CreateFromJSON(File.ReadAllText(folderPath));
+        SkinnedMeshRenderer effectedHead = applyOn;
+        //blend shapes
+        for (int i = 0; i < effectedHead.sharedMesh.blendShapeCount - 1; i++)
+        {
+            if (data.FaceBlendsShapes != null && data.FaceBlendsShapes.Length > 0)
+            {
 
                 if (data.FaceBlendsShapes.Length == effectedHead.sharedMesh.blendShapeCount || data.FaceBlendsShapes.Length == effectedHead.sharedMesh.blendShapeCount - 1)
                 {
