@@ -128,7 +128,7 @@ public class XanaChatSocket : MonoBehaviour
 
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
-        StartCoroutine(FetchOldMessages());
+        //StartCoroutine(FetchOldMessages());
     }
     private void OnEnable()
     {
@@ -251,7 +251,9 @@ public class XanaChatSocket : MonoBehaviour
 
         string tempUser = msg.name;//msg.username;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0 && string.IsNullOrEmpty(msg.name))
-            tempUser = msg.guestusername; //msg.username;
+            tempUser = msg.guestusername; 
+        else if(string.IsNullOrEmpty(msg.name))
+            tempUser = msg.username;
 
         receivedMsgForTesting = msg;
 
@@ -285,7 +287,7 @@ public class XanaChatSocket : MonoBehaviour
 
         DisplayOldChat(oldChatResponse);
     }
-    IEnumerator FetchOldMessages()
+    public IEnumerator FetchOldMessages()
     {
         yield return new WaitForSeconds(5f);
 

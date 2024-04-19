@@ -135,6 +135,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             print(e.Message);
         }
         VoiceView = GetComponent<PhotonVoiceView>();
+
+        GetComponent<PhotonView>().RPC(nameof(GetChatRecord), RpcTarget.All);
     }
 
     public void Update()
@@ -514,8 +516,12 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
     }
 
-
-
+    [PunRPC]
+    public void GetChatRecord()
+    {
+        //if (gameObject.GetComponent<PhotonView>().ViewID == viewId)
+            StartCoroutine(XanaChatSocket.instance.FetchOldMessages());
+    }
 
 
 
