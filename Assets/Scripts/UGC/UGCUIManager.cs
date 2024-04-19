@@ -63,7 +63,7 @@ public class UGCUIManager : MonoBehaviour
     //public Color normalTextColor, highlightedTextColor;
     public GameObject ItemPrefab;
     public Button videoBtn,photoBtn;
-
+    public Button bgDefaultBtn;
     void Start()
     {
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
@@ -80,11 +80,13 @@ public class UGCUIManager : MonoBehaviour
     {
         videoBtn.onClick.AddListener(OnTapVideoButton);
         photoBtn.onClick.AddListener(OnTapphotoButton);
+        bgDefaultBtn.onClick.AddListener(OnTapDefaultBg);
     }
     private void OnDisable()
     {
         videoBtn.onClick.RemoveListener(OnTapVideoButton);
         photoBtn.onClick.RemoveListener(OnTapphotoButton);
+        bgDefaultBtn.onClick.RemoveListener(OnTapDefaultBg);
     }
     public void DisableLoadingPanel()
     {
@@ -494,10 +496,27 @@ public class UGCUIManager : MonoBehaviour
         {
         });
     }
+
+    public void OnTapDefaultBg()
+    {
+        for (int i = 0; i < tagsObjects.Count; i++)
+        {
+            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+        }
+        _CharacterData.isBgApply = false;
+        _CharacterData.bgKeyValue = "";
+        ApplyDefaultTexture();
+        string bodyJson = JsonUtility.ToJson(_CharacterData);
+        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
+        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
+        {
+        });
+    }
     public void ApplyDefaultTexture()
     {
         //bgMat.mainTexture = texture;
         bgMat.material.mainTexture = defaultTexture;
+        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(true);
     }
     public void OnClickSelectBackgroundButton(GameObject _gameObject, string key)
     {
@@ -506,6 +525,7 @@ public class UGCUIManager : MonoBehaviour
         {
             tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
         }
+        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(false);
         _gameObject.transform.GetChild(1).gameObject.SetActive(true);
         key = Regex.Replace(key, @"\s", "");
         key = key.ToLower();
