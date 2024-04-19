@@ -3306,7 +3306,7 @@ MonoBehaviour:
   Lips: {fileID: 0}
   PelvisBone: {fileID: 0}
   ForeHead: {fileID: 0}
-  headAll: {fileID: 0}
+  headAll: {fileID: 3991031163302025358}
   scaleEyeX: 0
   EyeScaleY: 0
   MouthX: 0
@@ -3320,22 +3320,7 @@ MonoBehaviour:
   JBoneY: 0
   JBoneZ: 0
   Lipscalex: 0
-  _scaleBodyParts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _scaleBodyParts: []
   skinColor:
   - {r: 1, g: 0.9764706, b: 0.9647059, a: 1}
   - {r: 1, g: 0.95686275, b: 0.9372549, a: 1}
@@ -3476,7 +3461,12 @@ MonoBehaviour:
   eyeBrowsColor: []
   eyeColor: []
   lipColorPalette: []
-  BonesData: []
+  BonesData:
+  - Name: Head
+    Obj: {fileID: 3991031163302025358}
+    Pos: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0}
+    Scale: {x: 0, y: 0, z: 0}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 1}
   defaultMakeup: {fileID: 2800000, guid: debcfd3efb58eac47a3661c64709eeca, type: 3}
@@ -9176,6 +9166,11 @@ GameObject:
 --- !u!4 &2247581968729100585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1824824446595371411, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+  m_PrefabInstance: {fileID: 8763415751287652164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3991031163302025358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5692292108060305354, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &5212556724569025453 stripped

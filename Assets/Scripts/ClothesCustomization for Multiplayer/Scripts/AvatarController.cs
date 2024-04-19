@@ -563,7 +563,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
-
+                    characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
@@ -774,6 +774,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
+                    characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                     #region Xana Avatar 1.0 //--> remove for xana avatar2.0
                     //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                     //{
@@ -2116,6 +2117,7 @@ public class AvatarController : MonoBehaviour
             {
                 ApplyDefaultFrndData(_CharacterData,applyOn);
             }
+            characterBodyParts.LoadBlendShapes(_CharacterData, applyOn);
             #region Xana Avatar 1.0   //--> remove for xana avatar2.0
             //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
             //{
