@@ -1,8 +1,6 @@
 using UnityEngine;
 using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
-//using LightShaft.Scripts;
-
 
 public class UploadPropertyBehaviour : MonoBehaviour
 {
