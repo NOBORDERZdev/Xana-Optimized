@@ -181,6 +181,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 {
                     ApplyAIData(_CharacterData, bodyparts);
                 }
+                bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject); // Load BlendShapes
+                
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 //{
                 //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, otherPlayer.gameObject));
