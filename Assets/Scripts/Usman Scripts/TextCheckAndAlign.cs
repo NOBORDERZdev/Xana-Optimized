@@ -8,14 +8,35 @@ public class TextCheckAndAlign : MonoBehaviour
 {
     public GameObject textComponentGameObject;
     public TextMeshProUGUI textComponent;
-    public float X,Y;
+    public bool IsUseForChangeAllign;
+    public float X, Y;
 
     void Start()
     {
-      //  textComponent = textComponentGameObject.GetComponent<TextMeshProUGUI>();
-        if (IsJapaneseRegex(textComponent.text))
+        if (textComponentGameObject != null)
         {
-            textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X,Y,0f);
+            if (IsJapaneseRegex(textComponent.text))
+            {
+                textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X, Y, 0f);
+            }
+        }
+
+        if (IsUseForChangeAllign)
+        {
+            Invoke("ChangeCharacterSpacingForJP",1f);
+        }
+    }
+
+
+    void ChangeCharacterSpacingForJP()
+    {
+
+        if (IsUseForChangeAllign)
+        {
+            if (IsJapaneseRegex(textComponent.text))
+            {
+                textComponent.characterSpacing = -15f;
+            }
         }
     }
 
@@ -26,5 +47,5 @@ public class TextCheckAndAlign : MonoBehaviour
         return Regex.IsMatch(text, japaneseRegex);
     }
 
-   
+
 }
