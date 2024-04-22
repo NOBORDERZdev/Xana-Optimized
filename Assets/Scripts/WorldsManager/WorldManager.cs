@@ -164,6 +164,7 @@ public class WorldManager : MonoBehaviour
                 aPIURLGlobal = APIURL.SearchWorld;
             /*this.WorldItemManager.ClearListInDictionary(aPIURLGlobal.ToString());*/
             WorldScrollReset();
+            seeAllPN = 1;
             SearchPageNumb = 1;
             SearchTagPageNumb = 1;
             SearchPageSize = 40;
@@ -341,7 +342,7 @@ public class WorldManager : MonoBehaviour
                     }
                     else
                     {
-                        if (!string.IsNullOrEmpty(worldSearchManager.searchWorldInput.Text))
+                        if (!string.IsNullOrEmpty(worldSearchManager.searchWorldInput.Text) && _WorldInfo.data.count <= 0)
                         {
                             WorldLoadingText(APIURL.SearchWorld);
                         }
