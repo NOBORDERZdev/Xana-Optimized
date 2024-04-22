@@ -79,4 +79,17 @@ public class EventDataDetails
     public bool success;
     public XanaEventDetails data;
     public string msg;
- }   
+ }  
+
+public class EnvironmentDetails
+{
+    public bool success;
+    public XanaEnvironmentDetails data;
+    public string msg;
+}
+public class XanaEnvironmentDetails
+{
+    public string name;
+    public int user_limit;
+    public string entityType;
+}
