@@ -42,6 +42,11 @@ public class NFT_Holder_Manager : MonoBehaviour
     {
         currentRoom.CloseInfoPop();
         if (currentRoom != null) currentRoom = null;
+
+        renderTexture_16x9.Release();
+        renderTexture_9x16.Release();
+        renderTexture_1x1.Release();
+        renderTexture_4x3.Release();
     }
 
     public void PdfClosed()

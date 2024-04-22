@@ -145,7 +145,9 @@ public class ConstantsHolder : MonoBehaviour
     public UnityEvent<bool> CompletionEvent;
     private AsyncOperationHandle downloadHandle;
 
-
+    public bool IsProfileVisit = false; // bool to check is player in profile section.
+    public int SnsProfileID=0; // Id of user profile when the user visit the profile section.
+    public bool IsOtherProfileVisit = false; // to Check is other profile player visit
     public string r_EmoteReactionPersistentPath
     {
         get
@@ -239,7 +241,6 @@ public class ConstantsHolder : MonoBehaviour
         mic = PlayerPrefs.GetInt("micSound");
     }
 
-
     /// <summary>
     /// To preload addressable dependenceies
     /// </summary>
@@ -269,11 +270,6 @@ public class ConstantsHolder : MonoBehaviour
             Addressables.Release(downloadHandle); //Release the operation handle
         }
     }
-
-
-
-
-
 
     //////constant string variables 
     public const string collectibleMsg = "Item Collected...";

@@ -125,6 +125,7 @@ public static class BuilderEventManager
     public static Action<float> BGMVolume;
 
     //UploadPropertyLoad
-    public static Action<UploadProperties> UploadPropertiesLoad;
+    public static Action<UploadProperties> UploadPropertiesData;
+    public static Action UploadPropertiesInit;
     public static Action<string> YoutubeVideoLoadedCallback;
 }

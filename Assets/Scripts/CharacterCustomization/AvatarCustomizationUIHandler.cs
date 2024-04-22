@@ -41,15 +41,16 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
     GameManager gameManager;
     private void Awake()
     {
-        gameManager = gameManager?? GameManager.Instance;
+        //gameManager = gameManager?? GameManager.Instance;
         if (Instance == null)
             Instance = this;
     }
 
-    // private void Start()
-    // {
-    //     SlidersSaveButton.transform.parent.GetComponent<Button>().onClick.AddListener(CustomSliderSaveBtnFtn);
-    // }
+    private void Start()
+    {
+        //SlidersSaveButton.transform.parent.GetComponent<Button>().onClick.AddListener(CustomSliderSaveBtnFtn);
+        gameManager = gameManager ?? GameManager.Instance;
+    }
 
     public void CustomSliderSaveBtnFtn()
     {

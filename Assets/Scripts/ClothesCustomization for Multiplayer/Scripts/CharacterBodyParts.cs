@@ -1307,11 +1307,11 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void ApplyBodyTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetTexture("_Base_Texture", texture);
     }
     public void ApplyFaceTexture(Texture texture, GameObject applyOn)
     {
-        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetTexture(Skin_TextureName, texture);
+        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetTexture("_Base_Texture", texture);
     }
     public void ApplyTattoo(Texture texture, GameObject applyOn, CurrentTextureType nFTOjectType)
     {

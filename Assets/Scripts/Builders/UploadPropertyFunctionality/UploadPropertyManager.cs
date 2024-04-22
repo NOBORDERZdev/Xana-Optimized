@@ -6,29 +6,37 @@ public class UploadPropertyManager : MonoBehaviour
     public GameObject upLoadPlayerPrefab;
     public List<GameObject> mediaScreens;
     Transform mediaParent;
+    List<UploadData> uploadDatas = new List<UploadData>();
 
     private void OnEnable()
     {
-        BuilderEventManager.UploadPropertiesLoad += UploadPropertiesLoad;
+        BuilderEventManager.UploadPropertiesData += UploadPropertiesData;
+        BuilderEventManager.UploadPropertiesInit += UploadPropertiesInit;
     }
     private void OnDisable()
     {
-        BuilderEventManager.UploadPropertiesLoad -= UploadPropertiesLoad;
+        BuilderEventManager.UploadPropertiesData -= UploadPropertiesData;
+        BuilderEventManager.UploadPropertiesInit -= UploadPropertiesInit;
     }
 
     void Start()
     {
-        mediaParent= this.transform;
+        mediaParent = this.transform;
     }
 
-    private void UploadPropertiesLoad(UploadProperties uploadProperties)
+    private void UploadPropertiesData(UploadProperties uploadProperties)
     {
         if (uploadProperties == null) return;
 
-        var uploadData = uploadProperties.uploadData;
-        if (uploadData != null)
+        uploadDatas = uploadProperties.uploadData;
+
+    }
+
+    void UploadPropertiesInit()
+    {
+        if (uploadDatas.Count > 0)
         {
-            foreach (var data in uploadData)
+            foreach (var data in uploadDatas)
             {
                 AddScreen(data);
             }
@@ -36,7 +44,6 @@ public class UploadPropertyManager : MonoBehaviour
     }
     private void AddScreen(UploadData data)
     {
-
         var instantiatedPrefab = Instantiate(upLoadPlayerPrefab, data.position, data.rotation, mediaParent);
         instantiatedPrefab.transform.localScale = Vector3.one * data.scale;
 
@@ -53,5 +60,5 @@ public class UploadPropertyManager : MonoBehaviour
         mediaPlayer.addFrame = data.addFrame;
         mediaPlayer.isRepeat = data.isRepeat;
         mediaScreens.Add(instantiatedPrefab);
-    } 
+    }
 }
