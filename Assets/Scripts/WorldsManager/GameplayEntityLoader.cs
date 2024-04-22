@@ -616,8 +616,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         print("AUTO BACK CALL");
-        yield return new WaitForSecondsRealtime(30);
-        LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
+        yield return new WaitForSecondsRealtime(0);
+        //LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         _uiReferences.LoadMain(false);

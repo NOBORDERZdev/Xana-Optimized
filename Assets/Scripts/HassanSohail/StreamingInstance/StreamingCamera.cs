@@ -187,7 +187,7 @@ public class StreamingCamera : MonoBehaviour
                     ConstantsHolder.xanaConstants.JjWorldSceneChange=true;
                     ConstantsHolder.xanaConstants.newStreamEntery =false;
                    // ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-                    ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
+                    //ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
                     //XanaChatSystem.instance.OpenCloseChatDialog();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
