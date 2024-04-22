@@ -77,5 +77,15 @@ public class RotatorComponent : ItemComponent
         _componentType = Constants.ItemComponentType.RotatorComponent;
     }
 
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
     #endregion
 }

@@ -9,7 +9,7 @@ public class ImageFinderEditor : EditorWindow
 {
     public string targetFolder;
     public SceneAsset scene;
-    [MenuItem("Tools/Move Images to Folder")]
+    [MenuItem("Tools/EditorScipts-AP/Move Images to Folder")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow<ImageFinderEditor>("Find Images and Move");

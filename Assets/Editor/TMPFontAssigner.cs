@@ -6,7 +6,7 @@ public class TMPFontAssigner : EditorWindow
 {
     private TMP_FontAsset selectedFont;
 
-    [MenuItem("Tools/TMP Font Assigner")]
+    [MenuItem("Tools/EditorScipts-AP/TMP Font Assigner")]
     public static void ShowWindow()
     {
         EditorWindow.GetWindow<TMPFontAssigner>("TMP Font Assigner");

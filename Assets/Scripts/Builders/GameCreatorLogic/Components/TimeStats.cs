@@ -13,7 +13,7 @@ public class TimeStats : MonoBehaviour
     public static Action _intensityChangerStop;
     public static Action<bool, Light[], float[], float, float, GameObject, int> _blindComponentStart;
     public static Action _blindComponentStop;
-
+    internal static PlayerCanvas playerCanvas;
     private float m_TotalTime;
     public bool IsElapsedTimeActive;
     public bool IsSituationChangerActive;
@@ -36,7 +36,7 @@ public class TimeStats : MonoBehaviour
         _intensityChangerStop += SituationStoper;
         _blindComponentStart += BlindComponentStart;
         _blindComponentStop += BlindComponentStop;
-}
+    }
     private void OnDisable()
     {
         _timeStart -= StartTimer;
@@ -201,7 +201,8 @@ public class TimeStats : MonoBehaviour
         {
             for (int i = 0; i < _light.Length; i++)
             {
-                _light[i].intensity = _lightsIntensity[i];
+                if (_light[i] != null)
+                    _light[i].intensity = _lightsIntensity[i];
             }
         }
 
@@ -282,7 +283,7 @@ public class TimeStats : MonoBehaviour
         previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
         if (_Status)
         {
-            PlayerCanvas.Instance.ToggleBlindLight(true, _Radius);
+            TimeStats.playerCanvas.ToggleBlindLight(true, _Radius);
             SituationChangerSkyboxScript.instance.ChangeSkyBox(_skyBoxID);
             return;
         }
@@ -291,10 +292,11 @@ public class TimeStats : MonoBehaviour
         {
             for (int i = 0; i < blindlights.Length; i++)
             {
-                blindlights[i].intensity = blindIntensity[i];
+                if (blindlights[i] != null)
+                    blindlights[i].intensity = blindIntensity[i];
             }
         }
-        PlayerCanvas.Instance.ToggleBlindLight(false, 300);
+        TimeStats.playerCanvas.ToggleBlindLight(false, 300);
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
     }
 }

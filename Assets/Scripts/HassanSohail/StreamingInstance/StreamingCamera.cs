@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.WSA;
 public class StreamingCamera : MonoBehaviour
 {
     [SerializeField]
@@ -50,7 +51,7 @@ public class StreamingCamera : MonoBehaviour
     }
 
     public void TriggerStreamCam(){ 
-        if (XanaConstants.xanaConstants.isCameraMan)
+        if (ConstantsHolder.xanaConstants.isCameraMan)
         {
            
             if (Cameras.Count>0)
@@ -59,7 +60,7 @@ public class StreamingCamera : MonoBehaviour
             }
             else // there is no any streaming camera in scene so back to main menu
             {
-                  LoadFromFile.instance._uiReferences.LoadMain(false);
+                  GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             }
         }    
     }
@@ -75,13 +76,13 @@ public class StreamingCamera : MonoBehaviour
         { 
             visibleCount=0;
             cam.gameObject.SetActive(true);
-            yield return new WaitForSeconds(1f);
-            foreach (var avatar in Launcher.instance.playerobjects)
+            yield return new WaitForSeconds(2f);
+            foreach (var avatar in MutiplayerController.instance.playerobjects)
             {
                 if (!avatar.GetComponent<PhotonView>().IsMine)
                 {
                     // print("!! DETECTING AVATAR "+avatar.name +"in cam "+cam.name );
-                    if (avatar.GetComponent<CharcterBodyParts>().Body.GetComponent<SkinnedMeshRenderer>().isVisible)
+                    if (avatar.GetComponent<CharacterBodyParts>().body.GetComponent<SkinnedMeshRenderer>().isVisible)
                     {
                         // print("~~~~~~ AVATAR "+avatar.name +"is visible in cam "+cam.name );
                         visibleCount++;
@@ -145,7 +146,7 @@ public class StreamingCamera : MonoBehaviour
                 //list[index].cam.GetComponent<CinemachineFreeLook>().Follow = ReferrencesForDynamicMuseum.instance.m_34player.transform;
                 if (list[index].cam.GetComponent<StreamingCameraPaining>().lookObj == null)
                 {
-                    list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferrencesForDynamicMuseum.instance.m_34player ;
+                    list[index].cam.GetComponent<StreamingCameraPaining>().lookObj=ReferencesForGamePlay.instance.m_34player ;
                     //if (list[index].cam.GetComponent<StreamingCameraPaining>().focusOnScreen)
                    // {
                         //if (XanaConstants.xanaConstants.EnviornmentName== "Xana Festival")
@@ -181,17 +182,17 @@ public class StreamingCamera : MonoBehaviour
                     //}
                 }
 
-                if (XanaConstants.xanaConstants.newStreamEntery)
+                if (!ConstantsHolder.xanaConstants.newStreamEntery)
                 {
-                    XanaConstants.xanaConstants.JjWorldSceneChange=true;
-                    XanaConstants.xanaConstants.newStreamEntery =false;
+                    ConstantsHolder.xanaConstants.JjWorldSceneChange=true;
+                    ConstantsHolder.xanaConstants.newStreamEntery =false;
                    // ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(false);
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();
+                    //ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterBodyParts>().HidePlayer();
                     //LoadingHandler.Instance.streamingLoading.FullFillBar();
                     //XanaChatSystem.instance.OpenCloseChatDialog();
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
                     if(!isInfiniteStremaing)
-                   LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.BackToMainmenuforAutoSwtiching());
+                   GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.BackToMainmenuforAutoSwtiching());
                 }
                
                 if (index< list.Count-1)

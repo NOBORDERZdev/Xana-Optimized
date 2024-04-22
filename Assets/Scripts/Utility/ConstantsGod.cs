@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using static System.Net.WebRequestMethods;
 
 public class ConstantsGod
 
@@ -68,13 +69,17 @@ public class ConstantsGod
     public static string FILTERPROFILE = "/item/get-filter-assets";
     public static string UPLOADFILE = "/item/upload-file";
     public static string UPLOADFILECLOUDIMAGE = "/item/upload-file-v3";
-    public static string OCCUPIDEASSETS = "/item/get-user-occupied-asset/";
+    //public static string OCCUPIDEASSETS = "/item/get-user-occupied-asset/";
+    public static string OCCUPIDEASSETS = "/item/v2/get-user-occupied-asset/";
+    public static string USERLATESTOCCUPIEDASSET = "/item/get-latest-user-occupied-asset/";
     public static string DELETEOCCUPIDEUSER = "/item/delete-user-occupied-asset/";
-    public static string CREATEOCCUPIDEUSER = "/item/create-user-occupied-asset";
+    //public static string CREATEOCCUPIDEUSER = "/item/create-user-occupied-asset";
+    public static string CREATEOCCUPIDEUSER = "/item/v2/create-user-occupied-asset";
     public static string UPDATEOCCUPIDEUSER = "/item/update-user-occupied-asset/";
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
+    public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
     // public static string GetUserDetailsAPI = "users/single-user";
@@ -139,7 +144,8 @@ public class ConstantsGod
     public static string r_url_GetTaggedFeedsByUserId = "/hot/tagged-feeds";
 
     public static string r_url_FollowAUser = "/follow/user";
-    public static string r_url_GetAllFollowing = "/follow/get-all-following";
+    public static string r_url_GetAllFollowing = /*"/follow/get-all-following"*/ "/social/follow/get-all-following/";
+    public static string r_url_AdFrndGetAllAolowing = "/social/follow/get-all-following/";
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
@@ -154,13 +160,20 @@ public class ConstantsGod
 
     public static string r_url_FeedLikeDisLike = "/feeds/like-dislike-post";
 
-    public static string r_url_SearchUser = "/users/search-user";
+    public static string r_url_SearchUser = /*"/users/search-user"*/ "/users/v2/search-user/";
+    public static string r_url_HotUsers = /*"/social/get-non-friends/"*/ "/users/hot-users/";
+    public static string r_url_RecommendedUser = "/social/get-friends-recommendations/";
+    public static string r_url_MutalFrnd = "/social/follow/get-user-mutual-followers/";
+    public static string r_url_GetBestFrnd ="/social/get-close-friends/";
+    public static string r_url_AdBestFrnd ="/social/create-close-friend/";
+    public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";
     public static string r_url_GetUserDetails = "/users/single-user";
     public static string r_url_UpdateUserAvatar = "/users/update-avatar";
-    public static string r_url_UpdateUserProfile = "/users/update-profile";
+    //public static string r_url_UpdateUserProfile = "/users/update-profile";
+    public static string r_url_UpdateUserProfile = "/users/update-user-profile-details";
     public static string r_url_GetSingleUserProfile = "/follow/get-single-profile";
     public static string r_url_GetSingleUserRole = "/user/get-user-role?xanaId=";
     public static string r_url_DeleteAccount = "/users/delete-account";
@@ -185,6 +198,10 @@ public class ConstantsGod
 
     public static readonly string userMy_Collection_Xanalia = "/user/my-collection";
     public static readonly string getUserProfile_Xanalia = "/user/get-user-profile";
+
+    public const string xanaliaTestAPI = "https://backend.xanalia.com";
+    public const string xanaliaProductionAPI = "https://prod-backend.xanalia.com";
+    public static readonly string loginExternalWalletURL = "/auth/login-external-wallet";
 
     public static readonly string GetUserNounceURL = "/auth/get-user-nonce";
     public static readonly string VerifySignedURL = "/auth/verify-signature";
@@ -217,16 +234,51 @@ public class ConstantsGod
     #endregion
 
     #region XANABuilder Api's
-    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v3/get-xana-universe/";
+    //public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/get-world-creator-list-paginated/";    //"/item/v3/get-xana-universe/";
+    public static string MUSEUMENVBUILDERWORLDSCOMBINED = "/item/v2/get-world-creator-list-paginated/";
     public static string BUILDERGETSINGLEWORLDBYID = "/item/get-single-world/";
     public static string MYBUILDERWORLDS = "/item/v2/get-worlds/";  //status/pagenumber/pagecount
     public static string ALLBUILDERWORLDS = "/item/get-all-worlds/";  //status/pagenumber/pagecount
     public static string WORLDSBYCATEGORY = "/item/get-worlds-by-category/"; //:pageNumber/:pageSize/:status/:category
-    public static string SearchWorldAPI = "/item/search-worlds/";
+    public static string SearchWorldAPI = "/item/v2/search-worlds/";  //:name/:pageNumber/:pageSize
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
+    public static string USERTAGS = "/users/get-user-tags";
+
+    public static string FEATUREDSPACES = "/world/get-featured-spaces/";//pageNumber/pageSize
+    public static string HOTSPACES = "/world/get-most-visited-hot-spaces/";//pageNumber/pageSize
+    public static string HOTGAMES = "/world/get-most-visited-hot-games/";//pageNumber/pageSize
+    public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
+    public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
+    public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
+
+
+    #endregion
+   
+    #region UserPost
+    public static string SendPostToServer = "/item/new-text-post";
+    public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
+    public static string GetUserAllTextPosts = "/item/get-user-text-post/";
     #endregion
 
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
+    #endregion
+
+    public static string availableTags = "/users/get-user-tags";
+
+    #region UGC Api's
+    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net"; // for main
+    public static string UGCAiApi = "/analyze-image/";   // for main  
+    #endregion
+
+    #region Feed Api's
+
+    public static string FeedGetAllByUserId = "/item/get-following-text-post/";
+    public static string FeedLikeDislikePost = "/item/like-text-post";
+    public static string FeedSearch="/item/search-following-text-post";
+    #endregion
+
+    #region PMY World Api's
+    public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
 }

@@ -49,7 +49,11 @@ public class AudioManagerBGM : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Get(file_name))
         {
-            yield return www.Send();
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);

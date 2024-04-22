@@ -14,28 +14,24 @@ public class AvatarChangerComponent : ItemComponent
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void OnCollisionEnter(Collision _other)
+    private void CollisionEnter()
     {
-        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        if (componentData.avatarIndex == 1)//Hunter Selected
+            Toast.Show("Coming Soon, We will update The Hunter Appearance");
+        else
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
-            if(GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
         }
+        if (GamificationComponentData.instance.withMultiplayer)
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+        else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
     }
 
     #region BehaviourControl
 
     private void StartComponent()
     {
-        if (componentData.avatarIndex == 1)//Hunter Selected
-        {
-            Toast.Show("Coming Soon, We will update The Hunter Appearance");
-            return;
-        }
-
         //GamificationComponentData.instance.buildingDetect.StopSpecialItemComponent();
         //GamificationComponentData.instance.playerControllerNew.NinjaComponentTimerStart(0);
         if (componentData.avatarIndex > 1)
@@ -51,10 +47,10 @@ public class AvatarChangerComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -81,6 +77,16 @@ public class AvatarChangerComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.AvatarChangerComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

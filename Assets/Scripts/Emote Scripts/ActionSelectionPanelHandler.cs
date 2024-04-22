@@ -59,10 +59,10 @@ public class ActionSelectionPanelHandler : MonoBehaviour
 
     public void OnResetAnimationClick()
     {
-        if (CanvasButtonsHandler.inst)                                                  // AH working
+        if (GamePlayUIHandler.inst)                                                  // AH working
         {
-            CanvasButtonsHandler.inst.AnimationBtnClose.gameObject.SetActive(false);                                                
-            CanvasButtonsHandler.inst.stopCurrentPlayingAnim = false;
+            GamePlayUIHandler.inst.AnimationBtnClose.gameObject.SetActive(false);                                                
+            GamePlayUIHandler.inst.stopCurrentPlayingAnim = false;
         }
 
         for (int i = 0; i < 10; i++)
@@ -98,6 +98,7 @@ public class ActionSelectionPanelHandler : MonoBehaviour
                 errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Animation".ToString();
             else
                 errorObj.GetComponent<TextMeshProUGUI>().text = "Duplicate Reaction".ToString();
+            errorObj.GetComponent<TextLocalization>().LocalizeTextText();
         }
         for (int i = 0; i < animations.Count; i++)
         {

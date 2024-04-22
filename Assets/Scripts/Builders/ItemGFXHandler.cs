@@ -18,6 +18,8 @@ public class ItemGFXHandler : ItemComponent
 
     public void SetMaterialColorFromItemData(Color color)
     {
+        if (!this.gameObject.activeInHierarchy)
+            return;
         if (color.Equals(Color.white)) return;
 
         for (int i = 0; i < _renderers.Length; i++)
@@ -72,5 +74,15 @@ public class ItemGFXHandler : ItemComponent
 
     public override void AssignItemComponentType()
     {
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //throw new System.NotImplementedException();
     }
 }

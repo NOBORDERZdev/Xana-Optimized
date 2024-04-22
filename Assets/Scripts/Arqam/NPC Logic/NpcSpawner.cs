@@ -13,50 +13,68 @@ public class NpcSpawner : MonoBehaviour
 
     [SerializeField] private int aiStrength = 5;
     
-    private GameObject aiPrefabs;
+    private GameObject maleAiPrefabs;
+    private GameObject femmaleAiPrefabs;
 
+    public List<string> Names;
 
     private void Awake()
     {
         if (npcSpawner is null)
             npcSpawner = this;
-        else if(npcSpawner != null && npcSpawner != this)
+        else if (npcSpawner != null && npcSpawner != this)
             Destroy(this.gameObject);
     }
     private void OnEnable()
     {
-        NpcChatSystem.npcNameAction += UpdateNpcName;
+        //NpcChatSystem.npcNameAction += UpdateNpcName;
+
     }
     private void OnDisable()
     {
-        NpcChatSystem.npcNameAction -= UpdateNpcName;
+        //NpcChatSystem.npcNameAction -= UpdateNpcName;
     }
 
     void Start()
     {
-        // currently Not creatring any NPC's
+        //npcModel = new List<GameObject>();
 
-        npcModel = new List<GameObject>();
-
-        aiPrefabs = Resources.Load("NPC") as GameObject;
+        maleAiPrefabs = Resources.Load("NPCMale") as GameObject;
+        femmaleAiPrefabs = Resources.Load("NPCFemale") as GameObject;
         for (int i = 0; i < aiStrength; i++)
         {
-            GameObject npc = Instantiate(aiPrefabs);
+             GameObject npc;
+            if (Random.Range(0,2) == 0)
+            {
+               npc = Instantiate(maleAiPrefabs);
+            }else{ 
+               npc = Instantiate(femmaleAiPrefabs);
+             }
+          
             Vector3 temp = RandomNavMeshPoint();
-           npc.transform.position = temp;
+            npc.transform.position = temp;
             npc.transform.rotation = Quaternion.identity;
-            
+
             npcCounter++;
             npcModel.Add(npc);
         }
+        UpdateNpcName();
         StartCoroutine(ReactScreen.Instance.getAllReactions());
     }
 
-    private void UpdateNpcName(NpcChatSystem npcChatSystem)
+    //private void UpdateNpcName(NpcChatSystem npcChatSystem)
+    //{
+    //    for (int i = 0; i < npcModel.Count; i++)
+    //    {
+    //        npcModel[i].GetComponent<NpcBehaviourSelector>().SetAiName(npcChatSystem.npcDB[i].aiNames);
+    //    }
+    //}
+
+     private void UpdateNpcName()
     {
         for (int i = 0; i < npcModel.Count; i++)
         {
-            npcModel[i].GetComponent<NpcBehaviourSelector>().SetAiName(npcChatSystem.npcDB[i].aiNames);
+            npcModel[i].GetComponent<NpcBehaviourSelector>().SetAiName(Names[i]);
         }
     }
 

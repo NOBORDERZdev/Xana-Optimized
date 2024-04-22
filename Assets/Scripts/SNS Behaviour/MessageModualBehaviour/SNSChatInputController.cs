@@ -55,17 +55,17 @@ public class SNSChatInputController : MonoBehaviour
 		view.UpdateChatHistorySize();
 	}
 
-	public void OnMessageSendClick()
-	{
-		Debug.Log("OnMessageSendClick");
-		string message = view.MessageInput.RichText;
-		if (!string.IsNullOrEmpty(message))
-		{
-			view.MessageInput.Clear();
-			MessageController.Instance.OnChatVoiceOrSendButtonEnable();
-		}
-		StartCoroutine(WaitToResetScroll());
-	}
+	//public void OnMessageSendClick()
+	//{
+	//	Debug.Log("OnMessageSendClick");
+	//	string message = view.MessageInput.RichText;
+	//	if (!string.IsNullOrEmpty(message))
+	//	{
+	//		view.MessageInput.Clear();
+	//		SNS_MessageController.Instance.OnChatVoiceOrSendButtonEnable();
+	//	}
+	//	StartCoroutine(WaitToResetScroll());
+	//}
 
 	IEnumerator WaitToResetScroll()
     {

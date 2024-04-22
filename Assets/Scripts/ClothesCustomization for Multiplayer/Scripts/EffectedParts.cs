@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EffectedParts : MonoBehaviour
 {
-    public CharcterBodyParts bodyParts;
+    public CharacterBodyParts bodyParts;
     public Texture texture;
     public Texture variation_Texture;
     

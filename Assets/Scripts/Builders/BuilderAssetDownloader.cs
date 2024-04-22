@@ -55,7 +55,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
+            ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
     }
 
@@ -65,7 +65,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+            ScreenOrientationManager.switchOrientation -= OnOrientationChange;
         }
         ResetAll();
     }
@@ -102,7 +102,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
 
             builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
-            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") && BuilderData.mapData.data.json.otherItems[i].spawnComponent)
+            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") || BuilderData.mapData.data.json.otherItems[i].spawnComponent)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
                 temp.IsActive = BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive;
@@ -178,13 +178,18 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
-        if (BuilderData.mapData.data.json.otherItems.Count == 0)
+        //Remove spw count from Item count
+        int objCount = BuilderData.mapData.data.json.otherItems.Count - BuilderData.preLoadspawnPoint.Count;
+
+        if (objCount == 0)
         {
             assetDownloadingText.enabled = false;
             assetDownloadingTextPotrait.enabled = false;
             assetDownloadingText.transform.parent.gameObject.SetActive(false);
             assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
         }
+
+        BuilderEventManager.UploadPropertiesInit?.Invoke();
     }
 
     IEnumerator DownloadAssetsFromSortedList()
@@ -195,24 +200,25 @@ public class BuilderAssetDownloader : MonoBehaviour
             string downloadKey = prefabPrefix + downloadDataQueue[0].ItemID + prefabSuffix;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
+                InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
                 Debug.LogError("Download Failed......");
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(.01f);
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadDataQueue.RemoveAt(0);
@@ -241,24 +247,24 @@ public class BuilderAssetDownloader : MonoBehaviour
             string downloadKey = prefabPrefix + downloadFailed[0].ItemID + prefabSuffix;
             string dicKey = downloadFailed[0].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
                 Debug.LogError("Download Failed......");
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadFailed.RemoveAt(0);
@@ -280,24 +286,24 @@ public class BuilderAssetDownloader : MonoBehaviour
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
-            bool flag = false;
-            AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
-            if (!flag)
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
-                InstantiateAsset(_async.Result as GameObject, builderDataDictionary[dicKey]);
+                InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
                 Debug.LogError(_async.Status);
             }
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForEndOfFrame();
         }
 
         isSpawnDownloaded = true;
@@ -362,11 +368,11 @@ public class BuilderAssetDownloader : MonoBehaviour
     private static void InstantiateAsset(GameObject objectTobeInstantiate, ItemData _itemData)
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, assetParentStatic);
-        Rigidbody rb = null;
-        newObj.TryGetComponent(out rb);
-        if (rb == null)
-            rb = newObj.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
+        //Rigidbody rb = null;
+        //newObj.TryGetComponent(out rb);
+        //if (rb == null)
+        //    rb = newObj.AddComponent<Rigidbody>();
+        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -389,21 +395,21 @@ public class BuilderAssetDownloader : MonoBehaviour
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
                 multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-                return;
             }
+            return;
         }
 
-        if (!newObj.name.Contains("pfBLD1210015_XANA"))
-            meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //if (!newObj.name.Contains("pfBLD1210015_XANA"))
+        //    meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
 
-        foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
-        {
-            childTransform.tag = "Item";
-        }
+        //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
+        //{
+        //    childTransform.tag = "Item";
+        //}
 
         //Add game object into XanaItems List for Hirarchy
-        if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
-            GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }
@@ -422,14 +428,14 @@ public class BuilderAssetDownloader : MonoBehaviour
     CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
-        yield return new WaitForSeconds(.5f);
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
+        yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
             yield return null;
         }
         SortingDataShortInterval(currPlayerPosition);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         stopDownloading = false;
         StartCoroutine(DownloadAssetsFromSortedList());
         if (downloadDataQueue.Count > 0)
@@ -453,14 +459,14 @@ public class BuilderAssetDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
-        yield return new WaitForSeconds(.5f);
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
+        yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
             yield return null;
         }
         SortingQueueData(currPlayerPosition);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForEndOfFrame();
         stopDownloading = false;
         StartCoroutine(DownloadAssetsFromSortedList());
         if (downloadDataQueue.Count > 0)
@@ -502,7 +508,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
@@ -533,7 +539,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         dataArranged = false;
         dataSorted = false;
 
-        // BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, SetConstant.isLogin);
+        // BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
     }
 

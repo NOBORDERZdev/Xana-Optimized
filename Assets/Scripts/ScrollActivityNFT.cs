@@ -17,16 +17,14 @@ public class ScrollActivityNFT : MonoBehaviour
     public float normalized;
     private int lastindex = 1;
     public string NFTURL;
-     public Image NFTImage;
-    public TMP_Text NFTDescriptionImage;  
+    public Image NFTImage;
+    public TMP_Text NFTDescriptionImage;
     public Text NFTNametext;
     public Text SubButtonText;
     [HideInInspector]
-    public string subButtonTextToCheck= "Equip";
+    public string subButtonTextToCheck = "Equip";
     public CanvasScaler canUi;
-    public string CollectionAddressType;    
-  //  public UserNFTlistClass.Attribute _AttributeData;
-    // public UserNFTlistClass.Attribute _AttributeData;
+    public string CollectionAddressType;
     public int _NFTIndex;
     public int _NFTID;
     //Hardik Add 
@@ -34,6 +32,11 @@ public class ScrollActivityNFT : MonoBehaviour
     public GameObject SidePanel;
     public TMPro.TextMeshProUGUI EquipUIText;
     //End
+
+    //Script Refereces 
+    [Header("Scripts References")]
+    public OwnedNFTContainer _OwnedNFTDataObj;
+
     private void Awake()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
@@ -41,102 +44,106 @@ public class ScrollActivityNFT : MonoBehaviour
 
     //Worked by Abdullah & Riken
     private void OnDisable()
-    {  
-       // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+    {
+        // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         ScrollController.verticalNormalizedPosition = 3.5f;
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
         lastindex = 1;
     }
     private void OnEnable()
     {
-      // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  
-         AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
-        {
-            if (success)
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
-                // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                //  isImageSuccessDownloadAndSave = true;
-            }    
-            else
-            {
+        // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  
+        AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
+       {
+           if (success)
+           {
+               AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
+               // CheckAndSetResolutionOfImage(imgFeed.sprite);
+               //  isImageSuccessDownloadAndSave = true;
+           }
+           else
+           {
                Debug.Log("Download Failed");
-            }
-        });  
+           }
+       });
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
         lastindex = 1;
 
         //playBtn.onClick.RemoveAllListeners();
         //playBtn.onClick.AddListener(PlayBtnClicked);
     }
-  
+
     public async void EquipBtnClicked()
     {
 
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("EquipButton"))
+        if (!UserPassManager.Instance.CheckSpecificItem("EquipButton"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             return;
         }
-         print("NFT btn clicked here");  
-         if(subButtonTextToCheck == "Equip")
+        EquipPopup.SetActive(true);
+        EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        EquipUIText.text = "";
+        EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = false;
+        if (subButtonTextToCheck == "Equip")
         {
-             Task<bool> task = UserRegisterationManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
+            EquipUIText.text= "Equiping...";
+            Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
             bool _IsInOwnerShip = await task;
-              print("_IsInOwnerShip :: " + _IsInOwnerShip);  
-             if (!_IsInOwnerShip)
+            if (!_IsInOwnerShip)
             {
-                print("Show UI NFT not available");
                 NftDataScript.Instance.NftTransferedPanel.SetActive(true);
                 return;
-            } 
+            }
             else
             {
                 print("NFT is in your OwnerShip Enjoy");
             }
-             print("_NFTID :: " + _NFTID.ToString());  
-             PlayerPrefs.SetInt("nftID", _NFTID);
-            PlayerPrefs.SetInt("Equiped", _NFTID);  
+            PlayerPrefs.SetInt("nftID", _NFTID);
+            PlayerPrefs.SetInt("Equiped", _NFTID);
             PlayerPrefs.Save();
             //print(_NFTID);
             //print(PlayerPrefs.GetInt("Equiped"));
             //print("Equip Button Clicked");
-            print("Attributes Data Showing Here");
             SubButtonText.text = "Unequip";
             SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Unequip");
             subButtonTextToCheck = "Unequip";
-            XanaConstants.xanaConstants.isNFTEquiped = true;
+            ConstantsHolder.xanaConstants.isNFTEquiped = true;
             SaveAttributesInFile();
             BoxerNFTEventManager.OnNFTequip?.Invoke(true);
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
+            EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = " Equip Successfully !";
             EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Equip Successfully");
+            EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
         else if (subButtonTextToCheck == "Unequip")
         {
- 
+            EquipUIText.text = "Unequiping...";
             SubButtonText.text = "Equip";
             SubButtonText.text = TextLocalization.GetLocaliseTextByKey("Equip");
-            subButtonTextToCheck = "Equip";  
+            subButtonTextToCheck = "Equip";
             PlayerPrefs.DeleteKey("Equiped");
             PlayerPrefs.DeleteKey("nftID");
-            XanaConstants.xanaConstants.isNFTEquiped = false;
+            ConstantsHolder.xanaConstants.isNFTEquiped = false;
             BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-            SwitchToShoesHirokoKoshinoNFT.Instance.DisableAllLighting();
+            SwitchToShoesHirokoKoshino.Instance.DisableAllLighting();
             SidePanel.SetActive(false);
             EquipPopup.SetActive(true);
+            EquipPopup.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
             EquipUIText.text = "Unequipped Successfully.";
             EquipUIText.text = TextLocalization.GetLocaliseTextByKey("Unequipped Successfully.");
+            EquipPopup.transform.GetChild(0).GetChild(2).GetComponent<Button>().interactable = EquipPopup.transform.GetChild(0).GetChild(3).GetComponent<Button>().interactable = true;
         }
-        else  
+        else
         {
             print("Not Available");
         }
     }
- 
+
 
     private void Update()
     {
@@ -203,7 +210,7 @@ public class ScrollActivityNFT : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
-       // UIManager.Instance.ShowFooter(true);
+        // GameManager.Instance.UiManager.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
     {
@@ -211,8 +218,9 @@ public class ScrollActivityNFT : MonoBehaviour
         ScrollController.transform.parent.GetComponent<ScrollActivityNFT>().enabled = true;
     }
 
-   void SaveAttributesInFile()
+    void SaveAttributesInFile()
     {
+        Debug.LogError("SaveAttributesInFile: " + _NFTIndex);
         BoxerNFTDataClass nftAttributes = new BoxerNFTDataClass();
         nftAttributes.isNFTAquiped = true;
         /*
@@ -240,28 +248,35 @@ public class ScrollActivityNFT : MonoBehaviour
          */
         //UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber]
 
-         nftAttributes.id = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
-         nftAttributes.Gloves = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Gloves;
-        nftAttributes.Glasses = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].glasses;
-        nftAttributes.Full_Costumes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Full_Costumes;
-        nftAttributes.Chains = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Chains;
-        nftAttributes.Hairs = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].hairs;
-        nftAttributes.Face_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Face_Tattoo;
-        nftAttributes.Forehead_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Forehead_Tattoo;
-        nftAttributes.Chest_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Chest_Tattoo;
-        nftAttributes.Arm_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Arm_Tattoo;
-        nftAttributes.Legs_Tattoo = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].legs_Tattoo;
-        nftAttributes.Shoes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Shoes;
-        nftAttributes.Mustache = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Mustache;
-        nftAttributes.Pants = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Pants;
-        nftAttributes.Eyebrows = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyebrows;
-        nftAttributes.Lips = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Lips;
-        nftAttributes.Heads = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].head;
-        nftAttributes.Eye_Shapes = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_Shapes;
-        nftAttributes.Skin = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Skin;
-        nftAttributes.Eye_Lense = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eye_lense;
-        nftAttributes.Eyelid = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_NFTIndex].Eyelid;
-         string attributesJson = JsonUtility.ToJson(nftAttributes);      
-        File.WriteAllText(Application.persistentDataPath + XanaConstants.xanaConstants.NFTBoxerJson, attributesJson);
+        nftAttributes.id = _OwnedNFTDataObj._Attributes[_NFTIndex].id.ToString();
+        nftAttributes.Gloves = _OwnedNFTDataObj._Attributes[_NFTIndex].Gloves;
+        nftAttributes.Glasses = _OwnedNFTDataObj._Attributes[_NFTIndex].glasses;
+        nftAttributes.Full_Costumes = _OwnedNFTDataObj._Attributes[_NFTIndex].Full_Costumes;
+        nftAttributes.Chains = _OwnedNFTDataObj._Attributes[_NFTIndex].Chains;
+        nftAttributes.Hairs = _OwnedNFTDataObj._Attributes[_NFTIndex].hairs;
+        nftAttributes.Face_Tattoo = _OwnedNFTDataObj._Attributes[_NFTIndex].Face_Tattoo;
+        nftAttributes.Forehead_Tattoo = _OwnedNFTDataObj._Attributes[_NFTIndex].Forehead_Tattoo;
+        nftAttributes.Chest_Tattoo = _OwnedNFTDataObj._Attributes[_NFTIndex].Chest_Tattoo;
+        nftAttributes.Arm_Tattoo = _OwnedNFTDataObj._Attributes[_NFTIndex].Arm_Tattoo;
+        nftAttributes.Legs_Tattoo = _OwnedNFTDataObj._Attributes[_NFTIndex].legs_Tattoo;
+        nftAttributes.Shoes = _OwnedNFTDataObj._Attributes[_NFTIndex].Shoes;
+        nftAttributes.Mustache = _OwnedNFTDataObj._Attributes[_NFTIndex].Mustache;
+        nftAttributes.Pants = _OwnedNFTDataObj._Attributes[_NFTIndex].Pants;
+        nftAttributes.Eyebrows = _OwnedNFTDataObj._Attributes[_NFTIndex].Eyebrows;
+        nftAttributes.Lips = _OwnedNFTDataObj._Attributes[_NFTIndex].Lips;
+        nftAttributes.Heads = _OwnedNFTDataObj._Attributes[_NFTIndex].head;
+        nftAttributes.Eye_Shapes = _OwnedNFTDataObj._Attributes[_NFTIndex].Eye_Shapes;
+        nftAttributes.Skin = _OwnedNFTDataObj._Attributes[_NFTIndex].Skin;
+        nftAttributes.Eye_Lense = _OwnedNFTDataObj._Attributes[_NFTIndex].Eye_lense;
+        nftAttributes.Eyelid = _OwnedNFTDataObj._Attributes[_NFTIndex].Eyelid;
+        nftAttributes.profile = _OwnedNFTDataObj._Attributes[_NFTIndex].profile;
+        nftAttributes.speed = _OwnedNFTDataObj._Attributes[_NFTIndex].speed;
+        nftAttributes.stamina = _OwnedNFTDataObj._Attributes[_NFTIndex].stamina;
+        nftAttributes.punch = _OwnedNFTDataObj._Attributes[_NFTIndex].punch;
+        nftAttributes.kick = _OwnedNFTDataObj._Attributes[_NFTIndex].kick;
+        nftAttributes.defence = _OwnedNFTDataObj._Attributes[_NFTIndex].defence;
+        nftAttributes.special_move = _OwnedNFTDataObj._Attributes[_NFTIndex].special_move;
+        string attributesJson = JsonUtility.ToJson(nftAttributes);
+        File.WriteAllText(Application.persistentDataPath + ConstantsHolder.xanaConstants.NFTBoxerJson, attributesJson);
     }
 }

@@ -11,7 +11,12 @@ public class TogglePassword : MonoBehaviour
     public Sprite UnActiveEye;
     public Image myimage;
     
-    // Start is called before the first frame update
+    
+    private void OnEnable()
+    {
+        myimage.sprite = UnActiveEye;
+    }
+   
     void Start()
     {
         
@@ -19,7 +24,6 @@ public class TogglePassword : MonoBehaviour
        
     }
 
-    
     public void TogglePasswordhere()
     {
        

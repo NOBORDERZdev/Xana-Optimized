@@ -11,7 +11,7 @@ public class VideoDetectTrigger : MonoBehaviour
         {
             if (!added)
             {
-                other.gameObject.GetComponent<CharcterBodyParts>().Nose.AddComponent<DetectVideo>();
+                other.gameObject.GetComponent<CharacterBodyParts>().Nose.AddComponent<DetectVideo>();
                 added = true;
                 gameObject.GetComponent<Collider>().enabled= false;
                 Debug.Log("DetectVideo added");

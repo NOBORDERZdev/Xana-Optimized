@@ -22,7 +22,7 @@ public class FeedStoryAndCategoryItem : MonoBehaviour
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -63,7 +63,7 @@ public class FeedStoryAndCategoryItem : MonoBehaviour
         }
 
         isVisible = true;
-        /*if (!APIManager.Instance.isTestDefaultToken)
+        /*if (!SNS_APIManager.Instance.isTestDefaultToken)
         {
             isVisible = true;
         }
@@ -78,7 +78,7 @@ public class FeedStoryAndCategoryItem : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(followerData.follower.avatar))//rik for avatar user
         {
-            bool isAvatarUrlFromDropbox = APIManager.Instance.CheckUrlDropboxOrNot(followerData.follower.avatar);
+            bool isAvatarUrlFromDropbox = SNS_APIManager.Instance.CheckUrlDropboxOrNot(followerData.follower.avatar);
             //Debug.LogError("isAvatarUrlFromDropbox: " + isAvatarUrlFromDropbox + " :name:" + FeedsByFollowingUserRowData.User.Name);
             if (isAvatarUrlFromDropbox)
             {

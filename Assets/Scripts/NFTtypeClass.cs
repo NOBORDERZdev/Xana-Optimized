@@ -8,7 +8,6 @@ public class NFTtypeClass : MonoBehaviour
 {
     public Button OnclickNFT;
     public bool isVideoUrlFromDropbox;
-    public ScrollActivityNFT scrollActivity;
     public bool VideoNFT;
     public GameObject VideoIcon;
     public GameObject NFTDetailSlider;
@@ -27,10 +26,15 @@ public class NFTtypeClass : MonoBehaviour
     bool isClearAfterMemory = false;
     public int _indexNumber;
 
+
+    //NFT data Holder Scriptable Object
+    public OwnedNFTContainer _OwnedNFTDataObj;
+    public ScrollActivityNFT scrollActivityNFTRef;
     // Start is called before the first frame update
     void Start()
     {
-        OnclickNFT.onClick.AddListener(TaskOnClick);
+        if (OnclickNFT.gameObject)
+            OnclickNFT.onClick.AddListener(TaskOnClick);
     }
     private void OnEnable()
     {
@@ -108,7 +112,7 @@ public class NFTtypeClass : MonoBehaviour
                     //tt imgFeedRaw.texture = null;
                     //Resources.UnloadUnusedAssets();//every clear.......
                     //Caching.ClearCache();
-                    APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+                    SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
                 }
             }
         }
@@ -116,12 +120,13 @@ public class NFTtypeClass : MonoBehaviour
     }
     public void DownloadAndLoadNFT()
     {
-        print("When downloading Index is here " + _indexNumber);
-        AssetCache.Instance.EnqueueOneResAndWait(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber], UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber], (success) =>
+        /*Debug.LogError("When downloading Index is here " + _indexNumber);
+        Debug.LogError("NFT Object Name: " + gameObject.name);*/
+        AssetCache.Instance.EnqueueOneResAndWait(_OwnedNFTDataObj.NFTsURL[_indexNumber], _OwnedNFTDataObj.NFTsURL[_indexNumber], (success) =>
         {
             if (success)
             {
-                AssetCache.Instance.LoadSpriteIntoImage(OnclickNFT.image, UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber], changeAspectRatio: true);
+                AssetCache.Instance.LoadSpriteIntoImage(OnclickNFT.image, _OwnedNFTDataObj.NFTsURL[_indexNumber], changeAspectRatio: true);
                 //tt AssetCache.Instance.LoadTexture2DIntoRawImage(imgFeedRaw, FeedData.thumbnail, changeAspectRatio: true);
                 isImageSuccessDownloadAndSave = true;
             }
@@ -132,13 +137,13 @@ public class NFTtypeClass : MonoBehaviour
 
     public void CheckNftCollection()
     {
-        if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "XANA x BreakingDown")
+        if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "XANA x BreakingDown")
         {
             Debug.Log("Current NFT Colelction is Breaking Down");
             IsNFTCollectionBreakingDown = true;
             PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 1);
         }
-       else if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "HIROKO KOSHINO")
+        else if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].collection.name == "HIROKO KOSHINO")
         {
             IsNFTCollectionBreakingDown = false;
             PlayerPrefs.SetInt("IsNFTCollectionBreakingDown", 2);
@@ -150,76 +155,75 @@ public class NFTtypeClass : MonoBehaviour
     {
         Debug.Log("On Nft Click debug");
         NFTDetailSlider = NftDataScript.Instance.ScrollerObj;
-        NFTDetailSlider.GetComponent<ScrollActivityNFT>().NFTURL = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsURL[_indexNumber];
-        if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsDescriptions[_indexNumber] != null)
+        scrollActivityNFTRef.NFTURL = _OwnedNFTDataObj.NFTsURL[_indexNumber];
+        if (_OwnedNFTDataObj.NFTsDescriptions[_indexNumber] != null)
         {
-            NFTDetailSlider.GetComponent<ScrollActivityNFT>().NFTDescriptionImage.text = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsDescriptions[_indexNumber];
+            scrollActivityNFTRef.NFTDescriptionImage.text = _OwnedNFTDataObj.NFTsDescriptions[_indexNumber];
         }
-        NFTDetailSlider.GetComponent<ScrollActivityNFT>().NFTNametext.text = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTsName[_indexNumber];
-        NFTDetailSlider.GetComponent<ScrollActivityNFT>()._NFTIndex = _indexNumber;
+        scrollActivityNFTRef.NFTNametext.text = _OwnedNFTDataObj.NFTsName[_indexNumber];
+        scrollActivityNFTRef._NFTIndex = _indexNumber;
 
         //  if(CollectionAddress)
-        if (APIBaseUrlChange.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
-            if (NftDataScript.Instance.EquipCollectionAddresses.Contains(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.CollectionAddress[_indexNumber]))
+            if (NftDataScript.Instance.EquipCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {
                 //  NFTDetailSlider.GetComponent<ScrollActivityNFT>()._AttributeData = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj._Attributes[_indexNumber];
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>()._NFTID = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId;
-                if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId == PlayerPrefs.GetInt("nftID"))
+                scrollActivityNFTRef._NFTID = _OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId;
+                if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId == PlayerPrefs.GetInt("nftID"))
                 {
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Unequip";
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Unequip";
+                    scrollActivityNFTRef.SubButtonText.text = "Unequip";
+                    scrollActivityNFTRef.subButtonTextToCheck = "Unequip";
                 }
                 else
                 {
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Equip";
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Equip";
+                    scrollActivityNFTRef.SubButtonText.text = "Equip";
+                    scrollActivityNFTRef.subButtonTextToCheck = "Equip";
                 }
             }
-            else if (NftDataScript.Instance.ComingSoonCollectionAddresses.Contains(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.CollectionAddress[_indexNumber]))
+            else if (NftDataScript.Instance.ComingSoonCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Coming Soon";
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Coming Soon";
+                scrollActivityNFTRef.SubButtonText.text = "Coming Soon";
+                scrollActivityNFTRef.subButtonTextToCheck = "Coming Soon";
             }
             else
             {
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Unavailable ";
+                scrollActivityNFTRef.SubButtonText.text = "Unavailable ";
             }
         }
         else
         {
-            if (NftDataScript.Instance.TestnetEquipCollectionAddresses.Contains(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.CollectionAddress[_indexNumber]))
+            if (NftDataScript.Instance.TestnetEquipCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {
-                if (UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId == PlayerPrefs.GetInt("nftID"))
+                if (_OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId == PlayerPrefs.GetInt("nftID"))
                 {
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Unequip";
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Unequip";
+                    scrollActivityNFTRef.SubButtonText.text = "Unequip";
+                    scrollActivityNFTRef.subButtonTextToCheck = "Unequip";
                 }
                 else
                 {
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Equip";
-                    NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Equip";
+                    scrollActivityNFTRef.SubButtonText.text = "Equip";
+                    scrollActivityNFTRef.subButtonTextToCheck = "Equip";
                 }
 
                 //  NFTDetailSlider.GetComponent<ScrollActivityNFT>()._AttributeData = NFTClass.attribute;
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>()._NFTID = UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId;
+                scrollActivityNFTRef._NFTID = _OwnedNFTDataObj.NFTlistdata.list[_indexNumber].nftId;
             }
-            else if (NftDataScript.Instance.TestnetComingSoonCollectionAddresses.Contains(UserRegisterationManager.instance._web3APIforWeb2._OwnedNFTDataObj.CollectionAddress[_indexNumber]))
+            else if (NftDataScript.Instance.TestnetComingSoonCollectionAddresses.Contains(_OwnedNFTDataObj.CollectionAddress[_indexNumber]))
             {
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Coming Soon";
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Coming Soon";
+                scrollActivityNFTRef.SubButtonText.text = "Coming Soon";
+                scrollActivityNFTRef.subButtonTextToCheck = "Coming Soon";
             }
             else
             {
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().SubButtonText.text = "Unavailable ";
-                NFTDetailSlider.GetComponent<ScrollActivityNFT>().subButtonTextToCheck = "Unavailable ";
+                scrollActivityNFTRef.SubButtonText.text = "Unavailable ";
+                scrollActivityNFTRef.subButtonTextToCheck = "Unavailable ";
             }
         }
 
         NFTDetailSlider.SetActive(true);
-        scrollActivity = NftDataScript.Instance.ScrollerObj.GetComponent<ScrollActivityNFT>();
-        scrollActivity.BottomToTop();
-        scrollActivity.enabled = false;
+        scrollActivityNFTRef.BottomToTop();
+        scrollActivityNFTRef.enabled = false;
 
         CheckNftCollection();
     }

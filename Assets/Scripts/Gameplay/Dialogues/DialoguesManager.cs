@@ -9,7 +9,7 @@ public class DialoguesManager : MonoBehaviour
     #region Singleton
     public static DialoguesManager Instance;
 
-    private void Awake()
+    private void OnEnable()
     {
         if (Instance == null)
             Instance = this;
@@ -41,7 +41,7 @@ public class DialoguesManager : MonoBehaviour
         if (dialogues == null)
             dialogues = new List<Dialogues>();
 
-        
+
 
         raycaster = FindObjectOfType<MuseumRaycaster>();
     }
@@ -62,8 +62,8 @@ public class DialoguesManager : MonoBehaviour
     /// </summary>
     public void OnNextDialogue()
     {
-        if(raycaster)
-        raycaster.ChangePictureState(false) ;
+        if (raycaster)
+            raycaster.ChangePictureState(false);
 
         if (currentDialogueIndex == 0)
         {
@@ -77,6 +77,7 @@ public class DialoguesManager : MonoBehaviour
             if (currentDialogueIndex == dialogues[currentDialogues].dialogues.Length)
             {
                 messageBox.SetActive(false);
+                isDialogueStarted = false;
                 return;
             }
 
@@ -92,13 +93,14 @@ public class DialoguesManager : MonoBehaviour
                 if (currentDialogueIndex >= dialogues[currentDialogues].dialogues.Length)
                 {
                     messageBox.SetActive(false);
-                    gozHeadButton.SetActive(true);
+                    if (gozHeadButton)
+                        gozHeadButton.SetActive(true);
                     currentDialogueIndex = 0;
                     if (raycaster)
-                    raycaster.ChangePictureState(true);
-                   
+                        raycaster.ChangePictureState(true);
 
-                    
+
+
                 }
 
                 isDialogueStarted = false;
@@ -118,13 +120,13 @@ public class DialoguesManager : MonoBehaviour
         if (dialogueAttributes.dialogueTextPro)
             dialogueAttributes.dialogueTextPro.text = message;
 
-        
+
     }
 
     IEnumerator StartDialogue()
     {
         isDialogueStarted = true;
-            
+
         int currentPointer = 0;
         string mainDialogue = "";
         if (GameManager.currentLanguage == "ja")
@@ -152,17 +154,25 @@ public class DialoguesManager : MonoBehaviour
             yield return new WaitForSeconds(3.0f);
 
             messageBox.SetActive(false);
-            if(raycaster)
-            raycaster.ChangePictureState(true);
+            isDialogueStarted = false;
+            if (raycaster)
+                raycaster.ChangePictureState(true);
             currentDialogueIndex = 0;
 
-            
+
         }
 
         isDialogueStarted = false;
     }
 
-
+    private void OnDisable()
+    {
+        Instance = null;
+        if (messageBox)
+            messageBox.SetActive(false);
+        isDialogueStarted = false;
+        StopCoroutine(StartDialogue());
+    }
 }
 
 [System.Serializable]

@@ -42,7 +42,7 @@ public class StreamingSockets : MonoBehaviour
         if (isFristTime ) 
         {
             isFristTime= false;
-            if (APIBaseUrlChange.instance.IsXanaLive)
+            if (APIBasepointManager.instance.IsXanaLive)
             {
                socketAddress = "https://app-api.xana.net";
             }
@@ -101,9 +101,9 @@ public class StreamingSockets : MonoBehaviour
                  LoadingHandler.Instance.streamingLoading.UpdateLoadingText(false);
                 //LoadingHandler.Instance.StartCoroutine (LoadingHandler.Instance.streamingLoading.ResetLoadingBar());
                 LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-                XanaConstants.xanaConstants.JjWorldSceneChange = true;
+                ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
                 StreamingSockets.Instance.isInWorld=false;
-                LoadFromFile.instance._uiReferences.LoadMain(false);
+                GameplayEntityLoader.instance._uiReferences.LoadMain(false);
                 return;
                 //await Task.Delay(12000);
             }
@@ -114,7 +114,7 @@ public class StreamingSockets : MonoBehaviour
             // ReSetStreamingEvent();
             XanaEventDetails.eventDetails = eventDetails.data;
             XanaEventDetails.eventDetails.DataIsInitialized = true;
-            XanaConstants.xanaConstants.newStreamEntery=true;
+            ConstantsHolder.xanaConstants.newStreamEntery=true;
             isInEvent= true;
             DynamicEventManager.Instance.SetSceneData();
         }

@@ -14,7 +14,7 @@ namespace DynamicScrollRect
     }
     public class DynamicScrollRect : ScrollRect
     {
-        [SerializeField] private DynamicScrollRestrictionSettings _restrictionSettings = null;
+       /* [SerializeField] private DynamicScrollRestrictionSettings _restrictionSettings = null;
         private bool _isDragging = false;
         private bool _runningBack = false;
         private bool _needRunBack = false;
@@ -87,7 +87,7 @@ namespace DynamicScrollRect
         {
             if(RestrictFlag)
             {
-                TopScroller.vertical = false;
+                //TopScroller.vertical = false;   // main scroll view is off due to some reason
                 ParentSliderFlag = false;
                 return;
             }
@@ -112,7 +112,7 @@ namespace DynamicScrollRect
                     }
                     else
                     {
-                        TopScroller.vertical = false;
+                        //TopScroller.vertical = false;    // main scroll view is off due to some reason
                         ParentSliderFlag = true;
                     }
                 }
@@ -206,9 +206,8 @@ namespace DynamicScrollRect
         private void UpdateItems(Vector2 delta)
         {
             bool positiveDelta = delta.y > 0;
-           
-            if (positiveDelta &&
-                -_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y)
+           //Debug.LogError("positiveDelta: " + positiveDelta+":---------:"+ (-_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y));
+            if (-_Content.GetLastItemPos().y - content.anchoredPosition.y <= viewport.rect.height + _Content.Spacing.y)
             {
                 _Content.AddIntoTail();
             }
@@ -383,6 +382,6 @@ namespace DynamicScrollRect
             }
             _runningBack = false;
         }
-        #endregion
+        #endregion*/
     }
 }

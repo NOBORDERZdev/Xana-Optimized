@@ -13,7 +13,9 @@ using YoutubeLight;
 
 public class YoutubePlayerLivestream : MonoBehaviour
 {
-
+    public enum EnvType { JJWorld, Other }
+    public EnvType envType;
+   
     public string _livestreamUrl;
 
     //AVPRO
@@ -24,6 +26,10 @@ public class YoutubePlayerLivestream : MonoBehaviour
     public Vector3 rotateScreenValue;
 
     public GameObject videoPlayerParent;
+
+    [Header("Only for Toyota World")]
+    public Toyota.AR_Nft_Manager nftMAnager;
+
     void Start()
     {
         if (!rotateScreen)
@@ -35,6 +41,7 @@ public class YoutubePlayerLivestream : MonoBehaviour
         else
             mPlayer.gameObject.transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
+
     }
 
 
@@ -193,7 +200,11 @@ public class YoutubePlayerLivestream : MonoBehaviour
         if(string.IsNullOrEmpty(player_response))
         {
             Debug.Log("<color=red> Player Json is Null .</color>");
-            JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+
+            if (envType.Equals(EnvType.JJWorld))
+                JjInfoManager.Instance.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
+            else if (envType.Equals(EnvType.Other) && nftMAnager!=null)
+                nftMAnager.LoadLiveIfFirstTimeNotLoaded(videoPlayerParent, _livestreamUrl);
         }
         else
         {
@@ -212,7 +223,11 @@ public class YoutubePlayerLivestream : MonoBehaviour
                 else if (json["streamingData"]["hlsManifestUrl"] == null)
                 {
                     Debug.Log("<color=red> Key Not Found .</color>");
-                    JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
+                    
+                    if (envType.Equals(EnvType.JJWorld))
+                        JjInfoManager.Instance.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
+                    else if (envType.Equals(EnvType.Other))
+                        nftMAnager.LoadPrerecordedIfNoLongerLive(videoPlayerParent, _livestreamUrl);
                 }
                 else
                 {
