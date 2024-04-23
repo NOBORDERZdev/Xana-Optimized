@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,9 +18,9 @@ public class UGCUIManager : MonoBehaviour
     public bool isVideo;
     public string snapSavePath;
     public float VideoRecordTimer;
-    public float holdTime;
+    //public float holdTime;
     public bool isRecording;
-    public float holdTimeForPhoto;
+    //public float holdTimeForPhoto;
 
     public AvatarController UGCCharacter;
     public VideoPlayer videoPlayer;
@@ -41,6 +42,28 @@ public class UGCUIManager : MonoBehaviour
     public TextMeshProUGUI videoRecordingTimerText;
     public UGCRecordVideoBehaviour ugcRecordVideoBehaviour;
 
+    //new changes
+    public UGCDataManager ugcDataManager;
+    [Header("Background Panel")]
+    public GameObject bgScreenPanel;
+    public Renderer bgMat;
+    public Texture defaultTexture;
+    public string bgDefaultTextureKey = "";
+
+    public GameObject tagsPrefab;
+    public Transform tagsPrefabParent;
+    public Transform bgPrefabParent;
+    public List<GameObject> tagsObjects;
+    public List<GameObject> tagsbuttons;
+    bool saveVideo = false;
+    public GameObject loadingTexture;
+    SavingCharacterDataClass _CharacterData;
+
+    //public Color normalColor, highlightedColor;
+    //public Color normalTextColor, highlightedTextColor;
+    public GameObject ItemPrefab;
+    public Button videoBtn,photoBtn;
+    public Button bgDefaultBtn;
     void Start()
     {
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
@@ -48,10 +71,23 @@ public class UGCUIManager : MonoBehaviour
 
         ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         DisableLoadingPanel();
+        isPhoto = false;
+        isVideo = true;
         // BGMat = new Material(BG.material);
     }
 
-
+    private void OnEnable()
+    {
+        videoBtn.onClick.AddListener(OnTapVideoButton);
+        photoBtn.onClick.AddListener(OnTapphotoButton);
+        bgDefaultBtn.onClick.AddListener(OnTapDefaultBg);
+    }
+    private void OnDisable()
+    {
+        videoBtn.onClick.RemoveListener(OnTapVideoButton);
+        photoBtn.onClick.RemoveListener(OnTapphotoButton);
+        bgDefaultBtn.onClick.RemoveListener(OnTapDefaultBg);
+    }
     public void DisableLoadingPanel()
     {
         StartCoroutine(IEHandleLoadingPanel());
@@ -63,6 +99,25 @@ public class UGCUIManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
         }
+        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+        {
+            _CharacterData = new SavingCharacterDataClass();
+            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+            if (_CharacterData.isBgApply)
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(_CharacterData.bgKeyValue));
+                bgDefaultTextureKey = _CharacterData.bgKeyValue;
+            }
+            else if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
+            }
+            else
+            {
+                ApplyDefaultTexture();
+            }
+        }
+
         yield return new WaitForSeconds(1f);
         loadingScreen.SetActive(false);
     }
@@ -70,11 +125,11 @@ public class UGCUIManager : MonoBehaviour
     {
         while (isPressed && !isRecording)
         {
-            holdTime += Time.deltaTime;
-            if (holdTime > holdTimeForPhoto)
-            {
+           // holdTime += Time.deltaTime;
+           // if (holdTime > holdTimeForPhoto)
+           // {
                 StartRecording();
-            }
+           // }
             yield return null;
         }
         yield return null;
@@ -92,26 +147,65 @@ public class UGCUIManager : MonoBehaviour
         isPressed = true;
         VideoButtonDownCoroutine = StartCoroutine(IEVideoButtonDown());
     }
-
-    Coroutine VideoButtonDownCoroutine;
-    public void OnVideoButtonUp()
+    public void OnTapaRecordingButton()
     {
-        StopCoroutine(VideoButtonDownCoroutine);
-        if (holdTime < holdTimeForPhoto)
+        isPressed = true;
+        if (isVideo)
         {
-            TakeAPhoto();
-            holdTime = 0;
-            isPressed = false;
-        }
-        else
-        {
-            if (isPressed && isRecording)
+            if (isPressed && !isRecording) 
+            {
+                VideoButtonDownCoroutine = StartCoroutine(IEVideoButtonDown());
+            }
+            else 
             {
                 StopRecording();
-                holdTime = 0;
+                StopCoroutine(VideoButtonDownCoroutine);
+                // holdTime = 0;
                 isPressed = false;
             }
         }
+        else if (isPhoto)
+        {
+            TakeAPhoto();
+        }
+    }
+    public void OnTapVideoButton()
+    {
+        isPhoto = false;
+        isVideo = true;
+        photoBtn.GetComponent<Image>().color = Color.white;
+        photoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+        videoBtn.GetComponent<Image>().color = Color.black;
+        videoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+    }
+    public void OnTapphotoButton()
+    {
+        isPhoto = true;
+        isVideo = false;
+        videoBtn.GetComponent<Image>().color = Color.white;
+        videoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.black;
+        photoBtn.GetComponent<Image>().color = Color.black;
+        photoBtn.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.white;
+    }
+    Coroutine VideoButtonDownCoroutine;
+    public void OnVideoButtonUp()
+    {
+        //StopCoroutine(VideoButtonDownCoroutine);
+        //if (holdTime < holdTimeForPhoto)
+        //{
+        //    TakeAPhoto();
+        //    holdTime = 0;
+        //    isPressed = false;
+        //}
+        //else
+        //{
+        //    if (isPressed && isRecording)
+        //    {
+        //        StopRecording();
+        //        holdTime = 0;
+        //        isPressed = false;
+        //    }
+        //}
     }
 
     #region TakeSnap
@@ -121,8 +215,8 @@ public class UGCUIManager : MonoBehaviour
     private RenderTexture screenshotRT;
     public void TakeAPhoto()
     {
-        isPhoto = true;
-        isVideo = false;
+        //isPhoto = true;
+        //isVideo = false;
         GameObject g = new GameObject();
         g.transform.parent = Camera.main.transform;
         g.transform.localPosition = Vector3.zero;
@@ -186,6 +280,7 @@ public class UGCUIManager : MonoBehaviour
         photoButton.gameObject.SetActive(false);
         videoRecordingTimerText.gameObject.SetActive(true);
         isRecording = true;
+        photoBtn.interactable = false;
         recordtimerCoroutine = StartCoroutine(IEStartVideoTimer());
         ugcRecordVideoBehaviour.StartRecording();
     }
@@ -193,8 +288,9 @@ public class UGCUIManager : MonoBehaviour
     public void StopRecording()
     {
         isRecording = false;
-        isPhoto = false;
-        isVideo = true;
+        // isPhoto = false;
+        // isVideo = true;
+        photoBtn.interactable = true;
         recordButton.gameObject.SetActive(false);
         photoButton.gameObject.SetActive(true);
         ugcRecordVideoBehaviour.StopRecording();
@@ -227,18 +323,90 @@ public class UGCUIManager : MonoBehaviour
         videoRecordingTimerText.gameObject.SetActive(false);
         recordScreen.SetActive(true);
         videoImageResultScreen.SetActive(false);
-        if (isVideo)
+        if (!saveVideo && isVideo)
         {
             File.Delete(ugcRecordVideoBehaviour.videoRecordingPath);
             ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
         }
+        else if (!saveVideo && isPhoto)
+        {
+            File.Delete(snapSavePath);
+            snapSavePath = "";
+            saveVideo = false;
+        }
+        else
+        {
+            snapSavePath = "";
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+
     }
 
     public void BackToHomeScreen()
     {
-        //Initiate.Fade("Main", Color.black, 1.0f);
-        SceneManager.LoadScene("Home");
+        if (bgScreenPanel.activeInHierarchy)
+        {
+            bgScreenPanel.SetActive(false);
+            screenUI[1].SetActive(true);
+            if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
+            {
+                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
+            }
+            else
+            {
+                ApplyDefaultTexture();
+            }
+        }
+        else
+        {
+            SceneManager.LoadScene("Home");
+        }
+
     }
+    public void CancelVideoSreen()
+    {
+        if (!saveVideo && isVideo)
+        {
+            File.Delete(ugcRecordVideoBehaviour.videoRecordingPath);
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+        else if (!saveVideo && isPhoto)
+        {
+            File.Delete(snapSavePath);
+            snapSavePath = "";
+            saveVideo = false;
+        }
+        else
+        {
+            snapSavePath = "";
+            ugcRecordVideoBehaviour.videoRecordingPath = "";
+            saveVideo = false;
+        }
+    }
+    //public void OnClickTags(GameObject _gameObject, string _category)
+    //{
+    //    for (int i = 0; i < tagsPrefabParent.childCount; i++)
+    //    {
+    //        tagsbuttons[i].GetComponent<Image>().color = normalColor;
+    //        tagsbuttons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = normalTextColor;
+    //    }
+    //    _gameObject.GetComponent<Image>().color = highlightedColor;
+    //    _gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = highlightedTextColor;
+    //    for (int i = 0; i < tagsObjects.Count; i++)
+    //    {
+    //        if (tagsObjects[i].GetComponent<BgTagsView>().tagName == _category)
+    //        {
+    //            tagsObjects[i].SetActive(true);
+    //        }
+    //        else
+    //        {
+    //            tagsObjects[i].SetActive(false);
+    //        }
+    //    }
+    //}
     public IEnumerator PlayRecordedVideo()
     {
         loadingScreen.SetActive(true);
@@ -267,10 +435,14 @@ public class UGCUIManager : MonoBehaviour
 
     public void OnTapBackGroundButton()
     {
-        ChangeBG();
+        loadingTexture.SetActive(true);
+        ugcDataManager.GetAllBackGroundCategory();
+        bgScreenPanel.SetActive(true);
+        screenUI[1].SetActive(false);
+
     }
     Material BGMat;
-    public  void ChangeBG()
+    public void ChangeBG()
     {
         //BGMat.mainTexture = texture;
         //BG.material = BGMat;
@@ -286,6 +458,7 @@ public class UGCUIManager : MonoBehaviour
             FileInfo file = new FileInfo(ugcRecordVideoBehaviour.videoRecordingPath);
             NativeGallery.SaveVideoToGallery(ugcRecordVideoBehaviour.videoRecordingPath, "Xana", file.Name.Replace(".mp4", "") + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"));
         }
+        saveVideo = true;
         savePopup.SetActive(true);
     }
 
@@ -307,4 +480,59 @@ public class UGCUIManager : MonoBehaviour
 
         }
     }
+    public void OnClickSaveBackgroundButton()
+    {
+        bgScreenPanel.SetActive(false);
+        screenUI[1].SetActive(true);
+        bgDefaultTextureKey = _CharacterData.bgKeyValue;
+    }
+    public void ApplyBgTexture(Texture _texture, string _key)
+    {
+        //bgMat.mainTexture = texture;
+        bgMat.material.mainTexture = _texture;
+        _CharacterData.isBgApply = true;
+        _CharacterData.bgKeyValue = _key;
+        string bodyJson = JsonUtility.ToJson(_CharacterData);
+        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
+        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
+        {
+        });
+    }
+
+    public void OnTapDefaultBg()
+    {
+        for (int i = 0; i < tagsObjects.Count; i++)
+        {
+            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+        }
+        _CharacterData.isBgApply = false;
+        _CharacterData.bgKeyValue = "";
+        ApplyDefaultTexture();
+        string bodyJson = JsonUtility.ToJson(_CharacterData);
+        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
+        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
+        {
+        });
+    }
+    public void ApplyDefaultTexture()
+    {
+        //bgMat.mainTexture = texture;
+        bgMat.material.mainTexture = defaultTexture;
+        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(true);
+    }
+    public void OnClickSelectBackgroundButton(GameObject _gameObject, string key)
+    {
+        loadingTexture.SetActive(true);
+        for (int i=0;i<tagsObjects.Count;i++) 
+        {
+            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+        }
+        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(false);
+        _gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        key = Regex.Replace(key, @"\s", "");
+        key = key.ToLower();
+        key = "bg_" + key;
+        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(key));
+    }
+
 }
