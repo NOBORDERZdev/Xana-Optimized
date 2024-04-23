@@ -280,6 +280,7 @@ public class UGCUIManager : MonoBehaviour
         photoButton.gameObject.SetActive(false);
         videoRecordingTimerText.gameObject.SetActive(true);
         isRecording = true;
+        photoBtn.interactable = false;
         recordtimerCoroutine = StartCoroutine(IEStartVideoTimer());
         ugcRecordVideoBehaviour.StartRecording();
     }
@@ -287,8 +288,9 @@ public class UGCUIManager : MonoBehaviour
     public void StopRecording()
     {
         isRecording = false;
-       // isPhoto = false;
-       // isVideo = true;
+        // isPhoto = false;
+        // isVideo = true;
+        photoBtn.interactable = true;
         recordButton.gameObject.SetActive(false);
         photoButton.gameObject.SetActive(true);
         ugcRecordVideoBehaviour.StopRecording();
