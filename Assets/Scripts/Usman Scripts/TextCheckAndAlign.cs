@@ -20,31 +20,21 @@ public class TextCheckAndAlign : MonoBehaviour
             if (IsJapaneseRegex(textComponent.text))
             {
                 textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X, Y, 0f);
-                Invoke("ChangeCharacterSpacingForJP", 1f);
             }
         }
-       
-       
-        
-       
+        Invoke("ChangeCharacterSpacingForJP", 1f);
     }
-
-
-    void ChangeCharacterSpacingForJP()
+   public void ChangeCharacterSpacingForJP()
     {
-
-        if (IsUseForChangeAllign)
+        if (IsJapaneseRegex(textComponent.text))
         {
-            if (IsJapaneseRegex(textComponent.text))
+            if (IsUseForChangeAllign)
             {
-                textComponent.characterSpacing = -15f;
+            textComponent.characterSpacing = -15f;
             }
-        }
-        if (IsUseForChangeMargin)
-        {
-            if (IsJapaneseRegex(textComponent.text))
+            if (IsUseForChangeMargin)
             {
-                textComponent.margin = new Vector4(0, 0, 0, MarginBottom);
+            textComponent.margin = new Vector4(0, 0, 0, MarginBottom);
             }
         }
     }
