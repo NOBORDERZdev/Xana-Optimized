@@ -58,6 +58,7 @@ public class CheckOnlineFriend : MonoBehaviour
     }
     void GotoSpace()
     {
+        GameManager.Instance.HomeCameraInputHandler(false);
         ConstantsHolder.xanaConstants.isFromHomeTab = true;
         worldItemView.OnClickPrefab();
     }

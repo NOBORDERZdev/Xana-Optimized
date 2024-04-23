@@ -106,6 +106,12 @@ public class ScrollActivity : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 3.5f, 0.2f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
         this.gameObject.SetActive(false);
+        if (ConstantsHolder.xanaConstants.isFromHomeTab)
+        {
+            GameManager.Instance.HomeCameraInputHandler(true);
+            ConstantsHolder.xanaConstants.isFromHomeTab= false;
+
+        }
         GameManager.Instance.UiManager.ShowFooter(true);
     }
     public void WaitForOpenWorldPage()
