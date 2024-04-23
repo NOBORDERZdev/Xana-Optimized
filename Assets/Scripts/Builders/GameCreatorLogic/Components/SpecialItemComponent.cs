@@ -13,14 +13,17 @@ public class SpecialItemComponent : ItemComponent
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision other)
     {
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
             if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
+        }
     }
 
     #region BehaviourControl
@@ -80,7 +83,7 @@ public class SpecialItemComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion
