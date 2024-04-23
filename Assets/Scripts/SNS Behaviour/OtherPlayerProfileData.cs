@@ -262,7 +262,7 @@ public class OtherPlayerProfileData : MonoBehaviour
 
 
             if(gameObject.activeSelf)
-            StartCoroutine(WaitToRefreshProfileScreen());
+                StartCoroutine(WaitToRefreshProfileScreen());
             ConstantsHolder.xanaConstants.SnsProfileID = singleUserProfileData.id;
             ConstantsHolder.xanaConstants.IsProfileVisit = true;
             ConstantsHolder.xanaConstants.IsOtherProfileVisit= true;
@@ -344,7 +344,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     {
         yield return StartCoroutine(SetVerticalFitMode(bioDetailPart, ContentSizeFitter.FitMode.PreferredSize));
         yield return StartCoroutine(SetVerticalFitMode(mainProfileDetailPart, ContentSizeFitter.FitMode.PreferredSize));
-        yield return StartCoroutine(SetVerticalFitMode(mainFullScreenContainer, ContentSizeFitter.FitMode.PreferredSize));
+        //yield return StartCoroutine(SetVerticalFitMode(mainFullScreenContainer, ContentSizeFitter.FitMode.PreferredSize, 0.1f));
     }
 
     
@@ -444,6 +444,7 @@ public class OtherPlayerProfileData : MonoBehaviour
   
     public void AllFeedWithUserId(int pageNumb, bool _callFromFindFriendWithName = false)
     {
+        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         currentPageAllTextPostWithUserIdRoot = SNS_APIManager.Instance.allTextPostWithUserIdRoot;
         FeedUIController.Instance.OnClickCheckOtherPlayerProfile(_callFromFindFriendWithName);
 
@@ -479,20 +480,20 @@ public class OtherPlayerProfileData : MonoBehaviour
 
     IEnumerator WaitToFeedLoadedUpdate(int pageNum)
     {
-        yield return new WaitForSeconds(0.1f);
-        SetupEmptyMsgForPhotoTab(false);//check for empty message.......
+        yield return new WaitForSeconds(0.4f);
         userPostMainPart.GetComponent<ParentHeightResetScript>().SetParentheight(userPostParent.GetComponent<RectTransform>().sizeDelta);
-        yield return new WaitForSeconds(0.5f);
+        SetupEmptyMsgForPhotoTab(false);//check for empty message.......
+        yield return new WaitForSeconds(0.1f);
         FeedUIController.Instance.ShowLoader(false);
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.2f);
 
         isFeedLoaded = true;
         if (pageNum > 1 && currentPageAllTextPostFeedWithUserIdRoot.data.rows.Count > 0)
         {
             profileFeedAPiCurrentPageIndex += 1;
         }
-        parentHeightResetScript.OnHeightReset(0);
+        //parentHeightResetScript.OnHeightReset(0);
         //Debug.Log("other Profile AllFeedWithUserId:" + isFeedLoaded);
     }
 
