@@ -15,10 +15,13 @@ public class TimerCountdownComponent : ItemComponent
         defaultValue = (int)timerCountdownComponentData.setTimer - 1;
         RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision other)
     {
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
     }
 
     #region BehaviourControl
@@ -72,7 +75,7 @@ public class TimerCountdownComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
     #endregion
 }
