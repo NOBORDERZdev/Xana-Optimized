@@ -14,18 +14,21 @@ public class AvatarChangerComponent : ItemComponent
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (componentData.avatarIndex == 1)//Hunter Selected
-            Toast.Show("Coming Soon, We will update The Hunter Appearance");
-        else
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
+            if (componentData.avatarIndex == 1)//Hunter Selected
+                Toast.Show("Coming Soon, We will update The Hunter Appearance");
+            else
+            {
+                BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+                PlayBehaviour();
+            }
+            if (GamificationComponentData.instance.withMultiplayer)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
         }
-        if (GamificationComponentData.instance.withMultiplayer)
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-        else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
     }
 
     #region BehaviourControl
@@ -86,7 +89,7 @@ public class AvatarChangerComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

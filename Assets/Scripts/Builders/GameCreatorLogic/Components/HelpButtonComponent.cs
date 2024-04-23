@@ -38,9 +38,9 @@ public class HelpButtonComponent : ItemComponent
         }
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (!this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
@@ -50,9 +50,9 @@ public class HelpButtonComponent : ItemComponent
         }
     }
 
-    private void CollisionExit()
+    private void OnCollisionExit(Collision _other)
     {
-        if (!this.helpButtonComponentData.IsAlwaysOn)
+        if ((_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine) && !this.helpButtonComponentData.IsAlwaysOn)
         {
             BuilderEventManager.OnHelpButtonCollisionExit?.Invoke();
         }
@@ -102,12 +102,12 @@ public class HelpButtonComponent : ItemComponent
 
     public override void CollisionExitBehaviour()
     {
-        CollisionExit();
+        //CollisionExit();
     }
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

@@ -33,13 +33,16 @@ public class TranslateComponent : ItemComponent
         }
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (translateComponentData.avatarTriggerToggle && !IsAgainTouchable)
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            if (translateComponentData.avatarTriggerToggle && !IsAgainTouchable)
+            {
+                if (GamificationComponentData.instance.withMultiplayer)
+                    GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+                else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            }
         }
     }
 
@@ -153,7 +156,7 @@ public class TranslateComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion
