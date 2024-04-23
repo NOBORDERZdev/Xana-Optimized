@@ -19,12 +19,15 @@ public class TimeLimitComponent : ItemComponent
     }
 
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
         if (isActivated)
         {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
+            if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+                PlayBehaviour();
+            }
         }
     }
 
@@ -76,7 +79,7 @@ public class TimeLimitComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion
