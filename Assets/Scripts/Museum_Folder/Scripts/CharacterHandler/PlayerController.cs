@@ -1061,10 +1061,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else // Reseating animator to idel when joystick is not moving.
+        else // Reseating animator to idel when joystick is not moving-----
         {
-            PlayerIsIdle?.Invoke();
-            UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            if (_IsGrounded) // this check is added because not to enable bottom buttons early while the char is in jump state //
+            {
+                PlayerIsIdle?.Invoke();
+                UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            }
             //checking moving platform
             if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {
