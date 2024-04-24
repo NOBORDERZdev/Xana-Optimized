@@ -224,6 +224,7 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.noseItemData = InventoryManager.instance.itemData.noseItemData;
         SaveItemList.hairItemData = InventoryManager.instance.itemData._hairItemData;
         SaveItemList.eyeItemData = InventoryManager.instance.itemData._eyeItemData;
+        SaveItemList.eyeShapeItemData = InventoryManager.instance.itemData.eyeShapeItemData;
 
 
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
@@ -290,6 +291,7 @@ public class SaveCharacterProperties : MonoBehaviour
             _CharacterData.noseItemData = SaveItemList.noseItemData;
             _CharacterData.hairItemData = SaveItemList.hairItemData;
             _CharacterData.eyeItemData = SaveItemList.eyeItemData;
+            _CharacterData.eyeShapeItemData = SaveItemList.eyeShapeItemData;
 
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
@@ -394,6 +396,7 @@ public class SavingCharacterDataClass
     public int noseItemData;
     public string hairItemData;
     public string eyeItemData;
+    public int eyeShapeItemData;
     public bool charactertypeAi;
 
     public List<BoneDataContainer> SavedBones;
@@ -451,6 +454,8 @@ public class SavingCharacterDataClass
     public int punch;
     public int kick;
 
+    public bool isBgApply;
+    public string bgKeyValue;
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);

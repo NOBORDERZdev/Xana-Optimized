@@ -105,6 +105,10 @@ public class UIHandler : MonoBehaviour
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
             }
          }
         else
