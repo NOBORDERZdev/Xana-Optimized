@@ -34,15 +34,13 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
-                if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com"))
-                {
-                    Debug.Log("send invite to company account");
-                }
-                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
-                    other.gameObject.GetComponent<ArrowManager>().UpdateMeetingPrams();
-                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
+                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.HouseFull))
+                    return;
+                else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
+                    ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
                     return;
             }
 
@@ -63,17 +61,16 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            //Gautam Commented below code due to shows pop up again and again.
-
-            //collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
                 this.StartCoroutine(swtichScene(WorldName));
+
+                // For toyota bussiness meeting world only
+                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End)) // for customer
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
+                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress)) // for interviewer
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.HouseFull);
             }
-            //else
-            //{
-            //    this.StartCoroutine(ResetColider());
-            //}
         }
     }
 

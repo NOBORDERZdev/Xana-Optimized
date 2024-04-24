@@ -508,15 +508,15 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void UpdateMeetingPrams()
+    public void UpdateMeetingPrams(ConstantsHolder.MeetingStatus meetingStatus)
     {
-        gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+        gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, meetingStatus, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
-    public void StartMeeting(int ViewID)
+    public void StartMeeting(ConstantsHolder.MeetingStatus meetingStatus, int ViewID)
     {
-        ConstantsHolder.xanaConstants.toyotaMeetingStatus = ConstantsHolder.MeetingStatus.Inprogress;
+        ConstantsHolder.xanaConstants.toyotaMeetingStatus = meetingStatus;
     }
 
 
