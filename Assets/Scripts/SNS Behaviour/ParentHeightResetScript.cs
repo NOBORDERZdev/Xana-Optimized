@@ -46,15 +46,17 @@ public class ParentHeightResetScript : MonoBehaviour
 
     IEnumerator waitToReset()
     {
-        yield return new WaitForSeconds(0.001f);
-        mainContent.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        while (content.anchoredPosition != new Vector2(content.anchoredPosition.x, 0))
-        {
-            content.anchoredPosition = new Vector2(content.anchoredPosition.x, 0);
-            yield return new WaitForSeconds(0.001f);
-        }
-        Vector2 size = GetComponent<RectTransform>().sizeDelta;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, (Mathf.Abs(size.y)));
+        yield return new WaitForSeconds(0.1f);
+        //transform.GetComponent<RectTransform>().sizeDelta = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, _postTabHeight.y);
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //while (content.anchoredPosition != new Vector2(content.anchoredPosition.x, 0))
+        //{
+        //    content.anchoredPosition = new Vector2(content.anchoredPosition.x, 0);
+        //    yield return new WaitForSeconds(0.001f);
+        //}
+        //Vector2 size = GetComponent<RectTransform>().sizeDelta;
+        //GetComponent<RectTransform>().sizeDelta = new Vector2(size.x, (Mathf.Abs(size.y)));
     }
 
     public void OnHeightReset(int index)
@@ -64,8 +66,13 @@ public class ParentHeightResetScript : MonoBehaviour
 
     public void SetParentheight(Vector2 _postTabHeight)
     {
-        //Debug.Log("Setting parent height here: " + _postTabHeight.y);
         transform.GetComponent<RectTransform>().sizeDelta = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, _postTabHeight.y);
+        mainContent.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //Debug.Log("Setting parent height here: " + _postTabHeight.y);
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        //transform.GetComponent<RectTransform>().sizeDelta = new Vector2(transform.GetComponent<RectTransform>().sizeDelta.x, _postTabHeight.y);
+        //mainContent.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        //StartCoroutine(waitToReset());
     }
 
 

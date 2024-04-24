@@ -52,30 +52,31 @@ public class SituationChangerComponent : ItemComponent
     }
 
     Coroutine situationCo;
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        playerObject = GamificationComponentData.instance.buildingDetect.gameObject;
-
-        //if (!IsAgainTouchable) return;
-
-        //IsAgainTouchable = false;
-
-        if (GamificationComponentData.instance.withMultiplayer)
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            if (!situationChangerComponentData.isOff && !isRuninig)
+            if (!IsAgainTouchable) return;
+
+            IsAgainTouchable = false;
+
+            if (GamificationComponentData.instance.withMultiplayer)
             {
-                UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
-                utccounterValue.UTCTime = DateTime.UtcNow.ToString();
-                utccounterValue.CounterValue = defaultTimer;
-                BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
-                var hash = new ExitGames.Client.Photon.Hashtable();
-                hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
-                PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                if (!situationChangerComponentData.isOff && !isRuninig)
+                {
+                    UTCTimeCounterValue utccounterValue = new UTCTimeCounterValue();
+                    utccounterValue.UTCTime = DateTime.UtcNow.ToString();
+                    utccounterValue.CounterValue = defaultTimer;
+                    BuilderEventManager.OnSituationChangerTriggerEnter?.Invoke(0);
+                    var hash = new ExitGames.Client.Photon.Hashtable();
+                    hash["situationChangerComponent"] = JsonUtility.ToJson(utccounterValue);
+                    PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+                }
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
             }
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
+            else
+                PlayBehaviour();
         }
-        else
-            PlayBehaviour();
     }
 
     IEnumerator SituationChange()
@@ -87,15 +88,15 @@ public class SituationChangerComponent : ItemComponent
         }
     }
 
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    IsAgainTouchable = false;
-    //}
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    IsAgainTouchable = true;
-    //    playerObject = null;
-    //}
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
+        playerObject = null;
+    }
 
     #region BehaviourControl
     private void StartComponent()
@@ -351,7 +352,7 @@ public class SituationChangerComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
     #endregion
 
