@@ -128,7 +128,8 @@ public class ConstantsHolder : MonoBehaviour
     public bool isLobbyTutorialLoaded = false;
 
     public static bool isDescriptionFullPage = false;
-
+    //Toyota Home Aichi
+    public string toyotaEmail;
     public string r_EmoteStoragePersistentPath
     {
         get

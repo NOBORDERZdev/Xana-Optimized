@@ -22,26 +22,35 @@ public class JjWorldChanger : MonoBehaviour
 
     private GameObject triggerObject;
     public bool isEnteringPopup;
+    public GameObject portalObject;
     private void Start()
     {
         collider = GetComponent<Collider>();
     }
 
     private void OnTriggerEnter(Collider other)
-    {
+{
+       
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-            if (ReferencesForGamePlay.instance.m_34player)
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") &&ConstantsHolder.xanaConstants != null && ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com"))
             {
-                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                Debug.Log("send invite to company account");
             }
-            triggerObject = other.gameObject;
-            if (isEnteringPopup)
-                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            {
+                GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+                if (ReferencesForGamePlay.instance.m_34player)
+                {
+                    ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+                }
+                triggerObject = other.gameObject;
+                if (isEnteringPopup)
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
+                else
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
+            }
         }
 
     }
