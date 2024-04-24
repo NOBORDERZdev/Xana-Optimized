@@ -152,11 +152,11 @@ public class UGCManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
         UnityWebRequest www;
-        if (APIBasepointManager.instance.IsXanaLive) 
+        if (APIBasepointManager.instance.IsXanaLive)
         {
             www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
         }
-        else 
+        else
         {
             www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
         }
@@ -228,8 +228,11 @@ public class UGCManager : MonoBehaviour
                     //InventoryManager.instance.ApplyUGCValueOnCharacter();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
                     CharacSelectScroll.instance.OnClickNext();
-                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-                    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    //if (GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
+                    //{
+                    //    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                    //    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    //}
                     //Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
@@ -267,7 +270,7 @@ public class UGCManager : MonoBehaviour
         {
             InventoryManager.instance.itemData._hairItemData = _itemHair.keyValue;
         }
-        else 
+        else
         {
             InventoryManager.instance.itemData._hairItemData = "No hair";
         }
