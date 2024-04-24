@@ -162,6 +162,11 @@ public class PresetData_Jsons : MonoBehaviour
                 if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {
                     UserLoginSignupManager.instance.OpenUserNamePanel();
+                    if (UGCManager.isSelfieTaken) 
+                    {
+                        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    }
                 }
                 else
                 {
