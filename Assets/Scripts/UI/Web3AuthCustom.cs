@@ -31,6 +31,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     internal string mysignature1 , mysignature2;
     private string privateKey;
     private Web3UserInfo userInfo;
+    internal string Email;
     bool isNewReg;
     internal string publicAdress;
     internal string msg1 ,msg2;
@@ -219,6 +220,8 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;
+        Email = userInfo.email;
+        ConstantsHolder.xanaConstants.toyotaEmail = Email;
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));
