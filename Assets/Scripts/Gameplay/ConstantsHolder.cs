@@ -130,6 +130,9 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isDescriptionFullPage = false;
     //Toyota Home Aichi
     public string toyotaEmail;
+    public enum MeetingStatus { End, Inprogress}
+    public MeetingStatus toyotaMeetingStatus;
+
     public string r_EmoteStoragePersistentPath
     {
         get
