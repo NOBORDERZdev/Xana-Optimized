@@ -99,24 +99,24 @@ public class UGCUIManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
         }
-        if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-        {
-            _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-            if (_CharacterData.isBgApply)
-            {
-                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(_CharacterData.bgKeyValue));
-                bgDefaultTextureKey = _CharacterData.bgKeyValue;
-            }
-            else if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
-            {
-                StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
-            }
-            else
-            {
-                ApplyDefaultTexture();
-            }
-        }
+        //if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
+        //{
+        //    _CharacterData = new SavingCharacterDataClass();
+        //    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
+        //    if (_CharacterData.isBgApply)
+        //    {
+        //        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(_CharacterData.bgKeyValue));
+        //        bgDefaultTextureKey = _CharacterData.bgKeyValue;
+        //    }
+        //    else if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
+        //    {
+        //        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
+        //    }
+        //    else
+        //    {
+        //        ApplyDefaultTexture();
+        //    }
+        //}
 
         yield return new WaitForSeconds(1f);
         loadingScreen.SetActive(false);
