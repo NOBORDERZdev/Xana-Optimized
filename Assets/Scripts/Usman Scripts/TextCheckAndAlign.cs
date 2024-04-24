@@ -8,7 +8,9 @@ public class TextCheckAndAlign : MonoBehaviour
 {
     public GameObject textComponentGameObject;
     public TextMeshProUGUI textComponent;
+    public float MarginBottom;
     public bool IsUseForChangeAllign;
+    public bool IsUseForChangeMargin;
     public float X, Y;
 
     void Start()
@@ -20,22 +22,19 @@ public class TextCheckAndAlign : MonoBehaviour
                 textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X, Y, 0f);
             }
         }
-
-        if (IsUseForChangeAllign)
-        {
-            Invoke("ChangeCharacterSpacingForJP",1f);
-        }
+        Invoke("ChangeCharacterSpacingForJP", 1f);
     }
-
-
-    void ChangeCharacterSpacingForJP()
+   public void ChangeCharacterSpacingForJP()
     {
-
-        if (IsUseForChangeAllign)
+        if (IsJapaneseRegex(textComponent.text))
         {
-            if (IsJapaneseRegex(textComponent.text))
+            if (IsUseForChangeAllign)
             {
-                textComponent.characterSpacing = -15f;
+            textComponent.characterSpacing = -15f;
+            }
+            if (IsUseForChangeMargin)
+            {
+            textComponent.margin = new Vector4(0, 0, 0, MarginBottom);
             }
         }
     }

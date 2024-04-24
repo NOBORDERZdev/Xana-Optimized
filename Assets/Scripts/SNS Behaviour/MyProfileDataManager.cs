@@ -525,6 +525,7 @@ public class MyProfileDataManager : MonoBehaviour
     //this method is used to load All my feed and setup.......
     public void AllFeedWithUserId(int pageNumb, Transform Feedparent = null, bool IsNew = false)
     {
+        mainFullScreenContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         //New Text post based feed implimentation
         currentPageAllTextPostWithUserIdRoot = apiManager.allTextPostWithUserIdRoot;
         bool IsMyProfileFeed = false;
@@ -550,6 +551,7 @@ public class MyProfileDataManager : MonoBehaviour
                 {
                     Transform parent = Feedparent == null && !string.IsNullOrEmpty(currentRow.text_post) ? allPhotoContainer : null;
                     GameObject userTagPostObject = Instantiate(photoPrefab, parent);
+                    userTagPostObject.AddComponent<LayoutElement>();
                     userTagPostObject.name = "User Feed Post 2.0 " + i;
                     if (IsNew)
                     {
@@ -602,15 +604,23 @@ public class MyProfileDataManager : MonoBehaviour
         {
             allMyTextPostFeedImageRootDataList.RemoveAt(0);
         }
-        
-        Invoke(nameof(DisableFadderWithDelay),0.3f);
+        //allPhotoContainer.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        StartCoroutine(DisableFadderWithDelay());
     }
 
-    void DisableFadderWithDelay()
+    IEnumerator DisableFadderWithDelay()
     {
+        yield return new WaitForSeconds(0.4f);
+
+        parentHeightResetScript.SetParentheight(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
+        yield return new WaitForSeconds(0.1f);
+        //Debug.Log(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
+        //Debug.Log(allPhotoContainer.transform.childCount);
+        //allPhotoContainer.GetComponent<ContentSizeFitter>().enabled = true;
+        //Debug.Log(allPhotoContainer.GetComponent<RectTransform>().sizeDelta);
         feedUIController.ShowLoader(false);
-        allPhotoContainer.gameObject.SetActive(false);
-        allPhotoContainer.gameObject.SetActive(true);
+        //allPhotoContainer.gameObject.SetActive(false);
+        //allPhotoContainer.gameObject.SetActive(true);
     }
 
 
