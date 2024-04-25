@@ -65,7 +65,8 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-
+            int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
+            communicationComponent.BroadcastUserJoinInterviewRoom(userId);
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
