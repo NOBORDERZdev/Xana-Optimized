@@ -66,10 +66,16 @@ public class JjWorldChanger : MonoBehaviour
                 this.StartCoroutine(swtichScene(WorldName));
 
                 // For toyota bussiness meeting world only
-                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End)) // for customer
+                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
+                {// for customer
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
-                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress)) // for interviewer
+                    GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Waiting For Interviewer");
+                }
+                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
+                { // for interviewer
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.HouseFull);
+                    GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Meeting is starting", Color.red);
+                }
             }
         }
     }

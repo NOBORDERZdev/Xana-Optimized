@@ -510,7 +510,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingPrams(ConstantsHolder.MeetingStatus meetingStatus)
     {
-        gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, meetingStatus, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+        gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, meetingStatus, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
