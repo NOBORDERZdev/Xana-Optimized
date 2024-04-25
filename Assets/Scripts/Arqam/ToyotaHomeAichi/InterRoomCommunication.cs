@@ -10,12 +10,15 @@ public class InterRoomCommunication : MonoBehaviour
 
     private void Awake()
     {
-        if (obj == null)
+        if (obj)
+        {
+            DestroyImmediate(this.gameObject);
+        }
+        else
+        {
             obj = this;
-        if (obj != null)
-            Destroy(this);
-
-        DontDestroyOnLoad(this.gameObject);
+        }
+            DontDestroyOnLoad(this.gameObject);
     }
 
     public void BroadcastUserJoinInterviewRoom(int userId)
