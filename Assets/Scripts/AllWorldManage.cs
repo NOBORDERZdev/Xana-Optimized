@@ -38,13 +38,17 @@ public class AllWorldManage : MonoBehaviour
     {
         /*gameManager.UiManager.LobbyTabHolder.gameObject.SetActive(flag);*/
     }
-    public void SearchScreenLoad()
+    public void SearchScreenLoad(bool _state = true)
     {
         SearchWorldUIController.IsSearchBarActive = true;
         gameManager.UiManager.SwitchToScreen(2);
         //FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
         WorldManager.instance.SearchPageNumb = 1;
+        if (_state)
+        {
+            SearchWorldUIController.AutoSelectInputField?.Invoke();
+        }
     }
 
     public void SearchScreenLoad(string searchKey)
@@ -154,7 +158,7 @@ public class AllWorldManage : MonoBehaviour
     {
         Debug.Log("Selected Category Type: " + _categType);
         WorldManager.instance.seeAllPN = 1;
-        SearchScreenLoad();
+        SearchScreenLoad(false);
         WorldManager.instance.ChangeWorldTab(ApiUrlSelect(_categType), _categType);
     }
 

@@ -4734,6 +4734,8 @@ public class InventoryManager : MonoBehaviour
             _charcterBodyParts.head.SetBlendShapeWeight(itemData.noseItemData, 100);
         if (itemData.lipItemData != 0)
             _charcterBodyParts.head.SetBlendShapeWeight(itemData.lipItemData, 100);
+        if (itemData.eyeShapeItemData != 0)
+            _charcterBodyParts.head.SetBlendShapeWeight(itemData.eyeShapeItemData, 100);
         if (itemData._hairItemData != null)
         {
             if (!itemData._hairItemData.Contains("No hair"))

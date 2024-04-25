@@ -298,6 +298,7 @@ public class PresetData_Jsons : MonoBehaviour
         _CharacterData.lipItemData = InventoryManager.instance.itemData.lipItemData;
         _CharacterData.hairItemData = InventoryManager.instance.itemData._hairItemData;
         _CharacterData.eyeItemData = InventoryManager.instance.itemData._eyeItemData;
+        _CharacterData.eyeShapeItemData = InventoryManager.instance.itemData.eyeShapeItemData;
     }
 }
 
