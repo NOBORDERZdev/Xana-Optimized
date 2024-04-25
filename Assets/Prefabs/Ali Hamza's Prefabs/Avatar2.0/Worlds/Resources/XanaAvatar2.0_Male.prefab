@@ -6108,7 +6108,8 @@ MonoBehaviour:
   wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
-  wornEyebrow: []
+  wornEyebrow:
+  - {fileID: 4012293780636678229}
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   characterBodyParts: {fileID: 6365620064579044150}
   _PCharacterData:
@@ -6127,6 +6128,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -6177,6 +6179,8 @@ MonoBehaviour:
     special_move: 0
     punch: 0
     kick: 0
+    isBgApply: 0
+    bgKeyValue: 
   ArAnimator: {fileID: 0}
   wornHairId: 0
   hairColorPaletteId: 0
@@ -9173,6 +9177,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4012293780636678229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5862562281140520618, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
+  m_PrefabInstance: {fileID: 7418139670085091071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7023433744545143060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}

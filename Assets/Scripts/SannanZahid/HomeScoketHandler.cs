@@ -159,10 +159,14 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void AvatarUpdate(string response)
     {
-        snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
-         if (ConstantsHolder.xanaConstants.IsProfileVisit && snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID ){ 
+        if (ConstantsHolder.xanaConstants.IsProfileVisit)
+        {
+            snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
+            if ( snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
+            {
                 ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
-         }
+            }
+        }
     }
 
 
