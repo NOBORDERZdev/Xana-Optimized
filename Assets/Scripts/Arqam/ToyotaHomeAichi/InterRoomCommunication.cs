@@ -16,9 +16,15 @@ public class InterRoomCommunication : MonoBehaviour
             Destroy(this.gameObject);
     }
 
-    
+    public void BroadcastUserJoinInterviewRoom(int userId)
+    {
+        ArrowManager.Instance.UserJoinInterviewRoom(userId);
+    }
 
-   
+    public void BroadcastUserLeaveInterviewRoom(int userId)
+    {
+        ArrowManager.Instance.UserLeaveInterviewRoom(userId);
+    }
 
 
 }
