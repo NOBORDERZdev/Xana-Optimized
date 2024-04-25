@@ -315,7 +315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -805,6 +804,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -855,6 +855,8 @@ MonoBehaviour:
     special_move: 0
     punch: 0
     kick: 0
+    isBgApply: 0
+    bgKeyValue: 
   _sliderindexes: {fileID: 11400000, guid: 007ece8573d836d4b8f5fc3bfe09bf52, type: 2}
   charcterBodyParts: {fileID: 0}
   characterController: {fileID: 0}
@@ -2637,7 +2639,7 @@ PrefabInstance:
       objectReference: {fileID: 5733907664898954176}
     - target: {fileID: 580625885621899111, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.8927002
+      value: -3.8928223
       objectReference: {fileID: 0}
     - target: {fileID: 1222633700808300328, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_IsActive
@@ -4143,6 +4145,7 @@ GameObject:
   m_Component:
   - component: {fileID: 454488015}
   - component: {fileID: 454488014}
+  - component: {fileID: 454488016}
   m_Layer: 0
   m_Name: XanaConstants
   m_TagString: Untagged
@@ -4246,6 +4249,10 @@ MonoBehaviour:
   needToClearMemory: 1
   isTutorialLoaded: 0
   isLobbyTutorialLoaded: 0
+  toyotaEmail: 
+  toyotaMeetingStatus: 0
+  isBackToParentScane: 0
+  parentSceneName: 
   labels:
   - boyc11hair
   - staffshirt
@@ -4257,6 +4264,9 @@ MonoBehaviour:
   CompletionEvent:
     m_PersistentCalls:
       m_Calls: []
+  IsProfileVisit: 0
+  SnsProfileID: 0
+  IsOtherProfileVisit: 0
 --- !u!4 &454488015
 Transform:
   m_ObjectHideFlags: 0
@@ -4272,6 +4282,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &454488016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 454488013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9ff017b980a854280df8b967de3458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &457866014
 GameObject:
   m_ObjectHideFlags: 0
@@ -7786,6 +7808,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1549620715}
     m_Modifications:
+    - target: {fileID: 1558925940654563709, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558925940664573755, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 33.700195
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558925941223772646, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 71.10889
+      objectReference: {fileID: 0}
+    - target: {fileID: 1558925941502505681, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.899414
+      objectReference: {fileID: 0}
     - target: {fileID: 1558925941770329758, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_Name
       value: Description Panel Parent
@@ -7873,6 +7911,14 @@ PrefabInstance:
     - target: {fileID: 1558925941770329759, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902954811256364905, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -5.5546875
+      objectReference: {fileID: 0}
+    - target: {fileID: 9070976810441219090, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 31.760742
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae564ddca14a894cbbba5ab4ab11898, type: 3}
@@ -15152,11 +15198,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
   - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
   AllTitleText:
-  - {fileID: 1589138545}
-  - {fileID: 917781684}
-  - {fileID: 630340492}
-  - {fileID: 2047852099}
-  - {fileID: 1137014068}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
   unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -19407,11 +19453,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
   - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
   AllTitleText:
-  - {fileID: 32306825}
-  - {fileID: 1662976724}
-  - {fileID: 366743149}
-  - {fileID: 1767239895}
-  - {fileID: 2142488553}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
   unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -19821,7 +19867,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -20455,11 +20501,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
   - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
   AllTitleText:
-  - {fileID: 350869155}
-  - {fileID: 252617303}
-  - {fileID: 2020014965}
-  - {fileID: 993613028}
-  - {fileID: 832228081}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
   unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -20715,11 +20761,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
   - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
   AllTitleText:
-  - {fileID: 1042342215}
-  - {fileID: 285637152}
-  - {fileID: 2045969285}
-  - {fileID: 1855956867}
-  - {fileID: 605259879}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
   unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
@@ -31626,7 +31672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7141477523298660082, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 27.900024
+      value: 27.899902
       objectReference: {fileID: 0}
     - target: {fileID: 7141477523298660082, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_AnchoredPosition.y
