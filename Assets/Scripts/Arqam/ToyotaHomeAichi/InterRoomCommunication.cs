@@ -14,6 +14,8 @@ public class InterRoomCommunication : MonoBehaviour
             obj = this;
         if (obj != null)
             Destroy(this.gameObject);
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void BroadcastUserJoinInterviewRoom(int userId)

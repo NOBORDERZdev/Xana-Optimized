@@ -5,7 +5,6 @@ namespace Photon.Pun.Demo.PunBasics
 {
     public class ThaMeetingController : MonoBehaviourPunCallbacks
     {
-        private InterRoomCommunication communicationComponent;
 
         void Start()
         {
@@ -15,8 +14,6 @@ namespace Photon.Pun.Demo.PunBasics
                 ConstantsHolder.xanaConstants.isBackToParentScane = true;
                 ConstantsHolder.xanaConstants.parentSceneName = "D_Infinity_Labo";
             }
-
-            communicationComponent = ConstantsHolder.xanaConstants.gameObject.GetComponent<InterRoomCommunication>();
         }
 
         public override void OnConnectedToMaster()
@@ -38,7 +35,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnLeftLobby()
         {
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
-            communicationComponent.BroadcastUserJoinInterviewRoom(userId);
+            InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -52,7 +49,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnDisconnected(DisconnectCause cause)
         {
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
-            communicationComponent.BroadcastUserJoinInterviewRoom(userId);
+            InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
         public override void OnJoinedRoom()
         {
@@ -66,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
-            communicationComponent.BroadcastUserJoinInterviewRoom(userId);
+            InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
