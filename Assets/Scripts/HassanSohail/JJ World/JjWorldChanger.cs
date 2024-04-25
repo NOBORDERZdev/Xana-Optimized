@@ -29,28 +29,31 @@ public class JjWorldChanger : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-{
-       
+    {
+
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") &&ConstantsHolder.xanaConstants != null && ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com"))
+            // For toyota bussiness meeting world only
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
-                Debug.Log("send invite to company account");
+                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.HouseFull))
+                    return;
+                else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
+                    ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
+                    return;
             }
+
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+            if (ReferencesForGamePlay.instance.m_34player)
+            {
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
+            }
+            triggerObject = other.gameObject;
+            if (isEnteringPopup)
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
             else
-            {
-                GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-                if (ReferencesForGamePlay.instance.m_34player)
-                {
-                    ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
-                }
-                triggerObject = other.gameObject;
-                if (isEnteringPopup)
-                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
-                else
-                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
-            }
+                GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
 
     }
@@ -58,17 +61,16 @@ public class JjWorldChanger : MonoBehaviour
     {
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            //Gautam Commented below code due to shows pop up again and again.
-
-            //collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
                 this.StartCoroutine(swtichScene(WorldName));
+
+                // For toyota bussiness meeting world only
+                if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End)) // for customer
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
+                else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress)) // for interviewer
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.HouseFull);
             }
-            //else
-            //{
-            //    this.StartCoroutine(ResetColider());
-            //}
         }
     }
 
