@@ -374,6 +374,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
+                    Debug.LogError(otherPlayer.ActorNumber);
                     playerobjects.RemoveAt(x);
                 }
             }

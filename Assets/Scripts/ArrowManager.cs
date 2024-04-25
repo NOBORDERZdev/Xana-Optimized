@@ -517,6 +517,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public void StartMeeting(ConstantsHolder.MeetingStatus meetingStatus, int ViewID)
     {
         ConstantsHolder.xanaConstants.toyotaMeetingStatus = meetingStatus;
+
+        if (meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
+            ConstantsHolder.xanaConstants.userActorNum = gameObject.GetComponent<PhotonView>().Controller.ActorNumber;
+        else if (meetingStatus == ConstantsHolder.MeetingStatus.HouseFull)
+            ConstantsHolder.xanaConstants.userActorNum = gameObject.GetComponent<PhotonView>().Controller.ActorNumber;
     }
 
 
