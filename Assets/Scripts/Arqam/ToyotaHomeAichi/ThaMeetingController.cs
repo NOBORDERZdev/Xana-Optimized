@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Photon.Realtime;
-
+using UnityEngine;
 namespace Photon.Pun.Demo.PunBasics
 {
     public class ThaMeetingController : MonoBehaviourPunCallbacks
@@ -34,6 +34,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnLeftLobby()
         {
+            Debug.LogError("PlayerLobbyLeft");
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
             InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
@@ -48,6 +49,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
+            Debug.LogError("PlayerDisconnect");
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
             InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
@@ -62,6 +64,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            Debug.LogError("PlayerLeft");
             int userId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().Controller.ActorNumber;
             InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(userId);
         }
