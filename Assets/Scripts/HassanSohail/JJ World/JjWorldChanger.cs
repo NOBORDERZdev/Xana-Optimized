@@ -42,6 +42,9 @@ public class JjWorldChanger : MonoBehaviour
                 else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
                     ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
                     return;
+                else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
+                    ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
+                    return;
             }
 
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
