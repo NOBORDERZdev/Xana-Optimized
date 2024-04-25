@@ -517,12 +517,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
-        else if(ConstantsHolder.xanaConstants.EnviornmentName.Contains(ConstantsHolder.xanaConstants.parentSceneName))
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains(ConstantsHolder.xanaConstants.parentSceneName))
         {
-            if(ConstantsHolder.xanaConstants.parentSceneName == "D_Infinity_Labo")
-            {
-                ConstantsHolder.xanaConstants.toyotaMeetingStatus = ConstantsHolder.MeetingStatus.End;
-            }
+            if (ConstantsHolder.xanaConstants.parentSceneName == "D_Infinity_Labo")
+                ArrowManager.Instance.UpdateMeetingPrams(ConstantsHolder.MeetingStatus.End);
+
             ConstantsHolder.xanaConstants.isBackToParentScane = false;
             ConstantsHolder.xanaConstants.parentSceneName = "";
         }
