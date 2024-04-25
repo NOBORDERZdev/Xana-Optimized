@@ -510,12 +510,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingPrams(ConstantsHolder.MeetingStatus meetingStatus)
     {
-        //only user can back to toyota world when press on exit btn
-        if (meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
-        {
-            ConstantsHolder.xanaConstants.isBackToParentScane = true;
-            ConstantsHolder.xanaConstants.parentSceneName = "D_Infinity_Labo";
-        }
         gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, meetingStatus, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
     }
 
