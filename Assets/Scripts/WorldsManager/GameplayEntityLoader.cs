@@ -517,6 +517,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
+        else if(ConstantsHolder.xanaConstants.EnviornmentName.Contains(ConstantsHolder.xanaConstants.parentSceneName))
+        {
+            ConstantsHolder.xanaConstants.isBackToParentScane = false;
+            ConstantsHolder.xanaConstants.parentSceneName = "";
+        }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 

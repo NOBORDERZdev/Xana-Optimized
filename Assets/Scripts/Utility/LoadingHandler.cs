@@ -523,7 +523,9 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+            if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
+                || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
+                || ConstantsHolder.xanaConstants.isBackToParentScane) &&
                 teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
@@ -557,7 +559,9 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
+                    || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
+                    || ConstantsHolder.xanaConstants.isBackToParentScane) &&
                     teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);

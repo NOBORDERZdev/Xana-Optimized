@@ -65,8 +65,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             exitOnce = false;
             if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
-                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+                StartCoroutine(LobbySceneSwitch("XANA Lobby")); // to Lobby if player enter in world from Xana lobby
             }
+            else if(ConstantsHolder.xanaConstants.isBackToParentScane)
+                StartCoroutine(LobbySceneSwitch(ConstantsHolder.xanaConstants.parentSceneName));
             else
             {
 
@@ -99,7 +101,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             }
         }
     }
-    private IEnumerator LobbySceneSwitch()
+    private IEnumerator LobbySceneSwitch(string sceneName)
     {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
@@ -108,7 +110,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(.2f);
         ConstantsHolder.xanaConstants.isBuilderScene = false;
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
-        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = sceneName;
 
         // While Retruing from sub world to Xana Lobby
         // Storing Xana Lobby Ids

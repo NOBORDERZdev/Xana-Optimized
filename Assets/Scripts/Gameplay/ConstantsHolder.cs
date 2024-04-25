@@ -132,6 +132,8 @@ public class ConstantsHolder : MonoBehaviour
     public string toyotaEmail;
     public enum MeetingStatus { End, Inprogress, HouseFull}
     public MeetingStatus toyotaMeetingStatus;
+    public bool isBackToParentScane = false;
+    public string parentSceneName;
 
     public string r_EmoteStoragePersistentPath
     {
