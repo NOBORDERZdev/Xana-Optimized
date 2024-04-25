@@ -4,31 +4,21 @@ using System;
 
 public class InterRoomCommunication : MonoBehaviour
 {
-    public static event Action<int> OnUserJoinInterviewRoom; // Event for user joining interview room
-    public static event Action<int> OnUserLeaveInterviewRoom; // Event for user leaving interview room
+    public static InterRoomCommunication obj;
+    public static Action<int> OnUserJoinInterviewRoom; // Event for user joining interview room
+    public static Action<int> OnUserLeaveInterviewRoom; // Event for user leaving interview room
 
-
-    public void BroadcastUserJoinInterviewRoom(int userId)
+    private void Awake()
     {
-        PhotonView.Get(this).RPC("RPC_UserJoinInterviewRoom", RpcTarget.Others, userId);
+        if (obj == null)
+            obj = this;
+        if (obj != null)
+            Destroy(this.gameObject);
     }
 
-    public void BroadcastUserLeaveInterviewRoom(int userId)
-    {
-        PhotonView.Get(this).RPC("RPC_UserLeaveInterviewRoom", RpcTarget.Others, userId);
-    }
+    
 
-    [PunRPC]
-    private void RPC_UserJoinInterviewRoom(int userId)
-    {
-        OnUserJoinInterviewRoom?.Invoke(userId);
-    }
-
-    [PunRPC]
-    private void RPC_UserLeaveInterviewRoom(int userId)
-    {
-        OnUserLeaveInterviewRoom?.Invoke(userId);
-    }
+   
 
 
 }

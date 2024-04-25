@@ -524,5 +524,26 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //    ConstantsHolder.xanaConstants.interviewerActorNum = gameObject.GetComponent<PhotonView>().Controller.ActorNumber;
     }
 
+    public void BroadcastUserJoinInterviewRoom(int userId)
+    {
+        gameObject.GetComponent<PhotonView>().RPC(nameof(RPC_UserJoinInterviewRoom), RpcTarget.Others, userId);
+    }
+
+    public void BroadcastUserLeaveInterviewRoom(int userId)
+    {
+        gameObject.GetComponent<PhotonView>().RPC(nameof(RPC_UserLeaveInterviewRoom), RpcTarget.Others, userId);
+    }
+
+    [PunRPC]
+    private void RPC_UserJoinInterviewRoom(int userId)
+    {
+        InterRoomCommunication.OnUserJoinInterviewRoom?.Invoke(userId);
+    }
+
+    [PunRPC]
+    private void RPC_UserLeaveInterviewRoom(int userId)
+    {
+        InterRoomCommunication.OnUserLeaveInterviewRoom?.Invoke(userId);
+    }
 
 }
