@@ -1487,7 +1487,8 @@ public class CharacterBodyParts : MonoBehaviour
         {
             applyOnBodyParts.headAll.transform.localScale = data.SavedBones[i].Scale;
         }
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if(EyesBlinking.instance)
+            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
     }
 
     public void ApplyBlendShapesFromStore(GameObject applyOn, int blendshapeIndex, int value)
