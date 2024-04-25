@@ -13,7 +13,7 @@ public class InterRoomCommunication : MonoBehaviour
         if (obj == null)
             obj = this;
         if (obj != null)
-            Destroy(this.gameObject);
+            Destroy(this);
 
         DontDestroyOnLoad(this.gameObject);
     }
