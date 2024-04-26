@@ -34,7 +34,7 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Waiting For Interviewer");
+            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
@@ -63,7 +63,7 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Meeting Room");
+        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Room");
     }
 
     public void RedirectToWorld()
