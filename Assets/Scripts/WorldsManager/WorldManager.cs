@@ -550,7 +550,88 @@ public class WorldManager : MonoBehaviour
         //}
 
     }
+    public void SetFriendsJoinedWorldInfo(RowList _worldInfo, WorldItemView worldItemView)
+    {
+        WorldItemDetail _event;
+        _event = new WorldItemDetail();
+        _event.IdOfWorld = _worldInfo.id;
+        _event.EnvironmentName = _worldInfo.name;
+        try
+        {
+            if (_worldInfo.entityType != null)
+            {
+                string IThumbnailDownloadURL = "";
+                //Modify Path for Thumbnail
+                if (!string.IsNullOrEmpty(_worldInfo.banner_new))
+                {
+                    IThumbnailDownloadURL = _worldInfo.banner_new;
+                    IThumbnailDownloadURL = _worldInfo.banner_new.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                    // Test-net
+                    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                    // Main-net
+                    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+                    _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                }
+                else
+                {
+                    IThumbnailDownloadURL = _worldInfo.thumbnail.Replace("https://cdn.xana.net/xanaprod", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod");
+                    // Test-net
+                    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://cdn.xana.net/apitestxana/Defaults", "https://aydvewoyxq.cloudimg.io/_apitestxana_/apitestxana/Defaults");
+                    // Main-net
+                    IThumbnailDownloadURL = IThumbnailDownloadURL.Replace("https://ik.imagekit.io/xanalia/xanaprod/Defaults", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults");
+                    _event.ThumbnailDownloadURL = IThumbnailDownloadURL + "?width=" + 640 + "&height=" + 360;
+                }
+            }
+        }
+        catch
+        {
+            Debug.LogError("Check Exception world thumbnail Image");
+            _event.ThumbnailDownloadURL = _worldInfo.thumbnail;
+        }
+        _event.BannerLink = _worldInfo.banner;
+        _event.WorldDescription = _worldInfo.description;
+        _event.EntityType = _worldInfo.entityType;
+        _event.PressedIndex = int.Parse(_worldInfo.id);
+        _event.UpdatedAt = _worldInfo.updatedAt;
+        _event.CreatedAt = _worldInfo.createdAt;
+        _event.WorldVisitCount = _worldInfo.totalVisits;
+        _event.isFavourite = _worldInfo.isFavourite;
+        if (_worldInfo.tags != null)
+            _event.WorldTags = _worldInfo.tags;
 
+        if (_worldInfo.user.userProfile != null)
+        {
+            if (!string.IsNullOrEmpty(_worldInfo.user.userProfile.bio))
+                _event.CreatorDescription = _worldInfo.user.userProfile.bio;
+
+            //_event.CreatorDescription = _WorldInfo.data.rows[i].user.userProfile.bio;
+
+            if (_worldInfo.entityType == WorldType.USER_WORLD.ToString())
+            {
+                _event.Creator_Name = _worldInfo.user.name;
+                //_event.CreatorDescription = _WorldInfo.data.rows[i].creatorDetails.description; // due to wrong API response commited this
+                _event.CreatorDescription = _worldInfo.user.userProfile.bio;
+                _event.UserAvatarURL = _worldInfo.user.avatar;
+                _event.UserLimit = "15";
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(_worldInfo.user.name))
+                    _event.Creator_Name = _worldInfo.user.name;
+                else
+                    _event.Creator_Name = "XANA";
+
+                if (!string.IsNullOrEmpty(_worldInfo.creator))
+                    _event.Creator_Name = _worldInfo.creator;
+
+                if (!string.IsNullOrEmpty(_worldInfo.user.avatar))
+                    _event.UserAvatarURL = _worldInfo.user.avatar;
+            }
+        }
+        _event.UserLimit = _worldInfo.user_limit;
+
+        worldItemView.InitItem(_event);
+    }
 
     public void WorldLoadingText(APIURL aPIURL)
     {

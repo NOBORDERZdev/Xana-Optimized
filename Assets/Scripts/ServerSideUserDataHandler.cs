@@ -510,8 +510,6 @@ public class ServerSideUserDataHandler : MonoBehaviour
         public Color EyebrowColor;
         public Color EyeColor;
 
-        public bool isBgApply;
-        public string bgKeyValue;
         public Json CreateFromJSON(string jsonString)
         {
             return JsonUtility.FromJson<Json>(jsonString);
