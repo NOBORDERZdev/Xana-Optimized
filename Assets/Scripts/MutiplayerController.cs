@@ -231,6 +231,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 working = ScenesList.MainMenu;
             }
+            Debug.LogError("LobbyLeft");
         }
 
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -374,6 +375,9 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
+                    Debug.LogError("PlayerLeftRoom");
+                    if(lastRoomName == "THA_Meeting_Room")
+                        InterRoomCommunication.obj.BroadcastUserJoinInterviewRoom(otherPlayer.ActorNumber);
                     playerobjects.RemoveAt(x);
                 }
             }
