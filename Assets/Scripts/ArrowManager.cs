@@ -356,7 +356,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     public void NameToggle(int ToggleConstant, int id)
     {
-        if (gameObject.GetComponent<PhotonView>().ViewID == id)
+        if (c)
         {
             //Debug.Log("USERNAME VALUE:" + ConstantsHolder.xanaConstants.userName);
             if (ToggleConstant == 0)
@@ -521,14 +521,15 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingTxt(string message)
     {
-        gameObject.GetComponent<PhotonView>().RPC(nameof(RemoteUpdateTxt), RpcTarget.AllBuffered, message);
+        gameObject.GetComponent<PhotonView>().RPC(nameof(RemoteUpdateTxt), RpcTarget.AllBuffered, message, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
 
     }
 
     [PunRPC]
-    public void RemoteUpdateTxt(string message)
+    public void RemoteUpdateTxt(string message, int viewID)
     {
-        FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
+        if (gameObject.GetComponent<PhotonView>().ViewID != viewID)
+            FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
     }
 
 }
