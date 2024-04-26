@@ -1685,7 +1685,9 @@ public class AvatarController : MonoBehaviour
         {
             // Disable Pant
             if (wornPant)
-                wornPant.SetActive(false);
+            {
+                wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            }
 
             // Also Remove Pant Mask
             tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
@@ -1716,15 +1718,15 @@ public class AvatarController : MonoBehaviour
             //}
             #endregion
         }
-        else
-        {
-            if (wornPant)
-                wornPant.SetActive(true);
-            if (wornHair)
-                wornHair.SetActive(true);
-            if (wornChain)
-                wornChain.SetActive(true);
-        }
+        //else
+        //{
+        //    if (wornPant)
+        //        wornPant.SetActive(true);
+        //    if (wornHair)
+        //        wornHair.SetActive(true);
+        //    if (wornChain)
+        //        wornChain.SetActive(true);
+        //}
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
             if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)

@@ -1227,7 +1227,7 @@ public class CharacterBodyParts : MonoBehaviour
 
     public void ApplyMaskTexture(string type, Texture texture, GameObject applyOn)
     {
-        if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic"))
+        if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic") || type.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
         {
             applyOn.GetComponent<CharacterBodyParts>().TextureForShirt(texture);
 
