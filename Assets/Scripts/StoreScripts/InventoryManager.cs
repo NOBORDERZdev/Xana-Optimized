@@ -4618,8 +4618,8 @@ public class InventoryManager : MonoBehaviour
                 {
                     _CharacterData.FaceBlendsShapes[i] = 0;
                 }
+            
             _CharacterData.SavedBones.Clear();
-
             _CharacterData.eyeTextureName = "";
             _CharacterData.Skin = bodyParts.DefaultSkinColor;
             _CharacterData.LipColor = bodyParts.DefaultLipColor;
@@ -4642,7 +4642,8 @@ public class InventoryManager : MonoBehaviour
             _CharacterData.BodyFat = 0;
             _CharacterData.SkinId = -1;
             _CharacterData.PresetValue = "";
-            _CharacterData.makeupName = bodyParts.defaultMakeup.name;
+            if(bodyParts.defaultMakeup)
+                _CharacterData.makeupName = bodyParts.defaultMakeup.name;
             _CharacterData.eyeLashesName = bodyParts.defaultEyelashes.name;
             //_CharacterData.eyebrrowTexture = "";
             _CharacterData.eyebrrowTexture = bodyParts.defaultEyebrow.name;

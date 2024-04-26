@@ -251,7 +251,7 @@ public class AvatarController : MonoBehaviour
     ///  - Intilaze Store item 
     ///  - Intilaze Character customization (bones, morphes)
     /// </summary>
-    public async void InitializeAvatar(bool canWriteFile = false)
+    public async void InitializeAvatar(bool canWriteFile = false, SavingCharacterDataClass _tempdata = null)
     {
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
@@ -264,7 +264,7 @@ public class AvatarController : MonoBehaviour
             nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
             CreateOrUpdateBoxerFile(nftAttributes);
         }
-        Custom_InitializeAvatar();
+        Custom_InitializeAvatar(_tempdata);
     }
    
     /// <summary>
@@ -413,7 +413,7 @@ public class AvatarController : MonoBehaviour
     /// <summary>
     /// Initializing Avatar with json file from the server.
     /// </summary>
-    void Custom_InitializeAvatar()
+    void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
         if (isLoadStaticClothFromJson)
         {
@@ -424,7 +424,11 @@ public class AvatarController : MonoBehaviour
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+            if (_data != null)
+                _CharacterData = _data;
+            else
+                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+
             _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(folderPath);
             var gender = _CharacterData.gender ?? "Male";
@@ -448,7 +452,7 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default"))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
@@ -457,7 +461,7 @@ public class AvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!item.ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        if (type.Contains("Hair") && !string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair"))
                                         {
                                             if (wornHair)
                                                 UnStichItem("Hair");
@@ -1578,20 +1582,20 @@ public class AvatarController : MonoBehaviour
                     }
                     else
                     {
-                        //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                        StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
                         // Hairs Default Color
-                        StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f,1f), SliderType.HairColor, applyOn));
+                        //StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f,1f), SliderType.HairColor, applyOn));
                     }
                 }
                 if (_CharacterData?.charactertypeAi == true)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
                 }
-                else
-                {
-                    //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
-                    StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f, 1f), SliderType.HairColor, applyOn));
-                }
+                //else
+                //{
+                //    //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                //    StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f, 1f), SliderType.HairColor, applyOn));
+                //}
             }
             else if (type == "Hair" && xanaConstants.isPresetHairColor && presetHairColor != null)
             {
