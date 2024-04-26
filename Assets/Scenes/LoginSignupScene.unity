@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37089851, g: 0.3783701, b: 0.3572253, a: 1}
+  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -257,7 +257,7 @@ MonoBehaviour:
   enterNamePanel: {fileID: 2026440373958021448}
   userNameField: {fileID: 1650873783533469581}
   selectedPresetImage: {fileID: 6175814034152713494}
-  aiPresetImage: {fileID: 6175814034152713497}
+  aiPresetImage: {fileID: 6175814034152713496}
   nameScreenNextButton: {fileID: 6175814034152713495}
   nameScreenLoader: {fileID: 6175814034152713493}
   errorHandler: {fileID: 1458762913}
@@ -4494,14 +4494,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1479205145}
     m_Modifications:
-    - target: {fileID: 55531629742050000, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 800
-      objectReference: {fileID: 0}
-    - target: {fileID: 55531629742050000, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 800
-      objectReference: {fileID: 0}
     - target: {fileID: 5308542108830374966, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4595,69 +4587,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 219101427}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: BackFromUserNamePanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: BacktoAvatarSelectionPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UserLoginSignupManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: UserRegisterationManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814033728127073, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814034437264750, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6175814034884802562, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: blackScreen
-      value: 
-      objectReference: {fileID: 1938487462}
-    - target: {fileID: 6404617801032670567, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
-      propertyPath: m_Name
-      value: AI PresetImage
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
 --- !u!1 &6175814034152713493 stripped
@@ -4687,38 +4619,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &6175814034152713496 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6404617801032670567, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
+--- !u!114 &6175814034152713496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6175814034152713497, guid: b1fd512e357752147b08933a4dc3a031, type: 3}
   m_PrefabInstance: {fileID: 6175814034152713492}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6175814034152713497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6175814034152713496}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 0}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1001 &6332806878823679559
 PrefabInstance:
   m_ObjectHideFlags: 0
