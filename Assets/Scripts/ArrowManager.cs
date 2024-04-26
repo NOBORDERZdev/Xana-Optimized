@@ -528,8 +528,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoteUpdateTxt(string message, int ViewID)
     {
-        if(gameObject.GetComponent<PhotonView>().ViewID != viewID)
-        FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
+        if (gameObject.GetComponent<PhotonView>().ViewID != ViewID)
+            FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
     }
 
 }
