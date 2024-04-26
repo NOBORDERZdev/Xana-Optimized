@@ -226,7 +226,6 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.eyeItemData = InventoryManager.instance.itemData._eyeItemData;
         SaveItemList.eyeShapeItemData = InventoryManager.instance.itemData.eyeShapeItemData;
 
-
         if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
@@ -454,8 +453,6 @@ public class SavingCharacterDataClass
     public int punch;
     public int kick;
 
-    public bool isBgApply;
-    public string bgKeyValue;
     public SavingCharacterDataClass CreateFromJSON(string jsonString)
     {
         return JsonUtility.FromJson<SavingCharacterDataClass>(jsonString);

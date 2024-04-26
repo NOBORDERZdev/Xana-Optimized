@@ -10,6 +10,9 @@ public class BgTagsView : MonoBehaviour
     public string tagName;
     public string _name;
     public TextMeshProUGUI tagNameText;
+
+    public GameObject highlighter;
+    public Image icon;
     public void InitBgTags(BackgroundList _backgroundList)
     {
         tagName = _backgroundList.category;
