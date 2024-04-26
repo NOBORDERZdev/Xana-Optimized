@@ -1,5 +1,6 @@
 using AdvancedInputFieldPlugin;
 using System;
+using TMPro;
 using UnityEngine;
 
 public class SearchWorldUIController : MonoBehaviour
@@ -7,17 +8,20 @@ public class SearchWorldUIController : MonoBehaviour
     public AdvancedInputField searchWorldInput;
     public static Action<string> OpenSearchPanel;
     public static Action<string> SearchWorld;
+    public static Action AutoSelectInputField;
 
     public static bool IsSearchBarActive = false;
     private void OnEnable()
     {
         searchWorldInput.OnValueChanged.AddListener(UserInput => UserInputUpdate(UserInput)) ;
         SearchWorld += OpenSearchPanelFromTag;
+        AutoSelectInputField += ManualSelectInputField;
     }
 
     private void OnDisable()
     {
         SearchWorld -= OpenSearchPanelFromTag;
+        AutoSelectInputField -= ManualSelectInputField;
     }
     public void UserInputUpdate(string UserInput)
     {
@@ -46,4 +50,10 @@ public class SearchWorldUIController : MonoBehaviour
         //searchWorldInput.ReadOnly = true;
         WorldManager.instance.SearchWorldCall(tagName,true);
     }
+
+    public void ManualSelectInputField()
+    {
+        searchWorldInput.ManualSelect();
+    }
+
 }
