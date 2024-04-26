@@ -9,11 +9,12 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     {
         tmp.text = "Meeting Room";
     }
-    
+
     public void UpdateMeetingTxt(string data, Color txtColor = default)
     {
         tmp.text = data;
         tmp.color = txtColor;
     }
  
+
 }

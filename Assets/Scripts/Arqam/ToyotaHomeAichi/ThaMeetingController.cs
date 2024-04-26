@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ThaMeetingController : MonoBehaviour
 {
-    // Start is called before the first frame update
+
     void Start()
     {
         //only user can back to toyota world when press on exit btn
@@ -15,5 +13,5 @@ public class ThaMeetingController : MonoBehaviour
         }
     }
 
-
 }
+
