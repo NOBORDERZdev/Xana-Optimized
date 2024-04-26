@@ -168,9 +168,10 @@ public class UGCDataManager : MonoBehaviour
                     //animObject.transform.localScale = Vector3.one;
                     //animObject.transform.localRotation = Quaternion.identity;
                     //animObject.transform.GetChild(1).gameObject.SetActive(false);
+                    BgTagsView temp = animObject.GetComponent<BgTagsView>();
                     animObject.name = _info.data.backgroundList[i].name;
-                    animObject.transform.GetChild(0).GetComponent<Image>().sprite = null;
-                    animObject.GetComponent<BgTagsView>().InitBg(_info.data.backgroundList[i]);
+                    temp.icon.sprite = null;
+                    temp.InitBg(_info.data.backgroundList[i]);
                     string url = _info.data.backgroundList[i].thumbnail;
                     if (url != "")
                     {
@@ -178,7 +179,7 @@ public class UGCDataManager : MonoBehaviour
                         {
                             if (success)
                             {
-                                AssetCache.Instance.LoadSpriteIntoImage(animObject.transform.GetChild(0).GetComponent<Image>(), url, changeAspectRatio: true);
+                                AssetCache.Instance.LoadSpriteIntoImage(temp.icon, url, changeAspectRatio: true);
                             }
                             else
                             {
@@ -186,8 +187,8 @@ public class UGCDataManager : MonoBehaviour
                             }
                         });
                     }
-                    animObject.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickSelectBackgroundButton(animObject, animObject.name));
-                    ugcUIManager.tagsObjects.Add(animObject);
+                    animObject.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickSelectBackgroundButton(temp, animObject.name));
+                    ugcUIManager.tagsObjects.Add(temp);
 
                     // Get the category of the current background
                     string category = _info.data.backgroundList[i].category;

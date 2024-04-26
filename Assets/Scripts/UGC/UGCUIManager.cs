@@ -53,7 +53,7 @@ public class UGCUIManager : MonoBehaviour
     public GameObject tagsPrefab;
     public Transform tagsPrefabParent;
     public Transform bgPrefabParent;
-    public List<GameObject> tagsObjects;
+    public List<BgTagsView> tagsObjects;
     public List<GameObject> tagsbuttons;
     bool saveVideo = false;
     public GameObject loadingTexture;
@@ -487,32 +487,27 @@ public class UGCUIManager : MonoBehaviour
     {
         for (int i = 0; i < tagsObjects.Count; i++)
         {
-            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+            tagsObjects[i].highlighter.SetActive(false);
         }
-        //_CharacterData.isBgApply = false;
-        //_CharacterData.bgKeyValue = "";
+
         ApplyBgTexture(defaultTexture, "", "false");
-        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(true);
-        //string bodyJson = JsonUtility.ToJson(_CharacterData);
-        //File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
-        //ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
-        //{
-        //});
+        bgDefaultBtn.GetComponent<BgTagsView>().highlighter.SetActive(true);
+
     }
     public void ApplyDefaultTexture()
     {
         //bgMat.mainTexture = texture;
         bgMat.material.mainTexture = defaultTexture;
     }
-    public void OnClickSelectBackgroundButton(GameObject _gameObject, string key)
+    public void OnClickSelectBackgroundButton(BgTagsView _gameObject, string key)
     {
         loadingTexture.SetActive(true);
         for (int i=0;i<tagsObjects.Count;i++) 
         {
-            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+            tagsObjects[i].highlighter.SetActive(false);
         }
-        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(false);
-        _gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        bgDefaultBtn.GetComponent<BgTagsView>().highlighter.SetActive(false);
+        _gameObject.highlighter.SetActive(true);
         key = Regex.Replace(key, @"\s", "");
         key = key.ToLower();
         key = "bg_" + key;
