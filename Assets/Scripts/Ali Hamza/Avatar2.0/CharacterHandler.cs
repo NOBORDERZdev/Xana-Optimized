@@ -39,8 +39,9 @@ public class CharacterHandler : MonoBehaviour
                 break;
         }
 
+        InventoryManager.upateAssetOnGenderChanged?.Invoke();
         //if(ConstantsHolder.xanaConstants.isStoreActive)
-            
+
     }
 
     private void UpdateAvatarRefrences(AvatarData _avatarData)

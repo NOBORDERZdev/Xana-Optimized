@@ -804,6 +804,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -854,6 +855,8 @@ MonoBehaviour:
     special_move: 0
     punch: 0
     kick: 0
+    isBgApply: 0
+    bgKeyValue: 
   _sliderindexes: {fileID: 11400000, guid: 007ece8573d836d4b8f5fc3bfe09bf52, type: 2}
   charcterBodyParts: {fileID: 0}
   characterController: {fileID: 0}
@@ -4170,6 +4173,7 @@ MonoBehaviour:
   isHoldCharacterNFT: 0
   isNFTEquiped: 0
   LoginasGustprofile: 0
+  isFirstPanel: 0
   NFTUrl: 
   clothJson: 
   defaultFightingName: 
@@ -4262,6 +4266,9 @@ MonoBehaviour:
   CompletionEvent:
     m_PersistentCalls:
       m_Calls: []
+  IsProfileVisit: 0
+  SnsProfileID: 0
+  IsOtherProfileVisit: 0
 --- !u!4 &454488015
 Transform:
   m_ObjectHideFlags: 0
@@ -19678,7 +19685,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6812878254336208881, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: m_RootOrder
@@ -27039,7 +27046,7 @@ PrefabInstance:
       objectReference: {fileID: 1203579135}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: BottomAvatarButtonBool
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5612494589453737583, guid: d8bd3224f7beb2d48994bdfc88118f56, type: 3}
       propertyPath: LoginRegistrationScreen
@@ -30444,7 +30451,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 567546114508882697, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21.4
+      value: 21.400024
       objectReference: {fileID: 0}
     - target: {fileID: 790662658530805566, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -30573,6 +30580,10 @@ PrefabInstance:
     - target: {fileID: 7141477522733626315, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141477523298660082, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 27.900146
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf0ded3470cac6841b5717bb8c74d66b, type: 3}

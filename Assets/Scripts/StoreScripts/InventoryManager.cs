@@ -221,6 +221,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     List<GridLayoutGroup> panelsLayoutGroups;
 
+    public static Action upateAssetOnGenderChanged;
+
     void Start()
     {
         load = LoadPlayerAvatar.instance_loadplayer.loader;
@@ -278,13 +280,36 @@ public class InventoryManager : MonoBehaviour
     private void OnEnable()
     {
         MainSceneEventHandler.OnSucessFullLogin += CheckWhenUserLogin;
+        upateAssetOnGenderChanged += ChangeItemsOnGenderChange;
     }
     private void OnDisable()
     {
         MainSceneEventHandler.OnSucessFullLogin -= CheckWhenUserLogin;
+        upateAssetOnGenderChanged -= ChangeItemsOnGenderChange;
     }
 
-
+    void ChangeItemsOnGenderChange()
+    {
+        for (int i = 0; i < AllCategoriesData.Count; i++)
+        {
+            if (AllCategoriesData[i].subItems.Count > 0)
+            {
+                for (int j = 0; j < AllCategoriesData[i].subItems.Count; j++)
+                {
+                    if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && AllCategoriesData[i].subItems[j].gender.Equals("0")) ||
+                         (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && AllCategoriesData[i].subItems[j].gender.Equals("1")))
+                    {
+                        Debug.Log("Waqas: Gender Matched With Asset");
+                        AllCategoriesData[i].subItems[j].obj.SetActive(true);
+                    }
+                    else
+                    {
+                        AllCategoriesData[i].subItems[j].obj.SetActive(false);
+                    }
+                }
+            }
+        }
+    }
     public void skipAvatarSelection()
     {
         UserLoginSignupManager.instance.enterNamePanel.SetActive(true);
@@ -637,6 +662,12 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        // Cleared Stored References
+        for (int i = 0; i < AllCategoriesData.Count; i++)
+        {
+            AllCategoriesData[i].subItems.Clear();
+        }
+
         headsDownlaodedCount = 0;
         faceDownlaodedCount = 0;
         innerDownlaodedCount = 0;
@@ -892,6 +923,7 @@ public class InventoryManager : MonoBehaviour
                     }
                 }
             }
+            CheckAPILoaded = true;
         }
         request.Dispose();
     }
@@ -3363,17 +3395,27 @@ public class InventoryManager : MonoBehaviour
         }
 
         TempitemDetail.Add(abc);
+        
+        // Save Items References
+        SubitemData subitemData = new SubitemData();
+        subitemData.gender = dataListOfItems[objId].assetGender;
+        subitemData.obj = L_ItemBtnObj;
 
+        if(AllCategoriesData[myIndexInList].subItems == null)
+            AllCategoriesData[myIndexInList].subItems = new List<SubitemData>();
+
+        AllCategoriesData[myIndexInList].subItems.Add(subitemData);
         {
             // Initilize Item Specific for Gender
             // Getting int values from Server for assets Gender 0 for male and 1 for female
             // In Xana we are uisng string for geneder specificaton
 
-            //if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
-            //    (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
-            //{
-            //    return;
-            //}
+            if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
+                (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
+            {
+                Debug.Log("Waqas: Gender not Matched With Asset");
+                L_ItemBtnObj.SetActive(false);
+            }
         }
 
     }
@@ -4664,34 +4706,10 @@ public class InventoryManager : MonoBehaviour
     }
     public void UpdateXanaConstants()
     {
-        ////Debug.Log("<color=red> Update Xana Constant </color>");
-        //if (SaveCharacterProperties.instance.SaveItemList.SavedBones.Count == 0)
-        //{
-        //    ConstantsHolder.xanaConstants.hair = SaveCharacterProperties.instance.characterController.wornHairId.ToString();
-        //    ConstantsHolder.xanaConstants.hairColoPalette = SaveCharacterProperties.instance.characterController.hairColorPaletteId.ToString();
-        //    ConstantsHolder.xanaConstants.shirt = SaveCharacterProperties.instance.characterController.wornShirtId.ToString();
-        //    ConstantsHolder.xanaConstants.pants = SaveCharacterProperties.instance.characterController.wornPantId.ToString();
-        //    ConstantsHolder.xanaConstants.shoes = SaveCharacterProperties.instance.characterController.wornShoesId.ToString();
-        //    ConstantsHolder.xanaConstants.eyeWearable = SaveCharacterProperties.instance.characterController.wornEyewearableId.ToString();
-
-        //    ConstantsHolder.xanaConstants.PresetValueString = SaveCharacterProperties.instance.characterController.presetValue;
-        //    ConstantsHolder.xanaConstants.skinColor = SaveCharacterProperties.instance.characterController.skinId.ToString();
-        //    ConstantsHolder.xanaConstants.faceIndex = SaveCharacterProperties.instance.characterController.faceId;
-        //    ConstantsHolder.xanaConstants.eyeBrowIndex = SaveCharacterProperties.instance.characterController.eyeBrowId;
-        //    ConstantsHolder.xanaConstants.eyeBrowColorPaletteIndex = SaveCharacterProperties.instance.characterController.eyeBrowColorPaletteId;
-        //    ConstantsHolder.xanaConstants.eyeLashesIndex = SaveCharacterProperties.instance.characterController.eyeLashesId;
-        //    ConstantsHolder.xanaConstants.eyeIndex = SaveCharacterProperties.instance.characterController.eyesId;
-        //    ConstantsHolder.xanaConstants.eyeColor = SaveCharacterProperties.instance.characterController.eyesColorId.ToString();
-        //    ConstantsHolder.xanaConstants.eyeColorPalette = SaveCharacterProperties.instance.characterController.eyesColorPaletteId.ToString();
-        //    ConstantsHolder.xanaConstants.noseIndex = SaveCharacterProperties.instance.characterController.noseId;
-        //    ConstantsHolder.xanaConstants.lipIndex = SaveCharacterProperties.instance.characterController.lipsId;
-        //    ConstantsHolder.xanaConstants.lipColor = SaveCharacterProperties.instance.characterController.lipsColorId.ToString();
-        //    ConstantsHolder.xanaConstants.lipColorPalette = SaveCharacterProperties.instance.characterController.lipsColorPaletteId.ToString();
-        //    ConstantsHolder.xanaConstants.bodyNumber = SaveCharacterProperties.instance.characterController.bodyFat;
-        //    ConstantsHolder.xanaConstants.makeupIndex = SaveCharacterProperties.instance.characterController.makeupId;
-        //}
-        //else
-        //{
+        if (SaveCharacterProperties.instance.SaveItemList.myItemObj.Count == 0) 
+        {
+            return;
+        }
         ConstantsHolder.xanaConstants.hair = SaveCharacterProperties.instance.SaveItemList.myItemObj[2].ItemID.ToString();
         ConstantsHolder.xanaConstants.hairColoPalette = SaveCharacterProperties.instance.SaveItemList.HairColorPaletteValue.ToString();
         ConstantsHolder.xanaConstants.shirt = SaveCharacterProperties.instance.SaveItemList.myItemObj[1].ItemID.ToString();

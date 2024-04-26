@@ -24,10 +24,16 @@ public class menuAvatarFlowButton : MonoBehaviour
  
     void OnClickMenuAvatarBtn()
     {
-        //InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-
-       GameManager.Instance.AvatarMenuBtnPressed();
-       InventoryManager.instance.SubmitUserDetailAPI();
+        if (ConstantsHolder.xanaConstants.isFirstPanel)
+        {
+            InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            ConstantsHolder.xanaConstants.isFirstPanel = false;
+        }
+        else
+        {
+            GameManager.Instance.AvatarMenuBtnPressed();
+            InventoryManager.instance.SubmitUserDetailAPI();
+        }
     }
 
     public void StoreBtnController()
