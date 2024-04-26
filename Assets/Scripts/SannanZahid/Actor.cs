@@ -228,8 +228,14 @@ public class Actor : MonoBehaviour
             StateMoveBehaviour = 1;
             _moveFlag = true;
         }
-        NameTagHolderObj.gameObject.SetActive(!flag);
+        //NameTagHolderObj.gameObject.SetActive(!flag);
+        StartCoroutine(NamePanelAdjust(flag));
         this.GetComponent<FaceIK>().enabled = !flag;
         this.GetComponent<FootStaticIK>().enabled = !flag;
+    }
+    IEnumerator NamePanelAdjust(bool _flag) 
+    {
+        yield return new WaitForSeconds(.1f);
+        NameTagHolderObj.gameObject.SetActive(!_flag);
     }
 }
