@@ -10,11 +10,12 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
         tmp.text = "Meeting Room";
     }
 
-    public void UpdateMeetingTxt(string data, Color txtColor = default)
+    public void UpdateMeetingTxt(string data)
     {
         tmp.text = "";
         tmp.text = data;
-        tmp.color = txtColor;
+       // tmp.color = txtColor;
+        tmp.alpha = 1f;
     }
  
 
