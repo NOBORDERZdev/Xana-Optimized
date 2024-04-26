@@ -12,6 +12,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
 
     public void UpdateMeetingTxt(string data, Color txtColor = default)
     {
+        tmp.text = "";
         tmp.text = data;
         tmp.color = txtColor;
     }

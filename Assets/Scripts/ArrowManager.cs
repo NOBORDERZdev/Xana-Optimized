@@ -517,12 +517,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public void StartMeeting(ConstantsHolder.MeetingStatus meetingStatus, int ViewID)
     {
         ConstantsHolder.xanaConstants.toyotaMeetingStatus = meetingStatus;
-
-        //if (meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
-        //    ConstantsHolder.xanaConstants.userActorNum = gameObject.GetComponent<PhotonView>().Controller.ActorNumber;
-        //else if (meetingStatus == ConstantsHolder.MeetingStatus.HouseFull)
-        //    ConstantsHolder.xanaConstants.interviewerActorNum = gameObject.GetComponent<PhotonView>().Controller.ActorNumber;
     }
 
+    public void UpdateMeetingTxt(string message)
+    {
+        gameObject.GetComponent<PhotonView>().RPC(nameof(RemoteUpdateTxt), RpcTarget.AllBuffered, message);
+
+    }
+
+    [PunRPC]
+    public void RemoteUpdateTxt(string message)
+    {
+        FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
+    }
 
 }
