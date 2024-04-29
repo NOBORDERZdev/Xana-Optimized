@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+
 public class ThaMeetingTxtUpdate : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
@@ -18,6 +19,6 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
        // tmp.color = txtColor;
         tmp.alpha = 1f;
     }
- 
+
 
 }

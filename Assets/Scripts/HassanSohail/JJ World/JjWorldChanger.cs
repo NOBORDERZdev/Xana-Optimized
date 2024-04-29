@@ -75,6 +75,7 @@ public class JjWorldChanger : MonoBehaviour
                 {// for customer
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+                    GetComponent<ThaMeetingStatusUpdate>().UpdateMeetingStatus();
                 }
                 else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
                 { // for interviewer
