@@ -53,17 +53,20 @@ public class UGCUIManager : MonoBehaviour
     public GameObject tagsPrefab;
     public Transform tagsPrefabParent;
     public Transform bgPrefabParent;
-    public List<GameObject> tagsObjects;
+    public List<BgTagsView> tagsObjects;
     public List<GameObject> tagsbuttons;
     bool saveVideo = false;
     public GameObject loadingTexture;
-    SavingCharacterDataClass _CharacterData;
 
     //public Color normalColor, highlightedColor;
     //public Color normalTextColor, highlightedTextColor;
     public GameObject ItemPrefab;
-    public Button videoBtn,photoBtn;
+    public Button videoBtn, photoBtn;
     public Button bgDefaultBtn;
+
+    public KeyInfo currentKeyInfo;
+    //public string addresskey;
+    //public string isApplied;
     void Start()
     {
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
@@ -99,26 +102,8 @@ public class UGCUIManager : MonoBehaviour
         {
             yield return new WaitForSeconds(.5f);
         }
-        //if (File.Exists(GameManager.Instance.GetStringFolderPath()) && File.ReadAllText(GameManager.Instance.GetStringFolderPath()) != "")
-        //{
-        //    _CharacterData = new SavingCharacterDataClass();
-        //    _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(GameManager.Instance.GetStringFolderPath()));
-        //    if (_CharacterData.isBgApply)
-        //    {
-        //        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(_CharacterData.bgKeyValue));
-        //        bgDefaultTextureKey = _CharacterData.bgKeyValue;
-        //    }
-        //    else if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
-        //    {
-        //        StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
-        //    }
-        //    else
-        //    {
-        //        ApplyDefaultTexture();
-        //    }
-        //}
-
-        yield return new WaitForSeconds(1f);
+        StartCoroutine(ugcDataManager.GetBgKey());
+        yield return new WaitForSeconds(.5f);
         loadingScreen.SetActive(false);
     }
     public IEnumerator IEVideoButtonDown()
@@ -352,11 +337,14 @@ public class UGCUIManager : MonoBehaviour
             screenUI[1].SetActive(true);
             if (bgDefaultTextureKey != null && bgDefaultTextureKey != "")
             {
+                loadingTexture.SetActive(true);
                 StartCoroutine(ugcDataManager.DownloadBgAddressableTexture(bgDefaultTextureKey));
             }
             else
             {
                 ApplyDefaultTexture();
+                currentKeyInfo.backgroundInfo = "";
+                currentKeyInfo.isBackgroundApplied = "false";
             }
         }
         else
@@ -483,52 +471,43 @@ public class UGCUIManager : MonoBehaviour
     public void OnClickSaveBackgroundButton()
     {
         bgScreenPanel.SetActive(false);
-        screenUI[1].SetActive(true);
-        bgDefaultTextureKey = _CharacterData.bgKeyValue;
+        screenUI[1].SetActive(true);       
+        StartCoroutine(ugcDataManager.PostBgKey(currentKeyInfo));
     }
-    public void ApplyBgTexture(Texture _texture, string _key)
+
+    public void ApplyBgTexture(Texture _texture, string _key, string _isApplied)
     {
         //bgMat.mainTexture = texture;
         bgMat.material.mainTexture = _texture;
-        _CharacterData.isBgApply = true;
-        _CharacterData.bgKeyValue = _key;
-        string bodyJson = JsonUtility.ToJson(_CharacterData);
-        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
-        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
-        {
-        });
+        currentKeyInfo.backgroundInfo = _key;
+        currentKeyInfo.isBackgroundApplied = _isApplied;
     }
 
     public void OnTapDefaultBg()
     {
         for (int i = 0; i < tagsObjects.Count; i++)
         {
-            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+            tagsObjects[i].highlighter.SetActive(false);
         }
-        _CharacterData.isBgApply = false;
-        _CharacterData.bgKeyValue = "";
-        ApplyDefaultTexture();
-        string bodyJson = JsonUtility.ToJson(_CharacterData);
-        File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
-        ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
-        {
-        });
+
+        ApplyBgTexture(defaultTexture, "", "false");
+        bgDefaultBtn.GetComponent<BgTagsView>().highlighter.SetActive(true);
+
     }
     public void ApplyDefaultTexture()
     {
         //bgMat.mainTexture = texture;
         bgMat.material.mainTexture = defaultTexture;
-        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(true);
     }
-    public void OnClickSelectBackgroundButton(GameObject _gameObject, string key)
+    public void OnClickSelectBackgroundButton(BgTagsView _gameObject, string key)
     {
         loadingTexture.SetActive(true);
         for (int i=0;i<tagsObjects.Count;i++) 
         {
-            tagsObjects[i].transform.GetChild(1).gameObject.SetActive(false);
+            tagsObjects[i].highlighter.SetActive(false);
         }
-        bgDefaultBtn.transform.GetChild(1).gameObject.SetActive(false);
-        _gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        bgDefaultBtn.GetComponent<BgTagsView>().highlighter.SetActive(false);
+        _gameObject.highlighter.SetActive(true);
         key = Regex.Replace(key, @"\s", "");
         key = key.ToLower();
         key = "bg_" + key;
