@@ -529,7 +529,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void RemoteUpdateTxt(string message) //, int ViewID
     {
-        NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
+        if (NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
     }
     #endregion
 
