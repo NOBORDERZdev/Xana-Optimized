@@ -508,6 +508,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
     }
 
+
+    #region ToyotaMeetingArea
     public void UpdateMeetingPrams(ConstantsHolder.MeetingStatus meetingStatus)
     {
         gameObject.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, meetingStatus, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
@@ -521,15 +523,14 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingTxt(string message)
     {
-        gameObject.GetComponent<PhotonView>().RPC(nameof(RemoteUpdateTxt), RpcTarget.AllBuffered, message, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
-
+        gameObject.GetComponent<PhotonView>().RPC(nameof(RemoteUpdateTxt), RpcTarget.AllBuffered, message); //ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID
     }
 
     [PunRPC]
-    public void RemoteUpdateTxt(string message, int ViewID)
+    public void RemoteUpdateTxt(string message) //, int ViewID
     {
-       // if (gameObject.GetComponent<PhotonView>().ViewID != ViewID)
-            FindObjectOfType<ThaMeetingTxtUpdate>().UpdateMeetingTxt(message);
+        NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
     }
+    #endregion
 
 }

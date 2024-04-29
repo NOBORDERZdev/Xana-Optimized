@@ -8,6 +8,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     void Start()
     {
         tmp.text = "Meeting Room";
+        NFT_Holder_Manager.instance.meetingTxtUpdate = this;
     }
 
     public void UpdateMeetingTxt(string data)

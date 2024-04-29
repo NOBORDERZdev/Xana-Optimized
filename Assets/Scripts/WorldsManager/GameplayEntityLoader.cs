@@ -522,7 +522,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (ConstantsHolder.xanaConstants.parentSceneName == "D_Infinity_Labo")
             {
                 ArrowManager.Instance.UpdateMeetingPrams(ConstantsHolder.MeetingStatus.End);
-                //ArrowManager.Instance.UpdateMeetingTxt("Meeting End");
+                ArrowManager.Instance.UpdateMeetingTxt("Meeting End");
             }
             ConstantsHolder.xanaConstants.isBackToParentScane = false;
             ConstantsHolder.xanaConstants.parentSceneName = "";
