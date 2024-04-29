@@ -22,6 +22,7 @@ public class JJVideoAndImage : MonoBehaviour
 
     public string videoLink;
     public string imageLink;
+    [SerializeField] private bool isForceAudioOn = false;
 
     public VideoTypeRes _videoType;
     public JjRatio _imgVideoRatio;
@@ -366,7 +367,11 @@ public class JJVideoAndImage : MonoBehaviour
                     //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
                     RenderTexture renderTexture = new RenderTexture(JjInfoManager.Instance.renderTexture_16x9);
                     renderTexture_temp = renderTexture;
-                    imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                    if (!isForceAudioOn)
+                    {
+                        imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+
+                    }
                     imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
