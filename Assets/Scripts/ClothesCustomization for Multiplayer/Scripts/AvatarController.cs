@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System;
 using Random = UnityEngine.Random;
 using UnityEditor;
+using static InventoryManager;
 
 public class AvatarController : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class AvatarController : MonoBehaviour
     public int wornHairId, hairColorPaletteId, wornPantId, wornShirtId, wornShoesId, wornEyewearableId, skinId,
         faceId, eyeBrowId, eyeBrowColorPaletteId, eyesId, eyesColorId, eyesColorPaletteId, noseId, lipsId,
         lipsColorId, lipsColorPaletteId, bodyFat, makeupId, eyeLashesId, wornGlovesId, wornChainId;
-    [HideInInspector]
+    //[HideInInspector]
     public List<Texture> masks = new List<Texture>();
     #endregion
 
@@ -165,7 +166,7 @@ public class AvatarController : MonoBehaviour
         // .Step to do After Equipt NFT
         // .Add Data into NFTBoxerJson 
         // .Disable Store BTN
-        // .Make All Items Default [Eyebrow, EyeLashes, Bones, BlendShapes, Items Color[hair,eyebrow,eyes,lip,skin]]
+        // .Make All Items Default [Eyebrow, EyeBrowPoints, Bones, BlendShapes, Items Color[hair,eyebrow,eyes,lip,skin]]
         // .Reset BodyFat
         // .Read Data From Json & load its Properties
 
@@ -250,7 +251,7 @@ public class AvatarController : MonoBehaviour
     ///  - Intilaze Store item 
     ///  - Intilaze Character customization (bones, morphes)
     /// </summary>
-    public async void InitializeAvatar(bool canWriteFile = false)
+    public async void InitializeAvatar(bool canWriteFile = false, SavingCharacterDataClass _tempdata = null)
     {
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
@@ -263,7 +264,7 @@ public class AvatarController : MonoBehaviour
             nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
             CreateOrUpdateBoxerFile(nftAttributes);
         }
-        Custom_InitializeAvatar();
+        Custom_InitializeAvatar(_tempdata);
     }
    
     /// <summary>
@@ -412,7 +413,7 @@ public class AvatarController : MonoBehaviour
     /// <summary>
     /// Initializing Avatar with json file from the server.
     /// </summary>
-    void Custom_InitializeAvatar()
+    void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
     {
         if (isLoadStaticClothFromJson)
         {
@@ -423,7 +424,11 @@ public class AvatarController : MonoBehaviour
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+            if (_data != null)
+                _CharacterData = _data;
+            else
+                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+
             _PCharacterData = _CharacterData;
             clothJson = File.ReadAllText(folderPath);
             var gender = _CharacterData.gender ?? "Male";
@@ -447,7 +452,7 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
@@ -456,7 +461,7 @@ public class AvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!item.ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        if (type.Contains("Hair") && !string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair"))
                                         {
                                             if (wornHair)
                                                 UnStichItem("Hair");
@@ -562,7 +567,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
-
+                    characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
@@ -573,7 +578,7 @@ public class AvatarController : MonoBehaviour
 
                 //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                 //{
-                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                 //}
                 //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
                 //{
@@ -773,6 +778,7 @@ public class AvatarController : MonoBehaviour
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
+                    characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                     #region Xana Avatar 1.0 //--> remove for xana avatar2.0
                     //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                     //{
@@ -784,7 +790,7 @@ public class AvatarController : MonoBehaviour
                     //}
                     //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
                     //{
-                    //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+                    //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
                     //}
 
                     //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
@@ -992,7 +998,7 @@ public class AvatarController : MonoBehaviour
         //}
         //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
         //{
-        //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+        //    StartCoroutine(addressableDownloader.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
         //}
 
         //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
@@ -1102,6 +1108,8 @@ public class AvatarController : MonoBehaviour
             _CharacterData1.LipsValue = this.lipsId;
             _CharacterData1.LipsColorValue = this.lipsColorId;
             _CharacterData1.BodyFat = this.bodyFat;
+
+            // These Are using for save implemted obj index
             _CharacterData1.MakeupValue = this.makeupId;
             _CharacterData1.faceMorphed = xanaConstants.isFaceMorphed;
             _CharacterData1.eyeBrowMorphed = xanaConstants.isEyebrowMorphed;
@@ -1358,7 +1366,8 @@ public class AvatarController : MonoBehaviour
     /// <param name="gender"></param>
     public void WearDefaultItem(string type, GameObject applyOn, string gender)
     {
-        CharacterBodyParts bodyParts = applyOn.GetComponent<CharacterBodyParts>();
+        CharacterBodyParts bodyParts = characterBodyParts;
+
         if (itemDatabase== null)
         {
             itemDatabase = DefaultClothDatabase.instance;
@@ -1538,13 +1547,13 @@ public class AvatarController : MonoBehaviour
         //FriendAvatarController friendAvatarController = applyOn.GetComponent<FriendAvatarController>();
         EffectedParts effectedParts = item.GetComponent<EffectedParts>();
         UnStichItem(type);
+        
         if (effectedParts && effectedParts.texture != null)
         {
             Texture tempTex = item.GetComponent<EffectedParts>().texture;
             masks.Add(tempTex);
             tempBodyParts.ApplyMaskTexture(type, tempTex, this.gameObject);
         }
-
         if (effectedParts && effectedParts.variation_Texture != null)
         {
             item.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetTexture("_BaseMap", item.GetComponent<EffectedParts>().variation_Texture);
@@ -1572,16 +1581,21 @@ public class AvatarController : MonoBehaviour
                         }
                     }
                     else
+                    {
                         StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                        // Hairs Default Color
+                        //StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f,1f), SliderType.HairColor, applyOn));
+                    }
                 }
                 if (_CharacterData?.charactertypeAi == true)
                 {
                     StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.hair_color, SliderType.HairColor, applyOn));
                 }
-                else
-                {
-                    StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
-                }
+                //else
+                //{
+                //    //StartCoroutine(tempBodyParts.ImplementColors(Color.black, SliderType.HairColor, applyOn));
+                //    StartCoroutine(tempBodyParts.ImplementColors(new Color(0.9058824f, 0.5137255f, 0.4039216f, 1f), SliderType.HairColor, applyOn));
+                //}
             }
             else if (type == "Hair" && xanaConstants.isPresetHairColor && presetHairColor != null)
             {
@@ -1626,120 +1640,97 @@ public class AvatarController : MonoBehaviour
                 item.layer = 11;
             }
         }
+       
         switch (type)
         {
             case "Chest":
                 wornShirt = item;
                 wornShirtId = itemId;
                 wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornShirt = item;
-                //    friendAvatarController.wornShirtId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornShirt.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "Legs":
                 wornPant = item;
                 wornPantId = itemId;
                 wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornPant = item;
-                //    friendAvatarController.wornPantId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornPant.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornHair = item;
-                //    friendAvatarController.wornHairId = itemId;
-                //}
                 break;
+
             case "Feet":
                 wornShoes = item;
                 wornShoesId = itemId;
                 wornShoes.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornShose = item;
-                //    friendAvatarController.wornShoesId = itemId;
-                //    //GetComponent<FriendAvatarController>().wornShose.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
-                //}
                 break;
+
             case "EyeWearable":
                 wornEyeWearable = item;
                 wornEyewearableId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornEyewearable = item;
-                //    friendAvatarController.wornEyewearableId = itemId;
-                //}
                 break;
+
             case "Chain":
                 wornChain = item;
                 wornChainId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornChain = item;
-                //    friendAvatarController.wornChainId = itemId;
-                //}
                 break;
+
             case "Glove":
                 wornGloves = item;
                 Material m = new Material(wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
                 wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m;
                 wornGlovesId = itemId;
-                //if (friendAvatarController)
-                //{
-                //    friendAvatarController.wornGloves = item;
-                //    Material m1 = new Material(friendAvatarController.wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0]);
-                //    friendAvatarController.wornGloves.GetComponent<SkinnedMeshRenderer>().materials[0] = m1;
-                //    friendAvatarController.wornGlovesId = itemId;
-                //}
                 break;
         }
-        if (item.name.Contains("arabic"))
+
+        
+        if (item.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
         {
             // Disable Pant
             if (wornPant)
-                wornPant.SetActive(false);
+            {
+                wornPant.GetComponent<SkinnedMeshRenderer>().enabled = false;
+            }
 
-            // Disable Hair
-            if (wornHair)
-                wornHair.SetActive(false);
+            // Also Remove Pant Mask
+            tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (wornShirt && (wornShirt.name.Contains("arabic") || wornShirt.name.Contains("Arabic")))
+        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // Yes Arabic Wear , new pant or hair disable
-            if (wornPant)
-                wornPant.SetActive(false);
+            // User Has wear Full Costume 
+            // Change Full costume to Default shirt 
 
-            if (wornHair)
-                wornHair.SetActive(false);
-        }
-        else if (wornShirt && item.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase))
-        {
-            if (wornPant)
-                wornPant.SetActive(false);
-            if (wornChain)
-                wornChain.SetActive(false);
+            WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
 
-            if (gameObject.GetComponent<SwitchToBoxerAvatar>())
-                gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
+            // Apply Mask For Default Shirt
+            tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
+
+            #region Xana1.0 Boxer currently Not using In Xana2.0
+            //if (xanaConstants.isNFTEquiped && gameObject.GetComponent<SwitchToBoxerAvatar>())
+            //{
+            //    if (wornPant)
+            //        wornPant.SetActive(false);
+
+            //    // Also Remove Pant Mask
+            //    tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
+
+            //    if (wornChain)
+            //        wornChain.SetActive(false);
+
+            //    gameObject.GetComponent<SwitchToBoxerAvatar>().OnFullCostumeWear();
+            //}
+            #endregion
         }
-        else
-        {
-            if (wornPant)
-                wornPant.SetActive(true);
-            if (wornHair)
-                wornHair.SetActive(true);
-            if (wornChain)
-                wornChain.SetActive(true);
-        }
+        //else
+        //{
+        //    if (wornPant)
+        //        wornPant.SetActive(true);
+        //    if (wornHair)
+        //        wornHair.SetActive(true);
+        //    if (wornChain)
+        //        wornChain.SetActive(true);
+        //}
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
             if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
@@ -2133,6 +2124,7 @@ public class AvatarController : MonoBehaviour
             {
                 ApplyDefaultFrndData(_CharacterData,applyOn);
             }
+            characterBodyParts.LoadBlendShapes(_CharacterData, applyOn);
             #region Xana Avatar 1.0   //--> remove for xana avatar2.0
             //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
             //{
@@ -2141,7 +2133,7 @@ public class AvatarController : MonoBehaviour
 
             //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
             //{
-            //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+            //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
             //}
             //if (_CharacterData.eyebrrowTexture != "" && _CharacterData.eyebrrowTexture != null)
             //{
@@ -2469,7 +2461,7 @@ public class AvatarController : MonoBehaviour
     //    //}
     //    //if (_CharacterData.eyeLashesName != "" && _CharacterData.eyeLashesName != null)
     //    //{
-    //    //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeLashes));
+    //    //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeLashesName, this.gameObject, CurrentTextureType.EyeBrowPoints));
     //    //}
     //    //if (_CharacterData.makeupName != "" && _CharacterData.makeupName != null)
     //    //{
