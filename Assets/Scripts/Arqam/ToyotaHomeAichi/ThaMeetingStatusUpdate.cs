@@ -1,9 +1,5 @@
 using Photon.Pun;
-using Photon.Realtime;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static ConstantsHolder;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ThaMeetingStatusUpdate : MonoBehaviour
@@ -13,9 +9,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviour
     {
         Hashtable hash = new Hashtable();
         if (hash.ContainsKey("MeetingStatus")){
-            if (PhotonNetwork.LocalPlayer.CustomProperties.ContainsKey("MeetingStatus"))
+            object status;
+            if (PhotonNetwork.LocalPlayer.CustomProperties.TryGetValue("MeetingStatus", out status))
             {
-                ConstantsHolder.xanaConstants.toyotaMeetingStatus = (MeetingStatus)(int)PhotonNetwork.LocalPlayer.CustomProperties["MeetingStatus"];
+                ConstantsHolder.xanaConstants.toyotaMeetingStatus = (ConstantsHolder.MeetingStatus)(int)status;
                 Debug.LogError("Num:: " + (int)PhotonNetwork.LocalPlayer.CustomProperties["MeetingStatus"]);
             }
         }
