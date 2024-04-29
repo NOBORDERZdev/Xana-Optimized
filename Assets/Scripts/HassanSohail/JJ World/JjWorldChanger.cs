@@ -34,6 +34,7 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            //triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
@@ -58,8 +59,9 @@ public class JjWorldChanger : MonoBehaviour
             else
                 GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
-
     }
+
+
     public void RedirectToWorld()
     {
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
@@ -72,12 +74,12 @@ public class JjWorldChanger : MonoBehaviour
                 if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
                 {// for customer
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
-                    GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Waiting For Interviewer");
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
                 }
                 else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
                 { // for interviewer
                     triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.HouseFull);
-                    GetComponent<ThaMeetingTxtUpdate>().UpdateMeetingTxt("Meeting is starting", Color.red);
+                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
                 }
             }
         }

@@ -29,6 +29,8 @@ public class NFT_Holder_Manager : MonoBehaviour
     public RenderTexture renderTexture_4x3;
     [Space(5)]
     public AR_Nft_Manager currentRoom;
+    [Space(5)]
+    public ThaMeetingTxtUpdate meetingTxtUpdate;
 
     private void Awake()
     {
