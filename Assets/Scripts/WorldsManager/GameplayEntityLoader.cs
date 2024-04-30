@@ -57,6 +57,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public HomeSceneLoader _uiReferences;
     [Space(5)]
+    [SerializeField]
     public GameObject ThaMeetingObj;
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -622,7 +623,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public GameObject SpawnThaMeetingObject()
     {
         // Instantiate the prefab as a scene object at a specific position and rotation
-        //GameObject ThaMeetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+        GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+        ThaMeetingObj = meetingObj;
         return PhotonNetwork.InstantiateSceneObject(ThaMeetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity); 
     }
 
