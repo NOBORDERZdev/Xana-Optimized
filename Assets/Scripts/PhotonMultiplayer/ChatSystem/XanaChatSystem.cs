@@ -15,6 +15,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 using SimpleJSON;
+using Crosstales.BWF;
 
 #endif
 
@@ -256,6 +257,8 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
+        string chatMsg = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text); // check for bad words in the string
+
         if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
@@ -267,13 +270,13 @@ public class XanaChatSystem : MonoBehaviour
             print("Horayyy you have Access");
         }
 
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
+        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, chatMsg);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
+        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, chatMsg , CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
+        npcAlert?.Invoke(chatMsg);  // call npc's to start chat
 
         this.InputFieldChat.text = "";
     }
