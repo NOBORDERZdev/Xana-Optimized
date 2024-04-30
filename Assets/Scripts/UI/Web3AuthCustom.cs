@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Nethereum.Signer;
 using UnityEngine.Networking;
 using System.Security.Principal;
@@ -21,6 +22,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
     private Web3Auth.Network network;
     private string domains, domainsLine;
+   
 
     [Header("Refs")]
     [SerializeField] Web3Auth web3Auth;
@@ -34,11 +36,12 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     bool isNewReg;
     internal string publicAdress;
     internal string msg1 ,msg2,currentLan;
-
+    public List<Button> buttons;
 
     private void Start()
     {
-       if (APIBasepointManager.instance.IsXanaLive) {
+       
+        if (APIBasepointManager.instance.IsXanaLive) {
             //For Mainnet
             ClientId = "BPnWnv68o43X4uLNUNrBEWgu6GgletwK5bOU4SLpHFrKrkATivj36lOX3B1DE7u3qeFTksKqK30arrFLYAzAgGY";
             network = Web3Auth.Network.SAPPHIRE_MAINNET;
@@ -153,7 +156,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             }
         };
 
-
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
         web3Auth.login(options);
     }
    
@@ -170,7 +176,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
         };
 
-
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
         web3Auth.login(options);
     }
 
@@ -192,7 +201,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             }
         };
 
-
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
         web3Auth.login(options);
     }
 
@@ -219,6 +231,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     private void onLogin(Web3AuthResponse response)
     {
+        foreach (Button button in buttons)
+        {
+            button.interactable = true;
+        }
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;
