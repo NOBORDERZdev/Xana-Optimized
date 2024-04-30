@@ -372,6 +372,13 @@ public class JJVideoAndImage : MonoBehaviour
                         imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
 
                     }
+                    else
+                    {
+
+                        SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                        SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                        SoundSettings.soundManagerSettings.setNewSliderValues();
+                    }
                     imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                     imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
