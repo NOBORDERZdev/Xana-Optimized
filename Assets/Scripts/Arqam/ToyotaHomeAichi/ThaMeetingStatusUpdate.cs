@@ -38,15 +38,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         base.OnPlayerEnteredRoom(newPlayer);
 
+        if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
+
         // Check if the meeting status property was updated
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
         {
             int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
-
             Debug.LogError("New Player join room:::" + parameterValue);
-
-            //tms = (MeetingStatus)parameterValue;
-            //ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(parameterValue);
             this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, parameterValue);
         }
         else
@@ -54,7 +52,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    public void StartMeeting(int num) //, int ViewID
+    public void StartMeeting(int num)
     {
         tms = (MeetingStatus)num;
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
