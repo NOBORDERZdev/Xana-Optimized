@@ -155,6 +155,13 @@ public class FriendHomeManager : MonoBehaviour
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
+
+        if (CreatedFriend.GetComponent<EyesBlinking>() != null)
+        {
+            CreatedFriend.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            StartCoroutine(CreatedFriend.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+        }
+
         FriendSpawn.id = friend.id;
         FriendSpawn.friendObj = CreatedFriend;
         FriendSpawn.friendNameObj = CreatedNameTag;
@@ -192,6 +199,8 @@ public class FriendHomeManager : MonoBehaviour
             SpawnFriendsObjref.friendNameObj.gameObject.SetActive(flag);
             SpawnFriendsObjref.friendObj.gameObject.SetActive(flag);
             SpawnFriendsObjref.friendPostBubbleObj.gameObject.SetActive(flag);
+            if (SpawnFriendsObjref.friendObj.GetComponent<EyesBlinking>() && !SpawnFriendsObjref.friendObj.GetComponent<EyesBlinking>().isCoroutineRunning)   // Added by Ali Hamza
+                StartCoroutine(SpawnFriendsObjref.friendObj.GetComponent<EyesBlinking>().BlinkingStartRoutine());
         }
     }
     FriendSpawnData _friendtoRemove;
