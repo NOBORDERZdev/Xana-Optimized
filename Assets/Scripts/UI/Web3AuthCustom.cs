@@ -33,7 +33,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     private Web3UserInfo userInfo;
     bool isNewReg;
     internal string publicAdress;
-    internal string msg1 ,msg2;
+    internal string msg1 ,msg2,currentLan;
 
 
     private void Start()
@@ -100,6 +100,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientId = clientIdApple,
             typeOfLogin = TypeOfLogin.APPLE,
         };
+
         //var LineConfigItem = new LoginConfigItem()
         //{
         //    verifier = loginVerifier,
@@ -131,6 +132,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.onLogin += onLogin;
         web3Auth.onLogout += onLogout;
         updateConsole("Ready to Login!");
+        detectsystemLanguage();
     }
 
     public void PasswordLessEmailLogin(bool isnewreg)
@@ -146,6 +148,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
+                ui_locales=currentLan,
                 prompt = Prompt.LOGIN,
             }
         };
@@ -312,6 +315,19 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     {
         console = $"{console}\n{message}";
     }
+    public void detectsystemLanguage() {
+        string newLanguage = Application.systemLanguage.ToString();
+        if (newLanguage == "English")
+        {
+            currentLan= "en";
+        }
+        else if (newLanguage == "Japanese")
+        {
+            currentLan= "ja";
+        }
+
+    }
+   
     public enum Web3AuthSociallogin
     {
         None,
