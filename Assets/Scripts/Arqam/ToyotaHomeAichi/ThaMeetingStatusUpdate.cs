@@ -6,6 +6,7 @@ using Photon.Realtime;
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
     public enum MeetingStatus { End, Inprogress, HouseFull }
+    [SerializeField]
     public MeetingStatus tms;
 
     private const string MeetingStatusPropertyName = "MeetingStatus";
