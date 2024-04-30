@@ -75,12 +75,12 @@ public class ProfileUIHandler : MonoBehaviour
             if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
             {
                 maleAvatarRef.SetActive(true);
-                avatarRef = maleAvatarRef.transform.GetChild(0).gameObject;
+                avatarRef = maleAvatarRef.gameObject;
             }
             else
             {
                 femaleAvatarRef.SetActive(true);
-                avatarRef = femaleAvatarRef.transform.GetChild(0).gameObject;
+                avatarRef = femaleAvatarRef.gameObject;
             }
         }
     }
@@ -134,6 +134,11 @@ public class ProfileUIHandler : MonoBehaviour
                     maleAvatarRef.SetActive(false);
                 avatarRef = femaleAvatarRef.gameObject;
                 break;
+        }
+        if (avatarRef.GetComponent<EyesBlinking>() != null)
+        {
+            avatarRef.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            StartCoroutine(avatarRef.GetComponent<EyesBlinking>().BlinkingStartRoutine());
         }
         menuLightingObj.SetActive(false);
         lightingObj.SetActive(true);

@@ -1460,7 +1460,8 @@ public class CharacterBodyParts : MonoBehaviour
                 }
             }
         }
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
     public void ApplyBlendShapeEyesValues(GameObject applyOn, List<BlendShapeContainer> data, Vector3 eyesPos, float rotationz)
     {
@@ -1473,7 +1474,8 @@ public class CharacterBodyParts : MonoBehaviour
                 blendRender.SetBlendShapeWeight(data[i].blendShapeind, data[i].blendShapeValue);
             }
         }
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
 
         // ***** Reset to Default If Custom chance made
         BothEyes[0].transform.localPosition = new Vector3(-0.052f, 0.1106f, 0.122f);
