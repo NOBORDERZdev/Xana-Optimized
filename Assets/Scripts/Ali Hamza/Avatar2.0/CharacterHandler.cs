@@ -46,6 +46,15 @@ public class CharacterHandler : MonoBehaviour
 
     private void UpdateAvatarRefrences(AvatarData _avatarData)
     {
+        if (_avatarData.avatar_parent.GetComponent<EyesBlinking>() != null)
+        {
+            _avatarData.avatar_parent.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            if (activePlayerGender != _avatarData.avatar_Gender)
+            {
+                StartCoroutine(_avatarData.avatar_parent.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+            }
+        }
+
         activePlayerGender = _avatarData.avatar_Gender;
 
         if (GameManager.Instance != null)

@@ -78,10 +78,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
             loadAllAvatar?.Invoke(1, 20);
         }
 
-        if (EyesBlinking.instance)
-        {
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        }
+        
         //LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 20);
 
     }

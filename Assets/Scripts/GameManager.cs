@@ -11,11 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     [Header("Character")]
     public GameObject mainCharacter;
-    //public CharacterHandler maleAvatar;
-    //public CharacterHandler femaleAvatar;
     public AvatarController avatarController;
     public CharacterBodyParts characterBodyParts;
-    //public AvatarGender avatarGender;
+    public EyesBlinking eyesBlinking;
 
     public GameObject m_ChHead;
     [Header("Character Animator")]

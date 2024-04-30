@@ -375,11 +375,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 #endregion
                 StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
 
-            //if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
-            //{
-            //    otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
-            //    StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
-            //}
+                if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+                {
+                    otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+                    StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+                }
             }
         }
     }

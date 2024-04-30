@@ -180,10 +180,10 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
         InventoryManager.instance.ResetMorphBooleanValues();
         gameManager.BlendShapeManager.TurnOffAllObjects();
 
-        EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        if (!EyesBlinking.instance.isCoroutineRunning)
+        gameManager.mainCharacter.GetComponent<EyesBlinking>().StoreBlendShapeValues();          // Added by Ali Hamza
+        if (!gameManager.mainCharacter.GetComponent<EyesBlinking>().isCoroutineRunning)
         {
-            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+            StartCoroutine(gameManager.mainCharacter.GetComponent<EyesBlinking>().BlinkingStartRoutine());
         }
 
         //  SaveCharacterProperties.instance.AssignCustomsliderNewData();
