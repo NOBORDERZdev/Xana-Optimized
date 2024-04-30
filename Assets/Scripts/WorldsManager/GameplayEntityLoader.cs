@@ -622,6 +622,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public GameObject SpawnThaMeetingObject()
     {
         // Instantiate the prefab as a scene object at a specific position and rotation
+        //GameObject ThaMeetingObj = Resources.Load("ThaMeetingObj") as GameObject;
         return PhotonNetwork.InstantiateSceneObject(ThaMeetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity); 
     }
 
