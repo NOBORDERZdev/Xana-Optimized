@@ -309,6 +309,10 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
+        
+        // Update Character Reference On Gender Change
+        AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
+        AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
     }
     public void skipAvatarSelection()
     {
