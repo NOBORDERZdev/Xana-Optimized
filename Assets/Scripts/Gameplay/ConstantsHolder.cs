@@ -130,6 +130,10 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isDescriptionFullPage = false;
     //Toyota Home Aichi
     public string toyotaEmail;
+    public enum MeetingStatus { End, Inprogress, HouseFull }
+    [SerializeField]
+    public MeetingStatus meetingStatus;
+
     public bool isBackToParentScane = false;
     public string parentSceneName;
 

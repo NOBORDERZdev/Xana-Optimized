@@ -42,6 +42,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         Hashtable hash = new Hashtable();
         hash[MeetingStatusPropertyName] = (int)tms;
         newPlayer.SetCustomProperties(hash);
+
+        ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)((int)tms);
     }
 
     //[PunRPC]
