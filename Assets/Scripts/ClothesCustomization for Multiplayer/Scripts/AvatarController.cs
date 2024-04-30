@@ -125,7 +125,8 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
-                Invoke(nameof(Custom_InitializeAvatar), 0.02f);
+                Invoke(nameof(Deley_Custom_InitializeAvatar), 0.02f);
+                //Custom_InitializeAvatar();
                 if (xanaConstants.isNFTEquiped)
                 {
                     this.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
@@ -134,6 +135,12 @@ public class AvatarController : MonoBehaviour
             
         }
     }
+
+    void Deley_Custom_InitializeAvatar()
+    {
+        Custom_InitializeAvatar();
+    }
+
     private void OnDisable()
     {
         BoxerNFTEventManager.OnNFTequip -= EquipNFT;
