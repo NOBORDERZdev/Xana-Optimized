@@ -321,20 +321,23 @@ public class WorldItemView : EnhancedScrollerCellView
 
     void SetWorldName()
     {
-        if (m_EnvironmentName.Contains("Dubai"))
+        if (eviroment_Name != null && joinedUserCount != null)
         {
-            eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            if (m_EnvironmentName.Contains("Dubai"))
+            {
+                eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
+                eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            }
+            else
+            {
+                eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            }
+            eviroment_Name.text = eviroment_Name.text;
+            if (!string.IsNullOrEmpty(worldVisitCount))
+                joinedUserCount.text = worldVisitCount + " visits";
+            gameObject.GetComponent<Button>().interactable = true;
+            isVisible = true;
         }
-        else
-        {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
-        }
-        eviroment_Name.text = eviroment_Name.text;
-        if (!string.IsNullOrEmpty(worldVisitCount))
-            joinedUserCount.text = worldVisitCount + " visits";
-        gameObject.GetComponent<Button>().interactable = true;
-        isVisible = true;
         //StartCoroutine(DownloadImage());
     }
     /*public IEnumerator DownloadImage()
