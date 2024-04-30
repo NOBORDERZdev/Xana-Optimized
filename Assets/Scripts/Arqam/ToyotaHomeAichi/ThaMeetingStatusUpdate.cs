@@ -14,8 +14,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public void UpdateMeetingParams(int status)
     {
         //tms = (MeetingStatus)status;
-        //this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
-        StartMeeting(status);
+        this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
+        //StartMeeting(status);
 
         // Update the custom property for all players in the room
         Hashtable hash = new Hashtable();
@@ -39,18 +39,21 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         // Check if the meeting status property was updated
-        int parameterValue = 0;
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
-            parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
+        {
+            int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
 
-        Debug.LogError("New Player join room:::" + parameterValue);
+            Debug.LogError("New Player join room:::" + parameterValue);
 
-        //photonView.RPC("RPC_UpdateParameterForPlayer", newPlayer, parameterValue);
-        tms = (MeetingStatus)parameterValue;
-        ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(parameterValue);
+            //tms = (MeetingStatus)parameterValue;
+            //ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(parameterValue);
+            this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, parameterValue);
+        }
+        else
+            Debug.LogError("Property not exist::");
     }
 
-    //[PunRPC]
+    [PunRPC]
     public void StartMeeting(int num) //, int ViewID
     {
         tms = (MeetingStatus)num;
