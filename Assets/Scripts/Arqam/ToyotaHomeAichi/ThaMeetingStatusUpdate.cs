@@ -37,12 +37,12 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        Debug.LogError("New Player join room");
-        // Send the current meeting status to the new player
-        Hashtable hash = new Hashtable();
-        hash[MeetingStatusPropertyName] = (int)tms;
-        newPlayer.SetCustomProperties(hash);
 
+        // Check if the meeting status property was updated
+        int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
+        Debug.LogError("New Player join room:::" + parameterValue);
+
+        //photonView.RPC("RPC_UpdateParameterForPlayer", newPlayer, parameterValue);
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)((int)tms);
     }
 
@@ -50,6 +50,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public void StartMeeting(int num) //, int ViewID
     {
         tms = (MeetingStatus)num;
+        ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
     }
 
 }
