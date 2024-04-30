@@ -1724,6 +1724,11 @@ public class AvatarController : MonoBehaviour
             //}
             #endregion
         }
+        else if (type == "Chest" && (wornShirt && !wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
+        {
+            // User Has wear Full Costume And its Change to Shirt Than enable Pant
+            wornPant.GetComponent<SkinnedMeshRenderer>().enabled = true;
+        }
         //else
         //{
         //    if (wornPant)
