@@ -510,17 +510,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
 
     #region ToyotaMeetingArea
-    //public void UpdateMeetingPrams(ConstantsHolder.MeetingStatus meetingStatus)
-    //{
-    //    this.GetComponent<PhotonView>().RPC("StartMeeting", RpcTarget.AllBuffered, meetingStatus); //, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID
-    //}
-
-    //[PunRPC]
-    //public void StartMeeting(ConstantsHolder.MeetingStatus meetingStatus) //, int ViewID
-    //{
-    //    ConstantsHolder.xanaConstants.toyotaMeetingStatus = meetingStatus;
-    //}
-
     public void UpdateMeetingTxt(string message)
     {
         this.GetComponent<PhotonView>().RPC("RemoteUpdateTxt", RpcTarget.AllBuffered, message); //ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID

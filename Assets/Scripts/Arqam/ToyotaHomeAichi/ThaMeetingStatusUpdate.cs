@@ -13,9 +13,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingParams(int status)
     {
-        //tms = (MeetingStatus)status;
         this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
-        //StartMeeting(status);
 
         // Update the custom property for all players in the room
         Hashtable hash = new Hashtable();

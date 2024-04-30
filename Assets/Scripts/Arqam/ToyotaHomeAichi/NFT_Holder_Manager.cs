@@ -52,7 +52,6 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
         else if (meetingStatus == null)
             meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
-
     }
 
     public void CloseBtnClicked()

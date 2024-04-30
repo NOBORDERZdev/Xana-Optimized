@@ -34,7 +34,7 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            //triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
@@ -46,14 +46,6 @@ public class JjWorldChanger : MonoBehaviour
                 else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
                     NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                     return;
-                //if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.HouseFull))
-                //    return;
-                //else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
-                //    ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
-                //    return;
-                //else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
-                //    ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
-                //    return;
             }
 
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
@@ -78,29 +70,20 @@ public class JjWorldChanger : MonoBehaviour
             {
                 this.StartCoroutine(swtichScene(WorldName));
 
-                if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-                {// for customer
-                    NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
-                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+                // For toyota bussiness meeting world only
+                if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
+                {
+                    if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+                    {// for customer
+                        NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
+                        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+                    }
+                    else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+                    { // for interviewer
+                        NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
+                        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+                    }
                 }
-                else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-                { // for interviewer
-                    NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
-                    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
-                }
-
-                //// For toyota bussiness meeting world only
-                //if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.End))
-                //{// for customer
-                //    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.Inprogress);
-                //    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
-                //    GetComponent<ThaMeetingStatusUpdate>().UpdateMeetingStatus();
-                //}
-                //else if (ConstantsHolder.xanaConstants.toyotaMeetingStatus.Equals(ConstantsHolder.MeetingStatus.Inprogress))
-                //{ // for interviewer
-                //    triggerObject.GetComponent<ArrowManager>().UpdateMeetingPrams(ConstantsHolder.MeetingStatus.HouseFull);
-                //    triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
-                //}
             }
         }
     }
