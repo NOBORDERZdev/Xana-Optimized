@@ -28,14 +28,17 @@ public class RandomNumberComponent : ItemComponent
         GenerateNumber();
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (!IsAgainTouchable) return;
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            if (!IsAgainTouchable) return;
 
-        IsAgainTouchable = false;
+            IsAgainTouchable = false;
 
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -105,7 +108,7 @@ public class RandomNumberComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

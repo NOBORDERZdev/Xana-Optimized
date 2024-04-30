@@ -34,7 +34,7 @@ public class UIHandler : MonoBehaviour
 
 
     public bool isAvatarSelectionBtnClicked = false;
-
+    [SerializeField] Color postButtonColor;
     private void Awake()
     {
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
@@ -75,7 +75,7 @@ public class UIHandler : MonoBehaviour
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
             GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
             GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
-            GameManager.Instance.userAnimationPostFeature.postButtonText.color = Color.black;
+            GameManager.Instance.userAnimationPostFeature.postButtonText.color = postButtonColor;
         }
     }
     public void ResetPlayerToLastPostPosted()
@@ -105,6 +105,10 @@ public class UIHandler : MonoBehaviour
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
+                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                {
+                    Screen.orientation = ScreenOrientation.Portrait;
+                }
             }
          }
         else

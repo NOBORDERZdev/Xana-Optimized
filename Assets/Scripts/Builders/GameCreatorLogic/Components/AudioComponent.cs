@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using System;
 using System.IO;
 using Models;
+using Photon.Pun;
 
 public class AudioComponent : ItemComponent
 {
@@ -18,9 +19,9 @@ public class AudioComponent : ItemComponent
             StartCoroutine(setAudioFromUrl(this.audioComponentData.audioPath));
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (audioClip != null)
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine && audioClip != null)
         {
             GamificationComponentData.instance.audioSource.clip = audioClip;
             GamificationComponentData.instance.audioSource.Play();
@@ -117,7 +118,7 @@ public class AudioComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

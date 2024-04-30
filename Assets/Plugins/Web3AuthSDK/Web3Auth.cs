@@ -345,7 +345,7 @@ public class Web3Auth : MonoBehaviour
 
     public void logout(Dictionary<string, object> extraParams)
     {
-        sessionTimeOutAPI();
+        Invoke("sessionTimeOutAPI",0.2f); 
     }
 
     public void logout(Uri redirectUrl = null, string appState = null)

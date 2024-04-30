@@ -54,7 +54,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
-            Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
+            Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
             //CallRpcInvoke();
         }
         if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
@@ -497,6 +497,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         applyon.head.SetBlendShapeWeight(_CharacterData.faceItemData, 100);
         applyon.head.SetBlendShapeWeight(_CharacterData.lipItemData, 100);
         applyon.head.SetBlendShapeWeight(_CharacterData.noseItemData, 100);
+        applyon.head.SetBlendShapeWeight(_CharacterData.eyeShapeItemData, 100);
         //applyon.head.materials[2].SetColor("_BaseColor", _CharacterData.skin_color);
         //applyon.head.materials[2].SetColor("_Lips_Color", _CharacterData.lip_color);
         //applyon.body.materials[0].SetColor("_BaseColor", _CharacterData.hair_color);

@@ -21,14 +21,17 @@ public class NarrationComponent : ItemComponent
         RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (!IsAgainTouchable) return;
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            if (!IsAgainTouchable) return;
 
-        IsAgainTouchable = false;
+            IsAgainTouchable = false;
 
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -107,7 +110,7 @@ public class NarrationComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

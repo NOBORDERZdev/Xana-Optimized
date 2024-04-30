@@ -21,10 +21,13 @@ public class DisplayMessagesComponent : ItemComponent
     }
 
     //oncollisionEnter to OnTriggerEnter
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        BuilderEventManager.onComponentActivated(_componentType);
-        PlayBehaviour();
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.onComponentActivated(_componentType);
+            PlayBehaviour();
+        }
     }
 
     #region BehaviourControl
@@ -89,7 +92,7 @@ public class DisplayMessagesComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

@@ -468,6 +468,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
         public int noseItemData;
         public string hairItemData;
         public string eyeItemData;
+        public int eyeShapeItemData;
         public bool charactertypeAi;
 
         public List<BoneDataContainer> SavedBones;
@@ -508,7 +509,6 @@ public class ServerSideUserDataHandler : MonoBehaviour
         public Color HairColor;
         public Color EyebrowColor;
         public Color EyeColor;
-
 
         public Json CreateFromJSON(string jsonString)
         {

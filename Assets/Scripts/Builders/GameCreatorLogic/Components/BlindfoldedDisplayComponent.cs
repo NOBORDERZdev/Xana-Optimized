@@ -34,16 +34,19 @@ public class BlindfoldedDisplayComponent : ItemComponent
         childMesh = transform.GetComponentsInChildren<MeshRenderer>();
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision other)
     {
-        if (GamificationComponentData.instance.withMultiplayer)
+        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
-        }
+            if (GamificationComponentData.instance.withMultiplayer)
+            {
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.Others, RuntimeItemID, Constants.ItemComponentType.none);
+            }
 
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
-        GamificationComponentData.instance.activeComponent = this;
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+            GamificationComponentData.instance.activeComponent = this;
+        }
     }
 
     private void SetFootPrinting()
@@ -255,7 +258,7 @@ public class BlindfoldedDisplayComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

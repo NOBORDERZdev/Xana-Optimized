@@ -376,7 +376,7 @@ public class BuildingDetect : MonoBehaviour
                 playerShirt.enabled = state;
             if (playerShoes)
                 playerShoes.enabled = state;
-            if (playerEyebrow.Length > 0)
+            if (playerEyebrow != null)
             {
                 foreach (var eyeBrow in playerEyebrow)
                 {
@@ -520,7 +520,7 @@ public class BuildingDetect : MonoBehaviour
         if (playerShoes)
             playerShoes.material = state ? defaultShoesMat : hologramMaterial;
 
-        if (playerEyebrow.Length > 0)
+        if (playerEyebrow != null)
         {
             for (int i = 0; i < playerEyebrow.Length; i++)
             {

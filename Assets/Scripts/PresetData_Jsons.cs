@@ -162,6 +162,11 @@ public class PresetData_Jsons : MonoBehaviour
                 if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {
                     UserLoginSignupManager.instance.OpenUserNamePanel();
+                    if (UGCManager.isSelfieTaken) 
+                    {
+                        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    }
                 }
                 else
                 {
@@ -298,6 +303,7 @@ public class PresetData_Jsons : MonoBehaviour
         _CharacterData.lipItemData = InventoryManager.instance.itemData.lipItemData;
         _CharacterData.hairItemData = InventoryManager.instance.itemData._hairItemData;
         _CharacterData.eyeItemData = InventoryManager.instance.itemData._eyeItemData;
+        _CharacterData.eyeShapeItemData = InventoryManager.instance.itemData.eyeShapeItemData;
     }
 }
 

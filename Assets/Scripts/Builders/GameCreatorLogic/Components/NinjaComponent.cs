@@ -16,14 +16,17 @@ public class NinjaComponent : ItemComponent
         pc = GamificationComponentData.instance.playerControllerNew;
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
-        if (GamificationComponentData.instance.withMultiplayer)
-            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-        else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.StopAvatarChangeComponent?.Invoke(true);
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+            if (GamificationComponentData.instance.withMultiplayer)
+                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
+        }
     }
 
     #region BehaviourControl
@@ -85,7 +88,7 @@ public class NinjaComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

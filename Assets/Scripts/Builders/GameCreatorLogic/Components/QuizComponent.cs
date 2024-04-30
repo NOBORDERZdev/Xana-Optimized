@@ -14,10 +14,13 @@ public class QuizComponent : ItemComponent
             this.quizComponentData.correctAnswerRate = 100;
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
     }
 
     private void OnDisable()
@@ -76,7 +79,7 @@ public class QuizComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

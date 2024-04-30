@@ -59,18 +59,23 @@ public class StreamYoutubeVideo : MonoBehaviour
                 {
                     videoPlayer.source = VideoSource.Url;
                     videoPlayer.url = streamAbleUrl;
-                    videoPlayer.Play();
+                    
                     if (ConstantsHolder.xanaConstants.isBuilderScene)
                     {
-                        new Delayed.Action(() =>
-                           {
-                               if (videoPlayer.isPrepared)
-                                   BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
-                           }, 2);
+                        videoPlayer.Prepare();
+                        videoPlayer.prepareCompleted += VideoPrepared;
                     }
+                    else
+                        videoPlayer.Play();
                 }
             }
         }
+    }
+
+    void VideoPrepared(VideoPlayer vp)
+    {
+        vp.Play();
+        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
     }
 }
 [System.Serializable]

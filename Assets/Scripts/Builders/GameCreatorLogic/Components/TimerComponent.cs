@@ -17,30 +17,33 @@ public class TimerComponent : ItemComponent
     }
 
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        if (isActivated && timerComponentData.IsStart)
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            //if (!IsAgainTouchable) return;
+            if (isActivated && timerComponentData.IsStart)
+            {
+                if (!IsAgainTouchable) return;
 
-            //IsAgainTouchable = false;
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-        }
-        if (isActivated && timerComponentData.IsEnd)
-        {
-            BuilderEventManager.OnTimerLimitEnd?.Invoke();
+                IsAgainTouchable = false;
+                BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+                PlayBehaviour();
+            }
+            if (isActivated && timerComponentData.IsEnd)
+            {
+                BuilderEventManager.OnTimerLimitEnd?.Invoke();
+            }
         }
     }
 
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    IsAgainTouchable = false;
-    //}
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    IsAgainTouchable = true;
-    //}
+    private void OnCollisionStay(Collision collision)
+    {
+        IsAgainTouchable = false;
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        IsAgainTouchable = true;
+    }
 
     #region BehaviourControl
 
@@ -105,7 +108,7 @@ public class TimerComponent : ItemComponent
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion

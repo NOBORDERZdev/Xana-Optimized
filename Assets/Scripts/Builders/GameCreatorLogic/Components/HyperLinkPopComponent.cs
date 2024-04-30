@@ -36,15 +36,21 @@ public class HyperLinkPopComponent : ItemComponent
         BuilderEventManager.OnHyperLinkPopupCollisionEnter?.Invoke(titleText, buttonData, hyperLinkComponentData.urlData, this.transform);
     }
 
-    private void CollisionEnter()
+    private void OnCollisionEnter(Collision _other)
     {
-        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-        PlayBehaviour();
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+            PlayBehaviour();
+        }
     }
 
-    private void CollisionExit()
+    private void OnCollisionExit(Collision _other)
     {
-        BuilderEventManager.OnHyperLinkPopupCollisionExit?.Invoke();
+        if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            BuilderEventManager.OnHyperLinkPopupCollisionExit?.Invoke();
+        }
     }
 
     #region BehaviourControl
@@ -94,12 +100,12 @@ public class HyperLinkPopComponent : ItemComponent
 
     public override void CollisionExitBehaviour()
     {
-        CollisionExit();
+        //CollisionExit();
     }
 
     public override void CollisionEnterBehaviour()
     {
-        CollisionEnter();
+        //CollisionEnter();
     }
 
     #endregion
