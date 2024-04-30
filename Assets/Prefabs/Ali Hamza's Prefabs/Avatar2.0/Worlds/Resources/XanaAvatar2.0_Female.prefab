@@ -3206,6 +3206,7 @@ GameObject:
   - component: {fileID: 1518207911166972683}
   - component: {fileID: 6361991311103265947}
   - component: {fileID: 8787714129647578255}
+  - component: {fileID: 6246501003241866856}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Female
   m_TagString: PhotonLocalPlayer
@@ -3980,8 +3981,6 @@ MonoBehaviour:
     special_move: 0
     punch: 0
     kick: 0
-    isBgApply: 0
-    bgKeyValue: 
   ArAnimator: {fileID: 0}
   wornHairId: 0
   hairColorPaletteId: 0
@@ -4287,6 +4286,26 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &6246501003241866856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290326269450676071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345709dd5c5b4484280a3ba1f1b8eca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendHolder: {fileID: 6483856165262445224}
+  AllEyeBlendShapes: []
+  blinkingRate: 20
+  isEyeClose: 0
+  waitTime: 2
+  blinkingSpeed: 0.15
+  isBlinking: 1
+  isCoroutineRunning: 0
 --- !u!1 &3356888367223522174
 GameObject:
   m_ObjectHideFlags: 0
