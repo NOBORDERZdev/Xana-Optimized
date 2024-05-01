@@ -278,7 +278,7 @@ public class XanaChatSystem : MonoBehaviour
         ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
+      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
         removeBadWords = "";
