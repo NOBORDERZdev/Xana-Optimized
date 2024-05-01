@@ -193,10 +193,10 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
         //Setting child data loopable if child data count is greater than 3
         //Debug.Log("This Master cell view name: " + masterCellView.name + " child data size is: " + _data[dataIndex].childData.Count);
-        if (_data[dataIndex].childData.Count >= 3)
-        {
-            masterCellView.gameObject.transform.GetChild(1).GetComponent<EnhancedScroller>().Loop = true;
-        }
+        //if (_data[dataIndex].childData.Count >= 3)
+        //{
+        //    masterCellView.gameObject.transform.GetChild(1).GetComponent<EnhancedScroller>().Loop = true;
+        //}
 
         // in this example, we just pass the data to our cell's view which will update its UI
         masterCellView.SetData(_data[dataIndex]);
