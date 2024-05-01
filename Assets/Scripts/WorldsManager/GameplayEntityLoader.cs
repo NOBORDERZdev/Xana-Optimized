@@ -462,10 +462,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             }
-            //else
-            //{
-            //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            //}
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
@@ -521,7 +517,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             if (ConstantsHolder.xanaConstants.parentSceneName == "D_Infinity_Labo")
             {
-                ArrowManager.Instance.UpdateMeetingPrams(ConstantsHolder.MeetingStatus.End);
+                FindObjectOfType<ThaMeetingStatusUpdate>().UpdateMeetingParams(0); // set meeting status end for all users 
                 ArrowManager.Instance.UpdateMeetingTxt("Join Meeting Now!");
             }
             ConstantsHolder.xanaConstants.isBackToParentScane = false;
@@ -620,6 +616,13 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
         //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
+    }
+
+    public GameObject SpawnThaMeetingObject()
+    {
+        // Instantiate the prefab as a scene object at a specific position and rotation
+        GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+        return PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity); 
     }
 
     [SerializeField] int autoSwitchTime;
