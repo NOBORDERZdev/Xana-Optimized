@@ -157,7 +157,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void SnSUpate(string response) {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if (SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>

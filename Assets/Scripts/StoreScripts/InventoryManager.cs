@@ -277,6 +277,20 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void SetDefaultValues() // This is called When comming back from Worlds
+    {
+        CheckAPILoaded = true;
+        if (ArrayofMainCategories == null || ArrayofMainCategories.Length == 0)
+            GetAllMainCategories();
+     
+        if (SubCategoriesList.Count == 0)
+            GetAllSubCategories();
+
+        // Update Save Btn Methods
+        CheckWhenUserLogin();
+    }
+
+
     private void OnEnable()
     {
         MainSceneEventHandler.OnSucessFullLogin += CheckWhenUserLogin;
@@ -867,6 +881,7 @@ public class InventoryManager : MonoBehaviour
             dataListOfItems.Clear();
             dataListOfItems = JsonDataObj1.data[0].items;
             PutDataInOurAPPNewAPI();
+            CheckAPILoaded = false; // Already Have the response not calling the API -- Resetting the value
             yield break;
         }
         Debug.LogError("HitALLItemsAPI");
@@ -1573,6 +1588,7 @@ public class InventoryManager : MonoBehaviour
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex + 8].id, false);
             }
+            
         }
         else
         {
