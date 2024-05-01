@@ -131,7 +131,15 @@ public class Web3Auth : MonoBehaviour
 
     private void onDeepLinkActivated(string url)
     {
-        this.setResultUrl(new Uri(url));
+        Debug.LogError("DeepUrl --- " + url);
+        if (url.Contains("ENV"))
+        {
+            return;
+        }
+        else
+        {
+             this.setResultUrl(new Uri(url));
+        }
     }
 
 #if UNITY_STANDALONE || UNITY_EDITOR

@@ -5,130 +5,78 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
+using System.Security.Policy;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
     #region Variables
 
-    //Deeplink data properties
     public delegate void DeepLink(string arg);
     public static DeepLink deepLink;
-
-    //Event date time properties
     DateTime eventLocalStartDateTime, eventlocalEndDateTime, eventUnivStartDateTime, eventUnivEndDateTime;
     public string[] eventStartDateTime;
     public string[] eventEndDateTime;
-    /// <Irfan script>
-    string[] vec2 = null;
     private string EventURl = "/userCustomEvent/get-event-json/";
     private string EnvironmentURl = "/world/get-world-custom-data/";
-
     /// Testnet https://api-test.xana.net/world/get-world-custom-data/:worldId
-
-
-
     // TestEvent  "https://api-test.xana.net/userCustomEvent/get-event-json/"
     //MainEvent https://app-api.xana.net/userCustomEvent/get-event-json/45
-
     //    ConstantsGod.API_BASEURL = "https://app-api.xana.net";
     //  ConstantsGod.API_BASEURL = "https://api-test.xana.net";
-
     private string EventArguments;
     private int PauseCount;
     private int StartFocusCounter;
-
-     #endregion  
+    bool FirstTimeopen = true;
+    #endregion
 
     #region Unity Functions
 
+    //private void Awake()
+    //{
+    //   // XanaEventDetails.eventDetails = new XanaEventDetails();
+    //   // XanaEventDetails.eventDetails.DataIsInitialized = false;
+    //   // StartCoroutine(HitGetEnvironmentJson("https://api-test.xana.net" + EnvironmentURl + 406, "406"));
+    //}
     private void Awake()
     {
-        XanaEventDetails.eventDetails = new XanaEventDetails();
-        XanaEventDetails.eventDetails.DataIsInitialized = false;
-        Debug.LogError("OnDynamicLink Awake --->");
-
+        Application.deepLinkActivated += OpenEnvironmentDeeplink;
     }
-
+    private void OnDestroy()
+    {
+        Application.deepLinkActivated -= OpenEnvironmentDeeplink;
+    }
     private void Start()
     {
-        Debug.LogError("OnDynamicLink Start --->");
-        EventArguments = "";
-        PauseCount = 0;
-        StartFocusCounter = 1;
-
+        //EventArguments = "";
+        //PauseCount = 0;
+        //StartFocusCounter = 1;
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                // Crashlytics will use the DefaultInstance, as well;
-                // this ensures that Crashlytics is initialized.
                 Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-
-                // When this property is set to true, Crashlytics will report all
-                // uncaught exceptions as fatal events. This is the recommended behavior.
                 Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
-                // Set a flag here for indicating that your project is ready to use Firebase.
-                Debug.LogError("OnDynamicLink Start IF --->");
-                BindAfterInitilization();
+               // BindAfterInitilization();
                 ConstantsHolder.xanaConstants.isFirebaseInit = true;
-                InvokeDeepLink("focus");
-
+                // InvokeDeepLink("focus");
+                OpenEnvironmentDeeplink(Application.absoluteURL);
             }
             else
             {
-                Debug.LogError("OnDynamicLink Start ---> Else");
-
                 UnityEngine.Debug.Log(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
             }
         });
+        
     }
-    public void BindAfterInitilization()
+    public void OpenEnvironmentDeeplink(string deeplinkUrl)
     {
-        DynamicLinks.DynamicLinkReceived += OnDynamicLink;
-        deepLink += InvokeDeepLink;
+        StartCoroutine(ValidateLoginthenDeeplink(deeplinkUrl));
     }
-    private void OnDisable()
+    IEnumerator ValidateLoginthenDeeplink(string deeplinkUrl)
     {
-        deepLink -= InvokeDeepLink;
-    }
-    private void OnApplicationPause(bool pause)
-    {
-        if (pause)
-        {
-            EventArguments = "";
-            PauseCount += 1;
-        }
-    }
-    private void OnApplicationFocus(bool focus)
-    {
-
-        Debug.LogError("OnDynamicLink Focus  ---> "+focus);
-
-        if (focus && PauseCount > 0)
-        {
-            StartFocusCounter = 2;
-            DynamicLinks.DynamicLinkReceived += OnDynamicLink;
-        }
-    }
-    #endregion
-
-    #region Custom Functions
-    bool FirstTimeopen = true;
-    private void OnDynamicLink(object sender, EventArgs args)
-    {
-        if (StartFocusCounter == 0 && ConstantsHolder.xanaConstants.isFirebaseInit)
-        {
-            return;
-        }
-
-        var dynamicLinkEventArgs = args as ReceivedDynamicLinkEventArgs;
-        Debug.LogFormat("Received dynamic link {0}",
-                        dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
+        Debug.LogError("ValidateLoginthenDeeplink ----> " + deeplinkUrl);
         if (Application.platform == RuntimePlatform.Android)
         {
             using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
@@ -141,166 +89,44 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 }
             }
         }
+        Debug.LogError("Validate---Before ----> ");
+      
+        Debug.LogError("Validate---Before ----> "+PlayerPrefs.GetInt("IsLoggedIn") +" ---- " + PlayerPrefs.GetInt("shownWelcome")+"  ----- "+ PlayerPrefs.GetString("PlayerName"));
 
-        vec2 = dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString.Split("=");
-        Debug.LogError("OnDynamicLink 11 ---> " + dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
-        foreach (string word in vec2)
+        while (PlayerPrefs.GetInt("IsLoggedIn") == 0 && PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetString("PlayerName") == "")
+            yield return new WaitForSeconds(0.5f);
+
+        yield return new WaitForSeconds(1.5f);
+        Debug.LogError("Validate--- After ----> ");
+
+        string[] urlBreadDown = deeplinkUrl.Split("=");
+        foreach (string word in urlBreadDown)
         {
-            if (vec2[1] == word)
+            if (urlBreadDown[1] == word)
             {
-                Debug.LogError(StartFocusCounter + "OnDynamicLink ---> " + word);
-                Debug.LogError(StartFocusCounter + "PlayerPrefs.GetIntshownWelcome ---> " + PlayerPrefs.GetInt("shownWelcome"));
-                Debug.LogError(StartFocusCounter + "PlayerPrefs.GetIntIsLoggedIn ---> " + PlayerPrefs.GetInt("IsLoggedIn"));
-
-                if(word.Contains("ENV"))
+                if (word.Contains("ENV"))
                 {
-                    word.Replace("ENV", "");
-                    EventArguments = word;
-                    DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
-                    if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
+                    EventArguments = word.Replace("ENV", "");
+                    if (FirstTimeopen)
                     {
-                        Debug.LogError("OnDynamicLink ---> calllllled");
-                        InvokeDeepLinkEnvironment(word);
-                        StartFocusCounter = 0;
-                    }
-                    else if (StartFocusCounter == 1)
-                    {
-                        if ((PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1) && FirstTimeopen)
-                        {
-                            FirstTimeopen = false;
-                            InvokeDeepLinkEnvironment(word);
-                        }
-                        Debug.LogError("OnDynamicLink ---> Fucking Focus");
-                        StartFocusCounter = 0;
+                        FirstTimeopen = false;
+                        Debug.LogError("ValidateLoginthenDeeplink ID ----> " + EventArguments);
+                        InvokeDeepLinkEnvironment(EventArguments);
                     }
                 }
-                else
-                {
-                    EventArguments = word;
-                    DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
-                    if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
-                    {
-                        Debug.LogError("OnDynamicLink ---> calllllled");
-                        InvokeDeepLink("focus");
-                        StartFocusCounter = 0;
-                    }
-                    else if (StartFocusCounter == 1)
-                    {
-                        if ((PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1) && FirstTimeopen)
-                        {
-                            FirstTimeopen = false;
-                            InvokeDeepLink("focus");
-                        }
-                        Debug.LogError("OnDynamicLink ---> Fucking Focus");
-                        StartFocusCounter = 0;
-                    }
-                }
-           
             }
         }
-    }
-
-    private void OnDynamicLinkEmpty(object sender, EventArgs args)
-    {
-
-    }
-
-    public void InvokeDeepLink(string _ArgData)
-    {
-        Debug.LogError("InvokeDeepLink ---> " + ConstantsGod.API_BASEURL + EventURl + EventArguments);
-        if (EventArguments == "")
-            return;
-
-        Debug.LogError("InvokeDeepLink ---> 000" + ConstantsGod.API_BASEURL + EventURl + EventArguments);
-
-        StartCoroutine(HitGetEventJson(ConstantsGod.API_BASEURL + EventURl + EventArguments));
+        yield return new WaitForSeconds(1f);
     }
     public void InvokeDeepLinkEnvironment(string environmentIDf)
     {
-        Debug.LogError("InvokeDeepLinkEnvironment ---> " + ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf);
+        Debug.LogError("InvokeDeepLinkEnvironment ID ----> " + environmentIDf);
         if (EventArguments == "")
             return;
 
-        Debug.LogError("InvokeDeepLinkEnvironment ---> 000" + ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf);
+        Debug.LogError("InvokeDeepLinkEnvironment ID ----> " + (ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf));
 
-        StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf,environmentIDf));
-    }
-    //Fetching event data from server
-    IEnumerator HitGetEventJson(string url)
-    {
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        {
-            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            yield return request.SendWebRequest();
-            EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(request.downloadHandler.text);
-            XanaEventDetails.eventDetails = eventDetails.data;
-
-            if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
-            {
-                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
-            }
-            else if (eventDetails.data.environmentId != 0)
-            {
-                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
-            }
-            else if (eventDetails.data.museumId != 0)
-            {
-                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
-            }
-
-
-            if (!request.isHttpError && !request.isNetworkError)
-            {
-                if (request.error == null)
-                {
-                    if (eventDetails.success == true)
-                    {
-                        XanaEventDetails.eventDetails.DataIsInitialized = true;
-                        yield return new WaitForEndOfFrame();
-
-                        StartCoroutine(DelayLoadRemainingSceneData());
-                        LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
-                        /*  if (!XanaEventDetails.eventDetails.name.Equals(""))
-                          {
-                              CheckEventDateTime();
-                          }
-                          else
-                          {
-                              LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
-                          }*/
-                    }
-                }
-            }
-
-            else
-            {
-                if (request.Equals(UnityWebRequest.Result.ConnectionError))
-                {
-                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
-                    yield return StartCoroutine(HitGetEventJson(url));
-                }
-                else
-                {
-                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
-                    if (request.error != null)
-                    {
-                        if (eventDetails.success == false)
-                        {
-                            yield return StartCoroutine(HitGetEventJson(url));
-                            if (!XanaEventDetails.eventDetails.name.Equals(""))
-                            {
-                                //print("==============Checking JSON data");
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //print("==============Getting Error in request");
-                    }
-                }
-            }
-            request.Dispose();
-        }
+        StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf, environmentIDf));
     }
     IEnumerator HitGetEnvironmentJson(string url, string envId)
     {
@@ -309,16 +135,18 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return request.SendWebRequest();
             EnvironmentDetails environmentDetails = JsonUtility.FromJson<EnvironmentDetails>(request.downloadHandler.text);
-
             ConstantsHolder.xanaConstants.MuseumID = envId;
 
             if (!request.isHttpError && !request.isNetworkError)
             {
                 if (request.error == null)
                 {
+                    Debug.LogError("HitGetEnvironmentJson ID --Successss--> " + envId);
+
                     if (environmentDetails.success == true)
                     {
-                        XanaEventDetails.eventDetails.DataIsInitialized = true;
+                        Debug.LogError("HitGetEnvironmentJson ID Sucesss 3 ----> " + envId);
+
                         yield return new WaitForSeconds(3f);
                         LoadingHandler.Instance.ShowLoading();
                         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -353,9 +181,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     }
                 }
             }
-
             else
             {
+                Debug.LogError("HitGetEnvironmentJson ID ----> " + envId);
+
                 if (request.Equals(UnityWebRequest.Result.ConnectionError))
                 {
                     yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
@@ -374,6 +203,194 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.Dispose();
         }
     }
+    /*  public void BindAfterInitilization()
+      {
+          DynamicLinks.DynamicLinkReceived += OnDynamicLink;
+          deepLink += InvokeDeepLink;
+      }
+      private void OnDisable()
+      {
+          deepLink -= InvokeDeepLink;
+      }
+      private void OnApplicationPause(bool pause)
+      {
+          if (pause)
+          {
+              EventArguments = "";
+              PauseCount += 1;
+          }
+      }
+      private void OnApplicationFocus(bool focus)
+      {
+
+          if (focus && PauseCount > 0)
+          {
+              StartFocusCounter = 2;
+              DynamicLinks.DynamicLinkReceived += OnDynamicLink;
+          }
+      }
+    #endregion
+
+    IEnumerator ValidateLoginthenDeeplink(object sender, EventArgs args)
+    {
+        var dynamicLinkEventArgs = args as ReceivedDynamicLinkEventArgs;
+        Debug.LogFormat("Received dynamic link {0}",
+                        dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString);
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            using (AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            {
+                using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+                {
+                    var intent = activity.Call<AndroidJavaObject>("getIntent");
+                    intent.Call("removeExtra", "com.google.firebase.dynamiclinks.DYNAMIC_LINK_DATA");
+                    intent.Call("removeExtra", "com.google.android.gms.appinvite.REFERRAL_BUNDLE");
+                }
+            }
+        }
+
+        string[] vec2 = dynamicLinkEventArgs.ReceivedDynamicLink.Url.OriginalString.Split("=");
+        foreach (string word in vec2)
+        {
+            if (vec2[1] == word)
+            {
+                if (word.Contains("ENV"))
+                {
+                    EventArguments = word.Replace("ENV", "");
+                    DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
+                    if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
+                    {
+                        InvokeDeepLinkEnvironment(EventArguments);
+                        StartFocusCounter = 0;
+                    }
+                    else if (StartFocusCounter == 1)
+                    {
+                        if ((PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1) && FirstTimeopen)
+                        {
+                            FirstTimeopen = false;
+                            InvokeDeepLinkEnvironment(EventArguments);
+                        }
+                        StartFocusCounter = 0;
+                    }
+                }
+                else
+                {
+                    EventArguments = word;
+                    DynamicLinks.DynamicLinkReceived += OnDynamicLinkEmpty;
+                    if (StartFocusCounter == 2 && (PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1))
+                    {
+                        InvokeDeepLink("focus");
+                        StartFocusCounter = 0;
+                    }
+                    else if (StartFocusCounter == 1)
+                    {
+                        if ((PlayerPrefs.GetInt("shownWelcome") == 1 || PlayerPrefs.GetInt("IsLoggedIn") == 1) && FirstTimeopen)
+                        {
+                            FirstTimeopen = false;
+                            InvokeDeepLink("focus");
+                        }
+                        StartFocusCounter = 0;
+                    }
+                }
+
+            }
+        }
+        yield return new WaitForSeconds(1f);
+
+    }
+    
+    #region Custom Functions
+    private void OnDynamicLink(object sender, EventArgs args)
+    {
+        if (StartFocusCounter == 0 && ConstantsHolder.xanaConstants.isFirebaseInit)
+        {
+            return;
+        }
+        StartCoroutine(ValidateLoginthenDeeplink(sender, args));
+    }
+
+    private void OnDynamicLinkEmpty(object sender, EventArgs args)
+    {
+
+    }
+
+    public void InvokeDeepLink(string _ArgData)
+    {
+        if (EventArguments == "")
+            return;
+
+        StartCoroutine(HitGetEventJson(ConstantsGod.API_BASEURL + EventURl + EventArguments));
+    }
+    public void InvokeDeepLinkEnvironment(string environmentIDf)
+    {
+        if (EventArguments == "")
+            return;
+
+        StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf,environmentIDf));
+    }
+    IEnumerator HitGetEventJson(string url)
+    {
+        using (UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return request.SendWebRequest();
+            EventDataDetails eventDetails = JsonUtility.FromJson<EventDataDetails>(request.downloadHandler.text);
+            XanaEventDetails.eventDetails = eventDetails.data;
+
+            if (!string.IsNullOrEmpty(eventDetails.data.xana_world_id))
+            {
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+            }
+            else if (eventDetails.data.environmentId != 0)
+            {
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.environmentId.ToString();
+            }
+            else if (eventDetails.data.museumId != 0)
+            {
+                ConstantsHolder.xanaConstants.MuseumID = eventDetails.data.xana_world_id;
+            }
+
+
+            if (!request.isHttpError && !request.isNetworkError)
+            {
+                if (request.error == null)
+                {
+                    if (eventDetails.success == true)
+                    {
+                        XanaEventDetails.eventDetails.DataIsInitialized = true;
+                        yield return new WaitForEndOfFrame();
+
+                        StartCoroutine(DelayLoadRemainingSceneData());
+                        LoadingHandler.Instance.EventLoaderCanvas.SetActive(true);
+                    }
+                }
+            }
+
+            else
+            {
+                if (request.Equals(UnityWebRequest.Result.ConnectionError))
+                {
+                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+                    yield return StartCoroutine(HitGetEventJson(url));
+                }
+                else
+                {
+                    LoadingHandler.Instance.EventLoaderCanvas.SetActive(false);
+                    if (request.error != null)
+                    {
+                        if (eventDetails.success == false)
+                        {
+                            yield return StartCoroutine(HitGetEventJson(url));
+                        }
+                    }
+             
+                }
+            }
+            request.Dispose();
+        }
+    }
+    
+
     public void GetEventJsonData(string _jsonData)
     {
         XanaEventDetails JsonDataObj1 = JsonUtility.FromJson<XanaEventDetails>(_jsonData);
@@ -529,5 +546,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         PopupMessageHandler.Instance.SetText(PopupMessageHandler.Instance.timerText, _timertext);
         PopupMessageHandler.Instance.SetPanelState(_panelstate);
     }
+    */
     #endregion
 }

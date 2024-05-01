@@ -70,8 +70,6 @@ public class Environment2
 {
     public int id;
     public string name;
-
-
 }
 [System.Serializable]
 public class EventDataDetails
@@ -79,14 +77,15 @@ public class EventDataDetails
     public bool success;
     public XanaEventDetails data;
     public string msg;
- }  
-
+ }
+[System.Serializable]
 public class EnvironmentDetails
 {
     public bool success;
     public XanaEnvironmentDetails data;
     public string msg;
 }
+[System.Serializable]
 public class XanaEnvironmentDetails
 {
     public string name;
