@@ -38,7 +38,6 @@ namespace Metaverse
         private void OnApplicationQuit()
         {
             PhotonNetwork.Destroy(currentDummyPlayer);
-            HomeSceneLoader.callRemove = true;
             PhotonNetwork.LeaveRoom(false);
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);

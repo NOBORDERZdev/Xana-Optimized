@@ -34,7 +34,6 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     //Custome Variables
     public bool initializeCategoryRow = false;
     public AllWorldManage allWorldManageRef;
-    public WorldSpacesHomeScreen _spaceCategDataInitializer;
     public SNSAPILoaderController paginationLoaderRef;
     SpaceScrollRowHandler masterData;
     public List<Sprite> categIcons = new List<Sprite>();
@@ -223,9 +222,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         // if the scroller is at the end of the list and not already loading
         if (scroller.NormalizedScrollPosition >= 1f && !_loadingNew)
         {
-            _spaceCategDataInitializer.tagAsCategoryData.Clear();
-            _spaceCategDataInitializer.CategorytagNames.Clear();
-            if (!(_spaceCategDataInitializer._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
+            WorldManager.instance.worldSpaceHomeScreenRef.tagAsCategoryData.Clear();
+            WorldManager.instance.worldSpaceHomeScreenRef.CategorytagNames.Clear();
+            if (!(WorldManager.instance.worldSpaceHomeScreenRef._tagsTraversedCount >= WorldSpacesHomeScreen.mostVisitedTagList.Count - 1))
             {
                 masterScroller.GetComponent<ScrollRect>().enabled = false;
 
@@ -250,8 +249,9 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
 
     public void LoadCategoryTagsWithDelay()
     {
+        Debug.LogError("hereerererer");
         paginationLoaderRef.ShowApiLoader(true);
-        _spaceCategDataInitializer.GetUsersMostVisitedTags();
+        WorldManager.instance.worldSpaceHomeScreenRef.GetUsersMostVisitedTags();
     }
 
         #endregion

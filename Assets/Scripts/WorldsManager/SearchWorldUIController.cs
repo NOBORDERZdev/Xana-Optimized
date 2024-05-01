@@ -1,4 +1,5 @@
 using AdvancedInputFieldPlugin;
+using Photon.Pun.Demo.PunBasics;
 using System;
 using TMPro;
 using UnityEngine;
@@ -30,7 +31,7 @@ public class SearchWorldUIController : MonoBehaviour
     public void ClearInputField()
     {
         searchWorldInput.Clear();
-        WorldManager.instance.AllWorldTabReference.BackToPreviousScreen();
+        WorldManager.instance.WorldScrollReset();
         //FlexibleRect.OnAdjustSize?.Invoke(false);
     }
     public void GetSearchBarStatus()

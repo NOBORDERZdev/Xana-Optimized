@@ -229,7 +229,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            //LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = Web3AuthSociallogin.NewRegistration;
