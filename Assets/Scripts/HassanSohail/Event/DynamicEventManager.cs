@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
-using System.Security.Policy;
+
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
