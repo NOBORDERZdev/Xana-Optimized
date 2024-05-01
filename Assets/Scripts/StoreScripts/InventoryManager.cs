@@ -322,7 +322,7 @@ public class InventoryManager : MonoBehaviour
     IEnumerator waitAndDeeplink()
     {
         yield return new WaitForSeconds(2);
-        DynamicEventManager.deepLink?.Invoke("Come from store manager");
+       // DynamicEventManager.deepLink?.Invoke("Come from store manager");
     }
 
     //void ChangecharacterOnCLickFromserver()

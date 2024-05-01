@@ -11,12 +11,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 {
     #region Variables
 
-    public delegate void DeepLink(string arg);
-    public static DeepLink deepLink;
-    DateTime eventLocalStartDateTime, eventlocalEndDateTime, eventUnivStartDateTime, eventUnivEndDateTime;
-    public string[] eventStartDateTime;
-    public string[] eventEndDateTime;
-    private string EventURl = "/userCustomEvent/get-event-json/";
+    //DateTime eventLocalStartDateTime, eventlocalEndDateTime, eventUnivStartDateTime, eventUnivEndDateTime;
+   // public string[] eventStartDateTime;
+   // public string[] eventEndDateTime;
+   // private string EventURl = "/userCustomEvent/get-event-json/";
     private string EnvironmentURl = "/world/get-world-custom-data/";
     /// Testnet https://api-test.xana.net/world/get-world-custom-data/:worldId
     // TestEvent  "https://api-test.xana.net/userCustomEvent/get-event-json/"
@@ -24,8 +22,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //    ConstantsGod.API_BASEURL = "https://app-api.xana.net";
     //  ConstantsGod.API_BASEURL = "https://api-test.xana.net";
     private string EventArguments;
-    private int PauseCount;
-    private int StartFocusCounter;
+   // private int PauseCount;
+   // private int StartFocusCounter;
     bool FirstTimeopen = true;
     #endregion
 
@@ -68,7 +66,10 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
+
         
+
+
     }
     public void OpenEnvironmentDeeplink(string deeplinkUrl)
     {
@@ -98,8 +99,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
         yield return new WaitForSeconds(1.5f);
         Debug.LogError("Validate--- After ----> ");
-
-        string[] urlBreadDown = deeplinkUrl.Split("=");
+#if UNITY_ANDROID
+  string[] urlBreadDown = deeplinkUrl.Split("=");
         foreach (string word in urlBreadDown)
         {
             if (urlBreadDown[1] == word)
@@ -116,6 +117,35 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 }
             }
         }
+#endif
+#if UNITY_IOS
+
+        if (deeplinkUrl.Contains("ENV"))
+        {
+            int envIndex = deeplinkUrl.IndexOf("ENV");
+            int ampersandIndex = deeplinkUrl.IndexOf("&");
+
+            if (envIndex != -1 && ampersandIndex != -1)
+            {
+                // Extract the substring between "ENV" and "&"
+                string envSubstring = deeplinkUrl.Substring(envIndex + 3, ampersandIndex - envIndex - 3);
+
+                if (FirstTimeopen)
+                {
+                    EventArguments = envSubstring;
+                    FirstTimeopen = false;
+                    Debug.LogError("IOS ---> ValidateLoginthenDeeplink ID ----> " + EventArguments);
+                    InvokeDeepLinkEnvironment(EventArguments);
+                }
+            }
+            else
+            {
+                Debug.LogError("IOS ----  ValidateLoginthenDeeplink ID ----> " + EventArguments);
+
+            }
+        }
+#endif
+
         yield return new WaitForSeconds(1f);
     }
     public void InvokeDeepLinkEnvironment(string environmentIDf)
