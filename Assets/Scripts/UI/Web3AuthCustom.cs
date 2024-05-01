@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
-
+using UnityEngine.UI;
 
 public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
@@ -34,6 +34,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     bool isNewReg;
     internal string publicAdress;
     internal string msg1 ,msg2,currentLan;
+    public List<Button> myButtons;
 
 
     private void Start()
@@ -152,7 +153,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+        }
 
         web3Auth.login(options);
     }
@@ -169,7 +173,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             mfaLevel = MFALevel.NONE,
 
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+        }
 
         web3Auth.login(options);
     }
@@ -191,7 +198,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+        }
 
         web3Auth.login(options);
     }
@@ -219,6 +229,10 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     private void onLogin(Web3AuthResponse response)
     {
+        foreach (Button button in myButtons)
+        {
+            button.interactable = true;
+        }
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;

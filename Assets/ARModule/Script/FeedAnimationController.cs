@@ -28,10 +28,6 @@ public class FeedAnimationController : MonoBehaviour
         StartCoroutine(FindPlayerAvatar());
         yield return new WaitForSeconds(.5f);
         StartCoroutine(GetAllAnimations());
-        ////////////Added By Abdullah Rashid For eye Blinking in Create Scene
-        EyesBlinking.instance.StoreBlendShapeValues();
-        yield return new WaitForSeconds(1.0f);
-        StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
     }
 
     IEnumerator FindPlayerAvatar()
