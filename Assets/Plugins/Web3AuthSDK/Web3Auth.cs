@@ -136,7 +136,7 @@ public class Web3Auth : MonoBehaviour
         {
             return;
         }
-        else
+        else if (url.Contains("web3auth"))
         {
              this.setResultUrl(new Uri(url));
         }
