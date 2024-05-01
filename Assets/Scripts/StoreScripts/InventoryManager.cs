@@ -526,6 +526,8 @@ public class InventoryManager : MonoBehaviour
 
         if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
             GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
+
+        UnselectAllSelectedItemOnReset();
     }
     void Character_ResettoLastSaved()
     {
@@ -881,7 +883,7 @@ public class InventoryManager : MonoBehaviour
             dataListOfItems.Clear();
             dataListOfItems = JsonDataObj1.data[0].items;
             PutDataInOurAPPNewAPI();
-            CheckAPILoaded = false; // Already Have the response not calling the API -- Resetting the value
+            CheckAPILoaded = true; // Already Have the response not calling the API -- Resetting the value
             yield break;
         }
         Debug.LogError("HitALLItemsAPI");
@@ -1812,8 +1814,8 @@ public class InventoryManager : MonoBehaviour
 
                 break;
             case 7:
-                AllCategoriesData[18].parentObj.SetActive(false);
-                AllCategoriesData[26].parentObj.SetActive(true);
+                AllCategoriesData[16].parentObj.SetActive(false); // Avatar - Skin
+                AllCategoriesData[26].parentObj.SetActive(true); // Color - Skin
 
 
                 UpdateColor(_index);
@@ -4474,6 +4476,28 @@ public class InventoryManager : MonoBehaviour
                 }
 
                 ConstantsHolder.xanaConstants.colorSelection[i] = null;
+            }
+        }
+    }
+
+    void UnselectAllSelectedItemOnReset()
+    {
+        foreach (var categoryData in AllCategoriesData)
+        {
+            var parentTransform = categoryData.parentObj.transform;
+            for (int j = 0; j < parentTransform.childCount; j++)
+            {
+                var childTransform = parentTransform.GetChild(j);
+                int chldCount = childTransform.GetComponent<PresetData_Jsons>() ? 0 : 1;
+
+                if (childTransform.childCount > (chldCount +1) )
+                {
+                    var image = childTransform.GetChild(chldCount).GetComponent<Image>();
+                    if (image != null)
+                    {
+                        image.enabled = false;
+                    }
+                }
             }
         }
     }
