@@ -84,6 +84,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
                 }
                 LoadingHandler.Instance.ShowLoading();
+                StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(1f,true));
 
                 if (ConstantsHolder.xanaConstants.needToClearMemory)
                     AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
@@ -141,7 +142,6 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         ConstantsHolder.xanaConstants.CurrentSceneName = "Addressable";
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
-        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(UnityEngine.Random.Range(6f, 20f), true));
         SceneManager.LoadSceneAsync(mainScene);
     }
 
