@@ -9,20 +9,12 @@ public class TextCheckAndAlign : MonoBehaviour
     public GameObject textComponentGameObject;
     public TextMeshProUGUI textComponent;
     public float MarginBottom;
-    public bool IsUseForChangeAllign;
-    public bool IsUseForChangeMargin;
+    public bool IsUseForChangeAllign, IsUseForChangeMargin, IsUseForChangePOS;
     public float X, Y;
 
     void Start()
     {
-        if (textComponentGameObject != null)
-        {
-            if (IsJapaneseRegex(textComponent.text))
-            {
-                textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X, Y, 0f);
-            }
-        }
-        Invoke("ChangeCharacterSpacingForJP", 1f);
+        Invoke("ChangeCharacterSpacingForJP", 0.1f);
     }
    public void ChangeCharacterSpacingForJP()
     {
@@ -30,11 +22,18 @@ public class TextCheckAndAlign : MonoBehaviour
         {
             if (IsUseForChangeAllign)
             {
-            textComponent.characterSpacing = -15f;
+                textComponent.characterSpacing = -15f;
             }
             if (IsUseForChangeMargin)
             {
-            textComponent.margin = new Vector4(0, 0, 0, MarginBottom);
+                textComponent.margin = new Vector4(0, 0, 0, MarginBottom);
+            }
+            if (textComponentGameObject != null)
+            {
+               if(IsUseForChangePOS) 
+                {
+                    textComponentGameObject.GetComponent<RectTransform>().localPosition = new Vector3(X, Y, 0f);
+                }
             }
         }
     }

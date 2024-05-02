@@ -191,11 +191,6 @@ public class AvatarController : MonoBehaviour
 
             InitializeAvatar(canModifyFile);
         }
-
-        if (EyesBlinking.instance)
-        {
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        }
     }
 
     /// <summary>
