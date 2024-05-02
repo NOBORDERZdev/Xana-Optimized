@@ -764,7 +764,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         isEnvLoaded = true;
         yield return new WaitForSeconds(1.75f);
-        LoadingHandler.Instance.HideLoading();
+        if (!ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            LoadingHandler.Instance.HideLoading();
+
+        }
         // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         //LoadingHandler.Instance.UpdateLoadingStatusText("");
 
