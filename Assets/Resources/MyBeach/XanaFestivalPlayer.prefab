@@ -53,6 +53,7 @@ MonoBehaviour:
   APIHandler: {fileID: 7131525990368517632}
   videoPlayerAudioSource: {fileID: 3558926172653405874}
   mediaPlayerAudioSource: {fileID: 6592240787134628983}
+  streamYoutubeVideo: {fileID: 0}
 --- !u!114 &2370059558418852991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +69,10 @@ MonoBehaviour:
   streamAbleUrl: 
   mediaPlayer: {fileID: 3433836251880016732}
   videoPlayer: {fileID: 3805648036091765640}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!114 &7131525990368517632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -795,16 +800,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -923,7 +918,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1218,6 +1216,7 @@ GameObject:
   - component: {fileID: 3433836251880016732}
   - component: {fileID: 5975590294647308262}
   - component: {fileID: 4929145585370904188}
+  - component: {fileID: 1674409239007035758}
   m_Layer: 0
   m_Name: LiveStreamPlayer
   m_TagString: Untagged
@@ -1361,16 +1360,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -1489,7 +1478,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1638,3 +1630,17 @@ MonoBehaviour:
   _audioOutputMode: 1
   _channelMask: 65535
   _supportPositionalAudio: 0
+--- !u!114 &1674409239007035758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7995507085264838646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b91765924d37346b9181c3c2313ba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotateScreen: 1
+  rotateScreenValue: {x: 0, y: 180, z: 180}
