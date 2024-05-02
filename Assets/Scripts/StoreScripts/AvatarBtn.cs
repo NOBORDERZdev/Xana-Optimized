@@ -638,7 +638,8 @@ public class AvatarBtn : MonoBehaviour
                     }
                 case "EyesMorph":
                     {
-                        EyesBlinking.instance.isBlinking = false;       // Added by Ali Hamza
+                        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+                            GameManager.Instance.eyesBlinking.isBlinking = false;
 
                         AvatarCustomizationManager.Instance.OnFrontSide();
                         GameManager.Instance.UiManager._footerCan.SetActive(false);

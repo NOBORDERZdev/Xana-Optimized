@@ -31,6 +31,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public ResponseHolder apiResponseHolder;
     public static List<string> mostVisitedTagList = new List<string>();
     public int totalTagsInstCount = 0, _tagsTraversedCount = 0;
+    public int defaultWorldLoadPC = 15;
     public List<TagsCategoryData> tagAsCategoryData = new List<TagsCategoryData>();
     public List<string> CategorytagNames = new List<string>();
     WorldItemDetail _event;
@@ -83,7 +84,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     public void FeatureSpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FeaturedSpaces, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FeaturedSpaces, defaultWorldLoadPC);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -104,7 +105,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void HotSpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotSpaces, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotSpaces, defaultWorldLoadPC);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -124,7 +125,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void HotGamesLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotGames, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.HotGames, defaultWorldLoadPC);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -144,7 +145,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void FollowingSpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FolloingSpace, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.FolloingSpace, defaultWorldLoadPC);
         WorldManager.instance.followingPN = 1;
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
@@ -175,7 +176,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void MySpaceLoading()
     {
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.MySpace, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.MySpace, defaultWorldLoadPC);
         StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
@@ -284,7 +285,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         worldManager.SearchKey = mostVisitedTagList[index];
         //categoryHeading[index].text = mostVisitedTagList[index];
         //categoryHeading[index].GetComponent<TextLocalization>().LocalizeTextText(categoryHeading[index].text);
-        string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, 10);
+        string finalAPIURL = worldManager.PrepareApiURL(APIURL.SearchWorldByTag, defaultWorldLoadPC);
         yield return StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)

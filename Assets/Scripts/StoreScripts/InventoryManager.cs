@@ -473,8 +473,8 @@ public class InventoryManager : MonoBehaviour
         UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
         //ConstantsHolder.xanaConstants._lastClickedBtn = null;
 
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
     void Character_ResettoLastSaved()
     {
@@ -536,8 +536,8 @@ public class InventoryManager : MonoBehaviour
         else
             UpdateStoreSelection(ConstantsHolder.xanaConstants.currentButtonIndex);
 
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
 
 
@@ -4797,8 +4797,8 @@ public class InventoryManager : MonoBehaviour
     {
         //print("undo call");
         UndoClicked = true;
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
 
     /// <summary>
@@ -4808,8 +4808,8 @@ public class InventoryManager : MonoBehaviour
     {
         //print("redo call");
         RedoClicked = true;
-        if (EyesBlinking.instance)
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
+        if (GameManager.Instance.eyesBlinking != null)          // Added by Ali Hamza 
+            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
     }
     public void UpdateXanaConstants()
     {

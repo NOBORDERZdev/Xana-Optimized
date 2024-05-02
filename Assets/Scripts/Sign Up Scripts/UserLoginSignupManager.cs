@@ -70,6 +70,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public userRoleScript userRoleScriptScriptableObj;
 
     public static UserLoginSignupManager instance;
+    EyesBlinking ref_EyesBlinking;
 
     private void OnEnable()
     {
@@ -82,10 +83,13 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        if (EyesBlinking.instance != null)
+        if (ref_EyesBlinking == null)
+            ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
+
+        if (ref_EyesBlinking)
         {
-            EyesBlinking.instance.StoreBlendShapeValues();
-            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+            ref_EyesBlinking.StoreBlendShapeValues();
+            StartCoroutine(ref_EyesBlinking.BlinkingStartRoutine());
         }
     }
 
@@ -433,6 +437,10 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+        }
+        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
+        {
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         }
     }
 
@@ -1463,12 +1471,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
+        
         Debug.Log("Logout Successfully");
-        if (_web3APIforWeb2._OwnedNFTDataObj != null)
-        {
-            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        }
-
+        
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleScriptScriptableObj.userNftRoleSlist.Clear();
@@ -1496,6 +1501,9 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
         Web3AuthCustom.Instance.logout();
+        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy) { 
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        }
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
@@ -1515,6 +1523,11 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
         UserLoginSignupManager.instance.ShowWelcomeScreen();
+        if (_web3APIforWeb2._OwnedNFTDataObj != null)
+        {
+            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        }
+
         yield return null;
     }
 

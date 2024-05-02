@@ -297,15 +297,20 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    Coroutine coroutine;
     // Toogle camera first person to therd person
     public void SwitchCameraButton()
     {
         //Debug.Log("0");
+
         isFirstPerson = !isFirstPerson;
         gravityVector.y = 0;
 
         GamePlayUIHandler.inst.OnChangehighlightedFPSbutton(isFirstPerson);
+        if(coroutine != null) 
+        {
+            StopCoroutine(coroutine);
+        }
         if (isFirstPerson)
         {
 
@@ -319,7 +324,7 @@ public class PlayerController : MonoBehaviour
             gyroButton_Portait.SetActive(true);
 
             firstPersonCameraObj.SetActive(true);
-            StartCoroutine(FadeImage(true));
+            coroutine = StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(firstPersonCameraObj.GetComponent<Camera>());
             //gameObject.transform.localScale = new Vector3(0, 1, 0);
             DisablePlayerOnFPS();
@@ -338,7 +343,7 @@ public class PlayerController : MonoBehaviour
 
             firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
-            StartCoroutine(FadeImage(true));
+            coroutine = StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(ReferencesForGamePlay.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
             controllerCamera.SetActive(true);
@@ -1061,10 +1066,13 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else // Reseating animator to idel when joystick is not moving.
+        else // Reseating animator to idel when joystick is not moving-----
         {
-            PlayerIsIdle?.Invoke();
-            UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            if (_IsGrounded) // this check is added because not to enable bottom buttons early while the char is in jump state //
+            {
+                PlayerIsIdle?.Invoke();
+                UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            }
             //checking moving platform
             if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {

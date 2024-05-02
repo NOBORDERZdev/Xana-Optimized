@@ -54,7 +54,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
             _mydatatosend[1] = GetJsonFolderData() as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
-            Invoke(nameof(CallRpcInvoke), /*1.2f*/2);
+            Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
             //CallRpcInvoke();
         }
         if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
@@ -373,11 +373,11 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 #endregion
                 StartCoroutine(otherPlayer.RPCMaskApply(otherPlayer.gameObject));
 
-            //if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
-            //{
-            //    otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
-            //    StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
-            //}
+                if (otherPlayer.GetComponent<EyesBlinking>())                      // Added by Ali Hamza
+                {
+                    otherPlayer.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+                    StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+                }
             }
         }
     }
