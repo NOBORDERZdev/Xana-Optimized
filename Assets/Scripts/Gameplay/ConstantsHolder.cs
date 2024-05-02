@@ -133,6 +133,7 @@ public class ConstantsHolder : MonoBehaviour
     public enum MeetingStatus { End, Inprogress, HouseFull }
     [SerializeField]
     public MeetingStatus meetingStatus;
+    public string recipientToken;
 
     public bool isBackToParentScane = false;
     public string parentSceneName;

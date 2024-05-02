@@ -8,6 +8,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
+using Firebase.Messaging;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
@@ -86,6 +87,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 
                 BindAfterInitilization();
                 ConstantsHolder.xanaConstants.isFirebaseInit = true;
+                FirebaseMessaging.TokenReceived += OnTokenReceived;
+
                 InvokeDeepLink("focus");
             }
             else
@@ -95,6 +98,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 // Firebase Unity SDK is not safe to use here.
             }
         });
+    }
+
+    void OnTokenReceived(object sender, TokenReceivedEventArgs token)
+    {
+        ConstantsHolder.xanaConstants.recipientToken = token.Token;
+        Handheld.Vibrate();
+        Debug.LogError("FCM Token: " + token.Token);
+        // Save or use the token as needed
     }
 
     public void BindAfterInitilization()
