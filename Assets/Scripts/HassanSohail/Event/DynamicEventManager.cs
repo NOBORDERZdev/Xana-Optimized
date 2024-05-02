@@ -88,6 +88,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 BindAfterInitilization();
                 ConstantsHolder.xanaConstants.isFirebaseInit = true;
                 FirebaseMessaging.TokenReceived += OnTokenReceived;
+                FirebaseMessaging.MessageReceived += OnReceiveMsg;
 
                 InvokeDeepLink("focus");
             }
@@ -106,6 +107,12 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
         Handheld.Vibrate();
         Debug.LogError("FCM Token: " + token.Token);
         // Save or use the token as needed
+    }
+
+    void OnReceiveMsg(object receiver, MessageReceivedEventArgs msg)
+    {
+        Handheld.Vibrate();
+        Debug.LogError("FCM Message: " + msg.Message);
     }
 
     public void BindAfterInitilization()

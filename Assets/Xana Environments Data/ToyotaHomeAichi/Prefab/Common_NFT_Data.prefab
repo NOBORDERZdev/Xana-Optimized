@@ -53009,6 +53009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984769952214371201}
   - component: {fileID: 5984769952214371202}
+  - component: {fileID: 555933013972052003}
   m_Layer: 0
   m_Name: Common_NFT_Data
   m_TagString: Untagged
@@ -53227,3 +53228,19 @@ MonoBehaviour:
   renderTexture_1x1: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
   renderTexture_4x3: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
   currentRoom: {fileID: 0}
+  meetingTxtUpdate: {fileID: 0}
+  meetingStatus: {fileID: 0}
+--- !u!114 &555933013972052003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984769952214371200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serverKey: AAAAk9GwOwQ:APA91bEC8oSce1_-Br-VCqagawpYZprcNazEad8Kf-JNJUyeevcvpCtCIFi03w5vbEJnCtt9_DKnPqAojPtJ-00dfCVfuQLJ_hOIsFpBosoPzTrkmO0zftytcB_u6Mt-tjcwA0Za0LPN
+  recipientToken: RECIPIENT_FCM_TOKEN
