@@ -128,7 +128,7 @@ public class Web3Auth : MonoBehaviour
         if (this.web3AuthOptions.sessionTime != null)
             this.initParams["sessionTime"] = this.web3AuthOptions.sessionTime;
     }
-
+    bool firsttimeflag = true;
     private void onDeepLinkActivated(string url)
     {
         Debug.LogError("DeepUrl --- " + url);
@@ -138,7 +138,21 @@ public class Web3Auth : MonoBehaviour
         }
         else if (url.Contains("web3auth"))
         {
-             this.setResultUrl(new Uri(url));
+#if UNITY_IOS
+        if(firsttimeflag)
+        {
+            firsttimeflag = false;
+        }
+        else
+        {
+            this.setResultUrl(new Uri(url));
+        }
+#endif
+
+#if UNITY_ANDROID
+            this.setResultUrl(new Uri(url));
+#endif
+
         }
     }
 
