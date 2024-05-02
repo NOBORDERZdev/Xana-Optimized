@@ -42,6 +42,15 @@ public class CharacterHandler : MonoBehaviour
 
     private void UpdateAvatarRefrences(AvatarData _avatarData)
     {
+        if (_avatarData.avatar_parent.GetComponent<EyesBlinking>() != null)
+        {
+            _avatarData.avatar_parent.GetComponent<EyesBlinking>().StoreBlendShapeValues();
+            if (activePlayerGender != _avatarData.avatar_Gender)
+            {
+                StartCoroutine(_avatarData.avatar_parent.GetComponent<EyesBlinking>().BlinkingStartRoutine());
+            }
+        }
+
         activePlayerGender = _avatarData.avatar_Gender;
 
         if (GameManager.Instance != null)
@@ -53,7 +62,7 @@ public class CharacterHandler : MonoBehaviour
             GameManager.Instance.characterBodyParts = _avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
             GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
             GameManager.Instance.ActorManager.Init();
-
+            GameManager.Instance.eyesBlinking = _avatarData.avatar_parent.GetComponent<EyesBlinking>();
         }
         if (SaveCharacterProperties.instance != null)
         {
