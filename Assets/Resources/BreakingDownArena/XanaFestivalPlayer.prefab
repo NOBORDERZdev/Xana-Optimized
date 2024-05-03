@@ -1018,6 +1018,7 @@ GameObject:
   - component: {fileID: 8959878582016671529}
   - component: {fileID: 186324052971797259}
   - component: {fileID: 2379941322116222213}
+  - component: {fileID: 3408088122652500214}
   - component: {fileID: 171820914198464300}
   - component: {fileID: 6677073303525474817}
   - component: {fileID: 2746636564689956113}
@@ -1096,6 +1097,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3408088122652500214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443557185299102139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f12ae4e703e0354bb90ee5b6081e521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_filter: {fileID: 4732646159888516108}
+  iosScreen: {fileID: 5060444177187149915, guid: 720314bc0018b3c4e83e5d15d2f76e73, type: 3}
+  androidScreen: {fileID: 5060444177187149915, guid: 88abfbc7d387334478edb3528d27f58a, type: 3}
 --- !u!64 &171820914198464300
 MeshCollider:
   m_ObjectHideFlags: 0
