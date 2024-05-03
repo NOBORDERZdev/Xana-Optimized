@@ -39,7 +39,7 @@ public class CharacterHandler : MonoBehaviour
                 break;
         }
 
-        InventoryManager.upateAssetOnGenderChanged?.Invoke();
+        //InventoryManager.upateAssetOnGenderChanged?.Invoke();
         //if(ConstantsHolder.xanaConstants.isStoreActive)
 
     }
@@ -78,10 +78,14 @@ public class CharacterHandler : MonoBehaviour
             }
 
         }
-        if (SaveCharacterProperties.instance != null)
+        if (SaveCharacterProperties.instance != null && GameManager.Instance != null)
         {
             SaveCharacterProperties.instance.charcterBodyParts = GameManager.Instance.characterBodyParts;
             SaveCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
+            if (SaveCharacterProperties.instance.characterController.name.Contains("Female"))
+                SaveCharacterProperties.instance.SaveItemList.gender = "Female";
+            else
+                SaveCharacterProperties.instance.SaveItemList.gender = "Male";
         }
         
         if (playerNameCanvas && playerPostCanvas && !ConstantsHolder.xanaConstants.isStoreActive)

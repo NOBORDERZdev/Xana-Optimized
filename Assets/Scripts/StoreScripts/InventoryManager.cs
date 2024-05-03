@@ -78,7 +78,7 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistSkinToneColor;
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
-   
+
     //[Header("Categories Panel Cloths")]
     //public Transform ParentOfBtnsForHeads;
     //public Transform ParentOfBtnsForFace;
@@ -282,7 +282,7 @@ public class InventoryManager : MonoBehaviour
         CheckAPILoaded = true;
         if (ArrayofMainCategories == null || ArrayofMainCategories.Length == 0)
             GetAllMainCategories();
-     
+
         if (SubCategoriesList.Count == 0)
             GetAllSubCategories();
 
@@ -304,14 +304,15 @@ public class InventoryManager : MonoBehaviour
 
     void ChangeItemsOnGenderChange()
     {
+        CharacterHandler _charHandler = CharacterHandler.instance;
         for (int i = 0; i < AllCategoriesData.Count; i++)
         {
             if (AllCategoriesData[i].subItems.Count > 0)
             {
                 for (int j = 0; j < AllCategoriesData[i].subItems.Count; j++)
                 {
-                    if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && AllCategoriesData[i].subItems[j].gender.Equals("0")) ||
-                         (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && AllCategoriesData[i].subItems[j].gender.Equals("1")))
+                    if ((_charHandler.activePlayerGender == AvatarGender.Male && AllCategoriesData[i].subItems[j].gender.Equals("0")) ||
+                         (_charHandler.activePlayerGender == AvatarGender.Female && AllCategoriesData[i].subItems[j].gender.Equals("1")))
                     {
                         Debug.Log("Waqas: Gender Matched With Asset");
                         AllCategoriesData[i].subItems[j].obj.SetActive(true);
@@ -323,7 +324,7 @@ public class InventoryManager : MonoBehaviour
                 }
             }
         }
-        
+
         // Update Character Reference On Gender Change
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
@@ -632,7 +633,7 @@ public class InventoryManager : MonoBehaviour
                 //Resources.UnloadUnusedAssets();
             }
         }
-       
+
         //if (ParentOfBtnsAvatarEyes.childCount >= 1) // eyes
         //{
         //    print("~~~~~~~ ParentOfBtnsAvatarEyes" + ParentOfBtnsAvatarEyes.childCount);
@@ -641,7 +642,7 @@ public class InventoryManager : MonoBehaviour
         //        Destroy(ParentOfBtnsAvatarEyes.GetChild(i).gameObject);
         //    }
         //}
-      
+
         if (AllCategoriesData[16].parentObj.transform.childCount >= 1) // Avatar Skin
         {
             //print("~~~~~~~ ParentOfBtnsAvatarSkin" + ParentOfBtnsAvatarSkin.childCount);
@@ -1590,7 +1591,7 @@ public class InventoryManager : MonoBehaviour
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex + 8].id, false);
             }
-            
+
         }
         else
         {
@@ -3356,7 +3357,7 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
         }
-       
+
 
         if (TempSubcategoryParent != null)
         {
@@ -3381,11 +3382,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-
+    CharacterHandler _charHandler;
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
-
+        _charHandler = CharacterHandler.instance;
         GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, parentObj);
         L_ItemBtnObj.transform.parent = parentObj;
         L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
@@ -3417,13 +3418,13 @@ public class InventoryManager : MonoBehaviour
         }
 
         TempitemDetail.Add(abc);
-        
+
         // Save Items References
         SubitemData subitemData = new SubitemData();
         subitemData.gender = dataListOfItems[objId].assetGender;
         subitemData.obj = L_ItemBtnObj;
 
-        if(AllCategoriesData[myIndexInList].subItems == null)
+        if (AllCategoriesData[myIndexInList].subItems == null)
             AllCategoriesData[myIndexInList].subItems = new List<SubitemData>();
 
         AllCategoriesData[myIndexInList].subItems.Add(subitemData);
@@ -3432,8 +3433,8 @@ public class InventoryManager : MonoBehaviour
             // Getting int values from Server for assets Gender 0 for male and 1 for female
             // In Xana we are uisng string for geneder specificaton
 
-            if ((SaveCharacterProperties.instance.SaveItemList.gender.Equals("Male") && !dataListOfItems[objId].assetGender.Equals("0")) ||
-                (SaveCharacterProperties.instance.SaveItemList.gender.Equals("Female") && !dataListOfItems[objId].assetGender.Equals("1")))
+            if ((_charHandler.activePlayerGender == AvatarGender.Male && !dataListOfItems[objId].assetGender.Equals("0")) ||
+                (_charHandler.activePlayerGender == AvatarGender.Female && !dataListOfItems[objId].assetGender.Equals("1")))
             {
                 Debug.Log("Waqas: Gender not Matched With Asset");
                 L_ItemBtnObj.SetActive(false);
@@ -3441,7 +3442,7 @@ public class InventoryManager : MonoBehaviour
         }
 
     }
-    
+
 
     int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)
     {
@@ -4482,24 +4483,24 @@ public class InventoryManager : MonoBehaviour
 
     void UnselectAllSelectedItemOnReset()
     {
-        foreach (var categoryData in AllCategoriesData)
-        {
-            var parentTransform = categoryData.parentObj.transform;
-            for (int j = 0; j < parentTransform.childCount; j++)
-            {
-                var childTransform = parentTransform.GetChild(j);
-                int chldCount = childTransform.GetComponent<PresetData_Jsons>() ? 0 : 1;
+        //foreach (var categoryData in AllCategoriesData)
+        //{
+        //    var parentTransform = categoryData.parentObj.transform;
+        //    for (int j = 0; j < parentTransform.childCount; j++)
+        //    {
+        //        var childTransform = parentTransform.GetChild(j);
+        //        int chldCount = childTransform.GetComponent<PresetData_Jsons>() ? 0 : 1;
 
-                if (childTransform.childCount > (chldCount +1) )
-                {
-                    var image = childTransform.GetChild(chldCount).GetComponent<Image>();
-                    if (image != null)
-                    {
-                        image.enabled = false;
-                    }
-                }
-            }
-        }
+        //        if (childTransform.childCount > (chldCount + 1))
+        //        {
+        //            var image = childTransform.GetChild(chldCount).GetComponent<Image>();
+        //            if (image != null)
+        //            {
+        //                image.enabled = false;
+        //            }
+        //        }
+        //    }
+        //}
     }
 
     public void ResetMorphBooleanValues()
@@ -4662,7 +4663,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     _CharacterData.FaceBlendsShapes[i] = 0;
                 }
-            
+
             _CharacterData.SavedBones.Clear();
             _CharacterData.eyeTextureName = "";
             _CharacterData.Skin = bodyParts.DefaultSkinColor;
@@ -4686,7 +4687,7 @@ public class InventoryManager : MonoBehaviour
             _CharacterData.BodyFat = 0;
             _CharacterData.SkinId = -1;
             _CharacterData.PresetValue = "";
-            if(bodyParts.defaultMakeup)
+            if (bodyParts.defaultMakeup)
                 _CharacterData.makeupName = bodyParts.defaultMakeup.name;
             _CharacterData.eyeLashesName = bodyParts.defaultEyelashes.name;
             //_CharacterData.eyebrrowTexture = "";
@@ -4751,7 +4752,7 @@ public class InventoryManager : MonoBehaviour
     }
     public void UpdateXanaConstants()
     {
-        if (SaveCharacterProperties.instance.SaveItemList.myItemObj.Count == 0) 
+        if (SaveCharacterProperties.instance.SaveItemList.myItemObj.Count == 0)
         {
             return;
         }

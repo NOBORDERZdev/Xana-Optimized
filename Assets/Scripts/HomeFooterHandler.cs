@@ -849,6 +849,7 @@ public class HomeFooterHandler : MonoBehaviour
         // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         gameManager.UiManager.HomeWorldScreen.SetActive(false);
         ConstantsHolder.xanaConstants.isStoreActive = true;
+        InventoryManager.upateAssetOnGenderChanged?.Invoke();
     }
     public void SetDefaultButtonSelection(int index)
     {

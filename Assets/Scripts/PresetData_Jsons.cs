@@ -195,6 +195,7 @@ public class PresetData_Jsons : MonoBehaviour
                 }
 
                 ConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
+                InventoryManager.upateAssetOnGenderChanged?.Invoke();
             }
             if (GameManager.Instance.avatarController.wornEyeWearable != null)
             {
@@ -222,12 +223,12 @@ public class PresetData_Jsons : MonoBehaviour
             {
                 InventoryManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
             }
+           
             if (!presetAlreadySaved)
             {
                 InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
                 SavedButtonClickedBlue();
             }
-
             else
             {
                 InventoryManager.instance.SaveStoreBtn.SetActive(true);
