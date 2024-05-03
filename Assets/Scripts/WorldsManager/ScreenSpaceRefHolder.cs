@@ -1,3 +1,4 @@
+using AdvancedInputFieldPlugin;
 using EnhancedUI.EnhancedScroller;
 using SuperStar.Helpers;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class ScreenSpaceRefHolder : MonoBehaviour
     public EnhancedScroller fullPageScrollerSearch;
     public Transform SearchWorldScreenHolder;
     public GameObject searchWorldHolder;
+    public AdvancedInputField searchWorldInput;
     public TMPro.TextMeshProUGUI worldFoundText;
 
     private void Awake()
@@ -21,14 +23,16 @@ public class ScreenSpaceRefHolder : MonoBehaviour
         else
         {
             instance = this;
-            MainSceneEventHandler.OnBackFromGamePlay += SettingUpHomeSceneRef;
+            MainSceneEventHandler.OnBackRefAssign += SettingUpHomeSceneRef;
+            MainSceneEventHandler.MakeScreenSpaceAdditive += ScreenSpacesMakeAdditive;
         }
     }
 
 
     public void OnDestroy()
     {
-        MainSceneEventHandler.OnBackFromGamePlay -= SettingUpHomeSceneRef;
+        MainSceneEventHandler.OnBackRefAssign -= SettingUpHomeSceneRef;
+        MainSceneEventHandler.MakeScreenSpaceAdditive -= ScreenSpacesMakeAdditive;
     }
 
     public void ScreenSpacesMakeAdditive()
@@ -47,11 +51,14 @@ public class ScreenSpaceRefHolder : MonoBehaviour
         WorldManager.instance.uiHandlerRef.HomeWorldScreen = gameObject;
         WorldManager.instance.uiHandlerRef.searchWorldHolder = searchWorldHolder;
         WorldManager.instance.uiHandlerRef.SearchWorldScreenHolder = SearchWorldScreenHolder;
+        WorldManager.instance.worldSearchManager.searchWorldInput = searchWorldInput;
         gameObject.transform.parent = WorldManager.instance.uiHandlerRef.Canvas.transform;
         gameObject.transform.SetAsFirstSibling();
         gameObject.GetComponent<RectTransform>().Stretch();
         gameObject.transform.up = Vector3.zero;
         gameObject.transform.right = Vector3.zero;
         gameObject.transform.localScale = Vector3.one;
+
+        MainSceneEventHandler.BackHomeSucessfully?.Invoke();
     }
 }

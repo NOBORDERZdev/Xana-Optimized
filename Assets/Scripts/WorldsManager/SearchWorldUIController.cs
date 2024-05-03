@@ -17,12 +17,24 @@ public class SearchWorldUIController : MonoBehaviour
         searchWorldInput.OnValueChanged.AddListener(UserInput => UserInputUpdate(UserInput)) ;
         SearchWorld += OpenSearchPanelFromTag;
         AutoSelectInputField += ManualSelectInputField;
+        MainSceneEventHandler.BackHomeSucessfully += ReAssignActions;
     }
 
     private void OnDisable()
     {
         SearchWorld -= OpenSearchPanelFromTag;
         AutoSelectInputField -= ManualSelectInputField;
+        MainSceneEventHandler.BackHomeSucessfully -= ReAssignActions;
+    }
+
+    void ReAssignActions()
+    {
+        for (int i = 0; i < searchWorldInput.OnValueChanged.GetPersistentEventCount(); i++)
+        {
+            if (searchWorldInput.OnValueChanged.GetPersistentMethodName(i) == nameof(UserInputUpdate))
+                return;
+        }
+        searchWorldInput.OnValueChanged.AddListener(UserInput => UserInputUpdate(UserInput));
     }
     public void UserInputUpdate(string UserInput)
     {

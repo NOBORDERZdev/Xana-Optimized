@@ -72,7 +72,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
-                MainSceneEventHandler.OnBackFromGamePlay?.Invoke();
+                MainSceneEventHandler.OnBackRefAssign?.Invoke();
                 notLoadedAgain = true;
                 Invoke(nameof(OnClickHomeWorldButton), 0);
             }

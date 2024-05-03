@@ -726,7 +726,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
-        ScreenSpaceRefHolder.instance.ScreenSpacesMakeAdditive();
+        MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         /// <summary>
         /// As creator name is different from actual scene name
@@ -820,7 +820,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinBuilderWorld()
     {
-        ScreenSpaceRefHolder.instance.ScreenSpacesMakeAdditive();
+        MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
 
         if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
