@@ -128,7 +128,6 @@ public class Web3Auth : MonoBehaviour
         if (this.web3AuthOptions.sessionTime != null)
             this.initParams["sessionTime"] = this.web3AuthOptions.sessionTime;
     }
-    bool firsttimeflag = true;
     private void onDeepLinkActivated(string url)
     {
         Debug.LogError("DeepUrl --- " + url);
@@ -139,18 +138,13 @@ public class Web3Auth : MonoBehaviour
         else if (url.Contains("web3auth"))
         {
 #if UNITY_IOS
-        if(firsttimeflag)
-        {
-            firsttimeflag = false;
-        }
-        else
-        {
+
         if(PlayerPrefs.GetInt("FirstTimeappOpen") == 1)
             this.setResultUrl(new Uri(url));
-        }
 #endif
 
 #if UNITY_ANDROID
+            PlayerPrefs.SetInt("FirstTimeappOpen", 1); 
             this.setResultUrl(new Uri(url));
 #endif
 

@@ -94,7 +94,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
       
         Debug.LogError("Validate---Before ----> "+ ConstantsHolder.loggedIn + " ---- " + ConstantsHolder.isWalletLogin + "  ----- "+ PlayerPrefs.GetString("PlayerName"));
 
-        while (!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin)//PlayerPrefs.GetInt("IsLoggedIn") == 0 && PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetString("PlayerName").IsNullOrEmpty())
+        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+            (PlayerPrefs.GetString("PlayerName") == "" && PlayerPrefs.GetInt("FirstTimeappOpen")==0 ))//PlayerPrefs.GetInt("IsLoggedIn") == 0 && PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetString("PlayerName").IsNullOrEmpty())
             yield return new WaitForSeconds(0.5f);
 
         Debug.LogError("Validate---After 007 ----> " + ConstantsHolder.loggedIn + " ---- " + ConstantsHolder.isWalletLogin + "  ----- " + PlayerPrefs.GetString("PlayerName"));
