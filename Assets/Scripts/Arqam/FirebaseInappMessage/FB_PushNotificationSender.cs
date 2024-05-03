@@ -1,22 +1,29 @@
-using Firebase.Messaging;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.UI;
+using System;
 
 public class FB_PushNotificationSender : MonoBehaviour
 {
-    public string serverKey = "AAAAk9GwOwQ:APA91bEC8oSce1_-Br-VCqagawpYZprcNazEad8Kf-JNJUyeevcvpCtCIFi03w5vbEJnCtt9_DKnPqAojPtJ-00dfCVfuQLJ_hOIsFpBosoPzTrkmO0zftytcB_u6Mt-tjcwA0Za0LPN"; //"14e5944ca3f569eb1f5266eb95a749f3506cd06d";
+    [Space(5)]
+    public const string serverKey = "AAAAk9GwOwQ:APA91bEC8oSce1_-Br-VCqagawpYZprcNazEad8Kf-JNJUyeevcvpCtCIFi03w5vbEJnCtt9_DKnPqAojPtJ-00dfCVfuQLJ_hOIsFpBosoPzTrkmO0zftytcB_u6Mt-tjcwA0Za0LPN"; //"14e5944ca3f569eb1f5266eb95a749f3506cd06d";
     public string recipientToken = "RECIPIENT_FCM_TOKEN";
 
     private void Start()
     {
-        recipientToken = ConstantsHolder.xanaConstants.recipientToken;
+        
     }
 
-
-
-    public void SendNotification(string title, string body)
+    public void SetToken(string token)
     {
+        recipientToken = token;
+    }
+
+    public void SendNotification()
+    {
+        string title = "Alert";
+        string body = "I am in meeting.";
         StartCoroutine(SendNotificationCoroutine(title, body));
     }
 
@@ -24,7 +31,7 @@ public class FB_PushNotificationSender : MonoBehaviour
     {
         string url = "https://fcm.googleapis.com/fcm/send";
         string jsonBody = "{\"to\": \"" + recipientToken + "\", \"notification\": {\"title\": \"" + title + "\", \"body\": \"" + body + "\"}}";
-
+        
         using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);

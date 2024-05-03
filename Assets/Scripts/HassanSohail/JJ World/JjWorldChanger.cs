@@ -35,7 +35,7 @@ public class JjWorldChanger : MonoBehaviour
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
             NFT_Holder_Manager.instance.gameObject.GetComponent<FB_PushNotificationSender>().
-                SendNotification("Alert!", "I am in meeting");
+                SendNotification();
 
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
