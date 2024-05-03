@@ -81,11 +81,16 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             {
                 GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
                 UpdateNameText(tempMyProfileDataRoot.data.name);
+                UpdatePlayerNameRef(tempMyProfileDataRoot.data.name);
             }
         }
     }
-   
-       
-    
+    private void UpdatePlayerNameRef(string localUsername)
+    {
+        print("PlayerName == " + PlayerPrefs.GetString("PlayerName"));
+        PlayerPrefs.SetString("PlayerName", localUsername);
+        ConstantsHolder.userName = localUsername;
+    }
+
     #endregion
     }
