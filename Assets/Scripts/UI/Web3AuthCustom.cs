@@ -235,7 +235,11 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     private void onLogin(Web3AuthResponse response)
     {
-       
+#if UNITY_IOS
+       if(PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+
+#endif
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;

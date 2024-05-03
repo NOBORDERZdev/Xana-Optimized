@@ -179,7 +179,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                     {
                         Debug.LogError("HitGetEnvironmentJson ID Sucesss 3 ----> " + envId);
 
-                        yield return new WaitForSeconds(3f);
+                        yield return new WaitForSeconds(4f);
                         LoadingHandler.Instance.ShowLoading();
                         Screen.orientation = ScreenOrientation.LandscapeLeft;
                         yield return new WaitForSeconds(3f);

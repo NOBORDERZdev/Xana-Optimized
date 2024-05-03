@@ -145,6 +145,7 @@ public class Web3Auth : MonoBehaviour
         }
         else
         {
+        if(PlayerPrefs.GetInt("FirstTimeappOpen") == 1)
             this.setResultUrl(new Uri(url));
         }
 #endif
@@ -353,6 +354,12 @@ public class Web3Auth : MonoBehaviour
     {
         if (web3AuthOptions.loginConfig != null)
         {
+#if UNITY_IOS
+
+            if(PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
+                PlayerPrefs.SetInt("PlayerLoginFlag", 1);
+#endif
+
             var loginConfigItem = web3AuthOptions.loginConfig?.Values.First();
             var share = KeyStoreManagerUtils.getPreferencesData(loginConfigItem?.verifier);
 
