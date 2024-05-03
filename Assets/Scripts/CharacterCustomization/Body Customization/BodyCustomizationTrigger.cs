@@ -57,7 +57,11 @@ public class BodyCustomizationTrigger : MonoBehaviour
     }
     private void ChangeBlendshapeValues()
     {
-
+        {
+            // Reset the Reference of the Character Body Parts
+            // As User has changed the Avater Gender
+            charBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+        }
         SkinnedMeshRenderer head = charBodyParts.head.gameObject.GetComponent<SkinnedMeshRenderer>();
         ResetBlendShapeValues(head); // Reset respective catagory all Blend Shape Values
         if (!isDefault)
