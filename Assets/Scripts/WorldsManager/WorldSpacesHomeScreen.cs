@@ -247,6 +247,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     StartCoroutine(LoadUserTagsAsCategoriesPagination(_firstTimeLoad));
                 }
             }
+            else
+            {
+                spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
+            }
         }));
     }
 
@@ -317,6 +321,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
+                spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
                 //CategoryParentVisibility(index, false);
                 //FlexibleRect.OnAdjustSize?.Invoke(false);
                 //if (apiHitCountC1 < 5)
