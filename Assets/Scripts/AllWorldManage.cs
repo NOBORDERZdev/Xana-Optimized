@@ -12,12 +12,6 @@ public class AllWorldManage : MonoBehaviour
     [Header("World Page Scrollviews and Component")]
     public List<GameObject> WorldPagehighlighters = new List<GameObject>();
     public List<GameObject> WorldPagehighlightersText = new List<GameObject>();
-    GameManager gameManager;
-
-    private void Awake()
-    {
-        gameManager = GameManager.Instance;
-    }
 
     public delegate void SeeAllBtndelegate(string _categType);
     public SeeAllBtndelegate _seeAllBtnDelegate;
@@ -41,7 +35,7 @@ public class AllWorldManage : MonoBehaviour
     public void SearchScreenLoad(bool _state = true)
     {
         SearchWorldUIController.IsSearchBarActive = true;
-        gameManager.UiManager.SwitchToScreen(2);
+        GameManager.Instance.UiManager.SwitchToScreen(2);
         //FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
         WorldManager.instance.SearchPageNumb = 1;
@@ -54,7 +48,7 @@ public class AllWorldManage : MonoBehaviour
     public void SearchScreenLoad(string searchKey)
     {
         SearchWorldUIController.IsSearchBarActive = true;
-        gameManager.UiManager.SwitchToScreen(2);
+        GameManager.Instance.UiManager.SwitchToScreen(2);
         //FlexibleRect.OnAdjustSize?.Invoke(true);
         WorldManager.instance.WorldScrollReset();
     }
@@ -62,7 +56,7 @@ public class AllWorldManage : MonoBehaviour
     public void BackToPreviousScreen()
     {
         WorldManager.instance.WorldScrollReset();
-        gameManager.UiManager.SwitchToScreen(gameManager.UiManager.PreviousScreen);
+        GameManager.Instance.UiManager.SwitchToScreen(GameManager.Instance.UiManager.PreviousScreen);
         //WorldManager.instance.ChangeWorld(APIURL.HotSpaces);
         //ScrollEnableDisable(0);
     }

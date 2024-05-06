@@ -56,7 +56,7 @@ public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
     /// In this example, we are calling our initializations in the delegate's Start function,
     /// but it could have been done later, perhaps in the Update function.
     /// </summary>
-    void Start()
+    void OnEnable()
     {
         // set the application frame rate.
         // this improves smoothness on some devices
@@ -65,12 +65,23 @@ public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
         // tell the scroller that this script will be its delegate
         scroller.Delegate = this;
         scroller.scrollerScrolled = ScrollerScrolled;
-
+        MainSceneEventHandler.BackHomeSucessfully += ReAssignActions;
         // initialize the data
         //_data = new SmallList<WorldItemDetail>();
 
         // load in the first page of data
         //LoadData(0);
+    }
+
+    void OnDisable()
+    {
+        MainSceneEventHandler.BackHomeSucessfully -= ReAssignActions;
+    }
+
+    void ReAssignActions()
+    {
+        scroller.Delegate = this;
+        scroller.scrollerScrolled = ScrollerScrolled;
     }
 
     /// <summary>
@@ -101,7 +112,6 @@ public class SearchWorldHandler : MonoBehaviour, IEnhancedScrollerDelegate
         {
             _data.Add(world);
         }
-
         // cache the scroller's position so that we can set it back after the reload
 
         if (_pageNumb == 1)

@@ -8,7 +8,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-
+using SuperStar.Helpers;
 
 public class WorldManager : MonoBehaviour
 {
@@ -59,11 +59,11 @@ public class WorldManager : MonoBehaviour
 
     public WorldItemManager WorldItemManager;
     public WorldsInfo _WorldInfo;
-    public AllWorldManage AllWorldTabReference;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
     public WorldDescriptionPopupPreview worldItemPreviewTabRef;
     public SearchWorldUIController worldSearchManager;
     public SearchWorldHandler searchWorldControllerRef;
+    public UIHandler uiHandlerRef;
     public static WorldManager instance;
     //[HideInInspector]
     public bool changeFollowState = false;
@@ -726,6 +726,7 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinEvent()
     {
+        MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         /// <summary>
         /// As creator name is different from actual scene name
@@ -819,6 +820,9 @@ public class WorldManager : MonoBehaviour
 
     public async void JoinBuilderWorld()
     {
+        MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
+
+
         if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
