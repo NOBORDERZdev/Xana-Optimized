@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Crosstales;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -86,6 +87,8 @@ public class ButtonScript : MonoBehaviour
         ConstantsHolder.xanaConstants.currentButtonIndex = Index;
         inventoryManager.UpdateXanaConstants();
         inventoryManager.DisableColorPanels();
+        ResetSelectedItems();
+
 
         if (Index == 7 && inventoryManager.panelIndex == 1)
             inventoryManager.OnColorButtonClicked(ConstantsHolder.xanaConstants.currentButtonIndex);
@@ -96,8 +99,31 @@ public class ButtonScript : MonoBehaviour
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
         //if (this.gameObject.activeInHierarchy)
         GetComponentInParent<SubBottons>().ClickBtnFtn(Index);
+
+
     }
 
+
+    void ResetSelectedItems()
+    {
+        // Get Reference of all Clicked Items
+        int count = StoreUndoRedo.obj.data.Count;
+        for (int i = 0; i < count; i++)
+        {
+            var data = StoreUndoRedo.obj.data[i];
+            var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
+            var image = data.actionObject.GetComponent<Image>();
+
+            if (avatarBtn != null && image != null)
+            {
+                image.color = new Color(1, 1, 1, 0);
+            }
+            else if (!data.methodName.Equals("BtnClicked") && image != null)
+            {
+                image.enabled = false;
+            }
+        }
+    }
     private void ButtonPressed()
     {
         StoreStackHandler.obj.UpdatePanelStatus(Index, true);    // AR changes
