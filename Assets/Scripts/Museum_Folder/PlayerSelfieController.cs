@@ -341,6 +341,8 @@ public class PlayerSelfieController : MonoBehaviour
     {
         if (EmoteAnimationHandler.Instance)
             EmoteAnimationHandler.Instance.clearAnimation?.Invoke();
+
+        m_IsSelfieFeatureActive = true;
         StartCoroutine(EnableSelfieWithDelay());
        
 
@@ -352,7 +354,7 @@ public class PlayerSelfieController : MonoBehaviour
         
         m_PlayerController.GetComponent<PlayerController>().SwitchToSelfieMode();
 #if UNITY_EDITOR
-        m_IsSelfieFeatureActive = true;
+       // m_IsSelfieFeatureActive = true;
         m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
 
         GetRenderTexture();
@@ -381,7 +383,7 @@ public class PlayerSelfieController : MonoBehaviour
 #elif UNITY_ANDROID || UNITY_IOS
         if (Input.touchCount <= 1)
         {
-            m_IsSelfieFeatureActive = true;
+          //  m_IsSelfieFeatureActive = true;
             m_IKComponenet.GetComponent<IKMuseum>().EnableIK();
             
             GetRenderTexture();
@@ -475,7 +477,7 @@ public class PlayerSelfieController : MonoBehaviour
     public void DisableSelfieFeature()
     {
 
-        GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
+       // GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
         m_PlayerController.GetComponent<PlayerController>().gyroButton.SetActive(false);
         m_PlayerController.GetComponent<PlayerController>().gyroButton_Portait.SetActive(false);
 
