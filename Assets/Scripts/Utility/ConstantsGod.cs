@@ -264,7 +264,7 @@ public class ConstantsGod
     #region Jj World Api's
     public static string JJWORLDASSET = "/item/jjWorld/get-museum-all-assets/";
     #endregion
-
+   
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
@@ -282,7 +282,10 @@ public class ConstantsGod
     public static string FeedSearch="/item/search-following-text-post";
     #endregion
 
-    #region PMY World Api's
+    #region Toyota World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
+    #region Toyota Email Api's
+    public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
     #endregion
 }
