@@ -112,9 +112,14 @@ public class ButtonScript : MonoBehaviour
         {
             var data = StoreUndoRedo.obj.data[i];
             var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
+            var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
             var image = data.actionObject.GetComponent<Image>();
 
-            if (avatarBtn != null && image != null)
+            if (presetBtn != null)
+            {
+                presetBtn.transform.GetChild(0).GetComponent<Image>().enabled = false;
+            }
+            else if (avatarBtn != null && image != null)
             {
                 image.color = new Color(1, 1, 1, 0);
             }
