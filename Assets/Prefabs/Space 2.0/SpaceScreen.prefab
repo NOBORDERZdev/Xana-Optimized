@@ -282,7 +282,6 @@ MonoBehaviour:
   _loadingNew: 0
   initializeCategoryRow: 0
   allWorldManageRef: {fileID: 4253444705314927342}
-  _spaceCategDataInitializer: {fileID: 0}
   paginationLoaderRef: {fileID: 9195091184954087776}
   categIcons:
   - {fileID: 21300000, guid: 91a48cf2e435396448e48de3fc312d83, type: 3}
@@ -347,6 +346,7 @@ GameObject:
   - component: {fileID: 6308391638872952127}
   - component: {fileID: 6308391638872952113}
   - component: {fileID: 6308391638872952126}
+  - component: {fileID: 249932276}
   m_Layer: 5
   m_Name: SpaceScreen
   m_TagString: Untagged
@@ -416,6 +416,25 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &249932276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6308391638872952124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb0dd31e6682ea4fb55ee101f8ceb8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allWorldManageRef: {fileID: 4253444705314927342}
+  spaceScrollInitializerRef: {fileID: 4253444705314927341}
+  fullPageScrollerSearch: {fileID: 6913906899662447996}
+  SearchWorldScreenHolder: {fileID: 6713614378060099817}
+  searchWorldHolder: {fileID: 6713614378393215477}
+  searchWorldInput: {fileID: 6713614378469976174}
+  worldFoundText: {fileID: 421914199383799616}
 --- !u!1 &6713614376492214350
 GameObject:
   m_ObjectHideFlags: 0
