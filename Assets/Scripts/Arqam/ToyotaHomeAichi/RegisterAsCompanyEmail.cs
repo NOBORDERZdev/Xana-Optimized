@@ -10,11 +10,14 @@ using UnityEngine.Networking;
 
 public class RegisterAsCompanyEmail : MonoBehaviour
 {
+    public static RegisterAsCompanyEmail ins;
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
+    public List<string> emailList = new List<string>();
     void Start()
     {
+        ins = this;
         GetEmailData();
     }
     public async void GetEmailData()
@@ -39,6 +42,7 @@ public class RegisterAsCompanyEmail : MonoBehaviour
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
                     Debug.Log("Email is : " + json.data.rows[i].email);
+                    emailList.Add(json.data.rows[i].email);
                 }
             }
         }
