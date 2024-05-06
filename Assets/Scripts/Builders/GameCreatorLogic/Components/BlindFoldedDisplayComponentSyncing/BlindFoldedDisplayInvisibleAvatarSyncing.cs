@@ -13,6 +13,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
     SkinnedMeshRenderer playerPants;
     SkinnedMeshRenderer playerShoes;
     SkinnedMeshRenderer playerHead;
+    SkinnedMeshRenderer[] playerEyebrow;
     MeshRenderer playerFreeCamConsole;
     MeshRenderer playerFreeCamConsoleOther;
 
@@ -23,6 +24,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
     Material defaultShoesMat;
     Material defaultFreeCamConsoleMat;
     Material[] defaultHeadMaterials;
+    Material[] defaltEyebrowMat;
 
     GameObject playerObj;
     bool isInitialise;
@@ -33,7 +35,8 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             return;
 
         hologramMaterial = GamificationComponentData.instance.hologramMaterial;
-        StartCoroutine(SyncingCoroutin());
+        if (GamificationComponentData.instance.withMultiplayer)
+            StartCoroutine(SyncingCoroutin());
     }
 
     private IEnumerator SyncingCoroutin()
@@ -45,7 +48,7 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             this.transform.SetParent(playerObj.transform);
             AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
 
             if (ac.wornHair)
@@ -54,8 +57,19 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
                 playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShirt)
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            if (ac.wornShose)
-                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShoes)
+                playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+            int index = 0;
+            if (ac.wornEyebrow.Length > 0)
+            {
+                playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+                foreach (var eyeBrow in ac.wornEyebrow)
+                {
+                    playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                    index++;
+                }
+                index = 0;
+            }
             playerBody = charcterBodyParts.body;
             playerHead = charcterBodyParts.head;
             playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
@@ -75,6 +89,14 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
                 defaultHairMat = playerHair.sharedMaterials;
             if (playerShoes)
                 defaultShoesMat = playerShoes.material;
+            if (playerEyebrow.Length > 0)
+            {
+                defaltEyebrowMat = new Material[playerEyebrow.Length];
+                foreach (var eyeBrowMat in playerEyebrow)
+                {
+                    defaltEyebrowMat[index] = eyeBrowMat.material;
+                }
+            }
 
             defaultFreeCamConsoleMat = playerFreeCamConsole.material;
             AvatarInvisibilityApply();
@@ -83,8 +105,11 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
 
     void OnDisable()
     {
-        if (isInitialise)
-            StopAvatarInvisibility();
+        if (GamificationComponentData.instance.withMultiplayer)
+        {
+            if (isInitialise)
+                StopAvatarInvisibility();
+        }
     }
 
     GameObject FindPlayerusingPhotonView(PhotonView pv)
@@ -126,6 +151,14 @@ public class BlindFoldedDisplayInvisibleAvatarSyncing : MonoBehaviourPun
             playerPants.material = state ? defaultPantsMat : hologramMaterial;
         if (playerShoes)
             playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
+        if (playerEyebrow.Length > 0)
+        {
+            for (int i = 0; i < playerEyebrow.Length; i++)
+            {
+                playerEyebrow[i].material = state ? defaltEyebrowMat[i] : hologramMaterial;
+            }
+        }
 
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 

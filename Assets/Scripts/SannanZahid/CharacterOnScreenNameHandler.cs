@@ -32,7 +32,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             while (true)
             {
                 yield return new WaitForSeconds(1f);
-                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (XanaConstants.xanaConstants != null && !XanaConstants.xanaConstants.LoginasGustprofile))
+                if (PlayerPrefs.GetString("UserNameAndPassword").IsNotEmpty() || (ConstantsHolder.xanaConstants != null && !ConstantsHolder.xanaConstants.LoginasGustprofile))
                 {
                     break;
                 }
@@ -81,11 +81,16 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             {
                 GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
                 UpdateNameText(tempMyProfileDataRoot.data.name);
+                UpdatePlayerNameRef(tempMyProfileDataRoot.data.name);
             }
         }
     }
-   
-       
-    
+    private void UpdatePlayerNameRef(string localUsername)
+    {
+        print("PlayerName == " + PlayerPrefs.GetString("PlayerName"));
+        PlayerPrefs.SetString("PlayerName", localUsername);
+        ConstantsHolder.userName = localUsername;
+    }
+
     #endregion
     }

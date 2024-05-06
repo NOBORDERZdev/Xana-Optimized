@@ -1,5 +1,4 @@
-using AIFLogger;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +19,7 @@ public class UGCManager : MonoBehaviour
 
     public void OnClickSaveSelfieButton()
     {
-        StoreManager.instance.loaderPanel.SetActive(true);
+        InventoryManager.instance.loaderPanel.SetActive(true);
         isSelfieTaken = false;
         if (texture != null)
         {
@@ -33,18 +32,18 @@ public class UGCManager : MonoBehaviour
     {
         //selfieSprite.sprite = null;
         isSelfieTaken = false;
-        StoreManager.instance.itemData.CharactertypeAi = false;
+        InventoryManager.instance.itemData.CharactertypeAi = false;
         //texture = null;
         OnClickSelfieButton();
     }
     public void OnClickBackSelfieButton()
     {
         isSelfieTaken = false;
-        StoreManager.instance.selfiePanel.SetActive(false);
+        InventoryManager.instance.selfiePanel.SetActive(false);
         selfieSprite.sprite = null;
         texture = null;
-        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-        StoreManager.instance.itemData.CharactertypeAi = false;
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+        InventoryManager.instance.itemData.CharactertypeAi = false;
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
     public void OnClickSelfieButton()
@@ -79,8 +78,8 @@ public class UGCManager : MonoBehaviour
 
                     selfieSprite.sprite = capturedSprite;
                     selfieSprite.preserveAspect = true;
-                    StoreManager.instance.selfiePanel.SetActive(true);
-                    StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                    InventoryManager.instance.selfiePanel.SetActive(true);
+                    InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
                 }
             }, -1);
@@ -103,8 +102,8 @@ public class UGCManager : MonoBehaviour
 
                 // Calculate scaling factors to fit the image within the panel
                 // Calculate the scaling factor to fit the texture into the panel
-                //float panelWidth = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
-                //float panelHeight = StoreManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
+                //float panelWidth = InventoryManager.instance.selfiePanel.GetComponent<RectTransform>().rect.width;
+                //float panelHeight = InventoryManager.instance.selfiePanel.GetComponent<RectTransform>().rect.height;
 
                 //float scaleX = panelWidth / texture.width;
                 //float scaleY = panelHeight / texture.height;
@@ -118,8 +117,8 @@ public class UGCManager : MonoBehaviour
 
                 selfieSprite.sprite = capturedSprite;
                 selfieSprite.preserveAspect = true;
-                StoreManager.instance.selfiePanel.SetActive(true);
-                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(false);
+                InventoryManager.instance.selfiePanel.SetActive(true);
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(false);
 
             }
         }, -1);
@@ -147,12 +146,20 @@ public class UGCManager : MonoBehaviour
 
     public IEnumerator IERequest(byte[] imageBytes)
     {
-        float requestTimeout = 120f; // Timeout value in seconds (5 minutes)
+        float requestTimeout = 180f; // Timeout value in seconds (3 minutes)
         float timer = 0f;
         // Create a form with 'multipart/form-data' encoding
         WWWForm form = new WWWForm();
         form.AddBinaryData("file", imageBytes, "image.jpg", "image/*");
-        UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form);
+        UnityWebRequest www;
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            www = UnityWebRequest.Post(ConstantsGod.API_BASEURL_UGC + ConstantsGod.UGCAiApi, form); // for main server
+        }
+        else
+        {
+            www = UnityWebRequest.Post("http://182.70.242.10:8040/analyze-image/", form); // for testing server
+        }
         www.SetRequestHeader("Accept", "application/json");
         // Start the request
         AsyncOperation operation = www.SendWebRequest();
@@ -168,9 +175,9 @@ public class UGCManager : MonoBehaviour
             Debug.Log("Request timed out.");
             // Handle timeout (e.g., show a message, stop further processing)
             www.Abort(); // Stop the request
+            warningText.text = "The process has timed out. Please try again.";
             warningPanel.SetActive(true);
-            warningText.text = "Taking too long to respond. Please upload again.";
-            StoreManager.instance.loaderPanel.SetActive(false);
+            InventoryManager.instance.loaderPanel.SetActive(false);
             yield break; // Exit the coroutine
         }
         //using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.UGCAiApi, form))
@@ -180,9 +187,17 @@ public class UGCManager : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log("Failed to send image to the server : " + www.error);
-                warningPanel.SetActive(true);
-                warningText.text = www.error;
-                StoreManager.instance.loaderPanel.SetActive(false);
+                if (www.isHttpError)
+                {
+                    warningText.text = "An error occurred during processing. Please try again.";
+                    warningPanel.SetActive(true);
+                }
+                //else
+                //{
+                //    warningPanel.SetActive(true);
+                //    warningText.text = www.error;
+                //}
+                InventoryManager.instance.loaderPanel.SetActive(false);
                 GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             }
             else
@@ -191,29 +206,34 @@ public class UGCManager : MonoBehaviour
                 if (response.status == "reject")
                 {
                     Debug.Log("Server Response: " + www.downloadHandler.text);
-                    Debug.Log(response.description);
+                    Debug.Log(response.description_Eng);
+                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese) { warningText.text = response.description_Eng; }
+                    else { warningText.text = response.description_Jap; }
                     warningPanel.SetActive(true);
-                    warningText.text = response.description;
-                    StoreManager.instance.loaderPanel.SetActive(false);
+                    InventoryManager.instance.loaderPanel.SetActive(false);
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-                    //SNSNotificationManager.Instance.ShowNotificationMsg(response.description);
+                    //SNSNotificationHandler.Instance.ShowNotificationMsg(response.description);
                 }
                 else
                 {
                     Debug.Log("Response Data: " + response.ToString());
                     // selfieSprite.gameObject.SetActive(false);
-                    StoreManager.instance.loaderPanel.SetActive(false);
-                    // SNSNotificationManager.Instance.ShowNotificationMsg(response.ToString());
+                    InventoryManager.instance.loaderPanel.SetActive(false);
+                    // SNSNotificationHandler.Instance.ShowNotificationMsg(response.ToString());
                     ugcItems = response;
                     isSelfieTaken = true;
-                    SetFaceData(StoreManager.instance.ugcItemsData.GetFaceData(response.face_type), StoreManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
-                        StoreManager.instance.ugcItemsData.GetlipData(response.lip_shape), StoreManager.instance.ugcItemsData.GetHairData(response.hair_style),
-                        StoreManager.instance.ugcItemsData.GetEyeData(response.eyes_color));
-                    //StoreManager.instance.ApplyUGCValueOnCharacter();
+                    SetFaceData(InventoryManager.instance.ugcItemsData.GetFaceData(response.face_type), InventoryManager.instance.ugcItemsData.GetNoseData(response.nose_shape),
+                        InventoryManager.instance.ugcItemsData.GetlipData(response.lip_shape), InventoryManager.instance.ugcItemsData.GetHairData(response.hair_style),
+                        InventoryManager.instance.ugcItemsData.GetEyeData(response.eyes_color), InventoryManager.instance.ugcItemsData.GetEyeShapeData(response.eye_shape));
+                    //InventoryManager.instance.ApplyUGCValueOnCharacter();
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(true);
-                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-                    CharacterCustomizationManager.Instance.ResetCharacterRotation(180f);
-                    Swipe_menu.instance.OnClickNext();
+                    CharacSelectScroll.instance.OnClickNext();
+                    //if (GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
+                    //{
+                    //    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                    //    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    //}
+                    //Swipe_menu.instance.OnClickNext();
                     GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
                     // release memory after result successfull
@@ -224,32 +244,43 @@ public class UGCManager : MonoBehaviour
         }
     }
 
-    public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair, UGCItemsData.HairsEyeData _itemEye)
+    public void SetFaceData(UGCItemsData.ItemData _itemFace, UGCItemsData.ItemData _itemNose, UGCItemsData.ItemData _itemLips, UGCItemsData.HairsEyeData _itemHair,
+        UGCItemsData.HairsEyeData _itemEye, UGCItemsData.ItemData _itemEyeShape)
     {
-        StoreManager.instance.itemData.gender = ugcItems.gender;
-        StoreManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
-        StoreManager.instance.itemData.skin_color = HexToColor(ugcItems.skin_color);
-        StoreManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
-        StoreManager.instance.itemData.CharactertypeAi = true;
+        InventoryManager.instance.itemData.gender = ugcItems.gender.ToLower();
+        InventoryManager.instance.itemData.hair_color = HexToColor(ugcItems.hair_color);
+        char[] charsToTrim = { '#' };
+        string cleanString = ugcItems.skin_color.TrimStart(charsToTrim);
+        InventoryManager.instance.itemData.skin_color = cleanString;
+        InventoryManager.instance.itemData.lips_color = HexToColor(ugcItems.lips_color);
+        InventoryManager.instance.itemData.CharactertypeAi = true;
         if (_itemFace != null)
         {
-            StoreManager.instance.itemData.faceItemData = _itemFace.index;
+            InventoryManager.instance.itemData.faceItemData = _itemFace.index;
         }
         if (_itemNose != null)
         {
-            StoreManager.instance.itemData.noseItemData = _itemNose.index;
+            InventoryManager.instance.itemData.noseItemData = _itemNose.index;
         }
         if (_itemLips != null)
         {
-            StoreManager.instance.itemData.lipItemData = _itemLips.index;
+            InventoryManager.instance.itemData.lipItemData = _itemLips.index;
         }
         if (_itemHair != null)
         {
-            StoreManager.instance.itemData._hairItemData = _itemHair.keyValue;
+            InventoryManager.instance.itemData._hairItemData = _itemHair.keyValue;
+        }
+        else
+        {
+            InventoryManager.instance.itemData._hairItemData = "No hair";
         }
         if (_itemEye != null)
         {
-            StoreManager.instance.itemData._eyeItemData = _itemEye.keyValue;
+            InventoryManager.instance.itemData._eyeItemData = _itemEye.keyValue;
+        }
+        if (_itemEyeShape != null)
+        {
+            InventoryManager.instance.itemData.eyeShapeItemData = _itemEyeShape.index;
         }
     }
     Color HexToColor(string hex)
@@ -334,7 +365,8 @@ public class UGCManager : MonoBehaviour
 public class UGCItemsClass
 {
     public string status;
-    public string description;
+    public string description_Eng;
+    public string description_Jap;
     public string face_type;
     public string lip_shape;
     public string nose_shape;
@@ -343,11 +375,12 @@ public class UGCItemsClass
     public string skin_color;
     public string lips_color;
     public string hair_style;
+    public string eye_shape;
     public string gender;
 
     public override string ToString()
     {
-        return face_type + lip_shape + nose_shape + eyes_color + hair_color + skin_color + lips_color + hair_style + gender;
+        return face_type + lip_shape + nose_shape + eyes_color + hair_color + skin_color + lips_color + hair_style + eye_shape + gender;
     }
 }
 

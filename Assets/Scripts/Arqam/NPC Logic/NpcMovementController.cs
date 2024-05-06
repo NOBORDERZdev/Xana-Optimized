@@ -26,7 +26,7 @@ namespace NPC
         {
             timer = wanderTimer;
             agent.enabled = false;
-            //animator.runtimeAnimatorController = EmoteAnimationPlay.Instance.controller;
+            //animator.runtimeAnimatorController = EmoteAnimationHandler.Instance.controller;
             animator.SetBool("IsGrounded", true);
         }
 

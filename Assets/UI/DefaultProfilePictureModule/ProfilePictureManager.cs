@@ -35,7 +35,7 @@ public class ProfilePictureManager : MonoBehaviour
     }
     public void MakeProfilePicture(string userName)
     {
-        Debug.LogError("MakeProfilePicture: " + userName);
+        Debug.Log("MakeProfilePicture: " + userName);
         StartCoroutine(IEMakeProfilePicture(userName));
     }
 
@@ -92,14 +92,17 @@ public class ProfilePictureManager : MonoBehaviour
             savePath = Application.persistentDataPath + "/Profile/userProfile.png";
 
             byte[] fileData = File.ReadAllBytes(savePath);
-            while (string.IsNullOrEmpty(UserRegisterationManager.instance.TokenDataClass.data.token))
+            while (string.IsNullOrEmpty(ConstantsHolder.xanaToken) && string.IsNullOrEmpty(ConstantsGod.AUTH_TOKEN))
             {
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData, "Profile", UploadProfile);
+            AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
+            
+            Debug.Log("Changing  Imageing Now");
             profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
+            if (MyProfileDataManager.Instance)
+                MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
         }
     }
     public UploadFileRoot uploadFileRoot=new UploadFileRoot();
@@ -112,29 +115,46 @@ public class ProfilePictureManager : MonoBehaviour
     public IEnumerator UpdateUserAvatar()
     {
         yield return new WaitForSeconds(2f);
-        //APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
+        //SNS_APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
         WWWForm form = new WWWForm();
 
         form.AddField("avatar", uploadFileRoot.cdn_link);
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
         {
-            www.SetRequestHeader("Authorization", UserRegisterationManager.instance.TokenDataClass.data.token);
+            string tempToken = ConstantsHolder.xanaToken;
 
-            yield return www.SendWebRequest();
+            if (string.IsNullOrEmpty(tempToken))
+                tempToken = ConstantsGod.AUTH_TOKEN;
 
-            if (www.isNetworkError || www.isHttpError)
+            www.SetRequestHeader("Authorization", tempToken);
+
+            www.SendWebRequest();
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                //Debug.Log("Form upload complete!");
+                Debug.Log("Uploading complete!");
                 string data = www.downloadHandler.text;
+                ChangeProfileAfterUploading();
                 //Debug.Log("UpdateUserAvatar data:" + data);
             }
         }
 
+    }
+
+
+    void ChangeProfileAfterUploading()
+    {
+        //MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;    
+        MyProfileDataManager.Instance.UpdateProfilePic();
     }
     Sprite CreateSpriteFromTexture(Texture2D texture)
     {

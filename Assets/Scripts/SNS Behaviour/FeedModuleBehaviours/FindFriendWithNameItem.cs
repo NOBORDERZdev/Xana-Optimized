@@ -26,6 +26,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
+    public Button FollowUnfollowBtnRef;
     public bool IsInFollowingTab;
 
     public SavingCharacterDataClass _userAvatarData;
@@ -62,7 +63,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             profileImage.sprite = null;
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
-            APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
         }
     }
 
@@ -72,7 +73,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
         userNameText.text = searchUserRow.name;
         if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio)){ 
-            userBioText.text =  APIManager.DecodedString(searchUserRow.userProfile.bio);
+            userBioText.text =  SNS_APIManager.DecodedString(searchUserRow.userProfile.bio);
         }
         else
         {
@@ -80,7 +81,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         }
         if (!string.IsNullOrEmpty(searchUserRow.avatar))
         {
-            bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
+            bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
             if (isUrlContainsHttpAndHttps)
             {
                 AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
@@ -116,7 +117,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             userNameText.text = allFollowersRows.follower.name;
             if (allFollowersRows.follower.userProfile != null && !string.IsNullOrEmpty(allFollowersRows.follower.userProfile.bio))
             {
-                userBioText.text = APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
+                userBioText.text = SNS_APIManager.DecodedString(allFollowersRows.follower.userProfile.bio);
             }
             else
             {
@@ -124,7 +125,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
             if (!string.IsNullOrEmpty(allFollowersRows.follower.avatar))
             {
-                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
+                bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(allFollowersRows.follower.avatar);
                 if (isUrlContainsHttpAndHttps)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(allFollowersRows.follower.avatar, allFollowersRows.follower.avatar, (success) =>
@@ -165,7 +166,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             userNameText.text = searchUserRow.name;
             if (searchUserRow.userProfile != null && !string.IsNullOrEmpty(searchUserRow.userProfile.bio))
             {
-                userBioText.text = APIManager.DecodedString(searchUserRow.userProfile.bio);
+                userBioText.text = SNS_APIManager.DecodedString(searchUserRow.userProfile.bio);
             }
             else
             {
@@ -173,7 +174,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
             if (!string.IsNullOrEmpty(searchUserRow.avatar))
             {
-                bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
+                bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(searchUserRow.avatar);
                 if (isUrlContainsHttpAndHttps)
                 {
                     AssetCache.Instance.EnqueueOneResAndWait(searchUserRow.avatar, searchUserRow.avatar, (success) =>
@@ -207,7 +208,8 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void OnClickUserProfileButton()
     {
         Debug.Log("Search User id:" + searchUserRow.id);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
+        FeedUIController.Instance.ShowLoader(true);
+        SNS_APIManager.Instance.RequestGetUserLatestAvatarData<FindFriendWithNameItem>(searchUserRow.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
@@ -227,8 +229,8 @@ public class FindFriendWithNameItem : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
         if (searchUserRow.is_following_me)
         {
@@ -239,7 +241,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = searchUserRow.id;
@@ -250,8 +252,6 @@ public class FindFriendWithNameItem : MonoBehaviour
         feedRawData.FollowingCount = searchUserRow.followingCount;
         feedRawData.feedCount = searchUserRow.feedCount;
 
-        //FeedUIController.Instance.ShowLoader(true);
-
         OtherPlayerProfileData.Instance.currentFindFriendWithNameItemScript = this;
 
         OtherPlayerProfileData.Instance.FeedRawData = feedRawData;
@@ -260,8 +260,8 @@ public class FindFriendWithNameItem : MonoBehaviour
 
         OtherPlayerProfileData.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
 
-        //APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
-        //APIManager.Instance.RequestGetFeedsByUserId(searchUserRow.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
+        //SNS_APIManager.Instance.RequestGetFeedsByUserId(searchUserRow.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -295,9 +295,9 @@ public class FindFriendWithNameItem : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
@@ -335,14 +335,16 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (searchUserRow.am_i_following)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                FollowUnfollowBtnRef.interactable = false;
+                //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //unfollow
                 RequestUnFollowAUser(searchUserRow.id.ToString());
             }
             else
             {
                Debug.Log("Follow User call:" + searchUserRow.id);
-                FeedUIController.Instance.ShowLoader(true);//active api loader
+                gameObject.GetComponent<Button>().interactable = false;
+                //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
             }
@@ -360,7 +362,7 @@ public class FindFriendWithNameItem : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_FollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
             www.SendWebRequest();
 
@@ -373,11 +375,12 @@ public class FindFriendWithNameItem : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
-                Debug.Log(www.error);
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
+                FollowUnfollowBtnRef.interactable = true;
+                Debug.Log("Error on Requesting follow a user" + www.error);
             }
             else
             {
@@ -391,14 +394,16 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = true;
                 searchUserRow.am_i_following = true;
                 FollowFollowingSetUp(true);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                FollowUnfollowBtnRef.interactable = true;
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
                 //refresh Feed API.......
-                APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
+               // SNS_APIController.Instance.RemoveFollowedUserFromHot(int.Parse(user_Id));
 
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
+                //Debug.Log("Now following user: " + user_Id + " : " + searchUserRow.am_i_following);
             }
         }
     }
@@ -414,7 +419,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         form.AddField("userId", user_Id);
         using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UnFollowAUser), form))
         {
-            www.SetRequestHeader("Authorization", APIManager.Instance.userAuthorizeToken);
+            www.SetRequestHeader("Authorization", SNS_APIManager.Instance.userAuthorizeToken);
 
             yield return www.SendWebRequest();
             print("www" + www.downloadHandler);
@@ -423,10 +428,11 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (www.isNetworkError || www.isHttpError)
             {
                 Debug.Log(www.error);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
+                FollowUnfollowBtnRef.interactable = true;
             }
             else
             {
@@ -436,10 +442,10 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.am_i_following = false;
                 searchUserRow.is_close_friend = false;
                 //FollowFollowingSetUp(false);
-                if (FeedUIController.Instance != null)
-                {
-                    FeedUIController.Instance.ShowLoader(false);
-                }
+                //if (FeedUIController.Instance != null)
+                //{
+                //    FeedUIController.Instance.ShowLoader(false);
+                //}
                 FeedUIController.Instance.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
                 if (IsInFollowingTab)
                 {
@@ -453,6 +459,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                     UpdateBfBtn(searchUserRow.am_i_following,true, searchUserRow.is_close_friend);
                     FollowFollowingSetUp(false);
                 }
+                FollowUnfollowBtnRef.interactable = true;
             }
         }
     }
@@ -486,7 +493,8 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (GetComponent<FollowingItemController>())
         {
-            FeedUIController.Instance.ShowLoader(true);
+            FollowUnfollowBtnRef.interactable = false;
+            //FeedUIController.Instance.ShowLoader(true);
             RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
             //FeedUIController.Instance.OnClickAddFriendFollowing();
         }
@@ -536,7 +544,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     /// To Add Following in BFF list
     /// </summary>
     public void AddBff(){ 
-        APIManager.Instance.AddBestFriend(searchUserRow.id,gameObject);
+        SNS_APIManager.Instance.AddBestFriend(searchUserRow.id,gameObject);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().AddFriendToHome();
     }
 
@@ -544,7 +552,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     /// To Remove BFF that already are in BFF
     /// </summary>
     public void RemoveBff(){ 
-          APIManager.Instance.RemoveBestFriend(searchUserRow.id,gameObject);
+          SNS_APIManager.Instance.RemoveBestFriend(searchUserRow.id,gameObject);
         GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveFriendFromHome(searchUserRow.id);
     }
 

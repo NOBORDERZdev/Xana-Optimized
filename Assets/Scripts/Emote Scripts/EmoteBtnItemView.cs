@@ -11,6 +11,7 @@ public class EmoteBtnItemView : MonoBehaviour
 {
     [SerializeField] Image actionImg;
     [SerializeField] Image actionImgPotrait;
+    [SerializeField] EmoteSelectionBtn emoteSelectionBtnScript;
     AnimationData animData;
 
     private Image bgImage;
@@ -18,6 +19,7 @@ public class EmoteBtnItemView : MonoBehaviour
     private void Awake()
     {
         bgImage = GetComponent<Image>();
+        emoteSelectionBtnScript = GetComponent<EmoteSelectionBtn>();
     }
 
     public void OnEnable()
@@ -99,7 +101,7 @@ public class EmoteBtnItemView : MonoBehaviour
                 Texture2D thumbnailTexture = DownloadHandlerTexture.GetContent(www);
                 thumbnailTexture.Compress(true);
                 Sprite sprite = Sprite.Create(thumbnailTexture, new Rect(0, 0, thumbnailTexture.width, thumbnailTexture.height), new Vector2(0, 0));
-                if (actionImg != null && actionImgPotrait!=null)
+                if (actionImg != null && actionImgPotrait != null)
                 {
                     actionImg.sprite = sprite;
                     actionImgPotrait.sprite = sprite;
@@ -111,6 +113,10 @@ public class EmoteBtnItemView : MonoBehaviour
         }
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
+
+
+        if (emoteSelectionBtnScript)
+            emoteSelectionBtnScript.resetBtn.gameObject.SetActive(true);
     }
 }
 

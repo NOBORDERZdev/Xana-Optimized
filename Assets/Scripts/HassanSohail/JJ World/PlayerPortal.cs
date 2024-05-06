@@ -19,8 +19,8 @@ public class PlayerPortal : MonoBehaviour
     public float cam_XValue = -50f;
     #endregion
     #region PrivateVar
-    // private PlayerControllerNew player;
-    private ReferrencesForDynamicMuseum referrencesForDynamicMuseum;
+    // private PlayerController player;
+    private ReferencesForGamePlay referrencesForDynamicMuseum;
     Collider colider;
     string firebaseEventName = "";
 
@@ -31,9 +31,9 @@ public class PlayerPortal : MonoBehaviour
 
     private void Start()
     {
-        referrencesForDynamicMuseum = ReferrencesForDynamicMuseum.instance;
+        referrencesForDynamicMuseum = ReferencesForGamePlay.instance;
         FindScriptAttchedObject();
-       // player = referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>();
+       // player = referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>();
     }
 
     void FindScriptAttchedObject()
@@ -58,7 +58,7 @@ public class PlayerPortal : MonoBehaviour
             if (destinationPoint != null && other.GetComponent<PhotonView>().IsMine)
             {
                 print("player enter : " + transform.parent.parent.name);
-                CanvasButtonsHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+                GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
                 // For NFT Click
                 JjInfoManager.Instance.analyticMuseumID = transform.parent.name;
                 if (transform.parent.parent.name.Contains("Rental"))
@@ -87,9 +87,9 @@ public class PlayerPortal : MonoBehaviour
                 triggerObject = other.gameObject;
 
                 if (currentPortal == PortalType.Enter || currentPortal == PortalType.Teleport)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
                 else if (currentPortal == PortalType.Exit)
-                    CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
             }
         }
     }
@@ -127,7 +127,7 @@ public class PlayerPortal : MonoBehaviour
                 UnloadPreviousData();
                 JjInfoManager.Instance.IntJjInfoManager();
             }
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = false;
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
             LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
             //LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.4f,0.6f), 4f, false);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
@@ -162,18 +162,18 @@ public class PlayerPortal : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
             yield return new WaitForSeconds(.8f);
             referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerControllerNew>().m_IsMovementActive = true;
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
             // isAlreadyRunning = true;
             //manager.allowTeleportation = true;
-            LoadFromFile.instance.StartCoroutine(LoadFromFile.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             //player.allowTeleport = true;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
         else
         {
-            if (SNSNotificationManager.Instance != null)
-                SNSNotificationManager.Instance.ShowNotificationMsg("Coming soon");
+            if (SNSNotificationHandler.Instance != null)
+                SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
             yield return null;
         }
     }

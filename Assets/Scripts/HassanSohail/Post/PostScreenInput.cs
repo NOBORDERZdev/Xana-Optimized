@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
+using System.Text.RegularExpressions;
+
 public class PostScreenInput : MonoBehaviour
 {  
    [SerializeField] TMP_Text ShowText;
@@ -22,15 +24,29 @@ public class PostScreenInput : MonoBehaviour
     TouchScreenKeyboard keyboard;
     public RectTransform bubbleParent;
     bool bubbleHeightCheck = false;
+    string emojiRegexPattern = @"[\uD83C-\uDBFF\uDC00-\uDFFF]+";
+    public bool ContainsEmoji(string _text)
+    {
+        try
+        {
+            Regex regex = new Regex(emojiRegexPattern);
+            return regex.IsMatch(_text);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error in ContainsEmoji " + e);
+            return false;
+        }
+    }
     private void OnEnable()
     {
         if (GameManager.currentLanguage.Equals("en"))
         {
-            placeHolderText = "Enter the text";
+            placeHolderText = "How are you feeling?";
         }
         else
         {
-            placeHolderText = "テキストを入力してください";
+            placeHolderText = "今、どんな気分ですか？";
         }
         
         ActiveInputFeild();
@@ -47,29 +63,51 @@ public class PostScreenInput : MonoBehaviour
         ShowText.text = "";
         if (inputField.text.Count()>0) // if the input field is not empty
         {
+            if (inputField.text.Count() > 0 || GameManager.Instance.userAnimationPostFeature.MoodSelected != "")
+            {
+                GameManager.Instance.userAnimationPostFeature.postButton.interactable = true;
+                GameManager.Instance.userAnimationPostFeature.postButtonText.color=Color.white;
+            }
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
+
+            // Check if the text contains an Emoji
+            if (ContainsEmoji(ShowText.text))
+            {
+                ShowText.lineSpacing = 1.0f;
+                //Debug.LogError("Emoji Found " + ShowText.lineSpacing);
+            }
+            else
+            {
+                ShowText.lineSpacing = 0.5f;
+                //Debug.LogError("No Emoji Found " + ShowText.lineSpacing);
+            }
         }
         else
         {
+            if (GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
+            {
+                GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
+                GameManager.Instance.userAnimationPostFeature.postButtonText.color = placeHolderColor;
+            }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
             if (GameManager.currentLanguage.Equals("en"))
             {
-                if (ShowText.text == "Enter the text")
+                if (ShowText.text == "How are you feeling?")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                    bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+                    bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
                 }
             }
             else
             {
-                if (ShowText.text == "テキストを入力してください")
+                if (ShowText.text == "今、どんな気分ですか？")
                 {
                     BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-                    bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-                    bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+                    bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+                    bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
                 }
             }
            
@@ -88,8 +126,8 @@ public class PostScreenInput : MonoBehaviour
         }
         if (ShowText.text.Count() <= 10)
         {
-            bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-            bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+            bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+            bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
         }
         if (ShowText.text.Count() >= 70)
         {
@@ -131,8 +169,8 @@ public class PostScreenInput : MonoBehaviour
         ShowText.text = placeHolderText;
         ShowText.color = placeHolderColor;
         BubbleContentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
-        bubbleParent.anchorMin = new Vector2(0.1090846f, 0.6209897f);
-        bubbleParent.anchorMax = new Vector2(0.8273318f, 0.8013285f);
+        bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
+        bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
 
     }
     //private string FormatInput(string input)

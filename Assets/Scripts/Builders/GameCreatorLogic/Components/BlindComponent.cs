@@ -164,7 +164,7 @@ public class BlindComponent : ItemComponent
         time = blindComponentData.time + 1;
         if (playerObject != null)
         {
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
         }
         else
         {
@@ -176,7 +176,7 @@ public class BlindComponent : ItemComponent
                 DateTime currentDateTime = DateTime.UtcNow;
                 TimeSpan diff = currentDateTime - dateTimeRPC;
                 timeDiff = (diff.Minutes * 60) + diff.Seconds;
-                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue+1)
+                if (timeDiff >= 0 && timeDiff < utccounterValue.CounterValue + 1)
                     utccounterValue.CounterValue = utccounterValue.CounterValue - timeDiff;
                 else
                     return;
@@ -281,6 +281,16 @@ public class BlindComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.BlindComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

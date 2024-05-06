@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class FeedData : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class FeedData : MonoBehaviour
    [SerializeField] Color LikedColor;
    [SerializeField] Color UnLikedColor;
    [SerializeField] Button LikeBtn;
-    private bool isFeedScreen =true;
+    //private bool isFeedScreen =true;
     public FeedResponseRow _data;
     bool isLiked = false;
     bool isEnable = false;
@@ -32,54 +33,76 @@ public class FeedData : MonoBehaviour
         if (gameObject.activeInHierarchy)
         {
             _data = data;
-            DisplayName.text = data.user.name;
-            if(DisplayName.text.Length > 15)
+            if (data.text_post != "null" && !(string.IsNullOrEmpty(data.text_post)))
             {
-                DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
-            }
-            PostText.text = data.text_post;
-            isEnable= true;
-            //Likes.text = data.like_count.ToString();
-            UpdateLikeCount(data.like_count);
-            timeUpdateInterval=1;
-            if (isEnable)
-            {
-                Date.text = CalculateTimeDifference(Convert.ToDateTime(data.createdAt)).ToString();
-            }
-            if (data.isLikedByUser)
-            {
-                isLiked = true;
-                Likes.color = LikedColor;
-            }
-            UpdateHeart();
-            if (!String.IsNullOrEmpty(data.user.avatar) &&  !data.user.avatar.Equals("null") )
-            {
-                StartCoroutine(GetProfileImage(data.user.avatar));
+                DisplayName.text = data.user.name;
+                if (DisplayName.text.Length > 15)
+                {
+                    DisplayName.text = DisplayName.text.Substring(0, 15) + "...";
+                }
+                PostText.text = data.text_post;
+                isEnable = true;
+                //Likes.text = data.like_count.ToString();
+                UpdateLikeCount(data.like_count);
+                timeUpdateInterval = 1;
+                if (isEnable)
+                {
+                    gameObject.GetComponent<FeedData>().StopAllCoroutines();
+                    Date.text = CalculateTimeDifference(Convert.ToDateTime(_data.createdAt)).ToString();
+                }
+
+                if (data.isLikedByUser)
+                {
+                    isLiked = true;
+                    Likes.color = LikedColor;
+                }
+                else isLiked = false;
+                UpdateHeart();
+                if (!String.IsNullOrEmpty(data.user.avatar) && !data.user.avatar.Equals("null"))
+                {
+                    StartCoroutine(GetProfileImage(data.user.avatar));
+                }
+                else
+                {
+                    ProfileImage.sprite = defaultProfileImage;
+                }
+
+                //isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
+                if (isFeed)
+                {
+                    Invoke(nameof(HieghtListUpdateWithDelay), 0.08f);
+                }
+                else
+                {
+                    Invoke(nameof(SetProfileFeedWithWait), 0.08f);
+                }
             }
             else
             {
-                ProfileImage.sprite = defaultProfileImage;
-            }
-
-            isFeedScreen = !isFeed; //To assign back data to prefab items in case of no pooling in OnEnable
-            if (isFeed)
-            {
-                Invoke(nameof(HieghtListUpdateWithDelay),0.1f);
+                gameObject.SetActive(false);
             }
         }
     }
-   
+
+    void SetProfileFeedWithWait()
+    {
+         PostHieghtUpdateForProfileVisit();
+    }
+
+
     public void onclickFeedUserProfileButton()
     {
+        if (isProfileScene)
+            return;
         //print("Getting Click here" + _data.user_id);
-        APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
+        SNS_APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
     }
 
     public void SetupFeedUserProfile(SearchUserRow _feedUserData)
     {
         //print("Getting Click here name" + _feedUserData.name);
         //Debug.Log("Search User id:" + _feedUserData.id);
-        APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
+        SNS_APIManager.Instance.RequestGetUserLatestAvatarData<FeedData>(_feedUserData.id.ToString(), this);
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(true);
@@ -99,8 +122,8 @@ public class FeedData : MonoBehaviour
             FeedUIController.Instance.AddFriendPanel.SetActive(false);
             //MyProfileDataManager.Instance.gameObject.SetActive(false);
         }
-        ProfileUIHandler.instance.SwitchBetwenUserAndOtherProfileUI(false);
-        ProfileUIHandler.instance.SetMainScrolRefs();
+        ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(false);
+        ProfileUIHandler.instance.SetMainScrollRefs();
         ProfileUIHandler.instance.editProfileBtn.SetActive(false);
         if (_feedUserData.am_i_following)
         {
@@ -132,8 +155,8 @@ public class FeedData : MonoBehaviour
 
         //OtherPlayerProfileData.Instance.backKeyManageList.Add("FindFriendScreen");//For back mamages.......
 
-        //APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
-        //APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
+        //SNS_APIManager.Instance.RequesturlGetTaggedFeedsByUserId(FeedRawData.id, 1, FeedRawData.feedCount);//rik cmnt
+        //SNS_APIManager.Instance.RequestGetFeedsByUserId(_feedUserData.id, 1, 30, "OtherPlayerFeed");
 
         //this api get any user profile data and feed for other player profile....... 
         SingleUserProfileData singleUserProfileData = new SingleUserProfileData();
@@ -167,9 +190,9 @@ public class FeedData : MonoBehaviour
     public void DressUpUserAvatar()
     {
         ////Other player avatar initialization required here
-        if (APIManager.Instance.VisitedUserAvatarData != null)
+        if (SNS_APIManager.Instance.VisitedUserAvatarData != null)
         {
-            ProfileUIHandler.instance.SetUserAvatarClothing(APIManager.Instance.VisitedUserAvatarData.json);
+            ProfileUIHandler.instance.SetUserAvatarClothing(SNS_APIManager.Instance.VisitedUserAvatarData.json);
         }
         else
         {
@@ -177,11 +200,24 @@ public class FeedData : MonoBehaviour
         }
     }
 
-    void HieghtListUpdateWithDelay(){ 
-       scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
-       gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
+    void HieghtListUpdateWithDelay(){
+        scrollerController.AddInHeightList(_data.id, gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight());
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width , rectTemp.rect.height );
+
+       gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true) ;
+       //gameObject.GetComponent<LayoutElement>().minHeight = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>().CalculateHeight();
       // scrollerController.scroller.ReloadData();
      }
+
+    void PostHieghtUpdateForProfileVisit()
+    {
+        RectTransform rectTemp = gameObject.transform.GetChild(0).gameObject.GetComponent<RectTransform>();
+        Vector2 temp = new Vector2(rectTemp.rect.width, rectTemp.rect.height);
+
+        gameObject.transform.GetComponent<LayoutElement>().DOMinSize(temp, 0.8f, true);
+    }
+
     public string CalculateTimeDifference(DateTime postTime)
    {
         if (isEnable && gameObject.activeInHierarchy)
@@ -217,22 +253,23 @@ public class FeedData : MonoBehaviour
                 timeUpdateInterval =86400;
                 return $"{Math.Floor(timeDifference.TotalDays / 365)}y";
             }
-        }else
+        }
+        else
         {
             return "";
         }
-   }
+    }
 
     IEnumerator ReCallingTimeDifference(DateTime postTime){
-        yield return new WaitForSeconds(timeUpdateInterval);
-        Date.text = CalculateTimeDifference(postTime).ToString();
+        yield return new WaitForSecondsRealtime(timeUpdateInterval);
+        Date.text = CalculateTimeDifference(postTime).ToString(); 
     }
     IEnumerator GetProfileImage(string url)
     {
         yield return new WaitForSeconds(1);
         if (!string.IsNullOrEmpty(url))
         {
-           // bool isUrlContainsHttpAndHttps = APIManager.Instance.CheckUrlDropboxOrNot(url);
+           // bool isUrlContainsHttpAndHttps = SNS_APIManager.Instance.CheckUrlDropboxOrNot(url);
              AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
              {
                     if (success)
@@ -293,7 +330,8 @@ public class FeedData : MonoBehaviour
 
     public void LikeUnlikePost()
     {
-       StartCoroutine(LikeUnLike());
+        LikeBtn.interactable = false;
+        StartCoroutine(LikeUnLike());
     }
 
     IEnumerator LikeUnLike()
@@ -302,7 +340,6 @@ public class FeedData : MonoBehaviour
         int feedId = _data.id;
         WWWForm form = new WWWForm();
         form.AddField("textPostId", feedId);
-        LikeBtn.interactable= false;
         using (UnityWebRequest www = UnityWebRequest.Post(url,form))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -321,8 +358,16 @@ public class FeedData : MonoBehaviour
                 LikeResponse likeResponse = JsonUtility.FromJson<LikeResponse>(www.downloadHandler.text);
                 UpdateLikeCount(likeResponse.data.likeCount);
                 //Likes.text =  likeResponse.data.likeCount.ToString();
-                isLiked = !isLiked;
-                if(scrollerController)
+               
+                if(!isProfileScene)
+                    isLiked = !isLiked;
+                else
+                {
+                    _data.isLikedByUser = !_data.isLikedByUser;
+                    isLiked = _data.isLikedByUser;
+                }
+
+                if (scrollerController)
                     scrollerController.updateLikeCount(feedId,likeResponse.data.likeCount,isLiked);
                 UpdateHeart();
                 LikeBtn.interactable= true;
@@ -354,8 +399,11 @@ public class FeedData : MonoBehaviour
         return _data.id;
     }
 
-    public void UpdateLikeCount(int count){ 
-        Likes.text = count.ToString();
+    public void UpdateLikeCount(int count){
+        if (count > -1)
+            Likes.text = count.ToString();
+        else
+            Likes.text = "0";
     }
 
     public void SetFeedUiController(FeedScroller controller){ 

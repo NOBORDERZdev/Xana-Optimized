@@ -75,4 +75,14 @@ public class ItemGFXHandler : ItemComponent
     public override void AssignItemComponentType()
     {
     }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
 }

@@ -111,20 +111,20 @@ public class XLWorldInfo : MonoBehaviour
     }
     public void OpenWorldInfo()
     {
-        if (SelfieController.Instance.m_IsSelfieFeatureActive) return;
+        if (PlayerSelfieController.Instance.m_IsSelfieFeatureActive) return;
 
         //Reset joystick when OpenWorldInfo
-        if (ReferrencesForDynamicMuseum.instance.playerControllerNew)
-            ReferrencesForDynamicMuseum.instance.playerControllerNew.restJoyStick();
+        if (ReferencesForGamePlay.instance.playerControllerNew)
+            ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
 
         //JjInfoManager.Instance.firebaseEventName = firebaseEventName;
         if (XanaLobbyManager.Instance != null)
         {
-            if (GameManager.currentLanguage.Contains("en") && !CustomLocalization.forceJapanese)
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
             {
                 XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture,MediaType.Image);
             }
-            else if (CustomLocalization.forceJapanese || GameManager.currentLanguage.Equals("ja"))
+            else if (LocalizationManager.forceJapanese || GameManager.currentLanguage.Equals("ja"))
             {
                 XanaLobbyManager.Instance.SetInfo(JjRatio.OneXOneWithDes, XanaLobbyManager.Instance.worldsData[id].world_name, XanaLobbyManager.Instance.worldsData[id].users.name, XanaLobbyManager.Instance.worldsData[id].description, _texture, MediaType.Image);
             }

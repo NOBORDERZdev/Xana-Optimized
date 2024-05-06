@@ -119,7 +119,7 @@ public class TranslateComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-                isPlaying = false;
+        isPlaying = false;
         StopComponent();
         StopComponent();
     }
@@ -147,6 +147,16 @@ public class TranslateComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.TranslateComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

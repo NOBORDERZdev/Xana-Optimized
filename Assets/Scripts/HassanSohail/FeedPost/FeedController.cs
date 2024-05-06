@@ -36,13 +36,17 @@ public class FeedController : MonoBehaviour
     [SerializeField] RectTransform feedTabsContainer;
     [SerializeField] GameObject FeedLoader;
 
+    public FeedResponse feedResponseData;
+
+    public bool noResultinFeedSearch = true;
+
     private void OnEnable()
     {
         SerachPanel.SetActive(false);
         feedContentParent.gameObject.SetActive(true);
         SerchBarObj.SetActive(false);
         searchInputField.Text = "";
-        SocketController.instance.updateFeedLike += UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike += UpdateFeedLike;
         if (feedUIController == null)
         feedUIController = FeedUIController.Instance;
         if (!isFeedInitialized)
@@ -60,17 +64,17 @@ public class FeedController : MonoBehaviour
     /// </summary>
     async void IntFeedPage()
     {
-         FeedUIController.Instance.feedUiScreen.SetActive(true);
+         feedUIController.feedUiScreen.SetActive(true);
          noFeedsScreen.gameObject.SetActive(false);
          feedContentParent.gameObject.SetActive(true);
         //FeedUIController.Instance.ShowLoader(true);
         FeedLoader.SetActive(true);
         scrollerController.IntFeedScroller();
-        if (APIManager.Instance.userId == 0)
+        if (SNS_APIManager.Instance.userId == 0)
         {
-           APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
+           SNS_APIManager.Instance.userId=int.Parse(PlayerPrefs.GetString("UserName"));
         }
-        await GetFeedData(APIManager.Instance.userId);
+        await GetFeedData(SNS_APIManager.Instance.userId);
     }
 
     async Task GetFeedData(int userId)
@@ -84,6 +88,7 @@ public class FeedController : MonoBehaviour
             {
                 Debug.Log(response.error);
                 FeedLoader.SetActive(false);
+                noFeedText.text = "";
                 noFeedsScreen.gameObject.SetActive(true);
             }
             else
@@ -91,7 +96,7 @@ public class FeedController : MonoBehaviour
                
                 print("~~~~~ "+ response.downloadHandler.text);
                 noFeedsScreen.gameObject.SetActive(false);
-                FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
+                feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 // FeedAPIData.Add(feedResponseData);
                 if (feedResponseData.data.rows.Count>0)
                 {
@@ -112,7 +117,7 @@ public class FeedController : MonoBehaviour
                 }
                 else
                 {
-                    noFeedsScreen.gameObject.SetActive(true);
+                    FeedDataFromAPICountCheck();
                     FeedLoader.SetActive(false);
                     feedContentParent.gameObject.SetActive(false);
                 }
@@ -128,14 +133,22 @@ public class FeedController : MonoBehaviour
         response.Dispose();
     }
 
+    public void FeedDataFromAPICountCheck()
+    {
+        if (feedResponseData.data.rows.Count <= 0)
+        {
+            noFeedText.text = "";
+            noFeedsScreen.gameObject.SetActive(true);
+        }
+    }
 
     public void PullNewPlayerPost(){ 
         FeedLoader.SetActive(true);
-        GetPlayerNewPosts(APIManager.Instance.userId);
+        GetPlayerNewPosts(SNS_APIManager.Instance.userId);
     }
 
     async void GetPlayerNewPosts(int userId){ 
-         string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + 1 + "/" + 10;
+         string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedGetAllByUserId + userId + "/" + 1 + "/" + FeedAPIData.Count;
          UnityWebRequest response = UnityWebRequest.Get(url);
         try
         {
@@ -151,24 +164,38 @@ public class FeedController : MonoBehaviour
                 FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
                 //FeedUIController.Instance.ShowLoader(false);
                 List<FeedResponseRow> tempData = new List<FeedResponseRow>();
-                foreach (var item in feedResponseData.data.rows)
+                bool _isNameChanged = false;
+                foreach (var item1 in feedResponseData.data.rows)
                 {
-                    if (!String.IsNullOrEmpty(item.text_post) && !item.text_post.Equals("null"))
+                    if (!String.IsNullOrEmpty(item1.text_post) && !item1.text_post.Equals("null"))
                     {
-                        if (!FeedAPIData.Any(list1 => list1.id == item.id)){ 
-                            tempData.Add(item);
+                        if (!FeedAPIData.Any(list1 => list1.id == item1.id)){ 
+                            tempData.Add(item1);
+                        }
+                        var indexes = FeedAPIData.Select((number, index) => new { Number = number, Index = index })
+                             .Where(item => (item.Number.user.id == item1.user_id && item.Number.user.name != item1.user.name))
+                             .Select(item => item.Index)
+                             .ToList();
+                        if (indexes.Count > 0)
+                        {
+                            _isNameChanged = true;
+                            foreach (var index in indexes)
+                            {
+                                FeedAPIData[index].user.name = item1.user.name;
+                            }
                         }
                     }
                 }
                 if (tempData.Count>0){
                     FeedAPIData.InsertRange(0,tempData);
-                    //scrollerController._data.InsertRange(0,tempData);
-                    AddDataToTopScroller(tempData);
-                        
+                    AddDataToTopScroller(FeedAPIData);
                 }
                 else{
-                    //noFeedsScreen.gameObject.SetActive(true);
-                    //FeedLoader.SetActive(false);
+                    if (_isNameChanged)
+                    {
+                        AddDataToTopScroller(FeedAPIData);
+                        _isNameChanged = false;
+                    }
                 }
             }
             Invoke(nameof(turnoffLoaderForReload),1f);
@@ -200,7 +227,7 @@ public class FeedController : MonoBehaviour
     /// To get next page player post
     /// </summary>
     public void GetPlayerNextPostPage(){ 
-        GetFeedDataByPage(APIManager.Instance.userId);
+        GetFeedDataByPage(SNS_APIManager.Instance.userId);
     }
 
     async void GetFeedDataByPage(int userId)
@@ -257,7 +284,6 @@ public class FeedController : MonoBehaviour
         {
             if (scrollerController._data[i].id == feedLikeSocket.textPostId)
             {
-                //scrollerController._data[i].UpdateLikeCount(feedLikeSocket.likeCount);
                 scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
                 //scrollerController.scroller.ReloadData();
                 foreach (Transform item in feedContentParent.GetChild(0).transform )
@@ -270,19 +296,18 @@ public class FeedController : MonoBehaviour
                 break;
             }
         }
-        //foreach (var item in scrollerController._data)
-        //{
-        //    if (item.GetFeedId() == feedLikeSocket.textPostId)
-        //    {
-        //      item.UpdateLikeCount(feedLikeSocket.likeCount);
-        //      scrollerController.updateLikeCount(feedLikeSocket.textPostId, feedLikeSocket.likeCount);
-        //    }
-        //}
     }
 
     public void OnClickSerachBtn(){
         if (SerchBarObj.activeInHierarchy) // serach is active 
         {
+            if (noResultinFeedSearch)
+            {
+                noFeedSerach.gameObject.SetActive(false);
+                noResultinFeedSearch = false;
+                FeedDataFromAPICountCheck();
+            }
+            feedContentParent.gameObject.SetActive(true);
             SerchBarObj.SetActive(false);
             SerachPanel.SetActive(false);
             SearchContentPanel.SetActive(false);
@@ -300,7 +325,6 @@ public class FeedController : MonoBehaviour
     } 
 
     public void SearchFeed(){
-        print("~~~~~");
         noFeedSerach. gameObject.SetActive(false);
         FeedLoader.SetActive(true);
         EmptySearchPanel();   
@@ -318,7 +342,7 @@ public class FeedController : MonoBehaviour
 
     IEnumerator FeedSearch(string input)
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+APIManager.Instance.userId +"/"+ input +"/1/20";
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.FeedSearch +"/"+SNS_APIManager.Instance.userId +"/"+ input +"/1/20";
         UnityWebRequest response = UnityWebRequest.Get(url);
         yield return response.SendWebRequest();
         if (response.isNetworkError)
@@ -334,6 +358,10 @@ public class FeedController : MonoBehaviour
             noFeedsScreen.gameObject.SetActive(false);
             SearchContentPanel.SetActive(true);
             SerachPanel.SetActive(true);
+
+            // Clear Old Data
+            EmptySearchPanel();
+
             feedContentParent.gameObject.SetActive(false);
             print("~~~~~~~~~ FEED Search "+response.downloadHandler.text);
             FeedResponse feedResponseData = JsonUtility.FromJson<FeedResponse>(response.downloadHandler.text.ToString());
@@ -357,19 +385,20 @@ public class FeedController : MonoBehaviour
             }
             else
             {
-                if (GameManager.currentLanguage == "en" && !CustomLocalization.forceJapanese) // for English 
+                if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese) // for English 
                 {
                     noFeedText.text = "We couldn’t find a match for “ "+
                                        SerchStringToEllipsis( input)
                                         +"”.\r\nPlease try another search.";
                 }
-                else if(GameManager.currentLanguage == "ja" || CustomLocalization.forceJapanese)   // for Jp 
+                else if(GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)   // for Jp 
                 {
                     noFeedText.text = SerchStringToEllipsis( input) + "に一致するものが見つかりませんでした。\r\n" +
                                         "別のキーワードで試してみてください。";
                                         
                 }
                 noFeedSerach. gameObject.SetActive(true);
+                noResultinFeedSearch = true;
             }
              FeedLoader.SetActive(false);
         }
@@ -396,15 +425,37 @@ public class FeedController : MonoBehaviour
 
 
     public void BackToHome(){
-        EmptySearchPanel();
-        noFeedSerach. gameObject.SetActive(false);
-        noFeedsScreen.gameObject.SetActive(false);
-        FeedLoader.gameObject.SetActive(false);
-        FeedUIController.Instance.footerCan.GetComponent<BottomTabManager>().OnClickHomeButton();
-    }
+        if (SerchBarObj.activeInHierarchy) // serach is active 
+        {
+            SerchBarObj.SetActive(false);
+            SerachPanel.SetActive(false);
+            SearchContentPanel.SetActive(false);
+            EmptySearchPanel();
+            feedContentParent.gameObject.SetActive(true);
+            searchInputField.Text = "";
+            feedTabsContainer.sizeDelta = new Vector2(feedTabsContainer.rect.width, 80);
+            if (!isFeedInitialized)
+            {
+                Invoke(nameof(IntFeedPage), 0.01f);
+            }
+            else
+            {
+                PullNewPlayerPost();
+            }
+        }
+        else
+        {
+            EmptySearchPanel();
+            noFeedSerach.gameObject.SetActive(false);
+            noFeedsScreen.gameObject.SetActive(false);
+            FeedLoader.gameObject.SetActive(false);
+            feedUIController.footerCan.GetComponent<HomeFooterHandler>().OnClickHomeButton();
+        }
+     }
     private void OnDisable()
     {
-        SocketController.instance.updateFeedLike -= UpdateFeedLike;
+        HomeScoketHandler.instance.updateFeedLike -= UpdateFeedLike;
+        ResetFeedController();
     }
 
     /// <summary>

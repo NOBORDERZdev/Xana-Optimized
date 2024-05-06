@@ -42,6 +42,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
         }
         //defaultRotation = RootAnimTargetObj.transform.rotation;
         defaultRotation = new Quaternion(0, 0, 0, 1f);
+
+        playerHead= CharacterHandler.instance.GetActiveAvatarData().avatar_face.gameObject;
+        playerBody = CharacterHandler.instance.GetActiveAvatarData().avatar_body.gameObject;
     }
 
     private void Update()
@@ -78,6 +81,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     public void ToggleFaceDetection()
     {
+        if (m_ARFaceManager == null)
+            return;
+
         m_ARFaceManager.enabled = !m_ARFaceManager.enabled;
 
         if (m_ARFaceManager.enabled)
@@ -121,13 +127,35 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
                 faceAngle.y = differenceAngles.y;
                 mirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
-                /*Vector3 bodyRot = new Vector3(0, faceAngle.y / bodyRotRatio, 0);
-                playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
+
+                float yRot = faceAngle.y / bodyRotRatio;
+
+                if (yRot>100)
+                {
+                    yRot = 120 - yRot;
+                    float tempy=360 - yRot;
+                    yRot = tempy;
+                }
+
+                Vector3 bodyRot = new Vector3(0, yRot, 0);
+                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
                 playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(mirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
 #else
                 headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
-                /*Vector3 bodyRot = new Vector3(0, headRotation.y / bodyRotRatio, 0);
-                playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
+                
+                float yRot=face.transform.rotation.eulerAngles.y/bodyRotRatio;
+                if (yRot>100)
+                {
+                    yRot = 120 - yRot;
+                }
+                else
+                {
+                    float tempy=360-yRot;
+                    yRot = tempy;
+                }
+
+                Vector3 bodyRot = new Vector3(0,yRot,0);
+                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
                 playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
 #endif
 

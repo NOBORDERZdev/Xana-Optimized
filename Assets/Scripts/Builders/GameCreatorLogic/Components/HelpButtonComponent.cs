@@ -28,7 +28,7 @@ public class HelpButtonComponent : ItemComponent
             infoPopup = go.GetComponent<HelpButtonComponentResizer>();
             infoPopup.isAlwaysOn = helpButtonComponentData.IsAlwaysOn;
             infoPopup.titleText.text = helpButtonComponentData.titleHelpButtonText;
-            infoPopup.msg= helpButtonComponentData.helpButtonData.Length == 0 ? "Define Rules here !" : helpButtonComponentData.helpButtonData + "\n";
+            infoPopup.msg = helpButtonComponentData.helpButtonData.Length == 0 ? "Define Rules here !" : helpButtonComponentData.helpButtonData + "\n";
             //infoPopup.contentText.text = helpButtonComponentData.helpButtonData;
             infoPopup.scrollView.enabled = false;
             infoPopup.scrollbar.SetActive(false);
@@ -44,7 +44,7 @@ public class HelpButtonComponent : ItemComponent
         {
             {
                 BuilderEventManager.OnHelpButtonCollisionEnter?.Invoke(helpButtonComponentData.titleHelpButtonText, helpButtonComponentData.helpButtonData, this.gameObject);
-                ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
+                ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.InfoPopup);
 
             }
         }
@@ -98,6 +98,16 @@ public class HelpButtonComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.HelpButtonComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //CollisionExit();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

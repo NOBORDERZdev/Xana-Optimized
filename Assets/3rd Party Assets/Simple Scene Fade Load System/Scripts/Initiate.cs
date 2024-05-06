@@ -29,7 +29,7 @@ public static class Initiate
         Fader scr = init.GetComponent<Fader>();
         scr.fadeDamp = multiplier;
         scr.fadeScene = scene;
-        if (!SceneManager.GetActiveScene().name.Equals("Main") || isSetColorCompulsory)
+        if (!SceneManager.GetActiveScene().name.Equals("Home") || isSetColorCompulsory)
         {
             scr.fadeColor = col;
         }

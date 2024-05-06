@@ -25,10 +25,10 @@ public class UserPostFeature : MonoBehaviour
     {
         if (_postInputField.text == "" && GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
         {
-            SNSNotificationManager.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("Enter Text/Mood To Post");
             return;
         }
-        UIManager.Instance.SwitchToPostScreen(false);
+        GameManager.Instance.UiManager.SwitchToPostScreen(false);
         string moodToSend = GameManager.Instance.userAnimationPostFeature.MoodSelected;
         if (GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
         {
@@ -112,7 +112,7 @@ public class UserPostFeature : MonoBehaviour
         while (PlayerPrefs.GetString("UserNameAndPassword") == "")
             yield return new WaitForSeconds(0.5f);
 
-        string FinalUrl = PrepareApiURL("Receive") + XanaConstants.xanaConstants.userId;
+        string FinalUrl = PrepareApiURL("Receive") + ConstantsHolder.userId;
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
 
@@ -296,7 +296,7 @@ public class UserPostFeature : MonoBehaviour
 
     private IEnumerator ArrangeBubbleTxt(TMP_Text tmpText)
     {
-        ContentSizeFitter contentSizeFitter = tmpText.transform.parent.GetComponent<ContentSizeFitter>();
+        ContentSizeFitter contentSizeFitter = tmpText.transform.parent.parent.GetComponent<ContentSizeFitter>();
         contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
         yield return new WaitForEndOfFrame();
 
@@ -308,13 +308,13 @@ public class UserPostFeature : MonoBehaviour
             tmpText.ForceMeshUpdate();
 
             var preferredWidth = tmpText.GetPreferredValues().x;
-            if (preferredWidth > 134)
+            if (preferredWidth > 260)
             {
                 yield return new WaitForEndOfFrame();
                 contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
                 yield return new WaitForEndOfFrame();
                 contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(135f, contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta.y);
+                    new Vector2(300f, contentSizeFitter.gameObject.GetComponent<RectTransform>().sizeDelta.y);
 
                 tmpText.text = str;
                 yield break;

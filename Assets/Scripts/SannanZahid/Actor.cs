@@ -50,10 +50,10 @@ public class Actor : MonoBehaviour
     {
         _playerMoves.Clear();
     }
-    IEnumerator StartBehaviour()
+    public IEnumerator StartBehaviour()
     {
         while(ActionClipTime.Equals( 0f))
-            yield return new WaitForSeconds(0.5f); 
+            yield return new WaitForSeconds(0.5f);
 
         StartCoroutine(StartActorBehaviour());
     }
@@ -120,7 +120,7 @@ public class Actor : MonoBehaviour
         //StartCoroutine(StartActorBehaviour());
 
     }
-    IEnumerator StartActorBehaviour()
+    public IEnumerator StartActorBehaviour()
     {
         CheckedInLoop:
         yield return new WaitForSeconds(Time.deltaTime);
@@ -228,8 +228,14 @@ public class Actor : MonoBehaviour
             StateMoveBehaviour = 1;
             _moveFlag = true;
         }
-        NameTagHolderObj.gameObject.SetActive(!flag);
+        //NameTagHolderObj.gameObject.SetActive(!flag);
+        StartCoroutine(NamePanelAdjust(flag));
         this.GetComponent<FaceIK>().enabled = !flag;
         this.GetComponent<FootStaticIK>().enabled = !flag;
+    }
+    IEnumerator NamePanelAdjust(bool _flag) 
+    {
+        yield return new WaitForSeconds(.1f);
+        NameTagHolderObj.gameObject.SetActive(!_flag);
     }
 }

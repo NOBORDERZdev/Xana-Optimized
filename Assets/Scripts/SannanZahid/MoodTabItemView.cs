@@ -48,6 +48,6 @@ public class MoodTabItemView : MonoBehaviour
     }
     public void OnClickMood()
     {
-        this._animationPostManager.SetMood(_moodName.text);
+        this._animationPostManager.SetMood(_moodName.transform.GetComponent<TextLocalization>().GetOriginalText());
     }
 }

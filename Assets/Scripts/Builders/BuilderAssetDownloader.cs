@@ -55,7 +55,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
+            ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
     }
 
@@ -65,7 +65,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+            ScreenOrientationManager.switchOrientation -= OnOrientationChange;
         }
         ResetAll();
     }
@@ -178,13 +178,18 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
 
-        if (BuilderData.mapData.data.json.otherItems.Count == 0)
+        //Remove spw count from Item count
+        int objCount = BuilderData.mapData.data.json.otherItems.Count - BuilderData.preLoadspawnPoint.Count;
+
+        if (objCount == 0)
         {
             assetDownloadingText.enabled = false;
             assetDownloadingTextPotrait.enabled = false;
             assetDownloadingText.transform.parent.gameObject.SetActive(false);
             assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
         }
+
+        BuilderEventManager.UploadPropertiesInit?.Invoke();
     }
 
     IEnumerator DownloadAssetsFromSortedList()
@@ -259,7 +264,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             {
                 Debug.LogError("Download Failed......");
             }
-            yield return new WaitForEndOfFrame();   
+            yield return new WaitForEndOfFrame();
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
                 downloadFailed.RemoveAt(0);
@@ -372,7 +377,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.spawnComponent)
+        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
@@ -404,7 +409,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         //Add game object into XanaItems List for Hirarchy
         //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
-            GamificationComponentData.instance.xanaItems.Add(xanaItem);
+        GamificationComponentData.instance.xanaItems.Add(xanaItem);
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }
@@ -423,7 +428,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -454,7 +459,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -503,7 +508,7 @@ public class BuilderAssetDownloader : MonoBehaviour
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
@@ -534,7 +539,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         dataArranged = false;
         dataSorted = false;
 
-        // BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, SetConstant.isLogin);
+        // BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
     }
 

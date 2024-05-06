@@ -12,10 +12,10 @@ public class XLTutorials : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetInt("ShowLobbyTutorial") == 0 && !XanaConstants.xanaConstants.isLobbyTutorialLoaded)
+        if (PlayerPrefs.GetInt("ShowLobbyTutorial") == 0 && !ConstantsHolder.xanaConstants.isLobbyTutorialLoaded)
         {
             tutorialPanel.SetActive(true);
-            XanaConstants.xanaConstants.isLobbyTutorialLoaded = true;
+            ConstantsHolder.xanaConstants.isLobbyTutorialLoaded = true;
         }
         dontShowBtn.onClick.AddListener(DontShowTutorial);
     }

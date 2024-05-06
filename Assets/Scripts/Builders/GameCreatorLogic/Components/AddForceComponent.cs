@@ -51,7 +51,8 @@ public class AddForceComponent : ItemComponent
         {
             if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, _componentType);
-            else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
+            else
+                GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, _componentType);
         }
     }
 
@@ -59,12 +60,12 @@ public class AddForceComponent : ItemComponent
     private void StartComponent()
     {
         ApplyAddForce();
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
 
     }
     private void StopComponent()
     {
-        rigidBody.isKinematic = false;
+        //rigidBody.isKinematic = false;
     }
 
     public override void StopBehaviour()
@@ -96,6 +97,16 @@ public class AddForceComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.AddForceComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

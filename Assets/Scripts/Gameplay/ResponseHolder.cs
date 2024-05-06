@@ -42,6 +42,13 @@ public class ResponseHolder : ScriptableObject
         return null;
     }
 
+    public void ChangeReponse(string key, string response)
+    {
+        Response res = apiResponses.Find(x => x.apiKey == key);
+        if (res != null)
+            res.response = response;
+    }
+
     private void OnDisable()
     {
         apiResponses.Clear();

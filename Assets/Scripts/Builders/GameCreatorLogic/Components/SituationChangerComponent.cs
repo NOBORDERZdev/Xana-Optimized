@@ -56,8 +56,6 @@ public class SituationChangerComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            playerObject = _other.gameObject;
-
             if (!IsAgainTouchable) return;
 
             IsAgainTouchable = false;
@@ -112,7 +110,7 @@ public class SituationChangerComponent : ItemComponent
         time = defaultTimer;
         if (playerObject != null)
         {
-            ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.LightOff);
         }
         else
         {
@@ -345,6 +343,16 @@ public class SituationChangerComponent : ItemComponent
         timeCheck = situationChangerComponentData.Timer;
         SetDayMode(_light, _lightsIntensity);
         GamificationComponentData.instance.isNight = false;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
     #endregion
 

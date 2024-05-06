@@ -94,10 +94,10 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (assetParent)
             assetParentStatic = assetParent;
-        if (!XanaConstants.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene)
         {
             BuilderEventManager.XanaMapDataDownloaded += PostLoadingBuilderAssets;
-            ChangeOrientation_waqas.switchOrientation += OnOrientationChange;
+            ScreenOrientationManager.switchOrientation += OnOrientationChange;
         }
 
     }
@@ -106,7 +106,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
 
         BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
-        ChangeOrientation_waqas.switchOrientation -= OnOrientationChange;
+        ScreenOrientationManager.switchOrientation -= OnOrientationChange;
         ResetAll();
 
     }
@@ -125,7 +125,8 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartDownloadingAssets();
-        EnableDownloadingText();
+        if (totalAssetCount != downloadedTillNow)
+            EnableDownloadingText();
     }
 
     void LoadAddressableSceneAfterDownload()
@@ -302,6 +303,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator DownloadFailedItem()
     {
+        //Debug.LogError("Failed Count_" + downloadFailed.Count + "_TotalAsset_" + totalAssetCount + "_Downloaded_" + downloadedTillNow);
         while (downloadFailed.Count > 0)
         {
             string downloadKey = downloadFailed[0].ItemID;
@@ -352,7 +354,6 @@ public class XanaWorldDownloader : MonoBehaviour
             BuilderEventManager.AfterWorldOffcialWorldsInatantiated?.Invoke();
         }
     }
-
 
     public IEnumerator DownloadObjects(List<DownloadQueueData> downloadQueues, bool preLodaingObjects)
     {
@@ -405,6 +406,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingText.color = Color.green;
                     assetDownloadingTextPotrait.color = Color.green;
+         
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
@@ -470,7 +472,7 @@ public class XanaWorldDownloader : MonoBehaviour
         CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -497,7 +499,7 @@ public class XanaWorldDownloader : MonoBehaviour
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
-        currPlayerPosition = LoadFromFile.instance.mainController.transform.localPosition;
+        currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
         while (downloadIsGoingOn)
         {
@@ -542,7 +544,7 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ChangeOrientation_waqas._instance.isPotrait)
+            if (ScreenOrientationManager._instance.isPotrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);

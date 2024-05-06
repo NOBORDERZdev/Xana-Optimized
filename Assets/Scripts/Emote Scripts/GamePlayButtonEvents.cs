@@ -136,11 +136,11 @@ public class GamePlayButtonEvents : MonoBehaviour
 
     internal void OpenAllAnims()
     {
-  
+
         OpenAllAnimsPanel?.Invoke();
     }
 
-   
+
 
     public void ShowHelpObjects()
     {

@@ -93,17 +93,10 @@ public class FeedAnimationBGChange : MonoBehaviour
         Debug.Log("All BG Base url:" + ConstantsGod.API_BASEURL);
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES+"/"+APIBaseUrlChange.instance.apiversion);
+        UnityWebRequest uwr = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.BACKGROUNDFILES + "/" + APIBasepointManager.instance.apiversion);
         try
         {
-            if (UserRegisterationManager.instance.LoggedInAsGuest)
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
-            else
-            {
-                uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            }
+            uwr.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         }
         catch (Exception e1)
         {

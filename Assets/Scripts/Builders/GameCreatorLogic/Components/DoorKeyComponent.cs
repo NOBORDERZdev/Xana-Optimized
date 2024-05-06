@@ -92,7 +92,7 @@ public class DoorKeyComponent : ItemComponent
                     //Toast.Show("The keys match!");
                     BuilderEventManager.OnDoorKeyCollisionEnter?.Invoke("The keys match!");
 
-                    ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
+                    ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.DoorOpen);
 
                     return;
                 }
@@ -103,6 +103,7 @@ public class DoorKeyComponent : ItemComponent
             isCollisionHandled = true;
         }
     }
+
     private bool KeyValidation()
     {
         if (this.doorKeyComponentData.selectedKey.Equals("Select Key")) return false;
@@ -159,6 +160,16 @@ public class DoorKeyComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.DoorKeyComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

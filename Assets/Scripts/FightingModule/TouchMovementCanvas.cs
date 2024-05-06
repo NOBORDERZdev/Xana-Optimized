@@ -45,30 +45,30 @@ public class TouchMovementCanvas : MonoBehaviour, IDragHandler, IBeginDragHandle
         //switch (buttonID)
         //{
         //    case "JOYSTICK":
-        //        CanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
 
         //    case "LK":
-        //        CanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
 
         //    case "LP":
-        //        CanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
 
         //    case "HK":
-        //        CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
 
         //    case "HP":
-        //        CanvasButtonsHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.HP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
 
         //    case "SP":
-        //        CanvasButtonsHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.SP.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
         //    case "BLOCK":
-        //        CanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
+        //        GamePlayUIHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits(buttonID);
         //        break;
         //    default:
         //        print("Not Found");

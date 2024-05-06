@@ -70,9 +70,9 @@ public class RecordVideoBehaviour : MonoBehaviour
 
     public void StartRecording()
     {
-        if (SNSNotificationManager.Instance != null)
+        if (SNSNotificationHandler.Instance != null)
         {
-            SNSNotificationManager.Instance.ResetAndInstantHideNotificationBar();
+            SNSNotificationHandler.Instance.ResetAndInstantHideNotificationBar();
         }
 
         ARFaceModuleManager.Instance.OnActiveOrDisableUiRecordingTime(false);//this method is used to false button ui video racording time.......

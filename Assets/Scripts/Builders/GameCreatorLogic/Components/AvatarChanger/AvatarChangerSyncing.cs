@@ -3,6 +3,7 @@ using Photon.Pun;
 using System.Linq;
 using System.Collections;
 using Photon.Realtime;
+using Photon.Pun.Demo.PunBasics;
 
 public class AvatarChangerSyncing : MonoBehaviourPun
 {
@@ -20,6 +21,8 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     [Header("Player Head")]
     [SerializeField]
     private SkinnedMeshRenderer playerHead;
+    [SerializeField]
+    public SkinnedMeshRenderer[] playerEyebrow;
 
     GameObject playerObj;
     Avatar defaultAvatar;
@@ -30,9 +33,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
     bool isInitialise = false;
     MeshRenderer[] meshRenderers;
     SkinnedMeshRenderer[] skinnedMeshes;
-    [PunRPC]
-    void Init(int pvID, int avatarIndex, string RuntimeItemID)
-    { }
+
     private void OnEnable()
     {
         if (photonView.IsMine)
@@ -63,20 +64,31 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         int avatarIndex = int.Parse(parts[0]);
         string RuntimeItemID = parts[1];
         int viewID = int.Parse(parts[2]);
-        playerObj = PhotonView.Find(viewID).gameObject;
+        playerObj = FindPlayerusingPhotonView(photonView);
         yield return new WaitForSeconds(0.1f);
         if (playerObj != null)
         {
             AvatarController ac = playerObj.GetComponent<AvatarController>();
-            CharcterBodyParts charcterBodyParts = playerObj.GetComponent<CharcterBodyParts>();
+            CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornPant)
                 playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornShirt)
                 playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
-            if (ac.wornShose)
-                playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+            if (ac.wornShoes)
+                playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+            int index = 0;
+            if (ac.wornEyebrow.Length > 0)
+            {
+                playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+                foreach (var eyeBrow in ac.wornEyebrow)
+                {
+                    playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                    index++;
+                }
+                index = 0;
+            }
             playerBody = charcterBodyParts.body;
             playerHead = charcterBodyParts.head;
             anim = playerObj.GetComponent<Animator>();
@@ -153,6 +165,13 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             playerShirt.enabled = state;
         if (playerShoes)
             playerShoes.enabled = state;
+        if (playerEyebrow.Length > 0)
+        {
+            foreach (var eyeBrow in playerEyebrow)
+            {
+                eyeBrow.enabled = state;
+            }
+        }
     }
 
     private void OnDisable()
@@ -170,5 +189,19 @@ public class AvatarChangerSyncing : MonoBehaviourPun
         arrowManager.nameCanvas.transform.localPosition = canvasPos;
         if (gangsterCharacter != null)
             Destroy(gangsterCharacter);
+    }
+
+    GameObject FindPlayerusingPhotonView(PhotonView pv)
+    {
+        Player player = pv.Owner;
+        foreach (GameObject playerObject in MutiplayerController.instance.playerobjects)
+        {
+            PhotonView _photonView = playerObject.GetComponent<PhotonView>();
+            if (_photonView.Owner == player && _photonView.GetComponent<AvatarController>())
+            {
+                return playerObject;
+            }
+        }
+        return null;
     }
 }

@@ -35,9 +35,9 @@ public class AvatarSelfie : MonoBehaviour
     /// </summary>
     public void TakeScreenShootAndSaveData(Action<bool> CallBack)
     {
-        //if (!PremiumUsersDetails.Instance.CheckSpecificItem("Selfie Button"))
+        //if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
         //{
-        //    //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+        //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
         //    //print("Please Upgrade to Premium account");
         //    return;
         //}
@@ -133,7 +133,7 @@ public class AvatarSelfie : MonoBehaviour
         //}
         //else
         //{
-        //    StoreManager.instance.OnSaveBtnClicked();
+        //    InventoryManager.instance.OnSaveBtnClicked();
         //}
 
         LoadPlayerAvatar.instance_loadplayer.CloseAvatarPanel();

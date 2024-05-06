@@ -15,17 +15,14 @@ public class PowerProviderComponent : ItemComponent
         RuntimeItemID = this.GetComponent<XanaItem>().itemData.RuntimeItemID;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CollisionEnter()
     {
-        if (other.gameObject.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>().IsMine)
-        {
-            BuilderEventManager.onComponentActivated?.Invoke(_componentType);
-            PlayBehaviour();
-            if (GamificationComponentData.instance.withMultiplayer)
-                GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
-            else
-                GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
-        }
+        BuilderEventManager.onComponentActivated?.Invoke(_componentType);
+        PlayBehaviour();
+        if (GamificationComponentData.instance.withMultiplayer)
+            GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
+        else
+            GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
     }
 
     #region BehaviourControl
@@ -40,10 +37,10 @@ public class PowerProviderComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -70,6 +67,16 @@ public class PowerProviderComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.PowerProviderComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        CollisionEnter();
     }
 
     #endregion

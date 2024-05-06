@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class CharacterControls : MonoBehaviour
 {
-    internal PlayerControllerNew playerControler;
+    internal PlayerController playerControler;
 
     private Coroutine routine;
 

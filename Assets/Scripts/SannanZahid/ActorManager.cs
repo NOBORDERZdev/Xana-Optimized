@@ -21,12 +21,19 @@ public class ActorManager : MonoBehaviour
     }
     void Start()
     {
-        Transform defaultPoint = GameManager.Instance.avatarPathSystemManager.GetGridCenterPoint();
+        //Transform defaultPoint = GameManager.Instance.avatarPathSystemManager.GetGridCenterPoint();
         //GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().worldCam.GetComponent<HomeCameraController>().ViewPlayer();
+        //_previousPos = defaultPoint.position;
+       // _previousRot = defaultPoint.eulerAngles;
+        
+        //GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[GetPostRandomDefaultAnim()],defaultPoint);
+    }
+    public void Init()
+    {
+        Transform defaultPoint = GameManager.Instance.avatarPathSystemManager.GetGridCenterPoint(); 
         _previousPos = defaultPoint.position;
         _previousRot = defaultPoint.eulerAngles;
-        
-        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[GetPostRandomDefaultAnim()],defaultPoint);
+        GameManager.Instance.mainCharacter.GetComponent<Actor>().Init(actorBehaviour[GetPostRandomDefaultAnim()], defaultPoint);
     }
     public void SetMood(string mood)
     {

@@ -15,6 +15,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 using SimpleJSON;
+using Crosstales.BWF;
 
 #endif
 
@@ -97,7 +98,7 @@ public class XanaChatSystem : MonoBehaviour
 
     public void Start()
     {
-        CheckIfDeviceHasNotch();
+        //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
 
         if (!string.IsNullOrEmpty(CurrentChannelText.text.ToString()))
@@ -174,12 +175,12 @@ public class XanaChatSystem : MonoBehaviour
 
     public void LoadOldChat()
     {
-        XanaChatSocket.callApi?.Invoke();
+        ChatSocketManager.callApi?.Invoke();
         //chatConfirmationPanel.SetActive(false);
     }
     void CheckIfDeviceHasNotch()
     {
-        if (!ChangeOrientation_waqas._instance.isPotrait)
+        if (!ScreenOrientationManager._instance.isPotrait)
         {
             outline.offsetMin = new Vector2((Screen.safeArea.xMin / (float)(Screen.width / 800f)), outline.offsetMin.y);
         }
@@ -234,9 +235,9 @@ public class XanaChatSystem : MonoBehaviour
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
-            //    if (!string.IsNullOrEmpty(XanaChatSocket.instance.oldChatResponse))
+            //    if (!string.IsNullOrEmpty(ChatSocketManager.instance.oldChatResponse))
             //    {
-            //        JSONNode jsonNode = JSON.Parse(XanaChatSocket.instance.oldChatResponse);
+            //        JSONNode jsonNode = JSON.Parse(ChatSocketManager.instance.oldChatResponse);
             //        int countValue = jsonNode["count"].AsInt;
 
             //        if (countValue > 0)
@@ -256,9 +257,13 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-        if (!PremiumUsersDetails.Instance.CheckSpecificItem("Message Option/Chat option"))
+       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+
+        print("Bad word !!" + removeBadWords);
+
+        if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
-            //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }
@@ -267,15 +272,16 @@ public class XanaChatSystem : MonoBehaviour
             print("Horayyy you have Access");
         }
 
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
+        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
+        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
+      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
+        removeBadWords = "";
     }
 
     public void OnClickSend()
@@ -301,7 +307,7 @@ public class XanaChatSystem : MonoBehaviour
         //    }
 
         //}
-        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID, inputLine, CallBy.User, "");
+        ChatSocketManager.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID, inputLine, CallBy.User, "");
     }
 
     #region Photon Chat Region
@@ -328,9 +334,9 @@ public class XanaChatSystem : MonoBehaviour
     //}
     //public void OnEnterSend()
     //{
-    //    if (!PremiumUsersDetails.Instance.CheckSpecificItem("Message Option/Chat option"))
+    //    if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
     //    {
-    //        //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
+    //        //UserPassManager.Instance.PremiumUserUI.SetActive(true);
     //        print("Please Upgrade to Premium account");
     //        return;
     //    }
@@ -342,7 +348,7 @@ public class XanaChatSystem : MonoBehaviour
     //    PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
     //    Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-    //    XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text);
+    //    ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, this.InputFieldChat.text);
     //    ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
     //    this.InputFieldChat.text = "";
     //}
@@ -370,7 +376,7 @@ public class XanaChatSystem : MonoBehaviour
     //            this.testBytes = new byte[this.TestLength];
     //        }
 
-    //        XanaChatSocket.onSendMsg.Invoke(XanaConstants.xanaConstants.MuseumID,inputLine);
+    //        ChatSocketManager.onSendMsg.Invoke(ConstantsHolder.xanaConstants.MuseumID,inputLine);
     //    }
     //}
     //public void DebugReturn(ExitGames.Client.Photon.DebugLevel level, string message)
@@ -394,7 +400,7 @@ public class XanaChatSystem : MonoBehaviour
 
     //    //if (this.ChannelsToJoinOnConnect != null)
     //    //{
-    //    //    if (!XanaConstants.xanaConstants.isBuilderScene)
+    //    //    if (!ConstantsHolder.xanaConstants.isBuilderScene)
     //    //    {
     //    //        if (SceneManager.GetActiveScene().name == "AddressableScene")
     //    //        {
@@ -407,7 +413,7 @@ public class XanaChatSystem : MonoBehaviour
     //    //    }
     //    //    else
     //    //    {
-    //    //        this.ChannelsToJoinOnConnect = XanaConstants.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
+    //    //        this.ChannelsToJoinOnConnect = ConstantsHolder.xanaConstants.builderMapID+ FeedEventPrefab.m_EnvName;
     //    //    }
     //    //  //  this.chatClient.Subscribe(this.ChannelsToJoinOnConnect, this.HistoryLengthToFetch);
     //    //    //Debug.Log(this.ChannelsToJoinOnConnect);

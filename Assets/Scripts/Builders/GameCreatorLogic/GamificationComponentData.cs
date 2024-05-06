@@ -23,10 +23,11 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    internal PlayerControllerNew playerControllerNew;
+    internal PlayerController playerControllerNew;
     internal AvatarController avatarController;
-    internal CharcterBodyParts charcterBodyParts;
+    internal CharacterBodyParts charcterBodyParts;
     internal IKMuseum ikMuseum;
+    public Texture defaultSkyTex;
 
     public Vector3 spawnPointPosition;
     public GameObject raycast;
@@ -90,6 +91,13 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal bool isBuilderWorldPlayerSetup;
     public RuntimeAnimatorController idleAnimation;
     internal bool ZoomControl;
+
+    //platformLayers
+    public LayerMask platformLayers;
+
+    [Tooltip("What layers the character uses as ground")]
+    public LayerMask GroundLayers;
+
     private void Awake()
     {
         instance = this;
@@ -138,6 +146,11 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         Physics.IgnoreLayerCollision(9, 22, false);
 
         Debug.Log("Blindfolded spawned");
+    }
+
+    public float MapValue(float oldValue, float oldMin, float oldMax, float newMin, float newMax)
+    {
+        return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
     #region OrientationChange
@@ -212,10 +225,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (startKey == data2.warpPortalEndKeyValue && startKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
                     }
                 }
@@ -225,10 +238,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     if (endKey == data2.warpPortalStartKeyValue && endKey != "")
                     {
                         Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y = warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
                         Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y = warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
                         UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
                     }
                 }

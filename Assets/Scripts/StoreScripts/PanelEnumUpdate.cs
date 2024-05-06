@@ -10,9 +10,9 @@ public class PanelEnumUpdate : MonoBehaviour
     private void OnEnable()
     {
         if (localPanelType.Equals(LocalPanelType.AvatarPanel))
-            AR_UndoRedo.obj.panelType = AR_UndoRedo.PanelType.Avatar;
+            StoreUndoRedo.obj.panelType = StoreUndoRedo.PanelType.Avatar;
         else if (localPanelType.Equals(LocalPanelType.WearablePanel))
-            AR_UndoRedo.obj.panelType = AR_UndoRedo.PanelType.Wearable;
+            StoreUndoRedo.obj.panelType = StoreUndoRedo.PanelType.Wearable;
     }
 
     void Start()

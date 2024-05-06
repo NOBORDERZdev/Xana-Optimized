@@ -38,13 +38,13 @@ public class OnPanel : MonoBehaviour
             }
             GameManager.Instance.WorldBool = false;
             Invoke("SetFalse", 0f);
-            UIManager.Instance.ShowFooter(true);//rik
+            GameManager.Instance.UiManager.ShowFooter(true);//rik
         }
     }
     private void OnDisable()
     {
-        if ( UIManager.Instance.HomePage && UIManager.Instance.HomePage.activeInHierarchy)
-            UIManager.Instance.HomePage.SetActive(true);
+        if ( GameManager.Instance.UiManager.HomePage && GameManager.Instance.UiManager.HomePage.activeInHierarchy)
+            GameManager.Instance.UiManager.HomePage.SetActive(true);
 
 
         reverse = false;

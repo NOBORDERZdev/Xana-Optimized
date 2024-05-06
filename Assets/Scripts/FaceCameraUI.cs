@@ -19,9 +19,9 @@ public class FaceCameraUI : MonoBehaviour
     void Start()
     {
         localTrans = GetComponent<Transform>();
-        mainCam = LoadFromFile.instance.PlayerCamera.transform;
+        mainCam = GameplayEntityLoader.instance.PlayerCamera.transform;
         thirdPersonCam = mainCam;
-        firstPersonCam = LoadFromFile.instance.firstPersonCamera.transform;
+        firstPersonCam = GameplayEntityLoader.instance.firstPersonCamera.transform;
     }
 
     // Update is called once per frame
@@ -47,7 +47,7 @@ public class FaceCameraUI : MonoBehaviour
                     selficamOtherAssign = selfieCamOther;
                     oneTimeCall = false;
                     //GameObject[] objects = GameObject.FindGameObjectsWithTag("PhotonLocalPlayer");
-                    GameObject[] objects = Photon.Pun.Demo.PunBasics.Launcher.instance.playerobjects.ToArray();
+                    GameObject[] objects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
 
                     for (int i = 0; i < objects.Length; i++)
                     {

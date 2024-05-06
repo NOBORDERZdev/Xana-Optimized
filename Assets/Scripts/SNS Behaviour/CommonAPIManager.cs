@@ -28,7 +28,7 @@ public class CommonAPIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log("APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
+        //Debug.Log("SNS_APIManager Start UserToken:" + ConstantsGod.AUTH_TOKEN + "    :userID:" + PlayerPrefs.GetString("UserName"));
         SetUpBottomUnReadCount(0);//default message footer message unread count set false.......
         ConnetSocketManagerAndListener();
     }
@@ -79,27 +79,27 @@ public class CommonAPIManager : MonoBehaviour
     {
         print("Listen");
         //Manager.Socket.On<string>("FeedComment", FeedCommentResponse);
-        Manager.Socket.On<string>("MessageReceived", MessageReceivedResponse);
+        //Manager.Socket.On<string>("MessageReceived", MessageReceivedResponse);
     }
 
-    public void MessageReceivedResponse(string s)
-    {
-       Debug.Log("Common Socket Handler MessageReceivedResponce.......");
-        if (MessageController.Instance != null)
-        {
-            if (MessageController.Instance.ChatScreen.activeInHierarchy)
-            {
-                return;
-            }
+    //public void MessageReceivedResponse(string s)
+    //{
+    //   Debug.Log("Common Socket Handler MessageReceivedResponce.......");
+    //    if (SNS_MessageController.Instance != null)
+    //    {
+    //        if (SNS_MessageController.Instance.ChatScreen.activeInHierarchy)
+    //        {
+    //            return;
+    //        }
 
-            if (!MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
-            {
-                MessageController.Instance.isNeedToRefreshConversationAPI = true;
-            }
-        }
-       Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");
-        RequestGetAllChatUnReadMessagesCount();//For Get All Chat UnRead Message Count.......
-    }
+    //        if (!SNS_MessageController.Instance.gameObject.activeInHierarchy)//this condition is used to once message screen open then go to another screen then back to message screen refresh conversation list.......
+    //        {
+    //            SNS_MessageController.Instance.isNeedToRefreshConversationAPI = true;
+    //        }
+    //    }
+    //   Debug.Log("Common Socket Handler MessageReceivedResponce111111111.......");
+    //    RequestGetAllChatUnReadMessagesCount();//For Get All Chat UnRead Message Count.......
+    //}
 
     #endregion
 
@@ -110,7 +110,7 @@ public class CommonAPIManager : MonoBehaviour
     #region SNS Module APis.......
     [Space]
     [Header("Comman APi Handler")]
-    BottomTabManager[] bottomTabManagers;
+    HomeFooterHandler[] bottomTabManagers;
     //this api is used to get all UnRead Messages Count.......
     public void RequestGetAllChatUnReadMessagesCount()
     {
@@ -132,19 +132,21 @@ public class CommonAPIManager : MonoBehaviour
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
 
-            if (www.isNetworkError || www.isHttpError)
+            while(!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
             }
             else
             {
-                //Debug.Log("Get UnReadMessagesCount Success!");
-                string data = www.downloadHandler.text;
-                Debug.Log("<color=red> Get UnReadMessagesCount Success! data:" + data +"<color>");
+                string data = www.downloadHandler.text;   
                 MessageUnreadCountRoot myDeserializedClass = JsonConvert.DeserializeObject<MessageUnreadCountRoot>(data);
-
                 SetUpBottomUnReadCount(myDeserializedClass.data);
             }
         }
@@ -153,7 +155,8 @@ public class CommonAPIManager : MonoBehaviour
     //This method is used to setup footer message unread count setup.......
     public void SetUpBottomUnReadCount(int count)
     {
-        bottomTabManagers = Resources.FindObjectsOfTypeAll<BottomTabManager>();
+        bottomTabManagers = Resources.FindObjectsOfTypeAll<HomeFooterHandler>();
+        Debug.LogError("finding bottom tab manager  :- ");
         for (int i = 0; i < bottomTabManagers.Length; i++)
         {
             bottomTabManagers[i].MessageUnReadCountSetUp(count);

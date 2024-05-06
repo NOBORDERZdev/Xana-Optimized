@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿//-----------------------------------------------------------------------------
+// Copyright 2015-2023 RenderHeads Ltd.  All rights reserved.
+//-----------------------------------------------------------------------------
 
-//-----------------------------------------------------------------------------
-// Copyright 2015-2022 RenderHeads Ltd.  All rights reserved.
-//-----------------------------------------------------------------------------
+using UnityEngine;
 
 namespace RenderHeads.Media.AVProVideo
 {
@@ -61,7 +61,7 @@ namespace RenderHeads.Media.AVProVideo
 
 		void OnAudioConfigurationChanged(bool deviceChanged)
 		{
-			if (_mediaPlayer.Control == null)
+			if (_mediaPlayer == null || _mediaPlayer.Control == null)
 				return;
 			_mediaPlayer.Control.AudioConfigurationChanged(deviceChanged);
 		}

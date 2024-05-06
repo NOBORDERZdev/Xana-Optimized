@@ -16,17 +16,17 @@ public class UIObjectSwitcher : MonoBehaviour
 
     private void OnEnable()
     {
-        ChangeOrientation_waqas.switchOrientation += OrientationChanged;
+        ScreenOrientationManager.switchOrientation += OrientationChanged;
     }
     private void OnDisable()
     {
-        ChangeOrientation_waqas.switchOrientation -= OrientationChanged;
+        ScreenOrientationManager.switchOrientation -= OrientationChanged;
     }
 
 
     void OrientationChanged()
     {
-        if (ChangeOrientation_waqas._instance.isPotrait)
+        if (ScreenOrientationManager._instance.isPotrait)
         {
             foreach (GameObject landscapeAction in landscapeUIObjs)
                 landscapeAction.SetActive(false);

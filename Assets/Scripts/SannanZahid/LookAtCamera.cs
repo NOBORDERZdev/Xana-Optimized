@@ -15,11 +15,11 @@ public class LookAtCamera : MonoBehaviour
     [SerializeField]
     UserPostFeature _postHandler;
     [SerializeField]
-    Transform _playerTransform;
+    public Transform _playerTransform;
     [SerializeField]
     Transform boxerplayerTransform;
     [SerializeField]
-    Transform newplayerTransform;
+    public Transform newplayerTransform;
     public Vector3 Offset;
     bool SnapToPosition = false;
     Vector3 LastDisablePosition = default;

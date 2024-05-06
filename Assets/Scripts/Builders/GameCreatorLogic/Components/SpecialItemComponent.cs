@@ -30,7 +30,7 @@ public class SpecialItemComponent : ItemComponent
 
     private void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.SpecialItem);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.SpecialItem);
 
         GamificationComponentData.instance.buildingDetect.
                     SpecialItemPowerUp(specialItemComponentData.setTimer, specialItemComponentData.playerSpeed, specialItemComponentData.playerHeight);
@@ -74,6 +74,16 @@ public class SpecialItemComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.SpecialItemComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

@@ -23,7 +23,7 @@ public class AdjustGridLayoutCellSize : MonoBehaviour
  
     void Start()
     {
-        if (XanaConstants.xanaConstants!=null && XanaConstants.xanaConstants.screenType == XanaConstants.ScreenType.TabScreen)
+        if (ConstantsHolder.xanaConstants!=null && ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
             ratioMode = RatioMode.Fixed;
         UpdateCellSize();
     }

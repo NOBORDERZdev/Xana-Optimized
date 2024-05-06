@@ -79,6 +79,7 @@ public class ConstantsGod
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
+    public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
     // public static string GetUserDetailsAPI = "users/single-user";
@@ -148,6 +149,7 @@ public class ConstantsGod
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
+    public static string r_url_OnlineFriends = "/social/follow/get-user-online-friends";
 
     public static string r_url_AllFeed = "/feeds";
     public static string r_url_CommentFeed = "/feeds/comment-feed";
@@ -198,6 +200,10 @@ public class ConstantsGod
     public static readonly string userMy_Collection_Xanalia = "/user/my-collection";
     public static readonly string getUserProfile_Xanalia = "/user/get-user-profile";
 
+    public const string xanaliaTestAPI = "https://backend.xanalia.com";
+    public const string xanaliaProductionAPI = "https://prod-backend.xanalia.com";
+    public static readonly string loginExternalWalletURL = "/auth/login-external-wallet";
+
     public static readonly string GetUserNounceURL = "/auth/get-user-nonce";
     public static readonly string VerifySignedURL = "/auth/verify-signature";
     //public static readonly string NameAPIURL = "";
@@ -239,6 +245,7 @@ public class ConstantsGod
     public static string SEARCHWORLDBYTAG = "/item/search-worlds-by-tag/";  //:tag/:pageNumber/:pageSize
     public static string USERTAGS = "/users/get-user-tags";
 
+    public static string FEATUREDSPACES = "/world/get-featured-spaces/";//pageNumber/pageSize
     public static string HOTSPACES = "/world/get-most-visited-hot-spaces/";//pageNumber/pageSize
     public static string HOTGAMES = "/world/get-most-visited-hot-games/";//pageNumber/pageSize
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
@@ -261,8 +268,11 @@ public class ConstantsGod
     public static string availableTags = "/users/get-user-tags";
 
     #region UGC Api's
-    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net";
-    public static string UGCAiApi = "/analyze-image/";   // for main //"https://101d-39-61-48-164.ngrok-free.app/analyze-image/" for local call;
+    public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net"; // for main
+    public static string UGCAiApi = "/analyze-image/";   // for main  
+
+    public static string UGCGetBackground = "/users/get-user-background";
+    public static string UGCAddBackground = "/users/add-user-background";
     #endregion
 
     #region Feed Api's
@@ -270,5 +280,9 @@ public class ConstantsGod
     public static string FeedGetAllByUserId = "/item/get-following-text-post/";
     public static string FeedLikeDislikePost = "/item/like-text-post";
     public static string FeedSearch="/item/search-following-text-post";
+    #endregion
+
+    #region PMY World Api's
+    public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
 }

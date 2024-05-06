@@ -1040,7 +1040,7 @@ namespace WaheedDynamicScrollRect
            _Content.nameData = presetScript.JsonDataPreset;
            // UserRegisterationManager.instance.LogoImage.GetComponent<Image>().sprite = obj.GetComponent<Image>().sprite;
             ASNextButton.onClick.RemoveAllListeners();
-            ASNextButton.onClick.AddListener(presetScript.ChangecharacterOnCLickFromserver);
+            ASNextButton.onClick.AddListener(presetScript.ChangecharacterFromPresetPanel);
         }
 
         public void ActivePrviousButton()

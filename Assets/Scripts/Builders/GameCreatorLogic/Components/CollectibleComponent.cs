@@ -4,7 +4,6 @@ using Photon.Pun;
 
 public class CollectibleComponent : ItemComponent
 {
-
     private bool activateComponent = true;
     string RuntimeItemID = "";
 
@@ -29,9 +28,9 @@ public class CollectibleComponent : ItemComponent
     #region BehaviourControl
     public void StartComponent()
     {
-        ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
+        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
         //this.gameObject.SetActive(false);
-        //Toast.Show(XanaConstants.collectibleMsg);
+        //Toast.Show(ConstantsHolder.collectibleMsg);
     }
 
     private void StopComponent()
@@ -42,10 +41,10 @@ public class CollectibleComponent : ItemComponent
 
     public override void StopBehaviour()
     {
-        if(isPlaying)
+        if (isPlaying)
         {
-        isPlaying = false;
-        StopComponent();
+            isPlaying = false;
+            StopComponent();
         }
     }
 
@@ -72,6 +71,16 @@ public class CollectibleComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.CollectibleComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion

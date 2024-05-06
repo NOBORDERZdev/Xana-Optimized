@@ -82,5 +82,15 @@ public class AvatarChangerComponent : ItemComponent
         _componentType = Constants.ItemComponentType.AvatarChangerComponent;
     }
 
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
+    }
+
     #endregion
 }

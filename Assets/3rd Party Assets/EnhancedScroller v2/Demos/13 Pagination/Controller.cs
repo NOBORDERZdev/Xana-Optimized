@@ -15,7 +15,7 @@ namespace EnhancedScrollerDemos.Pagination
         /// Internal representation of our data. Note that the scroller will never see
         /// this, so it separates the data from the layout using MVC principles.
         /// </summary>
-        public SmallList<WorldItemDetail> _data;
+        public SmallList<Data> _data;
 
         /// <summary>
         /// This is our scroller we will be a delegate for
@@ -69,7 +69,7 @@ namespace EnhancedScrollerDemos.Pagination
             scroller.scrollerScrolled = ScrollerScrolled;
 
             // initialize the data
-            _data = new SmallList<WorldItemDetail>();
+            _data = new SmallList<Data>();
 
             // load in the first page of data
             LoadData(0);
@@ -89,7 +89,7 @@ namespace EnhancedScrollerDemos.Pagination
             // add data to the list
             for (var i = pageStartIndex; i < lastIndex; i++)
             {
-                _data.Add(new WorldItemDetail() { /*someText = "Cell Data Index " + i.ToString()*/ });
+                _data.Add(new Data() { someText = "Cell Data Index " + i.ToString() });
             }
 
             // cache the scroller's position so that we can set it back after the reload

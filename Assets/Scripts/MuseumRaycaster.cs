@@ -28,7 +28,7 @@ public class MuseumRaycaster : MonoBehaviour
         canOpenPicture = true;
         if (playerCamera == null)
         {
-            playerCamera = ReferrencesForDynamicMuseum.instance.randerCamera;
+            playerCamera = ReferencesForGamePlay.instance.randerCamera;
         }
     }
 
@@ -45,7 +45,7 @@ public class MuseumRaycaster : MonoBehaviour
 
     public void Update()
     {
-        //if (EmoteAnimationPlay.Instance.isEmoteActive) return;
+        //if (EmoteAnimationHandler.Instance.isEmoteActive) return;
 
 //        if (Input.GetMouseButtonUp(0) && canOpenPicture)
 //        {

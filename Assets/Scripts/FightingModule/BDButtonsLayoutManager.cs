@@ -155,32 +155,32 @@ public class BDButtonsLayoutManager : MonoBehaviour
 
         BDCanvasButtonsHandler.inst.joystick.anchoredPosition = new Vector3(joyStick.anchoredPosition.x, joyStick.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.joystick.transform.localScale = new Vector3(joyStick.transform.localScale.x, joyStick.transform.localScale.y, 0);
-   //     CanvasButtonsHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits();
+   //     GamePlayUIHandler.inst.joystick.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         BDCanvasButtonsHandler.inst.LK.anchoredPosition = new Vector3(LK.anchoredPosition.x, LK.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.LK.transform.localScale = new Vector3(LK.transform.localScale.x, LK.transform.localScale.y, 0);
-      //  CanvasButtonsHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+      //  GamePlayUIHandler.inst.LK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
 
         BDCanvasButtonsHandler.inst.LP.anchoredPosition = new Vector3(LP.anchoredPosition.x, LP.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.LP.transform.localScale = new Vector3(LP.transform.localScale.x, LP.transform.localScale.y, 0);
-       // CanvasButtonsHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits();
+       // GamePlayUIHandler.inst.LP.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         BDCanvasButtonsHandler.inst.HP.anchoredPosition = new Vector3(HP.anchoredPosition.x, HP.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.HP.transform.localScale = new Vector3(HP.transform.localScale.x, HP.transform.localScale.y, 0);
-       // CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+       // GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         BDCanvasButtonsHandler.inst.HK.anchoredPosition = new Vector3(HK.anchoredPosition.x, HK.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.HK.transform.localScale = new Vector3(HK.transform.localScale.x, HK.transform.localScale.y, 0);
-      //  CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+      //  GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         BDCanvasButtonsHandler.inst.SP.anchoredPosition = new Vector3(SP.anchoredPosition.x, SP.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.SP.transform.localScale = new Vector3(SP.transform.localScale.x, SP.transform.localScale.y, 0);
-     //   CanvasButtonsHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
+     //   GamePlayUIHandler.inst.HK.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         BDCanvasButtonsHandler.inst.B.anchoredPosition = new Vector3(B.anchoredPosition.x, B.anchoredPosition.y, 0);
         BDCanvasButtonsHandler.inst.B.transform.localScale = new Vector3(B.transform.localScale.x, B.transform.localScale.y, 0);
-        //   CanvasButtonsHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
+        //   GamePlayUIHandler.inst.B.gameObject.GetComponent<TouchButton>().SetupNewInits();
 
         ApplyNewSettings();
 

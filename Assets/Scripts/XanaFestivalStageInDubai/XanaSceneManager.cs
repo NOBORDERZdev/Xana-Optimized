@@ -8,9 +8,9 @@ public class XanaSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //if (SoundManager.Instance && bgMusic)
+        //if (SoundController.Instance && bgMusic)
         //{
-        //    SoundManager.Instance.SetBGMusic(bgMusic);
+        //    SoundController.Instance.SetBGMusic(bgMusic);
         //}
     }
 

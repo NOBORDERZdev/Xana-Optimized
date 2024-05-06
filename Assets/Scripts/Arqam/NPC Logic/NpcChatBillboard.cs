@@ -14,7 +14,7 @@ namespace NPC
         public void ShowNpcMessage(string msg)
         {
             ////For multiplayer
-            //gameObject.GetComponent<PhotonView>().RPC(nameof (HUDMessage), RpcTarget.All, msg, ReferrencesForDynamicMuseum.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            //gameObject.GetComponent<PhotonView>().RPC(nameof (HUDMessage), RpcTarget.All, msg, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
 
             chatText.text = "";
             chatText.text = msg;

@@ -10,6 +10,7 @@ public class UGCItemsData : ScriptableObject
     public List<ItemData> noseTypes;
     public List<HairsEyeData> hairTypes;
     public List<HairsEyeData> eyeColor;
+    public List<ItemData> eyeShapeTypes;
 
     public ItemData GetFaceData(string name)
     {
@@ -66,6 +67,17 @@ public class UGCItemsData : ScriptableObject
         }
         return null;
     }
+    public ItemData GetEyeShapeData(string name)
+    {
+        foreach (ItemData item in eyeShapeTypes)
+        {
+            if (item.typeName.Equals(name, StringComparison.OrdinalIgnoreCase))
+            {
+                return item;
+            }
+        }
+        return null;
+    }
     [System.Serializable]
     public class ItemData
     {
@@ -84,7 +96,7 @@ public class UGCItemsData : ScriptableObject
 public class UGCItemData
 {
     public Color hair_color;
-    public Color skin_color;
+    public string skin_color;
     public Color lips_color;
     public string gender;
     public string _hairItemData;
@@ -92,8 +104,9 @@ public class UGCItemData
     public int faceItemData;
     public int lipItemData;
     public int noseItemData;
+    public int eyeShapeItemData;
     public bool CharactertypeAi;
 
-    public Color default_male_skin_color, default_female_skin_color;
+    public Texture default_male_face_color, default_male_body_color, default_female_face_color, default_female_body_color;
     public Color default_male_lips_color, default_female_lips_color;
 }

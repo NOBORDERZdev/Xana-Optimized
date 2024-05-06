@@ -20,6 +20,8 @@ public class BuildingDetect : MonoBehaviour
     private SkinnedMeshRenderer playerPants;
     [SerializeField]
     public SkinnedMeshRenderer playerShoes;
+    [SerializeField]
+    public SkinnedMeshRenderer[] playerEyebrow;
 
     [SerializeField]
     public MeshRenderer playerFreeCamConsole;
@@ -39,6 +41,8 @@ public class BuildingDetect : MonoBehaviour
     private Material defaultShoesMat;
     [SerializeField]
     private Material defaultFreeCamConsoleMat;
+    [SerializeField]
+    private Material[] defaltEyebrowMat;
 
     [Header("Gangster Character")]
     internal GameObject gangsterCharacter;
@@ -105,8 +109,20 @@ public class BuildingDetect : MonoBehaviour
             playerPants = ac.wornPant.GetComponent<SkinnedMeshRenderer>();
         if (ac.wornShirt)
             playerShirt = ac.wornShirt.GetComponent<SkinnedMeshRenderer>();
-        if (ac.wornShose)
-            playerShoes = ac.wornShose.GetComponent<SkinnedMeshRenderer>();
+        if (ac.wornShoes)
+            playerShoes = ac.wornShoes.GetComponent<SkinnedMeshRenderer>();
+        int index = 0;
+        if (ac.wornEyebrow.Length > 0)
+        {
+            playerEyebrow = new SkinnedMeshRenderer[ac.wornEyebrow.Length];
+            foreach (var eyeBrow in ac.wornEyebrow)
+            {
+                playerEyebrow[index] = eyeBrow.GetComponent<SkinnedMeshRenderer>();
+                index++;
+            }
+            index = 0;
+        }
+
 
         playerBody = GamificationComponentData.instance.charcterBodyParts.body;
 
@@ -131,6 +147,14 @@ public class BuildingDetect : MonoBehaviour
             defaultHairMat = playerHair.sharedMaterials;
         if (playerShoes)
             defaultShoesMat = playerShoes.material;
+        if (playerEyebrow != null)
+        {
+            defaltEyebrowMat = new Material[playerEyebrow.Length];
+            foreach (var eyeBrowMat in playerEyebrow)
+            {
+                defaltEyebrowMat[index] = eyeBrowMat.material;
+            }
+        }
 
         defaultFreeCamConsoleMat = playerFreeCamConsole.material;
 
@@ -352,6 +376,13 @@ public class BuildingDetect : MonoBehaviour
                 playerShirt.enabled = state;
             if (playerShoes)
                 playerShoes.enabled = state;
+            if (playerEyebrow != null)
+            {
+                foreach (var eyeBrow in playerEyebrow)
+                {
+                    eyeBrow.enabled = state;
+                }
+            }
         }
     }
     #endregion
@@ -360,7 +391,7 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
-    PlayerControllerNew _playerControllerNew;
+    PlayerController _playerControllerNew;
     public static bool canRunCo = false;
     //public TextMeshProUGUI _remainingText;
     float _timer;
@@ -387,10 +418,10 @@ public class BuildingDetect : MonoBehaviour
 
         if (_specialEffects == null)
         {
-            Vector3 pos = ReferrencesForDynamicMuseum.instance.m_34player.transform.position;
+            Vector3 pos = ReferencesForGamePlay.instance.m_34player.transform.position;
             pos.y += GamificationComponentData.instance.specialItemParticleEffect.transform.position.y;
             _specialEffects = PhotonNetwork.Instantiate(GamificationComponentData.instance.specialItemParticleEffect.name, pos, GamificationComponentData.instance.specialItemParticleEffect.transform.rotation);
-            _specialEffects.transform.SetParent(ReferrencesForDynamicMuseum.instance.m_34player.transform);
+            _specialEffects.transform.SetParent(ReferencesForGamePlay.instance.m_34player.transform);
             _specialEffects.transform.localEulerAngles = Vector3.up * 180;
         }
         StartCoroutine(SIpowerUpCoroutine);
@@ -429,8 +460,9 @@ public class BuildingDetect : MonoBehaviour
         if (playerBody)
         {
             playerBody.material.shader = state ? newSkinShader : defaultSkinShader;
-            if (state)
-                playerBody.material.SetFloat("_Outer_Glow", 2);
+            playerBody.material.SetColor("_Lips_Color", state ? new Color32(0, 0, 0, 0) : new Color32(255, 255, 255, 0));
+            //if (state)
+            //    playerBody.material.SetFloat("_Outer_Glow", 2);
         }
         if (playerShirt)
             playerShirt.material.shader = state ? newClothShader : defaultClothShader;
@@ -487,6 +519,14 @@ public class BuildingDetect : MonoBehaviour
             playerPants.material = state ? defaultPantsMat : hologramMaterial;
         if (playerShoes)
             playerShoes.material = state ? defaultShoesMat : hologramMaterial;
+
+        if (playerEyebrow != null)
+        {
+            for (int i = 0; i < playerEyebrow.Length; i++)
+            {
+                playerEyebrow[i].material = state ? defaltEyebrowMat[i] : hologramMaterial;
+            }
+        }
 
         Material[] newMaterials = new Material[playerHead.sharedMesh.subMeshCount];
 

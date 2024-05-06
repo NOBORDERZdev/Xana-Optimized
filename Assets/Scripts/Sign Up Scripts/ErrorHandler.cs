@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ namespace Sign_Up_Scripts
         private TextAsset _csvAsset;
         private List<ErrorMessage> _errorMessageList;
 
-        public Text ActiveErrorText;
+        public TextMeshProUGUI ActiveErrorText;
         public bool CapitalizeMessage;
         [SerializeField]
         private ErrorMessage _defaultMessage;
@@ -40,12 +41,12 @@ namespace Sign_Up_Scripts
         {
             UnityWebRequest www = UnityWebRequest.Get(SheetLink);
 
-            yield return www.SendWebRequest();
+            www.SendWebRequest();
             while (!www.isDone)
             {
                 yield return null;
             }
-
+            //Debug.LogError(www.downloadHandler.text);
             if (www.isHttpError || www.isNetworkError)
             {
                 Debug.Log("Network Error");
@@ -79,7 +80,7 @@ namespace Sign_Up_Scripts
             StartCoroutine(GetErrorSheet());
         }
 
-        public void ShowErrorMessage(string errorCode, Text textToBeSet)
+        public void ShowErrorMessage(string errorCode, TextMeshProUGUI textToBeSet)
         {
             ActiveErrorText = textToBeSet;
             ErrorMessage errorMessage = default;
@@ -87,7 +88,7 @@ namespace Sign_Up_Scripts
             {
                 //print((int)errorCode);
                 errorMessage = _errorMessageList.Find(x => x.ErrorCode == errorCode);
-                if(string.IsNullOrEmpty(errorMessage.EnglishMessage) && string.IsNullOrEmpty(errorMessage.JapaneseMessage))
+                if (string.IsNullOrEmpty(errorMessage.EnglishMessage) && string.IsNullOrEmpty(errorMessage.JapaneseMessage))
                 {
                     errorMessage.EnglishMessage = errorCode;
                     errorMessage.JapaneseMessage = errorCode;
@@ -99,7 +100,6 @@ namespace Sign_Up_Scripts
                 errorMessage.JapaneseMessage = errorCode;
             }
             SetActiveText(errorMessage);
-            UserRegisterationManager.instance.NewLoadingScreen.SetActive(false);
         }
 
         //public void ShowErrorMessage(string errorCode, Text textToBeSet)
@@ -117,11 +117,11 @@ namespace Sign_Up_Scripts
         //    //}
         //    //SetActiveText(errorMessage);
 
-        //    if (CustomLocalization.localisationDict == null || CustomLocalization.localisationDict.Count <= 0) return;
+        //    if (LocalizationManager.localisationDict == null || LocalizationManager.localisationDict.Count <= 0) return;
 
-        //    if (CustomLocalization.localisationDict.TryGetValue(errorCode, out RecordsLanguage find))
+        //    if (LocalizationManager.localisationDict.TryGetValue(errorCode, out RecordsLanguage find))
         //    {
-        //        if (!CustomLocalization.forceJapanese)
+        //        if (!LocalizationManager.forceJapanese)
         //        {
         //            switch (GameManager.currentLanguage)
         //            {
@@ -204,6 +204,7 @@ namespace Sign_Up_Scripts
         Passwords_cannot_less_than_eight_charcters,
         UserName_Has_Space,
         Special_chracater_not_included,
-        Password_must_Contain_Number
+        Password_must_Contain_Number,
+        Could_not_verify_signature
     }
 }

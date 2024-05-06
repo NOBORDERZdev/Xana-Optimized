@@ -44,17 +44,17 @@ public class ReactItem : MonoBehaviour
                 {
                     if (d.animationURL == _mainImage)
                     {
-                        StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                         return;
                     }
                     else
                     {
-                        StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                     }
                 }
             }
             else
-                StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
     }
 
@@ -92,17 +92,17 @@ public class ReactItem : MonoBehaviour
                 {
                     if (d.animationURL == _mainImage)
                     {
-                        StarImg.sprite = AvatarManager.Instance.FavouriteAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
                         return;
                     }
                     else
                     {
-                        StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                        StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                     }
                 }
             }
             else
-                StarImg.sprite = AvatarManager.Instance.NormalAnimationSprite;
+                StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
     }
     #endregion

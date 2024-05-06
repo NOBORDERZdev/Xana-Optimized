@@ -39,6 +39,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     //Reflection Probe
     public ReflectionProbe reflectionProbe;
+    private byte[] deformationData;
 
     #region PRIVATE_VAR
     private ServerData serverData;
@@ -70,7 +71,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
-        BuilderEventManager.OnBuilderDataFetch?.Invoke(XanaConstants.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
+        BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
 
@@ -165,13 +166,13 @@ public class BuilderMapDownload : MonoBehaviour
             bool skyBoxExist = skyBoxData.skyBoxes.Exists(x => x.skyId == levelData.skyProperties.skyId);
             if (!skyBoxExist)
             {
-                aiSkyboxItem=levelData.skyProperties.aISkyboxItem;
+                aiSkyboxItem = levelData.skyProperties.aISkyboxItem;
                 StartCoroutine(AISkyTextureDownload());
             }
         }
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
-            StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
+            yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
             SetTerrainTexture(levelData.terrainProperties.texturePath);
         if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
@@ -179,8 +180,17 @@ public class BuilderMapDownload : MonoBehaviour
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
+        if (levelData.uploadProperties != null)
+            BuilderEventManager.UploadPropertiesData?.Invoke(levelData.uploadProperties);
+
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
+
+        if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
+        {
+            yield return StartCoroutine(DownloadAddressableGamificationObject());
+            yield return StartCoroutine(GemificationObjectLoadWait(1f));
+        }
 
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
@@ -283,7 +293,7 @@ public class BuilderMapDownload : MonoBehaviour
                 GetObject(_async, levelData.otherItems[i]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, prefabPrefix + levelData.otherItems[i].ItemID + "_XANA");
             }
-            //if (XanaConstants.xanaConstants.isFromXanaLobby)
+            //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
             //{
             //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(i * progressPlusValue + .2f, .1f);
             //}
@@ -338,7 +348,7 @@ public class BuilderMapDownload : MonoBehaviour
         return levelData;
     }
 
-    public static IEnumerator LoadMeshDeformationFile(string path, Action<byte[]> callback)
+    public IEnumerator LoadMeshDeformationFile(string path, Action<byte[]> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get(path);
         www.SendWebRequest();
@@ -355,6 +365,7 @@ public class BuilderMapDownload : MonoBehaviour
         else
         {
             byte[] results = www.downloadHandler.data;
+            deformationData = results;
             callback?.Invoke(results);
         }
     }
@@ -431,6 +442,12 @@ public class BuilderMapDownload : MonoBehaviour
                 _mat.shader = Shader.Find(realisticMaterialData.shaderName);
                 meshRenderer.enabled = false;
                 realisticPlanRenderer.material = _mat;
+                if (deformationData.Length > 0)
+                {
+                    var deformedMeshData = Encoding.UTF8.GetString(deformationData);
+                    if (deformedMeshData.Length >= 10)
+                        realisticPlanRenderer.GetComponent<MeshFilter>().mesh.vertices = DeserializeVector3Array(deformedMeshData);
+                }
                 realisticPlanRenderer.gameObject.SetActive(true);
             }
         }
@@ -502,6 +519,11 @@ public class BuilderMapDownload : MonoBehaviour
                     AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
+                    if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
+                    {
+                        //Set texture when getting null from addressable
+                        _mat.SetTexture("_Tex", GamificationComponentData.instance.defaultSkyTex);
+                    }
                     RenderSettings.skybox = _mat;
                     directionalLight.transform.rotation = Quaternion.Euler(skyBoxItem.directionalLightData.directionLightRot);
                     directionalLight.intensity = skyBoxItem.directionalLightData.lightIntensity;
@@ -642,19 +664,25 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator XanaSetItemDataCO()
     {
-        yield return StartCoroutine(DownloadAddressableGamificationObject());
-        yield return StartCoroutine(GemificationObjectLoadWait(1f));
-
-        foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+        if (levelData.otherItems.Count > 0)
         {
-            xanaItem.SetData(xanaItem.itemData);
+            if (!GamificationComponentData.instance.withMultiplayer)
+            {
+                yield return StartCoroutine(DownloadAddressableGamificationObject());
+                yield return StartCoroutine(GemificationObjectLoadWait(1f));
+            }
+
+            foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+            {
+                xanaItem.SetData(xanaItem.itemData);
+            }
+
+            GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
+            //Set Hierarchy same as builder
+            SetObjectHirarchy();
+
+            BuilderEventManager.CombineMeshes?.Invoke();
         }
-
-        GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
-        //Set Hierarchy same as builder
-        SetObjectHirarchy();
-
-        BuilderEventManager.CombineMeshes?.Invoke();
 
         PlayerSetup();
 
@@ -664,8 +692,8 @@ public class BuilderMapDownload : MonoBehaviour
         reflectionProbe.enabled = true;
         if (levelData.skyProperties.skyId != -1)
         {
-            LoadFromFile.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
-            LoadFromFile.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
+            GameplayEntityLoader.instance.environmentCameraRender.clearFlags = CameraClearFlags.Skybox;
+            GameplayEntityLoader.instance.firstPersonCamera.clearFlags = CameraClearFlags.Skybox;
         }
     }
 
@@ -824,11 +852,11 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-        //if (XanaConstants.xanaConstants.isFromXanaLobby)
+        //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
         //}
-        if (!XanaConstants.xanaConstants.isFromXanaLobby)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
             // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
@@ -909,6 +937,7 @@ public class LevelData
     public SkyProperties skyProperties;
     public PlayerProperties playerProperties;
     public TerrainProperties terrainProperties;
+    public UploadProperties uploadProperties;
     public AudioPropertiesBGM audioPropertiesBGM = new AudioPropertiesBGM();
 }
 
@@ -1129,8 +1158,8 @@ public class TerrainProperties
         texturePath = "";
         waterTexturePath = "";
         meshDeformationPath = "";
-        planeScale = new Vector3(0f, 1f, 0f);
-        planePos = new Vector3(0.0f, 0f, 0.0f);
+        planeScale = new UnityEngine.Vector3(0f, 1f, 0f);
+        planePos = new UnityEngine.Vector3(0.0f, 0f, 0.0f);
         upMovesAllowed = downMovesAllowed = leftMovesAllowed = rightMovesAllowed = 2;
         planeHeightLimit = 5;
         terrainTextureSelected = 0;
@@ -1165,4 +1194,41 @@ public class RealisticMaterialData
     //public Material material;
     public string shaderName;
     //public Sprite thumbnail;
+}
+public enum MediaTypeBuilder
+{
+    YouTube, LocalVideo, LocalImage
+}
+[Serializable]
+public class UploadProperties
+{
+    #region Data Variables
+    public List<UploadData> uploadData;
+    #endregion
+}
+
+[Serializable]
+public class UploadData
+{
+    #region Data Variables
+    public string uploadMediaId;
+    public Vector3 position;
+    public Quaternion rotation;
+    // public Vector3 scale;
+    public float scale;
+    public string url;
+    public string localFileName;
+    public int index;
+    public MediaTypeBuilder mediaType;
+    public bool isLivestream;
+    public bool addFrame;
+    public bool isRepeat;
+
+    #endregion
+
+    public UploadData()
+    {
+        url = "";
+        mediaType = MediaTypeBuilder.YouTube;
+    }
 }

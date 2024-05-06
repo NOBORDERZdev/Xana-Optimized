@@ -39,7 +39,7 @@ public class PutObjectsOnPath : MonoBehaviour, IDragHandler
         {
             Vector3 delta = lastPosition - (Vector3) data.position;
             delta = delta.normalized;
-            Vector2 screenPoint = LoadFromFile.instance.environmentCameraRender.ScreenToViewportPoint(data.position);
+            Vector2 screenPoint = GameplayEntityLoader.instance.environmentCameraRender.ScreenToViewportPoint(data.position);
             //Debug.LogError("Position:" + data.position + "   :ScreenToViewportPoint:" + screenPoint);
             if (screenPoint.x > 0.90f)
             {

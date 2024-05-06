@@ -27,7 +27,7 @@ public class MoodManager : MonoBehaviour
             //  loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
             //  if (!flag)
             //      loadOp =
-            loadOp = Addressables.LoadAssetAsync<AnimationClip>("Assets/Animations/Mood Animations/"+ key +".anim");
+            loadOp = Addressables.LoadAssetAsync<AnimationClip>(key/*"Assets/Animations/Mood Animations/"+ key +".anim"*/);
             LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
             while (!loadOp.IsDone)
                 yield return loadOp;
@@ -83,7 +83,7 @@ public class MoodManager : MonoBehaviour
             //  loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
             //  if (!flag)
             //      loadOp =
-            loadOp = Addressables.LoadAssetAsync<AnimationClip>("Assets/Animations/Mood Animations/" + key + ".anim");
+            loadOp = Addressables.LoadAssetAsync<AnimationClip>( key/*"Assets/Animations/Mood Animations/" + key + ".anim"*/);
             while (!loadOp.IsDone)
                 yield return loadOp;
 

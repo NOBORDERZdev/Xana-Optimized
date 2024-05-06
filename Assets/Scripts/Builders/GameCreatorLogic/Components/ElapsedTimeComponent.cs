@@ -36,14 +36,14 @@ public class ElapsedTimeComponent : ItemComponent
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        IsAgainTouchable = false;
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        IsAgainTouchable = true;
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    IsAgainTouchable = false;
+    //}
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    IsAgainTouchable = true;
+    //}
 
     #region BehaviourControler
     private void StartComponent()
@@ -97,6 +97,16 @@ public class ElapsedTimeComponent : ItemComponent
     public override void AssignItemComponentType()
     {
         _componentType = Constants.ItemComponentType.ElapsedTimeComponent;
+    }
+
+    public override void CollisionExitBehaviour()
+    {
+        //throw new System.NotImplementedException();
+    }
+
+    public override void CollisionEnterBehaviour()
+    {
+        //CollisionEnter();
     }
 
     #endregion
