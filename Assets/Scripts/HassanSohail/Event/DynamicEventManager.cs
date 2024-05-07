@@ -35,6 +35,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     //   // XanaEventDetails.eventDetails.DataIsInitialized = false;
     //   // StartCoroutine(HitGetEnvironmentJson("https://api-test.xana.net" + EnvironmentURl + 406, "406"));
     //}
+
+    void OnApplicationFocus(bool paused)
+    {
+       // Debug.LogError("OnApplicationFocus ----> ");
+
+      //  PlayerPrefs.GetInt("PlayerDeepLinkOpened", 0);
+
+    }
     private void Awake()
     {
         XanaEventDetails.eventDetails = new XanaEventDetails();
@@ -59,8 +67,9 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
                 // BindAfterInitilization();
                 ConstantsHolder.xanaConstants.isFirebaseInit = true;
-                // InvokeDeepLink("focus");
-                //OpenEnvironmentDeeplink(Application.absoluteURL);
+                if(PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0)
+                    OpenEnvironmentDeeplink(Application.absoluteURL);
+
             }
             else
             {
@@ -192,6 +201,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                             ConstantsHolder.xanaConstants.userLimit = "15";
                         }
                         //Set These Settings after loading Json Data
+                        PlayerPrefs.SetInt("PlayerDeepLinkOpened", 1);
                         if (environmentDetails.data.entityType.Equals("XANA_WORLD"))
                         {
                             WorldItemView.m_EnvName = "Builder";

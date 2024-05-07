@@ -44,6 +44,11 @@ public class HomeFooterHandler : MonoBehaviour
                 GlobalVeriableClass.callingScreen = "Feed";
             }
         }
+        if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
+        {
+            OnClickHomeWorldButton();
+            PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
+        }
 
     }
     void Start()
