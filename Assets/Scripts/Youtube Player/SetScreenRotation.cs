@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class SetScreenRotation : MonoBehaviour
 {
-    [SerializeField] Vector3 screenRotation;
+    public bool rotateScreen = true;
+
+    public Vector3 rotateScreenValue;
     // Start is called before the first frame update
     void Start()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-        this.transform.localRotation = Quaternion.Euler(screenRotation);
+        if (!rotateScreen)
+            return;
+        //GetLivestreamUrl(_livestreamUrl);
+#if UNITY_ANDROID
+        if (WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+            transform.localRotation = Quaternion.Euler(0, 0, 0);
+        else
+            transform.localRotation = Quaternion.Euler(rotateScreenValue);//Quaternion.Euler(180, 0, 0);
 #endif
     }
 }
