@@ -41,6 +41,7 @@ public class MyProfileDataManager : MonoBehaviour
     [SerializeField] GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
     [SerializeField] GameObject settingsButton;
+    [SerializeField] GameObject otherProfileScreenBackButton;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -175,11 +176,13 @@ public class MyProfileDataManager : MonoBehaviour
             profileMainScrollRectFasterEx.GetComponent<Mask>().enabled = false;
         }
         settingsButton.SetActive(true);
+        otherProfileScreenBackButton.SetActive(false);
     }
 
     private void OnDisable()
     {
         settingsButton.SetActive(false);
+        otherProfileScreenBackButton.SetActive(true);
     }
 
     private void Start()
