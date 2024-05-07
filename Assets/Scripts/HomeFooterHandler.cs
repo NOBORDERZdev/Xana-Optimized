@@ -44,11 +44,7 @@ public class HomeFooterHandler : MonoBehaviour
                 GlobalVeriableClass.callingScreen = "Feed";
             }
         }
-        if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
-        {
-            OnClickHomeWorldButton();
-            PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
-        }
+
 
     }
     void Start()
@@ -79,7 +75,14 @@ public class HomeFooterHandler : MonoBehaviour
             {
                 MainSceneEventHandler.OnBackRefAssign?.Invoke();
                 notLoadedAgain = true;
-                Invoke(nameof(OnClickHomeWorldButton), 0);
+                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
+                {
+                    PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
+                }
+                else
+                {
+                    Invoke(nameof(OnClickHomeWorldButton), 0);
+                }
             }
         }
         else
