@@ -511,6 +511,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>().DefaultTexture();
+        GameManager.Instance.mainCharacter.GetComponent<AvatarController>().UnStichItem("Feet");
         GameManager.Instance.mainCharacter.GetComponent<AvatarController>().InitializeAvatar();
 
         //GameManager.Instance.mainCharacter.GetComponent<Equipment>().SaveDefaultValues();
