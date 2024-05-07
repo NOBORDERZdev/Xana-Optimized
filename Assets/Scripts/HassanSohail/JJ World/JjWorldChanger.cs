@@ -40,6 +40,16 @@ public class JjWorldChanger : MonoBehaviour
             {
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
+                if(!RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+                {
+                    return;
+                }
+                else if (RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+                {
+                    return;
+                }
                 //else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
                 //    NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 //    return;
@@ -55,16 +65,6 @@ public class JjWorldChanger : MonoBehaviour
                 //            (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End)))
                 //        return;
                 //}
-                if(!RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
-                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-                {
-                    return;
-                }
-                else if (RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
-                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-                {
-                    return;
-                }
             }
 
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
