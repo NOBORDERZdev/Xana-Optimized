@@ -281,4 +281,7 @@ public class ConstantsGod
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
+    #region Toyota Email Api's
+    public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
+    #endregion
 }
