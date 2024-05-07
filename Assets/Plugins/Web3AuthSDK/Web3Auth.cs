@@ -138,13 +138,14 @@ public class Web3Auth : MonoBehaviour
         else if (url.Contains("web3auth"))
         {
 #if UNITY_IOS
+            Debug.LogError("Deeplink Check ----> ");
 
-        if(PlayerPrefs.GetInt("FirstTimeappOpen") == 1)
+            if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
             this.setResultUrl(new Uri(url));
 #endif
 
 #if UNITY_ANDROID
-            PlayerPrefs.SetInt("FirstTimeappOpen", 1); 
+            PlayerPrefs.SetInt("PlayerLoginFlag", 1); 
             this.setResultUrl(new Uri(url));
 #endif
 
@@ -349,8 +350,9 @@ public class Web3Auth : MonoBehaviour
         if (web3AuthOptions.loginConfig != null)
         {
 #if UNITY_IOS
+            Debug.LogError("Check Login----> ");
 
-            if(PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
+            if (PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
                 PlayerPrefs.SetInt("PlayerLoginFlag", 1);
 #endif
 
