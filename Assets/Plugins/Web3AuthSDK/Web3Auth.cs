@@ -131,7 +131,27 @@ public class Web3Auth : MonoBehaviour
 
     private void onDeepLinkActivated(string url)
     {
-        this.setResultUrl(new Uri(url));
+        Debug.LogError("DeepUrl --- " + url);
+        if (url.Contains("ENV"))
+        {
+            return;
+        }
+        else if (url.Contains("web3auth"))
+        {
+#if UNITY_IOS
+            Debug.LogError("Deeplink Check ----> "+ url);
+
+            if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+                this.setResultUrl(new Uri(url));
+#endif
+
+#if UNITY_ANDROID
+            PlayerPrefs.SetInt("PlayerLoginFlag", 1); 
+            this.setResultUrl(new Uri(url));
+#endif
+
+        }
+    
     }
 
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -331,6 +351,11 @@ public class Web3Auth : MonoBehaviour
     {
         if (web3AuthOptions.loginConfig != null)
         {
+#if UNITY_IOS
+            Debug.LogError("Auth Login");
+            if (PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
+                PlayerPrefs.SetInt("PlayerLoginFlag", 1);
+#endif
             var loginConfigItem = web3AuthOptions.loginConfig?.Values.First();
             var share = KeyStoreManagerUtils.getPreferencesData(loginConfigItem?.verifier);
 

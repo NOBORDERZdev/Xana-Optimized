@@ -270,7 +270,7 @@ public class UserLoginSignupManager : MonoBehaviour
     IEnumerator WaitForDeepLink()
     {
         yield return new WaitForSeconds(2);
-        DynamicEventManager.deepLink?.Invoke("moralis wait and come");
+       // DynamicEventManager.deepLink?.Invoke("moralis wait and come");
     }
 
     IEnumerator WalletLoggedInAccessGroup(bool loadData = false)
@@ -890,7 +890,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         ConstantsHolder.isWalletLogin = false;
                         OpenUIPanel(16);
                         DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
-                        DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
+                       // DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
                         MainSceneEventHandler.OnSucessFullLogin?.Invoke();
                         CallBack(true);
                     }
@@ -1065,7 +1065,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 CheckCameraMan(myObject1.data.user.email);
                 OpenUIPanel(21);
 
-                DynamicEventManager.deepLink?.Invoke("Login user here");
+                //DynamicEventManager.deepLink?.Invoke("Login user here");
                 MainSceneEventHandler.OnSucessFullLogin?.Invoke();
 
                 
