@@ -46,14 +46,24 @@ public class JjWorldChanger : MonoBehaviour
                 //else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
                 //    NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                 //    return;
-                foreach (var items in RegisterAsCompanyEmails.instance.emailList)
+                //foreach (var items in RegisterAsCompanyEmails.instance.emailList)
+                //{
+                //    if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains(items) &&
+                //            (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress)))
+                //        return;
+                //    else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains(items) &&
+                //            (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End)))
+                //        return;
+                //}
+                if(!RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
-                    if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains(items) &&
-                            (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress)))
-                        return;
-                    else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains(items) &&
-                            (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End)))
-                        return;
+                    return;
+                }
+                else if (RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+                {
+                    return;
                 }
             }
 
