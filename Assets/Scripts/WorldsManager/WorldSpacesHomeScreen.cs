@@ -42,7 +42,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
         WorldManager.ReloadFollowingSpace += FollowingSpaceLoading;
-        spaceCategoryScroller._spaceCategDataInitializer = this;
     }
 
     private void OnDisable()
@@ -616,7 +615,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 yield break;
             }
         }
-        // Debug.LogError("API URL :- " + apiURL);
+        //Debug.LogError("API URL :- " + apiURL);
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
