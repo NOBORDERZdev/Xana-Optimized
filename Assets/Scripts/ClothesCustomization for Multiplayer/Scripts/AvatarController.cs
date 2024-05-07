@@ -2003,7 +2003,7 @@ public class AvatarController : MonoBehaviour
                     string type = _CharacterData.myItemObj[i].ItemType;
                     Item item = _CharacterData.myItemObj[i];
                     string gender = _CharacterData.gender != null ? _CharacterData.gender : "Male";
-                    if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                    if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                     {
                         HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                         if (itemTypes.Any(item => type.Contains(item)))
