@@ -46,13 +46,10 @@ public class Web3Auth : MonoBehaviour
     public event Action<Web3AuthResponse> onLogin;
     public event Action onLogout;
 
- //   [SerializeField]
     private string clientId;
 
- //   [SerializeField]
     private string redirectUri;
 
- //   [SerializeField]
     private Web3Auth.Network network;
 
     private static readonly Queue<Action> _executionQueue = new Queue<Action>();
@@ -77,14 +74,6 @@ public class Web3Auth : MonoBehaviour
             this.setResultUrl(url);
         };
 
-//#elif UNITY_WEBGL
-//        var code = Utilss.GetAuthCode();
-//        Debug.Log("code is " + code);
-//        if (Utilss.GetAuthCode() != "") 
-//        {
-//            Debug.Log("I am here");
-//            this.setResultUrl(new Uri($"http://localhost#{code}"));
-//        } 
 #endif
         authorizeSession("");
     }
@@ -131,7 +120,6 @@ public class Web3Auth : MonoBehaviour
 
     private void onDeepLinkActivated(string url)
     {
-        Debug.LogError("DeepUrl --- " + url);
         if (url.Contains("ENV"))
         {
             return;
@@ -139,8 +127,6 @@ public class Web3Auth : MonoBehaviour
         else if (url.Contains("web3auth"))
         {
 #if UNITY_IOS
-            Debug.LogError("Deeplink Check ----> "+ url);
-
             if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
                 this.setResultUrl(new Uri(url));
 #endif
@@ -352,7 +338,6 @@ public class Web3Auth : MonoBehaviour
         if (web3AuthOptions.loginConfig != null)
         {
 #if UNITY_IOS
-            Debug.LogError("Auth Login");
             if (PlayerPrefs.GetInt("FirstTimeappOpen") == 0)
                 PlayerPrefs.SetInt("PlayerLoginFlag", 1);
 #endif

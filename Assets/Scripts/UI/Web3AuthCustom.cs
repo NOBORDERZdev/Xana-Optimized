@@ -69,8 +69,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole= "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-           // loginSubVerifierLine = "ppp-line-login";
-            //...
             clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
             clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
             clientIdApple = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0";
@@ -103,15 +101,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             typeOfLogin = TypeOfLogin.APPLE,
         };
 
-        //var LineConfigItem = new LoginConfigItem()
-        //{
-        //    verifier = loginVerifier,
-        //    verifierSubIdentifier = loginSubVerifierLine,
-        //    clientId = clientIdLine,
-        //    typeOfLogin = TypeOfLogin.LINE,
-        //};
-
-
         web3Auth.setOptions(new Web3AuthOptions()
         {
             clientId = ClientId,
@@ -128,7 +117,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                  { "google", GoogleConfig },
                 { "jwt", EmailPasswordlessConfigItem },
                 { "apple", AppleConfigItem },
-               // { "line" , LineConfigItem }
             }
         });
         web3Auth.onLogin += onLogin;
@@ -212,38 +200,15 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.login(options);
     }
 
-    //public void LineLogin(bool isnewreg)
-    //{
-    //    var selectedProvider = Provider.LINE;
-    //    isNewReg = isnewreg;
-    //    var options = new LoginParams()
-    //    {
-    //        loginProvider = selectedProvider,
-    //        extraLoginOptions = new ExtraLoginOptions()
-    //        {
-    //            domain = domainsLine,
-    //            verifierIdField = "email",
-    //            isVerifierIdCaseSensitive = false,
-    //            connection = "line",
-    //           prompt = Prompt.LOGIN,
-    //        }
-    //    };
-
-
-    //    web3Auth.login(options);
-    //}
-
     private void onLogin(Web3AuthResponse response)
     {
 #if UNITY_IOS
-        Debug.LogError("Custom Auth Login "+ PlayerPrefs.GetInt("PlayerLoginFlag"));
 
         if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
             PlayerPrefs.SetInt("FirstTimeappOpen", 1);
 
         if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
             return;
-
 
 #endif
             Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
@@ -256,7 +221,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try
         {
-            //LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = Web3AuthSociallogin.NewRegistration;
