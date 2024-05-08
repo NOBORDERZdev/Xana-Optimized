@@ -73,16 +73,17 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
-                MainSceneEventHandler.OnBackRefAssign?.Invoke();
-                notLoadedAgain = true;
+               // MainSceneEventHandler.OnBackRefAssign?.Invoke();
+                //notLoadedAgain = true;
                 if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
                 {
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
+                    //gameManager.defaultSelection = 0;
+                   // GameManager.Instance.isTabSwitched = false;
+                   // WorldManager.LoadHomeScreenWorlds?.Invoke();
                 }
                 else
-                {
-                    Invoke(nameof(OnClickHomeWorldButton), 0);
-                }
+                    Invoke(nameof(OnClickHomeWorldButton), 0f);
             }
         }
         else
@@ -284,6 +285,7 @@ public class HomeFooterHandler : MonoBehaviour
 
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
+
         if (gameManager.defaultSelection != 1)
         {
             //socketController.DisscountSNSSockets();
