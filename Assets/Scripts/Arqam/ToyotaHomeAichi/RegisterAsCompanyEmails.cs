@@ -6,14 +6,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 public class RegisterAsCompanyEmails : MonoBehaviour
 {
-    public static RegisterAsCompanyEmails instance;
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
     public List<string> emailList = new List<string>();
     void Start()
     {
-        instance = this;
+        NFT_Holder_Manager.instance.registerAsCompanyEmails = this;
         GetEmailData();
     }
     public async void GetEmailData()
@@ -34,10 +33,8 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
                 THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
-                Debug.Log("Data is : " + json.data.rows.Count);
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
-                    Debug.Log("Email is : " + json.data.rows[i].email);
                     emailList.Add(json.data.rows[i].email);
                 }
             }

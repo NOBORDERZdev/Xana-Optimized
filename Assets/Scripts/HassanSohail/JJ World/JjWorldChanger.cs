@@ -40,12 +40,12 @@ public class JjWorldChanger : MonoBehaviour
             {
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(!RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                if(!NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
                                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
                 }
-                else if (RegisterAsCompanyEmails.instance.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                else if (NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
                                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                 {
                     return;
