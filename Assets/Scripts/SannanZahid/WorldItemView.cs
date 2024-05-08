@@ -145,6 +145,15 @@ public class WorldItemView : EnhancedScrollerCellView
     //    }
     //    //UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     //}
+    private void OnEnable()
+    {
+        if(worldIcon.sprite==null)
+        {
+            LoadImagesFromRemote();
+            worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
+        }
+    }
+
     public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
@@ -156,6 +165,8 @@ public class WorldItemView : EnhancedScrollerCellView
         worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
+
+
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
         //if (m_EnvironmentName.Contains("XANA Lobby"))
