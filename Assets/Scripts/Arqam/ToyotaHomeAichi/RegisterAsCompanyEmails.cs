@@ -53,7 +53,6 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     // Call when user logged In
     public void SetEmailData(string mail)
     {
-        Debug.LogError("Email: " + mail);
         ConstantsHolder.xanaConstants.toyotaEmail = mail;
         actorType = CheckEmailStatus() ? ActorType.CompanyUser : ActorType.User;
     }
