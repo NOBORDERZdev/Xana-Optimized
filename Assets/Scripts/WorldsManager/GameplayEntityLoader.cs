@@ -598,10 +598,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
         }
         else
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
     }
 
@@ -762,7 +764,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         isEnvLoaded = true;
         yield return new WaitForSeconds(1.75f);
-        LoadingHandler.Instance.HideLoading();
+        if (!ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            LoadingHandler.Instance.HideLoading();
+
+        }
         // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
         //LoadingHandler.Instance.UpdateLoadingStatusText("");
 

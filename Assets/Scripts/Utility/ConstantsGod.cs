@@ -149,6 +149,7 @@ public class ConstantsGod
     public static string r_url_GetAllFollowers = "/follow/get-all-followers";
     public static string r_url_MakeFavouriteFollower = "/follow/make-fav";
     public static string r_url_UnFollowAUser = "/follow/unfollow-user";
+    public static string r_url_OnlineFriends = "/social/follow/get-user-online-friends";
 
     public static string r_url_AllFeed = "/feeds";
     public static string r_url_CommentFeed = "/feeds/comment-feed";
@@ -269,6 +270,9 @@ public class ConstantsGod
     #region UGC Api's
     public static string API_BASEURL_UGC = "https://ugcfacial-aiprod.xana.net"; // for main
     public static string UGCAiApi = "/analyze-image/";   // for main  
+
+    public static string UGCGetBackground = "/users/get-user-background";
+    public static string UGCAddBackground = "/users/add-user-background";
     #endregion
 
     #region Feed Api's

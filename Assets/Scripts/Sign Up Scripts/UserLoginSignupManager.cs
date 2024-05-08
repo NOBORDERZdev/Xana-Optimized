@@ -70,6 +70,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public userRoleScript userRoleScriptScriptableObj;
 
     public static UserLoginSignupManager instance;
+    EyesBlinking ref_EyesBlinking;
 
     private void OnEnable()
     {
@@ -82,10 +83,13 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        if (EyesBlinking.instance != null)
+        if (ref_EyesBlinking == null)
+            ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
+
+        if (ref_EyesBlinking)
         {
-            EyesBlinking.instance.StoreBlendShapeValues();
-            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+            ref_EyesBlinking.StoreBlendShapeValues();
+            StartCoroutine(ref_EyesBlinking.BlinkingStartRoutine());
         }
     }
 

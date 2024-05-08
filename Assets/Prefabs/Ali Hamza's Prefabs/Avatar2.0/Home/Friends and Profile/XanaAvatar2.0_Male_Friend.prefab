@@ -5445,7 +5445,6 @@ MonoBehaviour:
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 0}
   overrideController: {fileID: 0}
-  _animatorController: {fileID: 22100000, guid: 25907ba7df1c54447b46ceda32ea5f1d, type: 2}
   isPlayer: 1
 --- !u!114 &8580286353949959170
 MonoBehaviour:
@@ -5515,14 +5514,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 345709dd5c5b4484280a3ba1f1b8eca6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blendHolder: {fileID: 0}
-  EyeBlendShapeValues: []
-  blinkingRate: 1000
+  blendHolder: {fileID: 3805438726464574936}
+  AllEyeBlendShapes: []
+  blinkingRate: 20
   isEyeClose: 0
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
-  isCoroutineRunning: 1
+  isCoroutineRunning: 0
 --- !u!114 &8580286353949959678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6165,26 +6164,6 @@ MonoBehaviour:
   characterHeadMat: {fileID: 0}
   characterBodyMat: {fileID: 0}
   avatarController: {fileID: 8580286353949959677}
-  maleAvatarMeshes:
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_head: {fileID: 0}
-    Shirt_Texture: {fileID: 2800000, guid: 3557ff795d61e3f49a7828caf5d463d5, type: 3}
-    Pent_Texture: {fileID: 2800000, guid: 117f1de2a4676d94796809542822ce36, type: 3}
-    Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    Face_Texture: {fileID: 2800000, guid: d412e92c25b4e694c8d2558d5e273ab4, type: 3}
-    Skin_Texture: {fileID: 2800000, guid: 2e40a4b65acb1fa4eba5938ac371612e, type: 3}
-  femaleAvatarMeshes:
-    avatar_parent: {fileID: 0}
-    avatar_body: {fileID: 0}
-    avatar_head: {fileID: 0}
-    Shirt_Texture: {fileID: 2800000, guid: 78fabb684780d024fad9188248511c76, type: 3}
-    Pent_Texture: {fileID: 2800000, guid: 574e94a078cf0f84cae931bdb1f0e000, type: 3}
-    Shoe_Texture: {fileID: 0}
-    Eye_texture: {fileID: 2800000, guid: 7f2666fd350a8ff4c8f1965a4b2e862f, type: 3}
-    Face_Texture: {fileID: 2800000, guid: be34f75fc314b3447b078fdb6e2213da, type: 3}
-    Skin_Texture: {fileID: 2800000, guid: 3dd80a43c5641b7448ba8e57c0f21154, type: 3}
   boxerBody: {fileID: 0}
   boxerHead: {fileID: 0}
   body: {fileID: 2816264818738250768}
@@ -6333,6 +6312,7 @@ MonoBehaviour:
   wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
+  wornEyebrow: []
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   characterBodyParts: {fileID: 8580286353949959679}
   _PCharacterData:
@@ -6351,6 +6331,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0

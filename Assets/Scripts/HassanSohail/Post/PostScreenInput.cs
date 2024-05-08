@@ -88,7 +88,7 @@ public class PostScreenInput : MonoBehaviour
             if (GameManager.Instance.userAnimationPostFeature.MoodSelected == "")
             {
                 GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
-                GameManager.Instance.userAnimationPostFeature.postButtonText.color = Color.black;
+                GameManager.Instance.userAnimationPostFeature.postButtonText.color = placeHolderColor;
             }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;

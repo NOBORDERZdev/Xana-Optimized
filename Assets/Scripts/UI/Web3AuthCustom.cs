@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
-
+using UnityEngine.UI;
 
 public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
@@ -33,7 +33,9 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     private Web3UserInfo userInfo;
     bool isNewReg;
     internal string publicAdress;
-    internal string msg1 ,msg2;
+    internal string msg1 ,msg2,currentLan;
+    public List<Button> myButtons;
+    public float cooldownTime;
 
 
     private void Start()
@@ -100,6 +102,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientId = clientIdApple,
             typeOfLogin = TypeOfLogin.APPLE,
         };
+
         //var LineConfigItem = new LoginConfigItem()
         //{
         //    verifier = loginVerifier,
@@ -131,6 +134,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         web3Auth.onLogin += onLogin;
         web3Auth.onLogout += onLogout;
         updateConsole("Ready to Login!");
+        detectsystemLanguage();
     }
 
     public void PasswordLessEmailLogin(bool isnewreg)
@@ -139,17 +143,23 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         isNewReg = isnewreg;
         var options = new LoginParams()
         {
-            loginProvider = selectedProvider,
             mfaLevel = MFALevel.NONE,
+            loginProvider = selectedProvider,
+            
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
+                ui_locales=currentLan,
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
@@ -162,11 +172,16 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
         var options = new LoginParams()
         {
-            loginProvider = selectedProvider,
             mfaLevel = MFALevel.NONE,
+            loginProvider = selectedProvider,
+           
 
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
@@ -188,7 +203,11 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
@@ -216,6 +235,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
     private void onLogin(Web3AuthResponse response)
     {
+       
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;
@@ -226,7 +246,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            //LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = Web3AuthSociallogin.NewRegistration;
@@ -288,7 +308,14 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Debug.Log("Logged out!");
         updateConsole("Logged out!");
     }
-
+    IEnumerator EnableButtonAfterCooldown()
+    {
+        yield return new WaitForSeconds(cooldownTime); // Wait for 10 seconds
+        foreach (Button button in myButtons)
+        {
+            button.interactable = true;
+        } // Re-enable button interaction
+    }
     string GetSignature()
     {
         // get current timestamp
@@ -312,6 +339,19 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     {
         console = $"{console}\n{message}";
     }
+    public void detectsystemLanguage() {
+        string newLanguage = Application.systemLanguage.ToString();
+        if (newLanguage == "English")
+        {
+            currentLan= "en";
+        }
+        else if (newLanguage == "Japanese")
+        {
+            currentLan= "ja";
+        }
+
+    }
+   
     public enum Web3AuthSociallogin
     {
         None,

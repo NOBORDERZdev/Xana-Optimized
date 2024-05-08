@@ -77,10 +77,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
             loadAllAvatar?.Invoke(1, 20);
         }
 
-        if (EyesBlinking.instance)
-        {
-            EyesBlinking.instance.StoreBlendShapeValues();          // Added by Ali Hamza
-        }
+        
         //LoadPlayerAvatar.instance_loadplayer.LoadPlayerAvatar_onAvatarSaved(1, 20);
 
     }
@@ -510,8 +507,6 @@ public class ServerSideUserDataHandler : MonoBehaviour
         public Color EyebrowColor;
         public Color EyeColor;
 
-        public bool isBgApply;
-        public string bgKeyValue;
         public Json CreateFromJSON(string jsonString)
         {
             return JsonUtility.FromJson<Json>(jsonString);

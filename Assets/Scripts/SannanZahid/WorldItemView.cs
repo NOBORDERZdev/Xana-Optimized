@@ -145,6 +145,15 @@ public class WorldItemView : EnhancedScrollerCellView
     //    }
     //    //UserAnalyticsHandler.onChangeJoinUserStats -= UpdateUserCount;
     //}
+    private void OnEnable()
+    {
+        if(worldIcon.sprite==null)
+        {
+            LoadImagesFromRemote();
+            worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
+        }
+    }
+
     public void Init(int worlditemcount, int _loopcount)
     {
         GetEventType(entityType);
@@ -156,6 +165,8 @@ public class WorldItemView : EnhancedScrollerCellView
         worldItemPreview = WorldManager.instance.worldItemPreviewTabRef;
         LoadImagesFromRemote(worlditemcount, _loopcount);
     }
+
+
     void LoadImagesFromRemote(int worlditemcount = 0, int _loopcount = 0)
     {
         //if (m_EnvironmentName.Contains("XANA Lobby"))
@@ -321,20 +332,23 @@ public class WorldItemView : EnhancedScrollerCellView
 
     void SetWorldName()
     {
-        if (m_EnvironmentName.Contains("Dubai"))
+        if (eviroment_Name != null && joinedUserCount != null)
         {
-            eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            if (m_EnvironmentName.Contains("Dubai"))
+            {
+                eviroment_Name.text = "DUBAI FESTIVAL STAGE.";
+                eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(eviroment_Name.text);
+            }
+            else
+            {
+                eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
+            }
+            eviroment_Name.text = eviroment_Name.text;
+            if (!string.IsNullOrEmpty(worldVisitCount))
+                joinedUserCount.text = worldVisitCount + " visits";
+            gameObject.GetComponent<Button>().interactable = true;
+            isVisible = true;
         }
-        else
-        {
-            eviroment_Name.GetComponent<TextLocalization>().LocalizeTextText(m_EnvironmentName);
-        }
-        eviroment_Name.text = eviroment_Name.text;
-        if (!string.IsNullOrEmpty(worldVisitCount))
-            joinedUserCount.text = worldVisitCount + " visits";
-        gameObject.GetComponent<Button>().interactable = true;
-        isVisible = true;
         //StartCoroutine(DownloadImage());
     }
     /*public IEnumerator DownloadImage()
