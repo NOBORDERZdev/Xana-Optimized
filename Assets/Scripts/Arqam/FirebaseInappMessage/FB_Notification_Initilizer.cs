@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-using UnityEngine.UI;
+//using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class FB_Notification_Initilizer : MonoBehaviour
 {
-    public Text console;
-    public Text tokenTxt;
+    //public Text console;
+    //public Text tokenTxt;
     public UnityEvent<string> onReceiveToken;
 
     DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;
@@ -129,7 +129,7 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     public virtual void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {
-        tokenTxt.text = token.Token;
+        //tokenTxt.text = token.Token;
         onReceiveToken.Invoke(token.Token);
         Handheld.Vibrate();
         Debug.Log("Received Registration Token: " + token.Token);
@@ -137,8 +137,9 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     private void DebugMsg(string msg)
     {
-        console.text = "";
-        console.text = msg;
+        //console.text = "";
+        //console.text = msg;
+        Debug.LogError(msg);
     }
 
 }
