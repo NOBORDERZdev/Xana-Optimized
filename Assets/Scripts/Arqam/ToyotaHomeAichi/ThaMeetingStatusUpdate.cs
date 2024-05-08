@@ -42,11 +42,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
         {
             int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
-           // Debug.LogError("New Player join room:::" + parameterValue);
+            Debug.LogError("New Player join room:::" + parameterValue);
             this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, parameterValue);
-        }
-        //else
-        //    Debug.LogError("Property not exist::");
+        } 
+        else
+            Debug.LogError("Property not exist::");
     }
 
     [PunRPC]

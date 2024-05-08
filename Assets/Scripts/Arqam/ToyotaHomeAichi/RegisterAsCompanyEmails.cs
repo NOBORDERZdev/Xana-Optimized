@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Events;
+
 public class RegisterAsCompanyEmails : MonoBehaviour
 {
+    public enum ActorType { User, CompanyUser};
+    public ActorType actorType;
+    [Space(5)]
+    public UnityEvent actionForCompanyUser;
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
     public List<string> emailList = new List<string>();
+
     void Start()
     {
         NFT_Holder_Manager.instance.registerAsCompanyEmails = this;
@@ -37,29 +44,47 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 {
                     emailList.Add(json.data.rows[i].email);
                 }
+                actorType = CheckEmailStatus() ? ActorType.CompanyUser: ActorType.User;
             }
         }
     }
-}
-public class THAJson
-{
-    public int count { get; set; }
-    public List<THAItemsData> rows { get; set; }
+
+    private bool CheckEmailStatus()
+    {
+        if (emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail))
+        {
+            actionForCompanyUser.Invoke();
+            return true;
+        }
+        else
+            return false;
+    }
+
+
+    #region OutputClasses
+    public class THAJson
+    {
+        public int count { get; set; }
+        public List<THAItemsData> rows { get; set; }
+    }
+
+    public class THAEmailDataResponse
+    {
+        public bool success { get; set; }
+        public THAJson data { get; set; }
+        public string msg { get; set; }
+    }
+
+    public class THAItemsData
+    {
+        public int id { get; set; }
+        public int worldId { get; set; }
+        public string email { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
+    }
+    #endregion
 }
 
-public class THAEmailDataResponse
-{
-    public bool success { get; set; }
-    public THAJson data { get; set; }
-    public string msg { get; set; }
-}
 
-public class THAItemsData
-{
-    public int id { get; set; }
-    public int worldId { get; set; }
-    public string email { get; set; }
-    public DateTime createdAt { get; set; }
-    public DateTime updatedAt { get; set; }
-}
 

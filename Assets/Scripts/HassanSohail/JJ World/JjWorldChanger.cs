@@ -34,20 +34,20 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            NFT_Holder_Manager.instance.gameObject.GetComponent<FB_PushNotificationSender>().
-                SendNotification();
+            //NFT_Holder_Manager.instance.gameObject.GetComponent<FB_PushNotificationSender>().
+            //    SendNotification();
 
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(!NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
-                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+                if(NFT_Holder_Manager.instance.registerAsCompanyEmails.actorType != RegisterAsCompanyEmails.ActorType.CompanyUser &&
+                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
                 }
-                else if (NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                else if (NFT_Holder_Manager.instance.registerAsCompanyEmails.actorType == RegisterAsCompanyEmails.ActorType.CompanyUser &&
                                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                 {
                     return;
