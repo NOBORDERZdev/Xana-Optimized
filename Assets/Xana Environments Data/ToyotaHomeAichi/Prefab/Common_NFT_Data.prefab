@@ -20326,7 +20326,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0.00061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &669441089183939598
@@ -36193,7 +36193,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.5625, y: 0}
   m_SizeDelta: {x: 18.875, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -39216,7 +39216,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -53009,6 +53009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5984769952214371201}
   - component: {fileID: 5984769952214371202}
+  - component: {fileID: 1860204138818915026}
   m_Layer: 0
   m_Name: Common_NFT_Data
   m_TagString: Untagged
@@ -53023,7 +53024,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984769952214371200}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53227,3 +53228,22 @@ MonoBehaviour:
   renderTexture_1x1: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
   renderTexture_4x3: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
   currentRoom: {fileID: 0}
+  meetingTxtUpdate: {fileID: 0}
+  meetingStatus: {fileID: 0}
+  registerAsCompanyEmails: {fileID: 0}
+--- !u!114 &1860204138818915026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984769952214371200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0312e0c2c29dfe343ad556355fd763a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thaCompanyId: 4
+  thaPageNumber: 1
+  thaPageSize: 100
+  emailList: []
