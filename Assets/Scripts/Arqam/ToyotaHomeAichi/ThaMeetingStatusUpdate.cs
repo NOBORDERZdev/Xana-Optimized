@@ -52,7 +52,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         Debug.LogError("New Player join room:::");
 
-        if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
+        //if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
 
         // Check if the meeting status property was updated
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
