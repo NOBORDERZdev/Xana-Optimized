@@ -4664,7 +4664,7 @@ public class InventoryManager : MonoBehaviour
                 {
                     _CharacterData.FaceBlendsShapes[i] = 0;
                 }
-
+            _CharacterData.gender = SaveCharacterProperties.instance.SaveItemList.gender;
             _CharacterData.SavedBones.Clear();
             _CharacterData.eyeTextureName = "";
             _CharacterData.Skin = bodyParts.DefaultSkinColor;
@@ -4695,12 +4695,11 @@ public class InventoryManager : MonoBehaviour
             _CharacterData.eyebrrowTexture = bodyParts.defaultEyebrow.name;
             //_CharacterData.eyeBrowName = bodyParts.defaultEyebrow.name;
 
+            SaveCharacterProperties.instance.SaveItemList = _CharacterData;
             string bodyJson = JsonUtility.ToJson(_CharacterData);
             File.WriteAllText(GameManager.Instance.GetStringFolderPath(), bodyJson);
             if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-                ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() =>
-                {
-                });
+                ServerSideUserDataHandler.Instance.CreateUserOccupiedAsset(() => { });
         }
 
         //print("in delete");

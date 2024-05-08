@@ -31,8 +31,6 @@ public class AvatarBtn : MonoBehaviour
     {
         if (instance == null)
             instance = this;
-        downloader = AddressableDownloader.Instance;
-        shapeImporter = GameManager.Instance.BlendShapeManager;
     }
 
     private void OnEnable()
@@ -177,6 +175,8 @@ public class AvatarBtn : MonoBehaviour
         PriceTxt.enabled = false;
 
         _CharacterData = new SavingCharacterDataClass();
+        downloader = AddressableDownloader.Instance;
+        shapeImporter = GameManager.Instance.BlendShapeManager;
     }
 
     private void OnAvatarBtnClick()
