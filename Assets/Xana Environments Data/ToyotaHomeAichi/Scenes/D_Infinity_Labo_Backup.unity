@@ -28197,7 +28197,7 @@ PrefabInstance:
     - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 2089730954}
+      objectReference: {fileID: 0}
     - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -30577,7 +30577,6 @@ Transform:
   - {fileID: 1836847912}
   - {fileID: 2016802180}
   - {fileID: 1980016174}
-  - {fileID: 2089730955}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -32598,79 +32597,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.32773292, y: 3.946762, z: 1.6283525}
   m_Center: {x: 7.170789, y: 1.5219889, z: -37.06201}
---- !u!1 &2089730954
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2089730955}
-  - component: {fileID: 2089730956}
-  - component: {fileID: 2089730957}
-  m_Layer: 0
-  m_Name: FB_Notification_Initilizer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &2089730955
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089730954}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1963513464}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2089730956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089730954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f4b9af8aeb01a4eb116afcb63198c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onReceiveToken:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2089730957}
-        m_TargetAssemblyTypeName: FB_PushNotificationSender, Assembly-CSharp
-        m_MethodName: SetToken
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2089730957
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2089730954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipientToken: RECIPIENT_FCM_TOKEN
 --- !u!1 &2092698540
 GameObject:
   m_ObjectHideFlags: 0

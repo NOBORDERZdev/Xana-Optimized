@@ -3562,79 +3562,6 @@ Transform:
   m_Father: {fileID: 770949414}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &222308469
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 222308470}
-  - component: {fileID: 222308471}
-  - component: {fileID: 222308472}
-  m_Layer: 0
-  m_Name: FB_Notification_Initilizer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &222308470
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222308469}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1963513464}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &222308471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222308469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71f4b9af8aeb01a4eb116afcb63198c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onReceiveToken:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 222308472}
-        m_TargetAssemblyTypeName: FB_PushNotificationSender, Assembly-CSharp
-        m_MethodName: SetToken
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &222308472
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222308469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipientToken: RECIPIENT_FCM_TOKEN
 --- !u!1 &222716805
 GameObject:
   m_ObjectHideFlags: 0
@@ -27976,7 +27903,6 @@ Transform:
   - {fileID: 604343889}
   - {fileID: 1191278466}
   - {fileID: 1291774113}
-  - {fileID: 222308470}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -31166,7 +31092,7 @@ PrefabInstance:
     - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 222308469}
+      objectReference: {fileID: 0}
     - target: {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
       propertyPath: actionForCompanyUser.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -31235,7 +31161,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1860204138818915026, guid: 16230bab062713d4281129057103cb39, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 16230bab062713d4281129057103cb39, type: 3}
 --- !u!4 &5996394145620949784
 Transform:

@@ -11,17 +11,18 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     public enum ActorType { User, CompanyUser};
     public ActorType actorType;
     [Space(5)]
-    public UnityEvent actionForCompanyUser;
+    public UnityEvent companyMemberAction;
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
-    public List<string> emailList = new List<string>();
+    public readonly List<string> emailList = new List<string>();
 
     void Start()
     {
-        NFT_Holder_Manager.instance.registerAsCompanyEmails = this;
+        ConstantsHolder.xanaConstants.THA_CompanyEmail = this;
         GetEmailData();
     }
+
     public async void GetEmailData()
     {
         StringBuilder ApiURL = new StringBuilder();
@@ -44,16 +45,24 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 {
                     emailList.Add(json.data.rows[i].email);
                 }
-                actorType = CheckEmailStatus() ? ActorType.CompanyUser: ActorType.User;
+                SetEmailData(ConstantsHolder.xanaConstants.toyotaEmail);
             }
         }
+    }
+
+    // Call when user logged In
+    public void SetEmailData(string mail)
+    {
+        Debug.LogError("Email: " + mail);
+        ConstantsHolder.xanaConstants.toyotaEmail = mail;
+        actorType = CheckEmailStatus() ? ActorType.CompanyUser : ActorType.User;
     }
 
     private bool CheckEmailStatus()
     {
         if (emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail))
         {
-            actionForCompanyUser.Invoke();
+            companyMemberAction.Invoke();
             return true;
         }
         else

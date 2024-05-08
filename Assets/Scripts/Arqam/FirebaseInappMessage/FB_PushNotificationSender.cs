@@ -12,7 +12,7 @@ public class FB_PushNotificationSender : MonoBehaviour
 
     private void Start()
     {
-        
+        ConstantsHolder.xanaConstants.pushNotificationSender = this;
     }
 
     public void SetToken(string token)

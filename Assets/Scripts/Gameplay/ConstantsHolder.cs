@@ -130,6 +130,8 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isDescriptionFullPage = false;
     //Toyota Home Aichi
     public string toyotaEmail;
+    public RegisterAsCompanyEmails THA_CompanyEmail;
+    public FB_PushNotificationSender pushNotificationSender;
     public enum MeetingStatus { End, Inprogress, HouseFull }
     [SerializeField]
     public MeetingStatus meetingStatus;
