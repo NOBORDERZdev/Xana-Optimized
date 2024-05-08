@@ -50,6 +50,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void NewPlayerSpawned()
     {
+        Debug.LogError("New Player join room:::");
+
         if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
 
         // Check if the meeting status property was updated

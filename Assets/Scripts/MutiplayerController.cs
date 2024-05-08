@@ -362,6 +362,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             playerJoined?.Invoke();
+            Debug.LogError("New Player join room:::0");
             if (newPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
