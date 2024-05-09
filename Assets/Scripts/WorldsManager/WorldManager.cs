@@ -813,7 +813,6 @@ public class WorldManager : MonoBehaviour
             Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }
-        ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
     }
@@ -869,7 +868,6 @@ public class WorldManager : MonoBehaviour
                 }
             }
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-            ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
             //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
