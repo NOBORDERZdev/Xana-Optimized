@@ -56,7 +56,7 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ "/item/v2/all-items";
+    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ "/item/v3/all-items";
 
 
 

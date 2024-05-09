@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
 using SimpleJSON;
+using XanaAi;
 
 public class HomeScoketHandler : MonoBehaviour
 {
@@ -156,7 +157,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void SnSUpate(string response) {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if (SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
@@ -166,7 +168,8 @@ public class HomeScoketHandler : MonoBehaviour
     void UpdateFollowerFollowing(string response)
     {
         userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if(SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
