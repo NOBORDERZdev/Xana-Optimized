@@ -45,6 +45,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
         }
 
+
     }
     void Start()
     {
@@ -72,9 +73,12 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
-                MainSceneEventHandler.OnBackRefAssign?.Invoke();
-                notLoadedAgain = true;
-                Invoke(nameof(OnClickHomeWorldButton), 0);
+                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
+                {
+                    PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
+                }
+                else
+                    Invoke(nameof(OnClickHomeWorldButton), 0f);
             }
         }
         else
@@ -276,6 +280,7 @@ public class HomeFooterHandler : MonoBehaviour
 
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
+
         if (gameManager.defaultSelection != 1)
         {
             //socketController.DisscountSNSSockets();
