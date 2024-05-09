@@ -34,28 +34,23 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            ConstantsHolder.xanaConstants.pushNotificationSender.SendNotification();
 
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(!NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
-                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+                if(ConstantsHolder.xanaConstants.THA_CompanyEmail.actorType != RegisterAsCompanyEmails.ActorType.CompanyUser &&
+                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
                 }
-                else if (NFT_Holder_Manager.instance.registerAsCompanyEmails.emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail) &&
+                else if (ConstantsHolder.xanaConstants.THA_CompanyEmail.actorType == RegisterAsCompanyEmails.ActorType.CompanyUser &&
                                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                 {
                     return;
                 }
-                //else if (!ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
-                //    NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-                //    return;
-                //else if (ConstantsHolder.xanaConstants.toyotaEmail.Contains("ktoyota@yopmail.com") &&
-                //    NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-                //    return;
             }
 
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;

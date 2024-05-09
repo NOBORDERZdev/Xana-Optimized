@@ -2,6 +2,7 @@ using UnityEngine;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
+using Photon.Pun.Demo.PunBasics;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -10,6 +11,15 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public MeetingStatus tms;
 
     private const string MeetingStatusPropertyName = "MeetingStatus";
+
+    private void OnEnable()
+    {
+        MutiplayerController.instance.playerJoined += NewPlayerSpawned;
+    }
+    private void OnDisable()
+    {
+        MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
+    }
 
     public void UpdateMeetingParams(int status)
     {
@@ -24,7 +34,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         base.OnRoomPropertiesUpdate(propertiesThatChanged);
-
+        Debug.LogError("RoomProperty Update");
         // Check if the meeting status property was updated
         if (propertiesThatChanged.ContainsKey(MeetingStatusPropertyName))
         {
@@ -32,21 +42,27 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        base.OnPlayerEnteredRoom(newPlayer);
+    //public override void OnPlayerEnteredRoom(Player newPlayer)
+    //{
+    //    base.OnPlayerEnteredRoom(newPlayer);
+    //    NewPlayerSpawned(); 
+    //}
 
-        if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
+    private void NewPlayerSpawned()
+    {
+        Debug.LogError("New Player join room:::");
+
+        //if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
 
         // Check if the meeting status property was updated
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
         {
             int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
-           // Debug.LogError("New Player join room:::" + parameterValue);
+            Debug.LogError("New Player join room:::" + parameterValue);
             this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, parameterValue);
         }
-        //else
-        //    Debug.LogError("Property not exist::");
+        else
+            Debug.LogError("Property not exist::");
     }
 
     [PunRPC]
