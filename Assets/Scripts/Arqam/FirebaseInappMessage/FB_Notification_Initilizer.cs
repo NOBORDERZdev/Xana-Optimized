@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-//using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.Android;
 
 public class FB_Notification_Initilizer : MonoBehaviour
 {
@@ -20,9 +20,11 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     private void Awake()
     {
-        FirebaseMessaging.DeleteTokenAsync();
-        FirebaseMessaging.TokenRegistrationOnInitEnabled = true;  // for reRegister Token
+        if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
+
         FirebaseMessaging.RequestPermissionAsync();
+        FirebaseMessaging.TokenRegistrationOnInitEnabled = true;  // for reRegister Token 
     }
 
     protected virtual void Start()
@@ -140,6 +142,18 @@ public class FB_Notification_Initilizer : MonoBehaviour
         //console.text = "";
         //console.text = msg;
         Debug.LogError(msg);
+    }
+
+    public void DeleteToken()
+    {
+        FirebaseMessaging.DeleteTokenAsync();
+        if (isFirebaseInitialized)
+        {
+            FirebaseMessaging.SubscribeAsync(topic).ContinueWithOnMainThread(task =>
+            {
+                LogTaskCompletion(task, "SubscribeAsync");
+            });
+        }
     }
 
 }
