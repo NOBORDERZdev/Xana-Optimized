@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/ApiResponseHolder", fileName = "ScriptableObjects/ApiResponseHolder")]
@@ -7,6 +8,20 @@ public class ResponseHolder : ScriptableObject
 {
 
     public List<Response> apiResponses = new List<Response>();
+
+    private void OnEnable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+#endif
+    }
+
+    private void OnDisable()
+    {
+#if UNITY_EDITOR
+        EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+#endif
+    }
 
     public void AddReponse(string key, string response)
     {
@@ -49,10 +64,21 @@ public class ResponseHolder : ScriptableObject
             res.response = response;
     }
 
-    private void OnDisable()
+#if UNITY_EDITOR
+    private void OnPlayModeStateChanged(PlayModeStateChange obj)
     {
-        apiResponses.Clear();
+        switch (obj)
+        {
+            case PlayModeStateChange.EnteredPlayMode:
+                apiResponses.Clear();
+                break;
+
+            case PlayModeStateChange.ExitingPlayMode:
+                apiResponses.Clear();
+                break;
+        }
     }
+#endif
 
     [Serializable]
     public class Response

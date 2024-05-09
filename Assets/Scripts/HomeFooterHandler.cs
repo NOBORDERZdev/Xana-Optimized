@@ -73,8 +73,11 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
+                MainSceneEventHandler.OnBackRefAssign?.Invoke();
+                notLoadedAgain = true;
                 if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
                 {
+                    Debug.LogError("going here");
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
                 }
                 else

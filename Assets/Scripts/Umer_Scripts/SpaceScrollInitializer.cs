@@ -235,10 +235,6 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
                 //Debug.Log("Scroller Scrolled Registered");
 
             }
-            else
-            {
-                ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
-            }
             //    // for this example, we fake a delay that would simulate getting new data in a real application.
             //    // normally you would just call LoadData(_data.Count) directly here, instead of adding the fake
             //    // 1 second delay.
