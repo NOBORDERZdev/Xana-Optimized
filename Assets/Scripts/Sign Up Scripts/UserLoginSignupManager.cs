@@ -106,6 +106,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.loggedIn)
         {
             Debug.Log("Already Login Dont Call API");
+            InventoryManager.instance.SetDefaultValues();
             return;
         }
         Debug.Log("Auto Login");

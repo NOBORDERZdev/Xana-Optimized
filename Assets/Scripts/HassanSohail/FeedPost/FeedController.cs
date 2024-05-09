@@ -137,7 +137,7 @@ public class FeedController : MonoBehaviour
     {
         if (feedResponseData.data.rows.Count <= 0)
         {
-            noFeedText.text = "";
+            //noFeedText.text = "";
             noFeedsScreen.gameObject.SetActive(true);
         }
     }
