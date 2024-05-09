@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
@@ -46,13 +45,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
-       // StartCoroutine(HitGetEnvironmentTest("XANA Lobby", "38", "ENVIRONMENTS"));
-        // StartCoroutine(HitGetEnvironmentTest("D + Infinity Labo", "3755", "ENVIRONMENTS"));
-        //StartCoroutine(HitGetEnvironmentTest("NFT Duel", "3700", "USER_WORLD"));
-        //StartCoroutine(HitGetEnvironmentTest("DANGOYA～水田に囲まれて～", "4443", "USER_WORLD"));
-
-
-
     }
     public void OpenEnvironmentDeeplink(string deeplinkUrl)
     {
@@ -131,26 +123,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
         StartCoroutine(HitGetEnvironmentJson(ConstantsGod.API_BASEURL + EnvironmentURl + environmentIDf, environmentIDf));
     }
-    //void GetEventType(string entityType)
-    //{
-    //    isBuilderScene = false;
-    //    isMuseumScene = false;
-    //    isEnvirnomentScene = false;
 
-    //    if (entityType == WorldType.MUSEUM.ToString())
-    //    {
-    //        isMuseumScene = true;
-    //    }
-    //    else if (entityType == WorldType.ENVIRONMENT.ToString())
-    //    {
-    //        isEnvirnomentScene = true;
-    //    }
-    //    else if (entityType == WorldType.USER_WORLD.ToString())
-    //    {
-    //        isBuilderScene = true;
-    //        isMuseumScene = true;
-    //    }
-    //}
     IEnumerator HitGetEnvironmentJson(string url, string envId)
     {
         using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -218,46 +191,5 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             request.Dispose();
         }
     }
-
-
-/*
-
-    IEnumerator HitGetEnvironmentTest(string name, string envId,string entityType)
-    {
-            ConstantsHolder.xanaConstants.MuseumID = envId;
-
-            yield return new WaitForSeconds(4f);
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-            yield return new WaitForSeconds(3f);
-
-
-        bool isBuilderScene = false;
-        bool isMuseumScene = false;
-
-        if (entityType == WorldType.MUSEUM.ToString())
-            isMuseumScene = true;
-        else if (entityType == WorldType.USER_WORLD.ToString())
-        {
-            isBuilderScene = true;
-            isMuseumScene = true;
-        }
-        if (name == "Xana Festival")
-        {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(10)).ToString();
-        }
-        else
-        {
-            ConstantsHolder.xanaConstants.userLimit = "10";
-        }
-        ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
-        ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
-        ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        WorldItemView.m_EnvName = MutiplayerController.sceneName = name;
-
-        if (isBuilderScene)
-             WorldManager.instance.JoinBuilderWorld();
-        else
-            WorldManager.instance.JoinEvent();
-    }*/
     #endregion
 }

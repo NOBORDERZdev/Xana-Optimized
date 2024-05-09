@@ -269,7 +269,6 @@ public class Web3Auth : MonoBehaviour
             {
                 (paramMap["params"] as Dictionary<string, object>)[item.Key] = item.Value;
             }
-        //Debug.Log("paramMap: =>" + JsonConvert.SerializeObject(paramMap));
         string loginId = await createSession(JsonConvert.SerializeObject(paramMap, Formatting.None,
             new JsonSerializerSettings
             {
@@ -322,7 +321,6 @@ public class Web3Auth : MonoBehaviour
         this.Enqueue(() => KeyStoreManagerUtils.savePreferenceData(KeyStoreManagerUtils.SESSION_ID, sessionId));
 
         //call authorize session API
-        // Debug.Log("publickey after successful redirection from web. =>" + sessionId);
         this.Enqueue(() => authorizeSession(sessionId));
 
 #if !UNITY_EDITOR && UNITY_WEBGL
@@ -376,12 +374,10 @@ public class Web3Auth : MonoBehaviour
         if (string.IsNullOrEmpty(newSessionId))
         {
             sessionId = KeyStoreManagerUtils.getPreferencesData(KeyStoreManagerUtils.SESSION_ID);
-            // Debug.Log("sessionId during  authorizeSession in if part =>" + sessionId);
         }
         else
         {
             sessionId = newSessionId;
-            // Debug.Log("sessionId during  authorizeSession in else part =>" + sessionId);
         }
 
         if (!string.IsNullOrEmpty(sessionId))
@@ -500,7 +496,6 @@ public class Web3Auth : MonoBehaviour
     {
         TaskCompletionSource<string> createSessionResponse = new TaskCompletionSource<string>();
         var newSessionKey = KeyStoreManagerUtils.generateRandomSessionKey();
-        // Debug.Log("newSessionKey =>" + newSessionKey);
         var ephemKey = KeyStoreManagerUtils.getPubKey(newSessionKey);
         var ivKey = KeyStoreManagerUtils.generateRandomBytes();
 
@@ -535,7 +530,6 @@ public class Web3Auth : MonoBehaviour
                 {
                     try
                     {
-                        // Debug.Log("newSessionKey before saving into keystore =>" + newSessionKey);
                         this.Enqueue(() => KeyStoreManagerUtils.savePreferenceData(KeyStoreManagerUtils.SESSION_ID, newSessionKey));
                         createSessionResponse.SetResult(newSessionKey);
                     }

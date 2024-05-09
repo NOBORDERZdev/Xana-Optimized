@@ -73,14 +73,9 @@ public class HomeFooterHandler : MonoBehaviour
             }
             else
             {
-               // MainSceneEventHandler.OnBackRefAssign?.Invoke();
-                //notLoadedAgain = true;
                 if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
                 {
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
-                    //gameManager.defaultSelection = 0;
-                   // GameManager.Instance.isTabSwitched = false;
-                   // WorldManager.LoadHomeScreenWorlds?.Invoke();
                 }
                 else
                     Invoke(nameof(OnClickHomeWorldButton), 0f);
