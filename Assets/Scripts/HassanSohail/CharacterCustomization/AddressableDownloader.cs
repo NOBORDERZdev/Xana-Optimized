@@ -108,7 +108,7 @@ public class AddressableDownloader : MonoBehaviour
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                     Debug.Log("Fail To load");
-                    if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                    if (InventoryManager.instance && InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;

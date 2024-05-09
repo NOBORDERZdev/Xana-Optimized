@@ -196,12 +196,16 @@ public class SaveCharacterProperties : MonoBehaviour
         SaveItemList.LipsColorPaletteValue = characterController.lipsColorPaletteId;
         SaveItemList.BodyFat = characterController.bodyFat;
         SaveItemList.MakeupValue = characterController.makeupId;
-        for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
+        SaveItemList.avatarType = "NewAvatar";
+        int totalBlendShapes = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount;
+        SaveItemList.FaceBlendsShapes = new float[totalBlendShapes];
+
+        for (int i = 0; i < totalBlendShapes; i++)
         {
-            if (i < SaveItemList.FaceBlendsShapes.Length)
+            //if (i < SaveItemList.FaceBlendsShapes.Length)
                 SaveItemList.FaceBlendsShapes[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
         }
-        SaveItemList.SavedBones.Clear();
+        SaveItemList.SavedBones.Clear(); // Not Using Bones
         for (int i = 0; i < charcterBodyParts.BonesData.Count; i++)
         {
             Transform bone = charcterBodyParts.BonesData[i].Obj.transform;
@@ -216,6 +220,7 @@ public class SaveCharacterProperties : MonoBehaviour
 
         SaveItemList.ai_gender = InventoryManager.instance.itemData.gender;
         SaveItemList.charactertypeAi = InventoryManager.instance.itemData.CharactertypeAi;
+        
         SaveItemList.hair_color = InventoryManager.instance.itemData.hair_color;
         SaveItemList.lip_color = InventoryManager.instance.itemData.lips_color;
         SaveItemList.skin_color = InventoryManager.instance.itemData.skin_color;
@@ -261,7 +266,6 @@ public class SaveCharacterProperties : MonoBehaviour
                 //_CharacterData.eyeMorphed = SaveItemList.eyeMorphed;
                 //_CharacterData.noseMorphed = SaveItemList.noseMorphed;
                 //_CharacterData.lipMorphed = SaveItemList.lipMorphed;
-                //_CharacterData.SavedBones = SaveItemList.SavedBones;
                 //_CharacterData.Skin = charcterBodyParts.GetBodyColor();
                 //_CharacterData.SkinGerdientColor = charcterBodyParts.GetSkinGredientColor();
                 //_CharacterData.SkinId = SaveItemList.SkinId;
@@ -277,9 +281,8 @@ public class SaveCharacterProperties : MonoBehaviour
                 //_CharacterData.eyeLashesName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[3].GetTexture("_BaseMap").name;
                 //_CharacterData.makeupName = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().materials[2].GetTexture("_Base_Texture").name;
 
-                //_CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             }
-
+            _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
             _CharacterData.hair_color = SaveItemList.hair_color;
