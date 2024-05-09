@@ -137,15 +137,7 @@ public class FeedController : MonoBehaviour
     {
         if (feedResponseData.data.rows.Count <= 0)
         {
-            noFeedText.text = "You are not following anyone yet";
-            if (GameManager.currentLanguage == "en" && !LocalizationManager.forceJapanese) // for English 
-            {
-                noFeedText.text = "You are not following anyone yet";
-            }
-            else if (GameManager.currentLanguage == "ja" || LocalizationManager.forceJapanese)   // for Jp 
-            {
-                noFeedText.text = "あなたはまだ誰もフォローしていません";
-            }
+            //noFeedText.text = "";
             noFeedsScreen.gameObject.SetActive(true);
         }
     }
