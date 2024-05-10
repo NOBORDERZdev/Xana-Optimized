@@ -144,6 +144,27 @@ public class PresetData_Jsons : MonoBehaviour
                 UGCManager.isSelfieTaken = false;
             }
 
+            // Set the position, rotation of the character 
+            {
+                string oldSelectedGender = CharacterHandler.instance.activePlayerGender == AvatarGender.Female ? "1" : "0";
+
+                // Check Old and new Selected are not same
+                if (oldSelectedGender != _CharacterData.gender) // 
+                {
+                    // Copy old avatar pos, rotation and implement to new avatar 
+                    if(oldSelectedGender == "1")
+                    {
+                        // Old is Female
+                        CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition;
+                        CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation;
+                    }
+                    else
+                    {
+                        CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition;
+                        CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation;
+                    }
+                }
+            }
 
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
