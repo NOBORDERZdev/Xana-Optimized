@@ -53,3 +53,8 @@ Don’t omit braces, even for single-line statements and also don’t remove bra
 - **Don’t place name in comments**, Example: // added by devA or devB
 - **Use a tooltip** instead of a comment for serialized fields.
 - Remove commented out code.
+
+# Other Document Links
+- **Create IOS Build Xana**
+[Document Link]([https://docs.google.com/document/d/1Y-YLolfLzlI1WTw8sfxHS0GFKwmVQwcmWBnd0FixknU/edit?usp=sharing](https://docs.google.com/document/d/1M7ZI8oH9-gjBJ-zj8iKv-OftSxX3CUWjbjgQhy7j-7Y/edit?usp=sharing))
+
