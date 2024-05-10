@@ -3,7 +3,7 @@
 ### Rules to follow, during your development for XANA APP
 
 > [!Important]
-> **Coding rules**
+> Coding rules
 
 |  Name  | Rule |
 | --- | --- |
