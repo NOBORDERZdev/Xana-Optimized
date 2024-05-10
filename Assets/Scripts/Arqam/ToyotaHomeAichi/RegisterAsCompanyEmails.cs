@@ -4,22 +4,28 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.Events;
+
 
 public class RegisterAsCompanyEmails : MonoBehaviour
 {
-    public enum ActorType { User, CompanyUser};
-    public ActorType actorType;
-    [Space(5)]
-    public UnityEvent companyMemberAction;
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
-    public readonly List<string> emailList = new List<string>();
+    
+    private string toyotaUserEmail;
 
-    void Start()
+    private void OnEnable()
     {
-        ConstantsHolder.xanaConstants.THA_CompanyEmail = this;
+        Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
+    }
+    private void OnDisable()
+    {
+        Web3AuthCustom.Instance.onLoginAction -= UserLoggedIn;
+    }
+
+    private void UserLoggedIn(string userEmail)
+    {
+        toyotaUserEmail = userEmail;
         GetEmailData();
     }
 
@@ -43,29 +49,18 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
-                    emailList.Add(json.data.rows[i].email);
+                    FB_Notification_Initilizer.Instance.companyEmails.Add(json.data.rows[i].email);
+                    FB_Notification_Initilizer.Instance.fbTokens.Add(json.data.rows[i].userToken);
                 }
-                SetEmailData(ConstantsHolder.xanaConstants.toyotaEmail);
+                SetEmailData();
             }
         }
     }
 
     // Call when user logged In
-    public void SetEmailData(string mail)
+    private void SetEmailData()
     {
-        ConstantsHolder.xanaConstants.toyotaEmail = mail;
-        actorType = CheckEmailStatus() ? ActorType.CompanyUser : ActorType.User;
-    }
-
-    private bool CheckEmailStatus()
-    {
-        if (emailList.Contains(ConstantsHolder.xanaConstants.toyotaEmail))
-        {
-            companyMemberAction.Invoke();
-            return true;
-        }
-        else
-            return false;
+        FB_Notification_Initilizer.Instance.InitPushNotification(toyotaUserEmail);
     }
 
 
@@ -88,6 +83,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
         public int id { get; set; }
         public int worldId { get; set; }
         public string email { get; set; }
+        public string userToken { get; set; }
         public DateTime createdAt { get; set; }
         public DateTime updatedAt { get; set; }
     }
