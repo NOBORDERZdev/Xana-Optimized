@@ -139,7 +139,6 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public void StartSceneLoading()
     {
-        ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         ConstantsHolder.xanaConstants.CurrentSceneName = "Addressable";
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         SceneManager.LoadSceneAsync(mainScene);
