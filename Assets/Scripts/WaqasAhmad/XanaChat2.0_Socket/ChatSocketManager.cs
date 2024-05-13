@@ -158,7 +158,9 @@ public class ChatSocketManager : MonoBehaviour
         }
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
-        StartCoroutine(FetchOldMessages());
+
+        if (ConstantsHolder.xanaConstants.EnviornmentName != "THA_Meeting_Room")
+            StartCoroutine(FetchOldMessages());
     }
 
     IEnumerator RetryConnection()

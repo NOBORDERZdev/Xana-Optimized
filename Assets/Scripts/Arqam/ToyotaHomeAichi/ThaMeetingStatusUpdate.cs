@@ -12,14 +12,14 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private const string MeetingStatusPropertyName = "MeetingStatus";
 
-    private void OnEnable()
-    {
-        MutiplayerController.instance.playerJoined += NewPlayerSpawned;
-    }
-    private void OnDisable()
-    {
-        MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
-    }
+    //private void OnEnable()
+    //{
+    //    MutiplayerController.instance.playerJoined += NewPlayerSpawned;
+    //}
+    //private void OnDisable()
+    //{
+    //    MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
+    //}
 
     public void UpdateMeetingParams(int status)
     {
@@ -42,11 +42,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         }
     }
 
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-    //    base.OnPlayerEnteredRoom(newPlayer);
-    //    NewPlayerSpawned(); 
-    //}
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        NewPlayerSpawned();
+    }
 
     private void NewPlayerSpawned()
     {
