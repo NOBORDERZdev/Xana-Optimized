@@ -27,7 +27,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
         form.AddField("worldId", RoomId);
-        form.AddField("email", ConstantsHolder.xanaConstants.toyotaEmail);
+        form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
         form.AddField("isCompanyMember", isCompanyMember.ToString());
         UnityWebRequest www;
         www = UnityWebRequest.Post(ConstantsGod.BASE_URL + ConstantsGod.joinmeetingroom, form);
@@ -53,7 +53,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
         form.AddField("worldId", RoomId);
-        form.AddField("email", ConstantsHolder.xanaConstants.toyotaEmail);
+        form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
         UnityWebRequest www;
         www = UnityWebRequest.Post(ConstantsGod.BASE_URL + ConstantsGod.leavemeetingroom, form);
         www.SetRequestHeader("Authorization", token);
