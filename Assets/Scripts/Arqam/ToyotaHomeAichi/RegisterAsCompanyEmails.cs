@@ -4,17 +4,31 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
+
+
 public class RegisterAsCompanyEmails : MonoBehaviour
 {
     [SerializeField] int thaCompanyId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
-    public List<string> emailList = new List<string>();
-    void Start()
+    
+    private string toyotaUserEmail;
+
+    private void OnEnable()
     {
-        NFT_Holder_Manager.instance.registerAsCompanyEmails = this;
+        Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
+    }
+    private void OnDisable()
+    {
+        Web3AuthCustom.Instance.onLoginAction -= UserLoggedIn;
+    }
+
+    private void UserLoggedIn(string userEmail)
+    {
+        toyotaUserEmail = userEmail;
         GetEmailData();
     }
+
     public async void GetEmailData()
     {
         StringBuilder ApiURL = new StringBuilder();
@@ -35,31 +49,46 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
-                    emailList.Add(json.data.rows[i].email);
+                    FB_Notification_Initilizer.Instance.companyEmails.Add(json.data.rows[i].email);
+                    FB_Notification_Initilizer.Instance.fbTokens.Add(json.data.rows[i].userToken);
                 }
+                SetEmailData();
             }
         }
     }
-}
-public class THAJson
-{
-    public int count { get; set; }
-    public List<THAItemsData> rows { get; set; }
+
+    // Call when user logged In
+    private void SetEmailData()
+    {
+        FB_Notification_Initilizer.Instance.InitPushNotification(toyotaUserEmail);
+    }
+
+
+    #region OutputClasses
+    public class THAJson
+    {
+        public int count { get; set; }
+        public List<THAItemsData> rows { get; set; }
+    }
+
+    public class THAEmailDataResponse
+    {
+        public bool success { get; set; }
+        public THAJson data { get; set; }
+        public string msg { get; set; }
+    }
+
+    public class THAItemsData
+    {
+        public int id { get; set; }
+        public int worldId { get; set; }
+        public string email { get; set; }
+        public string userToken { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
+    }
+    #endregion
 }
 
-public class THAEmailDataResponse
-{
-    public bool success { get; set; }
-    public THAJson data { get; set; }
-    public string msg { get; set; }
-}
 
-public class THAItemsData
-{
-    public int id { get; set; }
-    public int worldId { get; set; }
-    public string email { get; set; }
-    public DateTime createdAt { get; set; }
-    public DateTime updatedAt { get; set; }
-}
 

@@ -48,11 +48,6 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     #region Unity Functions
 
-    private void OnEnable()
-    {
-
-    }
-
     private void Awake()
     {
         XanaEventDetails.eventDetails = new XanaEventDetails();

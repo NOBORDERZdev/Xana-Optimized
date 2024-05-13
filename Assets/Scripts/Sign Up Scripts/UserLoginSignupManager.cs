@@ -68,8 +68,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public Web3Web2Handler _web3APIforWeb2;
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
-
+    public Action logoutAction;
     public static UserLoginSignupManager instance;
+    
 
     private void OnEnable()
     {
@@ -1464,6 +1465,8 @@ public class UserLoginSignupManager : MonoBehaviour
     IEnumerator OnSucessLogout()
     {
         Debug.Log("Logout Successfully");
+        logoutAction?.Invoke();
+
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
