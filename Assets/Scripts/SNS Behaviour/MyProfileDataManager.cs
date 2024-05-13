@@ -60,7 +60,7 @@ public class MyProfileDataManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalFollowingText;
     [Space]
     [SerializeField] TextMeshProUGUI playerNameText;
-    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI displayName;
     [SerializeField] TextMeshProUGUI textUserBio;
     [SerializeField] GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
     [SerializeField] TextMeshProUGUI websiteText;
@@ -211,7 +211,7 @@ public class MyProfileDataManager : MonoBehaviour
     public void ClearDummyData()
     {
         playerNameText.text = "";
-        jobText.text = "";
+        displayName.text = "";
        // jobText.gameObject.SetActive(false);
         textUserBio.text = "";
         websiteText.text = "";
@@ -319,7 +319,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
-        jobText.text = myProfileData.userProfile.username;
+        displayName.text = myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
