@@ -9,7 +9,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        tmp.text = "Join Meeting Now!";
+        //tmp.text = "Join Meeting Now!";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this; 
     }
 
