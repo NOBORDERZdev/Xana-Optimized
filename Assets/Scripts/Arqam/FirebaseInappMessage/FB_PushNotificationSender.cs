@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-using System;
 
 public class FB_PushNotificationSender : MonoBehaviour
 {
@@ -12,26 +10,36 @@ public class FB_PushNotificationSender : MonoBehaviour
 
     private void Start()
     {
-        ConstantsHolder.xanaConstants.pushNotificationSender = this;
-    }
-
-    public void SetToken(string token)
-    {
-        recipientToken = token;
+        NFT_Holder_Manager.instance.pushNotificationSender = this;
     }
 
     public void SendNotification()
     {
         string title = "Alert";
         string body = "I am in meeting.";
-        StartCoroutine(SendNotificationCoroutine(title, body));
+        StartCoroutine(CallAPISequentially(title, body)); ;
     }
 
-    IEnumerator SendNotificationCoroutine(string title, string body)
+    IEnumerator CallAPISequentially(string title, string body)
+    {
+        int length = FB_Notification_Initilizer.Instance.fbTokens.Count;
+        for (int i = 0; i < length; i++)
+        {
+            if (!string.IsNullOrEmpty(FB_Notification_Initilizer.Instance.fbTokens[i]) &&
+                FB_Notification_Initilizer.Instance.fbTokens[i] != "")
+            {
+                recipientToken = FB_Notification_Initilizer.Instance.fbTokens[i];
+                // Call your API for each item
+                yield return StartCoroutine(SendNotification(title, body));
+            }
+        } 
+    }
+
+    IEnumerator SendNotification(string title, string body)
     {
         string url = "https://fcm.googleapis.com/fcm/send";
         string jsonBody = "{\"to\": \"" + recipientToken + "\", \"notification\": {\"title\": \"" + title + "\", \"body\": \"" + body + "\"}}";
-        
+
         using (UnityWebRequest www = new UnityWebRequest(url, "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
@@ -52,7 +60,5 @@ public class FB_PushNotificationSender : MonoBehaviour
             }
         }
     }
-
-
 
 }

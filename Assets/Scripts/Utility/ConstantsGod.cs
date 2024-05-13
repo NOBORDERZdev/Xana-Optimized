@@ -283,5 +283,6 @@ public class ConstantsGod
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
+    public static string toyotaNotificationApi = "/toyotaAichiWorlds/save-user-token";
     #endregion
 }
