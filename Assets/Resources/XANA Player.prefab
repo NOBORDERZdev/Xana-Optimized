@@ -5550,6 +5550,7 @@ Transform:
   - {fileID: 3798328719503789260}
   - {fileID: 3376362499695249942}
   - {fileID: 1961764267330981209}
+  - {fileID: 7451477825976693283}
   m_Father: {fileID: 5556358533142032527}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5951,6 +5952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   photonView: {fileID: 6600868634286491041}
   voiceView: {fileID: 1265562925189947652}
+  cameraTarget: {fileID: 7451477825976693283}
   isHunter: 0
   rearViewCamera: {fileID: 5554308608778179937}
   isMinimized: 0
@@ -6321,6 +6323,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5556358534646836579}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 27.822, y: 0, z: 0}
+--- !u!1 &8001264704560681263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7451477825976693283}
+  m_Layer: 22
+  m_Name: CameraTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7451477825976693283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8001264704560681263}
+  m_LocalRotation: {x: 0.24041587, y: -0, z: -0, w: 0.97067}
+  m_LocalPosition: {x: 0, y: 2.43, z: -1.91}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5556358534646836579}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 27.822, y: 0, z: 0}
 --- !u!1 &8386220491736559830
 GameObject:
@@ -7815,6 +7848,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1756241672296322622, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+      propertyPath: isModulePlayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1756241672296322622, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+      propertyPath: moduleClothJson
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2130443222824194811, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
       propertyPath: m_Layer
       value: 22
@@ -8016,6 +8057,7 @@ PrefabInstance:
     - {fileID: 7980377504355385946, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
     - {fileID: 4317905207048552268, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
     - {fileID: 5926118722746936117, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
+    - {fileID: 6012291502160390932, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 41b1b176f474f5241ad05a590441eaa1, type: 3}
 --- !u!1 &229819806370336182 stripped
 GameObject:

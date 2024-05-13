@@ -98,11 +98,15 @@ namespace RFM.Managers
             }
         }
 
-        /*private void Update()
+        public Runner[] runners;
+        public Hunter[] Hunters;
+        private void Update()
         {
             if (Input.GetKeyDown(KeyCode.H))
             {
-                if (PhotonNetwork.IsMasterClient)
+                runners=FindObjectsOfType<RFM.Character.Runner>(false);
+                Hunters = FindObjectsOfType<RFM.Character.Hunter>(false);
+                /*if (PhotonNetwork.IsMasterClient)
                 {
                     if (PhotonNetwork.PlayerListOthers.Length > 0)
                     {
@@ -110,9 +114,9 @@ namespace RFM.Managers
 
                         PhotonNetwork.SendAllOutgoingCommands();
                     }
-                }
+                }*/
             }
-        }*/
+        }
 
 
         public override void OnEnable()
@@ -521,7 +525,7 @@ namespace RFM.Managers
                     photonView.RPC(nameof(SetGameOver), RpcTarget.AllBuffered, "RUNNERS WIN");
                     CancelInvoke(nameof(CheckForGameOverCondition));
                 };
-                GameplayTimeOver(); 
+                GameplayTimeOver();
             },
                 gameplayTimeText, true, false, AfterEachSecondGameplayTimer);
 
@@ -697,6 +701,14 @@ namespace RFM.Managers
 
             if (hunterViewID != -1)
             {
+                var player = FindObjectOfType<RFMCharacter>();
+                if (player != null)
+                {
+                    realPlayer = player;
+                    _npcCamera.Init(player.cameraTarget);
+                    InvokeRepeating(nameof(CheckHuntersForSpectating), 1, 2);
+                    return;
+                }
                 var hunter = PhotonView.Find(hunterViewID).GetComponent<RFM.Character.Hunter>();
                 if (hunter != null)
                 {
@@ -721,22 +733,34 @@ namespace RFM.Managers
             }
         }
         public Hunter hunterForSpectating;
+        public RFMCharacter realPlayer;
+        public bool isRealPlayerAvailable;
         public void CheckHuntersForSpectating()
         {
             Debug.LogError("CheckHuntersForSpectating: " + hunterForSpectating);
-            if (hunterForSpectating == null)
+            if (realPlayer == null)
             {
-                List<RFM.Character.Hunter> hunterList = new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
-                var randomHunter = hunterList.Find(o => o.enabled == true);
-
-                if (randomHunter != null)
+                var player = FindObjectOfType<RFMCharacter>();
+                if (player != null)
                 {
-                    hunterForSpectating = randomHunter;
-                    if (_npcCamera == null)
+                    realPlayer = player;
+                    _npcCamera.Init(player.cameraTarget);
+                    return;
+                }
+                else if (hunterForSpectating == null)
+                {
+                    List<RFM.Character.Hunter> hunterList = new List<Hunter>(FindObjectsOfType<RFM.Character.Hunter>().ToList());
+                    var randomHunter = hunterList.Find(o => o.enabled == true);
+
+                    if (randomHunter != null)
                     {
-                        _npcCamera = Instantiate(npcCameraPrefab);
+                        hunterForSpectating = randomHunter;
+                        if (_npcCamera == null)
+                        {
+                            _npcCamera = Instantiate(npcCameraPrefab);
+                        }
+                        _npcCamera.Init(randomHunter.cameraTarget);
                     }
-                    _npcCamera.Init(randomHunter.cameraTarget);
                 }
             }
         }

@@ -85,8 +85,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         playerMat = Resources.Load<Material>("Material #25");
         mainPlayerParent = AvatarManager.Instance.spawnPoint.transform;
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
-        if (this.GetComponent<PhotonView>().IsMine)
+        if (GetComponent<PhotonView>().IsMine)
         {
+            PhotonUserName.text = gameObject.GetComponent<PhotonView>().Owner.NickName;
+            Debug.LogError("photonUserNameSet: " + gameObject.GetComponent<PhotonView>().Owner.NickName);
             if (AvatarManager.Instance.currentDummyPlayer == null)
             {
                 if (!/*WorldItemView.m_EnvName.Contains("RFMDummy")*/RFM.Globals.IsRFMWorld)
@@ -97,7 +99,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarManager.Instance.currentDummyPlayer = this.gameObject;
                 print("nick name 3==" + XanaChatSystem.instance.UserName);
-                PhotonUserName.text = PhotonNetwork.NickName;
 
                 //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
                 //    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
@@ -114,6 +115,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
                 AvatarManager.Instance.Defaultanimator = AvatarManager.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
             }
+        }
+        else
+        {
+            PhotonUserName.text = GetComponent<PhotonView>().Owner.NickName;
+            Debug.LogError("photonUserNameSet other: " + GetComponent<PhotonView>().Owner.NickName);
         }
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
         Debug.Log("call arrow");
@@ -440,6 +446,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (isOtherPlayer)
         {
             PhotonUserName.text = gameObject.GetComponent<PhotonView>().Owner.NickName;
+            Debug.LogError("photonUserNameSet isother: " + GetComponent<PhotonView>().Owner.NickName);
             Debug.Log("nick name 4==" + gameObject.GetComponent<PhotonView>().Owner.NickName);
             if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
                    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
@@ -500,7 +507,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //LoadingManager.Instance.HideLoading();
         //LoadingHandler.Instance.HideLoading();
 
-        if (XanaConstants.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5")) 
+        if (XanaConstants.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5"))
             go.SetActive(false);
         if (SoundManager.Instance)
         {

@@ -445,6 +445,7 @@ public class WorldManager : MonoBehaviour
     }
     public async void JoinEvent()
     {
+        Debug.LogError("JoinEvent");
         if (WorldItemView.m_EnvName.Contains("RFM"))
         {
             if (!XanaConstants.xanaConstants.isAlphaPassHolder)
@@ -456,6 +457,8 @@ public class WorldManager : MonoBehaviour
         _callSingleTime = true;
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
+                GameManager.Instance.NotNowOfSignManager();
+            return;
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
                 UIManager.Instance.LoginRegisterScreen.transform.SetAsLastSibling();
@@ -529,6 +532,7 @@ public class WorldManager : MonoBehaviour
     }
     public async void JoinBuilderWorld()
     {
+        Debug.LogError("JoinBuilderWorld");
         if (!UserRegisterationManager.instance.LoggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 

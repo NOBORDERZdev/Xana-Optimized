@@ -10,6 +10,7 @@ public class RFMCharacter : MonoBehaviour
 {
     public PhotonView photonView;
     public PhotonVoiceView voiceView;
+    public Transform cameraTarget;
     //public RFMPlayerClass RFMPlayer;
     public bool isHunter;
     public GameObject rearViewCamera;
