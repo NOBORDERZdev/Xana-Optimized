@@ -44,8 +44,13 @@ public class FB_Notification_Initilizer : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
+    private void OnDisable()
+    {
+        UserLoginSignupManager.instance.logoutAction -= DeleteToken;
+    }
     public void InitPushNotification(string mail)
     {
+        UserLoginSignupManager.instance.logoutAction += DeleteToken;
         toyotaUserEmail = mail;
         actorType = CheckEmailStatus() ? ActorType.CompanyUser : ActorType.User;
         if (actorType.Equals(ActorType.CompanyUser))
@@ -171,10 +176,8 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     public virtual void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {
-        //tokenTxt.text = token.Token;
         onReceiveToken?.Invoke(token.Token);
-        Handheld.Vibrate();
-        Debug.Log("Received Registration Token: " + token.Token);
+        Debug.LogError("Token Generated: " + token.Token);
     }
 
     private void DebugMsg(string msg)
@@ -186,13 +189,11 @@ public class FB_Notification_Initilizer : MonoBehaviour
     public void DeleteToken()
     {
         FirebaseMessaging.DeleteTokenAsync();
-        if (isFirebaseInitialized)
-        {
-            FirebaseMessaging.SubscribeAsync(topic).ContinueWithOnMainThread(task =>
-            {
-                LogTaskCompletion(task, "SubscribeAsync");
-            });
-        }
+        toyotaUserEmail = "";
+        companyEmails.Clear();
+        fbTokens.Clear();
+
+        Debug.LogError("Token Deleted");
     }
 
 }
