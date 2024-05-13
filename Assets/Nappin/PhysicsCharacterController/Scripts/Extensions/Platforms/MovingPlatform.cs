@@ -109,8 +109,10 @@ namespace PhysicsCharacterController
 
                 for (int i = 0; i < rigidbodies.Count; i++)
                 {
+                    if(rigidbodies.Count<=0||rigidbodies[i]== null)
+                        return;
                     Rigidbody rb = rigidbodies[i];
-
+                    
                     if (angularVelocity.y > 0)
                     {
                         rb.transform.RotateAround(transform.position, Vector3.up, angularVelocity.y);
