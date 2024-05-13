@@ -281,10 +281,8 @@ public class ConstantsGod
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
-    #region Toyota Email Api's and Count Api's
+    #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
-    public static string joinmeetingroom = "/toyotaAichiWorlds/join-meeting-room";
-    public static string leavemeetingroom = "/toyotaAichiWorlds/leave-meeting-room";
-    public static string getmeetingroomcount = "/toyotaAichiWorlds/check-meeting-members/";
+    public static string toyotaNotificationApi = "/toyotaAichiWorlds/save-user-token";
     #endregion
 }

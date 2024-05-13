@@ -5,38 +5,83 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
-//using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine.Android;
+using System.Collections;
+
 
 public class FB_Notification_Initilizer : MonoBehaviour
 {
-    //public Text console;
-    //public Text tokenTxt;
-    public UnityEvent<string> onReceiveToken;
+    public bool isShowLogs = false;
+    public enum ActorType { User, CompanyUser };
+    public ActorType actorType;
+    [Space(5)]
+    public string toyotaUserEmail;
+    public List<string> companyEmails = new List<string>();
+    public List<string> fbTokens = new List<string>();
+    [Tooltip("Action invoke when device token received for push notification")]
+    public Action<string> onReceiveToken;
+    public static FB_Notification_Initilizer Instance;
 
-    DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;
+    [SerializeField]
+    private bool isFirebaseInitialized = false;
     private string topic = "TestTopic";
-    protected bool isFirebaseInitialized = false;
+    DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;  
 
     private void Awake()
     {
-        FirebaseMessaging.DeleteTokenAsync();
-        FirebaseMessaging.TokenRegistrationOnInitEnabled = true;  // for reRegister Token
-        FirebaseMessaging.RequestPermissionAsync();
+        // Check if an instance already exists
+        if (Instance != null && Instance != this)
+        {
+            // If an instance already exists, destroy this instance
+            DestroyImmediate(gameObject);
+            return;
+        }
+        else
+        {
+            // assign the instance to this instance
+            Instance = this;
+        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
-    protected virtual void Start()
+    private void OnDisable()
     {
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+        UserLoginSignupManager.instance.logoutAction -= DeleteToken;
+    }
+    public void InitPushNotification(string mail)
+    {
+        UserLoginSignupManager.instance.logoutAction += DeleteToken;
+        toyotaUserEmail = mail;
+        actorType = CheckEmailStatus() ? ActorType.CompanyUser : ActorType.User;
+        if (actorType.Equals(ActorType.CompanyUser))
+            StartCoroutine(InitilizeFirebase());
+    }
+
+    private bool CheckEmailStatus()
+    {
+        if (companyEmails.Contains(toyotaUserEmail))
+            return true;
+        else
+            return false;
+    }
+
+
+    IEnumerator InitilizeFirebase()
+    {
+        if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
+            Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
+
+        FirebaseMessaging.RequestPermissionAsync();
+        FirebaseMessaging.TokenRegistrationOnInitEnabled = true;  // for reRegister Token 
+        yield return new WaitForEndOfFrame();
+
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
             dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
-            {
                 InitializeFirebase();
-            }
             else
-            {
                 DebugMsg("Could not resolve all Firebase dependencies: ");
-            }
         });
     }
 
@@ -45,7 +90,8 @@ public class FB_Notification_Initilizer : MonoBehaviour
     {
         FirebaseMessaging.MessageReceived += OnMessageReceived;
         FirebaseMessaging.TokenReceived += OnTokenReceived;
-        FirebaseMessaging.SubscribeAsync(topic).ContinueWithOnMainThread(task => {
+        FirebaseMessaging.SubscribeAsync(topic).ContinueWithOnMainThread(task =>
+        {
             LogTaskCompletion(task, "SubscribeAsync");
         });
 
@@ -58,7 +104,8 @@ public class FB_Notification_Initilizer : MonoBehaviour
         // On Android, this will return successfully immediately, as there is no
         // equivalent system logic to run.
         FirebaseMessaging.RequestPermissionAsync().ContinueWithOnMainThread(
-          task => {
+          task =>
+          {
               LogTaskCompletion(task, "RequestPermissionAsync");
           }
         );
@@ -129,17 +176,24 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     public virtual void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {
-        //tokenTxt.text = token.Token;
-        onReceiveToken.Invoke(token.Token);
-        Handheld.Vibrate();
-        Debug.Log("Received Registration Token: " + token.Token);
+        onReceiveToken?.Invoke(token.Token);
+        Debug.LogError("Token Generated: " + token.Token);
     }
 
     private void DebugMsg(string msg)
     {
-        //console.text = "";
-        //console.text = msg;
-        Debug.LogError(msg);
+        if (isShowLogs)
+            Debug.LogError(msg);
+    }
+
+    public void DeleteToken()
+    {
+        FirebaseMessaging.DeleteTokenAsync();
+        toyotaUserEmail = "";
+        companyEmails.Clear();
+        fbTokens.Clear();
+
+        Debug.LogError("Token Deleted");
     }
 
 }

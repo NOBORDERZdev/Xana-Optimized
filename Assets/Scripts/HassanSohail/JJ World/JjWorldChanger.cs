@@ -34,19 +34,19 @@ public class JjWorldChanger : MonoBehaviour
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            ConstantsHolder.xanaConstants.pushNotificationSender.SendNotification();
+            NFT_Holder_Manager.instance.pushNotificationSender.SendNotification();
 
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(ConstantsHolder.xanaConstants.THA_CompanyEmail.actorType != RegisterAsCompanyEmails.ActorType.CompanyUser &&
+                if(FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
                 }
-                else if (ConstantsHolder.xanaConstants.THA_CompanyEmail.actorType == RegisterAsCompanyEmails.ActorType.CompanyUser &&
+                else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
                                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
                 {
                     return;

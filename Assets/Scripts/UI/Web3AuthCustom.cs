@@ -36,6 +36,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     internal string publicAdress;
     internal string msg1 ,msg2;
 
+    public Action<string> onLoginAction;
 
     private void Start()
     {
@@ -221,7 +222,9 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         userInfo = response.userInfo;
         privateKey = response.privKey;
         Email = userInfo.email;
-        ConstantsHolder.xanaConstants.toyotaEmail = Email;
+
+        onLoginAction?.Invoke(Email);
+        
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));
