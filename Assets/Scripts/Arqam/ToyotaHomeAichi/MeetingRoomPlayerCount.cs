@@ -15,12 +15,11 @@ public class MeetingRoomPlayerCount : MonoBehaviour
     int RoomId = 4;
     void OnEnable()
     {
-        StartCoroutine(MeetingRoomJoin());
-        CheckUsersCount();
+       // StartCoroutine(MeetingRoomJoin());
+        StartCoroutine(MeetingRoomLeave());
     }
     void OnDisable()
     {
-        StartCoroutine(MeetingRoomLeave());
     }
     IEnumerator MeetingRoomJoin()
     {
@@ -28,7 +27,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("worldId", RoomId);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
-        form.AddField("isCompanyMember", isCompanyMember.ToString());
+        form.AddField("isCompanyMember", 0);
         UnityWebRequest www;
         www = UnityWebRequest.Post(ConstantsGod.BASE_URL + ConstantsGod.joinmeetingroom, form);
         www.SetRequestHeader("Authorization", token);
@@ -40,7 +39,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         string str = www.downloadHandler.text;
         if (!www.isHttpError && !www.isNetworkError)
         {
-            Debug.Log("Meeting Room Player Count is : " + www.downloadHandler.text.ToString());
+            Debug.Log("Meeting Room Player  on join : " + www.downloadHandler.text);
         }
         else
         {
@@ -68,13 +67,13 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         }
         else
         {
-            Debug.Log("Meeting Room Player Count is : " + www.downloadHandler.text.ToString());
+            Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
         }
     }
-    async void CheckUsersCount()
+   public async void CheckUsersCount()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + 4);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + RoomId);
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {

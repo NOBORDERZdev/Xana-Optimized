@@ -3,6 +3,11 @@ using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using Photon.Pun.Demo.PunBasics;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Text;
+using System;
+using UnityEngine.Networking;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -11,16 +16,23 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public MeetingStatus tms;
 
     private const string MeetingStatusPropertyName = "MeetingStatus";
-
-    private void OnEnable()
+    int playerCount;
+    int roomID =4;
+    //private void OnEnable()
+    //{
+    //    MutiplayerController.instance.playerJoined += NewPlayerSpawned;
+    //}
+    //private void OnDisable()
+    //{
+    //    MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
+    //}
+    private void Start()
     {
-        MutiplayerController.instance.playerJoined += NewPlayerSpawned;
+        if(PhotonNetwork.IsMasterClient)
+        {
+            CheckUsersCount();
+        }
     }
-    private void OnDisable()
-    {
-        MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
-    }
-
     public void UpdateMeetingParams(int status)
     {
         this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
@@ -42,11 +54,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         }
     }
 
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-    //    base.OnPlayerEnteredRoom(newPlayer);
-    //    NewPlayerSpawned(); 
-    //}
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        base.OnPlayerEnteredRoom(newPlayer);
+        NewPlayerSpawned();
+    }
 
     private void NewPlayerSpawned()
     {
@@ -70,6 +82,58 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         tms = (MeetingStatus)num;
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
+    }
+    public async void CheckUsersCount()
+    {
+        StringBuilder ApiURL = new StringBuilder();
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
+        Debug.Log("API URL is : " + ApiURL.ToString());
+        using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
+        {
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            await request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log("Error is" + request.error);
+            }
+            else
+            {
+                StringBuilder data = new StringBuilder();
+                data.Append(request.downloadHandler.text);
+                MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
+                playerCount = meetingRoomStatusResponse.data.Count;
+                Debug.Log("player count is :: " + playerCount);
+                if (playerCount == 0)
+                {
+                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.End;
+                }
+                else if (playerCount == 1)
+                {
+                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.Inprogress;
+                }
+                else if (playerCount == 2)
+                {
+                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.HouseFull;
+                }
+            }
+        }
+    }
+    public class MeetinRoomProperties
+    {
+        public int id { get; set; }
+        public int worldId { get; set; }
+        public string email { get; set; }
+        public bool isJoined { get; set; }
+        public bool isCompanyMember { get; set; }
+        public DateTime createdAt { get; set; }
+        public DateTime updatedAt { get; set; }
+    }
+
+    public class MeetingRoomStatusResponse
+    {
+        public bool success { get; set; }
+        public List<MeetinRoomProperties> data { get; set; }
+        public string msg { get; set; }
     }
 
 }

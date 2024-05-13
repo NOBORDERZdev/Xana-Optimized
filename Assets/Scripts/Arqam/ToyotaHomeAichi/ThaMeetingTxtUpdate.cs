@@ -1,13 +1,11 @@
 using UnityEngine;
 using TMPro;
-using Photon.Pun;
-
 public class ThaMeetingTxtUpdate : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
    
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //tmp.text = "Join Meeting Now!";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this; 
