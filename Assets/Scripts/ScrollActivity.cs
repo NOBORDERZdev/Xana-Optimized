@@ -16,8 +16,7 @@ public class ScrollActivity : MonoBehaviour
     public int lastindex = 1;
     [SerializeField]
     CanvasGroup canvasGroup;
-    [SerializeField]
-    Image bg;
+    public WorldDescriptionPopupPreview worldDetailParentRef;
 
     private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
     private SwipeGestureRecognizer swipe2 = new SwipeGestureRecognizer();
@@ -147,6 +146,7 @@ public class ScrollActivity : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
             //Debug.Log("Last swipe direction and distance Y Values: " + lastSwipeMovement + " " + lastSwipeYDistance);
             if (ScrollController.verticalNormalizedPosition < 1f)
             {
@@ -154,8 +154,7 @@ public class ScrollActivity : MonoBehaviour
                 {
                     if (worlddetailScrollContrl.verticalNormalizedPosition >= 1f)
                     {
-                        ConstantsHolder.isDescriptionFullPage = false;
-                        WorldDescriptionPopupPreview.OndescriptionPanelSizeChange?.Invoke(false);
+                        WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
 
                         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear);
                         worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
@@ -163,8 +162,8 @@ public class ScrollActivity : MonoBehaviour
                 }
                 else if (lastSwipeMovement == SwipeGestureRecognizerDirection.Up && lastSwipeYDistance > 0)
                 {
-                    ConstantsHolder.isDescriptionFullPage = true;
-                    WorldDescriptionPopupPreview.OndescriptionPanelSizeChange?.Invoke(true);
+                    //ConstantsHolder.isDescriptionFullPage = true;
+                    WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(true);
                     DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear);
                     worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 }

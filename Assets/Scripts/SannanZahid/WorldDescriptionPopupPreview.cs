@@ -22,9 +22,10 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public Text VisitCountTxt;
     [Header("Images")]
     public Image FadeImg;
+    public RectTransform WorldImageHolderRef;
     public Image WorldIconImg;
     public Image UserProfileImg;
-    public ScrollRect ScrollControllerRef;
+    public GameObject WorldDetailContentrRef;
     public GameObject XanaProfile;
     public Button JoinEventBtn;
     public GameObject followingWorld;
@@ -52,61 +53,83 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public bool tagsInstantiated;
     public Transform PreviewLogo;
 
-    public static Action<bool> OndescriptionPanelSizeChange;
+    public static Action<bool> OndescriptionPanelSwipUp;
     private void OnEnable()
     {
-        OndescriptionPanelSizeChange += UpdateDescirptionPanelItem;
+        OndescriptionPanelSwipUp += UpdateDescirptionPanelItem;
     }
 
     private void OnDisable()
     {
-        OndescriptionPanelSizeChange -= UpdateDescirptionPanelItem;
+        OndescriptionPanelSwipUp -= UpdateDescirptionPanelItem;
     }
 
     void UpdateDescirptionPanelItem(bool isFullOpen)
     {
-        if(isFullOpen)
+        if (isFullOpen)
         {
+            WorldImageHolderRef.sizeDelta = new Vector2(WorldImageHolderRef.sizeDelta.x, 487f);
+            SetTopAndBottomPositions(-15f, 20f);
             SetSeparatorLineProp(false);
-            SetParentBodyTop(parentBodyBG, -2082.26f);
-            worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 515f), 0.1f).SetEase(Ease.Linear);
-            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
-            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -555), 0.1f).SetEase(Ease.Linear);
-            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
-            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
+            //SetSeparatorLineProp(false);
+            //SetParentBodyTop(parentBodyBG, -2082.26f);
+            //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 515f), 0.1f).SetEase(Ease.Linear);
+            ////tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
+            //DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -555), 0.1f).SetEase(Ease.Linear);
+            ////tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
+            //worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
         }
         else
         {
+            WorldImageHolderRef.sizeDelta = new Vector2(WorldImageHolderRef.sizeDelta.x, 495f);
+            SetTopAndBottomPositions(0f, 0f);
             SetSeparatorLineProp(true);
-            SetParentBodyTop(parentBodyBG, -2067.26f);
-            worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 500f), 0.1f).SetEase(Ease.Linear);
-            //tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
-            DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -319), 0.1f).SetEase(Ease.Linear);
-            //tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
-            worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
+            //SetSeparatorLineProp(true);
+            //SetParentBodyTop(parentBodyBG, -2067.26f);
+            //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 500f), 0.1f).SetEase(Ease.Linear);
+            ////tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
+            //DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -319), 0.1f).SetEase(Ease.Linear);
+            ////tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
+            //worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
         }
+        WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+    }
+
+    void SetTopAndBottomPositions(float top, float bottom)
+    {
+        // Calculate the new height of the RectTransform
+        float newHeight = Mathf.Abs(top - bottom);
+
+        // Set the new height of the RectTransform
+        worldImageMask.sizeDelta = new Vector2(worldImageMask.sizeDelta.x, newHeight);
+
+        // Calculate the new Y position of the RectTransform
+        float newYPosition = (top + bottom) / 2f;
+
+        // Update the Y position of the RectTransform
+        worldImageMask.localPosition = new Vector3(worldImageMask.localPosition.x, newYPosition, worldImageMask.localPosition.z);
     }
 
     public void SetSeparatorLineProp(bool _switchLine)
     {
-            sepLineSmallView.SetActive(_switchLine);
-            sepLineLargeView.SetActive(!_switchLine);
+        sepLineSmallView.SetActive(_switchLine);
+        sepLineLargeView.SetActive(!_switchLine);
     }
 
     // Function to set the top properties of a RectTransform
-    void SetParentBodyTop(RectTransform rectTransform, float top)
-    {
-        // Get the current anchored position
-        Vector2 anchoredPosition = rectTransform.anchoredPosition;
+    //void SetParentBodyTop(RectTransform rectTransform, float top)
+    //{
+    //    //// Get the current anchored position
+    //    //Vector2 anchoredPosition = rectTransform.anchoredPosition;
 
-        // Set the top parameter
-        anchoredPosition.y = top;
+    //    //// Set the top parameter
+    //    //anchoredPosition.y = top;
 
-        // Assign the new anchored position
-        rectTransform.anchoredPosition = anchoredPosition;
-    }
+    //    //// Assign the new anchored position
+    //    //rectTransform.anchoredPosition = anchoredPosition;
+    //}
 
-    public void Init(GameObject thumbnailObjRef,Sprite worldImg, string worldName, string worldDescription, string creatorName,
+    public void Init(GameObject thumbnailObjRef, Sprite worldImg, string worldName, string worldDescription, string creatorName,
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
         string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
     {
@@ -123,7 +146,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         JoinEventBtn.onClick.RemoveAllListeners();
 
         scrollActivity.enabled = false;
-        ScrollControllerRef.verticalNormalizedPosition = 1f;
+        //ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
         CreatorNameTxt.text = creatorName;
@@ -151,9 +174,9 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         }
         else
         {
-            tagScroller.SetActive(false);
+            tagScroller.transform.parent.gameObject.SetActive(false);
         }
-        UpdateDescirptionPanelItem(false);
+        //UpdateDescirptionPanelItem(false);
         m_WorldPlayPanel.SetActive(true);
         m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
         m_MuseumIsClicked = false;
@@ -170,30 +193,30 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
         {*/
-            CreatorNameTxt.text = creator_Name;
-            CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
-            CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
-            AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
-            if (string.IsNullOrEmpty(userAvatarURL))
-            {
-                //NoAvatarIcon.gameObject.SetActive(true);
-                XanaAvatarIcon.gameObject.SetActive(false);
-                //AvatarIcon.gameObject.SetActive(true);
-            }
-            //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
-            //{
-            //    NoAvatarIcon.gameObject.SetActive(false);
-            //    XanaAvatarIcon.gameObject.SetActive(true);
-            //    AvatarIcon.gameObject.SetActive(false);
-            //}
-            else
-            {
-                //NoAvatarIcon.gameObject.SetActive(false);
-                XanaAvatarIcon.gameObject.SetActive(false);
-                //AvatarIcon.gameObject.SetActive(true);
-                StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
-            }
-            creatorPanel.SetActive(true);
+        CreatorNameTxt.text = creator_Name;
+        CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
+        CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        if (string.IsNullOrEmpty(userAvatarURL))
+        {
+            //NoAvatarIcon.gameObject.SetActive(true);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            //AvatarIcon.gameObject.SetActive(true);
+        }
+        //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
+        //{
+        //    NoAvatarIcon.gameObject.SetActive(false);
+        //    XanaAvatarIcon.gameObject.SetActive(true);
+        //    AvatarIcon.gameObject.SetActive(false);
+        //}
+        else
+        {
+            //NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            //AvatarIcon.gameObject.SetActive(true);
+            StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
+        }
+        creatorPanel.SetActive(true);
         /*}
         else
         {
@@ -202,11 +225,13 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
         CheckWorldFav(isFavourite);
     }
+
     public void CallAnalytics(string idOfObject, string entityType)
     {
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, VisitCountTxt); // Due to Flow change this API in not in use
     }
+
     public void SetPanelToBottom()
     {
         if (scrollActivity.gameObject.activeInHierarchy)
@@ -215,6 +240,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             CheckWorld();
         }
     }
+
     public void CheckWorld()
     {
         //  GameManager.Instance.UiManager.HomePage.SetActive(true);
@@ -251,6 +277,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         m_MuseumIsClicked = false;
         GameManager.Instance.WorldBool = true;
     }
+
     public void UpdateWorldPanel()
     {
         //if (!WorldNameTxt.text.Contains("XANA Lobby"))
@@ -268,6 +295,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         if (BannerImgSprite.Length > 2)
             BannerImgSprite[2].sprite = FadeImg.sprite;
     }
+
     IEnumerator DownloadAndSetImage(string downloadURL, Image imageHolder)
     {
         yield return null;
@@ -296,11 +324,10 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         }
     }
 
-
     void InstantiateWorldtags()
     {
         if (m_WorldTags.Length > 0)
-            tagScroller.SetActive(true);
+            tagScroller.transform.parent.gameObject.SetActive(true);
         else
             return;
 
@@ -329,7 +356,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         tagsInstantiated = true;
     }
 
-
     void CheckWorldFav(bool isFavourite)
     {
         if (isFavourite)
@@ -346,7 +372,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         followingWorldHighlight.GetComponent<Button>().interactable = true;
     }
 
-
+    //Both below functions are called from inspector on world fav buttons
     public void FavoriteWorldBtnClicked()
     {
         if (!UserPassManager.Instance.CheckSpecificItem("Favorite Worlds"))
@@ -362,7 +388,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         followWorldLoader.SetActive(true);
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
         Debug.LogError(apiUrl);
-        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
+        StartCoroutine(FollowWorldAPI(apiUrl, worldId, (isSucess) =>
         {
             if (isSucess)
             {
@@ -389,7 +415,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         followingWorldHighlight.GetComponent<Button>().interactable = false;
         followWorldLoader.SetActive(true);
         string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.FOLLOWWORLD + worldId;
-        StartCoroutine(FollowWorldAPI(apiUrl,worldId, (isSucess) =>
+        StartCoroutine(FollowWorldAPI(apiUrl, worldId, (isSucess) =>
         {
             if (isSucess)
             {
@@ -415,15 +441,15 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         }));
     }
 
-    IEnumerator FollowWorldAPI(string APIurl,string worldId, Action<bool> CallBack)
+    IEnumerator FollowWorldAPI(string APIurl, string worldId, Action<bool> CallBack)
     {
         yield return new WaitForEndOfFrame();
         //WWWForm wWWForm = new WWWForm();
         //wWWForm.AddField("worldId", worldId);
         Dictionary<string, int> data = new Dictionary<string, int>();
-        data.Add("worldId",int.Parse(worldId));
+        data.Add("worldId", int.Parse(worldId));
         string jsonData = JsonUtility.ToJson(data);
-        using (UnityWebRequest www = UnityWebRequest.Put(APIurl,jsonData))
+        using (UnityWebRequest www = UnityWebRequest.Put(APIurl, jsonData))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SetRequestHeader("Content-Type", "application/json");
@@ -437,7 +463,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             }
             else
             {
-               // Debug.LogError("following world :- "+www.downloadHandler.text);
+                // Debug.LogError("following world :- "+www.downloadHandler.text);
                 CallBack(true);
             }
             www.Dispose();
