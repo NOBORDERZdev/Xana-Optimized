@@ -69,8 +69,8 @@ public class PlayerController : MonoBehaviour
     public bool isFirstPerson = false;
     public GameObject gyroButton;
     public GameObject gyroButton_Portait;
-    public static event Action PlayerIsWalking;
-    public static event Action PlayerIsIdle;
+    public static Action PlayerIsWalking;
+    public static Action PlayerIsIdle;
     [HideInInspector] public Vector3 gravityVector;
     public GameObject ActiveCamera; // ethier TPS OR FPS CAM
     public bool IsJumpButtonPress = false;
@@ -297,15 +297,20 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
+    Coroutine coroutine;
     // Toogle camera first person to therd person
     public void SwitchCameraButton()
     {
         //Debug.Log("0");
+
         isFirstPerson = !isFirstPerson;
         gravityVector.y = 0;
 
         GamePlayUIHandler.inst.OnChangehighlightedFPSbutton(isFirstPerson);
+        if (coroutine != null)
+        {
+            StopCoroutine(coroutine);
+        }
         if (isFirstPerson)
         {
 
@@ -319,7 +324,7 @@ public class PlayerController : MonoBehaviour
             gyroButton_Portait.SetActive(true);
 
             firstPersonCameraObj.SetActive(true);
-            StartCoroutine(FadeImage(true));
+            coroutine = StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(firstPersonCameraObj.GetComponent<Camera>());
             //gameObject.transform.localScale = new Vector3(0, 1, 0);
             DisablePlayerOnFPS();
@@ -338,7 +343,7 @@ public class PlayerController : MonoBehaviour
 
             firstPersonCameraObj.tag = "FirstPersonCamera";
             firstPersonCameraObj.SetActive(false);
-            StartCoroutine(FadeImage(true));
+            coroutine = StartCoroutine(FadeImage(true));
             OnInvokeCameraChange(ReferencesForGamePlay.instance.randerCamera);
             //gameObject.transform.localScale = new Vector3(1, 1, 1);
             controllerCamera.SetActive(true);
@@ -562,7 +567,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("Move current:" + firstPersonCurrentSpeed + "    :Move:" + move);
                 PlayerIsWalking?.Invoke();
-                UpdateSefieBtn(false);
+                //  UpdateSefieBtn(false);
                 //if (Mathf.Abs(horizontal) > .5f || Mathf.Abs(vertical) > .5f)
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f))
                 {
@@ -602,8 +607,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            PlayerIsIdle?.Invoke();
-            UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                PlayerIsIdle?.Invoke();
+            //  UpdateSefieBtn(!LoadEmoteAnimations.animClick);
 
             characterController.Move(move * firstPersonCurrentSpeed * Time.deltaTime);
             velocity.y += gravity * Time.deltaTime;
@@ -1005,7 +1011,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("Move Current:" + currentSpeed + "    :DesiredMoveDirection:" + desiredMoveDirection);
                 PlayerIsWalking?.Invoke();
-                UpdateSefieBtn(false);
+                // UpdateSefieBtn(false);
                 if ((Mathf.Abs(horizontal) <= .85f || Mathf.Abs(vertical) <= .85f)) // walk
                 {
                     if (animator != null)
@@ -1061,10 +1067,14 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        else // Reseating animator to idel when joystick is not moving.
+        else // Reseating animator to idel when joystick is not moving-----
         {
-            PlayerIsIdle?.Invoke();
-            UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            if (_IsGrounded) // this check is added because not to enable bottom buttons early while the char is in jump state //
+            {
+                if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                    PlayerIsIdle?.Invoke();
+                //  UpdateSefieBtn(!LoadEmoteAnimations.animClick);
+            }
             //checking moving platform
             if (movedPosition.sqrMagnitude != 0 && ConstantsHolder.xanaConstants.isBuilderScene)
             {
@@ -1560,7 +1570,8 @@ public class PlayerController : MonoBehaviour
         }
         else // Reseating animator to idel when joystick is not moving.
         {
-            PlayerIsIdle?.Invoke();
+            if (!PlayerSelfieController.Instance.m_IsSelfieFeatureActive)
+                PlayerIsIdle?.Invoke();
             AnimationBehaviourNinjaMode();
             characterController.Move(desiredMoveDirection * currentSpeed * Time.deltaTime);
             gravityVector.y += gravityValue * Time.deltaTime;

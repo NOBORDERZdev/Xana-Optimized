@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using Newtonsoft.Json;
 using SimpleJSON;
+using XanaAi;
 
 public class HomeScoketHandler : MonoBehaviour
 {
@@ -17,6 +18,9 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<ReceivedFriendPostData> updateFriendPostDelegate;
     public Action<FeedLikeSocket> updateFeedLike;
+
+    public Action<FriendOnlineStatus> spaceJoinedFriendStatus;
+    public Action<FriendOnlineStatus> spaceExitFriendStatus;
     private void Awake()
     {
         instance = this;
@@ -49,7 +53,20 @@ public class HomeScoketHandler : MonoBehaviour
             Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
 
             ConnectSNSSockets();
-        
+            Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
+            Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
+    }
+    void FriendJoinedSpace(string msg)
+    {
+        FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        Debug.Log("Friens is Online " + data.isOnline);
+        spaceJoinedFriendStatus?.Invoke(data);
+    }
+    void FriendExitSpace(string msg)
+    {
+        FriendOnlineStatus data = JsonConvert.DeserializeObject<FriendOnlineStatus>(msg);
+        Debug.Log("Friens is Offline " + data.isOnline);
+        spaceExitFriendStatus?.Invoke(data);
     }
     void ReceivePost(string msg)
     {
@@ -140,7 +157,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void SnSUpate(string response) {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if (SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
@@ -150,7 +168,8 @@ public class HomeScoketHandler : MonoBehaviour
     void UpdateFollowerFollowing(string response)
     {
         userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
-        SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
+        if(SNS_APIController.Instance)
+            SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
     /// <summary>
@@ -159,10 +178,14 @@ public class HomeScoketHandler : MonoBehaviour
     /// <param name="response"></param>
     void AvatarUpdate(string response)
     {
-        snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
-         if (ConstantsHolder.xanaConstants.IsProfileVisit && snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID ){ 
+        if (ConstantsHolder.xanaConstants.IsProfileVisit)
+        {
+            snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
+            if ( snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
+            {
                 ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
-         }
+            }
+        }
     }
 
 
@@ -263,4 +286,14 @@ class HomeFriendAvatarData
     public string thumnmail;
     public string name;
     public SavingCharacterDataClass json;
+}
+public class FriendOnlineStatus
+{
+    public int userId;
+    public string name;
+    public string avatar;
+    public int worldId;
+    public string msg;
+    public RowList worldDetails;
+    public bool isOnline;
 }

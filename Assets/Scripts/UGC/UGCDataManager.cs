@@ -14,10 +14,85 @@ using UnityEngine.UI;
 
 public class UGCDataManager : MonoBehaviour
 {
-    public UGCUIManager ugcUIManager;
+    public UGCUIManager ugcUIManager;   
     void Start()
     {
 
+    }
+    public IEnumerator GetBgKey()
+    {
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
+        ugcUIManager.loadingTexture.SetActive(true);
+        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.UGCGetBackground))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("Response===" + data);
+                BgKey _info = JsonUtility.FromJson<BgKey>(data);
+                if (!_info.Equals("") || !_info.Equals(null))
+                {
+                    if (_info.data.isBackgroundApplied == "true")
+                    {
+                       StartCoroutine(DownloadBgAddressableTexture(_info.data.backgroundInfo));
+                        ugcUIManager.bgDefaultTextureKey = _info.data.backgroundInfo;
+                        ugcUIManager.currentKeyInfo = _info.data;
+                    }
+                    else
+                    {
+                        ugcUIManager.ApplyDefaultTexture();
+                        ugcUIManager.loadingTexture.SetActive(false);
+                    }
+                }
+                else
+                {
+                    ugcUIManager.ApplyDefaultTexture();
+                    ugcUIManager.loadingTexture.SetActive(false);
+                }
+            }
+        }
+    }
+    public IEnumerator PostBgKey(KeyInfo _keyInfo)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("backgroundInfo", _keyInfo.backgroundInfo);
+        form.AddField("isBackgroundApplied", _keyInfo.isBackgroundApplied);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.UGCAddBackground, form))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+            www.SendWebRequest();
+
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string data = www.downloadHandler.text;
+                ugcUIManager.bgDefaultTextureKey = _keyInfo.backgroundInfo;
+                Debug.Log("Successfully Post Data");
+            }
+        }
     }
     public IEnumerator DownloadBgAddressableTexture(string key)
     {
@@ -44,7 +119,7 @@ public class UGCDataManager : MonoBehaviour
             else if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
-                ugcUIManager.ApplyBgTexture(loadOp.Result as Texture, key);
+                ugcUIManager.ApplyBgTexture(loadOp.Result as Texture, key, "true");
                 ugcUIManager.loadingTexture.SetActive(false);
             }
         }
@@ -93,9 +168,10 @@ public class UGCDataManager : MonoBehaviour
                     //animObject.transform.localScale = Vector3.one;
                     //animObject.transform.localRotation = Quaternion.identity;
                     //animObject.transform.GetChild(1).gameObject.SetActive(false);
+                    BgTagsView temp = animObject.GetComponent<BgTagsView>();
                     animObject.name = _info.data.backgroundList[i].name;
-                    animObject.transform.GetChild(0).GetComponent<Image>().sprite = null;
-                    animObject.GetComponent<BgTagsView>().InitBg(_info.data.backgroundList[i]);
+                    temp.icon.sprite = null;
+                    temp.InitBg(_info.data.backgroundList[i]);
                     string url = _info.data.backgroundList[i].thumbnail;
                     if (url != "")
                     {
@@ -103,7 +179,7 @@ public class UGCDataManager : MonoBehaviour
                         {
                             if (success)
                             {
-                                AssetCache.Instance.LoadSpriteIntoImage(animObject.transform.GetChild(0).GetComponent<Image>(), url, changeAspectRatio: true);
+                                AssetCache.Instance.LoadSpriteIntoImage(temp.icon, url, changeAspectRatio: true);
                             }
                             else
                             {
@@ -111,8 +187,8 @@ public class UGCDataManager : MonoBehaviour
                             }
                         });
                     }
-                    animObject.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickSelectBackgroundButton(animObject, animObject.name));
-                    ugcUIManager.tagsObjects.Add(animObject);
+                    animObject.GetComponent<Button>().onClick.AddListener(() => ugcUIManager.OnClickSelectBackgroundButton(temp, animObject.name));
+                    ugcUIManager.tagsObjects.Add(temp);
 
                     // Get the category of the current background
                     string category = _info.data.backgroundList[i].category;
@@ -171,4 +247,17 @@ public class BackroundInfos
     public bool success;
     public BgData data;
     public string msg;
+}
+[System.Serializable]
+public class BgKey
+{
+    public bool success;
+    public KeyInfo data;
+    public string msg;
+}
+[System.Serializable]
+public class KeyInfo
+{
+    public string isBackgroundApplied;
+    public string backgroundInfo;
 }

@@ -20,21 +20,21 @@ public class UIHandler : MonoBehaviour
     //[Space(5)]
     //[Header("New World Layout References")]
     //public Transform SearchHomeHolder;
-    public Transform /*SearchWorldHolder,*/ 
-        SearchWorldScreenHolder,
+    public Transform /*SearchWorldHolder,*/
+        SearchWorldScreenHolder;
         //AvatarWindowHolder,
-        HomeWorldTabsHolder, 
+        
         //WorldWorldTabsHolder, 
-        WorldScrollerHolder/*,*/
+        /*,*/
         //LobbyTabHolder,
-        /*AdvanceSearchInputField*/;
+        /*AdvanceSearchInputField*/
 
     //public GameObject worldHolder;
     public GameObject searchWorldHolder;
 
 
     public bool isAvatarSelectionBtnClicked = false;
-
+    [SerializeField] Color postButtonColor;
     private void Awake()
     {
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
@@ -75,7 +75,7 @@ public class UIHandler : MonoBehaviour
             GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
             GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
             GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
-            GameManager.Instance.userAnimationPostFeature.postButtonText.color = Color.black;
+            GameManager.Instance.userAnimationPostFeature.postButtonText.color = postButtonColor;
         }
     }
     public void ResetPlayerToLastPostPosted()
@@ -114,7 +114,7 @@ public class UIHandler : MonoBehaviour
         else
         {
             StartCoroutine(IsSplashEnable(false, 0f));
-            StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
+            //StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
@@ -139,8 +139,6 @@ public class UIHandler : MonoBehaviour
         if(Loadinghandler_CanvasRef != null)
             Loadinghandler_CanvasRef.alpha = 1.0f;
         ShowFooter(!_state);
-        if(UserRegisterationManager.instance)
-        UserRegisterationManager.instance.ShowWelcomeScreenessintial();
         if (!_state)
         {
             SplashMemoryFree();
@@ -156,7 +154,6 @@ public class UIHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         Destroy(_SplashScreen);
-        Resources.UnloadUnusedAssets();
     }
 
 

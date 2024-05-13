@@ -5405,6 +5405,7 @@ GameObject:
   - component: {fileID: 7169874962019087732}
   - component: {fileID: 710343002764412631}
   - component: {fileID: 2426137225715645629}
+  - component: {fileID: 2401293168897870231}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Male
   m_TagString: PhotonLocalPlayer
@@ -6108,7 +6109,8 @@ MonoBehaviour:
   wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
-  wornEyebrow: []
+  wornEyebrow:
+  - {fileID: 4012293780636678229}
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   characterBodyParts: {fileID: 6365620064579044150}
   _PCharacterData:
@@ -6127,6 +6129,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -6482,6 +6485,26 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &2401293168897870231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6365620064579044144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345709dd5c5b4484280a3ba1f1b8eca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendHolder: {fileID: 8378100162615653196}
+  AllEyeBlendShapes: []
+  blinkingRate: 20
+  isEyeClose: 0
+  waitTime: 2
+  blinkingSpeed: 0.15
+  isBlinking: 1
+  isCoroutineRunning: 0
 --- !u!1 &6541641284438093609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9173,6 +9196,11 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &4012293780636678229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5862562281140520618, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
+  m_PrefabInstance: {fileID: 7418139670085091071}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7023433744545143060 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}

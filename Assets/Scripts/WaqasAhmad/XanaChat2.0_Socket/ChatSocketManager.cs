@@ -14,10 +14,9 @@ using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using UnityEngine.Networking;
 using System.Text;
 
-public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc };
+public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc};
 public class ChatSocketManager : MonoBehaviour
 {
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
@@ -63,6 +62,13 @@ public class ChatSocketManager : MonoBehaviour
 
     public static ChatSocketManager instance;
 
+
+    private bool isConnected = false;
+    private bool wasPaused = false;
+    private int retryInterval = 5; // Interval (in seconds) between retry attempts
+    private int maxRetries = 5;  // Maximum number of retries
+    private int currentRetry = 0;
+
     #region Summery
 
     // Join Room : socket.emit('joinRoom', { username, room });
@@ -87,47 +93,8 @@ public class ChatSocketManager : MonoBehaviour
     public static Action callApi;
     public Action<string> npcSendMsg;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-    void Start()
-    {
-        if (APIBasepointManager.instance.IsXanaLive)
-        {
-            address = socketMainnet;
-            fetchAllMsgApi = address + fetchApi;
-            setGuestNameApi = apiGusetNameMainnet;
-        }
-        else
-        {
-            address = socketTestnet;
-            fetchAllMsgApi = address + fetchApi;
-            setGuestNameApi = apiGusetNameTestnet;
-        }
+    #region MonoBehaviour functions
 
-        if (!address.EndsWith("/"))
-            address = address + "/";
-
-        // Default Method
-        Manager = new SocketManager(new Uri((address)));
-        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
-
-
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            eventId = XanaEventDetails.eventDetails.id;
-        }
-
-
-        // Custom Method
-        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
-
-        if (ConstantsHolder.xanaConstants.EnviornmentName != "THA_Meeting_Room")
-            StartCoroutine(FetchOldMessages());
-    }
     private void OnEnable()
     {
         onJoinRoom += UserJoinRoom;
@@ -145,26 +112,92 @@ public class ChatSocketManager : MonoBehaviour
     }
 
 
+    private void Awake()
+    {
+        instance = this;
+    }
+    private void Start()
+    {
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            address = socketMainnet;
+            fetchAllMsgApi = address + fetchApi;
+            setGuestNameApi = apiGusetNameMainnet;
+        }
+        else
+        {
+            address = socketTestnet;
+            fetchAllMsgApi = address + fetchApi;
+            setGuestNameApi = apiGusetNameTestnet;
+        }
+
+        if (!address.EndsWith("/"))
+            address = address + "/";
+
+
+        InitializeSocket();
+        StartCoroutine(RetryConnection());
+
+        // Default Method
+
+    }
+
+    #endregion
+
     #region Socket Calls Handling
+
+    void InitializeSocket()
+    {
+        Manager = new SocketManager(new Uri((address)));
+        Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            eventId = XanaEventDetails.eventDetails.id;
+        }
+        // Custom Method
+        Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
+        StartCoroutine(FetchOldMessages());
+    }
+
+    IEnumerator RetryConnection()
+    {
+        while (!isConnected && currentRetry < maxRetries)
+        {
+            Debug.Log($"Attempting to connect, try {currentRetry + 1}/{maxRetries}...");
+
+            // Re-initialize the socket manager to reconnect
+            Manager.Socket.Off(); // Remove existing event handlers to avoid duplicates
+            InitializeSocket();
+
+            yield return new WaitForSeconds(retryInterval);
+
+            currentRetry++;
+        }
+
+        if (isConnected)
+        {
+            Debug.Log("Successfully connected after retries.");
+        }
+        else
+        {
+            Debug.LogError($"Failed to connect after {maxRetries} attempts.");
+        }
+    }
 
     void OnConnected(ConnectResponse resp)
     {
+
+        Debug.Log("Socket Connected");
+        isConnected = true;
+        currentRetry = 0; // Reset retry count on successful connection
+
         socketId = resp.sid;
-        //Debug.Log("<color=blue> XanaChat -- SocketConnected : " + resp.sid + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Connected", "Yes");
-
-        //socket.Off("event", listener);
-        //Manager.Socket.Off();
-
-
-
         // is it reconnected or First time
         if (isJoinRoom)
         {
-            // Socket ID Update After Reconnect 
-            // Need To Emit joinRoom again with new Socket Id
-
-            onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
+            onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID); //Socket ID Update After Reconnect Need To Emit joinRoom again with new Socket Id
         }
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
@@ -172,8 +205,8 @@ public class ChatSocketManager : MonoBehaviour
     }
     void OnError(CustomError args)
     {
-        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        Debug.LogError("Socket Error: " + args.message);
+        isConnected = false;
     }
     void Onresult(CustomError args)
     {
@@ -181,8 +214,33 @@ public class ChatSocketManager : MonoBehaviour
     }
     void OnSocketDisconnect(CustomError args)
     {
-        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-        //XanaChatSystem.instance.DisplayErrorMsg_FromSocket("Xana Chat Reconnecting", "Error");
+        Debug.Log("Socket Disconnected: " + args.message);
+        isConnected = false;
+    }
+
+    void OnApplicationPause(bool pauseStatus)
+    {
+        // If the application was paused, mark it for reconnection when it resumes
+        if (pauseStatus)
+        {
+            wasPaused = true;
+            Debug.Log("App is paused, preparing to reconnect.");
+        }
+        else
+        {
+            if (wasPaused)
+            {
+                Debug.Log("App has resumed, attempting reconnection.");
+
+                // Attempt reconnection when resuming
+                if (!isConnected)
+                {
+                    StartCoroutine(RetryConnection());
+                }
+
+                wasPaused = false;
+            }
+        }
     }
 
 
@@ -223,7 +281,7 @@ public class ChatSocketManager : MonoBehaviour
         if (!npcId.IsNullOrEmpty())
             userId = "npc-" + npcId;
 
-        if (callBy.Equals(CallBy.NpcToNpc))
+        if(callBy.Equals(CallBy.NpcToNpc))
             npcSendMsg.Invoke(msg);
 
         // //Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
@@ -273,10 +331,6 @@ public class ChatSocketManager : MonoBehaviour
     //To fetch Old Messages from a server against any world
     public void CallApiForMessages()
     {
-        //Debug.Log("Calling API");
-        //StartCoroutine(FetchOldMessages());
-
-
         DisplayOldChat(oldChatResponse);
     }
     IEnumerator FetchOldMessages()
@@ -318,25 +372,6 @@ public class ChatSocketManager : MonoBehaviour
     }
     void DisplayOldChat(string OldChat)
     {
-        //if(!string.IsNullOrEmpty(OldChat))
-
-        //OldChatOutPut myChat = JsonUtility.FromJson<OldChatOutPut>(OldChat);
-        ////JsonUtility.FromJson<S3NftDetail>(jsonData);
-        //if (myChat.count > 0)
-        //{
-        //    string tempUserName = "";
-        //    for (int i = myChat.data.Count - 1; i > -1; i--)
-        //    {
-        //        if (string.IsNullOrEmpty(myChat.data[i].username))
-        //            tempUserName = "Xana";
-        //        else
-        //            tempUserName = myChat.data[i].username;
-
-        //        XanaChatSystem.instance.DisplayMsg_FromSocket(tempUserName, myChat.data[i].message);
-        //    }
-        //}
-
-
         RootData rootData = JsonUtility.FromJson<RootData>(OldChat);
         if (rootData.count > 0)
         {
@@ -356,8 +391,6 @@ public class ChatSocketManager : MonoBehaviour
                 XanaChatSystem.instance.DisplayMsg_FromSocket(tempUser, rootData.data[i].message);
             }
         }
-
-
     }
 
     private IEnumerator SubmitGuestUserNameWithJson()
@@ -370,14 +403,8 @@ public class ChatSocketManager : MonoBehaviour
             tempUserName = XanaChatSystem.instance.UserName;
         }
 
-
-
         ApiParameter requestData = new ApiParameter { username = tempUserName, deviceId = tempDeviceID, socketId = socketId };
         string jsonData = JsonUtility.ToJson(requestData);
-
-
-        // //Debug.LogError("<color=red> XanaChat -- UserNameData : " + socketId + "  :  " + tempDeviceID + "  :  " + tempUserName + "</color>");
-        // //Debug.LogError("<color=red> XanaChat -- UserNameAPI : " + setGuestNameApi + "</color>");
 
         // Create a UnityWebRequest for the POST request
         using (UnityWebRequest request = new UnityWebRequest(setGuestNameApi, "POST"))
@@ -388,17 +415,6 @@ public class ChatSocketManager : MonoBehaviour
             request.SetRequestHeader("Content-Type", "application/json");
 
             yield return request.SendWebRequest();
-
-            //if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
-            //{
-            //    //Debug.LogError("Error: " + request.error);
-            //}
-            //else
-            //{
-            //    // Request was successful
-            //    //Debug.LogError("Request Successful");
-            //    //Debug.LogError("Response: " + request.downloadHandler.text);
-            //}
         }
     }
 }

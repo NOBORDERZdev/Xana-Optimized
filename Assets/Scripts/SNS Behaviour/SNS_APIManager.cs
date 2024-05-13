@@ -474,16 +474,16 @@ public class SNS_APIManager : MonoBehaviour
     public IEnumerator IERequestGetSearchUser(string name)
     {
         WWWForm form = new WWWForm();
-        if (!name.All(char.IsDigit)) // is seraching with name
+        //if (!name.All(char.IsDigit)) // is seraching with name
         {
             form.AddField("name", name);
-            form.AddField("userId", 0);
+            form.AddField("userId", 0);  //disables search with userid because user can't check their id.
         }
-        else // is searching with number
-        {
-            form.AddField("name", "");
-            form.AddField("userId", name);
-        }
+        //else // is searching with number
+        //{
+        //    form.AddField("name", "");
+        //    form.AddField("userId", name);
+        //}
 
 
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_SearchUser + "1/50";
@@ -518,7 +518,14 @@ public class SNS_APIManager : MonoBehaviour
             _feedUserData.SetupFeedUserProfile(result);
         }));
     }
-
+    public void GetHomeFriendProfileData<T>(int _userid, T obj) where T : class
+    {
+        StartCoroutine(IERequestFeedUserProfileData(_userid, result =>
+        {
+            CheckOnlineFriend checkOnlineFriend = obj as CheckOnlineFriend;
+            checkOnlineFriend.SetupHomeFriendProfile(result);
+        }));
+    }
     IEnumerator IERequestFeedUserProfileData(int _userid, Action<SearchUserRow> result)
     {
         WWWForm form = new WWWForm();

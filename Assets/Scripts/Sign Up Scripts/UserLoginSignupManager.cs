@@ -68,9 +68,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public Web3Web2Handler _web3APIforWeb2;
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
-    public Action logoutAction;
+
     public static UserLoginSignupManager instance;
-    
+    EyesBlinking ref_EyesBlinking;
 
     private void OnEnable()
     {
@@ -83,10 +83,13 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        if (EyesBlinking.instance != null)
+        if (ref_EyesBlinking == null)
+            ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
+
+        if (ref_EyesBlinking)
         {
-            EyesBlinking.instance.StoreBlendShapeValues();
-            StartCoroutine(EyesBlinking.instance.BlinkingStartRoutine());
+            ref_EyesBlinking.StoreBlendShapeValues();
+            StartCoroutine(ref_EyesBlinking.BlinkingStartRoutine());
         }
     }
 
@@ -103,6 +106,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.loggedIn)
         {
             Debug.Log("Already Login Dont Call API");
+            InventoryManager.instance.SetDefaultValues();
             return;
         }
         Debug.Log("Auto Login");
@@ -267,7 +271,7 @@ public class UserLoginSignupManager : MonoBehaviour
     IEnumerator WaitForDeepLink()
     {
         yield return new WaitForSeconds(2);
-        DynamicEventManager.deepLink?.Invoke("moralis wait and come");
+       // DynamicEventManager.deepLink?.Invoke("moralis wait and come");
     }
 
     IEnumerator WalletLoggedInAccessGroup(bool loadData = false)
@@ -434,6 +438,10 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+        }
+        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
+        {
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         }
     }
 
@@ -883,7 +891,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         ConstantsHolder.isWalletLogin = false;
                         OpenUIPanel(16);
                         DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
-                        DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
+                       // DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
                         MainSceneEventHandler.OnSucessFullLogin?.Invoke();
                         CallBack(true);
                     }
@@ -1058,7 +1066,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 CheckCameraMan(myObject1.data.user.email);
                 OpenUIPanel(21);
 
-                DynamicEventManager.deepLink?.Invoke("Login user here");
+                //DynamicEventManager.deepLink?.Invoke("Login user here");
                 MainSceneEventHandler.OnSucessFullLogin?.Invoke();
 
                 
@@ -1464,14 +1472,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
+        
         Debug.Log("Logout Successfully");
-        logoutAction?.Invoke();
-
-        if (_web3APIforWeb2._OwnedNFTDataObj != null)
-        {
-            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        }
-
+        
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleScriptScriptableObj.userNftRoleSlist.Clear();
@@ -1499,6 +1502,9 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
         Web3AuthCustom.Instance.logout();
+        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy) { 
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        }
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
@@ -1518,6 +1524,11 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
         UserLoginSignupManager.instance.ShowWelcomeScreen();
+        if (_web3APIforWeb2._OwnedNFTDataObj != null)
+        {
+            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        }
+
         yield return null;
     }
 

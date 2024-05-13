@@ -25,6 +25,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
     public bool LoginasGustprofile = false; // for gust profile
+    public bool isFirstPanel = false; // User has Not data Open First Panel
     public string NFTUrl;
     public string clothJson;
     public string defaultFightingName;
@@ -35,10 +36,8 @@ public class ConstantsHolder : MonoBehaviour
     public bool profileImageModifedByUser = false;
     public string userProfileLink;
     public string CurrentSceneName;
-    public bool returnedFromGamePlay = false;
     public string EnviornmentName;
     public string userLimit;
-    public AssetBundle museumAssetLoaded;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
@@ -92,6 +91,9 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    // Is in Store
+    public bool isStoreActive = false;
+
     // For Analatics 
     public int worldIdFromApi;
     public string playerSocketID;
@@ -120,6 +122,7 @@ public class ConstantsHolder : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
+    public bool isFromHomeTab = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;

@@ -51,8 +51,8 @@ public class XanaEventDetails
     public string museumName;
     public string environmentName;
     public string userLimit;
-  }
-  
+}
+
 
 [System.Serializable]
 public class EventUserRoles
@@ -64,14 +64,12 @@ public class EventUserRoles
     public string createdAt;
     public string updatedAt;
 }
-    
+
 [System.Serializable]
 public class Environment2
 {
     public int id;
     public string name;
-
-
 }
 [System.Serializable]
 public class EventDataDetails
@@ -79,4 +77,18 @@ public class EventDataDetails
     public bool success;
     public XanaEventDetails data;
     public string msg;
- }   
+}
+[System.Serializable]
+public class EnvironmentDetails
+{
+    public bool success;
+    public XanaEnvironmentDetails data;
+    public string msg;
+}
+[System.Serializable]
+public class XanaEnvironmentDetails
+{
+    public string name;
+    public int user_limit;
+    public string entityType;
+}
