@@ -45,6 +45,8 @@ public class AvatarSelfie : MonoBehaviour
         //{
         //    //print("Horayyy you have Access");
         //}
+
+        m_CharacterAnimator = GameManager.Instance.m_CharacterAnimator;
         lastAnimatorState = m_CharacterAnimator.GetBool("Idle");
         m_CharacterAnimator.SetBool("Idle", true);
         m_CharacterAnimator.transform.eulerAngles = new Vector3(0, 180, 0);

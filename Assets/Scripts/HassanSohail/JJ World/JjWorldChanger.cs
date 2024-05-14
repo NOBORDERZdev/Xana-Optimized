@@ -82,6 +82,7 @@ public class JjWorldChanger : MonoBehaviour
                     {// for customer
                         NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
                         triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+                        NFT_Holder_Manager.instance.pushNotificationSender.SendNotification();
                     }
                     else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                     { // for interviewer

@@ -3206,6 +3206,7 @@ GameObject:
   - component: {fileID: 1518207911166972683}
   - component: {fileID: 6361991311103265947}
   - component: {fileID: 8787714129647578255}
+  - component: {fileID: 6246501003241866856}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Female
   m_TagString: PhotonLocalPlayer
@@ -3306,7 +3307,7 @@ MonoBehaviour:
   Lips: {fileID: 0}
   PelvisBone: {fileID: 0}
   ForeHead: {fileID: 0}
-  headAll: {fileID: 0}
+  headAll: {fileID: 3991031163302025358}
   scaleEyeX: 0
   EyeScaleY: 0
   MouthX: 0
@@ -3320,22 +3321,7 @@ MonoBehaviour:
   JBoneY: 0
   JBoneZ: 0
   Lipscalex: 0
-  _scaleBodyParts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  _scaleBodyParts: []
   skinColor:
   - {r: 1, g: 0.9764706, b: 0.9647059, a: 1}
   - {r: 1, g: 0.95686275, b: 0.9372549, a: 1}
@@ -3476,7 +3462,12 @@ MonoBehaviour:
   eyeBrowsColor: []
   eyeColor: []
   lipColorPalette: []
-  BonesData: []
+  BonesData:
+  - Name: Head
+    Obj: {fileID: 3991031163302025358}
+    Pos: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0}
+    Scale: {x: 0, y: 0, z: 0}
   defaultSssValue: 2.52
   PresetGredientColor: {r: 0.42352942, g: 0.39215687, b: 0.39215687, a: 1}
   defaultMakeup: {fileID: 2800000, guid: debcfd3efb58eac47a3661c64709eeca, type: 3}
@@ -3909,7 +3900,8 @@ MonoBehaviour:
   wornEyeWearable: {fileID: 0}
   wornGloves: {fileID: 0}
   wornChain: {fileID: 0}
-  wornEyebrow: []
+  wornEyebrow:
+  - {fileID: 5403557395799614798}
   _nftAvatarColorCodes: {fileID: 11400000, guid: 45b9e752138e53c4483e32294a22139e, type: 2}
   characterBodyParts: {fileID: 7697161651219652191}
   _PCharacterData:
@@ -3928,6 +3920,7 @@ MonoBehaviour:
     noseItemData: 0
     hairItemData: 
     eyeItemData: 
+    eyeShapeItemData: 0
     charactertypeAi: 0
     SavedBones: []
     SkinId: 0
@@ -4283,6 +4276,26 @@ CapsuleCollider:
   m_Height: 1.25
   m_Direction: 1
   m_Center: {x: 0, y: 0.8, z: 0}
+--- !u!114 &6246501003241866856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290326269450676071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 345709dd5c5b4484280a3ba1f1b8eca6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blendHolder: {fileID: 6483856165262445224}
+  AllEyeBlendShapes: []
+  blinkingRate: 20
+  isEyeClose: 0
+  waitTime: 2
+  blinkingSpeed: 0.15
+  isBlinking: 1
+  isCoroutineRunning: 0
 --- !u!1 &3356888367223522174
 GameObject:
   m_ObjectHideFlags: 0
@@ -9178,9 +9191,19 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -1824824446595371411, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &3991031163302025358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5692292108060305354, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+  m_PrefabInstance: {fileID: 8763415751287652164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!137 &5212556724569025453 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -5635321960573266711, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
+  m_PrefabInstance: {fileID: 8763415751287652164}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5403557395799614798 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3702137991796496906, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
 --- !u!137 &6483856165262445224 stripped

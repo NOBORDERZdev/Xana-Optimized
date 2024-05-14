@@ -64,9 +64,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "15";   // 12
-
-        public Action playerJoined;
+        string gameVersion = "13";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -361,8 +359,6 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            playerJoined?.Invoke();
-            Debug.LogError("New Player join room:::0");
             if (newPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;

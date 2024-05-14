@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 using System.Security.Principal;
 using static WalletLogin;
 using static System.Net.WebRequestMethods;
-
+using UnityEngine.UI;
 
 public class Web3AuthCustom : Singleton<Web3AuthCustom>
 {
@@ -34,7 +34,9 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     internal string Email;
     bool isNewReg;
     internal string publicAdress;
-    internal string msg1 ,msg2;
+    internal string msg1 ,msg2,currentLan;
+    public List<Button> myButtons;
+    public float cooldownTime;
 
     public Action<string> onLoginAction;
 
@@ -69,8 +71,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             loginSubVerifierEmail = "ppp-passwordless-login";
             loginSubVerifierGoole= "ppp-google-login";
             loginSubVerifierApple = "ppp-apple-login";
-           // loginSubVerifierLine = "ppp-line-login";
-            //...
             clientIdEmail = "kV31v4CokK8xEHgNcHki1nAVDCh3Friu";
             clientIdGoole = "792163717588-h9t0is3ng39opqmt1meflma087ov18k3.apps.googleusercontent.com";
             clientIdApple = "QRQW2fY3167OZTzreWBqHTBQU7gGXUD0";
@@ -102,14 +102,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
             clientId = clientIdApple,
             typeOfLogin = TypeOfLogin.APPLE,
         };
-        //var LineConfigItem = new LoginConfigItem()
-        //{
-        //    verifier = loginVerifier,
-        //    verifierSubIdentifier = loginSubVerifierLine,
-        //    clientId = clientIdLine,
-        //    typeOfLogin = TypeOfLogin.LINE,
-        //};
-
 
         web3Auth.setOptions(new Web3AuthOptions()
         {
@@ -127,12 +119,12 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                  { "google", GoogleConfig },
                 { "jwt", EmailPasswordlessConfigItem },
                 { "apple", AppleConfigItem },
-               // { "line" , LineConfigItem }
             }
         });
         web3Auth.onLogin += onLogin;
         web3Auth.onLogout += onLogout;
         updateConsole("Ready to Login!");
+        detectsystemLanguage();
     }
 
     public void PasswordLessEmailLogin(bool isnewreg)
@@ -141,17 +133,23 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         isNewReg = isnewreg;
         var options = new LoginParams()
         {
-            loginProvider = selectedProvider,
             mfaLevel = MFALevel.NONE,
+            loginProvider = selectedProvider,
+            
             extraLoginOptions = new ExtraLoginOptions()
             {
                 domain = domains,
                 verifierIdField = "email",
                 isVerifierIdCaseSensitive = false,
+                ui_locales=currentLan,
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
@@ -164,11 +162,16 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
 
         var options = new LoginParams()
         {
-            loginProvider = selectedProvider,
             mfaLevel = MFALevel.NONE,
+            loginProvider = selectedProvider,
+           
 
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
@@ -190,35 +193,27 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
                 prompt = Prompt.LOGIN,
             }
         };
-
+        foreach (Button button in myButtons)
+        {
+            button.interactable = false;
+            StartCoroutine(EnableButtonAfterCooldown());
+        }
 
         web3Auth.login(options);
     }
 
-    //public void LineLogin(bool isnewreg)
-    //{
-    //    var selectedProvider = Provider.LINE;
-    //    isNewReg = isnewreg;
-    //    var options = new LoginParams()
-    //    {
-    //        loginProvider = selectedProvider,
-    //        extraLoginOptions = new ExtraLoginOptions()
-    //        {
-    //            domain = domainsLine,
-    //            verifierIdField = "email",
-    //            isVerifierIdCaseSensitive = false,
-    //            connection = "line",
-    //           prompt = Prompt.LOGIN,
-    //        }
-    //    };
-
-
-    //    web3Auth.login(options);
-    //}
-
     private void onLogin(Web3AuthResponse response)
     {
-        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+#if UNITY_IOS
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 1)
+            PlayerPrefs.SetInt("FirstTimeappOpen", 1);
+
+        if (PlayerPrefs.GetInt("PlayerLoginFlag") == 0)
+            return;
+
+#endif
+            Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;
         Email = userInfo.email;
@@ -232,7 +227,6 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Web3AuthSociallogin type = Web3AuthSociallogin.None;
         try
         {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             if (isNewReg)
             {
                 type = Web3AuthSociallogin.NewRegistration;
@@ -294,7 +288,14 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         Debug.Log("Logged out!");
         updateConsole("Logged out!");
     }
-
+    IEnumerator EnableButtonAfterCooldown()
+    {
+        yield return new WaitForSeconds(cooldownTime); // Wait for 10 seconds
+        foreach (Button button in myButtons)
+        {
+            button.interactable = true;
+        } // Re-enable button interaction
+    }
     string GetSignature()
     {
         // get current timestamp
@@ -318,6 +319,19 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     {
         console = $"{console}\n{message}";
     }
+    public void detectsystemLanguage() {
+        string newLanguage = Application.systemLanguage.ToString();
+        if (newLanguage == "English")
+        {
+            currentLan= "en";
+        }
+        else if (newLanguage == "Japanese")
+        {
+            currentLan= "ja";
+        }
+
+    }
+   
     public enum Web3AuthSociallogin
     {
         None,
