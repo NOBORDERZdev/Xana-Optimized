@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.Android;
 using System.Collections;
-
+using TMPro;
 
 public class FB_Notification_Initilizer : MonoBehaviour
 {
@@ -21,6 +21,13 @@ public class FB_Notification_Initilizer : MonoBehaviour
     [Tooltip("Action invoke when device token received for push notification")]
     public Action<string> onReceiveToken;
     public static FB_Notification_Initilizer Instance;
+
+    [SerializeField]
+    private GameObject notificationTray;
+    [SerializeField]
+    private TextMeshProUGUI titleTxt;
+    [SerializeField]
+    private TextMeshProUGUI bodyTxt;
 
     [SerializeField]
     private bool isFirebaseInitialized = false;
@@ -148,8 +155,12 @@ public class FB_Notification_Initilizer : MonoBehaviour
         var notification = e.Message.Notification;
         if (notification != null)
         {
-            Debug.Log("title: " + notification.Title);
-            Debug.Log("body: " + notification.Body);
+            notificationTray.SetActive(true);
+            titleTxt.text = "";
+            titleTxt.text = notification.Title;
+            bodyTxt.text = "";
+            bodyTxt.text = notification.Body;
+
             var android = notification.Android;
             if (android != null)
             {

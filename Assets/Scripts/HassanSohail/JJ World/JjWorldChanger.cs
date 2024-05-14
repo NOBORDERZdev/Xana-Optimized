@@ -73,7 +73,6 @@ public class JjWorldChanger : MonoBehaviour
         {
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
-                this.StartCoroutine(swtichScene(WorldName));
 
                 // For toyota bussiness meeting world only
                 if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
@@ -90,6 +89,8 @@ public class JjWorldChanger : MonoBehaviour
                         triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
                     }
                 }
+
+                this.StartCoroutine(swtichScene(WorldName));
             }
         }
     }
