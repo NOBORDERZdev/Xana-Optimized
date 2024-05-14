@@ -83,6 +83,8 @@ public class ProfileUIHandler : MonoBehaviour
                 avatarRef = femaleAvatarRef.gameObject;
             }
         }
+
+        MyProfileDataManager.Instance.UpdateBackButtonOnClickListener();
     }
 
     private void OnDisable()
