@@ -345,9 +345,9 @@ MonoBehaviour:
   frictionAgainstFloor: 0.189
   frictionAgainstWall: 0.082
   canLongJump: 1
-  groundCheckerThrashold: 0.1
-  slopeCheckerThrashold: 0.51
-  stepCheckerThrashold: 0.6
+  groundCheckerThrashold: 0.001
+  slopeCheckerThrashold: 0.15
+  stepCheckerThrashold: 0.07
   maxClimbableSlopeAngle: 53.6
   maxStepHeight: 0.74
   speedMultiplierOnAngle:
@@ -381,8 +381,8 @@ MonoBehaviour:
   gravityMultiplyerOnSlideChange: 2
   gravityMultiplierIfUnclimbableSlope: 30
   lockOnSlope: 1
-  wallCheckerThrashold: 0.8
-  hightWallCheckerChecker: 0.5
+  wallCheckerThrashold: 0.15
+  hightWallCheckerChecker: 0.07
   jumpFromWallMultiplier: 31
   multiplierVerticalLeap: 1
   sprintSpeed: 20
