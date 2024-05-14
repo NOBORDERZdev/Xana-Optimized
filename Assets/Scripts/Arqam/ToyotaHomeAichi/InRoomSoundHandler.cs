@@ -2,6 +2,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 using System.Collections;
+using Photon.Realtime;
+using System.Text;
+using UnityEngine.Networking;
+using System.Collections.Generic;
+using System;
+using Newtonsoft.Json;
 
 public class InRoomSoundHandler : MonoBehaviour
 {
@@ -11,7 +17,8 @@ public class InRoomSoundHandler : MonoBehaviour
     [SerializeField] string roomName = "";
     public static UnityAction<bool, string> playerInRoom;
     public static UnityAction<bool> soundAction;
-
+    int RoomId = 4;
+    public int playerCount;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
@@ -22,7 +29,7 @@ public class InRoomSoundHandler : MonoBehaviour
                 soundAction?.Invoke(true);
             if (roomName == "Home" && triggerType.Equals(TriggerType.RoomTrigger))
             {
-                Invoke("TextUpdate", 0.1f);
+                TextUpdate();
             }
         }
 
@@ -36,6 +43,10 @@ public class InRoomSoundHandler : MonoBehaviour
                 playerInRoom?.Invoke(false, roomName);
             else if (triggerType.Equals(TriggerType.SoundTrigger))
                 soundAction?.Invoke(false);
+            if (roomName == "Home" && triggerType.Equals(TriggerType.RoomTrigger))
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
+            }
         }
     }
     void TextUpdate()
@@ -56,5 +67,6 @@ public class InRoomSoundHandler : MonoBehaviour
             Debug.Log("House Full");
         }
     }
+
 
 }

@@ -8,15 +8,17 @@ using Newtonsoft.Json;
 using EnhancedUI;
 using static RegisterAsCompanyEmails;
 using System.Text;
+using BestHTTP.JSON.LitJson;
+using System.Security.Policy;
 
 public class MeetingRoomPlayerCount : MonoBehaviour
 {
     bool isCompanyMember = false;
     int RoomId = 4;
+
     void OnEnable()
     {
         StartCoroutine(MeetingRoomJoin());
-        CheckUsersCount();
     }
     void OnDisable()
     {
@@ -24,13 +26,39 @@ public class MeetingRoomPlayerCount : MonoBehaviour
     }
     IEnumerator MeetingRoomJoin()
     {
+
+        //MyTestingClass myTestingClass = new MyTestingClass();// (RoomId, FB_Notification_Initilizer.Instance.toyotaUserEmail,false);
+        //myTestingClass.worldId = RoomId;
+        //myTestingClass.email = FB_Notification_Initilizer.Instance.toyotaUserEmail;
+        //myTestingClass.isCompanyMember = isCompanyMember;
+
+        //string json = JsonConvert.SerializeObject(myTestingClass);
+        //using (UnityWebRequest request = new UnityWebRequest(ConstantsGod.API_BASEURL + ConstantsGod.joinmeetingroom, "POST"))
+        //{
+        //    byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
+        //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+        //    request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        //    request.SetRequestHeader("Content-Type", "application/json");
+
+        //    yield return request.SendWebRequest();
+
+        //    if (request.isNetworkError || request.isHttpError)
+        //    {
+        //        Debug.LogError("Error: " + request.error);
+        //    }
+        //    else
+        //    {
+        //        Debug.Log("Response: " + request.downloadHandler.text);
+        //    }
+        //}
+
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
         form.AddField("worldId", RoomId);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
-        form.AddField("isCompanyMember", isCompanyMember.ToString());
+        form.AddField("isCompanyMember", isCompanyMember ? "1" : "0");
         UnityWebRequest www;
-        www = UnityWebRequest.Post(ConstantsGod.BASE_URL + ConstantsGod.joinmeetingroom, form);
+        www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.joinmeetingroom, form);
         www.SetRequestHeader("Authorization", token);
         www.SendWebRequest();
         while (!www.isDone)
@@ -40,7 +68,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         string str = www.downloadHandler.text;
         if (!www.isHttpError && !www.isNetworkError)
         {
-            Debug.Log("Meeting Room Player Count is : " + www.downloadHandler.text.ToString());
+            Debug.Log("Meeting Room Player  on join : " + www.downloadHandler.text);
         }
         else
         {
@@ -55,7 +83,7 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         form.AddField("worldId", RoomId);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
         UnityWebRequest www;
-        www = UnityWebRequest.Post(ConstantsGod.BASE_URL + ConstantsGod.leavemeetingroom, form);
+        www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.leavemeetingroom, form);
         www.SetRequestHeader("Authorization", token);
         www.SendWebRequest();
         while (!www.isDone)
@@ -68,29 +96,22 @@ public class MeetingRoomPlayerCount : MonoBehaviour
         }
         else
         {
-            Debug.Log("Meeting Room Player Count is : " + www.downloadHandler.text.ToString());
+            Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
         }
     }
-    async void CheckUsersCount()
-    {
-        StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + 4);
-        Debug.Log("API URL is : " + ApiURL.ToString());
-        using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
-        {
-            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            await request.SendWebRequest();
-            if (request.isNetworkError || request.isHttpError)
-            {
-                Debug.Log("Error is" + request.error);
-            }
-            else
-            {
-                StringBuilder data = new StringBuilder();
-                data.Append(request.downloadHandler.text);
-                Debug.Log("Meeting Room Player Count is : " + data.ToString());
-            }
-        }
-    }
+}
+
+public class MyTestingClass
+{
+    public int worldId;
+    public string email;
+    public bool isCompanyMember;
+
+    //MyTestingClass(string abc, string xyz, bool klm)
+    //{
+    //    worldId = abc;
+    //    email = xyz;
+    //    isCompanyMember = klm;
+    //}
 }
 
