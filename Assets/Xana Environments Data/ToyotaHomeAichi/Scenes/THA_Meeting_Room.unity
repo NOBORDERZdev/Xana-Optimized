@@ -2229,7 +2229,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1771786941}
   - component: {fileID: 1771786940}
-  - component: {fileID: 1771786942}
   m_Layer: 0
   m_Name: ThaMeetingController
   m_TagString: Untagged
@@ -2249,6 +2248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2923002cecd4ce440927582c37be8305, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  roomID: 4
 --- !u!4 &1771786941
 Transform:
   m_ObjectHideFlags: 0
@@ -2264,18 +2264,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1771786942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1771786939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c0ac9e2d5dca44d9e4b000571f9447, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1776208277
 PrefabInstance:
   m_ObjectHideFlags: 0
