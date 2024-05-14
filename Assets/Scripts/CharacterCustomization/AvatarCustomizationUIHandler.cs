@@ -217,7 +217,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
         SetCameraPosForFaceCustomization.instance.ChangeCameraToProspective();
         // SaveCharacterProperties.instance.AssignCustomSlidersData();
 
-        InventoryManager.instance.saveStoreBtnButton.onClick.Invoke();
+        InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().onClick.Invoke();
         Debug.Log("<color=red>CustomizationManager AssignLastClickedBtnHere</color>");
         ConstantsHolder.xanaConstants._lastClickedBtn = gameObject;
         //  SaveCharacterProperties.instance.AssignCustomsliderNewData();

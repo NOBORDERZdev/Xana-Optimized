@@ -265,6 +265,8 @@ public class XanaChatSystem : MonoBehaviour
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
+            this.InputFieldChat.text = "";
+            removeBadWords = "";
             return;
         }
         else

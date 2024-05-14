@@ -72,7 +72,6 @@ public class UGCUIManager : MonoBehaviour
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
         UGCCharacter = CharacterHandler.instance.GetActiveAvatarData().avatar_parent.GetComponent<AvatarController>();
 
-        ConstantsHolder.xanaConstants.returnedFromGamePlay = true;
         DisableLoadingPanel();
         isPhoto = false;
         isVideo = true;

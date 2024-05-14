@@ -36,7 +36,6 @@ public class ConstantsHolder : MonoBehaviour
     public bool profileImageModifedByUser = false;
     public string userProfileLink;
     public string CurrentSceneName;
-    public bool returnedFromGamePlay = false;
     public string EnviornmentName;
     public string userLimit;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";

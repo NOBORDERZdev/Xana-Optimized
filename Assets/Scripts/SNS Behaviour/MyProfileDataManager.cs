@@ -60,7 +60,7 @@ public class MyProfileDataManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI totalFollowingText;
     [Space]
     [SerializeField] TextMeshProUGUI playerNameText;
-    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI displayName;
     [SerializeField] TextMeshProUGUI textUserBio;
     [SerializeField] GameObject _alignment_space; // use this b/w bio and Tags in Profile Screen
     [SerializeField] TextMeshProUGUI websiteText;
@@ -211,8 +211,8 @@ public class MyProfileDataManager : MonoBehaviour
     public void ClearDummyData()
     {
         playerNameText.text = "";
-        jobText.text = "";
-        jobText.gameObject.SetActive(false);
+        displayName.text = "";
+       // jobText.gameObject.SetActive(false);
         textUserBio.text = "";
         websiteText.text = "";
         _alignment_space.SetActive(false);
@@ -319,6 +319,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
+        displayName.text = myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -328,7 +329,7 @@ public class MyProfileDataManager : MonoBehaviour
         websiteText.gameObject.SetActive(false);
         if (myProfileData.userProfile != null)
         {
-            jobText.gameObject.SetActive(false);
+          //  jobText.gameObject.SetActive(false);
             if (!string.IsNullOrEmpty(myProfileData.userProfile.bio))
             {
                 textUserBio.text = SNS_APIManager.DecodedString(myProfileData.userProfile.bio);

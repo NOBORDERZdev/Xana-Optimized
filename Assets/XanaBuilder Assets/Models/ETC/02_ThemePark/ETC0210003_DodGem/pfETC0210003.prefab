@@ -43,8 +43,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2353187, y: 2.8288417, z: 1.8541026}
-  m_Center: {x: 0.021737944, y: 0.91442084, z: -0.4270536}
+  m_Size: {x: 3.2353187, y: 1.1695287, z: 1.8541026}
+  m_Center: {x: 0.021737924, y: 0.08476448, z: -0.42705357}
 --- !u!1 &2145021072586130400
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,8 +416,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2353187, y: 2.8288417, z: 1.8541026}
-  m_Center: {x: 0.021737944, y: 0.91442084, z: -0.4270536}
+  m_Size: {x: 3.2353187, y: 1.0362659, z: 1.8541026}
+  m_Center: {x: 0.021737922, y: 0.018133044, z: -0.42705357}
 --- !u!1 &6872030285107918927
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,8 +461,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2353187, y: 2.8288417, z: 1.8541026}
-  m_Center: {x: 0.021737944, y: 0.91442084, z: -0.4270536}
+  m_Size: {x: 3.2353187, y: 1.005892, z: 1.8541026}
+  m_Center: {x: 0.021737944, y: 0.0029459, z: -0.4270536}
 --- !u!1 &8728627066096276542
 GameObject:
   m_ObjectHideFlags: 0
@@ -587,9 +587,11 @@ MonoBehaviour:
   itemType: 0
   itemCategory: 0
   itemThemes: 
+  componentsAttachedToItem: 
   bottomTransform: 0
   isValid: 0
   isPlaced: 0
+  isCurrentSpawnPoint: 0
   IsItemLocked: 0
   IsItemVisible: 0
   hasParent: 0
@@ -601,6 +603,10 @@ MonoBehaviour:
   parent: {fileID: 0}
   highlightObject: {fileID: 0}
   itemMode: 0
+  m_explorerItemHandler: {fileID: 0}
+  indentationCount: 0
+  isSelected: 0
+  shrinkHierarchy: 0
 --- !u!114 &6153235239844788040
 MonoBehaviour:
   m_ObjectHideFlags: 0
