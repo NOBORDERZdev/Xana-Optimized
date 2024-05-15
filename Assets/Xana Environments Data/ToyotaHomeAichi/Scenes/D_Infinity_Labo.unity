@@ -7813,6 +7813,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &532526404
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11044,6 +11045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &719887678
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12600,51 +12602,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.7691755, y: 1.1846701, z: 3.0595627}
   m_Center: {x: 6.8477125, y: 0.14094304, z: -36.890278}
---- !u!1 &881996306
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 881996307}
-  - component: {fileID: 881996308}
-  m_Layer: 0
-  m_Name: FB_PushNotificationSender
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &881996307
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881996306}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1963513464}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &881996308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881996306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipientToken: RECIPIENT_FCM_TOKEN
 --- !u!1 &890293849
 GameObject:
   m_ObjectHideFlags: 0
@@ -15428,6 +15385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &1057199729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18311,6 +18269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &1256490048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22032,6 +21991,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Architec
+  playerCount: 0
 --- !u!65 &1477262537
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24436,6 +24396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Home
+  playerCount: 0
 --- !u!65 &1769459614
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27948,7 +27909,6 @@ Transform:
   - {fileID: 604343889}
   - {fileID: 1191278466}
   - {fileID: 1291774113}
-  - {fileID: 881996307}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29256,6 +29216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Factory
+  playerCount: 0
 --- !u!65 &2067692206
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29826,6 +29787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: LandInfo
+  playerCount: 0
 --- !u!65 &2122820457
 BoxCollider:
   m_ObjectHideFlags: 0

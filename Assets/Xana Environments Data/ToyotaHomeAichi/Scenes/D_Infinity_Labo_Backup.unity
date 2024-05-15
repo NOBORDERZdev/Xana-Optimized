@@ -9154,6 +9154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &578122057
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17014,6 +17015,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Home
+  playerCount: 0
 --- !u!1 &1057254425
 GameObject:
   m_ObjectHideFlags: 0
@@ -17466,6 +17468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: LandInfo
+  playerCount: 0
 --- !u!65 &1101256834
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19018,6 +19021,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &1169715770
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24543,6 +24547,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &1556253251
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26351,6 +26356,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Architec
+  playerCount: 0
 --- !u!65 &1716806081
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28498,51 +28504,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.32773292, y: 3.946762, z: 1.6283525}
   m_Center: {x: 7.170789, y: 1.5219889, z: -37.06201}
---- !u!1 &1853540255
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1853540256}
-  - component: {fileID: 1853540257}
-  m_Layer: 0
-  m_Name: FB_PushNotificationSender
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1853540256
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853540255}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1963513464}
-  m_RootOrder: 15
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1853540257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1853540255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d96f74fd3956d140b13b4349e90bc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recipientToken: RECIPIENT_FCM_TOKEN
 --- !u!1 &1854830599
 GameObject:
   m_ObjectHideFlags: 0
@@ -30622,7 +30583,6 @@ Transform:
   - {fileID: 1836847912}
   - {fileID: 2016802180}
   - {fileID: 1980016174}
-  - {fileID: 1853540256}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30739,6 +30699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 0
   roomName: Factory
+  playerCount: 0
 --- !u!1001 &1966728555
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31125,6 +31086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   triggerType: 1
   roomName: 
+  playerCount: 0
 --- !u!65 &1992673588
 BoxCollider:
   m_ObjectHideFlags: 0
