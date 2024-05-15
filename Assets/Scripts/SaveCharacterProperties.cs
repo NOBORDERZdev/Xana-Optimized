@@ -170,8 +170,12 @@ public class SaveCharacterProperties : MonoBehaviour
             SaveItemList.myItemObj.Add(new Item(characterController.wornPantId, characterController.wornPant.name, "Legs"));
         if(characterController.wornShirt!=null)
             SaveItemList.myItemObj.Add(new Item(characterController.wornShirtId, characterController.wornShirt.name, "Chest"));
-        if(characterController.wornHair!=null)
+        if (characterController.wornHair != null)
+        {
             SaveItemList.myItemObj.Add(new Item(characterController.wornHairId, characterController.wornHair.name, "Hair"));
+            SaveItemList.HairColor = charcterBodyParts.GetHairColor();
+            InventoryManager.instance.itemData.hair_color = SaveItemList.HairColor;
+        }
         if(characterController.wornShoes!=null)
             SaveItemList.myItemObj.Add(new Item(characterController.wornShoesId, characterController.wornShoes.name, "Feet"));
         if (characterController.wornEyeWearable != null)
@@ -285,7 +289,10 @@ public class SaveCharacterProperties : MonoBehaviour
             _CharacterData.FaceBlendsShapes = SaveItemList.FaceBlendsShapes;
             _CharacterData.ai_gender = SaveItemList.ai_gender;
             _CharacterData.charactertypeAi = SaveItemList.charactertypeAi;
+
             _CharacterData.hair_color = SaveItemList.hair_color;
+            _CharacterData.HairColor = SaveItemList.HairColor;
+
             _CharacterData.lip_color = SaveItemList.lip_color;
             _CharacterData.skin_color = SaveItemList.skin_color;
             _CharacterData.faceItemData = SaveItemList.faceItemData;
