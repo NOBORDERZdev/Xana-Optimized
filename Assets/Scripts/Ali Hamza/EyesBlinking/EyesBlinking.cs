@@ -11,7 +11,7 @@ public class EyesBlinking : MonoBehaviour
     [HideInInspector]
     public float blinkingRate;
     [HideInInspector]
-    public bool areEyesClosed = false;
+    public bool AreEyesClosed = false;
     [Range(2f, 3f)]
     public float waitTime;
     [Range(0.1f, 0.2f)]
@@ -65,27 +65,27 @@ public class EyesBlinking : MonoBehaviour
 
         if (isBlinking && AllEyeBlendShapes.Count != 0)
         {
-            while (!areEyesClosed)
+            while (!AreEyesClosed)
             {
                 UpdateBlendShapes(0);
                 currentBlendWeight += Time.deltaTime * blinkingRate;
                 if (currentBlendWeight >= 100f)
                 {
                     currentBlendWeight = 100f;
-                    areEyesClosed = true;
+                    AreEyesClosed = true;
                 }
 
                 blendHolder.SetBlendShapeWeight(8, currentBlendWeight);  // Set the blend shape weight for the left eye
                 blendHolder.SetBlendShapeWeight(9, currentBlendWeight);  // Set the blend shape weight for the right eye
             }
             yield return new WaitForSeconds(blinkingSpeed);
-            while (areEyesClosed)
+            while (AreEyesClosed)
             {
                 currentBlendWeight -= Time.deltaTime * blinkingRate;
                 if (currentBlendWeight <= 0f)
                 {
                     currentBlendWeight = 0f;
-                    areEyesClosed = false;
+                    AreEyesClosed = false;
                 }
                 UpdateBlendShapesToOriginal();
                 blendHolder.SetBlendShapeWeight(8, currentBlendWeight);
