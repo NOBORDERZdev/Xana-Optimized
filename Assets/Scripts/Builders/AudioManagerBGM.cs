@@ -32,7 +32,6 @@ public class AudioManagerBGM : MonoBehaviour
     private void AudioBGM(AudioPropertiesBGM audioPropertiesBGM)
     {
         this.audioPropertiesBGM = audioPropertiesBGM;
-        Debug.LogError("AudioPropertiesBGM => enableDisableBGM == " + this.audioPropertiesBGM.dataAudioBGM.enableDisableBGM);
         if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty() && this.audioPropertiesBGM.dataAudioBGM.enableDisableBGM)
             StartCoroutine(setAudioFromUrl(this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
         else
