@@ -368,14 +368,9 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
                                             {
                                                 if (animatorremote.GetBool("EtcAnimStart"))
                                                 {
-                                                    if (clip.name == "crouchDefault")
+                                                    if (clip.name == "crouchDefault" || clip.name == "standDefault")
                                                     {
                                                         keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(0).GetComponent<Animation>().clip));
-                                                        //currentEtcAnimName = go.name;
-                                                    }
-                                                    else if (clip.name == "standDefault")
-                                                    {
-                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, remotego.transform.GetChild(1).GetComponent<Animation>().clip));
                                                         //currentEtcAnimName = go.name;
                                                     }
                                                     else
@@ -689,14 +684,9 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
                         {
                             if (animatorremote.GetBool("EtcAnimStart"))
                             {
-                                if (clip.name == "crouchDefault")
+                                if (clip.name == "crouchDefault" || clip.name == "standDefault")
                                 {
                                     keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
-                                    //currentEtcAnimName = go.name;
-                                }
-                                else if (clip.name == "standDefault")
-                                {
-                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(1).GetComponent<Animation>().clip));
                                     //currentEtcAnimName = go.name;
                                 }
                                 else

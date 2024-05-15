@@ -47,7 +47,8 @@ public class ScreenSpaceRefHolder : MonoBehaviour
         WorldManager.instance.worldSpaceHomeScreenRef.spaceCategoryScroller = spaceScrollInitializerRef;
         WorldManager.instance.worldFoundText = worldFoundText;
         WorldManager.instance.searchWorldControllerRef.scroller = fullPageScrollerSearch;
-        Destroy(WorldManager.instance.uiHandlerRef.HomeWorldScreen.gameObject);
+        GameObject temp = WorldManager.instance.uiHandlerRef.HomeWorldScreen.gameObject;
+        Destroy(temp,2);
         WorldManager.instance.uiHandlerRef.HomeWorldScreen = gameObject;
         WorldManager.instance.uiHandlerRef.searchWorldHolder = searchWorldHolder;
         WorldManager.instance.uiHandlerRef.SearchWorldScreenHolder = SearchWorldScreenHolder;
