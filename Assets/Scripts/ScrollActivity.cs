@@ -17,21 +17,26 @@ public class ScrollActivity : MonoBehaviour
     [SerializeField]
     CanvasGroup canvasGroup;
     public WorldDescriptionPopupPreview worldDetailParentRef;
+    public RectTransform fakeBGRectTransform;
+    public RectTransform contentRectTransform;
 
     private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
     private SwipeGestureRecognizer swipe2 = new SwipeGestureRecognizer();
     public SwipeGestureRecognizerDirection lastSwipeMovement;
     public float lastSwipeYDistance;
+    public bool firstTimePlay = true;
 
     private void Awake()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
+        firstTimePlay = true;
     }
     private void OnDisable()
     {
         ScrollController.verticalNormalizedPosition = 3.5f;
         worlddetailScrollContrl.verticalNormalizedPosition = 1f;
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
+        firstTimePlay = true;
         UnRegTouchInput();
     }
     private void OnEnable()
@@ -61,20 +66,6 @@ public class ScrollActivity : MonoBehaviour
             swipe1.StateUpdated -= Swipe_Updated;
             FingersScript.Instance.RemoveGesture(swipe1);
         }
-    }
-
-    public void Closer()
-    {
-        //if (ScrollController.verticalNormalizedPosition < 0.001f)
-        //{
-        //    btnback.SetActive(true);
-        //}
-        //else
-        //{
-        //    btnback.SetActive(false);
-        //}
-        parentNormVal = ScrollController.verticalNormalizedPosition;
-        ChildNormVal = worlddetailScrollContrl.verticalNormalizedPosition;
     }
 
     Coroutine IEBottomToTopCoroutine;
@@ -129,10 +120,8 @@ public class ScrollActivity : MonoBehaviour
 
     public void Swipe_Updated(DigitalRubyShared.GestureRecognizer gesture)
     {
+        firstTimePlay = false;
         swipe2 = gesture as SwipeGestureRecognizer;
-
-        //print("End Direction Scroll Controller Values Confirmation: " + swipe2.EndDirection);
-        //print(" swipe DirectionY: " + swipe2.DistanceY);//Up Movement gives positive value and vice versa
 
         if (swipe2.EndDirection == SwipeGestureRecognizerDirection.Down || swipe2.EndDirection == SwipeGestureRecognizerDirection.Up)
         {
@@ -155,16 +144,23 @@ public class ScrollActivity : MonoBehaviour
                     if (worlddetailScrollContrl.verticalNormalizedPosition >= 1f)
                     {
                         WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
-
-                        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear);
+                        //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
+                        //fakeBGRectTransform.gameObject.SetActive(false);
+                        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+                            //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
+                            //fakeBGRectTransform.gameObject.SetActive(false);
+                        });
                         worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
                     }
                 }
                 else if (lastSwipeMovement == SwipeGestureRecognizerDirection.Up && lastSwipeYDistance > 0)
                 {
-                    //ConstantsHolder.isDescriptionFullPage = true;
                     WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(true);
-                    DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear);
+                    DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+                        //SetFakeBGHeight(1150f);
+                        //fakeBGRectTransform.gameObject.SetActive(true);
+                        //worlddetailScrollContrl.GetComponent<Image>().enabled = false;
+                    });
                     worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 }
             }
@@ -179,5 +175,71 @@ public class ScrollActivity : MonoBehaviour
         }
 
     }
+
+    //Called From Inspector Scroller event
+    public void Closer()
+    {
+        //if (ScrollController.verticalNormalizedPosition < 0.001f)
+        //{
+        //    btnback.SetActive(true);
+        //}
+        //else
+        //{
+        //    btnback.SetActive(false);
+        //}
+        parentNormVal = ScrollController.verticalNormalizedPosition;
+        ChildNormVal = worlddetailScrollContrl.verticalNormalizedPosition;
+    }
+
+    public void FakeBGHeightHandler()
+    {
+        // Get the parent RectTransform's height
+        float posY = contentRectTransform.anchoredPosition.y;
+
+        if (worlddetailScrollContrl.verticalNormalizedPosition < 1f)
+        {
+            if (firstTimePlay)
+            {
+                SetFakeBGHeight(430f);
+            }
+            else
+            {
+                SetFakeBGHeight(-100f);
+            }
+        }
+        else if (worlddetailScrollContrl.verticalNormalizedPosition >= 1f)
+        {
+            if (posY > -300f)
+            {
+                SetFakeBGHeight(430f);
+            }
+            else if (posY > -600f)
+            {
+                SetFakeBGHeight(650f);
+            }
+            else if (posY > -800f)
+            {
+                SetFakeBGHeight(950f);
+            }
+            else if (posY > -1000f)
+            {
+                SetFakeBGHeight(1150f);
+            }
+        }
+    }
+
+    void SetFakeBGHeight(float _desrHeight)
+    {
+        // Get the current anchorMax and anchorMin values
+        Vector2 anchorMax = fakeBGRectTransform.anchorMax;
+
+        // Calculate the new anchor values based on desired top and bottom
+        float parentHeight = fakeBGRectTransform.parent.GetComponent<RectTransform>().rect.height;
+        anchorMax.y = 1f - (_desrHeight / parentHeight);
+
+        // Apply the new anchor values to the RectTransform
+        fakeBGRectTransform.anchorMax = anchorMax;
+    }
+
 
 }
