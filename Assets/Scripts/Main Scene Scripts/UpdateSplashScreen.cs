@@ -18,18 +18,18 @@ public class UpdateSplashScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Once = false;
-        time = 0;
+        //Once = false;
+        //time = 0;
         versionText.text = "Ver." + Application.version;
-        if (ConstantsHolder.xanaConstants.screenType==ConstantsHolder.ScreenType.TabScreen)
-        {
-            tabBG.SetActive(true);
-        }
+        //if (ConstantsHolder.xanaConstants.screenType==ConstantsHolder.ScreenType.TabScreen)
+        //{
+        //    tabBG.SetActive(true);
+        //}
     }
 
-    public void CallWelcome()
-    {
-        UserLoginSignupManager.instance.ShowWelcomeScreen();
-    }
+    //public void CallWelcome()
+    //{
+    //    UserLoginSignupManager.instance.ShowWelcomeScreen();
+    //}
 
 }
