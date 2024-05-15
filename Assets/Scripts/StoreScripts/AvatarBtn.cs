@@ -569,6 +569,10 @@ public class AvatarBtn : MonoBehaviour
 
                         if (InventoryManager.instance.UndoBtn)
                             InventoryManager.instance.UndoBtn.GetComponent<Button>().interactable = true;
+
+                        if (GameManager.Instance.eyesBlinking != null)
+                            GameManager.Instance.eyesBlinking.StoreBlendShapeValues();
+
                         break;
                     }
                 case "Nose":
