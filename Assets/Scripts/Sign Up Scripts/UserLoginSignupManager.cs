@@ -16,7 +16,8 @@ using Newtonsoft.Json;
 using UnityEngine.SocialPlatforms.Impl;
 using static WorldSpacesHomeScreen;
 using System.Diagnostics.Eventing.Reader;
-using static System.Net.Mime.MediaTypeNames;
+
+
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -786,7 +787,7 @@ public class UserLoginSignupManager : MonoBehaviour
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
 
-        if (displayrname == "" )
+        if (displayrname == "")
         {
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -832,7 +833,7 @@ public class UserLoginSignupManager : MonoBehaviour
             nameScreenNextButton.interactable = true;
             return;
         }
-        else if (userUsername.Length < 5 && userUsername.Length > 15)
+        else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
             validationPopupPanel.SetActive(true);
             errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -840,6 +841,17 @@ public class UserLoginSignupManager : MonoBehaviour
             nameScreenLoader.SetActive(false);
             nameScreenNextButton.interactable = true;
             return;
+        }
+        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+        {
+
+            validationPopupPanel.SetActive(true);
+            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            errorHandler.ShowErrorMessage("The username must must include letters,numbers or (_)", errorTextMsg);
+            nameScreenLoader.SetActive(false);
+            nameScreenNextButton.interactable = true;
+            return;
+
         }
         else if (displayrname.EndsWith(" "))
         {
