@@ -64,6 +64,7 @@ public class CharacterHandler : MonoBehaviour
             GameManager.Instance.m_CharacterAnimator = _avatarData.avatar_animator;
             GameManager.Instance.avatarController = _avatarData.avatar_parent.GetComponent<AvatarController>();
             GameManager.Instance.characterBodyParts = _avatarData.avatar_parent.GetComponent<CharacterBodyParts>();
+            GameManager.Instance.eyesBlinking = _avatarData.avatar_parent.GetComponent<EyesBlinking>();
 
             Debug.Log("Waqas Here : " + PlayerPrefs.GetInt("presetPanel"));
 
