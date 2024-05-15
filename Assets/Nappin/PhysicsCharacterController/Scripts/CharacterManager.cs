@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -200,15 +201,18 @@ namespace PhysicsCharacterController
 
 
         /**/
-
+        private PhotonView photonView;
 
         private void Awake()
         {
+            photonView = this.GetComponent<PhotonView>();
             rigidbody = this.GetComponent<Rigidbody>();
             collider = this.GetComponent<CapsuleCollider>();
             originalColliderHeight = collider.height;
-
-            SetFriction(frictionAgainstFloor, true);
+            if (photonView.IsMine)
+            {
+                SetFriction(frictionAgainstFloor, true);
+            }
             currentLockOnSlope = lockOnSlope;
         }
 
@@ -216,16 +220,22 @@ namespace PhysicsCharacterController
         private void Update()
         {
             //input
-            axisInput = input.axisInput;
-            jump = input.jump;
-            jumpHold = input.jumpHold;
-            sprint = input.sprint;
-            crouch = input.crouch;
+            if (photonView.IsMine){ 
+                axisInput = input.axisInput;
+                jump = input.jump;
+                jumpHold = input.jumpHold;
+                sprint = input.sprint;
+                crouch = input.crouch;
+            }
         }
 
 
         private void FixedUpdate()
         {
+            if (!photonView.IsMine)
+            {
+                return;
+            }
             //local vectors
             CheckGrounded();
             CheckStep();

@@ -634,9 +634,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
+        characterManager.enabled =true;
     }
 
-        void ActivateNpcChat()
+    void ActivateNpcChat()
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
