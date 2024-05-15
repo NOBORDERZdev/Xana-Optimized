@@ -8,10 +8,6 @@ public class FB_PushNotificationSender : MonoBehaviour
     public const string serverKey = "AAAAk9GwOwQ:APA91bEC8oSce1_-Br-VCqagawpYZprcNazEad8Kf-JNJUyeevcvpCtCIFi03w5vbEJnCtt9_DKnPqAojPtJ-00dfCVfuQLJ_hOIsFpBosoPzTrkmO0zftytcB_u6Mt-tjcwA0Za0LPN"; //"14e5944ca3f569eb1f5266eb95a749f3506cd06d";
     public string recipientToken = "RECIPIENT_FCM_TOKEN";
 
-    private void Start()
-    {
-        NFT_Holder_Manager.instance.pushNotificationSender = this;
-    }
 
     public void SendNotification()
     {

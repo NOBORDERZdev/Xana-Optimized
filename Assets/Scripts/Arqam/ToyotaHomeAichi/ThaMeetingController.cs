@@ -7,6 +7,7 @@ public class ThaMeetingController : MonoBehaviour
     public int roomID = 4;
     void Start()
     {
+        GetComponent<FB_PushNotificationSender>().SendNotification();
         //only user can back to toyota world when press on exit btn
         if (ConstantsHolder.xanaConstants.meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
         {
