@@ -629,7 +629,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         CharacterManager characterManager = player.GetComponent<CharacterManager>();
         XanaPartyCamera.characterManager = characterManager;
         characterManager.input= XanaPartyInput;
-        characterManager.characterCamera = XanaPartyCamera.gameObject;
+        characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
         XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
         XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
         XanaPartyCamera.SetCamera();
@@ -738,6 +738,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
             }
+        }
+        else
+        {
+             BuilderEventManager.ApplySkyoxSettings?.Invoke();
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
