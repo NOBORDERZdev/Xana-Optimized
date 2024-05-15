@@ -36,7 +36,7 @@ namespace PhysicsCharacterController
 
         private ThirdPersonCameraController thirdPersonCameraController;
 
-
+         [SerializeField] bool AutoSetCamera= false; 
         /**/
 
 
@@ -47,8 +47,12 @@ namespace PhysicsCharacterController
 
             thirdPersonCameraController = thirdPersonCamera.GetComponent<ThirdPersonCameraController>();
 
-            SetCamera();
-            SetDebug();
+            if (AutoSetCamera)
+            {
+                SetCamera();
+                SetDebug();
+            }
+           
         }
 
 

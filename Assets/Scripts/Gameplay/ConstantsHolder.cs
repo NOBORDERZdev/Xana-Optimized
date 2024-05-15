@@ -15,6 +15,7 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isGuestLogin;
     public static bool loggedIn;
     public static bool isWalletLogin;
+    public bool isXanaPartyWorld = false;
     public static string xanaliaToken;
     public static string xanaToken;
     public static string userId;
@@ -148,6 +149,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID=0; // Id of user profile when the user visit the profile section.
     public bool IsOtherProfileVisit = false; // to Check is other profile player visit
+
     public string r_EmoteReactionPersistentPath
     {
         get

@@ -101,6 +101,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
+         ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
         ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 

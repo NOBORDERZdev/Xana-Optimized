@@ -14,6 +14,8 @@ using System;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
+using PhysicsCharacterController;
+using UnityEngine.InputSystem;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -56,6 +58,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public double eventRemainingTime;
 
     public HomeSceneLoader _uiReferences;
+    [Header("XANA Party")]
+    [SerializeField] GameObject XanaWorldController;
+    [SerializeField] GameObject XanaPartyController;
+    [SerializeField] CameraManager XanaPartyCamera;
+    [SerializeField] InputReader XanaPartyInput;
+
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -595,19 +603,40 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar()
     {
-        if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
-            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
+            if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
+            {
+                player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+                player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
+            }
+            else
+            {
+                player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+                player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
+            }
         }
         else
         {
-            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
-            player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
+               XanaWorldController.SetActive(false);
+               XanaPartyController.SetActive(true);
+               player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
+               SetXanaPartyControllers(player);
         }
     }
 
-    void ActivateNpcChat()
+    void SetXanaPartyControllers(GameObject player){ 
+        CharacterManager characterManager = player.GetComponent<CharacterManager>();
+        XanaPartyCamera.characterManager = characterManager;
+        characterManager.input= XanaPartyInput;
+        characterManager.characterCamera = XanaPartyCamera.gameObject;
+        XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
+        XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
+        XanaPartyCamera.SetCamera();
+        XanaPartyCamera.SetDebug();
+    }
+
+        void ActivateNpcChat()
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;
         Instantiate(npcChatSystem);
@@ -657,7 +686,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         InstantiatePlayerAvatar();
 
-        if (ConstantsHolder.xanaConstants.isBuilderScene)
+        if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();

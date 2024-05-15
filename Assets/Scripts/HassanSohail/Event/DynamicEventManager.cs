@@ -161,6 +161,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
                         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
                         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+                        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
+                        {
+                            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+                        }
+                        else
+                        {
+                            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+                        }
                         WorldItemView.m_EnvName = MutiplayerController.sceneName = environmentDetails.data.name;
 
                         if (isBuilderScene)

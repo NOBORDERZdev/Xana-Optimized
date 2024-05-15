@@ -373,6 +373,14 @@ public class WorldItemView : EnhancedScrollerCellView
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
+        if (m_EnvName.Contains("XanaParty"))
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+        }
+        else
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
+        }
         MutiplayerController.sceneName = m_EnvName;
 
         //if (m_EnvironmentName.Contains("XANA Lobby"))
