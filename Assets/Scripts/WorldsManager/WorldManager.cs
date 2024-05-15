@@ -67,7 +67,6 @@ public class WorldManager : MonoBehaviour
     public static WorldManager instance;
     //[HideInInspector]
     public bool changeFollowState = false;
-
     public APIURL GetCurrentTabSelected()
     {
         return aPIURLGlobal;
@@ -994,7 +993,6 @@ public class WorldManager : MonoBehaviour
     public void GoToUGC()
     {
         GameManager.Instance.HomeCameraInputHandler(false);
-
         SceneManager.LoadScene("UGC");
     }
     public void ClearHomePageData()
