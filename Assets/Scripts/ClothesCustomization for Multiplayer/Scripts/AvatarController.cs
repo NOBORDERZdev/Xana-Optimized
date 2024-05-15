@@ -463,10 +463,12 @@ public class AvatarController : MonoBehaviour
                                     //getHairColorFormFile = true;
                                     if (!item.ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        if (type.Contains("Hair") && !string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair"))
+                                        if (type.Contains("Hair"))
                                         {
-                                            if (wornHair)
+                                            if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
+                                            else
+                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController,_CharacterData.HairColor));
                                         }
                                         else
                                             StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, Color.clear));
@@ -680,17 +682,19 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = item.ItemType;
-                            if (!string.IsNullOrEmpty(item.ItemName))
+                            if (!string.IsNullOrEmpty(item.ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                                 if (itemTypes.Any(item => type.Contains(item)))
                                 {
                                     if (!item.ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
                                     {
-                                        if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                        if (type.Contains("Hair"))
                                         {
-                                            if (wornHair)
+                                            if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
+                                            else
+                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
                                         }
                                         else
                                             StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, type, _CharacterData.gender != null ? _CharacterData.gender : "Male", this.gameObject.GetComponent<AvatarController>(), Color.clear));
@@ -1451,7 +1455,8 @@ public class AvatarController : MonoBehaviour
     /// <param name="hairColor"></param>
     public void WearDefaultHair(GameObject applyOn, Color hairColor)
     {
-        StichItem(-1, itemDatabase.DefaultHair, "Hair", applyOn, hairColor);
+        //StichItem(-1, itemDatabase.DefaultHair, "Hair", applyOn, hairColor);
+        StichHairWithColor(-1, itemDatabase.DefaultHair, "Hair", applyOn, hairColor,true);
     }
 
     /// <summary>
@@ -1580,6 +1585,8 @@ public class AvatarController : MonoBehaviour
                         if (!string.IsNullOrEmpty(fileContent))
                         {
                             _CharacterData = _CharacterData.CreateFromJSON(fileContent);
+                            if(!ConstantsHolder.xanaConstants.isStoreActive) // Changing Hair no need to apply color from file
+                                StartCoroutine(tempBodyParts.ImplementColors(_CharacterData.HairColor, SliderType.HairColor, applyOn));
                         }
                     }
                     else
@@ -1744,6 +1751,37 @@ public class AvatarController : MonoBehaviour
                 InventoryManager.instance.loaderForItems.SetActive(false);
         }
     }
+
+    /// <summary>
+    /// As Home Scene has now friends so we need to change color of hairs as require
+    /// </summary>
+    public void StichHairWithColor(int itemId, GameObject item, string type, GameObject applyOn, Color hairColor , bool isMultiPlayer)
+    {
+        CharacterBodyParts tempBodyParts = applyOn.gameObject.GetComponent<CharacterBodyParts>();
+        EffectedParts effectedParts = item.GetComponent<EffectedParts>();
+        UnStichItem(type);
+
+        item = this.stitcher.Stitch(item, applyOn);
+        StartCoroutine(tempBodyParts.ImplementColors(hairColor, SliderType.HairColor, applyOn));
+        
+        if(isMultiPlayer)
+        {
+            item.layer = 22;
+        }
+        else
+        {
+            item.layer = 11;
+        }
+        wornHair = item;
+        wornHairId = itemId;
+
+        if (PlayerPrefs.GetInt("presetPanel") != 1)
+        {
+            if (InventoryManager.instance != null && InventoryManager.instance.loaderForItems)
+                InventoryManager.instance.loaderForItems.SetActive(false);
+        }
+    }
+
 
     /// <summary>
     /// For Multiplayer Hairs Only
@@ -2017,7 +2055,10 @@ public class AvatarController : MonoBehaviour
                                         UnStichItem("Hair");
                                 }
                                 else
-                                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                {
+                                    //StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.gameObject.GetComponent<AvatarController>(), Color.clear));
+                                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.gameObject.GetComponent<AvatarController>(), _CharacterData.HairColor));
+                                }
                             }
                             else
                             {
