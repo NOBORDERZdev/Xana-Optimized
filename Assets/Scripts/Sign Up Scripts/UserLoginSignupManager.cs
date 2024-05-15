@@ -13,9 +13,7 @@ using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-using UnityEngine.SocialPlatforms.Impl;
-using static WorldSpacesHomeScreen;
-using System.Diagnostics.Eventing.Reader;
+
 
 
 
@@ -787,69 +785,33 @@ public class UserLoginSignupManager : MonoBehaviour
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
 
-        if (displayrname == "")
+        if (displayrname == "" || userUsername == "")
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage("Display name or username should not empty", errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            userDisplaynameErrors("Display name or username should not empty");
             return;
         }
-        else if (userUsername == "")
+       
+        else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage("Display name or username should not empty", errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
-            return;
 
-        }
-        else if (displayrname.StartsWith(" "))
-        {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
-            return;
-        }
-        else if (userUsername.StartsWith(" "))
-        {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            userDisplaynameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
         else if (userUsername.All(char.IsDigit))
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage("The username must include letters", errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            userDisplaynameErrors("The username must include letters");
             return;
         }
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage("The username must be between 5 and 15 characters", errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+
+            userDisplaynameErrors("The username must be between 5 and 15 characters");
             return;
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
 
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage("The username must must include letters,numbers or (_)", errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            userDisplaynameErrors("The username must must include letters,numbers or (_)");
             return;
 
         }
@@ -883,7 +845,7 @@ public class UserLoginSignupManager : MonoBehaviour
                    
                 }));
            
-            RequestUpdateUserProfile(userUsername);
+            RequestSubmitUsername(userUsername);
         }
         else
         {
@@ -901,6 +863,15 @@ public class UserLoginSignupManager : MonoBehaviour
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
     }
+    public void userDisplaynameErrors(string errorMSg) {
+
+        validationPopupPanel.SetActive(true);
+        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+        errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
+        nameScreenLoader.SetActive(false);
+        nameScreenNextButton.interactable = true;
+       
+  }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
     {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -1591,12 +1562,12 @@ public class UserLoginSignupManager : MonoBehaviour
         yield return null;
     }
 
-    public void RequestUpdateUserProfile(string unique_Name)
+    public void RequestSubmitUsername(string unique_Name)
     {
-        StartCoroutine(IERequestUpdateUserProfile(unique_Name));
+        StartCoroutine(IERequestSubmitUsername(unique_Name));
     }
 
-    public IEnumerator IERequestUpdateUserProfile(string unique_Name)
+    public IEnumerator IERequestSubmitUsername(string unique_Name)
     {
         WWWForm form = new WWWForm();
 
@@ -1622,36 +1593,24 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 yield return null;
             }
-            UniqueUserNameError test = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+            UniqueUserNameError ApiResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
-                if (test.msg.Contains("Username"))
+                if (ApiResponse.msg.Contains("Username"))
                 {
-
-                    validationPopupPanel.SetActive(true);
-                    errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    errorHandler.ShowErrorMessage("The username must include letters", errorTextMsg);
-                    nameScreenLoader.SetActive(false);
-                    nameScreenNextButton.interactable = true;
-
-
+                    userDisplaynameErrors("The username must include letters");
                 }
             }
-            else if (!test.success)
+            else if (!ApiResponse.success)
                 {
-                    if (test.msg.Contains("Username"))
+                    if (ApiResponse.msg.Contains("Username"))
                     {
-                        validationPopupPanel.SetActive(true);
-                        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                        errorHandler.ShowErrorMessage("Username already taken", errorTextMsg);
-                        nameScreenLoader.SetActive(false);
-                        nameScreenNextButton.interactable = true;
-
+                    userDisplaynameErrors("Username already taken");
                     }
                 }
 
-                else if (test.success){
+                else if (ApiResponse.success){
                    OpenUIPanel(16);
                    nameScreenLoader.SetActive(false);
                    nameScreenNextButton.interactable = true;
