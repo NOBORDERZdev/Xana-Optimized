@@ -42,6 +42,7 @@ public class MyProfileDataManager : MonoBehaviour
     public GameObject OtherPlayerdataObj;
     [SerializeField] GameObject settingsButton;
     [SerializeField] GameObject otherProfileScreenBackButton;
+    public Action otherProfileScreenBackButtonAction;
 
     [Space]
     [Header("Profile Screen Refresh Object")]
@@ -640,6 +641,18 @@ public class MyProfileDataManager : MonoBehaviour
     {
         apiManager.RequestFollowAUser(FeedRawData.id.ToString(), "MyProfile");
     }
+
+    public void UpdateBackButtonOnClickListener()
+    {
+        otherProfileScreenBackButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        otherProfileScreenBackButton.GetComponent<Button>().onClick.AddListener(() => otherProfileScreenBackButtonAction?.Invoke());
+    }
+
+    public void UpdateBackButtonAction(Action _action)
+    {
+        otherProfileScreenBackButtonAction = _action;
+    }
+
     #endregion
 
 
