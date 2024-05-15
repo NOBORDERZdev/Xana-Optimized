@@ -360,14 +360,14 @@ public class SaveCharacterProperties : MonoBehaviour
             SaveItemList.gender = _CharacterData.gender;
 
             float[] blendValues = new float[GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount];
-            for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
-            {
-                if (!_sliderindexes.ContainsIndex(i))
-                {
-                    blendValues[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
-                    GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, 0);
-                }
-            }
+            //for (int i = 0; i < GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().sharedMesh.blendShapeCount; i++)
+            //{
+            //    if (!_sliderindexes.ContainsIndex(i))
+            //    {
+            //        blendValues[i] = GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().GetBlendShapeWeight(i);
+            //        GameManager.Instance.m_ChHead.GetComponent<SkinnedMeshRenderer>().SetBlendShapeWeight(i, 0);
+            //    }
+            //}
 
             SaveItemList.FaceBlendsShapes = blendValues;
             AvatarCustomizationManager.Instance.UpdateChBodyShape(_CharacterData.BodyFat);
