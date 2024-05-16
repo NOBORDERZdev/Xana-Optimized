@@ -32,7 +32,7 @@ public class AudioManagerBGM : MonoBehaviour
     private void AudioBGM(AudioPropertiesBGM audioPropertiesBGM)
     {
         this.audioPropertiesBGM = audioPropertiesBGM;
-        if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty())
+        if (!this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM.IsNullOrEmpty() && this.audioPropertiesBGM.dataAudioBGM.enableDisableBGM)
             StartCoroutine(setAudioFromUrl(this.audioPropertiesBGM.dataAudioBGM.pathAudioBGM));
         else
             downloadingError = true;
