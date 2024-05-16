@@ -26,8 +26,10 @@ public class CheckOnlineFriend : MonoBehaviour
     private void Start()
     {
         worldItemView = GetComponent<WorldItemView>();
-        offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
-        onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
+        if(offlineFriendName)
+            offlineFriendName.GetComponent<Button>().onClick.AddListener(onclickFriendNameButton);
+        if (onlineFriendName)
+            onlineFriendName.GetComponent<Button>().onClick.AddListener(GotoSpace);
     }
     public void SpaceJoinedFriend(FriendOnlineStatus friendOnlineStatus)
     {
@@ -71,6 +73,11 @@ public class CheckOnlineFriend : MonoBehaviour
             SNS_APIManager.Instance.GetHomeFriendProfileData<CheckOnlineFriend>(friendId, this);
         else
             GameManager.Instance.bottomTabManagerInstance.OnClickProfileButton();
+
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(GameManager.Instance.bottomTabManagerInstance.OnClickHomeButton);
+        }
     }
     public void SetupHomeFriendProfile(SearchUserRow searchUserRow)
     {
