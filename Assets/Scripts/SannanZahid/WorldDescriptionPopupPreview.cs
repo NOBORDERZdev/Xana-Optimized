@@ -20,7 +20,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public Text UpdatedAtTxt;
     public Text VisitCountTxt;
     [Header("Images")]
-    public Image FadeImg;
     public RectTransform WorldImageHolderRef;
     public Image WorldIconImg;
     public Image UserProfileImg;
@@ -36,11 +35,11 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
-    string ThumbnailDownloadURL = "";
-    public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;//Need to start clearing script from here
+    public Transform XanaAvatarIcon, AvatarIcon;
+    public Sprite NoAvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
     public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
-    public RectTransform worldImageMask, parentBodyBG;
+    public RectTransform worldImageMask;
 
     [Header("Tags and Category")]
     public GameObject tagScroller;
@@ -189,13 +188,13 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         else
             JoinEventBtn.onClick.AddListener(() => WorldManager.instance.JoinEvent());
         SetPanelToBottom();
-        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon;
         /*if (entityType == WorldType.USER_WORLD.ToString() && (creator_Name != null || creator_Description != null || creatorAvatar != null))
         {*/
         CreatorNameTxt.text = creator_Name;
         CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
         CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
-        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon.GetComponent<Image>().sprite;
+        AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon;
         if (string.IsNullOrEmpty(userAvatarURL))
         {
             //NoAvatarIcon.gameObject.SetActive(true);
@@ -243,8 +242,8 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public void CheckWorld()
     {
         //  GameManager.Instance.UiManager.HomePage.SetActive(true);
-        FadeImg.sprite = WorldIconImg.sprite;
-        UpdateWorldPanel();
+        //FadeImg.sprite = WorldIconImg.sprite;
+        //UpdateWorldPanel();
         string EnvironmentName = WorldNameTxt.text;
         if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
         {
@@ -279,20 +278,10 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
     public void UpdateWorldPanel()
     {
-        //if (!WorldNameTxt.text.Contains("XANA Lobby"))
-        //{
-        //    BannerImgSprite[0].sprite = FadeImg.sprite;
-        // LobbyLogoContaionr.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-        //    LobbyLogoContaionr.gameObject.SetActive(true);
-
-        //}
-        BannerImgSprite[0].sprite = FadeImg.sprite;
-        BannerImgSprite[1].sprite = FadeImg.sprite;
-        if (BannerImgSprite.Length > 2)
-            BannerImgSprite[2].sprite = FadeImg.sprite;
+        //BannerImgSprite[0].sprite = FadeImg.sprite;
+        //BannerImgSprite[1].sprite = FadeImg.sprite;
+        //if (BannerImgSprite.Length > 2)
+        //    BannerImgSprite[2].sprite = FadeImg.sprite;
     }
 
     IEnumerator DownloadAndSetImage(string downloadURL, Image imageHolder)
