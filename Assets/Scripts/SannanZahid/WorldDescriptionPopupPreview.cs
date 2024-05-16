@@ -28,14 +28,13 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public GameObject followingWorld;
     public GameObject followingWorldHighlight;
     public GameObject followWorldLoader;
-    public Image[] BannerImgSprite;
     bool _isBuilderScene = default;
     public static bool m_WorldIsClicked = false;
     public static bool m_MuseumIsClicked = false;
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
-    public Transform XanaAvatarIcon, AvatarIcon;
+    public Transform AvatarIcon;
     public Sprite NoAvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
     public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
@@ -198,7 +197,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         if (string.IsNullOrEmpty(userAvatarURL))
         {
             //NoAvatarIcon.gameObject.SetActive(true);
-            XanaAvatarIcon.gameObject.SetActive(false);
+            //XanaAvatarIcon.gameObject.SetActive(false);
             //AvatarIcon.gameObject.SetActive(true);
         }
         //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
@@ -210,7 +209,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         else
         {
             //NoAvatarIcon.gameObject.SetActive(false);
-            XanaAvatarIcon.gameObject.SetActive(false);
+            //XanaAvatarIcon.gameObject.SetActive(false);
             //AvatarIcon.gameObject.SetActive(true);
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
