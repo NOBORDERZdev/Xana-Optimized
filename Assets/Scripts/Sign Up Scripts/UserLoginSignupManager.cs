@@ -784,62 +784,35 @@ public class UserLoginSignupManager : MonoBehaviour
         nameScreenNextButton.interactable = false;
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
-
+        string keytoLocalize;
         if (displayrname == "" || userUsername == "")
         {
-            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-            {
-                UserDisplayNameErrors("Display name or username should not be empty.");
-            }
-            else {
-                UserDisplayNameErrors("表示名またはユーザー名を空にすることはできません。");
-            }
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+            UserDisplayNameErrors(keytoLocalize) ;
             return;
         }
        
         else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
         {
-
             UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
         else if (userUsername.All(char.IsDigit))
         {
-            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-            {
-                UserDisplayNameErrors(" The username must include letters.");
-
-            }
-            else {
-                UserDisplayNameErrors("ユーザー名にはアルファベットを含める必要があります。");
-
-            }
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+            UserDisplayNameErrors(keytoLocalize);
             return;
         }
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
-            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-            {
-                UserDisplayNameErrors("The username must be between 5 and 15 characters.");
-
-            }
-            else {
-
-                UserDisplayNameErrors("ユーザー名は5〜15文字である必要があります。");
-            }
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+            UserDisplayNameErrors(keytoLocalize);
             return;
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
-            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-            {
-                UserDisplayNameErrors("The username must include alphabet, numbers, or underscores (_).");
-
-            }
-            else
-            {
-                UserDisplayNameErrors("ユーザー名にはアルファベット、数字、またはアンダースコア (_) を含める必要があります。");
-            } 
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include alphabet, numbers, or underscores (_).");
+            UserDisplayNameErrors(keytoLocalize);
             return;
 
         }
@@ -1621,38 +1594,29 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 yield return null;
             }
+             string bykeyLocalize;
             UniqueUserNameError APIResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
+               
                 if (APIResponse.msg.Contains("Username"))
                 {
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                    UserDisplayNameErrors(bykeyLocalize);
 
-                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-                    {
-                        UserDisplayNameErrors(" The username must include letters.");
-
-                    }
-                    else
-                    {
-                        UserDisplayNameErrors("ユーザー名にはアルファベットを含める必要があります。");
-
-                    }
+                  
                 }
             }
             else if (!APIResponse.success)
             {
                 if (APIResponse.msg.Contains("Username"))
                 {
-                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
-                    {
-                        UserDisplayNameErrors("Username already taken.");
 
-                    }
-                    else
-                    {
-                        UserDisplayNameErrors("ユーザー名は既に使用されています。");
-                    }
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("Username already exists");
+                    UserDisplayNameErrors(bykeyLocalize);
+
+
                 }
             }
             else if (APIResponse.success)
