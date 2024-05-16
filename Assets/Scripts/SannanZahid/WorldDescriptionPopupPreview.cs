@@ -91,7 +91,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             ////tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
             //worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
         }
-        WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     void SetTopAndBottomPositions(float top, float bottom)
@@ -132,6 +131,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         string createdAt, string updatedAt, bool isBuilderSceneF, string userAvatarURL, string ThumbnailDownloadURLHigh, string[] worldTags,
         string entityType, string creator_Name, string creator_Description, string creatorAvatar, bool isFavourite, string _worldId)
     {
+        WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         worldId = _worldId;
         if (thumbnailObjRef)
             thumbnailPrefabRef = thumbnailObjRef;
@@ -224,6 +224,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         }*/
 
         CheckWorldFav(isFavourite);
+        WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     public void CallAnalytics(string idOfObject, string entityType)

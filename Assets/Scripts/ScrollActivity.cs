@@ -34,7 +34,7 @@ public class ScrollActivity : MonoBehaviour
     private void OnDisable()
     {
         worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         worldDetailParentRef.backButton.SetActive(false);
         ScrollController.verticalNormalizedPosition = 3.5f;
         worlddetailScrollContrl.verticalNormalizedPosition = 1f;
@@ -138,7 +138,6 @@ public class ScrollActivity : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
             //Debug.Log("Last swipe direction and distance Y Values: " + lastSwipeMovement + " " + lastSwipeYDistance);
             if (ScrollController.verticalNormalizedPosition < 1f)
             {
