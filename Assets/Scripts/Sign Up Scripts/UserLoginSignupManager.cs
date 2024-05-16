@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdvancedInputFieldPlugin;
@@ -787,7 +787,13 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (displayrname == "" || userUsername == "")
         {
-            UserDisplayNameErrors("Display name or username should not be empty.");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                UserDisplayNameErrors("Display name or username should not be empty.");
+            }
+            else {
+                UserDisplayNameErrors("表示名またはユーザー名を空にすることはできません。");
+            }
             return;
         }
        
@@ -799,19 +805,41 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else if (userUsername.All(char.IsDigit))
         {
-            UserDisplayNameErrors("The username must include letters.");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                UserDisplayNameErrors(" The username must include letters.");
+
+            }
+            else {
+                UserDisplayNameErrors("ユーザー名にはアルファベットを含める必要があります。");
+
+            }
             return;
         }
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                UserDisplayNameErrors("The username must be between 5 and 15 characters.");
 
-            UserDisplayNameErrors("The username must be between 5 and 15 characters.");
+            }
+            else {
+
+                UserDisplayNameErrors("ユーザー名は5〜15文字である必要があります。");
+            }
             return;
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                UserDisplayNameErrors("The username must include alphabet, numbers, or underscores (_).");
 
-            UserDisplayNameErrors("The username must include alphabet, numbers, or underscores (_).");
+            }
+            else
+            {
+                UserDisplayNameErrors("ユーザー名にはアルファベット、数字、またはアンダースコア (_) を含める必要があります。");
+            } 
             return;
 
         }
@@ -1599,22 +1627,40 @@ public class UserLoginSignupManager : MonoBehaviour
                 Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
                 if (APIResponse.msg.Contains("Username"))
                 {
-                    UserDisplayNameErrors("The username must include letters.");
+
+                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+                    {
+                        UserDisplayNameErrors(" The username must include letters.");
+
+                    }
+                    else
+                    {
+                        UserDisplayNameErrors("ユーザー名にはアルファベットを含める必要があります。");
+
+                    }
                 }
             }
             else if (!APIResponse.success)
+            {
+                if (APIResponse.msg.Contains("Username"))
                 {
-                    if (APIResponse.msg.Contains("Username"))
+                    if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
                     {
-                    UserDisplayNameErrors("Username already taken.");
+                        UserDisplayNameErrors("Username already taken.");
+
+                    }
+                    else
+                    {
+                        UserDisplayNameErrors("ユーザー名は既に使用されています。");
                     }
                 }
+            }
+            else if (APIResponse.success)
+            {
+                OpenUIPanel(16);
+                nameScreenLoader.SetActive(false);
+                nameScreenNextButton.interactable = true;
 
-                else if (APIResponse.success){
-                   OpenUIPanel(16);
-                   nameScreenLoader.SetActive(false);
-                   nameScreenNextButton.interactable = true;
-                   
             }
                 
 
