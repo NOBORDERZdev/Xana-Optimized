@@ -37,7 +37,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     WorldItemDetail _event;
 
     public SpaceScrollInitializer spaceCategoryScroller;
-    public bool ApiHolderContainsData = false;
     private void OnEnable()
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
@@ -273,11 +272,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             } while (totalTagsInstCount < 7);
 
             //Setting tags data as category on pagination call
-            if (!ApiHolderContainsData)
-            {
-                _event = new WorldItemDetail();
-                spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
-            }
+            _event = new WorldItemDetail();
+            spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
             totalTagsInstCount = 0;
         }
     }
@@ -568,10 +564,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
-                if (!ApiHolderContainsData)
-                {
-                    spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
-                }
+                spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
             }
             //spaceContent.transform.GetChild(i).gameObject.SetActive(true);
             //spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
@@ -605,10 +598,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
         if (apiResponseHolder.CheckResponse(apiURL) && !WorldManager.instance.changeFollowState)
         {
-            if (!ConstantsHolder.xanaConstants.returnedFromGamePlay)
-            {
-                ApiHolderContainsData = true;
-            }
             if (apiResponseHolder.GetResponse(apiURL) != null)
             {
                 callback(true, apiResponseHolder.GetResponse(apiURL));
@@ -628,7 +617,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
-                ApiHolderContainsData = false;
                 //_WorldInfo = JsonUtility.FromJson<WorldsInfo>(www.downloadHandler.text);
                 //worldstr = www.downloadHandler.text;
                 if (!apiResponseHolder.CheckResponse(apiURL))
@@ -639,7 +627,6 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                 callback(true, www.downloadHandler.text);
                 WorldManager.instance.changeFollowState = false;
             }
-            Debug.Log(apiURL + "---" + www.downloadHandler.text);
             www.Dispose();
         }
     }
@@ -723,10 +710,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         mostVisitedTagList.Clear();
         tagAsCategoryData.Clear();
         CategorytagNames.Clear();
-        ApiHolderContainsData = false;
         apiResponseHolder.apiResponses.Clear();
         GameManager.Instance.isTabSwitched = false;
-        ConstantsHolder.xanaConstants.returnedFromGamePlay = false;
     }
 
     [Serializable]

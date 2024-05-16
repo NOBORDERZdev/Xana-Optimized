@@ -74,7 +74,7 @@ public class AddressableDownloader : MonoBehaviour
     /// To Download Addressable object. with call back from coroutine
     /// </summary>
     /// <param name="name">tag or key of a addressable object</param>
-    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color mulitplayerHairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
+    public IEnumerator DownloadAddressableObj(int itemId, string key, string type, string _gender, AvatarController applyOn, Color hairColor, bool applyHairColor = true, bool callFromMultiplayer = false)
     {
         int _counter = 0;
         while (!ConstantsHolder.isAddressableCatalogDownload)
@@ -108,7 +108,7 @@ public class AddressableDownloader : MonoBehaviour
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                     Debug.Log("Fail To load");
-                    if (InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
+                    if (InventoryManager.instance && InventoryManager.instance.loaderForItems && InventoryManager.instance != null)
                         InventoryManager.instance.loaderForItems.SetActive(false);
                     if (GameManager.Instance != null)
                         GameManager.Instance.isStoreAssetDownloading = false;
@@ -142,9 +142,20 @@ public class AddressableDownloader : MonoBehaviour
                         MemoryManager.AddToReferenceList(loadOp, key.ToLower());
                         if (PlayerPrefs.GetInt("presetPanel") != 1)
                         {
-                            if (callFromMultiplayer)
+                            //if (callFromMultiplayer)
+                            //{
+                            //    applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
+                            //}
+                            if(type == "Hair")
                             {
-                                applyOn.StichItem(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, mulitplayerHairColor);
+                                if (ConstantsHolder.xanaConstants.isStoreActive)
+                                {
+                                    GameObject downloadedHair = loadOp.Result as GameObject;
+                                    Color hairDefaultColor = GetHairDefaultColorFromDownloadedHair(downloadedHair);
+                                    applyOn.StichHairWithColor(itemId, downloadedHair, type, applyOn.gameObject, hairDefaultColor, callFromMultiplayer);
+                                }
+                                else 
+                                    applyOn.StichHairWithColor(itemId, loadOp.Result as GameObject, type, applyOn.gameObject, hairColor,callFromMultiplayer);
                             }
                             else
                             {
@@ -175,6 +186,20 @@ public class AddressableDownloader : MonoBehaviour
         }
     }
 
+    public Color GetHairDefaultColorFromDownloadedHair(GameObject downloadedHair)
+    {
+        string Hair_ColorName = "_BaseColor";
+        SkinnedMeshRenderer skinnedMeshRenderer = downloadedHair.transform.GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        if (skinnedMeshRenderer.sharedMaterials.Length > 1) // In case Of Hat there is 2 material
+        {
+            if (skinnedMeshRenderer.sharedMaterials[0].name.Contains("Cap") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Hat") || skinnedMeshRenderer.sharedMaterials[0].name.Contains("Pins"))
+                return skinnedMeshRenderer.sharedMaterials[1].GetColor(Hair_ColorName);
+            else
+                return skinnedMeshRenderer.sharedMaterials[0].GetColor(Hair_ColorName);
+        }
+        else
+            return skinnedMeshRenderer.sharedMaterials[0].GetColor(Hair_ColorName);
+    }
     void DisableLoadingPanel()
     {
         if (LoadingHandler.Instance != null)

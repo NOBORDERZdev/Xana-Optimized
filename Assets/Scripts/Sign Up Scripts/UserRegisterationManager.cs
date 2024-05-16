@@ -435,7 +435,7 @@ public class UserRegisterationManager : MonoBehaviour
             ConnectionEstablished_popUp.SetActive(true);
 
             Invoke(nameof(showPresetPanel), 1f);
-            DynamicEventManager.deepLink?.Invoke("Moralis side");
+            //DynamicEventManager.deepLink?.Invoke("Moralis side");
 
             if (InventoryManager.instance != null)
                 InventoryManager.instance.WalletLoggedinCall();
@@ -456,7 +456,7 @@ public class UserRegisterationManager : MonoBehaviour
     IEnumerator WaitForDeepLink()
     {
         yield return new WaitForSeconds(2);
-        DynamicEventManager.deepLink?.Invoke("moralis wait and come");
+        //DynamicEventManager.deepLink?.Invoke("moralis wait and come");
     }
     /// <summary>
     /// To show preset panel if playe login form wallet and on perset is applied
@@ -1052,7 +1052,7 @@ public class UserRegisterationManager : MonoBehaviour
             if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetInt("iSignup") == 1)
             {
                 PlayerPrefs.SetInt("RegistrationOnce", 1);
-                DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
+                //DynamicEventManager.deepLink?.Invoke("Sign Up Flow");
             }
         }
     }
@@ -2785,7 +2785,7 @@ public class UserRegisterationManager : MonoBehaviour
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
             Debug.LogError("Set Name for Guest User");
-            DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
+            //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, Localusername);
             currentSelectedNxtButton.interactable = true;
             UsernamescreenLoader.SetActive(false);
@@ -3363,7 +3363,7 @@ public class UserRegisterationManager : MonoBehaviour
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
-                            DynamicEventManager.deepLink?.Invoke("Guest login");
+                            //DynamicEventManager.deepLink?.Invoke("Guest login");
                         }
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
@@ -3427,7 +3427,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetInt("WalletLogin", 0);
                     ConstantsGod.AUTH_TOKEN = myObject1.data.token;
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
-                    DynamicEventManager.deepLink?.Invoke("Login user here");
+                    //DynamicEventManager.deepLink?.Invoke("Login user here");
 
                     if (myObject1.data.isAdmin)
                     {

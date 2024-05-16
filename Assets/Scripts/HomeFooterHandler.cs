@@ -45,6 +45,7 @@ public class HomeFooterHandler : MonoBehaviour
             }
         }
 
+
     }
     void Start()
     {
@@ -74,7 +75,13 @@ public class HomeFooterHandler : MonoBehaviour
             {
                 MainSceneEventHandler.OnBackRefAssign?.Invoke();
                 notLoadedAgain = true;
-                Invoke(nameof(OnClickHomeWorldButton), 0);
+                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 1)
+                {
+                    Debug.LogError("going here");
+                    PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
+                }
+                else
+                    Invoke(nameof(OnClickHomeWorldButton), 0f);
             }
         }
         else
@@ -276,6 +283,7 @@ public class HomeFooterHandler : MonoBehaviour
 
         GlobalVeriableClass.callingScreen = "";
         Debug.Log("Home button onclick");
+
         if (gameManager.defaultSelection != 1)
         {
             //socketController.DisscountSNSSockets();
@@ -569,6 +577,11 @@ public class HomeFooterHandler : MonoBehaviour
             WorldManager.instance.ClearHomePageData();
             DisableSubScreen();
         }
+
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickFeedButton);
+        }
     }
 
     public void OnClickAddFriends()
@@ -674,6 +687,12 @@ public class HomeFooterHandler : MonoBehaviour
         }
         FeedUIController.Instance.feedUiScreen.SetActive(false);
 
+
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickAddFriends);
+        }
+        
     }
 
     void DisableSubScreen()
@@ -789,6 +808,11 @@ public class HomeFooterHandler : MonoBehaviour
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
         gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
+
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
+        }
     }
     public void InitProfileData()
     {
@@ -855,6 +879,8 @@ public class HomeFooterHandler : MonoBehaviour
         //  gameManager.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(false);
         // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
         gameManager.UiManager.HomeWorldScreen.SetActive(false);
+        ConstantsHolder.xanaConstants.isStoreActive = true;
+        InventoryManager.upateAssetOnGenderChanged?.Invoke();
     }
     public void SetDefaultButtonSelection(int index)
     {

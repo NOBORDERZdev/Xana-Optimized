@@ -144,8 +144,27 @@ public class PresetData_Jsons : MonoBehaviour
                 UGCManager.isSelfieTaken = false;
             }
 
-            File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));
-            File.WriteAllText((Application.persistentDataPath + "/logIn.json"), JsonUtility.ToJson(_CharacterData));
+            // Set the position, rotation of the character 
+            {
+                string oldSelectedGender = CharacterHandler.instance.activePlayerGender == AvatarGender.Female ? "1" : "0";
+
+                // Check Old and new Selected are not same
+                if (oldSelectedGender != _CharacterData.gender) // 
+                {
+                    // Copy old avatar pos, rotation and implement to new avatar 
+                    if(oldSelectedGender == "1")
+                    {
+                        // Old is Female
+                        CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition;
+                        CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation;
+                    }
+                    else
+                    {
+                        CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localPosition = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localPosition;
+                        CharacterHandler.instance.femaleAvatarData.avatar_parent.transform.localRotation = CharacterHandler.instance.maleAvatarData.avatar_parent.transform.localRotation;
+                    }
+                }
+            }
 
             //Store selected preset data when signup
             GameManager.Instance.selectedPresetData = JsonUtility.ToJson(_CharacterData);
@@ -197,6 +216,7 @@ public class PresetData_Jsons : MonoBehaviour
                 }
 
                 ConstantsHolder.xanaConstants._lastClickedBtn = this.gameObject;
+                InventoryManager.upateAssetOnGenderChanged?.Invoke();
             }
             if (GameManager.Instance.avatarController.wornEyeWearable != null)
             {
@@ -205,9 +225,15 @@ public class PresetData_Jsons : MonoBehaviour
 
             if (_CharacterData.HairColor != null)
                 ConstantsHolder.xanaConstants.isPresetHairColor = true;
-            GetSavedPreset();
-            SavePresetOnServer(_CharacterData);
-            ApplyPreset();
+           
+            ApplyPreset(_CharacterData);
+            if (IsStartUp_Canvas)
+            {
+                File.WriteAllText((Application.persistentDataPath + "/loginAsGuestClass.json"), JsonUtility.ToJson(_CharacterData));
+                File.WriteAllText((Application.persistentDataPath + "/logIn.json"), JsonUtility.ToJson(_CharacterData));
+                GetSavedPreset();
+                SavePresetOnServer(_CharacterData);
+            }
 
             if (UGCManager.isSelfieTaken)
             {
@@ -218,12 +244,12 @@ public class PresetData_Jsons : MonoBehaviour
             {
                 InventoryManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
             }
+           
             if (!presetAlreadySaved)
             {
                 InventoryManager.instance.SaveStoreBtn.GetComponent<Button>().interactable = true;
                 SavedButtonClickedBlue();
             }
-
             else
             {
                 InventoryManager.instance.SaveStoreBtn.SetActive(true);
@@ -272,12 +298,12 @@ public class PresetData_Jsons : MonoBehaviour
             }
         }
     }
-    public void ApplyPreset()
+    public void ApplyPreset(SavingCharacterDataClass _data)
     {
         //UserRegisterationManager.instance.SignUpCompletedPresetApplied();
         if (PlayerPrefs.GetInt("presetPanel") == 1)   // preset panel is enable so saving preset to account 
             PlayerPrefs.SetInt("presetPanel", 0);
-        GameManager.Instance.avatarController.InitializeAvatar();
+        GameManager.Instance.avatarController.InitializeAvatar(false,_data);
     }
 
     void SavePresetOnServer(SavingCharacterDataClass savingCharacterDataClass)
