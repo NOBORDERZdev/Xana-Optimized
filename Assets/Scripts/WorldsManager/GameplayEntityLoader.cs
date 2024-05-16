@@ -605,6 +605,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+               XanaWorldController.SetActive(true);
+               XanaPartyController.SetActive(false);
             if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
             {
                 player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
@@ -618,23 +620,26 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
-               XanaWorldController.SetActive(false);
-               XanaPartyController.SetActive(true);
-               player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
-               SetXanaPartyControllers(player);
+            XanaWorldController.SetActive(false);
+            XanaPartyController.SetActive(true);
+            player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
+            StartCoroutine(SetXanaPartyControllers(player));
         }
     }
 
-    void SetXanaPartyControllers(GameObject player){ 
+    IEnumerator SetXanaPartyControllers(GameObject player){ 
         CharacterManager characterManager = player.GetComponent<CharacterManager>();
         XanaPartyCamera.characterManager = characterManager;
         characterManager.input= XanaPartyInput;
         characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
         XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
         XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
+        characterManager.enabled =true;
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
-        characterManager.enabled =true;
+        yield return new WaitForSeconds(0.2f);
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void ActivateNpcChat()
