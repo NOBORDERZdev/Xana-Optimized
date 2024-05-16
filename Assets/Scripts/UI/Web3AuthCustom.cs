@@ -258,6 +258,7 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
         catch (Exception ex)
         {
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
 
         }
 
