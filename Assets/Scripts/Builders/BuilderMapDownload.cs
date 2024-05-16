@@ -589,10 +589,8 @@ public class BuilderMapDownload : MonoBehaviour
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
         directionalLight.gameObject.SetActive(true);
-        if (TimeStats.playerCanvas != null)
-        {
-            RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
-        }
+        if(TimeStats.playerCanvas)
+        RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -736,7 +734,7 @@ public class BuilderMapDownload : MonoBehaviour
         Vignette vignette;
         postProcessVol.profile.TryGet(out vignette);
 
-        if (vignette && GamificationComponentData.instance.buildingDetect!=null)
+        if (vignette&& GamificationComponentData.instance.buildingDetect)
         {
             GamificationComponentData.instance.buildingDetect.defaultIntensityvalue = (float)vignette.intensity;
             GamificationComponentData.instance.buildingDetect.defaultSmootnesshvalue = (float)vignette.smoothness;
