@@ -13,7 +13,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 {
     public string worldId;
     public GameObject thumbnailPrefabRef;
-    public GameObject worldDescriptionScrollview;
     public TextMeshProUGUI WorldNameTxt;
     public TextMeshProUGUI WorldDescriptionTxt;
     public TextMeshProUGUI CreatorNameTxt;
@@ -26,7 +25,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public Image WorldIconImg;
     public Image UserProfileImg;
     public GameObject WorldDetailContentrRef;
-    public GameObject XanaProfile;
     public Button JoinEventBtn;
     public GameObject followingWorld;
     public GameObject followingWorldHighlight;
@@ -39,7 +37,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
     string ThumbnailDownloadURL = "";
-    public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;
+    public Transform LobbyLogoContaionr, XanaAvatarIcon, NoAvatarIcon, AvatarIcon;//Need to start clearing script from here
     public TextMeshProUGUI CreatorDescriptionTxt;
     public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
     public RectTransform worldImageMask, parentBodyBG;
@@ -149,6 +147,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         //ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
+        WorldDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
         CreatorNameTxt.text = creatorName;
         CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creatorName);
         CreatedAtTxt.text = createdAt.Substring(0, 10);
