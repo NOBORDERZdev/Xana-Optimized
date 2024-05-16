@@ -10,7 +10,7 @@ using static WalletLogin;
 using static System.Net.WebRequestMethods;
 using UnityEngine.UI;
 
-public class Web3AuthCustom : Singleton<Web3AuthCustom>
+public class Web3AuthCustom : MonoBehaviour
 {
   
     [Header("Web3Auth Project settings")]
@@ -36,7 +36,19 @@ public class Web3AuthCustom : Singleton<Web3AuthCustom>
     internal string msg1 ,msg2,currentLan;
     public List<Button> myButtons;
     public float cooldownTime;
-
+    public static Web3AuthCustom Instance;
+    private void Awake()
+    {
+        if(Instance==null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {
