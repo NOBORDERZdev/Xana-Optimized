@@ -215,6 +215,7 @@ GameObject:
   - component: {fileID: 2819321149851860340}
   - component: {fileID: -4570242160330397549}
   - component: {fileID: -1017050273809807769}
+  - component: {fileID: 3895471979230611570}
   m_Layer: 9
   m_Name: MovingPlatform_Small Variant
   m_TagString: Untagged
@@ -374,13 +375,26 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: -4570242160330397549}
+  - {fileID: 3895471979230611570}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3895471979230611570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819321149851860345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b62cc858ebbc142b908e3558a68488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6464496979595890638
 GameObject:
   m_ObjectHideFlags: 0
