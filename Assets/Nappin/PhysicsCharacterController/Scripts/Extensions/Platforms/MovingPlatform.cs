@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,6 +47,10 @@ namespace PhysicsCharacterController
 
         private void Awake()
         {
+            if (!GetComponent<PhotonView>().IsMine)
+            {
+                return;
+            }
             transform = this.GetComponent<Transform>();
             lastPosition = transform.position;
             lastEulerAngles = transform.eulerAngles;
@@ -58,6 +63,10 @@ namespace PhysicsCharacterController
 
         private void FixedUpdate()
         {
+            if (!GetComponent<PhotonView>().IsMine)
+            {
+                return;
+            }
             UpdateDestination();
             UpdatePositionAndRotation();
             UpdateBodies();
