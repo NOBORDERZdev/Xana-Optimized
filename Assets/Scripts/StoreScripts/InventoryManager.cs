@@ -4609,7 +4609,7 @@ public class InventoryManager : MonoBehaviour
             _CharacterData.LipColor = bodyParts.DefaultLipColor;
             _CharacterData.EyebrowColor = bodyParts.DefaultEyebrowColor;
             _CharacterData.EyebrowColor = Color.white;
-            _CharacterData.HairColor = bodyParts.DefaultHairColor;
+            _CharacterData.HairColor = Color.black; // bodyParts.DefaultHairColor; 
             _CharacterData.HairColorPaletteValue = 0;
             _CharacterData.MakeupValue = 0;
             _CharacterData.EyeLashesValue = 0;

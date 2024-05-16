@@ -286,6 +286,7 @@ public class SilderColorPicker : MonoBehaviour
             case SliderType.HairColor:
                 Debug.Log("Hair color");
                 bodyParts.ChangeHairColor(_color);
+                InventoryManager.instance.itemData.hair_color = _color;
                 break;
 
             case SliderType.EyeBrowColor:

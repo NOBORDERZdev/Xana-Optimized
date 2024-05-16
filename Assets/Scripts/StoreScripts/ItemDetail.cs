@@ -56,13 +56,12 @@ public class ItemDetail : MonoBehaviour
     InventoryManager store;
    
     
-    private void Awake()
+    
+    private void Start()
     {
         store = InventoryManager.instance;
         characterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
-    }
-    private void Start()
-    {
+
         if (CategoriesEnumVar.Equals(EnumClass.CategoryEnum.HairAvatar) && this.id == ConstantsHolder.xanaConstants.hair)
         {
             isHairItem = true;
