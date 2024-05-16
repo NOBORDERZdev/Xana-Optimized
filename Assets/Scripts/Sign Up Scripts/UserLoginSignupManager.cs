@@ -787,31 +787,31 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (displayrname == "" || userUsername == "")
         {
-            userDisplaynameErrors("Display name or username should not empty");
+            UserDisplayNameErrors("Display name or username should not be empty.");
             return;
         }
        
         else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
         {
 
-            userDisplaynameErrors(ErrorType.UserName_Has_Space.ToString());
+            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
         else if (userUsername.All(char.IsDigit))
         {
-            userDisplaynameErrors("The username must include letters");
+            UserDisplayNameErrors("The username must include letters.");
             return;
         }
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
 
-            userDisplaynameErrors("The username must be between 5 and 15 characters");
+            UserDisplayNameErrors("The username must be between 5 and 15 characters.");
             return;
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
 
-            userDisplaynameErrors("The username must must include letters,numbers or (_)");
+            UserDisplayNameErrors("The username must include alphabet, numbers, or underscores (_).");
             return;
 
         }
@@ -863,7 +863,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
     }
-    public void userDisplaynameErrors(string errorMSg) {
+    public void UserDisplayNameErrors(string errorMSg) {
 
         validationPopupPanel.SetActive(true);
         errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -1593,24 +1593,24 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 yield return null;
             }
-            UniqueUserNameError ApiResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+            UniqueUserNameError APIResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
-                if (ApiResponse.msg.Contains("Username"))
+                if (APIResponse.msg.Contains("Username"))
                 {
-                    userDisplaynameErrors("The username must include letters");
+                    UserDisplayNameErrors("The username must include letters.");
                 }
             }
-            else if (!ApiResponse.success)
+            else if (!APIResponse.success)
                 {
-                    if (ApiResponse.msg.Contains("Username"))
+                    if (APIResponse.msg.Contains("Username"))
                     {
-                    userDisplaynameErrors("Username already taken");
+                    UserDisplayNameErrors("Username already taken.");
                     }
                 }
 
-                else if (ApiResponse.success){
+                else if (APIResponse.success){
                    OpenUIPanel(16);
                    nameScreenLoader.SetActive(false);
                    nameScreenNextButton.interactable = true;
