@@ -48,6 +48,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public string[] m_WorldTags;
     public bool tagsInstantiated;
     public Transform PreviewLogo;
+    public GameObject backButton;
 
     public static Action<bool> OndescriptionPanelSwipUp;
     private void OnEnable()
@@ -67,6 +68,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             WorldImageHolderRef.sizeDelta = new Vector2(WorldImageHolderRef.sizeDelta.x, 487f);
             SetTopAndBottomPositions(-15f, 20f);
             SetSeparatorLineProp(false);
+            backButton.SetActive(true);
             //SetSeparatorLineProp(false);
             //SetParentBodyTop(parentBodyBG, -2082.26f);
             //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 515f), 0.1f).SetEase(Ease.Linear);
@@ -80,6 +82,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             WorldImageHolderRef.sizeDelta = new Vector2(WorldImageHolderRef.sizeDelta.x, 495f);
             SetTopAndBottomPositions(0f, 0f);
             SetSeparatorLineProp(true);
+            backButton.SetActive(false);
             //SetSeparatorLineProp(true);
             //SetParentBodyTop(parentBodyBG, -2067.26f);
             //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 500f), 0.1f).SetEase(Ease.Linear);

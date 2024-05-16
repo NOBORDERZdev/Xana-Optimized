@@ -33,6 +33,9 @@ public class ScrollActivity : MonoBehaviour
     }
     private void OnDisable()
     {
+        worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        worldDetailParentRef.backButton.SetActive(false);
         ScrollController.verticalNormalizedPosition = 3.5f;
         worlddetailScrollContrl.verticalNormalizedPosition = 1f;
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
@@ -241,5 +244,9 @@ public class ScrollActivity : MonoBehaviour
         fakeBGRectTransform.anchorMax = anchorMax;
     }
 
+    public void OnClickBackButton()
+    {
+        StartCoroutine(ExampleCoroutine());
+    }
 
 }
