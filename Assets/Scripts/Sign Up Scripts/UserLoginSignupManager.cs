@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdvancedInputFieldPlugin;
@@ -784,34 +784,35 @@ public class UserLoginSignupManager : MonoBehaviour
         nameScreenNextButton.interactable = false;
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
-
+        string keytoLocalize;
         if (displayrname == "" || userUsername == "")
         {
-            userDisplaynameErrors("Display name or username should not empty");
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+            UserDisplayNameErrors(keytoLocalize) ;
             return;
         }
        
         else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
         {
-
-            userDisplaynameErrors(ErrorType.UserName_Has_Space.ToString());
+            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
         else if (userUsername.All(char.IsDigit))
         {
-            userDisplaynameErrors("The username must include letters");
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+            UserDisplayNameErrors(keytoLocalize);
             return;
         }
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
-
-            userDisplaynameErrors("The username must be between 5 and 15 characters");
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+            UserDisplayNameErrors(keytoLocalize);
             return;
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
-
-            userDisplaynameErrors("The username must must include letters,numbers or (_)");
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include alphabet, numbers, or underscores (_).");
+            UserDisplayNameErrors(keytoLocalize);
             return;
 
         }
@@ -863,7 +864,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
     }
-    public void userDisplaynameErrors(string errorMSg) {
+    public void UserDisplayNameErrors(string errorMSg) {
 
         validationPopupPanel.SetActive(true);
         errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
@@ -1593,28 +1594,37 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 yield return null;
             }
-            UniqueUserNameError ApiResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+             string bykeyLocalize;
+            UniqueUserNameError APIResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
             {
                 Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
-                if (ApiResponse.msg.Contains("Username"))
+               
+                if (APIResponse.msg.Contains("Username"))
                 {
-                    userDisplaynameErrors("The username must include letters");
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                    UserDisplayNameErrors(bykeyLocalize);
+
+                  
                 }
             }
-            else if (!ApiResponse.success)
+            else if (!APIResponse.success)
+            {
+                if (APIResponse.msg.Contains("Username"))
                 {
-                    if (ApiResponse.msg.Contains("Username"))
-                    {
-                    userDisplaynameErrors("Username already taken");
-                    }
-                }
 
-                else if (ApiResponse.success){
-                   OpenUIPanel(16);
-                   nameScreenLoader.SetActive(false);
-                   nameScreenNextButton.interactable = true;
-                   
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("Username already exists");
+                    UserDisplayNameErrors(bykeyLocalize);
+
+
+                }
+            }
+            else if (APIResponse.success)
+            {
+                OpenUIPanel(16);
+                nameScreenLoader.SetActive(false);
+                nameScreenNextButton.interactable = true;
+
             }
                 
 

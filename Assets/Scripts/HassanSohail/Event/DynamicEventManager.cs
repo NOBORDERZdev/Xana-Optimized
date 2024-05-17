@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using Firebase.DynamicLinks;
 using Firebase.Crashlytics;
 using Photon.Pun.Demo.PunBasics;
+using UnityEditor;
 
 public class DynamicEventManager : Singleton<DynamicEventManager>
 {
@@ -35,8 +36,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                 Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
                 ConstantsHolder.xanaConstants.isFirebaseInit = true;
-                if(PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0)
-                    OpenEnvironmentDeeplink(Application.absoluteURL);
+                string validateURL = Application.absoluteURL;
+                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0 && validateURL != "")
+                {
+                   if(validateURL.Contains("ENV"))
+                   {
+                        OpenEnvironmentDeeplink(Application.absoluteURL);
+                   }
+                }
 
             }
             else
@@ -78,7 +85,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
         yield return new WaitForSeconds(1.5f);
 #if UNITY_ANDROID
-  string[] urlBreadDown = deeplinkUrl.Split("=");
+
+        string[] urlBreadDown = deeplinkUrl.Split("=");
         foreach (string word in urlBreadDown)
         {
             if (urlBreadDown[1] == word)
@@ -201,3 +209,24 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     }
     #endregion
 }
+#if UNITY_EDITOR
+
+[CustomEditor(typeof(DynamicEventManager))]
+public class EditorTestDeeplinking : Editor
+{
+    public int EnvironmentID = default;
+
+    public override void OnInspectorGUI()
+    {
+        EnvironmentID = EditorGUILayout.IntField("EnvironmentID", EnvironmentID);
+
+        if (GUILayout.Button("Enter World"))
+        {
+            if (EnvironmentID > 0)
+            {
+                DynamicEventManager.Instance.InvokeDeepLinkEnvironment("" + EnvironmentID);
+            }
+        }
+    }
+}
+#endif
