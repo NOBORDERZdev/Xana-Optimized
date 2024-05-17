@@ -112,9 +112,10 @@ public class WalletLogin: MonoBehaviour
                 PlayerPrefs.Save();
             }
         }
-        catch (Exception e )
+        catch (Exception e)
         {
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(true);
             throw new System.Exception("Unbale to Connect wallet on wallet connect btn at "+type+" state  with exception : "+e );
         }
 
