@@ -28,7 +28,7 @@ public class SilderColorPicker : MonoBehaviour
     {
 
         //bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharcterBodyParts>();
-        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
+        
         saveBtn = InventoryManager.instance.saveButton.GetComponent<Button>();
 
         //Int();
@@ -40,6 +40,7 @@ public class SilderColorPicker : MonoBehaviour
 
     private void OnEnable()
     {
+        bodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
         SetRelatedData();
         if (sliderCategory.Equals(SliderType.Skin))
             CharacterBodyParts.OnSkinColorApply += ChangeSliderColor;
