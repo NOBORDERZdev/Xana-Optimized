@@ -13,7 +13,6 @@ public class ScrollActivity : MonoBehaviour
     public Transform m_parent;
     public GameObject btnback;
     public float parentNormVal, ChildNormVal;
-    public int lastindex = 1;
     [SerializeField]
     CanvasGroup canvasGroup;
     public WorldDescriptionPopupPreview worldDetailParentRef;
@@ -33,14 +32,7 @@ public class ScrollActivity : MonoBehaviour
     }
     private void OnDisable()
     {
-        worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
-        worldDetailParentRef.backButton.SetActive(false);
-        ScrollController.enabled = false;
-        ScrollController.verticalNormalizedPosition = 3.5f;
-        worlddetailScrollContrl.verticalNormalizedPosition = 1f;
-        ScrollController.movementType = ScrollRect.MovementType.Elastic;
-        firstTimePlay = true;
+        SetComponentsDefaultSetting();
         UnRegTouchInput();
     }
     private void OnEnable()
@@ -70,6 +62,18 @@ public class ScrollActivity : MonoBehaviour
             swipe1.StateUpdated -= Swipe_Updated;
             FingersScript.Instance.RemoveGesture(swipe1);
         }
+    }
+
+    void SetComponentsDefaultSetting()
+    {
+        worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
+        worldDetailParentRef.backButton.SetActive(false);
+        ScrollController.enabled = false;
+        ScrollController.verticalNormalizedPosition = 3.5f;
+        worlddetailScrollContrl.verticalNormalizedPosition = 1f;
+        ScrollController.movementType = ScrollRect.MovementType.Elastic;
+        firstTimePlay = true;
     }
 
     Coroutine IEBottomToTopCoroutine;
@@ -191,14 +195,6 @@ public class ScrollActivity : MonoBehaviour
     //Called From Inspector Scroller event
     public void Closer()
     {
-        //if (ScrollController.verticalNormalizedPosition < 0.001f)
-        //{
-        //    btnback.SetActive(true);
-        //}
-        //else
-        //{
-        //    btnback.SetActive(false);
-        //}
         parentNormVal = ScrollController.verticalNormalizedPosition;
         ChildNormVal = worlddetailScrollContrl.verticalNormalizedPosition;
     }
