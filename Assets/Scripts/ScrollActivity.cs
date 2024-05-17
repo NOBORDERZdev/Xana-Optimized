@@ -118,6 +118,8 @@ public class ScrollActivity : MonoBehaviour
     {
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.OutSine).OnComplete(() =>
         {
+            worldDetailParentRef.CreatorDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
+            contentRectTransform.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
             ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
             ScrollController.enabled = true;
         });

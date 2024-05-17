@@ -9,20 +9,6 @@ public class ParentHeightAdjuster : MonoBehaviour
 
     void Update()
     {
-        if (parentRect != null && childRect != null)
-        {
-            // Get the height of the child element
-            float childHeight = childRect.rect.height;
-
-            // Adjust the parent's height based on the child's height
-            Vector2 parentSize = parentRect.sizeDelta;
-            parentSize.y = childHeight;
-            parentRect.sizeDelta = parentSize;
-        }
-    }
-
-    public void SetParentHeight()
-    {
         //if (parentRect != null && childRect != null)
         //{
         //    // Get the height of the child element
@@ -33,5 +19,19 @@ public class ParentHeightAdjuster : MonoBehaviour
         //    parentSize.y = childHeight;
         //    parentRect.sizeDelta = parentSize;
         //}
+    }
+
+    public void SetParentHeight()
+    {
+        if (parentRect != null && childRect != null)
+        {
+            // Get the height of the child element
+            float childHeight = childRect.rect.height;
+
+            // Adjust the parent's height based on the child's height
+            Vector2 parentSize = parentRect.sizeDelta;
+            parentSize.y = childHeight;
+            parentRect.sizeDelta = parentSize;
+        }
     }
 }

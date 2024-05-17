@@ -148,7 +148,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         //ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
-        WorldDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
         CreatorNameTxt.text = creatorName;
         CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creatorName);
         CreatedAtTxt.text = createdAt.Substring(0, 10);
@@ -224,7 +223,9 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         }*/
 
         CheckWorldFav(isFavourite);
-        WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+        WorldDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
+        //CreatorDescriptionTxt.transform.parent.GetComponent<ParentHeightAdjuster>().SetParentHeight();
+        //WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 
     public void CallAnalytics(string idOfObject, string entityType)
