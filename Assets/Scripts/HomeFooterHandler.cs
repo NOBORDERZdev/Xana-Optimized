@@ -583,6 +583,10 @@ public class HomeFooterHandler : MonoBehaviour
             WorldManager.instance.ClearHomePageData();
             DisableSubScreen();
         }
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickFeedButton);
+        }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
@@ -688,7 +692,10 @@ public class HomeFooterHandler : MonoBehaviour
             OtherPlayerProfileData.Instance.myPlayerdataObj.gameObject.SetActive(false);
         }
         FeedUIController.Instance.feedUiScreen.SetActive(false);
-
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickAddFriends);
+        }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
@@ -805,7 +812,10 @@ public class HomeFooterHandler : MonoBehaviour
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
         gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
-
+        if (MyProfileDataManager.Instance)
+        {
+            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
+        }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
     public void InitProfileData()

@@ -14,6 +14,12 @@ public class BackButtonHandler : MonoBehaviour
         Othertabs,
         Avatar,
         Post,
+        FeedProfile,
+        FriendsProfile,
+        EditProfile,
+        FaceCam,
+        MainSetting,
+        SubSetting,
         Gameplay
     }
 
@@ -22,6 +28,13 @@ public class BackButtonHandler : MonoBehaviour
         HomeFooterHandler.OnScreenTabStateChange += setScreenTabEnum;
         UIHandler.OnScreenTabStateChange += setScreenTabEnum;
         InventoryManager.OnScreenTabStateChange += setScreenTabEnum;
+        FeedData.OnScreenTabStateChange += setScreenTabEnum;
+        FindFriendWithNameItem.OnScreenTabStateChange += setScreenTabEnum;
+        MyProfileDataManager.OnScreenTabStateChange += setScreenTabEnum;
+        UGCUIManager.OnScreenTabStateChange += setScreenTabEnum;
+        WorldManager.OnScreenTabStateChange += setScreenTabEnum;
+        FollowingItemController.OnScreenTabStateChange += setScreenTabEnum;
+        SNSSettingController.OnScreenTabStateChange += setScreenTabEnum;
     }
 
     private void OnDisable()
@@ -29,12 +42,26 @@ public class BackButtonHandler : MonoBehaviour
         HomeFooterHandler.OnScreenTabStateChange -= setScreenTabEnum;
         UIHandler.OnScreenTabStateChange -= setScreenTabEnum;
         InventoryManager.OnScreenTabStateChange -= setScreenTabEnum;
+        FeedData.OnScreenTabStateChange -= setScreenTabEnum;
+        FindFriendWithNameItem.OnScreenTabStateChange -= setScreenTabEnum;
+        MyProfileDataManager.OnScreenTabStateChange -= setScreenTabEnum;
+        UGCUIManager.OnScreenTabStateChange -= setScreenTabEnum;
+        WorldManager.OnScreenTabStateChange -= setScreenTabEnum;
+        FollowingItemController.OnScreenTabStateChange -= setScreenTabEnum;
+        SNSSettingController.OnScreenTabStateChange -= setScreenTabEnum;
     }
 
     private void Awake()
     {
-        if (instance != null)
+        if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void Update()
@@ -61,15 +88,46 @@ public class BackButtonHandler : MonoBehaviour
             case screenTabs.Post:
                 ExitFromPostTab();
                 break;
-            case screenTabs.Gameplay:
-                ExitFromGamePlay();
+            case screenTabs.FeedProfile:
+                ExitfromFeedOtherPlayerProfile();
+                break;
+            case screenTabs.FriendsProfile:
+                ExitFromAddFriendsProfile();
+                break;
+            case screenTabs.EditProfile:
+                ExitFromEditProfile();
+                break;
+            case screenTabs.FaceCam:
+                ExitFromfaceCam();
+                break;
+            case screenTabs.MainSetting:
+                ExitFromMainSetting();
+                break;
+            case screenTabs.SubSetting:
+                ExitFromSubSetting();
                 break;
         }
     }
 
-    private void ExitFromGamePlay()
+    private void ExitFromEditProfile()
     {
-        Debug.Log("Exit from gameplay");
+        MyProfileDataManager.Instance.editProfileScreen.SetActive(false);
+        _screenTabs = screenTabs.Othertabs;
+    }
+
+    private void ExitFromMainSetting()
+    {
+        FeedUIController.Instance.SNSSettingController.OnClickSettingClose();
+    }
+
+    private void ExitFromSubSetting()
+    {
+        FeedUIController.Instance.SNSSettingController.OnClickMyAccountBackButton();
+    }
+
+    private void ExitFromfaceCam()
+    {
+        UGCUIManager.instance.BackToHomeScreen();
     }
 
     private void ExitFromAvatarTab()
@@ -89,6 +147,16 @@ public class BackButtonHandler : MonoBehaviour
 
     }
 
+    private void ExitfromFeedOtherPlayerProfile()
+    {
+        GameManager.Instance.bottomTabManagerInstance.OnClickFeedButton();
+    }
+
+    private void ExitFromAddFriendsProfile()
+    {
+        GameManager.Instance.bottomTabManagerInstance.OnClickAddFriends();
+    }
+
     private void PromptQuitGame()
     {
         exitPanel.SetActive(true);
@@ -96,7 +164,6 @@ public class BackButtonHandler : MonoBehaviour
 
     public void ConfirmQuitDialog()
     {
-        Debug.Log("Quitting game...");
         Application.Quit();
     }
 
