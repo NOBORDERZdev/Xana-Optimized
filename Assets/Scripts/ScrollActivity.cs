@@ -161,10 +161,7 @@ public class ScrollActivity : MonoBehaviour
                         else
                         {
                             WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
-                            DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
-                                //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
-                                //fakeBGRectTransform.gameObject.SetActive(false);
-                            });
+                            DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear);
                             worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
                         }
                     }
@@ -172,11 +169,7 @@ public class ScrollActivity : MonoBehaviour
                 else if (lastSwipeMovement == SwipeGestureRecognizerDirection.Up && lastSwipeYDistance > 0)
                 {
                     WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(true);
-                    DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
-                        //SetFakeBGHeight(1150f);
-                        //fakeBGRectTransform.gameObject.SetActive(true);
-                        //worlddetailScrollContrl.GetComponent<Image>().enabled = false;
-                    });
+                    DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 0, 0.1f).SetEase(Ease.Linear);
                     worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = true;
                 }
             }
