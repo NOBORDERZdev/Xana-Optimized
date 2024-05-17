@@ -36,6 +36,7 @@ public class Web3AuthCustom : MonoBehaviour
     internal string msg1 ,msg2,currentLan;
     public List<Button> myButtons;
     public float cooldownTime;
+    public Action<string> onLoginAction;
     public static Web3AuthCustom Instance;
     private void Awake()
     {
@@ -226,6 +227,7 @@ public class Web3AuthCustom : MonoBehaviour
             Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         userInfo = response.userInfo;
         privateKey = response.privKey;
+        onLoginAction?.Invoke(userInfo.email);
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));

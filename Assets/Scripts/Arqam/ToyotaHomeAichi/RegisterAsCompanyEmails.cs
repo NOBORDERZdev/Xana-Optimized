@@ -14,7 +14,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     
     private string toyotaUserEmail;
 
-    private void OnEnable()
+    private void Start()
     {
         Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
     }

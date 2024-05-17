@@ -72,6 +72,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public Web3Web2Handler _web3APIforWeb2;
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
+    public Action logoutAction;
     public static UserLoginSignupManager instance;
     EyesBlinking ref_EyesBlinking;
 
@@ -1505,7 +1506,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         
         Debug.Log("Logout Successfully");
-        
+        logoutAction?.Invoke();
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleScriptScriptableObj.userNftRoleSlist.Clear();
