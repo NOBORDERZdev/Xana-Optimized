@@ -2,7 +2,6 @@ using UnityEngine;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
-using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
@@ -18,21 +17,19 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private const string MeetingStatusPropertyName = "MeetingStatus";
     public int roomID = 4;
     public int playerCount;
-    //private void OnEnable()
-    //{
-    //    MutiplayerController.instance.playerJoined += NewPlayerSpawned;
-    //}
-    //private void OnDisable()
-    //{
-    //    MutiplayerController.instance.playerJoined -= NewPlayerSpawned;
-    //}
+
+
     private void Start()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            CheckUsersCount();
-        }
+        BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        //if (PhotonNetwork.IsMasterClient)
+            //CheckUsersCount();
     }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
+    }
+
     public void UpdateMeetingParams(int status)
     {
         this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
@@ -49,9 +46,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         Debug.LogError("RoomProperty Update");
         // Check if the meeting status property was updated
         if (propertiesThatChanged.ContainsKey(MeetingStatusPropertyName))
-        {
             tms = (MeetingStatus)(int)propertiesThatChanged[MeetingStatusPropertyName];
-        }
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -83,6 +78,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         tms = (MeetingStatus)num;
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
     }
+
     public async void CheckUsersCount()
     {
         StringBuilder ApiURL = new StringBuilder();

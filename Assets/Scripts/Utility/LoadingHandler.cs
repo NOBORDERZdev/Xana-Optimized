@@ -286,7 +286,8 @@ public class LoadingHandler : MonoBehaviour
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.isBackToParentScane
+            && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
