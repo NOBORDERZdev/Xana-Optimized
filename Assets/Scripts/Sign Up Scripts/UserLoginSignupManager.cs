@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AdvancedInputFieldPlugin;
@@ -12,6 +12,10 @@ using System.Text;
 using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
+using Newtonsoft.Json;
+
+
+
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -46,7 +50,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     [Space(10)]
     public GameObject enterNamePanel;
-    public AdvancedInputField userNameField;
+    public AdvancedInputField displayrNameField,userUsernameField;
     public Image selectedPresetImage;
     public RawImage aiPresetImage;
     public Button nameScreenNextButton;
@@ -68,7 +72,6 @@ public class UserLoginSignupManager : MonoBehaviour
     public Web3Web2Handler _web3APIforWeb2;
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
-    public Action logoutAction;
     public static UserLoginSignupManager instance;
     EyesBlinking ref_EyesBlinking;
 
@@ -218,12 +221,14 @@ public class UserLoginSignupManager : MonoBehaviour
     public void OpenUserNamePanel()
     {
         enterNamePanel.SetActive(true);
-        userNameField.Clear();
+        displayrNameField.Clear();
+        userUsernameField.Clear();
     }
     public void BackFromUserNamePanel()
     {
         enterNamePanel.SetActive(false);
-        userNameField.Clear();
+        displayrNameField.Clear();
+        userUsernameField.Clear();
         MainSceneEventHandler.OpenPresetPanel?.Invoke();
     }
 
@@ -235,7 +240,8 @@ public class UserLoginSignupManager : MonoBehaviour
         passwordField.Clear();
         passwordFieldLogin.Clear();
         repeatPasswordField.Clear();
-        userNameField.Clear();
+        displayrNameField.Clear();
+        userUsernameField.Clear();
     }
 
     //wallet login functions 
@@ -650,8 +656,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 errorTextMsg.gameObject.SetActive(true);
                 errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
                 errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-
-
             }
         }
         if (_loader != null)
@@ -774,62 +778,79 @@ public class UserLoginSignupManager : MonoBehaviour
         CheckForValidationAndSignUp(true);
     }
 
-
-    //Enter User Name Section 
     public void EnterUserName()
     {
         nameScreenLoader.SetActive(true);
         nameScreenNextButton.interactable = false;
-
-        string Localusername = userNameField.Text;
-
-        if (Localusername == "")
+        string displayrname = displayrNameField.Text;
+        string userUsername = userUsernameField.Text;
+        string keytoLocalize;
+        if (displayrname == "" || userUsername == "")
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.Name_Field__empty.ToString(), errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
+            UserDisplayNameErrors(keytoLocalize) ;
             return;
         }
-        else if (Localusername.StartsWith(" "))
+       
+        else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
         {
-            validationPopupPanel.SetActive(true);
-            errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-            errorHandler.ShowErrorMessage(ErrorType.UserName_Has_Space.ToString(), errorTextMsg);
-            nameScreenLoader.SetActive(false);
-            nameScreenNextButton.interactable = true;
+            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
-
-        if (Localusername.EndsWith(" "))
+        else if (userUsername.All(char.IsDigit))
         {
-            Localusername = Localusername.TrimEnd(' ');
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+            UserDisplayNameErrors(keytoLocalize);
+            return;
         }
+        else if (userUsername.Length < 5 || userUsername.Length > 15)
+        {
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+            UserDisplayNameErrors(keytoLocalize);
+            return;
+        }
+        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+        {
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include alphabet, numbers, or underscores (_).");
+            UserDisplayNameErrors(keytoLocalize);
+            return;
+
+        }
+        else if (displayrname.EndsWith(" "))
+        {
+            displayrname = displayrname.TrimEnd(' ');
+        }
+        else if (userUsername.EndsWith(" "))
+        {
+            userUsername = userUsername.TrimEnd(' ');
+        }
+       
+
         PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
-        string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(Localusername));
+        string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(displayrname));
 
         string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
-
+        
+        
 
         if (ConstantsHolder.isWalletLogin)
         {
-            StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, Localusername, (isSucess) =>
-            {
-                OpenUIPanel(16);
-                nameScreenLoader.SetActive(false);
-                nameScreenNextButton.interactable = true;
-                
-                Debug.Log("Wallet Signup");
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
-            }));
+           
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+                {
+                    Debug.Log("Wallet Signup");
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+                   
+                }));
+           
+            RequestSubmitUsername(userUsername);
         }
         else
         {
-            StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, Localusername, (isSucess) =>
+            StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
             {
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
@@ -839,10 +860,19 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserPassManager.Instance.GetGroupDetails("freeuser");
             }));
         }
-
+     
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
     }
+    public void UserDisplayNameErrors(string errorMSg) {
+
+        validationPopupPanel.SetActive(true);
+        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+        errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
+        nameScreenLoader.SetActive(false);
+        nameScreenNextButton.interactable = true;
+       
+  }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
     {
         _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -950,18 +980,18 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else
         {
-            if (request.result == UnityWebRequest.Result.ConnectionError)
-            {
-            }
-            else
-            {
-                if (!myObject1.success)
-                {
-                    validationPopupPanel.SetActive(true);
-                    errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
-                    errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
-                }
-            }
+            //if (request.result == UnityWebRequest.Result.ConnectionError)
+            //{
+            //}
+            //else
+            //{
+            //    if (!myObject1.success)
+            //    {
+            //        validationPopupPanel.SetActive(true);
+            //        errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
+            //        errorHandler.ShowErrorMessage(myObject1.msg, errorTextMsg);
+            //    }
+            //}
             UserRegisteredCallBack(false);
         }
 
@@ -1281,7 +1311,8 @@ public class UserLoginSignupManager : MonoBehaviour
             case 16:
                 {
                     enterNamePanel.SetActive(false);
-                    userNameField.Clear();
+                    displayrNameField.Clear();
+                    userUsernameField.Clear();
                     //TutorialsHandler.instance.ShowTutorials();
                     break;
                 }
@@ -1474,7 +1505,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         
         Debug.Log("Logout Successfully");
-        logoutAction?.Invoke();
+        
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleScriptScriptableObj.userNftRoleSlist.Clear();
@@ -1531,6 +1562,78 @@ public class UserLoginSignupManager : MonoBehaviour
 
         yield return null;
     }
+
+    public void RequestSubmitUsername(string unique_Name)
+    {
+        StartCoroutine(IERequestSubmitUsername(unique_Name));
+    }
+
+    public IEnumerator IERequestSubmitUsername(string unique_Name)
+    {
+        WWWForm form = new WWWForm();
+
+        UserProfile userProfile = new UserProfile
+        {
+            username = unique_Name,
+        };
+
+        string jsonData = JsonUtility.ToJson(userProfile);
+        string apiUrl = ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserProfile;
+
+        using (UnityWebRequest www = new UnityWebRequest(apiUrl, "POST"))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+            byte[] jsonToSend = new UTF8Encoding().GetBytes(jsonData);
+            www.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
+            www.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+             string bykeyLocalize;
+            UniqueUserNameError APIResponse = JsonConvert.DeserializeObject<UniqueUserNameError>(www.downloadHandler.text);
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError) //(www.result.isNetworkError || www.isHttpError)
+            {
+                Debug.Log("<color=red> ------Edit NormalAPI Error " + www.error + www.downloadHandler.text + "</color>");
+               
+                if (APIResponse.msg.Contains("Username"))
+                {
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                    UserDisplayNameErrors(bykeyLocalize);
+
+                  
+                }
+            }
+            else if (!APIResponse.success)
+            {
+                if (APIResponse.msg.Contains("Username"))
+                {
+
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("Username already exists");
+                    UserDisplayNameErrors(bykeyLocalize);
+
+
+                }
+            }
+            else if (APIResponse.success)
+            {
+                OpenUIPanel(16);
+                nameScreenLoader.SetActive(false);
+                nameScreenNextButton.interactable = true;
+
+            }
+                
+
+
+        }
+    }
+    
+
+
 
     #endregion
 
@@ -1629,6 +1732,17 @@ public class UserLoginSignupManager : MonoBehaviour
             myObject = JsonUtility.FromJson<MyClassNewApi>(savedData);
             return myObject;
         }
+    }
+    [Serializable]
+    public class UserProfile
+    {
+        public string username;
+    }
+    [Serializable]
+    class UniqueUserNameError
+    {
+        public bool success;
+        public string msg;
     }
 
     [Serializable]

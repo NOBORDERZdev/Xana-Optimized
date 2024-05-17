@@ -1040,30 +1040,18 @@ public class CharacterBodyParts : MonoBehaviour
                 AvatarController ac = applyOn.GetComponent<AvatarController>();
                 if (ac.wornHair != null)
                 {
-                    //ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+                    Material material = ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0];
+                    if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
                     {
-                        // For Band using Eye Shader so variable name is Changed 
-                        // Variable is equal to eyename
-                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
-                    }
-                    else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-                    {
-                        if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-                           ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
+                        if (material.name.Contains("Cap") || material.name.Contains("Hat") || material.name.Contains("Pins"))
                             ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
                         else
-                            ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                            material.SetColor(Hair_ColorName, _color);
                     }
                     else
-                        ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                        material.SetColor(Hair_ColorName, _color);
                 }
 
-                // }
-                //else if(hairColorai)
-                //{
-                //    avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
-                //}
                 break;
 
             case SliderType.EyeBrowColor:
