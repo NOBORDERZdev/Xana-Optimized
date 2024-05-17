@@ -23,7 +23,7 @@ public class ScrollActivity : MonoBehaviour
     private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
     private SwipeGestureRecognizer swipe2 = new SwipeGestureRecognizer();
     public SwipeGestureRecognizerDirection lastSwipeMovement;
-    public float lastSwipeYDistance;
+    public float lastSwipeYDistance, lastSwipeSpeed;
     public bool firstTimePlay = true;
 
     private void Awake()
@@ -36,6 +36,7 @@ public class ScrollActivity : MonoBehaviour
         worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
         worldDetailParentRef.WorldDetailContentrRef.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.Unconstrained;
         worldDetailParentRef.backButton.SetActive(false);
+        ScrollController.enabled = false;
         ScrollController.verticalNormalizedPosition = 3.5f;
         worlddetailScrollContrl.verticalNormalizedPosition = 1f;
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
@@ -118,6 +119,7 @@ public class ScrollActivity : MonoBehaviour
         DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.OutSine).OnComplete(() =>
         {
             ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = true;
+            ScrollController.enabled = true;
         });
     }
 
@@ -134,25 +136,33 @@ public class ScrollActivity : MonoBehaviour
         if (swipe2.DistanceY > 0 || swipe2.DistanceY < 0)
         {
             lastSwipeYDistance = swipe2.DistanceY;
+            lastSwipeSpeed = swipe2.Speed;
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            //Debug.Log("Last swipe direction and distance Y Values: " + lastSwipeMovement + " " + lastSwipeYDistance);
+            //Debug.Log("Last swipe direction and distance Y Values: " + lastSwipeMovement + ": Distance: " + lastSwipeYDistance + ": Speed: " + lastSwipeSpeed);
             if (ScrollController.verticalNormalizedPosition < 1f)
             {
                 if (lastSwipeMovement == SwipeGestureRecognizerDirection.Down)
                 {
                     if (worlddetailScrollContrl.verticalNormalizedPosition >= 1f)
                     {
-                        WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
-                        //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
-                        //fakeBGRectTransform.gameObject.SetActive(false);
-                        DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+                        if (lastSwipeSpeed >= 8000f)
+                        {
+                            OnClickBackButton();
+                        }
+                        else
+                        {
+                            WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
                             //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
                             //fakeBGRectTransform.gameObject.SetActive(false);
-                        });
-                        worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                            DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
+                                //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
+                                //fakeBGRectTransform.gameObject.SetActive(false);
+                            });
+                            worlddetailScrollContrl.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                        }
                     }
                 }
                 else if (lastSwipeMovement == SwipeGestureRecognizerDirection.Up && lastSwipeYDistance > 0)
