@@ -47,7 +47,7 @@ namespace PhysicsCharacterController
 
         private void Awake()
         {
-            if (!GetComponent<PhotonView>().IsMine)
+            if (GetComponent<PhotonView>() && !GetComponent<PhotonView>().IsMine)
             {
                 return;
             }
@@ -63,7 +63,7 @@ namespace PhysicsCharacterController
 
         private void FixedUpdate()
         {
-            if (!GetComponent<PhotonView>().IsMine)
+            if (GetComponent<PhotonView>() && !GetComponent<PhotonView>().IsMine)
             {
                 return;
             }

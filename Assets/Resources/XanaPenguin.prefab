@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 1927154725259993613}
   - component: {fileID: 8322226048980141524}
   - component: {fileID: 6647519497024165762}
+  - component: {fileID: -2821674540856074328}
   m_Layer: 8
   m_Name: XanaPenguin
   m_TagString: Untagged
@@ -476,6 +477,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 6647519497024165762}
+  - {fileID: -2821674540856074328}
   - {fileID: 3883278212563750094}
   sceneViewId: 0
   InstantiationId: 0
@@ -496,6 +498,22 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &-2821674540856074328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927154725259993610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 1
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &1927154725311225520
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,22 +702,22 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isGrounded
   - Type: 1
     SynchronizeType: 2
     Name: velocity
   - Type: 4
-    SynchronizeType: 2
+    SynchronizeType: 1
     Name: isJump
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isTouchWall
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isClimb
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: isCrouch
   m_SynchronizeLayers:
   - SynchronizeType: 0
