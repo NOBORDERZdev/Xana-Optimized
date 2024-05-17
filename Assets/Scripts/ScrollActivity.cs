@@ -157,8 +157,6 @@ public class ScrollActivity : MonoBehaviour
                         else
                         {
                             WorldDescriptionPopupPreview.OndescriptionPanelSwipUp?.Invoke(false);
-                            //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
-                            //fakeBGRectTransform.gameObject.SetActive(false);
                             DOTween.To(() => ScrollController.verticalNormalizedPosition, x => ScrollController.verticalNormalizedPosition = x, 1, 0.1f).SetEase(Ease.Linear).OnComplete(() => {
                                 //worlddetailScrollContrl.GetComponent<Image>().enabled = true;
                                 //fakeBGRectTransform.gameObject.SetActive(false);

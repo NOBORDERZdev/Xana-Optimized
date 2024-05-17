@@ -69,13 +69,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             SetTopAndBottomPositions(-15f, 20f);
             SetSeparatorLineProp(false);
             backButton.SetActive(true);
-            //SetSeparatorLineProp(false);
-            //SetParentBodyTop(parentBodyBG, -2082.26f);
-            //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 515f), 0.1f).SetEase(Ease.Linear);
-            ////tagScroller.transform.position = new Vector3(tagScroller.transform.position.x,-500, tagScroller.transform.position.z);
-            //DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -555), 0.1f).SetEase(Ease.Linear);
-            ////tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -500);
-            //worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(400);
         }
         else
         {
@@ -83,13 +76,6 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             SetTopAndBottomPositions(0f, 0f);
             SetSeparatorLineProp(true);
             backButton.SetActive(false);
-            //SetSeparatorLineProp(true);
-            //SetParentBodyTop(parentBodyBG, -2067.26f);
-            //worldImageMask.DOSizeDelta(new Vector2(worldImageMask.sizeDelta.x, 500f), 0.1f).SetEase(Ease.Linear);
-            ////tagScroller.transform.position = new Vector3(tagScroller.transform.position.x, -310, tagScroller.transform.position.z);
-            //DOTween.To(() => tagScroller.GetComponent<RectTransform>().anchoredPosition, x => tagScroller.GetComponent<RectTransform>().anchoredPosition = x, new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -319), 0.1f).SetEase(Ease.Linear);
-            ////tagScroller.GetComponent<RectTransform>().anchoredPosition = new Vector2(tagScroller.GetComponent<RectTransform>().anchoredPosition.x, -310);
-            //worldDescriptionScrollview.GetComponent<RectTransform>().SetHeight(255);
         }
     }
 
