@@ -85,6 +85,8 @@ public class JjWorldChanger : MonoBehaviour
                         NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
                         triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
                     }
+
+                    ConstantsHolder.xanaConstants.isBackToParentScane = true;
                 }
 
                 this.StartCoroutine(swtichScene(WorldName));
@@ -114,8 +116,6 @@ public class JjWorldChanger : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
-        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
-            ConstantsHolder.xanaConstants.isBackToParentScane = true;
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
