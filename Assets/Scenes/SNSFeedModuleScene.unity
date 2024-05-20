@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7604,7 +7604,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &537554721
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14503,19 +14503,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1202664523}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114721104}
-        m_TargetAssemblyTypeName: HomeFooterHandler, Assembly-CSharp
-        m_MethodName: OnClickFeedButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1202664523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15504,7 +15492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1282846351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -30895,7 +30883,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fontColor: {r: 0.35686275, g: 0.4392157, b: 0.5137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -31995,8 +31983,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 437.5, y: 593}
-  m_SizeDelta: {x: 120, y: 120}
+  m_AnchoredPosition: {x: 437.5, y: 584}
+  m_SizeDelta: {x: 124, y: 124}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1424186645196662181
 GameObject:
@@ -34816,6 +34804,10 @@ PrefabInstance:
       propertyPath: TagPrefab
       value: 
       objectReference: {fileID: 9156112392926067791, guid: b4d75d32f61ce1c40bcddb30ffdddcdb, type: 3}
+    - target: {fileID: 2922296259976616566, guid: 002f5c72e6e3b9e48872ee68430b74ba, type: 3}
+      propertyPath: displayName
+      value: 
+      objectReference: {fileID: 1424186644393210154}
     - target: {fileID: 2922296259976616566, guid: 002f5c72e6e3b9e48872ee68430b74ba, type: 3}
       propertyPath: dropDownBtn
       value: 

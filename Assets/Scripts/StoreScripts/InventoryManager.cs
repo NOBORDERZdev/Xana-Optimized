@@ -53,16 +53,13 @@ public class InventoryManager : MonoBehaviour
     public GameObject ReturnHomePopUp;
     [Header("Total Buying Btns")]
     public GameObject BuyStoreBtn;
-    //open a panel for player name 
-    public GameObject SaveStoreBtn;
-    //save player data to server
-    public GameObject saveButton;
+    public GameObject SaveStoreBtn; // Store Save Button
+    public GameObject saveButton;  // Popup Save Button
     [Header("Total Texts money Display")]
     public Text BuyCountertxt;
     public Text TotalGameCoins;
 
     public List<StoreItemHolder> AllCategoriesData;
-
 
     public List<ItemDetail> TotalBtnlist;
     public List<ItemDetail> CategorieslistHeads;
@@ -78,37 +75,6 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistSkinToneColor;
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
-
-    //[Header("Categories Panel Cloths")]
-    //public Transform ParentOfBtnsForHeads;
-    //public Transform ParentOfBtnsForFace;
-    //public Transform ParentOfBtnsForInner;
-    //public Transform ParentOfBtnsForOuter;
-    //public Transform ParentOfBtnsForAccesary;
-    //public Transform ParentOfBtnsForBottom;
-    //public Transform ParentOfBtnsForSocks;
-    //public Transform ParentOfBtnsForShoes;
-    //[Header("Categories Panel Avatar")]
-    //public Transform ParentOfBtnsAvatarHairs;
-    //public Transform ParentOfBtnsAvatarFace;
-    //public Transform ParentOfBtnsAvatarEyeBrows;
-    //public Transform ParentOfBtnsAvatarEyeLashes;
-    //public Transform ParentOfBtnsAvatarEyes;
-    //public Transform ParentOfBtnsAvatarNose;
-    //public Transform ParentOfBtnsAvatarLips;
-    //public Transform ParentOfBtnsAvatarBody;
-    //public Transform ParentOfBtnsAvatarSkin;
-    //public Transform ParentOfBtnsAvatarMakeup;
-    //public Transform ParentOfBtnsAvatarAccessary;
-    //[Header("Categories Color Customizations")]
-    //public Transform ParentOfBtnsCustomHair;
-    //public Transform ParentOfBtnsCustomEyeBrows;
-    //public Transform ParentOfBtnsCustomFace;
-    //public Transform ParentOfBtnsCustomEyes;
-    //public Transform ParentOfBtnsCustomEyesPalette;
-    //public Transform ParentOfBtnsCustomLips;
-    //public Transform ParentOfBtnsCustomLipsPalette;
-    //public Transform ParentOfBtnsCustomSkin;
 
     private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
         shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
@@ -127,8 +93,6 @@ public class InventoryManager : MonoBehaviour
     //public GameObject BuyBtnCheckOut;
     //public string[] ArrayofBuyItems;
     //private int TotalItemPriceCheckOut;
-
-
 
     [Header("Color Customizations")]
     public bool colorMode = false;
@@ -187,14 +151,14 @@ public class InventoryManager : MonoBehaviour
     [HideInInspector]
     public bool RedoClicked = false;
 
-    private Image saveStoreBtnImage;
-    public Button saveStoreBtnButton;
+    //private Image saveStoreBtnImage;
+    //public Button saveStoreBtnButton;
     public GameObject load;
     public GameObject loaderForItems;
 
     [Header("My Avatar Panel Prefab Refrence")]
     public Button myAvatarButton;
-    //WaqasHamd
+
     //public ColorPicker skinColorPicker;
     public bool MultipleSave; // to enable/ disable multiple save 
     private GameObject childObject;
@@ -227,9 +191,9 @@ public class InventoryManager : MonoBehaviour
     {
         load = LoadPlayerAvatar.instance_loadplayer.loader;
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
-        saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
-        saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false;
+        //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
+        //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
+        CheckAPILoaded = false; 
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -241,11 +205,6 @@ public class InventoryManager : MonoBehaviour
                 AvatarSaved.SetActive(false);
             SetPresetValue();
         }
-        //    if(UserRegisterationManager.instance.LoggedInAsGuest)
-        //  Invoke("Character_DefaultReset",2.0f);
-
-        //WaqasAhmad
-        //CharcterBodyParts.instance.BindSkinListner();
 
         if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
         {
@@ -314,7 +273,6 @@ public class InventoryManager : MonoBehaviour
                     if ((_charHandler.activePlayerGender == AvatarGender.Male && AllCategoriesData[i].subItems[j].gender.Equals("0")) ||
                          (_charHandler.activePlayerGender == AvatarGender.Female && AllCategoriesData[i].subItems[j].gender.Equals("1")))
                     {
-                        Debug.Log("Waqas: Gender Matched With Asset");
                         AllCategoriesData[i].subItems[j].obj.SetActive(true);
                     }
                     else
@@ -349,117 +307,94 @@ public class InventoryManager : MonoBehaviour
     // Using accessory panel as preset jsons
     void SetPresetValue()
     {
-        //  prefabbutton_preset;
-        ////  GameObject contentparent = ClothsPanel[4].GetComponent<ScrollRect>().content.gameObject;
-
-        ////  for(int x=0;x<contentparent.transform.childCount;x++)
-        //// {
-        ////     contentparent.transform.GetChild(x).gameObject.name = "Preset" + (1+x).ToString();
-        //    contentparent.transform.GetChild(x).gameObject.GetComponent<Image>().color = Color.black;
-        //   contentparent.transform.GetChild(x).GetComponent<Button>().onClick.AddListener(ChangecharacterOnCLickFromserver);
-        //// }
-
-        //    GameObject button = (GameObject)Instantiate(ButtonFor_Preset);
-        //     button.transform.parent = contentparent.transform;
-
         if (PlayerPrefs.GetString("PresetValue") != "")
             ConstantsHolder.xanaConstants.PresetValueString = PlayerPrefs.GetString("PresetValue");
     }
 
-
-    public void CallDynamicLink()
-    {
-        StartCoroutine(waitAndDeeplink());
-    }
-    IEnumerator waitAndDeeplink()
-    {
-        yield return new WaitForSeconds(2);
-      //  DynamicEventManager.deepLink?.Invoke("Come from store manager");
-    }
-
-    //void ChangecharacterOnCLickFromserver()
-    //{
-    //    print("Calling cloths");
-    //    PlayerPrefs.SetInt("IsLoggedIn", 2);
-    //        DefaultEnteriesforManican.instance.DefaultReset();
-    //    GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
-    //    SaveCharacterProperties.instance.LoadMorphsfromFile();
-    //}
     private void Update()
     {
-
         // Quick fix AKA ElFY
         SaveBtn();
-
     }
     public void SaveBtn()
     {
-        if (saveStoreBtnImage.color == Color.white)
-            saveStoreBtnButton.interactable = false;
+        Image image = SaveStoreBtn.GetComponent<Image>();
+        Button button = SaveStoreBtn.GetComponent<Button>();
+
+        if (image.color == Color.white)
+            button.interactable = false;
         else
-            saveStoreBtnButton.interactable = true;
+            button.interactable = true;
+
+        //if (saveStoreBtnImage.color == Color.white)
+        //    saveStoreBtnButton.interactable = false;
+        //else
+        //    saveStoreBtnButton.interactable = true;
     }
     public void CheckWhenUserLogin()
     {
-        saveStoreBtnButton.onClick.RemoveAllListeners();
-        saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        Button _storeSaveBtn = SaveStoreBtn.GetComponent<Button>();
+        Button _panelSaveBtn = saveButton.GetComponent<Button>();
+
+        _storeSaveBtn.onClick.RemoveAllListeners();
+        _panelSaveBtn.onClick.RemoveAllListeners();
         newAvatarPresetBtn.onClick.RemoveAllListeners();
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
+        //saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1) // As Guest Functionality Removed, No need for this check anymore 
+        //{
+        if (MultipleSave)
         {
-            if (MultipleSave)
+            if (AvatarSelfie.instance != null)
             {
-                if (AvatarSelfie.instance != null)
-                    saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
-                if (LoadPlayerAvatar.instance_loadplayer != null)
-                    saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
-
-                if (AvatarSelfie.instance != null)
-                    newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
-                if (LoadPlayerAvatar.instance_loadplayer != null)
-                    newAvatarPresetBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
-
-                saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
-
-                ////saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShoot());
-                //saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
-                ////saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
-                //newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData(false));
-                ////newAvatarPresetBtn.onClick.AddListener(() => OnSaveBtnClicked());
-                //// newAvatarPresetBtn.onClick.AddListener(()=> LoadPlayerAvatar.instance_loadplayer.ClosePlayerNamePanel());
-                //LoadPlayerAvatar.instance_loadplayer.PlayerPanelSaveButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData(true));
-                ////  LoadPlayerAvatar.instance_loadplayer.PlayerPanelSaveButton.onClick.AddListener(OnSaveBtnClicked);
-                ////newAvatarPresetBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+                _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
-            else
-            {
-                saveStoreBtnButton.onClick.AddListener(OnSaveBtnClicked);
-            }
+            
+            if (LoadPlayerAvatar.instance_loadplayer != null)
+                _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+
+            if (AvatarSelfie.instance != null)
+                newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+            if (LoadPlayerAvatar.instance_loadplayer != null)
+                newAvatarPresetBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+
+            _panelSaveBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
 
         }
         else
         {
-            saveStoreBtnButton.onClick.AddListener(OnSaveBtnClicked);
+            _storeSaveBtn.onClick.AddListener(OnSaveBtnClicked);
         }
+
+        //}
+        //else
+        //{
+        //    saveStoreBtnButton.onClick.AddListener(OnSaveBtnClicked);
+        //}
     }
 
 
     IEnumerator WaitForInstance()
     {
-        saveStoreBtnButton.onClick.RemoveAllListeners();
+        Button _storeSaveBtn = SaveStoreBtn.GetComponent<Button>();
+        _storeSaveBtn.onClick.RemoveAllListeners();
+
         saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         yield return new WaitForSeconds(.1f);
         //SaveStoreBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && MultipleSave)
+        if (/*PlayerPrefs.GetInt("IsLoggedIn") == 1 &&*/ MultipleSave)
         {
             if (AvatarSelfie.instance != null)
-                saveStoreBtnButton.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+            {
+                _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
+            }
+            
             if (LoadPlayerAvatar.instance_loadplayer != null)
-                saveStoreBtnButton.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+                _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
         }
         else
         {
-            saveStoreBtnButton.onClick.AddListener(OnSaveBtnClicked);
+            _storeSaveBtn.onClick.AddListener(OnSaveBtnClicked);
         }
 
         //if (Defaultreset)
@@ -551,9 +486,10 @@ public class InventoryManager : MonoBehaviour
         Default_LastSaved_PanelDisabler();
 
 
-        InventoryManager.instance.GreyRibbonImage.SetActive(true);
-        InventoryManager.instance.WhiteRibbonImage.SetActive(false);
-        InventoryManager.instance.saveStoreBtnImage.color = Color.white;
+        GreyRibbonImage.SetActive(true);
+        WhiteRibbonImage.SetActive(false);
+        SaveStoreBtn.GetComponent<Image>().color = Color.white;
+
         PresetData_Jsons test;
         if (FindObjectOfType<PresetData_Jsons>())
         {
@@ -1421,7 +1357,7 @@ public class InventoryManager : MonoBehaviour
         eyeBrowsColorButton.gameObject.SetActive(false);
         hairColorButton.gameObject.SetActive(false);
         GameManager.Instance.UiManager.ShowFooter(true);
-        if (saveStoreBtnButton.interactable == true)
+        if (SaveStoreBtn.GetComponent<Button>().interactable == true)
             ReturnHomePopUp.SetActive(true);
         else
             OnClickHomeButton();
@@ -1441,10 +1377,11 @@ public class InventoryManager : MonoBehaviour
     public void OnClickSaveAvatarButton()
     {
         isSaveFromreturnHomePopUp = true;
-        ReturnHomePopUp.GetComponent<ReturnHomeLoader>().saveloader.SetActive(true);
-        ReturnHomePopUp.GetComponent<ReturnHomeLoader>().saveButton.enabled = false;
-        ReturnHomePopUp.GetComponent<ReturnHomeLoader>().closeButton.enabled = false;
-        ReturnHomePopUp.GetComponent<ReturnHomeLoader>().homeButton.enabled = false;
+        ReturnHomeLoader returnHomeLoader = ReturnHomePopUp.GetComponent<ReturnHomeLoader>();
+        returnHomeLoader.saveloader.SetActive(true);
+        returnHomeLoader.saveButton.enabled = false;
+        returnHomeLoader.closeButton.enabled = false;
+        returnHomeLoader.homeButton.enabled = false;
         if (AvatarSelfie.instance != null) //this will take screenshot of character and automatically save avatar to server.
             AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) =>
             {
@@ -4671,7 +4608,7 @@ public class InventoryManager : MonoBehaviour
             _CharacterData.LipColor = bodyParts.DefaultLipColor;
             _CharacterData.EyebrowColor = bodyParts.DefaultEyebrowColor;
             _CharacterData.EyebrowColor = Color.white;
-            _CharacterData.HairColor = bodyParts.DefaultHairColor;
+            _CharacterData.HairColor = Color.black; // bodyParts.DefaultHairColor; 
             _CharacterData.HairColorPaletteValue = 0;
             _CharacterData.MakeupValue = 0;
             _CharacterData.EyeLashesValue = 0;

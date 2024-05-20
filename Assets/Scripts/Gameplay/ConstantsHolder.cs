@@ -130,7 +130,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
 
-    public static bool isDescriptionFullPage = false;
+    //public static bool isDescriptionFullPage = false;
 
     public string r_EmoteStoragePersistentPath
     {
