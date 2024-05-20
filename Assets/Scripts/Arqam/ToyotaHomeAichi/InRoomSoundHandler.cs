@@ -51,17 +51,17 @@ public class InRoomSoundHandler : MonoBehaviour
     }
     void TextUpdate()
     {
-        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress) && NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text != null)
+        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress) && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
             Debug.Log("Join Meeting Now!");
         }
-        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End) && NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text != null)
+        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End) && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
             Debug.Log("Meeting Ended");
         }
-        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull) && NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text != null)
+        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull) && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
             Debug.Log("House Full");
