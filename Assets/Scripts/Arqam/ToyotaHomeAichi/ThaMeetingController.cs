@@ -10,11 +10,11 @@ public class ThaMeetingController : MonoBehaviour
         GetComponent<FB_PushNotificationSender>().SendNotification();
         //only user can back to toyota world when press on exit btn
         if (ConstantsHolder.xanaConstants.meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
-        {
-            ConstantsHolder.xanaConstants.isBackToParentScane = true;
             ConstantsHolder.xanaConstants.parentSceneName = "D_Infinity_Labo";
-        }
+        else
+            ConstantsHolder.xanaConstants.isBackToParentScane = false;
     }
+
     private void OnEnable()
     {
         JoinMeeting();

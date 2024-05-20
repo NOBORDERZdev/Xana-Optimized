@@ -981,6 +981,8 @@ public class WorldManager : MonoBehaviour
                 {
                     ConstantsHolder.xanaConstants.userLimit = "15";
                 }
+                else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("THA_Meeting_Room"))
+                    ConstantsHolder.xanaConstants.userLimit = "2";
                 else
                 {
                     ConstantsHolder.xanaConstants.userLimit = "15";

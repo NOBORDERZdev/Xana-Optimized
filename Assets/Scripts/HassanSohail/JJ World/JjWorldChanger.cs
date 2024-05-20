@@ -85,6 +85,8 @@ public class JjWorldChanger : MonoBehaviour
                         NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
                         triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
                     }
+
+                    ConstantsHolder.xanaConstants.isBackToParentScane = true;
                 }
 
                 this.StartCoroutine(swtichScene(WorldName));
