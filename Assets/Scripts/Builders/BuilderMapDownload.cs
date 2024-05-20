@@ -977,6 +977,7 @@ public class DataAudioBGM
     #region Data Variables
     public string pathAudioBGM;
     public bool audioLoopBGM;
+    public bool enableDisableBGM;
     public float audioVolume = .1f;
     #endregion
 }
