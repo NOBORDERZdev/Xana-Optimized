@@ -114,6 +114,8 @@ public class JjWorldChanger : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
+            ConstantsHolder.xanaConstants.isBackToParentScane = true;
 
         // LoadingHandler.Instance.UpdateLoadingSliderForJJ(Random.Range(0.1f, 0.19f), 1f, false);
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
