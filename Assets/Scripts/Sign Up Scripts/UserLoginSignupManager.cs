@@ -13,9 +13,7 @@ using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-
-
-
+using SuperStar.Helpers;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -50,11 +48,17 @@ public class UserLoginSignupManager : MonoBehaviour
 
     [Space(10)]
     public GameObject enterNamePanel;
+    public GameObject editProfilePanel;
     public AdvancedInputField displayrNameField,userUsernameField;
-    public Image selectedPresetImage;
-    public RawImage aiPresetImage;
-    public Button nameScreenNextButton;
-    public GameObject nameScreenLoader;
+    public Image selectedPresetImage,SelectPresetImageforEditProfil;
+    public RawImage aiPresetImage, aiPresetImageforEditProfil;
+    public Button nameScreenNextButton, profilePicNextButton;
+    public GameObject nameScreenLoader, profilePicScreenLoader;
+    public Image editProfileImage;
+    public string setProfileAvatarTempPath = "";
+    public string setProfileAvatarTempFilename = "";
+    public GameObject pickImageOptionScreen;
+    public TextMeshProUGUI profilePicText;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -66,6 +70,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public AdvancedInputField passwordFieldLogin;
     public GameObject loginLoader;
     public Button loginButton;
+    
 
     //Scripts References 
     [Header("Scripts References")]
@@ -74,6 +79,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public userRoleScript userRoleScriptScriptableObj;
     public static UserLoginSignupManager instance;
     EyesBlinking ref_EyesBlinking;
+    
 
     private void OnEnable()
     {
@@ -841,7 +847,9 @@ public class UserLoginSignupManager : MonoBehaviour
            
                 StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
                 {
+                    editProfilePanel.SetActive(true);
                     Debug.Log("Wallet Signup");
+                    Debug.Log("Love mera fit fit");
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
                    
                 }));
@@ -852,6 +860,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
             {
+                Debug.Log("Love mera hit hit");
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
                 
@@ -1803,7 +1812,7 @@ public class UserLoginSignupManager : MonoBehaviour
             return JsonUtility.FromJson<MyClassOfRegisterWithEmail>(jsonString);
         }
     }
-
+  
     [System.Serializable]
     public class DeleteApiRes
     {
@@ -1813,7 +1822,275 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     #endregion
 
-    enum NftRolePriority
+    #region Work for Pick ProfilePicFromGallery 
+
+    public void OnClickChangeProfilePicButton()
+    {
+      //  mainFullScreenContainer.SetActive(false);//fo disable profile screen post part.......
+        pickImageOptionScreen.SetActive(true);
+    }
+
+
+    public void OnPickImageFromGellery(int maxSize)
+    {
+#if UNITY_IOS
+        if (permissionCheck == "false")
+        {
+            string url = MyNativeBindings.GetSettingsURL();
+            Debug.Log("the settings url is:" + url);
+            Application.OpenURL(url);
+        }
+        else
+        {
+            iOSCameraPermission.VerifyPermission(gameObject.name, "SampleCallback");
+        }
+          setProfileAvatarTempPath = "";
+        setProfileAvatarTempFilename = "";
+        //setGroupFromCamera = false;
+
+        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        {
+            if (path != null)
+            {
+                if (pickImageOptionScreen.activeSelf)//false meadia option screen.
+                {
+                    pickImageOptionScreen.SetActive(false);
+                }
+
+                // Create Texture from selected image
+                Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize, false);
+                if (texture == null)
+                {
+                    Debug.Log("Couldn't load texture from " + path);
+                    return;
+                }
+
+                //setGroupTempAvatarTexture = texture;
+
+               Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
+
+                //string[] pathArry = path.Split('/');
+
+                //string fileName = pathArry[pathArry.Length - 1];
+                string fileName = Path.GetFileName(path);
+               Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
+
+                string[] fileNameArray = fileName.Split('.');
+                string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
+                fileName = fileNameArray[0] + str + fileNameArray[1];
+
+                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setProfileAvatarTempFilename = fileName;
+
+                Crop(texture,  setProfileAvatarTempPath);
+
+                //editProfileImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
+            }
+        });
+        Debug.Log("Permission result: " + permission);
+       
+#elif UNITY_ANDROID
+        setProfileAvatarTempPath = "";
+        setProfileAvatarTempFilename = "";
+        //setGroupFromCamera = false;
+
+        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        {
+            if (path != null)
+            {
+                if (pickImageOptionScreen.activeSelf)//false meadia option screen.
+                {
+                    pickImageOptionScreen.SetActive(false);
+                }
+
+                // Create Texture from selected image
+                Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize, false);
+                if (texture == null)
+                {
+                    Debug.Log("Couldn't load texture from " + path);
+                    return;
+                }
+
+                //setGroupTempAvatarTexture = texture;
+
+                Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
+
+                //string[] pathArry = path.Split('/');
+
+                //string fileName = pathArry[pathArry.Length - 1];
+                string fileName = Path.GetFileName(path);
+                Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
+
+                string[] fileNameArray = fileName.Split('.');
+                string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
+                fileName = fileNameArray[0] + str + fileNameArray[1];
+
+                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setProfileAvatarTempFilename = fileName;
+
+                Crop(texture, setProfileAvatarTempPath);
+
+            }
+        });
+
+        if (permission != NativeGallery.Permission.Granted)
+        {
+            using (var unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            using (AndroidJavaObject currentActivityObject = unityClass.GetStatic<AndroidJavaObject>("currentActivity"))
+            {
+                string packageName = currentActivityObject.Call<string>("getPackageName");
+
+                using (var uriClass = new AndroidJavaClass("android.net.Uri"))
+                using (AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromParts", "package", packageName, null))
+                using (var intentObject = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS", uriObject))
+                {
+                    intentObject.Call<AndroidJavaObject>("addCategory", "android.intent.category.DEFAULT");
+                    intentObject.Call<AndroidJavaObject>("setFlags", 0x10000000);
+                    currentActivityObject.Call("startActivity", intentObject);
+                }
+            }
+        }
+        Debug.Log("Permission result: " + permission);
+#endif
+    }
+
+    public void Crop(Texture2D LoadedTexture, string path)
+    {
+        // If image cropper is already open, do nothing
+        if (ImageCropper.Instance.IsOpen)
+            return;
+
+        StartCoroutine(SetImageCropper(LoadedTexture, path));
+
+        //Invoke("ProfilePostPartShow", 1f);
+    }
+
+    private IEnumerator SetImageCropper(Texture2D screenshot, string path)
+    {
+        yield return new WaitForEndOfFrame();
+
+        bool ovalSelection = true;
+        bool autoZoom = true;
+
+        float minAspectRatio = 1, maxAspectRatio = 1;
+
+        ImageCropper.Instance.Show(screenshot, (bool result, Texture originalImage, Texture2D croppedImage) =>
+        {
+            // If screenshot was cropped successfully
+            if (result)
+            {
+                Sprite s = Sprite.Create(croppedImage, new Rect(0, 0, croppedImage.width, croppedImage.height), new Vector2(0, 0), 1);
+                editProfileImage.sprite = s;
+
+                try
+                {
+                    byte[] bytes = croppedImage.EncodeToPNG();
+                    File.WriteAllBytes(path, bytes);
+                    Debug.Log("File SAVE");
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e);
+                }
+            }
+            else
+            {
+                //Debug.Log("--------Image not cropped");
+                setProfileAvatarTempPath = "";
+                //croppedImageHolder.enabled = false;
+                //croppedImageSize.enabled = false;
+            }
+            // Destroy the screenshot as we no longer need it in this case
+            Destroy(screenshot);
+            Resources.UnloadUnusedAssets();
+            //Caching.ClearCache();
+            //GC.Collect();
+            profilePicText.enabled= false;
+            Invoke("ProfilePostPartShow", 0.5f);
+        },
+        settings: new ImageCropper.Settings()
+        {
+            ovalSelection = ovalSelection,
+            autoZoomEnabled = autoZoom,
+            imageBackground = Color.clear, // transparent background
+            selectionMinAspectRatio = minAspectRatio,
+            selectionMaxAspectRatio = maxAspectRatio,
+            markTextureNonReadable = false
+        },
+        croppedImageResizePolicy: (ref int width, ref int height) =>
+        {
+            // uncomment lines below to save cropped image at half resolution
+            //width /= 2;
+            //height /= 2;
+        });
+    }
+
+   public IEnumerator WaitEditProfileGetUserDetails()
+    {
+        if (setProfileAvatarTempPath == "") {
+            editProfilePanel.SetActive(false);
+        } 
+        else {
+            profilePicNextButton.interactable = false;
+            profilePicScreenLoader.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            AWSHandler.Instance.PostAvatarObject(setProfileAvatarTempPath, setProfileAvatarTempFilename, "SignupProfilePicUpload");//upload avatar image on AWS.
+        }
+    }
+    
+    public void UpdateProfilePic()
+    {
+         StartCoroutine(WaitEditProfileGetUserDetails());
+    }
+   
+    public void RequestUpdateUserAvatar(string user_avatar, string callingFrom)
+    {
+        StartCoroutine(IERequestUpdateUserAvatar(user_avatar, callingFrom));
+    }
+   
+    public IEnumerator IERequestUpdateUserAvatar(string user_avatar, string callingFrom)
+    {
+        WWWForm form = new WWWForm();
+
+        form.AddField("avatar", user_avatar);
+
+        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                profilePicNextButton.interactable = true;
+                profilePicScreenLoader.SetActive(false);
+                yield return null;
+            }
+
+            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log(www.error);
+                profilePicNextButton.interactable = true;
+                profilePicScreenLoader.SetActive(false);
+            }
+            else
+            {
+               
+                string data = www.downloadHandler.text;
+                profilePicNextButton.interactable = true;
+                profilePicScreenLoader.SetActive(false);
+                editProfilePanel.SetActive(false);
+
+            }
+        }
+    }
+
+
+ 
+
+
+        #endregion
+
+        enum NftRolePriority
     {
         alpha_pass,
         dj_event,
