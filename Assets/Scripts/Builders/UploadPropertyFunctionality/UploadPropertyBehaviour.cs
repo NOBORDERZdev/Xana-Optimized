@@ -192,29 +192,29 @@ public class UploadPropertyBehaviour : MonoBehaviour
     }
     private void OnVideoPrepared(MediaPlayer mp)
     {
-        // Get the video width and height
-        float videoWidth = mp.Info.GetVideoWidth();
-        float videoHeight = mp.Info.GetVideoHeight();
+        //// Get the video width and height
+        //float videoWidth = mp.Info.GetVideoWidth();
+        //float videoHeight = mp.Info.GetVideoHeight();
 
-        // Calculate desired dimensions based on video's aspect ratio
-        float videoAspectRatio = videoWidth / videoHeight;
-        float quadAspectRatio = feedMediaPlayer.gameObject.transform.localScale.x / feedMediaPlayer.gameObject.transform.localScale.y;
-        float newScaleX, newScaleY;
+        //// Calculate desired dimensions based on video's aspect ratio
+        //float videoAspectRatio = videoWidth / videoHeight;
+        //float quadAspectRatio = feedMediaPlayer.gameObject.transform.localScale.x / feedMediaPlayer.gameObject.transform.localScale.y;
+        //float newScaleX, newScaleY;
 
-        if (videoAspectRatio >= quadAspectRatio)
-        {
-            newScaleX = feedMediaPlayer.gameObject.transform.localScale.x;
-            newScaleY = newScaleX / videoAspectRatio;
-        }
-        else
-        {
-            newScaleY = feedMediaPlayer.gameObject.transform.localScale.y;
-            newScaleX = newScaleY * videoAspectRatio;
-        }
-        if (gameObject.GetComponentInParent<BoxCollider>() != null)
-            gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newScaleX, newScaleY, gameObject.GetComponentInParent<BoxCollider>().size.z);
-        // Update the scale of the feedMediaPlayer.gameObject
-        feedMediaPlayer.gameObject.transform.localScale = new Vector3(newScaleX, newScaleY, 1f);
+        //if (videoAspectRatio >= quadAspectRatio)
+        //{
+        //    newScaleX = feedMediaPlayer.gameObject.transform.localScale.x;
+        //    newScaleY = newScaleX / videoAspectRatio;
+        //}
+        //else
+        //{
+        //    newScaleY = feedMediaPlayer.gameObject.transform.localScale.y;
+        //    newScaleX = newScaleY * videoAspectRatio;
+        //}
+        //if (gameObject.GetComponentInParent<BoxCollider>() != null)
+        //    gameObject.GetComponentInParent<BoxCollider>().size = new Vector3(newScaleX, newScaleY, gameObject.GetComponentInParent<BoxCollider>().size.z);
+        //// Update the scale of the feedMediaPlayer.gameObject
+        //feedMediaPlayer.gameObject.transform.localScale = new Vector3(newScaleX, newScaleY, 1f);
 
         // Stop listening to the event to avoid multiple calls
         feedMediaPlayer.VideoPrepared -= OnVideoPrepared;
