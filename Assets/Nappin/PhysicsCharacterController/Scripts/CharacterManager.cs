@@ -17,7 +17,7 @@ namespace PhysicsCharacterController
         [Range(0f, 1f)]
         [Tooltip("Minimum input value to trigger movement")]
         public float crouchSpeedMultiplier = 0.248f;
-        [Range(0.01f, 0.99f)]
+        [Range(0f, 0.99f)]
         [Tooltip("Minimum input value to trigger movement")]
         public float movementThrashold = 0.01f;
         [Space(10)]
