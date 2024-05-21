@@ -134,7 +134,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     IEnumerator HitGetEnvironmentJson(string url, string envId)
     {
-        Debug.LogError(url + " ----- Environment Jump ---- " + envId);
+        //Debug.LogError(url + " ----- Environment Jump ---- " + envId);
 
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
@@ -183,7 +183,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
             else
             {
-        Debug.LogError(" ----- Environment Jump ---- " + request.error);
+       // Debug.LogError(" ----- Environment Jump ---- " + request.error);
 
                 if (request.Equals(UnityWebRequest.Result.ConnectionError))
                 {

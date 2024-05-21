@@ -1,16 +1,10 @@
-using ExitGames.Client.Photon;
-using Metaverse;
-using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
-using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Policy;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-public class EmoteManager : MonoBehaviour
+
+public class ReactionManager : MonoBehaviour
 {
     public EmoteAnimationResponse EmoteServerData;
     private void Start()
@@ -34,58 +28,66 @@ public class EmoteManager : MonoBehaviour
                 {
                     if (EmoteServerData.success == true)
                     {
-                       
+
 
                     }
                 }
             }
             else
             {
-            
+
             }
             request.Dispose();
 
         }
     }
 }
-
+#region DATA
 [System.Serializable]
-public class EmoteAnimationList
+public class ReactEmote
+{
+    public string imageName;
+    public string thumb;
+    public string mainImage;
+}
+[System.Serializable]
+public class ReactGestures
+{
+    public string imageName;
+    public string thumb;
+    public string mainImage;
+}
+[System.Serializable]
+public class ReactOthers
+{
+    public string imageName;
+    public string thumb;
+    public string mainImage;
+}
+[System.Serializable]
+public class ReactionList
 {
     public int id;
     public string name;
-    public string group;
+    public object android_bundle;
+    public object ios_bundle;
     public string thumbnail;
-    public string android_file;
-    public string ios_file;
-    public string description;
+    public int version;
+    public string group;
+    public string icon3d;
     public DateTime createdAt;
     public DateTime updatedAt;
 }
 [System.Serializable]
-public class DataEmoteAnimationList
+public class Data
 {
-    [SerializeField]
-    public List<EmoteAnimationList> animationList;
+    public List<ReactionList> reactionList;
 }
 [System.Serializable]
-public class EmoteAnimationResponse
+public class ReactionDetails
 {
     public bool success;
-    public DataEmoteAnimationList data;
+    public Data data;
     public string msg;
 }
-#if UNITY_EDITOR
-
-[CustomEditor(typeof(DynamicEventManager))]
-public class EditorTestEmoteManager : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        if (GUILayout.Button("Run Function"))
-        {
-        
-        }
-    }
-}
-#endif
+#endregion
