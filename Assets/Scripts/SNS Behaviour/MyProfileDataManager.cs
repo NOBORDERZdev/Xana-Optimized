@@ -37,7 +37,7 @@ public class MyProfileDataManager : MonoBehaviour
     [Space]
     [Header("Screen References")]
     public GameObject myProfileScreen;
-    [SerializeField] GameObject editProfileScreen;
+    public GameObject editProfileScreen;
     [SerializeField] GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
     [SerializeField] GameObject settingsButton;
@@ -160,6 +160,7 @@ public class MyProfileDataManager : MonoBehaviour
     SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
     FeedUIController feedUIController;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     //HomeScoketHandler socketController;
     private void Awake()
     {
@@ -663,6 +664,7 @@ public class MyProfileDataManager : MonoBehaviour
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         editProfileScreen.SetActive(true);
         SetupEditProfileScreen();
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.EditProfile);
     }
 
     void SetupEditProfileScreen()

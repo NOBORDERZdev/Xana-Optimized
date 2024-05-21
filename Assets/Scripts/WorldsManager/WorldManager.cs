@@ -67,7 +67,7 @@ public class WorldManager : MonoBehaviour
     public static WorldManager instance;
     //[HideInInspector]
     public bool changeFollowState = false;
-
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     public APIURL GetCurrentTabSelected()
     {
         return aPIURLGlobal;
@@ -994,7 +994,7 @@ public class WorldManager : MonoBehaviour
     public void GoToUGC()
     {
         GameManager.Instance.HomeCameraInputHandler(false);
-
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FaceCam);
         SceneManager.LoadScene("UGC");
     }
     public void ClearHomePageData()
