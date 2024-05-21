@@ -76,7 +76,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927154725259993610}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d653000bcba62c14ba9b6c5c324a4197, type: 3}
   m_Name: 
@@ -84,12 +84,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 512
-  movementSpeed: 4
+  movementSpeed: 4.2
   crouchSpeedMultiplier: 0.248
   movementThrashold: 0
   dampSpeedUp: 0.2
   dampSpeedDown: 0.1
-  jumpVelocity: 7
+  jumpVelocity: 3
   fallMultiplier: 1
   holdJumpMultiplier: 5
   frictionAgainstFloor: 0.189
@@ -127,7 +127,7 @@ MonoBehaviour:
   canSlideMultiplierCurve: 0.061
   cantSlideMultiplierCurve: 0.039
   climbingStairsMultiplierCurve: 0.086
-  gravityMultiplier: 8
+  gravityMultiplier: 3
   gravityMultiplyerOnSlideChange: 2
   gravityMultiplierIfUnclimbableSlope: 30
   lockOnSlope: 1
@@ -146,7 +146,7 @@ MonoBehaviour:
   meshCharacterCrouch: {fileID: 0}
   headPoint: {fileID: 1927154726348607533}
   input: {fileID: 0}
-  debug: 1
+  debug: 0
   OnJump:
     m_PersistentCalls:
       m_Calls:
@@ -203,7 +203,7 @@ MonoBehaviour:
   OnCrouch:
     m_PersistentCalls:
       m_Calls: []
-  targetAngle: 90
+  targetAngle: 180
 --- !u!114 &8322226048980141524
 MonoBehaviour:
   m_ObjectHideFlags: 0
