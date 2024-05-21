@@ -30,6 +30,7 @@ public class FindFriendWithNameItem : MonoBehaviour
     public bool IsInFollowingTab;
 
     public SavingCharacterDataClass _userAvatarData;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -290,6 +291,8 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
+        print("Enter here ");
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FriendsProfile);
     }
 
     public void DressUpUserAvatar()
