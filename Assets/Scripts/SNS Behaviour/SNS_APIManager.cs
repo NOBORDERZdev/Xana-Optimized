@@ -28,7 +28,7 @@ public class SNS_APIManager : MonoBehaviour
 
     [Space]
     public bool r_isCreateMessage = false;
-    private int BFCount = 0;
+    public int BFCount = 0;
     private int maxBfCount = 10;
     public AllFollowingRoot adFrndFollowing;
     GameManager gameManager;
