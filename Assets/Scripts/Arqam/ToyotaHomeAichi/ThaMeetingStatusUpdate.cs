@@ -30,7 +30,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public void UpdateMeetingParams(int status)
     {
-        this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, status);
+        this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, status);
 
         // Update the custom property for all players in the room
         Hashtable hash = new Hashtable();
@@ -63,12 +63,12 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         {
             int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
             Debug.LogError("New Player join room:::" + parameterValue);
-            this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.AllBuffered, parameterValue);
+            this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
         }
         else
             Debug.LogError("Property not exist::");
 
-        this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.AllBuffered);
+        this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
     }
 
     [PunRPC]
