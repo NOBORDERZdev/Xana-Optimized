@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class FollowParentHeight : MonoBehaviour
 {
-    private RectTransform parentRectTransform;
-    private RectTransform childRectTransform;
 
-    public float heightPadding = 0f;
-    public bool addPading = false;
+    public float HeightPadding = 0f;
+    public bool AddPading = false;
+    private RectTransform ParentRectTransform;
+    private RectTransform ChildRectTransform;
 
     void Start()
     {
         // Get the RectTransform components of the parent and the child
-        parentRectTransform = transform.parent.GetComponent<RectTransform>();
-        childRectTransform = GetComponent<RectTransform>();
+        ParentRectTransform = transform.parent.GetComponent<RectTransform>();
+        ChildRectTransform = GetComponent<RectTransform>();
     }
 
     private void OnEnable()
@@ -25,24 +25,24 @@ public class FollowParentHeight : MonoBehaviour
     public void SetChildHeight()
     {
         // Ensure the child follows the parent's height
-        if (parentRectTransform != null && childRectTransform != null)
+        if (ParentRectTransform != null && ChildRectTransform != null)
         {
-            Vector2 sizeDelta = childRectTransform.sizeDelta;
-            sizeDelta.y = parentRectTransform.rect.height;
-            sizeDelta.y -= heightPadding;
-            childRectTransform.sizeDelta = sizeDelta;
+            Vector2 sizeDelta = ChildRectTransform.sizeDelta;
+            sizeDelta.y = ParentRectTransform.rect.height;
+            sizeDelta.y -= HeightPadding;
+            ChildRectTransform.sizeDelta = sizeDelta;
         }
     }
 
     public void AddToHeightPaddingForSearchUI()
     {
-        if (addPading)
+        if (AddPading)
         {
-            heightPadding += 100f;
+            HeightPadding += 100f;
         }
         else
         {
-            heightPadding -= 100f;
+            HeightPadding -= 100f;
         }
         SetChildHeight();
     }
