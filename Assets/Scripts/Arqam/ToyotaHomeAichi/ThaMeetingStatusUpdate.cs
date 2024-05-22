@@ -18,10 +18,12 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private const string MeetingStatusPropertyName = "MeetingStatus";
     private const int roomID = 4;
     private int playerCount;
+    private PhotonView pv;
 
     private void Start()
     {
         BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        pv = GetComponent<PhotonView>();
     }
     private void OnDisable()
     {
@@ -68,8 +70,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         else
             Debug.LogError("Property not exist::");
 
-        if (this.GetComponent<PhotonView>() != null)
-            this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
+        if (pv != null)
+            pv.RPC(nameof(UpdatePortal), RpcTarget.All);
         else
             Debug.LogError("PhotonViewNotExist: " + this.gameObject.name);
     }
