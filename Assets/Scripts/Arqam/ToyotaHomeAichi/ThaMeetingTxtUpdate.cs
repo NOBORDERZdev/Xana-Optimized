@@ -12,6 +12,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     public TextMeshProUGUI tmp;
 
     private MeshRenderer portalMesh;
+    private BoxCollider boxCollider;
 
     // Start is called before the first frame update
     void Awake()
@@ -19,6 +20,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
         //tmp.text = "Join Meeting Now!";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this;
         portalMesh = GetComponent<MeshRenderer>();
+        boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnEnable()
@@ -54,7 +56,8 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
 
                 Debug.Log("Wrap Object Status is :: " + wrapObjectClass.success);
-                portalMesh.enabled = wrapObjectClass.success;               
+                portalMesh.enabled = wrapObjectClass.success;
+                boxCollider.enabled = wrapObjectClass.success;
             }
         }
     }
