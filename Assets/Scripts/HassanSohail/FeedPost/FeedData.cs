@@ -29,6 +29,7 @@ public class FeedData : MonoBehaviour
     int timeUpdateInterval = 1;
     FeedScroller scrollerController;
     public bool isProfileScene = false;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     public void SetFeedPrefab(FeedResponseRow data, bool isFeed = true ){
         if (gameObject.activeInHierarchy)
         {
@@ -96,6 +97,7 @@ public class FeedData : MonoBehaviour
             return;
         //print("Getting Click here" + _data.user_id);
         SNS_APIManager.Instance.GetFeedUserProfileData<FeedData>(_data.user_id, this);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FeedProfile);
     }
 
     public void SetupFeedUserProfile(SearchUserRow _feedUserData)
