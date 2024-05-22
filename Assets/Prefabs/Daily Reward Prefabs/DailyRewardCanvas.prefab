@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8470841549926142460}
   - component: {fileID: 8470841549926142463}
   - component: {fileID: 8470841549926142462}
+  - component: {fileID: 857122592}
   m_Layer: 5
   m_Name: DailyRewardCanvas
   m_TagString: Untagged
@@ -101,6 +102,26 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &857122592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8470841549926142457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2be69a90350d284581cfa1a99bdd94d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dailyRewardPopup: {fileID: 1333407506560330562}
+  rewardedAmountText: {fileID: 8470841549894639914}
+  userDailyRewardData:
+    userId: 0
+    amount: 0
+  userID: 0
+  rewardedUserID: 0
+  msg: 
 --- !u!1001 &8470841549910263551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,6 +129,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8470841549926142461}
     m_Modifications:
+    - target: {fileID: 18065363, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
+      propertyPath: m_Name
+      value: Amount
+      objectReference: {fileID: 0}
+    - target: {fileID: 1497612337, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
+      propertyPath: m_Name
+      value: Coin
+      objectReference: {fileID: 0}
     - target: {fileID: 7426240701045370290, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -210,7 +239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7426240701045370301, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7426240701161279471, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -218,8 +247,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
+--- !u!1 &1333407506560330562 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7426240701045370301, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
+  m_PrefabInstance: {fileID: 8470841549910263551}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1333407506560330573 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7426240701045370290, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
   m_PrefabInstance: {fileID: 8470841549910263551}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8470841549894639914 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 18065365, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
+  m_PrefabInstance: {fileID: 8470841549910263551}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

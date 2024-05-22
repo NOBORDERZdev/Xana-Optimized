@@ -1,81 +1,99 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
+using Newtonsoft.Json;
+using System.Collections;
+using UnityEngine.SceneManagement;
+using TMPro;
 
-public enum DailyRewardTypes
-{
-    XENYCoins
-}
 public class UserDailyRewardHandler : MonoBehaviour
 {
     [SerializeField]
     private GameObject dailyRewardPopup;
-    public string socketId;
-    //[SerializeField, Header("All daily rewards")]
-    //private List<DailyRewardItem> dailyRewards;
-    private UserDailyRewardData userDailyRewardData;
 
+    [SerializeField]
+    private TextMeshProUGUI rewardedAmountText;
 
+    public UserDailyRewardData userDailyRewardData;
     public SocketManager Manager;
+    public int userID = 0;
+    public int rewardedUserID;
+    public bool dailyRewardReceived = false;
 
-    private void Start()
+
+    public string msg;
+
+    private string SocketUrl
     {
-        //Manager = new SocketManager(new Uri("http://localhost:3000"));
-        //Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-
+        get
+        {
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                return "LiveURL";
+            }
+            else
+            {
+                return "https://mslog-test.xana.net";
+            }
+        }
     }
+    
+    private IEnumerator Start()
+    {
+        if (SocketUrl != null)
+        {
+            Manager = new SocketManager(new Uri(SocketUrl));
+            Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
+            Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        }
+        DontDestroyOnLoad(this);
 
+        while (ConstantsHolder.userId == null)
+            yield return new WaitForSeconds(0.5f);
+
+        userID = int.Parse(ConstantsHolder.userId);
+    }
 
     private void OnConnected(ConnectResponse resp)
     {
-        Debug.Log("Connected to server");
-        Debug.Log("Response : " + resp);
-        socketId = resp.sid;
-        //RequestUserDailyRewardData();
-        //Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
-        //Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
-        //Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
-        //Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
+        Manager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
     }
 
     private void OnError(CustomError args)
     {
-        Debug.Log("Socket Error : " + args);
+        Debug.LogError("Socket Error : " + args);
     }
 
-    public void RequestUserDailyRewardData()
+    public void DailyRewardResponse(string resp)
     {
-        //get data from API
-        UserDailyRewardData userDailyRewardData = new()
+        msg = resp;
+        UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
+        rewardedUserID = data.userId;
+        if (data.userId == userID)
         {
-            day = 1,
-            rewardAmount = 1,
-            currentServerTime = DateTime.Now,
-            lastRewardedtime = DateTime.Now,
-            isClaimed = false
-        };
-        this.userDailyRewardData = userDailyRewardData; 
+            dailyRewardReceived = true;
+            rewardedAmountText.text = data.amount.ToString();   
+            StartCoroutine(ShowDailyRewardRoutine());
+        }
+    }
+
+    private IEnumerator ShowDailyRewardRoutine()
+    {
+        while (SceneManager.GetActiveScene().name != "Home")
+            yield return new WaitForSeconds(5f);
+
+        dailyRewardPopup.SetActive(true);
+        dailyRewardReceived = false;
+        StopCoroutine(ShowDailyRewardRoutine());
     }
 }
 
-[System.Serializable]
-public struct DailyRewardItem
-{
-    public DailyRewardTypes rewardType;
-    public int rewardAmount;
-}
-
+[Serializable]
 public struct UserDailyRewardData
 {
-    public int day; //or time
-    public int rewardAmount;
-    public DateTime currentServerTime;
-    public DateTime lastRewardedtime;
-    public bool isClaimed;
-    public int totalXenyCoins;
+    public int userId;
+    public int amount;
+    public DateTime datetime;
 }
