@@ -51,6 +51,22 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("NotifyNewPlayer", newPlayer, this.GetComponent<PhotonView>().ViewID);
+        }
+        //NewPlayerSpawned();
+    }
+
+    [PunRPC]
+    void NotifyNewPlayer(int viewID)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+            NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
+
         NewPlayerSpawned();
     }
 
@@ -80,7 +96,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdatePortal()
     {
-        if(NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+        if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
@@ -103,7 +119,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 data.Append(request.downloadHandler.text);
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                 playerCount = meetingRoomStatusResponse.data.Count;
-  
+
                 if (playerCount == 0)
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
                 else if (playerCount == 1)
