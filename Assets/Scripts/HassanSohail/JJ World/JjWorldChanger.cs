@@ -1,8 +1,6 @@
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class JjWorldChanger : MonoBehaviour
 {
@@ -17,12 +15,9 @@ public class JjWorldChanger : MonoBehaviour
     public bool isBuilderWorld;
 
     Collider collider;
-
-    bool reSetCollider = false;
-
     private GameObject triggerObject;
     public bool isEnteringPopup;
-    public GameObject portalObject;
+  
     private void Start()
     {
         collider = GetComponent<Collider>();
