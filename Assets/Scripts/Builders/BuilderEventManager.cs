@@ -19,6 +19,8 @@ public static class BuilderEventManager
     public static Action<string> XanaMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
 
+    public static Action<string> LoadNewScene;
+
     public static Action AfterWorldInstantiated;
     public static Action AfterWorldOffcialWorldsInatantiated;
 

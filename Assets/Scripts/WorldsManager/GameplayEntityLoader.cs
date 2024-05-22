@@ -17,6 +17,8 @@ using UnityEngine.Rendering.Universal;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
+    public bool isAlreadySpawned;
+
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
 
@@ -31,7 +33,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [HideInInspector]
     private Transform updatedSpawnpoint;
     private Vector3 spawnPoint;
-    private GameObject currentEnvironment;
+    public GameObject currentEnvironment;
     public bool isEnvLoaded = false;
 
     private float fallOffset = 10f;
@@ -176,6 +178,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //LoadEnvironment(FeedEventPrefab.m_EnvName);
         if (currentEnvironment == null)
         {
+            Debug.LogError("env loading.");
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 SetupEnvirnmentForBuidlerScene();
             else
