@@ -87,7 +87,7 @@ public class HomeScoketHandler : MonoBehaviour
     public void GetCallFromMeetingRoom(string _data) //meeting room exit
     {
         Manager.Socket.Emit("user-info-on-tha-world-exit", _data);
-        Debug.Log("Emit Leave Meeting Room" + _data);
+        Debug.LogError("Emit Leave Meeting Room" + _data);
         //meetingExitRoomStatus?.Invoke(data);
     }
     void FriendJoinedSpace(string msg)
