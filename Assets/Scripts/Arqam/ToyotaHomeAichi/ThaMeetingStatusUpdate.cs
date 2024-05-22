@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -54,10 +55,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.IsMasterClient)
         {
-            PhotonView photonView = PhotonView.Get(this);
-            photonView.RPC("NotifyNewPlayer", newPlayer, this.GetComponent<PhotonView>().ViewID);
+            StartCoroutine(Delay(newPlayer));
         }
         //NewPlayerSpawned();
+    }
+
+    IEnumerator Delay(Player newPlayer)
+    {
+        yield return new WaitForSeconds(5f);
+        PhotonView photonView = PhotonView.Get(this);
+        photonView.RPC("NotifyNewPlayer", newPlayer, this.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
