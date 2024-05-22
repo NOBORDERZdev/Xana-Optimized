@@ -80,7 +80,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdatePortal()
     {
-        if(NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+        if(NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
