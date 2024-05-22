@@ -15,8 +15,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public MeetingStatus tms;
 
     private const string MeetingStatusPropertyName = "MeetingStatus";
-    public int roomID = 4;
-    public int playerCount;
+    private const int roomID = 4;
+    private int playerCount;
 
 
     private void Start()
