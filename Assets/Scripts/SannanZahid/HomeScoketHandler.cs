@@ -81,7 +81,7 @@ public class HomeScoketHandler : MonoBehaviour
         //Manager.Socket.Emit("user_exit_toyota_world", ConstantsHolder.xanaConstants.MuseumID, ConstantsHolder.userId, FB_Notification_Initilizer.Instance.actorType);
         //THALeaveRoom data = JsonConvert.DeserializeObject<THALeaveRoom>(msg);
         Debug.LogError("Meeting Room Status Check" + msg);
-        NFT_Holder_Manager.instance.meetingStatus.CheckUsersCount();
+        NFT_Holder_Manager.instance.meetingStatus.RemoteCheckUserCount();
         //meetingExitRoomStatus?.Invoke(data);
     }
     public void GetCallFromMeetingRoom(string _data) //meeting room exit

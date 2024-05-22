@@ -99,7 +99,19 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
-    public async void CheckUsersCount()
+    public void RemoteCheckUserCount()
+    {
+        if (pv != null)
+            pv.RPC(nameof(CheckUsersCount), RpcTarget.All);
+        else
+        {
+            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(CheckUsersCount), RpcTarget.All);
+            Debug.LogError("PhotonViewNotExist: ");
+        }
+    }
+
+    [PunRPC]
+    private async void CheckUsersCount()
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
