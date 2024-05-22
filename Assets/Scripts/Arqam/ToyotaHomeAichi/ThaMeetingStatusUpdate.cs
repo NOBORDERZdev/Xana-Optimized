@@ -19,6 +19,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private const int roomID = 4;
     private int playerCount;
     private Player newArrivalPlayer;
+    private PhotonView pv;
 
     private void Start()
     {
@@ -56,8 +57,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         if (PhotonNetwork.IsMasterClient)
+        {
             newArrivalPlayer = newPlayer;
-
+            pv = PhotonView.Find(this.GetComponent<PhotonView>().ViewID);
+        }
         //NewPlayerSpawned();
     }
 
@@ -65,18 +68,18 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         Debug.LogError("Get Meeting Obj");
         //PhotonView photonView = PhotonView.Get(this);
-        GetComponent<PhotonView>().RPC("NotifyNewPlayer", newArrivalPlayer, this.GetComponent<PhotonView>().ViewID);
+        GetComponent<PhotonView>().RPC("NotifyNewPlayer", newArrivalPlayer);
     }
 
     [PunRPC]
-    void NotifyNewPlayer(int viewID)
+    void NotifyNewPlayer()
     {
         Debug.LogError("NotifyNewPlayer");
-        PhotonView view = PhotonView.Find(viewID);
-        if (view != null)
+        
+        if (pv != null)
         {
             NewPlayerSpawned();
-            CheckUsersCount(view);
+            CheckUsersCount();
         }
     }
 
@@ -110,7 +113,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
-    public async void CheckUsersCount(PhotonView view)
+    public async void CheckUsersCount()
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
@@ -130,7 +133,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                 playerCount = meetingRoomStatusResponse.data.Count;
 
-                NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
+                NFT_Holder_Manager.instance.GetMeetingObjRef(pv.GetComponent<ThaMeetingStatusUpdate>());
 
                 if (playerCount == 0)
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
