@@ -50,8 +50,8 @@ public class NFT_Holder_Manager : MonoBehaviour
             meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
             Debug.LogError("Instantiate Meeting Object");
         }
-        //else if (meetingStatus == null)
-        //    meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+        else if (meetingStatus == null)
+            meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
     }
 
     public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
