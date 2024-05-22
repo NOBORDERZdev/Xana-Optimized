@@ -132,18 +132,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                 playerCount = meetingRoomStatusResponse.data.Count;
 
-                if (playerCount == 0)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
-                }
-                else if (playerCount == 1)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.Inprogress;
-                }
-                else if (playerCount == 2)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.HouseFull;
-                }
+                NFT_Holder_Manager.instance.meetingStatus.tms = (MeetingStatus)(playerCount);
                 ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
             }
             TextUpdate();
