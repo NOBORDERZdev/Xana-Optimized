@@ -23,6 +23,7 @@ public class FollowingItemController : MonoBehaviour
 
     [SerializeField] GameObject MakeBfBtn;
     [SerializeField] GameObject RemoveBfBtn;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     public Sprite defaultSP;
     int userId ;
@@ -206,6 +207,7 @@ public class FollowingItemController : MonoBehaviour
         }
 
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FriendsProfile);
     }
 
     public void DressUpUserAvatar()
