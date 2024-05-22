@@ -23,13 +23,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void Start()
     {
         //BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
-        BuilderEventManager.AfterWorldInstantiated += GetMeetingObject;
+        BuilderEventManager.AfterPlayerInstantiated += GetMeetingObject;
     }
 
     private void OnDisable()
     {
         //BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
-        BuilderEventManager.AfterWorldInstantiated -= GetMeetingObject;
+        BuilderEventManager.AfterPlayerInstantiated -= GetMeetingObject;
     }
 
     public void UpdateMeetingParams(int status)
@@ -75,10 +75,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         PhotonView view = PhotonView.Find(viewID);
         if (view != null)
         {
-            NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
-            NewPlayerSpawned();
-            CheckUsersCount();
+            StartCoroutine(Delay(view));
         }
+    }
+
+    IEnumerator Delay(PhotonView view)
+    {
+        yield return new WaitForSeconds(1f);
+        NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
+        NewPlayerSpawned();
+        CheckUsersCount();
     }
 
     private void NewPlayerSpawned()
