@@ -187,8 +187,8 @@ public class FeedUIController : MonoBehaviour
         AddFriendPanel.SetActive(flag);    
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().addPading = false;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().heightPadding = 190f;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
         HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
@@ -200,11 +200,11 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            HotFriendPanel.GetComponentInParent<FollowParentHeight>().addPading = true;
+            HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = true;
         }
         else
         {
-            HotFriendPanel.GetComponentInParent<FollowParentHeight>().addPading = false;
+            HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
         }
         HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddToHeightPaddingForSearchUI();
         //if (AddFriendSerachBar.activeInHierarchy)
@@ -606,8 +606,8 @@ public class FeedUIController : MonoBehaviour
         MyProfileDataManager.Instance.myProfileScreen.SetActive(false); 
         AddFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().addPading = false;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().heightPadding = 190f;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
         HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         OnClickHotFrnd();
         SNS_APIManager.Instance.SetHotFriend();
