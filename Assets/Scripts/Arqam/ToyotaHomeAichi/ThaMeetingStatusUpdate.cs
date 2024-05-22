@@ -64,8 +64,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void GetMeetingObject()
     {
         Debug.LogError("Get Meeting Obj");
-        PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("NotifyNewPlayer", newArrivalPlayer, this.GetComponent<PhotonView>().ViewID);
+        //PhotonView photonView = PhotonView.Get(this);
+        GetComponent<PhotonView>().RPC("NotifyNewPlayer", newArrivalPlayer, this.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
