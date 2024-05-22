@@ -75,16 +75,9 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         PhotonView view = PhotonView.Find(viewID);
         if (view != null)
         {
-            StartCoroutine(Delay(view));
+            NewPlayerSpawned();
+            CheckUsersCount(view);
         }
-    }
-
-    IEnumerator Delay(PhotonView view)
-    {
-        yield return new WaitForSeconds(1f);
-        NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
-        NewPlayerSpawned();
-        CheckUsersCount();
     }
 
     private void NewPlayerSpawned()
@@ -117,7 +110,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
-    public async void CheckUsersCount()
+    public async void CheckUsersCount(PhotonView view)
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
@@ -136,7 +129,9 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 data.Append(request.downloadHandler.text);
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                 playerCount = meetingRoomStatusResponse.data.Count;
-  
+
+                NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
+
                 if (playerCount == 0)
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
                 else if (playerCount == 1)
