@@ -65,7 +65,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         {
             int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
             Debug.LogError("New Player join room:::" + parameterValue);
-            this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
+            if(pv != null)
+            pv.RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
+            else
+            {
+                NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
+                Debug.LogError("PhotonViewNotExist: ");
+            }
         }
         else
             Debug.LogError("Property not exist::");
