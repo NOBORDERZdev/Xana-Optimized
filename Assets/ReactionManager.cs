@@ -3,30 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using static EmoteManager;
 
 public class ReactionManager : MonoBehaviour
 {
-    public EmoteAnimationResponse EmoteServerData;
-    private void Start()
+    public enum ReactionGroup { Emote, Gestures, Others }
+    public ReactionGroup ReactionGroupSelected = ReactionGroup.Emote;
+    public ReactionAnimationDetails ReactionServerData;
+    public void GetServerData()
     {
         StartCoroutine(GetEmoteServerData());
     }
-    public IEnumerator GetEmoteServerData()
+    private IEnumerator GetEmoteServerData()
     {
         yield return new WaitForSeconds(5f);
-        UnityWebRequest emoteWebRequest = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBasepointManager.instance.apiversionForAnimation);
+        UnityWebRequest emoteWebRequest = UnityWebRequest.Get(ConstantsGod.API_BASEURL + 
+            ConstantsGod.GetAllReactions + "/" + APIBasepointManager.instance.apiversion);
 
         using (UnityWebRequest request = UnityWebRequest.Get(emoteWebRequest.url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return request.SendWebRequest();
-            EmoteServerData = JsonUtility.FromJson<EmoteAnimationResponse>(request.downloadHandler.text);
+            ReactionServerData = JsonUtility.FromJson<ReactionAnimationDetails>(request.downloadHandler.text);
 
             if (!request.isHttpError && !request.isNetworkError)
             {
                 if (request.error == null)
                 {
-                    if (EmoteServerData.success == true)
+                    if (ReactionServerData.success == true)
                     {
 
 
@@ -41,31 +45,23 @@ public class ReactionManager : MonoBehaviour
 
         }
     }
-}
-#region DATA
-[System.Serializable]
-public class ReactEmote
-{
-    public string imageName;
-    public string thumb;
-    public string mainImage;
-}
-[System.Serializable]
-public class ReactGestures
-{
-    public string imageName;
-    public string thumb;
-    public string mainImage;
-}
-[System.Serializable]
-public class ReactOthers
-{
-    public string imageName;
-    public string thumb;
-    public string mainImage;
+    public void OpenReactionDialogUITabClick(int index)
+    {
+        if (ReactionGroupSelected == (ReactionGroup)index)
+            return;
+
+        ReactionGroupSelected = (ReactionGroup)index;
+        OpenReactionDialogUI();
+    }
+    public void OpenReactionDialogUI()
+    {
+        List<ReactionAnimationList> items = ReactionServerData.data.reactionList.FindAll(x => x.group == ReactionGroupSelected.ToString());
+        Debug.LogError("----- >>> OpenReactionDialogUI " + items.Count);
+        EmoteReactionUIHandler.SetViewItemsReaction?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Reaction);
+    }
 }
 [System.Serializable]
-public class ReactionList
+public class ReactionAnimationList
 {
     public int id;
     public string name;
@@ -79,15 +75,14 @@ public class ReactionList
     public DateTime updatedAt;
 }
 [System.Serializable]
-public class Data
+public class ReactionAnimationData
 {
-    public List<ReactionList> reactionList;
+    public List<ReactionAnimationList> reactionList;
 }
 [System.Serializable]
-public class ReactionDetails
+public class ReactionAnimationDetails
 {
     public bool success;
-    public Data data;
+    public ReactionAnimationData data;
     public string msg;
 }
-#endregion

@@ -1,23 +1,22 @@
-using ExitGames.Client.Photon;
-using Metaverse;
-using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
-using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Policy;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Linq;
+using static ReactionManager;
+
 public class EmoteManager : MonoBehaviour
 {
     public EmoteAnimationResponse EmoteServerData;
-    private void Start()
+    public enum EmoteGroup {Dance, Moves, Reaction, Idle, Walk}
+    public EmoteGroup EmoteGroupSelected = EmoteGroup.Moves;
+    public void GetServerData()
     {
         StartCoroutine(GetEmoteServerData());
     }
-    public IEnumerator GetEmoteServerData()
+    private IEnumerator GetEmoteServerData()
     {
         yield return new WaitForSeconds(5f);
         UnityWebRequest emoteWebRequest = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.GetAllAnimatons + "/" + APIBasepointManager.instance.apiversionForAnimation);
@@ -34,7 +33,6 @@ public class EmoteManager : MonoBehaviour
                 {
                     if (EmoteServerData.success == true)
                     {
-                       
 
                     }
                 }
@@ -46,6 +44,19 @@ public class EmoteManager : MonoBehaviour
             request.Dispose();
 
         }
+    }
+    public void OpenEmoteDialogUITabClick(int index)
+    {
+        if (EmoteGroupSelected == (EmoteGroup)index)
+            return;
+
+        EmoteGroupSelected = (EmoteGroup)index;
+        OpenEmoteDialogUI();
+    }
+    public void OpenEmoteDialogUI()
+    {
+        List<EmoteAnimationList> items = EmoteServerData.data.animationList.FindAll(x => x.group == EmoteGroupSelected.ToString());
+        EmoteReactionUIHandler.SetViewItemsEmote?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Emote);
     }
 }
 
