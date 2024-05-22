@@ -847,7 +847,7 @@ public class UserLoginSignupManager : MonoBehaviour
            
                 StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
                 {
-                    editProfilePanel.SetActive(true);
+                   
                     Debug.Log("Wallet Signup");
                     Debug.Log("Love mera fit fit");
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
@@ -1631,8 +1631,10 @@ public class UserLoginSignupManager : MonoBehaviour
             else if (APIResponse.success)
             {
                 OpenUIPanel(16);
+                editProfilePanel.SetActive(true);
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
+                
 
             }
                 
