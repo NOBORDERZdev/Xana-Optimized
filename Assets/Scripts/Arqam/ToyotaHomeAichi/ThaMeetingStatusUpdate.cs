@@ -8,6 +8,7 @@ using System.Text;
 using System;
 using UnityEngine.Networking;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -15,7 +16,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [SerializeField]
     public MeetingStatus tms;
 
-    private const string MeetingStatusPropertyName = "MeetingStatus";
+    //private const string MeetingStatusPropertyName = "MeetingStatus";
     private const int roomID = 4;
     private int playerCount;
     private PhotonView pv;
@@ -35,19 +36,19 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, status);
 
         // Update the custom property for all players in the room
-        Hashtable hash = new Hashtable();
-        hash[MeetingStatusPropertyName] = status;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        //Hashtable hash = new Hashtable();
+        //hash[MeetingStatusPropertyName] = status;
+        //PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    {
-        base.OnRoomPropertiesUpdate(propertiesThatChanged);
-        Debug.LogError("RoomProperty Update");
-        // Check if the meeting status property was updated
-        if (propertiesThatChanged.ContainsKey(MeetingStatusPropertyName))
-            tms = (MeetingStatus)(int)propertiesThatChanged[MeetingStatusPropertyName];
-    }
+    //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    //{
+    //    base.OnRoomPropertiesUpdate(propertiesThatChanged);
+    //    Debug.LogError("RoomProperty Update");
+    //    // Check if the meeting status property was updated
+    //    if (propertiesThatChanged.ContainsKey(MeetingStatusPropertyName))
+    //        tms = (MeetingStatus)(int)propertiesThatChanged[MeetingStatusPropertyName];
+    //}
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -60,21 +61,21 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void NewPlayerSpawned()
     {
         Debug.LogError("New Player join room:::");
-        // Check if the meeting status property was updated
-        if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
-        {
-            int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
-            Debug.LogError("New Player join room:::" + parameterValue);
-            if(pv != null)
-            pv.RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
-            else
-            {
-                NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, parameterValue);
-                Debug.LogError("PhotonViewNotExist: ");
-            }
-        }
+        //// Check if the meeting status property was updated
+        //if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
+        //{
+        //    int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
+        //    Debug.LogError("New Player join room:::" + parameterValue);
+        if (pv != null)
+            pv.RPC(nameof(StartMeeting), RpcTarget.All, playerCount);
         else
-            Debug.LogError("Property not exist::");
+        {
+            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, playerCount);
+            Debug.LogError("PhotonViewNotExist: ");
+        }
+        //}
+        //else
+        //    Debug.LogError("Property not exist::");
 
         if (pv != null)
             pv.RPC(nameof(UpdatePortal), RpcTarget.All);
@@ -132,11 +133,18 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 playerCount = meetingRoomStatusResponse.data.Count;
 
                 if (playerCount == 0)
+                {
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
+                }
                 else if (playerCount == 1)
+                {
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.Inprogress;
+                }
                 else if (playerCount == 2)
+                {
                     NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.HouseFull;
+                }
+                ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
             }
             TextUpdate();
         }
