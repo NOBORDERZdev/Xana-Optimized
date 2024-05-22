@@ -21,13 +21,14 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        //BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        CheckUsersCount();
         //if (PhotonNetwork.IsMasterClient)
-            //CheckUsersCount();
+        //CheckUsersCount();
     }
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
+        //BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
     }
 
     public void UpdateMeetingParams(int status)
@@ -114,6 +115,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public class MeetinRoomProperties
     {
         public int id { get; set; }
