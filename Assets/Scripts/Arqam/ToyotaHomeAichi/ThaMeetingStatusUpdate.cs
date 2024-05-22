@@ -68,7 +68,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         else
             Debug.LogError("Property not exist::");
 
-        this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
+        if (this.GetComponent<PhotonView>() != null)
+            this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
+        else
+            Debug.LogError("PhotonViewNotExist: " + this.gameObject.name);
     }
 
     [PunRPC]
