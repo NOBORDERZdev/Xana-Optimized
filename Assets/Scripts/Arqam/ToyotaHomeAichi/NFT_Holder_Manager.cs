@@ -48,10 +48,15 @@ public class NFT_Holder_Manager : MonoBehaviour
         {
             GameObject meetingObj = GameplayEntityLoader.instance.SpawnThaMeetingObject();
             meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
-            //Debug.LogError("Instantiate Meeting Object");
+            Debug.LogError("Instantiate Meeting Object");
         }
-        else if (meetingStatus == null)
-            meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+        //else if (meetingStatus == null)
+        //    meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+    }
+
+    public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
+    {
+        meetingStatus = meetingRef;
     }
 
     public void CloseBtnClicked()

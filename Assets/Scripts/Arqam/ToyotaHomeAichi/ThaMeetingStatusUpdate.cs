@@ -51,7 +51,24 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);
-        NewPlayerSpawned();
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("NotifyNewPlayer", newPlayer, this.GetComponent<PhotonView>().ViewID);
+        }
+        //NewPlayerSpawned();
+    }
+
+    [PunRPC]
+    void NotifyNewPlayer(int viewID)
+    {
+        PhotonView view = PhotonView.Find(viewID);
+        if (view != null)
+        {
+            NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
+            NewPlayerSpawned();
+        }
     }
 
     private void NewPlayerSpawned()
