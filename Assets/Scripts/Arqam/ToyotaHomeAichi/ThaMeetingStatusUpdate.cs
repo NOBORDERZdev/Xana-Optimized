@@ -22,9 +22,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void Start()
     {
         BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
-        //if (PhotonNetwork.IsMasterClient)
-        //CheckUsersCount();
     }
+
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
@@ -58,9 +57,6 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void NewPlayerSpawned()
     {
         Debug.LogError("New Player join room:::");
-
-        //if (ConstantsHolder.xanaConstants.meetingStatus != ConstantsHolder.MeetingStatus.End) return;
-
         // Check if the meeting status property was updated
         if (PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey(MeetingStatusPropertyName))
         {
@@ -70,6 +66,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         }
         else
             Debug.LogError("Property not exist::");
+
+        this.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.AllBuffered);
     }
 
     [PunRPC]
@@ -77,6 +75,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         tms = (MeetingStatus)num;
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
+    }
+
+    [PunRPC]
+    public void UpdatePortal()
+    {
+        if(NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+            NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
     public async void CheckUsersCount()
@@ -98,19 +103,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 data.Append(request.downloadHandler.text);
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                 playerCount = meetingRoomStatusResponse.data.Count;
-                Debug.Log("player count is :: " + playerCount);
+  
                 if (playerCount == 0)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.End;
-                }
+                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.End;
                 else if (playerCount == 1)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.Inprogress;
-                }
+                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.Inprogress;
                 else if (playerCount == 2)
-                {
-                    NFT_Holder_Manager.instance.meetingStatus.tms = ThaMeetingStatusUpdate.MeetingStatus.HouseFull;
-                }
+                    NFT_Holder_Manager.instance.meetingStatus.tms = MeetingStatus.HouseFull;
             }
             TextUpdate();
         }
@@ -120,20 +119,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             if (NFT_Holder_Manager.instance.meetingTxtUpdate == null) return;
 
             if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.Inprogress))
-            {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
-                Debug.Log("Join Meeting Now!");
-            }
             else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.End))
-            {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
-                Debug.Log("Meeting Ended");
-            }
             else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.HouseFull))
-            {
                 NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
-                Debug.Log("House Full");
-            }
         }
     }
 

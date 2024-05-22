@@ -59,7 +59,7 @@ public class ThaMeetingController : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("worldId", roomID);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
-        //form.AddField("isCompanyMember", isCompanyMember.ToString());
+
         UnityWebRequest www;
         www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.joinmeetingroom, form);
         www.SetRequestHeader("Authorization", token);
@@ -68,17 +68,13 @@ public class ThaMeetingController : MonoBehaviour
         {
             yield return null;
         }
-        string str = www.downloadHandler.text;
-        if (!www.isHttpError && !www.isNetworkError)
-        {
-            Debug.Log("Meeting Room Player  on join : " + www.downloadHandler.text);
-        }
-        else
-        {
-            Debug.Log("Error is" + www.error);
-        }
 
+        if (!www.isHttpError && !www.isNetworkError)
+            Debug.Log("Meeting Room Player  on join : " + www.downloadHandler.text);
+        else
+            Debug.Log("Error is" + www.error);
     }
+
     IEnumerator MeetingRoomLeave()
     {
         string token = ConstantsGod.AUTH_TOKEN;
@@ -94,14 +90,11 @@ public class ThaMeetingController : MonoBehaviour
             yield return null;
         }
         if (!www.isHttpError && www.isNetworkError)
-        {
             Debug.Log("Error is" + www.error);
-        }
         else
-        {
             Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
-        }
     }
+
     void MeetingRoomLeaveSocket()
     {
         THALeaveRoom tHALeaveRoom = new THALeaveRoom();
@@ -109,10 +102,10 @@ public class ThaMeetingController : MonoBehaviour
         tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
         tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
         string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
-        Debug.Log("Meeting Room Player  on leave : " + jsonData);
         HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
 
         Debug.Log("Actor Type : " + FB_Notification_Initilizer.Instance.actorType + "userid : " + ConstantsHolder.userId);
     }
+
 }
 

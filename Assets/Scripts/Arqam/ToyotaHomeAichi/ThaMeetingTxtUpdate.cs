@@ -5,16 +5,24 @@ using Photon.Realtime;
 using static ThaMeetingStatusUpdate;
 using System.Text;
 using UnityEngine.Networking;
+using static ThaMeetingTxtUpdate;
 
 public class ThaMeetingTxtUpdate : MonoBehaviour
 {
     public TextMeshProUGUI tmp;
-    public GameObject portalObject;
+
+    private MeshRenderer portalMesh;
+
     // Start is called before the first frame update
     void Awake()
     {
         //tmp.text = "Join Meeting Now!";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this;
+        portalMesh = GetComponent<MeshRenderer>();
+    }
+
+    private void OnEnable()
+    {
         WrapObjectOnOff();
     }
 
@@ -25,7 +33,8 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
         // tmp.color = txtColor;
         tmp.alpha = 1f;
     }
-    async void WrapObjectOnOff()
+
+    public async void WrapObjectOnOff()
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + 4);
@@ -43,20 +52,13 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
+
                 Debug.Log("Wrap Object Status is :: " + wrapObjectClass.success);
-                if(wrapObjectClass.success)
-                {
-                    Debug.Log("Portal Object is Active");
-                    portalObject.SetActive(true);
-                }
-                else
-                {
-                    Debug.Log("Portal Object is DeActive");
-                    portalObject.SetActive(false);
-                }
+                portalMesh.enabled = wrapObjectClass.success;               
             }
         }
     }
+
     public class WrapObjectClass
     {
         public bool success { get; set; }
