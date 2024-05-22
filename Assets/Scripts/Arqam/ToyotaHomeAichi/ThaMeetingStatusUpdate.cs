@@ -23,7 +23,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
         //if (PhotonNetwork.IsMasterClient)
-            //CheckUsersCount();
+        //CheckUsersCount();
     }
     private void OnDisable()
     {
@@ -114,6 +114,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             }
         }
     }
+
     public class MeetinRoomProperties
     {
         public int id { get; set; }

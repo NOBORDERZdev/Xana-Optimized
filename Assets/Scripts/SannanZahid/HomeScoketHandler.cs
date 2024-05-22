@@ -21,9 +21,26 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<FriendOnlineStatus> spaceJoinedFriendStatus;
     public Action<FriendOnlineStatus> spaceExitFriendStatus;
+
+    public Action<THALeaveRoom> meetingExitRoomStatus;
+
+
+
     private void Awake()
     {
-        instance = this;
+        // Check if an instance already exists
+        if (instance != null && instance != this)
+        {
+            // If an instance already exists, destroy this instance
+            DestroyImmediate(gameObject);
+            return;
+        }
+        else
+        {
+            // assign the instance to this instance
+            instance = this;
+        }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     void Start()
@@ -35,26 +52,43 @@ public class HomeScoketHandler : MonoBehaviour
     }
     void OnSocketDisconnect(CustomError args)
     {
-      //  Debug.Log("<color=blue> Post -- Disconnect  </color>");
+        //  Debug.Log("<color=blue> Post -- Disconnect  </color>");
     }
     void OnError(CustomError args)
     {
-        Debug.Log("<color=blue> Post -- Connection Error  </color>" +args.message);
+        Debug.Log("<color=blue> Post -- Connection Error  </color>" + args.message);
     }
     void OnConnected(ConnectResponse resp)
     {
-            socketId = resp.sid;
-           // Debug.Log("<color=blue> Post -- Connected  </color>");
-            EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
+        socketId = resp.sid;
+        // Debug.Log("<color=blue> Post -- Connected  </color>");
+        EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
 
-            // Bind Events to listen
-            Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
-            //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
-            Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
+        // Bind Events to listen
+        Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
+        //Manager.Socket.On<FeedLikeSocket>("likeTextPost", FeedLikeUpdate);
+        Manager.Socket.On<string>("likeTextPost", FeedLikeUpdate);
 
-            ConnectSNSSockets();
-            Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
-            Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
+        ConnectSNSSockets();
+        Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
+        Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
+
+        Manager.Socket.On<string>("user-info-tha-exit-global", LeaveMeetingRoom); // Meeting Room Exit
+    }
+
+    public void LeaveMeetingRoom(string msg) //meeting room exit
+    {
+        //Manager.Socket.Emit("user_exit_toyota_world", ConstantsHolder.xanaConstants.MuseumID, ConstantsHolder.userId, FB_Notification_Initilizer.Instance.actorType);
+        //THALeaveRoom data = JsonConvert.DeserializeObject<THALeaveRoom>(msg);
+        Debug.LogError("Meeting Room Status Check" + msg);
+        NFT_Holder_Manager.instance.meetingStatus.CheckUsersCount();
+        //meetingExitRoomStatus?.Invoke(data);
+    }
+    public void GetCallFromMeetingRoom(string _data) //meeting room exit
+    {
+        Manager.Socket.Emit("user-info-on-tha-world-exit", _data);
+        Debug.Log("Emit Leave Meeting Room" + _data);
+        //meetingExitRoomStatus?.Invoke(data);
     }
     void FriendJoinedSpace(string msg)
     {
@@ -70,15 +104,15 @@ public class HomeScoketHandler : MonoBehaviour
     }
     void ReceivePost(string msg)
     {
-       // Debug.Log("<color=blue> Post -- Received : </color>");
+        // Debug.Log("<color=blue> Post -- Received : </color>");
         ReceivedFriendPostData data = JsonConvert.DeserializeObject<ReceivedFriendPostData>(msg);
         updateFriendPostDelegate?.Invoke(data);
     }
     void FeedLikeUpdate(string msg)
     {
-      // Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
+        // Debug.Log("<color=blue> Post -- FeedLikeUpdate : </color>" + msg);
         FeedLikeSocket socketInput = JsonConvert.DeserializeObject<FeedLikeSocket>(msg);
-       updateFeedLike?.Invoke(socketInput);
+        updateFeedLike?.Invoke(socketInput);
 
     }
     void EmitUserSocketToApi()
@@ -128,12 +162,12 @@ public class HomeScoketHandler : MonoBehaviour
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
                 //Debug.LogError("SendSocketIdOfUserForPost ---->   ERROR  ----->  "+ www.downloadHandler.text);
-               // Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
+                // Debug.Log("Error PostSocket ID update  --->  " + www.downloadHandler.text);
             }
             else
             {
                 Manager.Socket.On<string>("send_new_cloth_info", HomeFriendClothUpdate);
-               // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
+                // Debug.Log("SendSocketIdOfUserForPost Success ---->  " + www.downloadHandler.text);
             }
             www.Dispose();
         }
@@ -143,7 +177,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// To connect SNS Sockets
     /// </summary>
     /// <param name="userId"></param>
-    public void ConnectSNSSockets() {
+    public void ConnectSNSSockets()
+    {
         Manager.Socket.On<string>("user-updated", SnSUpate);
         Manager.Socket.On<string>("user-follow", UpdateFollowerFollowing);
         Manager.Socket.On<string>("user-occupied-assets", AvatarUpdate);
@@ -155,7 +190,8 @@ public class HomeScoketHandler : MonoBehaviour
     /// Call on SNS info Update
     /// </summary>
     /// <param name="response"></param>
-    void SnSUpate(string response) {
+    void SnSUpate(string response)
+    {
         userInfoUpdate userInfoUpdate = JsonConvert.DeserializeObject<userInfoUpdate>(response);
         if (SNS_APIController.Instance)
             SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
@@ -168,7 +204,7 @@ public class HomeScoketHandler : MonoBehaviour
     void UpdateFollowerFollowing(string response)
     {
         userFollowerFollowing userInfoUpdate = JsonConvert.DeserializeObject<userFollowerFollowing>(response);
-        if(SNS_APIController.Instance)
+        if (SNS_APIController.Instance)
             SNS_APIController.Instance.ProfileDataUpdateFromSocket(userInfoUpdate.userId);
     }
 
@@ -181,7 +217,7 @@ public class HomeScoketHandler : MonoBehaviour
         if (ConstantsHolder.xanaConstants.IsProfileVisit)
         {
             snsAvatarUpdate snsAvatarUpdate = JsonConvert.DeserializeObject<snsAvatarUpdate>(response);
-            if ( snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
+            if (snsAvatarUpdate.userId == ConstantsHolder.xanaConstants.SnsProfileID)
             {
                 ProfileUIHandler.instance.SetUserAvatarClothing(snsAvatarUpdate.json);
             }
@@ -252,7 +288,8 @@ class ErrorData
     public string content;
 }
 
-class userFollowerFollowing{
+class userFollowerFollowing
+{
     public int userId;
     public int followerCount;
     public int followingCount;
@@ -260,7 +297,8 @@ class userFollowerFollowing{
     public bool isFollowing;
 }
 
-class userInfoUpdate {
+class userInfoUpdate
+{
     public int userId;
     public string name;
     public string avatar;
@@ -269,7 +307,8 @@ class userInfoUpdate {
     public string username;
 }
 
-class snsAvatarUpdate{
+class snsAvatarUpdate
+{
     public int userId;
     public string name;
     public string thumbnail;
@@ -296,4 +335,10 @@ public class FriendOnlineStatus
     public string msg;
     public RowList worldDetails;
     public bool isOnline;
+}
+public class THALeaveRoom
+{
+    public int world_id { get; set; }
+    public int userId { get; set; }
+    public string userType { get; set; }
 }

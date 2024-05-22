@@ -1,12 +1,28 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+//using BestHTTP.SocketIO3;
+//using BestHTTP.SocketIO3.Events;
+using System;
+using BestHTTP.JSON;
+using Newtonsoft.Json;
 
 public class ThaMeetingController : MonoBehaviour
 {
     public int roomID = 4;
+    //public SocketManager Manager;
+    //string address = "https://api-test.xana.net/";
+
     void Start()
     {
+        //address = ConstantsGod.API_BASEURL;
+
+        //if (!address.EndsWith("/"))
+        //{
+        //    address = address + "/";
+        //}
+        //Manager = new SocketManager(new Uri(address));
+
         GetComponent<FB_PushNotificationSender>().SendNotification();
         //only user can back to toyota world when press on exit btn
         if (ConstantsHolder.xanaConstants.meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
@@ -14,11 +30,20 @@ public class ThaMeetingController : MonoBehaviour
         else
             ConstantsHolder.xanaConstants.isBackToParentScane = false;
     }
+    public void JoinMeetingRoom(string msg)
+    {
+        Debug.Log("Join Meeting Room" + msg);
+    }
+   public  void LeaveMeetingRoom(string msg)
+    {
+        Debug.Log("Leave Meeting Room" + msg);
 
+    }
     private void OnEnable()
     {
         JoinMeeting();
         GamePlayButtonEvents.inst.OnExitButton += LeaveMeeting;
+        GamePlayButtonEvents.inst.OnExitButton += MeetingRoomLeaveSocket;
     }
     private void JoinMeeting()
     {
@@ -76,6 +101,18 @@ public class ThaMeetingController : MonoBehaviour
         {
             Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
         }
+    }
+    void MeetingRoomLeaveSocket()
+    {
+        THALeaveRoom tHALeaveRoom = new THALeaveRoom();
+        tHALeaveRoom.userType = FB_Notification_Initilizer.Instance.actorType.ToString();
+        tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
+        tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
+        string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
+        Debug.Log("Meeting Room Player  on leave : " + jsonData);
+        HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
+
+        Debug.Log("Actor Type : " + FB_Notification_Initilizer.Instance.actorType + "userid : " + ConstantsHolder.userId);
     }
 }
 
