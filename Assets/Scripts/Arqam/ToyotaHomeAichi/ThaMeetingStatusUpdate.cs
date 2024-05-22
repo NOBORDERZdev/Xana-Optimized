@@ -18,16 +18,18 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private const string MeetingStatusPropertyName = "MeetingStatus";
     private const int roomID = 4;
     private int playerCount;
-
+    private Player newArrivalPlayer;
 
     private void Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        //BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        BuilderEventManager.AfterPlayerInstantiated += GetMeetingObject;
     }
 
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
+        //BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
+        BuilderEventManager.AfterPlayerInstantiated -= GetMeetingObject;
     }
 
     public void UpdateMeetingParams(int status)
@@ -54,17 +56,15 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         base.OnPlayerEnteredRoom(newPlayer);
 
         if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(Delay(newPlayer));
-        }
+            newArrivalPlayer = newPlayer;
+
         //NewPlayerSpawned();
     }
 
-    IEnumerator Delay(Player newPlayer)
+    private void GetMeetingObject()
     {
-        yield return new WaitForSeconds(5f);
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("NotifyNewPlayer", newPlayer, this.GetComponent<PhotonView>().ViewID);
+        photonView.RPC("NotifyNewPlayer", newArrivalPlayer, this.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
@@ -75,6 +75,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         {
             NFT_Holder_Manager.instance.GetMeetingObjRef(view.GetComponent<ThaMeetingStatusUpdate>());
             NewPlayerSpawned();
+            CheckUsersCount();
         }
     }
 
@@ -112,7 +113,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
-        Debug.Log("API URL is : " + ApiURL.ToString());
+        Debug.LogError("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
