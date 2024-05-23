@@ -15,7 +15,7 @@ public class UserDailyRewardHandler : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI rewardedAmountText;
 
-    private SocketManager Manager;
+    private SocketManager socketManager;
     private int myUserId = 0;
 
     private string SocketUrl
@@ -37,9 +37,9 @@ public class UserDailyRewardHandler : MonoBehaviour
     {
         if (SocketUrl != null)
         {
-            Manager = new SocketManager(new Uri(SocketUrl));
-            Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-            Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+            socketManager = new SocketManager(new Uri(SocketUrl));
+            socketManager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnSocketConnected);
+            socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
         }
         DontDestroyOnLoad(this);
 
@@ -50,19 +50,18 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (Manager != null)
+        if (socketManager != null)
         {
-            Manager.Socket.Off();
-            Manager.Close();
+            socketManager.Socket.Off();
+            socketManager.Close();
         }
     }
-
-    private void OnConnected(ConnectResponse resp)
+    private void OnSocketConnected(ConnectResponse resp)
     {
-        Manager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
+        socketManager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
     }
 
-    private void OnError(CustomError args)
+    private void OnSocketError(CustomError args)
     {
         Debug.LogError("Socket Error : " + args);
     }
