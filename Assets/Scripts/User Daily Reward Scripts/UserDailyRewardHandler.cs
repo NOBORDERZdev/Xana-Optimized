@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using BestHTTP.SocketIO3;
 using BestHTTP.SocketIO3.Events;
@@ -16,14 +15,8 @@ public class UserDailyRewardHandler : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI rewardedAmountText;
 
-    public UserDailyRewardData userDailyRewardData;
-    public SocketManager Manager;
-    public int userID = 0;
-    public int rewardedUserID;
-    public bool dailyRewardReceived = false;
-
-
-    public string msg;
+    private SocketManager Manager;
+    private int myUserId = 0;
 
     private string SocketUrl
     {
@@ -53,7 +46,15 @@ public class UserDailyRewardHandler : MonoBehaviour
         while (ConstantsHolder.userId == null)
             yield return new WaitForSeconds(0.5f);
 
-        userID = int.Parse(ConstantsHolder.userId);
+        myUserId = int.Parse(ConstantsHolder.userId);
+    }
+    private void OnDisable()
+    {
+        if (Manager != null)
+        {
+            Manager.Socket.Off();
+            Manager.Close();
+        }
     }
 
     private void OnConnected(ConnectResponse resp)
@@ -66,14 +67,11 @@ public class UserDailyRewardHandler : MonoBehaviour
         Debug.LogError("Socket Error : " + args);
     }
 
-    public void DailyRewardResponse(string resp)
+    private void DailyRewardResponse(string resp)
     {
-        msg = resp;
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
-        rewardedUserID = data.userId;
-        if (data.userId == userID)
+        if (data.userId == myUserId)
         {
-            dailyRewardReceived = true;
             rewardedAmountText.text = data.amount.ToString();   
             StartCoroutine(ShowDailyRewardRoutine());
         }
@@ -82,10 +80,9 @@ public class UserDailyRewardHandler : MonoBehaviour
     private IEnumerator ShowDailyRewardRoutine()
     {
         while (SceneManager.GetActiveScene().name != "Home")
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSecondsRealtime(5f);
 
         dailyRewardPopup.SetActive(true);
-        dailyRewardReceived = false;
         StopCoroutine(ShowDailyRewardRoutine());
     }
 }
