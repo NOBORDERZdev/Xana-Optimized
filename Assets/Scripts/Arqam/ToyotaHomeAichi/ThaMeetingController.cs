@@ -42,8 +42,10 @@ public class ThaMeetingController : MonoBehaviour
     private void OnEnable()
     {
         JoinMeeting();
-        GamePlayButtonEvents.inst.OnExitButton += LeaveMeeting;
-        GamePlayButtonEvents.inst.OnExitButton += MeetingRoomLeaveSocket;
+        //GamePlayButtonEvents.inst.OnExitButton += LeaveMeeting;
+        //GamePlayButtonEvents.inst.OnExitButton += MeetingRoomLeaveSocket;
+        GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeeting);
+        GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(MeetingRoomLeaveSocket);
     }
     private void JoinMeeting()
     {
