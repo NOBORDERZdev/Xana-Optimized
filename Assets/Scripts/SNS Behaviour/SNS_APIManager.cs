@@ -28,7 +28,7 @@ public class SNS_APIManager : MonoBehaviour
 
     [Space]
     public bool r_isCreateMessage = false;
-    private int BFCount = 0;
+    public int BFCount = 0;
     private int maxBfCount = 10;
     public AllFollowingRoot adFrndFollowing;
     GameManager gameManager;
@@ -366,6 +366,8 @@ public class SNS_APIManager : MonoBehaviour
             else
             {
                 string data = www.downloadHandler.text;
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
                 Debug.Log("Un Follow a user data:" + data + "  :user id:" + user_Id + "   :CallingFrom:" + callingFrom);
                 switch (callingFrom)
                 {

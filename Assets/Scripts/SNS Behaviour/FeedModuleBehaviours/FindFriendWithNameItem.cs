@@ -444,6 +444,8 @@ public class FindFriendWithNameItem : MonoBehaviour
                 searchUserRow.is_following_me = false;
                 searchUserRow.am_i_following = false;
                 searchUserRow.is_close_friend = false;
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
                 //FollowFollowingSetUp(false);
                 //if (FeedUIController.Instance != null)
                 //{
