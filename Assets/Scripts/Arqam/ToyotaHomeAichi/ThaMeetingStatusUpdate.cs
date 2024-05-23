@@ -102,7 +102,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void GetPlayerCount()        // call in start when player join toyota world
     {
-        CheckUsersCount(false);
+        CheckUsersCount(false, 0);
     }
     public void RemoteCheckUserCount()   // call when user exist from meeting
     {
@@ -119,7 +119,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     private async void CheckUsersCount(bool existFromMeeting, int photonId)
     {
-        if (photonId == gameObject.GetComponent<PhotonView>().ViewID)
+        if (!existFromMeeting || photonId == gameObject.GetComponent<PhotonView>().ViewID)
         {
             StringBuilder ApiURL = new StringBuilder();
             ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
