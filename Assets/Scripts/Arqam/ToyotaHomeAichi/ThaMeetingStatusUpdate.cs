@@ -79,7 +79,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             pv.RPC(nameof(UpdatePortal), RpcTarget.All);
         else
         {
-            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
+            if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
+                NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(UpdatePortal), RpcTarget.All);
             Debug.LogError("PhotonViewNotExist: ");
         }
     }
