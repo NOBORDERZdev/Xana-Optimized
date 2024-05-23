@@ -21,12 +21,11 @@ public class SNSSettingController : MonoBehaviour
     [Header("My Account Personal Information References")]
     public GameObject myAccountPersonalInfoScreen;
     [SerializeField] private GameObject personalInfoPublicIDObj;
-
     [SerializeField] private GameObject personalInfoEmailObj;
     [SerializeField] private GameObject personalInfoPhoneNumberObj;
-    [SerializeField] private TextMeshProUGUI personalInfoEmailText;
-    [SerializeField] private TextMeshProUGUI personalInfoPhoneNumberText;
-    [SerializeField] private TextMeshProUGUI personalInfoPublicaddressText;
+    public TextMeshProUGUI personalInfoEmailText;
+    public TextMeshProUGUI personalInfoPhoneNumberText;
+    public TextMeshProUGUI personalInfoPublicaddressText;
 
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
