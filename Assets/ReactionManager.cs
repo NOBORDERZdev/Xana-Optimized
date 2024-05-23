@@ -56,7 +56,10 @@ public class ReactionManager : MonoBehaviour
     public void OpenReactionDialogUI()
     {
         List<ReactionAnimationList> items = ReactionServerData.data.reactionList.FindAll(x => x.group == ReactionGroupSelected.ToString());
+
         Debug.LogError("----- >>> OpenReactionDialogUI " + items.Count);
+        if (items.Count.Equals(0)) { return;  }
+            
         EmoteReactionUIHandler.SetViewItemsReaction?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Reaction);
     }
 }

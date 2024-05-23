@@ -86,17 +86,3 @@ public class EmoteAnimationResponse
     public DataEmoteAnimationList data;
     public string msg;
 }
-#if UNITY_EDITOR
-
-[CustomEditor(typeof(DynamicEventManager))]
-public class EditorTestEmoteManager : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        if (GUILayout.Button("Run Function"))
-        {
-        
-        }
-    }
-}
-#endif

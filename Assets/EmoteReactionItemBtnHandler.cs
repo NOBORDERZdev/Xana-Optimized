@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EmoteReactionItemBtnHandler : MonoBehaviour
 {
@@ -13,14 +14,25 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
     public string ActionThumbnail_Url;
     public string ActionGroupType;
     public Image BtnImg;
+    public TMP_Text NameTxt;
 
     public void InitializeItem(ItemType _type, int _id, string _actionName, string _actionThumbnail_Ur, string _actionGroupType)
     {
-        TypeOfAction = ItemType.Reaction;
+        TypeOfAction = _type ;
         Id = _id;
         ActionName = _actionName;
         ActionThumbnail_Url = _actionThumbnail_Ur;
         ActionGroupType= _actionGroupType;
+
+        if(TypeOfAction == ItemType.Emote)
+        {
+            NameTxt.text = ""+ ActionName;
+        }
+        else
+        {
+            NameTxt.text = string.Empty;
+
+        }
     }
     private void OnEnable()
     {

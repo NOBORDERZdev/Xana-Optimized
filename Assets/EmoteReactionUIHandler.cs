@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class EmoteReactionUIHandler : MonoBehaviour
 {
+    public static Action ClearViewItemsReaction;
     public static Action< List<EmoteAnimationList>, EmoteReactionItemBtnHandler.ItemType> SetViewItemsEmote;
     public static Action< List<ReactionAnimationList>, EmoteReactionItemBtnHandler.ItemType> SetViewItemsReaction;
     public Transform DisplayDialogScrollView;
     public Transform DisplayContentScrollView;
     public List<Transform> ViewItemsInScrollView = new List<Transform>();
     public Transform ViewItemPrefab;
-    public EmoteReactionItemBtnHandler.ItemType SelectedAction;
+    protected EmoteReactionItemBtnHandler.ItemType SelectedAction;
     public Transform TabItemViewEmotes;
     public Transform TabItemViewReaction;
 
@@ -19,13 +20,15 @@ public class EmoteReactionUIHandler : MonoBehaviour
     {
         SetViewItemsEmote += PopulateViewItemsEmotes;
         SetViewItemsReaction += PopulateViewItemsReaction;
+        ClearViewItemsReaction += ClearItemsInView;
     }
     private void OnDisable()
     {
         SetViewItemsEmote -= PopulateViewItemsEmotes;
         SetViewItemsReaction -= PopulateViewItemsReaction;
+        ClearViewItemsReaction -= ClearItemsInView;
     }
-    void SetTabOfItem()
+    private void SetTabOfItem()
     {
         if(SelectedAction == EmoteReactionItemBtnHandler.ItemType.Emote)
         {
@@ -38,6 +41,14 @@ public class EmoteReactionUIHandler : MonoBehaviour
             TabItemViewReaction.gameObject.SetActive(true);
         }
     }
+    private void ClearItemsInView()
+    {
+        foreach (Transform viewItem in ViewItemsInScrollView)
+        {
+            Destroy(viewItem.gameObject);
+        }
+        ViewItemsInScrollView.Clear();
+    }
     public void PopulateViewItemsEmotes(List<EmoteAnimationList> items, EmoteReactionItemBtnHandler.ItemType _selectedAction )
     {
   
@@ -49,20 +60,19 @@ public class EmoteReactionUIHandler : MonoBehaviour
         foreach (Transform viewItem in ViewItemsInScrollView)
         {
             SetDataToViewItem(viewItem, items[itemscount].id, items[itemscount].name, 
-                items[itemscount].thumbnail, items[itemscount].group);
-            viewItem.gameObject.SetActive(true);
-            itemscount++;
-            if (itemscount >= items.Count)
-            {
-                return;
-            }
+                items[itemscount].thumbnail, items[itemscount].group, _selectedAction);
 
+            viewItem.gameObject.SetActive(true);
+
+            itemscount++;
+
+            if (itemscount >= items.Count) { return; }
         }
         for (int i = itemscount; i < items.Count; i++)
         {
             Transform spawnItem = Instantiate(ViewItemPrefab.gameObject, DisplayContentScrollView).transform;
             SetDataToViewItem(spawnItem, items[itemscount].id, items[itemscount].name, 
-                items[itemscount].thumbnail, items[itemscount].group);
+                items[itemscount].thumbnail, items[itemscount].group, _selectedAction);
 
             spawnItem.gameObject.SetActive(true);
 
@@ -78,24 +88,22 @@ public class EmoteReactionUIHandler : MonoBehaviour
         DisplayDialogScrollView.gameObject.SetActive(true);
         DisableAllItemsInView();
         int itemscount = 0;
+
         foreach (Transform viewItem in ViewItemsInScrollView)
         {
             SetDataToViewItem(viewItem, items[itemscount].id, items[itemscount].name, 
-                items[itemscount].thumbnail, items[itemscount].group);
+                items[itemscount].thumbnail, items[itemscount].group, _selectedAction);
 
             viewItem.gameObject.SetActive(true);
 
             itemscount++;
-            if (itemscount >= items.Count)
-            {
-                return;
-            }
+            if (itemscount >= items.Count) {  return; }
         }
         for (int i = itemscount; i < items.Count; i++)
         {
             Transform spawnItem = Instantiate(ViewItemPrefab.gameObject, DisplayContentScrollView).transform;
             SetDataToViewItem(spawnItem, items[itemscount].id, items[itemscount].name, 
-                items[itemscount].thumbnail, items[itemscount].group);
+                items[itemscount].thumbnail, items[itemscount].group, _selectedAction);
 
             spawnItem.gameObject.SetActive(true);
 
@@ -104,12 +112,12 @@ public class EmoteReactionUIHandler : MonoBehaviour
         }
     
     }
-    void SetDataToViewItem(Transform populateItem, int id, string name, string thumbnail, string group)
+    private void SetDataToViewItem(Transform populateItem, int id, string name, string thumbnail, string group, EmoteReactionItemBtnHandler.ItemType _selectedAction)
     {
         populateItem.GetComponent<EmoteReactionItemBtnHandler>().InitializeItem
-            (SelectedAction, id, name, thumbnail, group);
+            (_selectedAction, id, name, thumbnail, group);
     }
-    void DisableAllItemsInView()
+    private void DisableAllItemsInView()
     {
         foreach (Transform viewItem in ViewItemsInScrollView)
         {
