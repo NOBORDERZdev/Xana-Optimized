@@ -100,6 +100,11 @@ public class UserLoginSignupManager : MonoBehaviour
             ref_EyesBlinking.StoreBlendShapeValues();
             StartCoroutine(ref_EyesBlinking.BlinkingStartRoutine());
         }
+        string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
+        if (!Directory.Exists(saveDir))
+        {
+            Directory.CreateDirectory(saveDir);
+        }
     }
 
     private void OnDisable()
@@ -2005,10 +2010,10 @@ public class UserLoginSignupManager : MonoBehaviour
             // Destroy the screenshot as we no longer need it in this case
             Destroy(screenshot);
             Resources.UnloadUnusedAssets();
-            //Caching.ClearCache();
+            Caching.ClearCache();
             //GC.Collect();
             profilePicText.enabled= false;
-            Invoke("ProfilePostPartShow", 0.5f);
+          //  Invoke("ProfilePostPartShow", 0.5f);
         },
         settings: new ImageCropper.Settings()
         {
@@ -2029,7 +2034,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
    public IEnumerator WaitEditProfileGetUserDetails()
     {
-        if (setProfileAvatarTempPath == "") {
+        if  (string.IsNullOrEmpty(setProfileAvatarTempPath)){
             editProfilePanel.SetActive(false);
         } 
         else {
