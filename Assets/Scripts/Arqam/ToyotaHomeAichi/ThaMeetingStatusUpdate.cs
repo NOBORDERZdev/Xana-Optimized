@@ -1,14 +1,11 @@
 using UnityEngine;
 using Photon.Pun;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 using System;
 using UnityEngine.Networking;
-using System.Collections;
-using Unity.VisualScripting;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -102,7 +99,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void GetPlayerCount()        // call in start when player join toyota world
     {
-        CheckUsersCount(false, 0);
+        CheckUsersCount(ConstantsHolder.xanaConstants.backFromMeeting, 0);
     }
     public void RemoteCheckUserCount()   // call when user exist from meeting
     {
@@ -143,6 +140,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                     Debug.LogError("playerCount: " + playerCount);
                     if (existFromMeeting)
                     {
+                        ConstantsHolder.xanaConstants.backFromMeeting = false;
                         //playerCount = playerCount >= 1 ? 2 : playerCount;
                         if (playerCount >= 1)
                         {
