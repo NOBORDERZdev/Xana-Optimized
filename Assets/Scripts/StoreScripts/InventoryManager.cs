@@ -169,8 +169,8 @@ public class InventoryManager : MonoBehaviour
     public UGCItemData itemData;
     CharacterBodyParts characterBodyParts;
     public Sprite defaultPngForSkinIcon;
-
     AvatarController _avatarController;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     private void Awake()
     {
@@ -1362,6 +1362,7 @@ public class InventoryManager : MonoBehaviour
         else
             OnClickHomeButton();
 
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
 
     public void OnClickHomeButton()

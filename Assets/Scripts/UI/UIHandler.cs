@@ -3,6 +3,7 @@ using System.Collections;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class UIHandler : MonoBehaviour
 {
@@ -35,6 +36,9 @@ public class UIHandler : MonoBehaviour
 
     public bool isAvatarSelectionBtnClicked = false;
     [SerializeField] Color postButtonColor;
+
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+
     private void Awake()
     {
         Canvas.GetComponent<CanvasGroup>().alpha = 0;
@@ -77,11 +81,14 @@ public class UIHandler : MonoBehaviour
             GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
             GameManager.Instance.userAnimationPostFeature.postButtonText.color = postButtonColor;
         }
+
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Post);
     }
     public void ResetPlayerToLastPostPosted()
     {
         GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
-         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
     public void AvaterButtonCustomPushed()
     {
