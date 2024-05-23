@@ -48,7 +48,7 @@ public class ThaMeetingController : MonoBehaviour
         //GamePlayButtonEvents.inst.OnExitButton += LeaveMeeting;
         //GamePlayButtonEvents.inst.OnExitButton += MeetingRoomLeaveSocket;
         GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeeting);
-        GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(MeetingRoomLeaveSocket);
+        //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(MeetingRoomLeaveSocket);
     }
     private void JoinMeeting()
     {
@@ -97,7 +97,10 @@ public class ThaMeetingController : MonoBehaviour
         if (!www.isHttpError && www.isNetworkError)
             Debug.Log("Error is" + www.error);
         else
+        {
+            MeetingRoomLeaveSocket();
             Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
+        }
     }
 
     void MeetingRoomLeaveSocket()
