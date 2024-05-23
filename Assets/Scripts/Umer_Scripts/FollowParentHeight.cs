@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class FollowParentHeight : MonoBehaviour
 {
-
     public float HeightPadding = 0f;
     public bool AddPading = false;
-    private RectTransform ParentRectTransform;
-    private RectTransform ChildRectTransform;
+    RectTransform _parentRectTransform;
+    RectTransform _childRectTransform;
 
     void Start()
     {
         // Get the RectTransform components of the parent and the child
-        ParentRectTransform = transform.parent.GetComponent<RectTransform>();
-        ChildRectTransform = GetComponent<RectTransform>();
+        _parentRectTransform = transform.parent.GetComponent<RectTransform>();
+        _childRectTransform = GetComponent<RectTransform>();
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         SetChildHeight();
     }
@@ -25,12 +24,12 @@ public class FollowParentHeight : MonoBehaviour
     public void SetChildHeight()
     {
         // Ensure the child follows the parent's height
-        if (ParentRectTransform != null && ChildRectTransform != null)
+        if (_parentRectTransform != null && _childRectTransform != null)
         {
-            Vector2 sizeDelta = ChildRectTransform.sizeDelta;
-            sizeDelta.y = ParentRectTransform.rect.height;
+            Vector2 sizeDelta = _childRectTransform.sizeDelta;
+            sizeDelta.y = _parentRectTransform.rect.height;
             sizeDelta.y -= HeightPadding;
-            ChildRectTransform.sizeDelta = sizeDelta;
+            _childRectTransform.sizeDelta = sizeDelta;
         }
     }
 
