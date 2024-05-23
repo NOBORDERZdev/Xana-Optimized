@@ -461,16 +461,13 @@ public class GamificationComponentUIManager : MonoBehaviour
             //float minutes = Mathf.FloorToInt(time / 60);
             //float seconds = Mathf.FloorToInt(time % 60);
             //DisplayMessageTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-           
-            //Display message timer not showing in Builder
-            //if (state)
-            //    DisplayMessageTimeText.text = ConvertTimetoSecondsandMinute(time);
-            //else
-            //{
-            //    DisplayMessageTimeText.text = "";
-            //    DisplayMessageTimeText.transform.parent.gameObject.SetActive(false);
-            //}
-
+            if (state)
+                DisplayMessageTimeText.text = ConvertTimetoSecondsandMinute(time);
+            else
+            {
+                DisplayMessageTimeText.text = "";
+                DisplayMessageTimeText.transform.parent.gameObject.SetActive(false);
+            }
             //CanvasComponenetsManager._instance.timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             yield return new WaitForSeconds(1f);
             time--;
