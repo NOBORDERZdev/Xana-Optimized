@@ -139,8 +139,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 if (!existFromMeeting)
                     playerCount = meetingRoomStatusResponse.data.Count;
                 else if (existFromMeeting)
-                    playerCount = playerCount >= 1 ? 2 : playerCount;
-
+                {
+                    //playerCount = playerCount >= 1 ? 2 : playerCount;
+                    if (playerCount >= 1)
+                        playerCount = 2;
+                }
                 Debug.LogError("playerCount: " + playerCount + ":" + existFromMeeting);
                 NFT_Holder_Manager.instance.meetingStatus.tms = (MeetingStatus)(playerCount);
                 ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
