@@ -51,7 +51,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public string addressableSceneName;
 
-    [SerializeField] Button HomeBtn;
+    public Button HomeBtn;
 
     public double eventRemainingTime;
 
