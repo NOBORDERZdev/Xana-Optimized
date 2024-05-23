@@ -892,7 +892,8 @@ public class MyProfileDataManager : MonoBehaviour
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
-            uniqueUsername = tempStr;
+            tempStr = "@" + tempStr;
+            uniqueUsername = tempStr;// adding @ as pr in UI mockUp v1.4 
             checkEditInfoUpdated = 1;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
