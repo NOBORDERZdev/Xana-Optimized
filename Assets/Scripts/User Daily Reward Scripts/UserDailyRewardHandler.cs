@@ -17,6 +17,7 @@ public class UserDailyRewardHandler : MonoBehaviour
 
     private SocketManager _socketManager;
     private int _myUserId = 0;
+    private bool _hasToShowDailyPopup = false;
 
     private string SocketUrl
     {
@@ -32,9 +33,14 @@ public class UserDailyRewardHandler : MonoBehaviour
             }
         }
     }
-    
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+
+    }
     private IEnumerator Start()
     {
+
         if (SocketUrl != null)
         {
             _socketManager = new SocketManager(new Uri(SocketUrl));
@@ -55,6 +61,8 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.Off();
             _socketManager.Close();
         }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
     }
     private void OnSocketConnected(ConnectResponse resp)
     {
@@ -71,19 +79,46 @@ public class UserDailyRewardHandler : MonoBehaviour
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
         if (data.userId == _myUserId)
         {
-            _rewardedAmountText.text = data.amount.ToString();   
+            _rewardedAmountText.text = data.amount.ToString();
+            if (SceneManager.GetActiveScene().name != "Home")
+            {
+                ShowDailyRewardPopup();
+            }
+            else
+            {
+                _hasToShowDailyPopup = true;
+            }
+        }
+    }
+    private void ShowDailyRewardPopup()
+    {
+        _dailyRewardPopup.SetActive(true);
+        _hasToShowDailyPopup = false;
+    }
+
+    //Executes when Home Scene is loaded
+    private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+    {
+        if (arg0.name == "Home" && _hasToShowDailyPopup)
+        {
+            Debug.Log("Home Scene Loaded");
             StartCoroutine(ShowDailyRewardRoutine());
+
         }
     }
 
     private IEnumerator ShowDailyRewardRoutine()
     {
-        while (SceneManager.GetActiveScene().name != "Home")
-            yield return new WaitForSecondsRealtime(5f);
-
-        _dailyRewardPopup.SetActive(true);
+        //Adding delay to avoid showing the popup on the lobby worlds loading throuth Home scene
+        yield return new WaitForSecondsRealtime(3f);
+        if (SceneManager.GetActiveScene().name != "Home")
+        {
+            ShowDailyRewardPopup();
+        }
         StopCoroutine(ShowDailyRewardRoutine());
     }
+ 
+
 }
 
 [Serializable]

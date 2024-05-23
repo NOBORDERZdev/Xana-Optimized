@@ -114,14 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2be69a90350d284581cfa1a99bdd94d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dailyRewardPopup: {fileID: 1333407506560330562}
-  rewardedAmountText: {fileID: 8470841549894639914}
-  userDailyRewardData:
-    userId: 0
-    amount: 0
-  userID: 0
-  rewardedUserID: 0
-  msg: 
+  _dailyRewardPopup: {fileID: 8470841549926142457}
+  _rewardedAmountText: {fileID: 8470841549894639914}
 --- !u!1001 &8470841549910263551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,11 +241,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
---- !u!1 &1333407506560330562 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7426240701045370301, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
-  m_PrefabInstance: {fileID: 8470841549910263551}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1333407506560330573 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7426240701045370290, guid: faa93f6e0f219ce4dbef30debb3c9c35, type: 3}
