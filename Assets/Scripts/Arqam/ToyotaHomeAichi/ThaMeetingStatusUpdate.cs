@@ -23,12 +23,12 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += CheckUsersCount;
+        BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
         pv = GetComponent<PhotonView>();
     }
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= CheckUsersCount;
+        BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
     }
 
     public void UpdateMeetingParams(int status)
@@ -96,23 +96,27 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     public void UpdatePortal()
     {
-        if(NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+        if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
-    public void RemoteCheckUserCount()
+    private void GetPlayerCount()        // call in start when player join toyota world
+    {
+        CheckUsersCount(false);
+    }
+    public void RemoteCheckUserCount()   // call when user exist from meeting
     {
         if (pv != null)
-            pv.RPC(nameof(CheckUsersCount), RpcTarget.All);
+            pv.RPC(nameof(CheckUsersCount), RpcTarget.All, true);
         else
         {
-            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(CheckUsersCount), RpcTarget.All);
+            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(CheckUsersCount), RpcTarget.All, true);
             Debug.LogError("PhotonViewNotExist: ");
         }
     }
 
     [PunRPC]
-    private async void CheckUsersCount()
+    private async void CheckUsersCount(bool existFromMeeting)
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
@@ -130,7 +134,11 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
                 MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
-                playerCount = meetingRoomStatusResponse.data.Count;
+               
+                if (!existFromMeeting)
+                    playerCount = meetingRoomStatusResponse.data.Count;
+                else if (existFromMeeting)
+                    playerCount = playerCount >= 1 ? 2 : playerCount;
 
                 NFT_Holder_Manager.instance.meetingStatus.tms = (MeetingStatus)(playerCount);
                 ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
