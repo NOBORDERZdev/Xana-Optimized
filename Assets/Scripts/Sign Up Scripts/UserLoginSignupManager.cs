@@ -1616,7 +1616,7 @@ public class UserLoginSignupManager : MonoBehaviour
                
                 if (APIResponse.msg.Contains("Username"))
                 {
-                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+                    bykeyLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
                     UserDisplayNameErrors(bykeyLocalize);
 
                   
