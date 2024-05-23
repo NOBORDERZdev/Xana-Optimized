@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class HomeFooterHandler : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class HomeFooterHandler : MonoBehaviour
     AdditiveScenesLoader additiveScenesManager;
     GameManager gameManager;
     HomeScoketHandler socketController;
+
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     private bool notLoadedAgain = false;
     private void Awake()
@@ -271,6 +274,7 @@ public class HomeFooterHandler : MonoBehaviour
         }
         gameManager.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
     public void OnClickHomeButtonIdleAvatar()
     {
@@ -338,6 +342,8 @@ public class HomeFooterHandler : MonoBehaviour
             SearchWorldUIController.IsSearchBarActive = false;
             WorldManager.instance.worldSearchManager.ClearInputField();
         }
+
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
     /*public void OnClickNewWorldButton()
@@ -577,11 +583,11 @@ public class HomeFooterHandler : MonoBehaviour
             WorldManager.instance.ClearHomePageData();
             DisableSubScreen();
         }
-
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickFeedButton);
         }
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
     public void OnClickAddFriends()
@@ -686,13 +692,11 @@ public class HomeFooterHandler : MonoBehaviour
             OtherPlayerProfileData.Instance.myPlayerdataObj.gameObject.SetActive(false);
         }
         FeedUIController.Instance.feedUiScreen.SetActive(false);
-
-
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickAddFriends);
         }
-        
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
     void DisableSubScreen()
@@ -808,11 +812,11 @@ public class HomeFooterHandler : MonoBehaviour
         //home page thumnbail images destroy
         WorldManager.instance.ClearHomePageData();
         gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
-
         if (MyProfileDataManager.Instance)
         {
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
         }
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
     public void InitProfileData()
     {
@@ -881,6 +885,8 @@ public class HomeFooterHandler : MonoBehaviour
         gameManager.UiManager.HomeWorldScreen.SetActive(false);
         ConstantsHolder.xanaConstants.isStoreActive = true;
         InventoryManager.upateAssetOnGenderChanged?.Invoke();
+
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Avatar);
     }
     public void SetDefaultButtonSelection(int index)
     {

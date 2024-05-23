@@ -130,14 +130,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isTutorialLoaded=false;
     public bool isLobbyTutorialLoaded = false;
 
-    public static bool isDescriptionFullPage = false;
-    //Toyota Home Aichi
-    public enum MeetingStatus { End, Inprogress, HouseFull }
-    [SerializeField]
-    public MeetingStatus meetingStatus;
-
-    public bool isBackToParentScane = false;
-    public string parentSceneName;
+    //public static bool isDescriptionFullPage = false;
 
     public string r_EmoteStoragePersistentPath
     {

@@ -101,7 +101,10 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-            Connect(ConstantsHolder.xanaConstants.EnviornmentName);
+            // Seperate the live and test environment
+            string _LobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + ConstantsHolder.xanaConstants.EnviornmentName) : ("Test" + ConstantsHolder.xanaConstants.EnviornmentName);
+            Debug.Log("Lobby Name: " + _LobbyName);
+            Connect(_LobbyName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
