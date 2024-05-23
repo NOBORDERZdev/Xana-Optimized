@@ -138,12 +138,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                     data.Append(request.downloadHandler.text);
                     MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
                     Debug.LogError("ActualPlayerCount: " + meetingRoomStatusResponse.data.Count);
-                    if (!existFromMeeting)
-                    {
-                        playerCount = meetingRoomStatusResponse.data.Count;
-                        Debug.LogError("playerCount: " + playerCount);
-                    }
-                    else if (existFromMeeting)
+
+                    playerCount = meetingRoomStatusResponse.data.Count;
+                    Debug.LogError("playerCount: " + playerCount);
+                    if (existFromMeeting)
                     {
                         //playerCount = playerCount >= 1 ? 2 : playerCount;
                         if (playerCount >= 1)
