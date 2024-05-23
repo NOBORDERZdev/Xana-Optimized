@@ -441,35 +441,20 @@ public class GamificationComponentUIManager : MonoBehaviour
     }
     public IEnumerator IEEnableDisplayMessageUI(string DisplayMessage, float time, bool state)
     {
-        //if (!DisplayMessageParentUI.activeInHierarchy)
-        //{
 
         DisplayMessageText.text = DisplayMessage;
         bool isJPText = CheckJapaneseDisplayMessage(DisplayMessage);
-        //Debug.LogError(isJPText);
         if (isJPText)
             DisplayMessageText.font = GamificationComponentData.instance.hiraginoFont;
         else
             DisplayMessageText.font = GamificationComponentData.instance.orbitronFont;
 
         DisplayMessageParentUI.SetActive(true);
-        //yield return new WaitForSeconds(.1f);
-        //}
 
         while (time > 0)
         {
-            //float minutes = Mathf.FloorToInt(time / 60);
-            //float seconds = Mathf.FloorToInt(time % 60);
-            //DisplayMessageTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-            //Display message timer not showing in Builder
-            //if (state)
-            //    DisplayMessageTimeText.text = ConvertTimetoSecondsandMinute(time);
-            //else
-            //{
             DisplayMessageTimeText.text = "";
             DisplayMessageTimeText.transform.parent.gameObject.SetActive(false);
-            //}
-            //CanvasComponenetsManager._instance.timeLeft.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             yield return new WaitForSeconds(1f);
             time--;
         }

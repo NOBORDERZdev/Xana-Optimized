@@ -3,21 +3,22 @@ using UnityEngine.Video;
 
 public class VideoMaterialShareBackside : MonoBehaviour
 {
+    public bool IsLive = false;
+
     [SerializeField]
     MeshRenderer _meshVideoPlayer;
     [SerializeField]
     MeshRenderer _meshBackside;
 
     [SerializeField]
-    VideoPlayer _youtubeVideoPlayer; // Reference to the VideoPlayer
+    VideoPlayer _youtubeVideoPlayer;
 
-    public bool IsLive = false; // Flag to determine if sharing materials directly
+   
 
     private void Awake()
     {
         if (IsLive)
         {
-            // Share materials directly
             _meshBackside.sharedMaterial = _meshVideoPlayer.sharedMaterial;
         }
     }
@@ -33,7 +34,6 @@ public class VideoMaterialShareBackside : MonoBehaviour
 
     private void VideoPlayerStarted(VideoPlayer source)
     {
-        // Set the texture from the video player as the base map for the backside material
         _meshBackside.material.SetTexture("_BaseMap", source.texture);
     }
 }
