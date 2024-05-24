@@ -23,17 +23,16 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void LoadingNewScene(string sceneName)
     {
-        WorldItemView.m_EnvName = sceneName;
-        ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
-        gameplayEntityLoader.currentEnvironment = null;
-        multiplayerController.isConnecting = false;
-        gameplayEntityLoader.isEnvLoaded = false;
-        gameplayEntityLoader.isAlreadySpawned = true;
-        multiplayerController.fromXANASUmmit = true;
+        //WorldItemView.m_EnvName = sceneName;
+        //ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
+        //gameplayEntityLoader.currentEnvironment = null;
+        //multiplayerController.isConnecting = false;
+        //gameplayEntityLoader.isEnvLoaded = false;
+        //gameplayEntityLoader.isAlreadySpawned = true;
         multiplayerController.Disconnect();
 
-        multiplayerController.Connect(sceneName);
+        //multiplayerController.Connect(sceneName);
 
-        SceneManager.UnloadSceneAsync("XANA Summit");
+        //SceneManager.UnloadSceneAsync("XANA Summit");
     }
 }

@@ -102,7 +102,7 @@ public class AskForJoining : MonoBehaviour
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            MutiplayerController.instance.Connect(MutiplayerController.instance.lastLobbyName);
+            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
             AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);

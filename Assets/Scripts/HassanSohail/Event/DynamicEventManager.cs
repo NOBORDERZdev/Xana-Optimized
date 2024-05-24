@@ -169,7 +169,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
                         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
                         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-                        WorldItemView.m_EnvName = MutiplayerController.sceneName = environmentDetails.data.name;
+                        WorldItemView.m_EnvName = environmentDetails.data.name;
 
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();
