@@ -18,7 +18,7 @@ public class PlayerCameraController : MonoBehaviour
     private CinemachineFreeLook cinemachine;
     private CinemachineFreeLook.Orbit[] originalOrbits;
 
-    private Controls controls;
+    public Controls controls;
     public RectTransform freelookup;
     public bool gyroCheck = false;
     public static PlayerCameraController instance;

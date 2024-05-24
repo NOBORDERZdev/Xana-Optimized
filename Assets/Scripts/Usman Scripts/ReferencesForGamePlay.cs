@@ -39,6 +39,17 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
 
+    [Header("XANA Controller UI")]
+    [SerializeField] public CanvasGroup XanaFeatures;
+    [SerializeField] public CanvasGroup XanaChatCanvas;
+    //[SerializeField] CanvasGroup XanaJump;
+
+    [Header("Party Controller UI")]
+    [SerializeField] public CanvasGroup PartyChatCanvas;   
+    //[SerializeField] CanvasGroup PartyJump;
+
+
+
     // Start is called before the first frame update
     void Awake()
     {

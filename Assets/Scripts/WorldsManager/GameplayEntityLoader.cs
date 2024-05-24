@@ -640,6 +640,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         yield return new WaitForSeconds(0.2f);
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        ReferencesForGamePlay.instance.XanaFeatures.alpha = 0;
+        ReferencesForGamePlay.instance.XanaFeatures.interactable = false;
+        ReferencesForGamePlay.instance.XanaChatCanvas.alpha = 0;
+        ReferencesForGamePlay.instance.XanaChatCanvas.interactable = false;
+
+        ReferencesForGamePlay.instance.PartyChatCanvas.alpha = 1;
+        ReferencesForGamePlay.instance.PartyChatCanvas.interactable = true;
+
     }
 
     void ActivateNpcChat()
