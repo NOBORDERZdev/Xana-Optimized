@@ -49,11 +49,16 @@ public class UserLoginSignupManager : MonoBehaviour
     [Space(10)]
     public GameObject enterNamePanel;
     public GameObject editProfilePanel;
-    public AdvancedInputField displayrNameField,userUsernameField;
-    public Image selectedPresetImage,SelectPresetImageforEditProfil;
-    public RawImage aiPresetImage, aiPresetImageforEditProfil;
-    public Button nameScreenNextButton, profilePicNextButton;
-    public GameObject nameScreenLoader, profilePicScreenLoader;
+    public AdvancedInputField displayrNameField;
+    public AdvancedInputField userUsernameField;
+    public Image selectedPresetImage;
+    public Image selectPresetImageforEditProfil;
+    public RawImage aiPresetImage;
+    public RawImage aiPresetImageforEditProfil;
+    public Button nameScreenNextButton;
+    public Button profilePicNextButton;
+    public GameObject nameScreenLoader;
+    public GameObject profilePicScreenLoader;
     public Image editProfileImage;
     public string setProfileAvatarTempPath = "";
     public string setProfileAvatarTempFilename = "";
@@ -100,7 +105,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ref_EyesBlinking.StoreBlendShapeValues();
             StartCoroutine(ref_EyesBlinking.BlinkingStartRoutine());
         }
-        string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
+        string saveDir = Path.Combine(Application.persistentDataPath, "UserProfilePic");
         if (!Directory.Exists(saveDir))
         {
             Directory.CreateDirectory(saveDir);
@@ -1887,7 +1892,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
                 setProfileAvatarTempFilename = fileName;
 
                 Crop(texture,  setProfileAvatarTempPath);
@@ -1934,7 +1939,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
                 setProfileAvatarTempFilename = fileName;
 
                 CropProfilePic(texture, setProfileAvatarTempPath);
