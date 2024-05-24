@@ -1,29 +1,19 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-//using BestHTTP.SocketIO3;
-//using BestHTTP.SocketIO3.Events;
-using System;
-using BestHTTP.JSON;
-using Newtonsoft.Json;
+
 
 public class ThaMeetingController : MonoBehaviour
 {
     public int roomID = 4;
-    //public SocketManager Manager;
     //string address = "https://api-test.xana.net/";
 
     void Start()
     {
-        //address = ConstantsGod.API_BASEURL;
-
-        //if (!address.EndsWith("/"))
-        //{
-        //    address = address + "/";
-        //}
-        //Manager = new SocketManager(new Uri(address));
 
         GetComponent<FB_PushNotificationSender>().SendNotification();
+        ConstantsHolder.xanaConstants.MuseumID = "2399";                 // Toyota_Meeting_Room id
+
         //only user can back to toyota world when press on exit btn
         if (ConstantsHolder.xanaConstants.meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
         {
@@ -33,30 +23,17 @@ public class ThaMeetingController : MonoBehaviour
         else
             ConstantsHolder.xanaConstants.isBackToParentScane = false;
     }
-    public void JoinMeetingRoom(string msg)
-    {
-        Debug.Log("Join Meeting Room" + msg);
-    }
-   public  void LeaveMeetingRoom(string msg)
-    {
-        Debug.Log("Leave Meeting Room" + msg);
 
-    }
+
     private void OnEnable()
     {
         JoinMeeting();
-        //GamePlayButtonEvents.inst.OnExitButton += LeaveMeeting;
-        //GamePlayButtonEvents.inst.OnExitButton += MeetingRoomLeaveSocket;
         GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeeting);
-        //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(MeetingRoomLeaveSocket);
     }
+
     private void JoinMeeting()
     {
         StartCoroutine(MeetingRoomJoin());
-    }
-    private void LeaveMeeting()
-    {
-        StartCoroutine(MeetingRoomLeave());
     }
     IEnumerator MeetingRoomJoin()
     {
@@ -80,40 +57,13 @@ public class ThaMeetingController : MonoBehaviour
             Debug.Log("Error is" + www.error);
     }
 
-    IEnumerator MeetingRoomLeave()
+    private void LeaveMeeting()
     {
-        string token = ConstantsGod.AUTH_TOKEN;
-        WWWForm form = new WWWForm();
-        form.AddField("worldId", roomID);
-        form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
-        UnityWebRequest www;
-        www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.leavemeetingroom, form);
-        www.SetRequestHeader("Authorization", token);
-        www.SendWebRequest();
-        while (!www.isDone)
-        {
-            yield return null;
-        }
-        if (!www.isHttpError && www.isNetworkError)
-            Debug.Log("Error is" + www.error);
-        else
-        {
-            MeetingRoomLeaveSocket();
-            Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
-        }
+        StartCoroutine(FB_Notification_Initilizer.Instance.MeetingRoomLeave());
     }
+    
 
-    void MeetingRoomLeaveSocket()
-    {
-        THALeaveRoom tHALeaveRoom = new THALeaveRoom();
-        tHALeaveRoom.userType = FB_Notification_Initilizer.Instance.actorType.ToString();
-        tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
-        tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
-        string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
-        HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
-
-        Debug.Log("Actor Type : " + FB_Notification_Initilizer.Instance.actorType + "userid : " + ConstantsHolder.userId);
-    }
+    
 
 }
 
