@@ -854,7 +854,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                    
                     Debug.Log("Wallet Signup");
-                    Debug.Log("Love mera fit fit");
+                   
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
                    
                 }));
@@ -865,7 +865,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
             {
-                Debug.Log("Love mera hit hit");
+               
                 nameScreenLoader.SetActive(false);
                 nameScreenNextButton.interactable = true;
                 
@@ -1937,7 +1937,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
                 setProfileAvatarTempFilename = fileName;
 
-                Crop(texture, setProfileAvatarTempPath);
+                CropProfilePic(texture, setProfileAvatarTempPath);
 
             }
         });
@@ -1963,18 +1963,18 @@ public class UserLoginSignupManager : MonoBehaviour
 #endif
     }
 
-    public void Crop(Texture2D LoadedTexture, string path)
+    public void CropProfilePic(Texture2D LoadedTexture, string path)
     {
         // If image cropper is already open, do nothing
         if (ImageCropper.Instance.IsOpen)
             return;
 
-        StartCoroutine(SetImageCropper(LoadedTexture, path));
+        StartCoroutine(SetImageProfilePicCropper(LoadedTexture, path));
 
         //Invoke("ProfilePostPartShow", 1f);
     }
 
-    private IEnumerator SetImageCropper(Texture2D screenshot, string path)
+    private IEnumerator SetImageProfilePicCropper(Texture2D screenshot, string path)
     {
         yield return new WaitForEndOfFrame();
 
@@ -2034,7 +2034,7 @@ public class UserLoginSignupManager : MonoBehaviour
         });
     }
 
-   public IEnumerator WaitEditProfileGetUserDetails()
+   public IEnumerator EditProfilePic()
     {
         if  (string.IsNullOrEmpty(setProfileAvatarTempPath)){
             editProfilePanel.SetActive(false);
@@ -2049,15 +2049,15 @@ public class UserLoginSignupManager : MonoBehaviour
     
     public void UpdateProfilePic()
     {
-         StartCoroutine(WaitEditProfileGetUserDetails());
+         StartCoroutine(EditProfilePic());
     }
    
-    public void RequestUpdateUserAvatar(string user_avatar, string callingFrom)
+    public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
-        StartCoroutine(IERequestUpdateUserAvatar(user_avatar, callingFrom));
+        StartCoroutine(IERequestUpdateUserProfilePic(user_avatar, callingFrom));
     }
    
-    public IEnumerator IERequestUpdateUserAvatar(string user_avatar, string callingFrom)
+    public IEnumerator IERequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
         WWWForm form = new WWWForm();
 
