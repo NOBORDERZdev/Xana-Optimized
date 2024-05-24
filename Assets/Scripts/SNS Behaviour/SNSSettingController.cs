@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 using System.IO;
 
 public class SNSSettingController : MonoBehaviour
@@ -20,12 +21,11 @@ public class SNSSettingController : MonoBehaviour
     [Header("My Account Personal Information References")]
     public GameObject myAccountPersonalInfoScreen;
     [SerializeField] private GameObject personalInfoPublicIDObj;
-
     [SerializeField] private GameObject personalInfoEmailObj;
     [SerializeField] private GameObject personalInfoPhoneNumberObj;
-    [SerializeField] private TextMeshProUGUI personalInfoEmailText;
-    [SerializeField] private TextMeshProUGUI personalInfoPhoneNumberText;
-    [SerializeField] private TextMeshProUGUI personalInfoPublicaddressText;
+    public TextMeshProUGUI personalInfoEmailText;
+    public TextMeshProUGUI personalInfoPhoneNumberText;
+    public TextMeshProUGUI personalInfoPublicaddressText;
 
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
@@ -34,6 +34,8 @@ public class SNSSettingController : MonoBehaviour
     [Header("Simultaneous Connections Items")]
     public Image btnImageOn;
     public Image btnImageOff;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+
     //public Sprite offBtn, onBtn;
 
 
@@ -43,6 +45,7 @@ public class SNSSettingController : MonoBehaviour
     {
         settingScreen.SetActive(true);
         SettingScreenSetup();
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.MainSetting);
     }
 
     //this method is used to Setup Setting Screen.......
@@ -55,6 +58,7 @@ public class SNSSettingController : MonoBehaviour
     public void OnClickSettingClose()
     {
         settingScreen.SetActive(false);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
     }
 
     //this method is used to My Account Button click.......
@@ -62,12 +66,15 @@ public class SNSSettingController : MonoBehaviour
     {
         OnClickSettingClose();
         myAccountScreen.SetActive(true);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.SubSetting);
     }
 
     //this method is used to My Account Screen Back Button Click.......
     public void OnClickMyAccountBackButton()
     {
         OnClickSettingOpen();
+        myAccountScreen.SetActive(false);
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.MainSetting);
     }
 
     //this method is used to terms and policy.......
