@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using UnityEngine.Android;
 using System.Collections;
 using TMPro;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 public class FB_Notification_Initilizer : MonoBehaviour
 {
@@ -205,6 +207,41 @@ public class FB_Notification_Initilizer : MonoBehaviour
         fbTokens.Clear();
 
         Debug.LogError("Token Deleted");
+    }
+
+    public IEnumerator MeetingRoomLeave()
+    {
+        string token = ConstantsGod.AUTH_TOKEN;
+        WWWForm form = new WWWForm();
+        form.AddField("worldId", 4);            // here 4 is home consulting room id in Toyota world
+        form.AddField("email", toyotaUserEmail);
+        UnityWebRequest www;
+        www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.leavemeetingroom, form);
+        www.SetRequestHeader("Authorization", token);
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
+        if (!www.isHttpError && www.isNetworkError)
+            Debug.Log("Error is" + www.error);
+        else
+        {
+            MeetingRoomLeaveSocket();
+            Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
+        }
+    }
+
+    void MeetingRoomLeaveSocket()
+    {
+        THALeaveRoom tHALeaveRoom = new THALeaveRoom();
+        tHALeaveRoom.userType = FB_Notification_Initilizer.Instance.actorType.ToString();
+        tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
+        tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
+        string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
+        HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
+
+        Debug.Log("Actor Type : " + FB_Notification_Initilizer.Instance.actorType + "userid : " + ConstantsHolder.userId);
     }
 
 }
