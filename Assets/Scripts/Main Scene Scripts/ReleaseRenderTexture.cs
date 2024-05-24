@@ -17,6 +17,7 @@ public class ReleaseRenderTexture : MonoBehaviour
 
             this.GetComponent<Camera>().targetTexture = renderTexture;   // my changes
             UserLoginSignupManager.instance.aiPresetImage.texture = renderTexture;
+            UserLoginSignupManager.instance.aiPresetImageforEditProfil.texture = renderTexture;
         }
     }
 
