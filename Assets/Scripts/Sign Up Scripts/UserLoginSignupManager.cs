@@ -822,7 +822,7 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
         {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include alphabet, numbers, or underscores (_).");
+            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
             UserDisplayNameErrors(keytoLocalize);
             return;
 
@@ -1862,6 +1862,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (pickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     pickImageOptionScreen.SetActive(false);
+                      profilePicText.enabled= true;
                 }
 
                 // Create Texture from selected image
@@ -1908,6 +1909,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (pickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     pickImageOptionScreen.SetActive(false);
+                    profilePicText.enabled = true;
                 }
 
                 // Create Texture from selected image
