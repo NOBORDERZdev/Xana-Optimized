@@ -202,7 +202,7 @@ public class PresetData_Jsons : MonoBehaviour
                     //UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
                     UserLoginSignupManager.instance.selectedPresetImage.gameObject.SetActive(false);
                     UserLoginSignupManager.instance.aiPresetImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(false);
+                    UserLoginSignupManager.instance.selectPresetImageforEditProfil.gameObject.SetActive(false);
                     UserLoginSignupManager.instance.aiPresetImageforEditProfil.gameObject.SetActive(true);
                 }
                 else
@@ -210,7 +210,7 @@ public class PresetData_Jsons : MonoBehaviour
                     //UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
                     UserLoginSignupManager.instance.selectedPresetImage.gameObject.SetActive(true);
                     UserLoginSignupManager.instance.aiPresetImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(true);
+                    UserLoginSignupManager.instance.selectPresetImageforEditProfil.gameObject.SetActive(true);
                     UserLoginSignupManager.instance.aiPresetImageforEditProfil.gameObject.SetActive(false);
                 }
             }
