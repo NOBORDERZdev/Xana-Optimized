@@ -1,11 +1,8 @@
 using UnityEngine;
 using TMPro;
 using Newtonsoft.Json;
-using Photon.Realtime;
-using static ThaMeetingStatusUpdate;
 using System.Text;
 using UnityEngine.Networking;
-using static ThaMeetingTxtUpdate;
 
 public class ThaMeetingTxtUpdate : MonoBehaviour
 {
@@ -47,7 +44,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.Log("Error is" + request.error);
+                Debug.LogError("Error is" + request.error);
             }
             else
             {
@@ -55,9 +52,9 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
                 data.Append(request.downloadHandler.text);
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
 
-                Debug.Log("Wrap Object Status is :: " + wrapObjectClass.success);
-                portalMesh.enabled = wrapObjectClass.success;
-                boxCollider.enabled = wrapObjectClass.success;
+                Debug.LogError("Wrap Object Status is :: " + wrapObjectClass.data);
+                portalMesh.enabled = wrapObjectClass.data;
+                boxCollider.enabled = wrapObjectClass.data;
             }
         }
     }
