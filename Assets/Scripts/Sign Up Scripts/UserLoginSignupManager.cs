@@ -48,22 +48,22 @@ public class UserLoginSignupManager : MonoBehaviour
 
     [Space(10)]
     public GameObject enterNamePanel;
-    public GameObject editProfilePanel;
+    public GameObject EditProfilePanel;
     public AdvancedInputField displayrNameField;
     public AdvancedInputField userUsernameField;
-    public Image selectedPresetImage;
-    public Image selectPresetImageforEditProfil;
-    public RawImage aiPresetImage;
-    public RawImage aiPresetImageforEditProfil;
-    public Button nameScreenNextButton;
-    public Button profilePicNextButton;
-    public GameObject nameScreenLoader;
-    public GameObject profilePicScreenLoader;
-    public Image editProfileImage;
-    public string setProfileAvatarTempPath = "";
-    public string setProfileAvatarTempFilename = "";
-    public GameObject pickImageOptionScreen;
-    public TextMeshProUGUI profilePicText;
+    public Image SelectedPresetImage;
+    public Image SelectPresetImageforEditProfil;
+    public RawImage AiPresetImage;
+    public RawImage AiPresetImageforEditProfil;
+    public Button NameScreenNextButton;
+    public Button ProfilePicNextButton;
+    public GameObject NameScreenLoader;
+    public GameObject ProfilePicScreenLoader;
+    public Image EditProfileImage;
+    public string SetProfileAvatarTempPath = "";
+    public string SetProfileAvatarTempFilename = "";
+    public GameObject PickImageOptionScreen;
+    public TextMeshProUGUI ProfilePicText;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -796,8 +796,8 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void EnterUserName()
     {
-        nameScreenLoader.SetActive(true);
-        nameScreenNextButton.interactable = false;
+        NameScreenLoader.SetActive(true);
+        NameScreenNextButton.interactable = false;
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
@@ -871,8 +871,8 @@ public class UserLoginSignupManager : MonoBehaviour
             StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
             {
                
-                nameScreenLoader.SetActive(false);
-                nameScreenNextButton.interactable = true;
+                NameScreenLoader.SetActive(false);
+                NameScreenNextButton.interactable = true;
                 
                 Debug.Log("Email Signup");
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
@@ -888,8 +888,8 @@ public class UserLoginSignupManager : MonoBehaviour
         validationPopupPanel.SetActive(true);
         errorTextMsg.color = new Color(0.44f, 0.44f, 0.44f, 1f);
         errorHandler.ShowErrorMessage(errorMSg, errorTextMsg);
-        nameScreenLoader.SetActive(false);
-        nameScreenNextButton.interactable = true;
+        NameScreenLoader.SetActive(false);
+        NameScreenNextButton.interactable = true;
        
   }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
@@ -1640,10 +1640,10 @@ public class UserLoginSignupManager : MonoBehaviour
             }
             else if (APIResponse.success)
             {
-                OpenUIPanel(16);
-                editProfilePanel.SetActive(true);
-                nameScreenLoader.SetActive(false);
-                nameScreenNextButton.interactable = true;
+               OpenUIPanel(16);
+               EditProfilePanel.SetActive(true);
+               NameScreenLoader.SetActive(false);
+               NameScreenNextButton.interactable = true;
                 
 
             }
@@ -1839,7 +1839,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public void OnClickChangeProfilePicButton()
     {
       //  mainFullScreenContainer.SetActive(false);//fo disable profile screen post part.......
-        pickImageOptionScreen.SetActive(true);
+        PickImageOptionScreen.SetActive(true);
     }
 
 
@@ -1856,18 +1856,18 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             iOSCameraPermission.VerifyPermission(gameObject.name, "SampleCallback");
         }
-          setProfileAvatarTempPath = "";
-        setProfileAvatarTempFilename = "";
+          SetProfileAvatarTempPath = "";
+        SetProfileAvatarTempFilename = "";
         //setGroupFromCamera = false;
 
         NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
         {
             if (path != null)
             {
-                if (pickImageOptionScreen.activeSelf)//false meadia option screen.
+                if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
-                    pickImageOptionScreen.SetActive(false);
-                      profilePicText.enabled= true;
+                    PickImageOptionScreen.SetActive(false);
+                      ProfilePicText.enabled= true;
                 }
 
                 // Create Texture from selected image
@@ -1892,10 +1892,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
-                setProfileAvatarTempFilename = fileName;
+                SetProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
+                SetProfileAvatarTempFilename = fileName;
 
-                Crop(texture,  setProfileAvatarTempPath);
+                CropProfilePic(texture,  SetProfileAvatarTempPath);
 
                 //editProfileImage.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0, 0));
             }
@@ -1903,18 +1903,18 @@ public class UserLoginSignupManager : MonoBehaviour
         Debug.Log("Permission result: " + permission);
        
 #elif UNITY_ANDROID
-        setProfileAvatarTempPath = "";
-        setProfileAvatarTempFilename = "";
+        SetProfileAvatarTempPath = "";
+        SetProfileAvatarTempFilename = "";
         //setGroupFromCamera = false;
 
         NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
         {
             if (path != null)
             {
-                if (pickImageOptionScreen.activeSelf)//false meadia option screen.
+                if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
-                    pickImageOptionScreen.SetActive(false);
-                    profilePicText.enabled = true;
+                    PickImageOptionScreen.SetActive(false);
+                    ProfilePicText.enabled = true;
                 }
 
                 // Create Texture from selected image
@@ -1939,10 +1939,10 @@ public class UserLoginSignupManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
-                setProfileAvatarTempFilename = fileName;
+                SetProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
+                SetProfileAvatarTempFilename = fileName;
 
-                CropProfilePic(texture, setProfileAvatarTempPath);
+                CropProfilePic(texture, SetProfileAvatarTempPath);
 
             }
         });
@@ -1974,12 +1974,12 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ImageCropper.Instance.IsOpen)
             return;
 
-        StartCoroutine(SetImageProfilePicCropper(LoadedTexture, path));
+        StartCoroutine(_setImageProfilePicCropper(LoadedTexture, path));
 
         //Invoke("ProfilePostPartShow", 1f);
     }
 
-    private IEnumerator SetImageProfilePicCropper(Texture2D screenshot, string path)
+    private IEnumerator _setImageProfilePicCropper(Texture2D screenshot, string path)
     {
         yield return new WaitForEndOfFrame();
 
@@ -1994,7 +1994,7 @@ public class UserLoginSignupManager : MonoBehaviour
             if (result)
             {
                 Sprite s = Sprite.Create(croppedImage, new Rect(0, 0, croppedImage.width, croppedImage.height), new Vector2(0, 0), 1);
-                editProfileImage.sprite = s;
+                EditProfileImage.sprite = s;
 
                 try
                 {
@@ -2010,7 +2010,7 @@ public class UserLoginSignupManager : MonoBehaviour
             else
             {
                 //Debug.Log("--------Image not cropped");
-                setProfileAvatarTempPath = "";
+                SetProfileAvatarTempPath = "";
                 //croppedImageHolder.enabled = false;
                 //croppedImageSize.enabled = false;
             }
@@ -2019,7 +2019,7 @@ public class UserLoginSignupManager : MonoBehaviour
             Resources.UnloadUnusedAssets();
             Caching.ClearCache();
             //GC.Collect();
-            profilePicText.enabled= false;
+            ProfilePicText.enabled= false;
           //  Invoke("ProfilePostPartShow", 0.5f);
         },
         settings: new ImageCropper.Settings()
@@ -2041,14 +2041,14 @@ public class UserLoginSignupManager : MonoBehaviour
 
    public IEnumerator EditProfilePic()
     {
-        if  (string.IsNullOrEmpty(setProfileAvatarTempPath)){
-            editProfilePanel.SetActive(false);
+        if  (string.IsNullOrEmpty(SetProfileAvatarTempPath)){
+            EditProfilePanel.SetActive(false);
         } 
         else {
-            profilePicNextButton.interactable = false;
-            profilePicScreenLoader.SetActive(true);
+            ProfilePicNextButton.interactable = false;
+            ProfilePicScreenLoader.SetActive(true);
             yield return new WaitForSeconds(0.5f);
-            AWSHandler.Instance.PostAvatarObject(setProfileAvatarTempPath, setProfileAvatarTempFilename, "SignupProfilePicUpload");//upload avatar image on AWS.
+            AWSHandler.Instance.PostAvatarObject(SetProfileAvatarTempPath, SetProfileAvatarTempFilename, "SignupProfilePicUpload");//upload avatar image on AWS.
         }
     }
     
@@ -2075,24 +2075,24 @@ public class UserLoginSignupManager : MonoBehaviour
             www.SendWebRequest();
             while (!www.isDone)
             {
-                profilePicNextButton.interactable = true;
-                profilePicScreenLoader.SetActive(false);
+                ProfilePicNextButton.interactable = true;
+                ProfilePicScreenLoader.SetActive(false);
                 yield return null;
             }
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(www.error);
-                profilePicNextButton.interactable = true;
-                profilePicScreenLoader.SetActive(false);
+                ProfilePicNextButton.interactable = true;
+                ProfilePicScreenLoader.SetActive(false);
             }
             else
             {
                
                 string data = www.downloadHandler.text;
-                profilePicNextButton.interactable = true;
-                profilePicScreenLoader.SetActive(false);
-                editProfilePanel.SetActive(false);
+                ProfilePicNextButton.interactable = true;
+                ProfilePicScreenLoader.SetActive(false);
+                EditProfilePanel.SetActive(false);
 
             }
         }

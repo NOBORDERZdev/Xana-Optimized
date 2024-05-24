@@ -200,18 +200,18 @@ public class PresetData_Jsons : MonoBehaviour
                 if (UGCManager.isSelfieTaken)
                 {
                     //UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.selectedPresetImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.aiPresetImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.selectPresetImageforEditProfil.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.aiPresetImageforEditProfil.gameObject.SetActive(true);
+                    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(false);
+                    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(true);
+                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(false);
+                    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(true);
                 }
                 else
                 {
                     //UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.selectedPresetImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.aiPresetImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.selectPresetImageforEditProfil.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.aiPresetImageforEditProfil.gameObject.SetActive(false);
+                    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(true);
+                    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(false);
+                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(true);
+                    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(false);
                 }
             }
             else

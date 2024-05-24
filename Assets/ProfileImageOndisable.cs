@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class ProfileImageOndisable : MonoBehaviour
 {
     
-    public Sprite defaultImage;
-    public Image imageRefrence;
+    public Sprite DefaultImage;
+    public Image ImageRefrence;
    
     private void OnDisable()
     {
-        imageRefrence.sprite = defaultImage;
-        UserLoginSignupManager.instance.profilePicText.enabled = true;
-        UserLoginSignupManager.instance.setProfileAvatarTempPath = "";
-        UserLoginSignupManager.instance.setProfileAvatarTempFilename = "";
+        ImageRefrence.sprite = DefaultImage;
+        ImageRefrence.sprite = DefaultImage;
+        UserLoginSignupManager.instance.ProfilePicText.enabled = true;
+        UserLoginSignupManager.instance.SetProfileAvatarTempPath = "";
+        UserLoginSignupManager.instance.SetProfileAvatarTempFilename = "";
     }
 }
