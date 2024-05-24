@@ -28,7 +28,7 @@ public class UserDailyRewardHandler : MonoBehaviour
         {
             if (APIBasepointManager.instance.IsXanaLive)
             {
-                return "LiveURL";
+                return null; //Mainet socket url will be added here
             }
             else
             {
@@ -38,6 +38,7 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void Awake()
     {
+
         if (_instance == null)
         {
             _instance = this;
@@ -60,6 +61,10 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnSocketConnected);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        }
+        else
+        {
+            Destroy(gameObject);
         }
 
         while (ConstantsHolder.userId == null)
