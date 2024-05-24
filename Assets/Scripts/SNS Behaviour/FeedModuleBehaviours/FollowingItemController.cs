@@ -329,6 +329,8 @@ public class FollowingItemController : MonoBehaviour
                Debug.Log("user unfollow success data:" + data);
                 //searchUserRow.isFollowing = false;
                 FollowFollowingSetUp(false);
+                if (SNS_APIManager.Instance.BFCount > 0)
+                    SNS_APIManager.Instance.BFCount -= 1;
             }
         }
     }

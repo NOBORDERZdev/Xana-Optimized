@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 288265395169905481}
   - component: {fileID: 288265395169905495}
   - component: {fileID: 288265395169905480}
+  - component: {fileID: 1733481517693922902}
   m_Layer: 5
   m_Name: FriendContainer
   m_TagString: Untagged
@@ -81,6 +82,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1733481517693922902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 288265395169905482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841fed8a472cff942b0d97e95d72fd43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heightPadding: 190
+  addPading: 0
 --- !u!1 &288265395175937824
 GameObject:
   m_ObjectHideFlags: 0
@@ -4485,7 +4500,7 @@ MonoBehaviour:
     m_Left: 40
     m_Right: 0
     m_Top: 55
-    m_Bottom: 400
+    m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 23
   m_ChildForceExpandWidth: 1
@@ -6710,7 +6725,7 @@ MonoBehaviour:
     m_Left: 40
     m_Right: 0
     m_Top: 53
-    m_Bottom: 400
+    m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 23
   m_ChildForceExpandWidth: 1
@@ -7044,7 +7059,7 @@ MonoBehaviour:
     m_Left: 0
     m_Right: 0
     m_Top: 55
-    m_Bottom: 400
+    m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 23
   m_ChildForceExpandWidth: 1
@@ -8571,7 +8586,7 @@ MonoBehaviour:
     m_Left: 40
     m_Right: 0
     m_Top: 50
-    m_Bottom: 400
+    m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 23
   m_ChildForceExpandWidth: 1

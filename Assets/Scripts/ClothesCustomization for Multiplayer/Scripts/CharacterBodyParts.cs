@@ -776,45 +776,31 @@ public class CharacterBodyParts : MonoBehaviour
     }
     public void ChangeHairColor(Color color)
     {
-        // print("Change Hair From Slider : " + color);
-        if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+        Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
+        if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            // For Band using Eye Shader so variable name is Changed 
-            // Variable is equal to eyename
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, color);
-        }
-        else if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-        {
-            if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-               avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, color);
+            if (_materials[0].name.Contains("Band") || _materials[0].name.Contains("Cap") || _materials[0].name.Contains("Hat") || _materials[0].name.Contains("Pins"))
+                _materials[1].SetColor(Hair_ColorName, color);
             else
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
+                _materials[0].SetColor(Hair_ColorName, color);
         }
         else
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, color);
-
+            _materials[0].SetColor(Hair_ColorName, color);
     }
     public void ChangeHairColor(int colorId)
     {
         //print("Change Hair From Color Panel : " + hairColor[colorId]);
-        if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+       
+        Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
+        if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            // For Band using Eye Shader so variable name is Changed 
-            // Variable is equal to eyename
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, hairColor[colorId]);
-        }
-        else if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1) // In case Of Hat there is 2 material
-        {
-            if (avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
-               avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, hairColor[colorId]);
+            if (_materials[0].name.Contains("Band") || _materials[0].name.Contains("Cap") || _materials[0].name.Contains("Hat") || _materials[0].name.Contains("Pins"))
+                _materials[1].SetColor(Hair_ColorName, hairColor[colorId]);
             else
-                avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
+                _materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
         }
         else
-            avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
-
+            _materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
     }
     public void ChangeEyeColor(Color color)
     {
