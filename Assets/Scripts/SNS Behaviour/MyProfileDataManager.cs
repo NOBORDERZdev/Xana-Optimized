@@ -195,7 +195,7 @@ public class MyProfileDataManager : MonoBehaviour
         profileUIHandler = ProfileUIHandler.instance;
         feedUIController = FeedUIController.Instance;
         //socketController = HomeScoketHandler.instance;
-        string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
+        string saveDir = Path.Combine(Application.persistentDataPath, "UserProfilePic");
         if (!Directory.Exists(saveDir))
         {
             Directory.CreateDirectory(saveDir);
@@ -1209,7 +1209,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1335,7 +1335,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
+                string filePath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
 
                 Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
@@ -1398,7 +1398,7 @@ public class MyProfileDataManager : MonoBehaviour
         string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
         fileName = fileName + str + ".png";
 
-        string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
+        string filePath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
 
         Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName);
 
