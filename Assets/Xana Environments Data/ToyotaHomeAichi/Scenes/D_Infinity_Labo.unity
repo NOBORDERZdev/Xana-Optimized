@@ -27909,6 +27909,7 @@ Transform:
   - {fileID: 604343889}
   - {fileID: 1191278466}
   - {fileID: 1291774113}
+  - {fileID: 2115192424}
   m_Father: {fileID: 1108251053}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29737,6 +29738,51 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.1730106, y: 4.217999, z: 1.5413587}
   m_Center: {x: 7.406609, y: 1.6575472, z: -37.25667}
+--- !u!1 &2115192423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2115192424}
+  - component: {fileID: 2115192425}
+  m_Layer: 0
+  m_Name: THA_AI_Conversation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2115192424
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115192423}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1963513464}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2115192425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115192423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9719b916a45eb934a95304709239bfde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  msg: Hello Airin. What are you doing?
 --- !u!1 &2122820454
 GameObject:
   m_ObjectHideFlags: 0
