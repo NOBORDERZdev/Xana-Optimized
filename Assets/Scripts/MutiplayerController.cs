@@ -129,7 +129,6 @@ namespace Photon.Pun.Demo.PunBasics
         /// 
         public void Connect(string lobbyN)
         {
-            Debug.LogError("connect method start");
             working = ScenesList.AddressableScene;
             CurrLobbyName = lobbyN;
 
@@ -150,16 +149,12 @@ namespace Photon.Pun.Demo.PunBasics
             }
             if (PhotonNetwork.IsConnected)
             {
-                Debug.LogError("here join lobby");
                 JoinLobby(CurrLobbyName);
             }
             else
             {
                 //Once it connected to server OnConnectedToMaster callback it sent from their we can join lobby.
-                if(PhotonNetwork.ConnectUsingSettings())
-                {
-
-                }
+                bool isConnected=PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = this.gameVersion;
                 JoinLobby(CurrLobbyName);
             }
@@ -175,16 +170,15 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
-            Debug.LogError("Connected to master called");
             connectionState = ServerConnectionStates.ConnectedToServer;
             if (working == ScenesList.MainMenu)
                 return;
-            //PhotonNetwork.JoinLobby(new TypedLobby(CurrLobbyName, LobbyType.Default));
-            //JoinLobby(CurrLobbyName);
         }
 
-        private void JoinLobby(String lobbyName)
+        private async void JoinLobby(String lobbyName)
         {
+            while(!PhotonNetwork.IsConnectedAndReady)
+            await Task.Delay(1);
             PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
         }
 

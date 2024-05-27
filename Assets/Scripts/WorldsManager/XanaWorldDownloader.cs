@@ -646,8 +646,9 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    public void ResetAll()
+    public static void ResetAll()
     {
+
         stopDownloading = true;
 
         downloadDataQueue.Clear();

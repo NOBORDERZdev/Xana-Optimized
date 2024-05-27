@@ -365,45 +365,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public IEnumerator SpawnPlayer()
     {
-        //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
-        //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(.8f,0.1f);
         if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
-            // LoadingHandler.Instance.UpdateLoadingSlider(.8f);
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
         }
-        yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            if (WorldItemView.m_EnvName.Contains("AfterParty"))
-            {
-                if (ConstantsHolder.xanaConstants.setIdolVillaPosition)
-                {
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                    ConstantsHolder.xanaConstants.setIdolVillaPosition = false;
-                }
-                else
-                {
-                    for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
-                    {
-                        if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
-                        {
-                            spawnPoint = IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().spawnPos;
-                            break;
-                        }
-                        else
-                        {
-                            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-            }
+            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             RaycastHit hit;
-        CheckAgain:
+            CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -411,64 +381,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 {
                     spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     goto CheckAgain;
-                } //else if()
-
-                else if (hit.collider.gameObject.GetComponent<NPCRandomMovement>())
-                {
-                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-2, 2), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-2, 2));
-                    goto CheckAgain;
                 }
-
                 spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
-            if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
-                //Invoke(nameof(SetKotoAngle), 0.5f);
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-                {
-                    StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
-                }
-                else
-                {
-                    StartCoroutine(setPlayerCamAngle(0, 0.75f));
-
-                }
-            }
-            else if (WorldItemView.m_EnvName.Contains("Genesis"))
-            {
-                // No Need TO Rotate Player
-                StartCoroutine(setPlayerCamAngle(0, 0.75f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
-            {
-                StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
-            {
-                StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            }
-            if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
-            {
-                PlayerCamera.m_Lens.NearClipPlane = 0.05f;
-            }
-            if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
-            {              // added by AR for ToyotaHome world
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            }
-            //else
-            //{
-            //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            //}
+            SetPlayerCameraAngle();
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
@@ -484,8 +400,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         GetComponent<PostProcessManager>().SetPostProcessing();
 
-        // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
-
         //change youtube player instantiation code because while env is in loading and youtube started playing video
         InstantiateYoutubePlayer();
 
@@ -494,7 +408,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (!ConstantsHolder.xanaConstants.isCameraMan)
         {
             LoadingHandler.Instance.HideLoading();
-            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
@@ -522,8 +435,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 
-        yield return new WaitForSeconds(.5f);
-
         if (ConstantsHolder.xanaConstants.isCameraMan)
         {
             ReferencesForGamePlay.instance.randerCamera.gameObject.SetActive(false);
@@ -536,23 +447,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         if (!ConstantsHolder.xanaConstants.isCameraMan)
             LoadingHandler.Instance.HideLoading();
-        //TurnOnPostCam();
-        // Commented By WaqasAhmad
-        {
-            //try
-            //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    //Debug.Log("<color = red>Exception here..............</color>");
-            //}
-        }
-        // Yes Join APi Call Here
-        ////Debug.Log("Waqas : Room Joined.");
-        //Debug.Log("<color=green> Analytics -- Joined </color>");
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
-
+        
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
         if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -588,11 +483,55 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // Firebase Event for Join World
         Debug.Log("Player Spawn Completed --  Join World");
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
-
+        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
         //ActivateNpcChat();
+
+        yield return null;
+    }
+
+    void SetPlayerCameraAngle()
+    {
+        if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+        {
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+        else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
+        {
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
+            //Invoke(nameof(SetKotoAngle), 0.5f);
+            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            {
+                StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+            }
+            else
+            {
+                StartCoroutine(setPlayerCamAngle(0, 0.75f));
+            }
+        }
+        else if (WorldItemView.m_EnvName.Contains("Genesis"))
+        {
+            StartCoroutine(setPlayerCamAngle(0, 0.75f));
+        }
+        else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+        {
+            StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
+        }
+        else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
+        {
+            StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+        }
+        if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+        {
+            PlayerCamera.m_Lens.NearClipPlane = 0.05f;
+        }
+        if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
+        {              // added by AR for ToyotaHome world
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+        }
     }
 
     void InstantiatePlayerAvatar()
@@ -631,11 +570,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public IEnumerator SpawnPlayerForBuilderScene()
     {
         LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-    CheckAgain:
+        CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -719,21 +658,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ReferencesForGamePlay.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
-    End:
-        //LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
-        yield return new WaitForSeconds(1);
-
-        // Commented By WaqasAhmad
-        {
-            //try
-            //{
-            //    LoadingHandler.Instance.Loading_WhiteScreen.SetActive(false);
-            //}
-            //catch (System.Exception e)
-            //{
-            //    //Debug.Log("<color = red> Exception here..............</color>");
-            //}
-        }
 
         SetAddressableSceneActive();
         updatedSpawnpoint.localPosition = spawnPoint;
@@ -764,19 +688,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
 
         isEnvLoaded = true;
-        yield return new WaitForSeconds(1.75f);
         if (!ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             LoadingHandler.Instance.HideLoading();
 
         }
-        // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
-        //LoadingHandler.Instance.UpdateLoadingStatusText("");
-
-
-        // Yes Join APi Call Here
-        ////Debug.Log("Waqas : Room Joined.");
-        //Debug.Log("<color=green> Analytics -- Joined </color>");
+      
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.builderMapID.ToString());
 
@@ -901,12 +818,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         PhotonNetwork.LeaveRoom();
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
-    }
-
-
-    public override void OnLeftRoom()
-    {
-
     }
 
     public void OnPhotonInstantiate(PhotonMessageInfo info)
@@ -1048,7 +959,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-    CheckAgain:
+        CheckAgain:
         Transform temp = null;
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
@@ -1110,7 +1021,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint.y += BuilderSpawnPoint ? 2 : 1000;
 
         RaycastHit hit;
-    CheckAgain:
+        CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -1142,7 +1053,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        ////Debug.LogError("~~~~~~scene name to be activated :-  " + temp);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (ConstantsHolder.xanaConstants.isBuilderScene)

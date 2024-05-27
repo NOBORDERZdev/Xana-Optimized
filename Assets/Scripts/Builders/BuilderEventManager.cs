@@ -18,6 +18,7 @@ public static class BuilderEventManager
     public static Action AfterMapDataDownloaded;
     public static Action<string> XanaMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
+    public static Action UnSubscribeEvent;
 
     public static Action<string> LoadNewScene;
 
