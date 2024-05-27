@@ -23,6 +23,28 @@ public class ScreenOrientationManager : MonoBehaviour
     public AvatarSpawnerOnDisconnect ref_avatarManager;
     public AvatarSpawnerOnDisconnect ref_avatarManager_Portrait;
 
+    [Header("Landsacape")]
+    [Header("XANA Controller UI")]
+    [SerializeField] public GameObject XanaFeaturesLandsacape;
+    [SerializeField] public GameObject XanaChatCanvasLandsacape;
+    [SerializeField] public GameObject XanaJumpLandsacape;
+    [SerializeField] public GameObject EmoteFavLandsacape;
+    [Header("Party Controller UI")]
+    [SerializeField] public GameObject PartyChatCanvasLandsacape;
+    [SerializeField] public GameObject PartJumpLandsacape;
+
+    [Header("Potraite")]
+    [Header("XANA Controller UI")]
+    [SerializeField] public GameObject XanaFeaturesPotraite;
+    [SerializeField] public GameObject XanaChatCanvasPotraite;
+    [SerializeField] public GameObject XanaJumpPotraite;
+    //[SerializeField] public GameObject EmoteFavPotraite;
+    [Header("Party Controller UI")]
+    [SerializeField] public GameObject PartyChatCanvasPotraite;
+    [SerializeField] public GameObject PartJumpPotraite;
+
+
+
     private void Awake()
     {
         _instance = this;

@@ -39,13 +39,6 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
 
-    [Header("XANA Controller UI")]
-    [SerializeField] public CanvasGroup XanaFeatures;
-    [SerializeField] public CanvasGroup XanaChatCanvas;
-    //[SerializeField] CanvasGroup XanaJump;
-
-    [Header("Party Controller UI")]
-    [SerializeField] public CanvasGroup PartyChatCanvas;   
     //[SerializeField] CanvasGroup PartyJump;
 
 
@@ -132,17 +125,21 @@ public class ReferencesForGamePlay : MonoBehaviour
             }
         }
       
-        if (ReferenceObject.activeInHierarchy && m_34player != null)
+        if (ReferenceObject.activeInHierarchy && m_34player != null && m_34player.activeInHierarchy && m_34player.GetComponent<MyBeachSelfieCam>())
         {
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
+            if(m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender!=null)
+                m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
+            if(m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat!=null)
+                m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
 
 
-        if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null)
+        if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null && m_34player.activeInHierarchy && m_34player.GetComponent<MyBeachSelfieCam>())
         {
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
-            m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
+            if(m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender!=null)
+                m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
+            if(m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat!=null)
+                m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
 
 

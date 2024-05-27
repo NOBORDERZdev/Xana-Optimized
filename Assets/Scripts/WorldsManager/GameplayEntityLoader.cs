@@ -628,6 +628,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){ 
+        ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
         CharacterManager characterManager = player.GetComponent<CharacterManager>();
         XanaPartyCamera.characterManager = characterManager;
         characterManager.input= XanaPartyInput;
@@ -637,17 +638,41 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         characterManager.enabled =true;
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-        ReferencesForGamePlay.instance.XanaFeatures.alpha = 0;
-        ReferencesForGamePlay.instance.XanaFeatures.interactable = false;
-        ReferencesForGamePlay.instance.XanaChatCanvas.alpha = 0;
-        ReferencesForGamePlay.instance.XanaChatCanvas.interactable = false;
+        // Landscape
+        tempRef.XanaFeaturesLandsacape.SetActive(false);
+        tempRef.XanaChatCanvasLandsacape.SetActive(false);
+        tempRef.XanaJumpLandsacape.SetActive(false);
+        tempRef.EmoteFavLandsacape.SetActive(false);
+        tempRef.PartyChatCanvasLandsacape.SetActive(true);
+        tempRef.PartJumpLandsacape.SetActive(true);
+        // Potrait
+        tempRef.XanaFeaturesPotraite.SetActive(false);
+        tempRef.XanaChatCanvasPotraite.SetActive(false);
+        tempRef.XanaJumpPotraite.SetActive(false);
+        //tempRef.EmoteFavPotraite.SetActive(false);
+        tempRef.PartyChatCanvasPotraite.SetActive(true);
+        tempRef.PartJumpPotraite.SetActive(true);
+    }
 
-        ReferencesForGamePlay.instance.PartyChatCanvas.alpha = 1;
-        ReferencesForGamePlay.instance.PartyChatCanvas.interactable = true;
-
+    void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){
+        if (state)
+        {   
+            canvasGroup.alpha = 0;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+            canvasGroup.gameObject.SetActive(false);
+        }
+        else
+        {
+            canvasGroup.alpha = 1;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+            canvasGroup.gameObject.SetActive(true);
+        }
+        print("Disabling "+ canvasGroup.name + ": State: "+state );
     }
 
     void ActivateNpcChat()

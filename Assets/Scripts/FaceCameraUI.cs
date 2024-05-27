@@ -40,8 +40,9 @@ public class FaceCameraUI : MonoBehaviour
         }
         else
         {
-            if (selfieStick.activeInHierarchy)
+            if ( selfieStick!=null)
             {
+                if(selfieStick.activeInHierarchy){
                 if (oneTimeCall)
                 {
                     selficamOtherAssign = selfieCamOther;
@@ -60,6 +61,7 @@ public class FaceCameraUI : MonoBehaviour
                 }
                 localTrans.LookAt(2 * localTrans.position - selfieCam.position);
                 localTrans.LookAt(2 * localTrans.position - selfieCamOther.position);
+                }
             }
         }
     }
