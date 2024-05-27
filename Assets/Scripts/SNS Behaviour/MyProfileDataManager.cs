@@ -37,7 +37,7 @@ public class MyProfileDataManager : MonoBehaviour
     [Space]
     [Header("Screen References")]
     public GameObject myProfileScreen;
-    [SerializeField] GameObject editProfileScreen;
+    public GameObject editProfileScreen;
     [SerializeField] GameObject pickImageOptionScreen;
     public GameObject OtherPlayerdataObj;
     [SerializeField] GameObject settingsButton;
@@ -160,6 +160,7 @@ public class MyProfileDataManager : MonoBehaviour
     SNS_APIManager apiManager;
     ProfileUIHandler profileUIHandler;
     FeedUIController feedUIController;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     //HomeScoketHandler socketController;
     private void Awake()
     {
@@ -194,7 +195,7 @@ public class MyProfileDataManager : MonoBehaviour
         profileUIHandler = ProfileUIHandler.instance;
         feedUIController = FeedUIController.Instance;
         //socketController = HomeScoketHandler.instance;
-        string saveDir = Path.Combine(Application.persistentDataPath, "XanaChat");
+        string saveDir = Path.Combine(Application.persistentDataPath, "UserProfilePic");
         if (!Directory.Exists(saveDir))
         {
             Directory.CreateDirectory(saveDir);
@@ -663,6 +664,7 @@ public class MyProfileDataManager : MonoBehaviour
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         editProfileScreen.SetActive(true);
         SetupEditProfileScreen();
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.EditProfile);
     }
 
     void SetupEditProfileScreen()
@@ -890,7 +892,8 @@ public class MyProfileDataManager : MonoBehaviour
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
-            uniqueUsername = tempStr;
+            tempStr = "@" + tempStr;
+            uniqueUsername = tempStr;// adding @ as pr in UI mockUp v1.4 
             checkEditInfoUpdated = 1;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
@@ -1206,7 +1209,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1332,7 +1335,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
+                string filePath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
 
                 Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName + "   :texture width:" + texture.width + " :height:" + texture.height);
 
@@ -1395,7 +1398,7 @@ public class MyProfileDataManager : MonoBehaviour
         string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
         fileName = fileName + str + ".png";
 
-        string filePath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName);
+        string filePath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
 
         Debug.Log("Camera filePath:" + filePath + "    :filename:" + fileName);
 

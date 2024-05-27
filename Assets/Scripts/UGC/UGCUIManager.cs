@@ -13,6 +13,7 @@ using UnityEngine.XR.ARFoundation;
 
 public class UGCUIManager : MonoBehaviour
 {
+    public static UGCUIManager instance;
     public bool isPressed;
     public bool isPhoto;
     public bool isVideo;
@@ -67,6 +68,12 @@ public class UGCUIManager : MonoBehaviour
     public KeyInfo currentKeyInfo;
     //public string addresskey;
     //public string isApplied;
+    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+    }
     void Start()
     {
         CharacterHandler.instance.ActivateAvatarByGender(SaveCharacterProperties.instance.SaveItemList.gender);
@@ -350,7 +357,7 @@ public class UGCUIManager : MonoBehaviour
         {
             SceneManager.LoadScene("Home");
         }
-
+        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
     public void CancelVideoSreen()
     {
