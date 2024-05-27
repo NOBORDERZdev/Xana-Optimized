@@ -35,6 +35,10 @@ public class InventoryManager : MonoBehaviour
     public GameObject WhiteRibbonImage;
     public Color HighlightedColor;
     public Color NormalColor;
+
+    [Header("Xeny IAP")]
+    public GameObject XenyIAPPanel;
+
     [Header("Total Panels Cloths")]
     public GameObject MainPanelCloth;
     public GameObject[] ClothsPanel;
@@ -259,6 +263,13 @@ public class InventoryManager : MonoBehaviour
     {
         MainSceneEventHandler.OnSucessFullLogin -= CheckWhenUserLogin;
         upateAssetOnGenderChanged -= ChangeItemsOnGenderChange;
+    }
+    public void ShowXenyIAPPanel()
+    {
+        if (XenyIAPPanel != null)
+        {
+            XenyIAPPanel.SetActive(true);
+        }
     }
 
     void ChangeItemsOnGenderChange()
@@ -2565,17 +2576,17 @@ public class InventoryManager : MonoBehaviour
     private string MainNetXenyTokenAPI = ""; // Mainnet Api here
     public void SubmitUserDetailAPI()
     {
-        //string localAPI = "";
-        //if (!APIBasepointManager.instance.IsXanaLive)
-        //{
-        //    localAPI = TestNetXenyTokenAPI;
-        //}
-        //else
-        //{
-        //    // Mainnet Api
-        //    localAPI = MainNetXenyTokenAPI;
-        //}
-        //StartCoroutine(XenyTokenUserAddrerss(localAPI));
+        string localAPI = "";
+        if (!APIBasepointManager.instance.IsXanaLive)
+        {
+            localAPI = TestNetXenyTokenAPI;
+        }
+        else
+        {
+            // Mainnet Api
+            localAPI = MainNetXenyTokenAPI;
+        }
+        StartCoroutine(XenyTokenUserAddrerss(localAPI));
     }
     private RequestedData requestData;
 
@@ -2602,8 +2613,8 @@ public class InventoryManager : MonoBehaviour
         {
             if (request.error == null)
             {
-                JObject json = JObject.Parse(request.downloadHandler.text);
-                string token = json["userXenyTokens"].ToString();
+                //JObject json = JObject.Parse(request.downloadHandler.text);
+                string token = request.downloadHandler.text;// json["userXenyTokens"].ToString();
                 TotalGameCoins.text = token;
                 print("xeny coins are = " + token);
             }
