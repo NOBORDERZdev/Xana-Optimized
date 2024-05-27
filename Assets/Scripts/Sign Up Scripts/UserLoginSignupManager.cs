@@ -63,8 +63,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempPath = "";
     public string SetProfileAvatarTempFilename = "";
     public GameObject PickImageOptionScreen;
-    public TextMeshProUGUI ProfilePicText;
-
+   
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
     public GameObject validationPopupPanel;
@@ -233,7 +232,6 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
 
-    //
     public void OpenUserNamePanel()
     {
         enterNamePanel.SetActive(true);
@@ -1914,7 +1912,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     PickImageOptionScreen.SetActive(false);
-                    ProfilePicText.enabled = true;
+                  
                 }
 
                 // Create Texture from selected image
@@ -2018,9 +2016,8 @@ public class UserLoginSignupManager : MonoBehaviour
             Destroy(screenshot);
             Resources.UnloadUnusedAssets();
             Caching.ClearCache();
-            //GC.Collect();
-            ProfilePicText.enabled= false;
-          //  Invoke("ProfilePostPartShow", 0.5f);
+           
+        
         },
         settings: new ImageCropper.Settings()
         {
