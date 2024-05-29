@@ -18,8 +18,7 @@ public class VoiceManager : MonoBehaviour
 
         //if (PhotonNetwork.IsConnectedAndReady)
         //{
-        byte group = (byte)(1 % 2);
-        SetVoiceGroup(group); // Default group for all users initially
+        SetVoiceGroup(0); // Default group for all users initially
         //}
     }
 
