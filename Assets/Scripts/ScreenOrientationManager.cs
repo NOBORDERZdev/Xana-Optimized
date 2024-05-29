@@ -131,7 +131,7 @@ public class ScreenOrientationManager : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
 
-        if (ArrowManager.Instance)
+        if (ArrowManager.Instance && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
             AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
