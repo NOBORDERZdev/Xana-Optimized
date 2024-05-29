@@ -996,12 +996,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9621213795040b449bd416a5e2695e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlreadySpawned: 0
   mainPlayer: {fileID: 360146152713065801}
   mainController: {fileID: 1808683680640967398}
   PlayerCamera: {fileID: 360146154038492715}
   playerCameraCharacterRender: {fileID: 1272852912}
   environmentCameraRender: {fileID: 360146153501369239}
   firstPersonCamera: {fileID: 1508993052}
+  currentEnvironment: {fileID: 0}
   isEnvLoaded: 0
   setLightOnce: 0
   leftJoyStick: {fileID: 0}
@@ -1104,6 +1106,7 @@ MonoBehaviour:
   - BreakingDown Arena
   - XANA Lobby
   - D_Infinity_Labo
+  - XANA Summit
 --- !u!114 &79798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7785,14 +7788,10 @@ MonoBehaviour:
   matchMakingState: 2
   internetState: 1
   working: 0
-  maxPlayersPerRoom: 4
-  LFF: {fileID: 79798788}
-  playerobjects: []
-  isConnecting: 0
   roomNames: []
-  lastSceneName: 
-  lastLobbyName: 
-  lastRoomName: 
+  playerobjects: []
+  LFF: {fileID: 79798788}
+  isConnecting: 0
 --- !u!4 &860513762
 Transform:
   m_ObjectHideFlags: 0
@@ -19580,7 +19579,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.039276537, y: -0.0008918507, z: 0.000035055873, w: 0.999228}
+  m_LocalRotation: {x: 0.039276537, y: -0.0008918464, z: 0.000035055702, w: 0.999228}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20205,7 +20204,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.039276533, y: -0.00089185056, z: 0.000035057732, w: 0.999228}
+  m_LocalRotation: {x: 0.039276533, y: -0.00089184626, z: 0.000035057565, w: 0.999228}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20283,7 +20282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0106414985, y: -0.00089248695, z: 0.000009499802, w: 0.999943}
+  m_LocalRotation: {x: 0.010641495, y: -0.0008924867, z: 0.000009499795, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
