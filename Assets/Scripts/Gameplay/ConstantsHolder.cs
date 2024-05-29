@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jint.Parser;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -122,6 +123,7 @@ public class ConstantsHolder : MonoBehaviour
     public int builderMapID;
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
+    public bool isFromXanaSummit = false;
     public bool isFromHomeTab = false;
 
     [HideInInspector]
@@ -148,6 +150,10 @@ public class ConstantsHolder : MonoBehaviour
     public bool IsProfileVisit = false; // bool to check is player in profile section.
     public int SnsProfileID=0; // Id of user profile when the user visit the profile section.
     public bool IsOtherProfileVisit = false; // to Check is other profile player visit
+    public Vector3 PlrOldSpawnPos;
+    public Vector3 PlrOldSpawnRot;
+    public Vector3 PlrOldSpawnScale;
+
     public string r_EmoteReactionPersistentPath
     {
         get

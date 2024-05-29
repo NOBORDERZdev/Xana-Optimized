@@ -517,6 +517,13 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit") && ConstantsHolder.xanaConstants.isFromXanaSummit)
+        {
+            mainController.transform.position = ConstantsHolder.xanaConstants.PlrOldSpawnPos;
+            mainController.transform.eulerAngles = ConstantsHolder.xanaConstants.PlrOldSpawnRot;
+            mainController.transform.localScale = ConstantsHolder.xanaConstants.PlrOldSpawnScale;
+            ConstantsHolder.xanaConstants.isFromXanaSummit = false;
+        }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 

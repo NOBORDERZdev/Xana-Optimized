@@ -66,6 +66,9 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
+            }else if (ConstantsHolder.xanaConstants.isFromXanaSummit && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+            {
+                StartCoroutine(SummitSceneSwitch()); // to summit if player enter in world from Xana summit
             }
             else
             {
@@ -116,6 +119,29 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
         yield return null;
     }
+
+    private IEnumerator SummitSceneSwitch()
+    {
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+        ConstantsHolder.xanaConstants.isBuilderScene = false;
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Summit";
+
+        // While Retruing from sub world to Xana Lobby
+        // Storing Xana Lobby Ids
+
+        if ((ConstantsGod.API_BASEURL.Contains("test")))
+            ConstantsHolder.xanaConstants.MuseumID = "406";
+        else
+            ConstantsHolder.xanaConstants.MuseumID = "38";
+
+        LeaveRoom();
+
+        yield return null;
+    }
+
     public void LoadWorld()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
