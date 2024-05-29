@@ -47,6 +47,17 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     //        tms = (MeetingStatus)(int)propertiesThatChanged[MeetingStatusPropertyName];
     //}
 
+    void AssignVoiceGroups()
+    {
+        var players = PhotonNetwork.PlayerList;
+        for (int i = 0; i < players.Length; i++)
+        {
+            byte group = (byte)(i % 2); // Simple example: alternate groups between 0 and 1
+            photonView.RPC("SetPlayerVoiceGroup", players[i], group);
+        }
+    }
+
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         base.OnPlayerEnteredRoom(newPlayer);

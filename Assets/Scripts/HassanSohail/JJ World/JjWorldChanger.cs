@@ -32,6 +32,9 @@ public class JjWorldChanger : MonoBehaviour
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
+                triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
+                    1);
+
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
                 if(FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
