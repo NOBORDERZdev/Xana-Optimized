@@ -5,6 +5,7 @@ using UnityEngine;
 public class VoiceManager : MonoBehaviour
 {
     public Recorder recorder;
+    public int value = 0;
 
     void Start()
     {
@@ -22,6 +23,7 @@ public class VoiceManager : MonoBehaviour
 
     public void SetVoiceGroup(byte group)
     {
+        value = group;
         Debug.LogError("Set Voice Group: " + group);
         recorder.InterestGroup = group; // Set the group to which this player will broadcast their voice
         //PhotonVoiceNetwork.Instance.Client.ChangeGroups(null, new byte[] { group }); // Subscribe to the group to receive others' voices
