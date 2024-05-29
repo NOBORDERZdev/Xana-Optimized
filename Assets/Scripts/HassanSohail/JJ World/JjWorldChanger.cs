@@ -33,7 +33,7 @@ public class JjWorldChanger : MonoBehaviour
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
                 triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                    1);
+                    0);
 
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
@@ -65,7 +65,7 @@ public class JjWorldChanger : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                    0);
+                    1);
     }
 
     public void RedirectToWorld()
