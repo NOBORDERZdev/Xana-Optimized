@@ -61,7 +61,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [Header("XANA Party")]
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
-    [SerializeField] CameraManager XanaPartyCamera;
+    [SerializeField] public CameraManager XanaPartyCamera;
     [SerializeField] InputReader XanaPartyInput;
 
 

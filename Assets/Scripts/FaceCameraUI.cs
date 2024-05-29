@@ -19,19 +19,28 @@ public class FaceCameraUI : MonoBehaviour
     void Start()
     {
         localTrans = GetComponent<Transform>();
-        mainCam = GameplayEntityLoader.instance.PlayerCamera.transform;
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            mainCam = GameplayEntityLoader.instance.PlayerCamera.transform;
+            firstPersonCam = GameplayEntityLoader.instance.firstPersonCamera.transform;
+        }
+        else
+        {
+            mainCam = GameplayEntityLoader.instance.XanaPartyCamera.GetComponentInChildren<Camera>().transform;
+        }
         thirdPersonCam = mainCam;
-        firstPersonCam = GameplayEntityLoader.instance.firstPersonCamera.transform;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (firstPersonCam.gameObject.activeInHierarchy && mainCam!=firstPersonCam) 
-            mainCam = firstPersonCam;
-        else if(mainCam!=thirdPersonCam && !firstPersonCam.gameObject.activeInHierarchy)
-            mainCam = thirdPersonCam;
-        
+        if(!ConstantsHolder.xanaConstants.isXanaPartyWorld){ 
+            if (firstPersonCam.gameObject.activeInHierarchy && mainCam!=firstPersonCam) 
+                mainCam = firstPersonCam;
+            else if(mainCam!=thirdPersonCam && !firstPersonCam.gameObject.activeInHierarchy)
+                mainCam = thirdPersonCam;
+        }
 
         if (mainCam.gameObject.activeInHierarchy)
         {
