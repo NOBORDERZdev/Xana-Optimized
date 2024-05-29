@@ -22,7 +22,7 @@ public class VoiceManager : MonoBehaviour
 
     public void SetVoiceGroup(byte group)
     {
-        Debug.LogError("Set Voice Group");
+        Debug.LogError("Set Voice Group: " + group);
         recorder.InterestGroup = group; // Set the group to which this player will broadcast their voice
         //PhotonVoiceNetwork.Instance.Client.ChangeGroups(null, new byte[] { group }); // Subscribe to the group to receive others' voices
     }

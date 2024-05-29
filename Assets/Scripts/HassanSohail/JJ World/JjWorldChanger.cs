@@ -64,7 +64,7 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
+        triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
                     0);
     }
 
