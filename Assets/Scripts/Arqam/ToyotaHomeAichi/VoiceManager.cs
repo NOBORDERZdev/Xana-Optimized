@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ public class VoiceManager : MonoBehaviour
         value = group;
         Debug.LogError("Set Voice Group: " + group);
         recorder.InterestGroup = group; // Set the group to which this player will broadcast their voice
+        PhotonVoiceNetwork.Instance.Client.OpChangeGroups(null, new byte[] { group });
         //PhotonVoiceNetwork.Instance.Client.ChangeGroups(null, new byte[] { group }); // Subscribe to the group to receive others' voices
     }
 
