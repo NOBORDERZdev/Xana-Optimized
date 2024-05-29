@@ -14,14 +14,15 @@ public class VoiceManager : MonoBehaviour
             return;
         }
 
-        if (PhotonNetwork.IsConnectedAndReady)
-        {
+        //if (PhotonNetwork.IsConnectedAndReady)
+        //{
             SetVoiceGroup(0); // Default group for all users initially
-        }
+        //}
     }
 
     public void SetVoiceGroup(byte group)
     {
+        Debug.LogError("Set Voice Group");
         recorder.InterestGroup = group; // Set the group to which this player will broadcast their voice
         //PhotonVoiceNetwork.Instance.Client.ChangeGroups(null, new byte[] { group }); // Subscribe to the group to receive others' voices
     }
