@@ -5,7 +5,7 @@ using UnityEngine;
 public class VoiceManager : MonoBehaviour
 {
     public Recorder recorder;
-    public int value = 0;
+    public byte value = 0;
 
     void Start()
     {
@@ -17,7 +17,8 @@ public class VoiceManager : MonoBehaviour
 
         //if (PhotonNetwork.IsConnectedAndReady)
         //{
-            SetVoiceGroup(1); // Default group for all users initially
+        byte group = (byte)(1 % 2);
+        SetVoiceGroup(group); // Default group for all users initially
         //}
     }
 

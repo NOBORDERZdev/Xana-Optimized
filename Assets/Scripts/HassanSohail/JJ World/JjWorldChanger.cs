@@ -32,8 +32,9 @@ public class JjWorldChanger : MonoBehaviour
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
+                byte group = (byte)(2 % 2);
                 triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                    0);
+                    group);
 
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
@@ -64,8 +65,9 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        byte group = (byte)(1 % 2);
         triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                    1);
+                    group);
     }
 
     public void RedirectToWorld()
