@@ -1866,7 +1866,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     PickImageOptionScreen.SetActive(false);
-                      ProfilePicText.enabled= true;
                 }
 
                 // Create Texture from selected image
