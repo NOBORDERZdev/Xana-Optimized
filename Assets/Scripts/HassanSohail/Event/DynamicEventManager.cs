@@ -169,7 +169,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
                         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
                         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-                        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
+                        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Party") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
                         {
                             ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
                         }

@@ -528,7 +528,7 @@ public class FeedEventPrefab : MonoBehaviour
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        if (m_EnvName.Contains("XanaParty"))
+        if (m_EnvName.Contains("XanaParty") || m_EnvName.Contains("XANA Party"))
         {
             ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
         }

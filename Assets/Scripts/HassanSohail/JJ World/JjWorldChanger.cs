@@ -123,7 +123,7 @@ public class JjWorldChanger : MonoBehaviour
         else if (isBuilderWorld)
         {
             ConstantsHolder.xanaConstants.isBuilderScene = true;
-            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Party") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("XanaParty"))
             {
                 ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
             }
