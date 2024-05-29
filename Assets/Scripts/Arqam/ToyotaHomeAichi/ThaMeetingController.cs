@@ -10,8 +10,9 @@ public class ThaMeetingController : MonoBehaviour
 
     void Start()
     {
+        if (ConstantsHolder.xanaConstants.meetingStatus == ConstantsHolder.MeetingStatus.Inprogress)
+            GetComponent<FB_PushNotificationSender>().SendNotification();
 
-        GetComponent<FB_PushNotificationSender>().SendNotification();
         ConstantsHolder.xanaConstants.MuseumID = "2399";                 // Toyota_Meeting_Room id
 
         //only user can back to toyota world when press on exit btn
@@ -60,10 +61,11 @@ public class ThaMeetingController : MonoBehaviour
     private void LeaveMeeting()
     {
         StartCoroutine(FB_Notification_Initilizer.Instance.MeetingRoomLeave());
+        FB_Notification_Initilizer.Instance.MeetingRoomLeaveSocket();
     }
-    
 
-    
+
+
 
 }
 
