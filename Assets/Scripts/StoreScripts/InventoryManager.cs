@@ -286,6 +286,8 @@ public class InventoryManager : MonoBehaviour
         // Update Character Reference On Gender Change
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
+
+        ResetDownloadCount();
     }
     public void skipAvatarSelection()
     {
@@ -626,25 +628,10 @@ public class InventoryManager : MonoBehaviour
             AllCategoriesData[i].subItems.Clear();
         }
 
-        headsDownlaodedCount = 0;
-        faceDownlaodedCount = 0;
-        innerDownlaodedCount = 0;
-        outerDownlaodedCount = 0;
-        accesaryDownlaodedCount = 0;
-        bottomDownlaodedCount = 0;
-        socksDownlaodedCount = 0;
-        shoesDownlaodedCount = 0;
-        hairDwonloadedCount = 0;
-        LipsColorDwonloadedCount = 0;
-        EyesColorDwonloadedCount = 0;
-        EyeBrowColorDwonloadedCount = 0;
-        HairColorDwonloadedCount = 0;
-        skinColorDwonloadedCount = 0;
-        eyeBrowDwonloadedCount = 0;
-        eyeBrowColorDwonloadedCount = 0;
-        eyeLashesDwonloadedCount = 0;
-        eyesDwonloadedCount = 0;
-        lipsDwonloadedCount = 0;
+       
+
+        ResetDownloadCount();
+
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
@@ -756,6 +743,7 @@ public class InventoryManager : MonoBehaviour
         public int pageSize;
         public string order;
         public string sort;
+        public int gender;
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -783,6 +771,11 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             myObj.order = _order;
             myObj.sort = sortingType;
+
+            if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                myObj.gender = 0;
+            else
+                myObj.gender = 1;
             return myObj;
         }
     }
@@ -805,6 +798,7 @@ public class InventoryManager : MonoBehaviour
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
             string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name")); // API Update New Parameter added for sorting
+            
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));
@@ -3117,7 +3111,17 @@ public class InventoryManager : MonoBehaviour
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     CategorieslistOuter = TempitemDetail;
                     TempEnumVar = EnumClass.CategoryEnum.Outer;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                   
+                    if(previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
                     break;
                 }
             case 4: // Presets
@@ -3134,7 +3138,17 @@ public class InventoryManager : MonoBehaviour
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Bottom;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    
+                    if(previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
                     break;
                 }
             case 7: // Shoes
@@ -3143,7 +3157,18 @@ public class InventoryManager : MonoBehaviour
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Shoes;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+
+
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+                        
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
                     break;
                 }
             case 8: // Hairs
@@ -3156,7 +3181,17 @@ public class InventoryManager : MonoBehaviour
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatar;
                         Debug.Log("Hair Color Button is Temporiry Disable");
                         //hairColorButton.gameObject.SetActive(true);
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        
+                        if (previousCoroutine != null)
+                        {
+                            _switchTab = true;
+                            StopCoroutine(previousCoroutine);
+                        }
+
+                        previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                        yield return new WaitForEndOfFrame();
+                        _switchTab = false;
+                        StartCoroutine(previousCoroutine);
                     }
                     else
                     {
@@ -3192,8 +3227,17 @@ public class InventoryManager : MonoBehaviour
                             else
                                 AllCategoriesData[20].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                         }
+                        
+                        if (previousCoroutine != null)
+                        {
+                            _switchTab = true;
+                            StopCoroutine(previousCoroutine);
+                        }
 
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                        yield return new WaitForEndOfFrame();
+                        _switchTab = false;
+                        StartCoroutine(previousCoroutine);
                     }
                     else
                     {
@@ -3292,7 +3336,16 @@ public class InventoryManager : MonoBehaviour
                         else
                             AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                     }
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
                     break;
                 }
         }
@@ -3311,13 +3364,27 @@ public class InventoryManager : MonoBehaviour
         }
     }
     int localcount = 0;
+    IEnumerator previousCoroutine;
+    bool _switchTab = false;
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
         int loopStart = GetDownloadedNumber(TempEnumVar);
+        //_switchTab = false;
+        Debug.Log("Waqas : Start Coroutine: ");
+
         for (int i = loopStart; i < dataListOfItems.Count; i++)
         {
+            if (_switchTab)
+            {
+                Debug.Log("Waqas : Switch Tab : Breaking Loop" + i);
+                break;
+            }
+            else
+            {
+                Debug.Log("Waqas : For Loop: " + i);
+                InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+            }
             yield return new WaitForEndOfFrame();
-            InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
         }
     }
 
@@ -3375,13 +3442,34 @@ public class InventoryManager : MonoBehaviour
             if ((_charHandler.activePlayerGender == AvatarGender.Male && !dataListOfItems[objId].assetGender.Equals("0")) ||
                 (_charHandler.activePlayerGender == AvatarGender.Female && !dataListOfItems[objId].assetGender.Equals("1")))
             {
-                Debug.Log("Waqas: Gender not Matched With Asset");
+                //Debug.Log("Waqas: Gender not Matched With Asset");
                 L_ItemBtnObj.SetActive(false);
             }
         }
 
     }
-
+    void ResetDownloadCount()
+    {
+        headsDownlaodedCount = 0;
+        faceDownlaodedCount = 0;
+        innerDownlaodedCount = 0;
+        outerDownlaodedCount = 0;
+        accesaryDownlaodedCount = 0;
+        bottomDownlaodedCount = 0;
+        socksDownlaodedCount = 0;
+        shoesDownlaodedCount = 0;
+        hairDwonloadedCount = 0;
+        LipsColorDwonloadedCount = 0;
+        EyesColorDwonloadedCount = 0;
+        EyeBrowColorDwonloadedCount = 0;
+        HairColorDwonloadedCount = 0;
+        skinColorDwonloadedCount = 0;
+        eyeBrowDwonloadedCount = 0;
+        eyeBrowColorDwonloadedCount = 0;
+        eyeLashesDwonloadedCount = 0;
+        eyesDwonloadedCount = 0;
+        lipsDwonloadedCount = 0;
+    }
 
     int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)
     {
