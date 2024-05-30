@@ -17,7 +17,7 @@ public class JjWorldChanger : MonoBehaviour
     Collider collider;
     private GameObject triggerObject;
     public bool isEnteringPopup;
-  
+
     private void Start()
     {
         collider = GetComponent<Collider>();
@@ -38,7 +38,7 @@ public class JjWorldChanger : MonoBehaviour
 
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
+                if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
@@ -65,7 +65,8 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
+        if (triggerObject.GetComponent<PhotonView>().IsMine)
+            FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
         //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
         //            0);
     }
