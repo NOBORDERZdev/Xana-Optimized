@@ -2501,6 +2501,7 @@ GameObject:
   - component: {fileID: 1890696878}
   - component: {fileID: 1890696877}
   - component: {fileID: 1890696876}
+  - component: {fileID: 1890696880}
   m_Layer: 23
   m_Name: Quad
   m_TagString: Untagged
@@ -2627,6 +2628,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890696874}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1890696880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890696874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 0}
+  isMeshRendrer: 0
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!1 &2047856773
 GameObject:
   m_ObjectHideFlags: 0

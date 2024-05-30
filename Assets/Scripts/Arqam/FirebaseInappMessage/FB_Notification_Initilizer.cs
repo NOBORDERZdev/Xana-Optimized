@@ -211,6 +211,7 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     public IEnumerator MeetingRoomLeave()
     {
+        Debug.LogError("Meeting Room Player  on leave 1111");
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
         form.AddField("worldId", 4);            // here 4 is home consulting room id in Toyota world
@@ -224,24 +225,25 @@ public class FB_Notification_Initilizer : MonoBehaviour
             yield return null;
         }
         if (!www.isHttpError && www.isNetworkError)
-            Debug.Log("Error is" + www.error);
+            Debug.LogError("Error is" + www.error);
         else
         {
-            MeetingRoomLeaveSocket();
-            Debug.Log("Meeting Room Player  on leave : " + www.downloadHandler.text);
+            //MeetingRoomLeaveSocket();
+            Debug.LogError("Meeting Room Player  on leave : " + www.downloadHandler.text);
         }
     }
 
-    void MeetingRoomLeaveSocket()
+   public void MeetingRoomLeaveSocket()
     {
+        Debug.LogError("Meeting Room Player  on leave Socket 2222");
         THALeaveRoom tHALeaveRoom = new THALeaveRoom();
-        tHALeaveRoom.userType = FB_Notification_Initilizer.Instance.actorType.ToString();
+        tHALeaveRoom.userType = actorType.ToString();
         tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
         tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
         string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
         HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
 
-        Debug.Log("Actor Type : " + FB_Notification_Initilizer.Instance.actorType + "userid : " + ConstantsHolder.userId);
+        Debug.LogError("Actor Type : " + Instance.actorType + "userid : " + ConstantsHolder.userId);
     }
 
 }
