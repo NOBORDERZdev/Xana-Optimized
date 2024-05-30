@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
@@ -12,6 +13,15 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        BuilderEventManager.AfterPlayerInstantiated += UpdateVoiceGroup;
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= UpdateVoiceGroup;
+    }
+
+    private void UpdateVoiceGroup()
+    {
         if (recorder == null /*|| speaker == null*/)
         {
             Debug.LogError("Recorder or Speaker component is missing.");
@@ -20,7 +30,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
         if (PhotonNetwork.InRoom)
         {
-            SetVoiceGroup(0); // Default group for all users initially
+            SetVoiceGroup(1); // Default group for all users initially
         }
     }
 
