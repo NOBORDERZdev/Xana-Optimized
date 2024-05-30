@@ -321,7 +321,7 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
-        displayName.text = myProfileData.userProfile.username;
+        displayName.text = "@"+myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -682,7 +682,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
                 editProfileUniqueNameAdvanceInputfield.Text = "";
             else
-                editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
+                editProfileUniqueNameAdvanceInputfield.Text = "@"+myProfileData.userProfile.username;// as per the figma 1.4
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
             // Convert Array into List
             userSelectedTags = new List<string>(myProfileData.tags);
@@ -892,8 +892,7 @@ public class MyProfileDataManager : MonoBehaviour
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
-            tempStr = "@" + tempStr;
-            uniqueUsername = tempStr;// adding @ as pr in UI mockUp v1.4 
+            uniqueUsername = tempStr;
             checkEditInfoUpdated = 1;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))

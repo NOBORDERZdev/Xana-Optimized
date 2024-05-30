@@ -257,9 +257,12 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        string removeBadWords = "";
 
-        print("Bad word !!" + removeBadWords);
+        if (!string.IsNullOrEmpty(InputFieldChat.text))
+        {
+            removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        }
 
         if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
