@@ -6,7 +6,6 @@ using Newtonsoft.Json;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using TMPro;
-using ExitGames.Client.Photon;
 
 public class UserDailyRewardHandler : MonoBehaviour
 {
@@ -71,6 +70,7 @@ public class UserDailyRewardHandler : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
         _myUserId = int.Parse(ConstantsHolder.userId);
+        //Debug.LogError("Daily Reward User Id : " + _myUserId);
     }
 
     private void OnDisable()
@@ -80,31 +80,31 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.Off();
             _socketManager.Close();
         }
-
     }
 
     private void OnSocketConnected(ConnectResponse resp)
     {
-        Debug.Log("Sohaib Socket Connected : " + resp);
+        Debug.LogError("Daily Reward Socket Connected : " + resp);
         _socketManager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
     }
 
     private void OnSocketError(CustomError args)
     {
-        Debug.LogError("Sohaib Socket Error : " + args);
+        Debug.LogError("Daily Reward Socket Error : " + args);
     }
 
     private void OnSocketDisconnect(CustomError args)
     {
-        Debug.LogError("Sohaib Socket Disconnected : " + args);
+        Debug.LogError("Daily Reward Socket Disconnected : " + args);
     }
     private void DailyRewardResponse(string resp)
     {
+        //Debug.LogError("Daily Reward Daily Reward Response : " + resp);
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
 
         if (data.userId == _myUserId)
         {
-            _rewardedAmountText.text = data.amount.ToString();
+            _rewardedAmountText.text = data.coin.ToString();
             if (SceneManager.GetActiveScene().name == "Home")
             {
                 ShowDailyRewardPopup();
@@ -113,13 +113,13 @@ public class UserDailyRewardHandler : MonoBehaviour
             {
                 _hasToShowDailyPopup = true;
             }
-
         }
     }
     private void ShowDailyRewardPopup()
     {
         _dailyRewardPopup.SetActive(true);
         _hasToShowDailyPopup = false;
+        //InventoryManager.instance.UpdateUserXeny();
     }
 
     //Executes when Home Scene is loaded
@@ -127,7 +127,7 @@ public class UserDailyRewardHandler : MonoBehaviour
     {
         if (arg0.name == "Home" && _hasToShowDailyPopup)
         {
-            Debug.Log("Home Scene Loaded");
+            //Debug.LogError("Home Scene Loaded");
             StartCoroutine(ShowDailyRewardRoutine());
         }
     }
@@ -149,6 +149,6 @@ public class UserDailyRewardHandler : MonoBehaviour
 public struct UserDailyRewardData
 {
     public int userId;
-    public int amount;
-    public DateTime datetime;
-}
+    public int coin;
+    public DateTime dateTime;
+} 
