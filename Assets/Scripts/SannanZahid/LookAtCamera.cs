@@ -46,6 +46,10 @@ public class LookAtCamera : MonoBehaviour
     }
     void Start()
     {
+        GetLatestPost();
+    }
+    public void GetLatestPost()
+    {
         _postHandler.GetLatestPost(_postText);
     }
     void Update()
