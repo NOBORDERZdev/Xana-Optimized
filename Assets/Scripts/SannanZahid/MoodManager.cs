@@ -110,13 +110,13 @@ public class MoodManager : MonoBehaviour
     {
         if (overrideController == null)
         {
-            Debug.LogError("Override controller not set.");
+           // Debug.LogError("Override controller not set.");
             return;
         }
 
         if (newClip == null)
         {
-            Debug.LogError("New animation clip not set.");
+           // Debug.LogError("New animation clip not set.");
             return;
         }
 
@@ -149,7 +149,7 @@ public class MoodManager : MonoBehaviour
         // Assign the override controller to the animator
         anim.runtimeAnimatorController = overrideController;
 
-        Debug.Log($"Replaced {nodeAnimToReplace} with {newClip.name}");
+       // Debug.Log($"Replaced {nodeAnimToReplace} with {newClip.name}");
     }
 
     private IEnumerator ResetMenuActionBool(Animator _anim)
