@@ -56,7 +56,15 @@ public class UserPostFeature : MonoBehaviour
             GameManager.Instance.moodManager.LastMoodSelected = "";
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        {
+            AssignRandomAnimationIfUserNotPosted();
+        }
+    }
+
+    private void AssignRandomAnimationIfUserNotPosted()
+    {
+        string randAnimKey = GameManager.Instance.ActorManager.actorBehaviour[GameManager.Instance.ActorManager.GetPostRandomDefaultAnim()].Name;
+        GameManager.Instance.moodManager.SetMoodPosted(randAnimKey, true, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -109,7 +117,7 @@ public class UserPostFeature : MonoBehaviour
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
-        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+        while (ConstantsHolder.userId.IsNullOrEmpty())
             yield return new WaitForSeconds(0.5f);
 
         string FinalUrl = PrepareApiURL("Receive") + ConstantsHolder.userId;
@@ -148,8 +156,11 @@ public class UserPostFeature : MonoBehaviour
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
-                textElement.text = RetrievedPostPlayer.data.text_post;
-                InsertNewlines(textElement);
+                if (!RetrievedPostPlayer.data.text_post.IsNullOrEmpty())
+                {
+                    textElement.text = RetrievedPostPlayer.data.text_post;
+                    InsertNewlines(textElement);
+                }
 
                 if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
                 {
@@ -159,7 +170,9 @@ public class UserPostFeature : MonoBehaviour
                     GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+                {
+                    AssignRandomAnimationIfUserNotPosted();
+                }
             }
             www.Dispose();
         }
@@ -190,7 +203,9 @@ public class UserPostFeature : MonoBehaviour
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        {
+            AssignRandomAnimationIfUserNotPosted();
+        }
     }
 
 
@@ -250,11 +265,13 @@ public class UserPostFeature : MonoBehaviour
                     }
                     else
                     {
-                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
+                        AssignRandomAnimationIfUserNotPosted();
                     }
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
+                {
+                    AssignRandomAnimationIfUserNotPosted();
+                }
             }
             www.Dispose();
         }

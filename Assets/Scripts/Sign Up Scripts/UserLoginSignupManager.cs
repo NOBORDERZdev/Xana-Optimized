@@ -456,6 +456,7 @@ public class UserLoginSignupManager : MonoBehaviour
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
