@@ -286,6 +286,8 @@ public class InventoryManager : MonoBehaviour
         // Update Character Reference On Gender Change
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
+
+        ResetDownloadCount();
     }
     public void skipAvatarSelection()
     {
@@ -626,6 +628,15 @@ public class InventoryManager : MonoBehaviour
             AllCategoriesData[i].subItems.Clear();
         }
 
+        ResetDownloadCount();
+        
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
+
+    }
+
+    void ResetDownloadCount()
+    {
         headsDownlaodedCount = 0;
         faceDownlaodedCount = 0;
         innerDownlaodedCount = 0;
@@ -645,11 +656,7 @@ public class InventoryManager : MonoBehaviour
         eyeLashesDwonloadedCount = 0;
         eyesDwonloadedCount = 0;
         lipsDwonloadedCount = 0;
-        if (LoadingHandler.Instance)
-            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
-
     }
-
     void ClearingLists(int index)
     {
         //AssetBundle.UnloadAllAssetBundles(false);
@@ -756,6 +763,7 @@ public class InventoryManager : MonoBehaviour
         public int pageSize;
         public string order;
         public string sort;
+        public int gender;
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -783,6 +791,11 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             myObj.order = _order;
             myObj.sort = sortingType;
+
+            if(CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                myObj.gender = 0;
+            else
+                myObj.gender = 1;
             return myObj;
         }
     }
