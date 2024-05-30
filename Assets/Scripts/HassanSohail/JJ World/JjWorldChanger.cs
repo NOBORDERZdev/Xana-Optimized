@@ -34,7 +34,7 @@ public class JjWorldChanger : MonoBehaviour
             {
                 FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
                 //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                //    1);
+                //    5);
 
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
