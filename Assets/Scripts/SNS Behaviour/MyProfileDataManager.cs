@@ -682,7 +682,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (myProfileData.userProfile.username == "null" || myProfileData.userProfile.username == "Null")
                 editProfileUniqueNameAdvanceInputfield.Text = "";
             else
-                editProfileUniqueNameAdvanceInputfield.Text = "@"+myProfileData.userProfile.username;// as per the figma 1.4
+                editProfileUniqueNameAdvanceInputfield.Text = myProfileData.userProfile.username;
             editProfileBioInputfield.transform.parent.GetComponent<InputFieldHightResetScript>().OnValueChangeAfterResetHeight();
             // Convert Array into List
             userSelectedTags = new List<string>(myProfileData.tags);
