@@ -1,47 +1,65 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
 
-public class VoiceManager : MonoBehaviour
+public class VoiceManager : MonoBehaviourPunCallbacks
 {
     public Recorder recorder;
-    public byte previousGroup = 0;
+    //public Speaker speaker;
+    private byte currentGroup;
 
     void Start()
     {
-        if (recorder == null)
+        if (recorder == null /*|| speaker == null*/)
         {
             Debug.LogError("Recorder or Speaker component is missing.");
             return;
         }
 
-        //if (PhotonNetwork.IsConnectedAndReady)
-        //{
-        previousGroup = 0;
-        SetVoiceGroup(0); // Default group for all users initially
-        //}
+        if (PhotonNetwork.InRoom)
+        {
+            SetVoiceGroup(0); // Default group for all users initially
+        }
     }
 
-    public void SetVoiceGroup(byte group)
+    public void SetVoiceGroup(byte newGroup)
     {
-        Debug.LogError("Set Voice Group: " + group);
-        recorder.InterestGroup = group; // Set the group to which this player will broadcast their voice
-        byte[] bt = { group };
-        PhotonVoiceNetwork.Instance.Client.OpChangeGroups(null, bt);
-        previousGroup = group;
+        byte oldGroup = currentGroup;
+        currentGroup = newGroup;
+
+        // Set the recorder's interest group to the new group
+        recorder.InterestGroup = newGroup;
+
+        // Change the groups: unsubscribe from the old group and subscribe to the new group
+        ChangeGroups(new byte[] { oldGroup }, new byte[] { newGroup });
     }
 
+    private void ChangeGroups(byte[] groupsToLeave, byte[] groupsToJoin)
+    {
+        PhotonVoiceNetwork.Instance.Client.OpChangeGroups(groupsToLeave, groupsToJoin);
+    }
 
-    //public void ChangePlayerVoiceGroup(byte group)
+    //[PunRPC]
+    //public void ChangePlayerVoiceGroup(int playerID, byte group)
     //{
+    //    if (PhotonNetwork.LocalPlayer.ActorNumber == playerID)
+    //    {
     //        SetVoiceGroup(group);
+    //    }
     //}
 
     //// Method to call from the game logic to change voice groups for specific players
     //public void ChangeVoiceGroupForPlayer(Player player, byte newGroup)
     //{
     //    photonView.RPC("ChangePlayerVoiceGroup", player, player.ActorNumber, newGroup);
+    //}
+
+    //public override void OnJoinedRoom()
+    //{
+    //    base.OnJoinedRoom();
+    //    SetVoiceGroup(0); // Set default group when joined room
     //}
 
 
