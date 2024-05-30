@@ -57,14 +57,14 @@ public class UserPostFeature : MonoBehaviour
         }
         else
         {
-            AssignRandomAnimationIfUserNotPosted();
+            AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
         }
     }
 
-    private void AssignRandomAnimationIfUserNotPosted()
+    private void AssignRandomAnimationIfUserNotPosted(AnimatorOverrideController animatorOverrideController, Animator animator)
     {
         string randAnimKey = GameManager.Instance.ActorManager.actorBehaviour[GameManager.Instance.ActorManager.GetPostRandomDefaultAnim()].Name;
-        GameManager.Instance.moodManager.SetMoodPosted(randAnimKey, true, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        GameManager.Instance.moodManager.SetMoodPosted(randAnimKey, true, animatorOverrideController, animator);
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -171,7 +171,7 @@ public class UserPostFeature : MonoBehaviour
                 }
                 else
                 {
-                    AssignRandomAnimationIfUserNotPosted();
+                    AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
                 }
             }
             www.Dispose();
@@ -204,7 +204,7 @@ public class UserPostFeature : MonoBehaviour
         }
         else
         {
-            AssignRandomAnimationIfUserNotPosted();
+            AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
         }
     }
 
@@ -265,12 +265,12 @@ public class UserPostFeature : MonoBehaviour
                     }
                     else
                     {
-                        AssignRandomAnimationIfUserNotPosted();
+                        AssignRandomAnimationIfUserNotPosted(friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
                     }
                 }
                 else
                 {
-                    AssignRandomAnimationIfUserNotPosted();
+                    AssignRandomAnimationIfUserNotPosted(friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
                 }
             }
             www.Dispose();
