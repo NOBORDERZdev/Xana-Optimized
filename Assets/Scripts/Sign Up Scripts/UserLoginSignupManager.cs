@@ -62,9 +62,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public Image EditProfileImage;
     public string SetProfileAvatarTempPath = "";
     public string SetProfileAvatarTempFilename = "";
+    public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
-    public TextMeshProUGUI ProfilePicText;
-
+   
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
     public GameObject validationPopupPanel;
@@ -233,7 +233,6 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
 
-    //
     public void OpenUserNamePanel()
     {
         enterNamePanel.SetActive(true);
@@ -1846,7 +1845,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public void OnPickImageFromGellery(int maxSize)
     {
 #if UNITY_IOS
-        if (permissionCheck == "false")
+        if (PermissionCheck == "false")
         {
             string url = MyNativeBindings.GetSettingsURL();
             Debug.Log("the settings url is:" + url);
@@ -1867,7 +1866,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     PickImageOptionScreen.SetActive(false);
-                      ProfilePicText.enabled= true;
                 }
 
                 // Create Texture from selected image
@@ -1914,7 +1912,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 if (PickImageOptionScreen.activeSelf)//false meadia option screen.
                 {
                     PickImageOptionScreen.SetActive(false);
-                    ProfilePicText.enabled = true;
+                  
                 }
 
                 // Create Texture from selected image
@@ -2018,9 +2016,8 @@ public class UserLoginSignupManager : MonoBehaviour
             Destroy(screenshot);
             Resources.UnloadUnusedAssets();
             Caching.ClearCache();
-            //GC.Collect();
-            ProfilePicText.enabled= false;
-          //  Invoke("ProfilePostPartShow", 0.5f);
+           
+        
         },
         settings: new ImageCropper.Settings()
         {
@@ -2097,14 +2094,29 @@ public class UserLoginSignupManager : MonoBehaviour
             }
         }
     }
+    public void SampleCallback(string permissionWasGranted)
+    {
+        Debug.Log("Callback.permissionWasGranted = " + permissionWasGranted);
 
+        if (permissionWasGranted == "true")
+        {
+            // You can now use the device camera.
+        }
+        else
+        {
+            PermissionCheck = permissionWasGranted;
 
- 
+            // permission denied, no access should be visible, when activated when requested permission
+            return;
 
+            // You cannot use the device camera.  You may want to display a message to the user
+            // about changing the camera permission in the Settings app.
+            // You may want to re-enable the button to display the Settings message again.
+        }
+    }
+     #endregion
 
-        #endregion
-
-        enum NftRolePriority
+    enum NftRolePriority
     {
         alpha_pass,
         dj_event,
