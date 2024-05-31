@@ -20,7 +20,7 @@ public static class BuilderEventManager
     public static Action AfterPlayerInstantiated;
     public static Action UnSubscribeEvent;
 
-    public static Action<string> LoadNewScene;
+    public static Action<int,Vector3> LoadNewScene;
 
     public static Action AfterWorldInstantiated;
     public static Action AfterWorldOffcialWorldsInatantiated;

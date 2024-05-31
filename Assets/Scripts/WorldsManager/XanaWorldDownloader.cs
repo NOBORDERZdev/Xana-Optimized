@@ -260,13 +260,13 @@ public class XanaWorldDownloader : MonoBehaviour
             string downloadKey = downloadDataQueue[0].ItemID;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
             AsyncOperationHandle<GameObject> _async;
-            GameObject objectfromPool = GetObjectFromPool(downloadKey);
-            if (objectfromPool)
-            {
-                InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
-                yield break;
-            }
-            else
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
+            //{
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
+            //}
+            //else
                 _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -308,13 +308,13 @@ public class XanaWorldDownloader : MonoBehaviour
             string downloadKey = downloadFailed[0].ItemID;
             string dicKey = downloadFailed[0].DcitionaryKey;
             AsyncOperationHandle<GameObject> _async;
-            GameObject objectfromPool = GetObjectFromPool(downloadKey);
-            if (objectfromPool)
-            {
-                InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
-                yield break;
-            }
-            else
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
+            //{
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
+            //}
+            //else
                 _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
 
             while (!_async.IsDone)
@@ -356,13 +356,13 @@ public class XanaWorldDownloader : MonoBehaviour
             string downloadKey = downloadQueues[i].ItemID;
             string dicKey = downloadQueues[i].DcitionaryKey;
             AsyncOperationHandle<GameObject> _async;
-            GameObject objectfromPool = GetObjectFromPool(downloadKey);
-            if (objectfromPool)
-            {
-                InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
-                yield break;
-            }
-            else
+            //GameObject objectfromPool = GetObjectFromPool(downloadKey);
+            //if (objectfromPool)
+            //{
+            //    InstantiateAsset(objectfromPool, xanaWorldDataDictionary[dicKey], true);
+            //    yield break;
+            //}
+            //else
                 _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -499,7 +499,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
-
+        AssignDomeId(newObj,_itemData);
     }
 
     private static void InstantiateAsset(GameObject ObjectFromPool, ObjectsInfo _itemData, bool alreadyInstantiated)
@@ -526,6 +526,14 @@ public class XanaWorldDownloader : MonoBehaviour
             //Debug.LogError("Error while applying lightmap data :- " + e.Message);
         }
 
+    }
+
+    static void AssignDomeId(GameObject DomeObject, ObjectsInfo _itemData)
+    {
+        if(_itemData.summitDomeInfo.domeIndex!=0)
+        {
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
+        }
     }
 
     IEnumerator CheckForUnloading()
@@ -690,6 +698,7 @@ public class ObjectsInfo
     public int layerIndex;
     public bool isActive;
     public LightmapData[] lightmapData;
+    public SummitDomeInfo summitDomeInfo;
 }
 [System.Serializable]
 public class LightmapData
@@ -698,6 +707,13 @@ public class LightmapData
     public Vector4 lightmapScaleOffset;
     // Add more fields as needed to store relevant data
 }
+
+[System.Serializable]
+public class SummitDomeInfo
+{
+    public int domeIndex;
+}
+
 
 public enum Priority
 {

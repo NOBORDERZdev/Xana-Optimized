@@ -961,6 +961,7 @@ public class WorldManager : MonoBehaviour
         SetAutoSwtichStreaming();
         if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
+            Debug.LogError("load jj scene here");
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
             LoadingHandler.Instance.characterLoading.SetActive(false);
