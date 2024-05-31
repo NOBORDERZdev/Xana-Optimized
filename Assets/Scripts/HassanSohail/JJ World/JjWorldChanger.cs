@@ -17,7 +17,7 @@ public class JjWorldChanger : MonoBehaviour
     Collider collider;
     private GameObject triggerObject;
     public bool isEnteringPopup;
-  
+
     private void Start()
     {
         collider = GetComponent<Collider>();
@@ -32,9 +32,13 @@ public class JjWorldChanger : MonoBehaviour
             // For toyota bussiness meeting world only
             if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
             {
+                FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
+                //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
+                //    5);
+
                 if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                     return;
-                if(FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
+                if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
                        NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
                 {
                     return;
@@ -59,6 +63,13 @@ public class JjWorldChanger : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (triggerObject.GetComponent<PhotonView>().IsMine)
+            FindObjectOfType<VoiceManager>().SetVoiceGroup(1);
+        //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
+        //            0);
+    }
 
     public void RedirectToWorld()
     {
