@@ -414,11 +414,11 @@ namespace Photon.Pun.Demo.PunBasics
         public void MovePlayersToRoom(int gameId, string gameName)
         {
             // Leave the current room
-            PhotonNetwork.LeaveRoom();
             ConstantsHolder.xanaConstants.isJoinigXanaPartyGame=true;
             ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
             ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
             ConstantsHolder.xanaConstants.isBuilderScene = true;
+            PhotonNetwork.LeaveRoom();
             GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             // Join the new room
             //PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
