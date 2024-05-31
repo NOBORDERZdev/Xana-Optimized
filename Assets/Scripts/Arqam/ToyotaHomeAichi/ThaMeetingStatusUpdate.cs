@@ -84,7 +84,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         NewPlayerSpawned();
     }
 
-    public virtual void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.LogError("OnPlayerLeftRoom");
         if(otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum 
