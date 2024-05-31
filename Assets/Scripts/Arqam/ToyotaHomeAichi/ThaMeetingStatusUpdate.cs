@@ -31,13 +31,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     public void UpdateMeetingParams(int status)
     {
         this.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, status);
-
         // Update the custom property for all players in the room
         //Hashtable hash = new Hashtable();
         //hash[MeetingStatusPropertyName] = status;
         //PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
     }
 
+    public void UpdateUserCounter(int countPram)
+    {
+        this.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter), RpcTarget.All, countPram); 
+    }
     //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     //{
     //    base.OnRoomPropertiesUpdate(propertiesThatChanged);
@@ -47,14 +50,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     //        tms = (MeetingStatus)(int)propertiesThatChanged[MeetingStatusPropertyName];
     //}
 
-    void AssignVoiceGroups()
+    [PunRPC]
+    private void SetMeetingCounter(int count)
     {
-        var players = PhotonNetwork.PlayerList;
-        for (int i = 0; i < players.Length; i++)
-        {
-            byte group = (byte)(i % 2); // Simple example: alternate groups between 0 and 1
-            photonView.RPC("SetPlayerVoiceGroup", players[i], group);
-        }
+        FB_Notification_Initilizer.Instance.userInMeeting = count;
     }
 
 
