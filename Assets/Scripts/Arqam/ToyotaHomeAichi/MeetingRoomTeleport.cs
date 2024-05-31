@@ -72,7 +72,8 @@ public class MeetingRoomTeleport : MonoBehaviour
     private void EnterInMeeting()
     {
         FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
-        NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(FB_Notification_Initilizer.Instance.userInMeeting++);
+        int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
+        NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {// for customer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
@@ -88,7 +89,8 @@ public class MeetingRoomTeleport : MonoBehaviour
     private IEnumerator ExitFromMeeting()
     {
         FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
-        NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(FB_Notification_Initilizer.Instance.userInMeeting--);
+        int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
+        NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         yield return new WaitForSeconds(1f);
         if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
         {

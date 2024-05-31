@@ -39,6 +39,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public void UpdateUserCounter(int countPram)
     {
+        Debug.LogError("Count: "+ countPram);
         this.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter), RpcTarget.All, countPram); 
     }
     //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
