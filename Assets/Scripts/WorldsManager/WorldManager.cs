@@ -102,7 +102,10 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
+        LoadXanaPartyGame();
     }
+    
+
     /*public void CheckWorldTabAndReset(APIURL tab)
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
@@ -990,7 +993,25 @@ public class WorldManager : MonoBehaviour
             PlayWorld();
         }
     }
+    void LoadXanaPartyGame(){
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        {
 
+            ConstantsHolder.xanaConstants.userLimit = "15";
+            MutiplayerController.sceneName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+
+            LoadingHandler.Instance.characterLoading.SetActive(false);
+            LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
+            LoadingHandler.Instance.characterLoading.SetActive(false);
+            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.loadingPanel.SetActive(false);
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            PlayWorld();
+        }   
+    }
     public void GoToUGC()
     {
         GameManager.Instance.HomeCameraInputHandler(false);

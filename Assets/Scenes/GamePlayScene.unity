@@ -997,6 +997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainPlayer: {fileID: 360146152713065801}
   mainController: {fileID: 1808683680640967398}
+  PenguinPlayer: {fileID: 0}
   PlayerCamera: {fileID: 360146154038492715}
   playerCameraCharacterRender: {fileID: 1272852912}
   environmentCameraRender: {fileID: 360146153501369239}
@@ -1011,12 +1012,12 @@ MonoBehaviour:
   addressableSceneName: 
   HomeBtn: {fileID: 6408302776192530263}
   eventRemainingTime: 0
+  autoSwitchTime: 0
   _uiReferences: {fileID: 4338721142732702075}
   XanaWorldController: {fileID: 561587643}
   XanaPartyController: {fileID: 1043578925}
   XanaPartyCamera: {fileID: 1788077269}
   XanaPartyInput: {fileID: 4422376555776512726}
-  autoSwitchTime: 0
 --- !u!4 &79798789
 Transform:
   m_ObjectHideFlags: 0
@@ -7999,6 +8000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 860513762}
   - component: {fileID: 860513761}
+  - component: {fileID: 860513763}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -8045,6 +8047,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &860513763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860513760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e038d22dd53bd7c45a5e860d328e5ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameIds: []
 --- !u!1 &861049183
 GameObject:
   m_ObjectHideFlags: 0
@@ -20952,7 +20967,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.068069465, y: -0.0008904671, z: 0.000060756418, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806947, y: -0.0008904597, z: 0.000060755927, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21404,7 +21419,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641502, y: -0.0008924861, z: 0.000009499796, w: 0.999943}
+  m_LocalRotation: {x: 0.0106415, y: -0.0008924873, z: 0.000009499807, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

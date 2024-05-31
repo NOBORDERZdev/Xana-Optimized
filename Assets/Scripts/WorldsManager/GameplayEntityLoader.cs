@@ -25,6 +25,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject YoutubeStreamPlayer;
+    public GameObject PenguinPlayer;
 
     public CinemachineFreeLook PlayerCamera;
     public CinemachineFreeLook playerCameraCharacterRender;
@@ -56,8 +57,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] Button HomeBtn;
 
     public double eventRemainingTime;
-
+    [SerializeField] int autoSwitchTime;
     public HomeSceneLoader _uiReferences;
+
     [Header("XANA Party")]
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
@@ -623,6 +625,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
+            PenguinPlayer = player;
             StartCoroutine(SetXanaPartyControllers(player));
         }
     }
@@ -682,7 +685,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
-    [SerializeField] int autoSwitchTime;
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         print("AUTO BACK CALL");

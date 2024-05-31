@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -352,7 +353,17 @@ public class ReferencesForGamePlay : MonoBehaviour
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
                     totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
+                   
                 }
+
+                if (PlayerCount == 2/*RoomMaxPlayerCount*/){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                         MutiplayerController.instance.MovePlayersToRandomGame();
+                    }
+
+                }
+                    
                 //else
                 //{
                 //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
@@ -368,7 +379,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
-
+    
 }
 
 

@@ -18,6 +18,10 @@ using UnityEngine.SceneManagement;
 using Metaverse;
 using System.Collections;
 using System.Linq;
+using UnityEngine.Networking;
+using Unity.Mathematics;
+using abc = UnityEngine.Random;
+using AIFLogger;
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -324,8 +328,6 @@ namespace Photon.Pun.Demo.PunBasics
             isConnecting = false;
         }
 
-
-
         public override void OnJoinedRoom()
         {
             lastRoomName = PhotonNetwork.CurrentRoom.Name;
@@ -394,6 +396,34 @@ namespace Photon.Pun.Demo.PunBasics
         {
             PhotonNetwork.JoinRoom(name);
         }
+
+        
+
+        #region 
+       
+
+        public void MovePlayersToRandomGame()
+        {
+             // Select a random room
+            //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
+            GameData gameId = GetComponent<MultiplayerXanaParty>().GetRandomAndRemove();
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.All, gameId.Id, gameId.WorldName); // Calling RPC from Master
+        }
+
+        [PunRPC]
+        public void MovePlayersToRoom(int gameId, string gameName)
+        {
+            // Leave the current room
+            PhotonNetwork.LeaveRoom();
+            ConstantsHolder.xanaConstants.isJoinigXanaPartyGame=true;
+            ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
+            ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
+            ConstantsHolder.xanaConstants.isBuilderScene = true;
+            GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+            // Join the new room
+            //PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
+        }
+        #endregion
 
     }
 }
