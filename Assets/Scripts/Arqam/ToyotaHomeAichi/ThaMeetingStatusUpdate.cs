@@ -86,6 +86,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public virtual void OnPlayerLeftRoom(Player otherPlayer)
     {
+        Debug.LogError("OnPlayerLeftRoom");
         if(otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum 
             || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum)
         {
