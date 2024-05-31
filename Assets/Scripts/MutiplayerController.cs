@@ -369,6 +369,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            Debug.LogError("NutiplayerLeftRoom");
             if (otherPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
