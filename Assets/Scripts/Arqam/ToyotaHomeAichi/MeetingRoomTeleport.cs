@@ -70,7 +70,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     private void EnterInMeeting()
     {
         FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
-
+        FB_Notification_Initilizer.Instance.userInMeeting++;
         if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {// for customer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
@@ -86,6 +86,12 @@ public class MeetingRoomTeleport : MonoBehaviour
     private void ExitFromMeeting()
     {
         FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
+        FB_Notification_Initilizer.Instance.userInMeeting--;
+        if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
+        {
+            NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
+            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+        }
     }
 
     IEnumerator Teleport()
