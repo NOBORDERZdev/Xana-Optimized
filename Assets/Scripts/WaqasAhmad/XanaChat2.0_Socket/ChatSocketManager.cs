@@ -285,7 +285,7 @@ public class ChatSocketManager : MonoBehaviour
         if (callBy.Equals(CallBy.NpcToNpc))
             npcSendMsg.Invoke(msg);
 
-        // //Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
+        Debug.Log("<color=red> XanaChat -- MsgSend : " + userId + " - " + event_Id + " - " + world_Id + " - " + msg  + " : " + npcId + "</color>");
         var data = new { userId, eventId = event_Id, worldId = world_Id, msg = msg };
         //Debug.Log("Data:::" + data);
         Manager.Socket.Emit("chatMessage", data);
