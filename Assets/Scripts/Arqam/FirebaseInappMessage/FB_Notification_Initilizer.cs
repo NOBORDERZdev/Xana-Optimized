@@ -212,41 +212,41 @@ public class FB_Notification_Initilizer : MonoBehaviour
         Debug.LogError("Token Deleted");
     }
 
-    public IEnumerator MeetingRoomLeave()
-    {
-        Debug.LogError("Meeting Room Player  on leave 1111");
-        string token = ConstantsGod.AUTH_TOKEN;
-        WWWForm form = new WWWForm();
-        form.AddField("worldId", 4);            // here 4 is home consulting room id in Toyota world
-        form.AddField("email", toyotaUserEmail);
-        UnityWebRequest www;
-        www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.leavemeetingroom, form);
-        www.SetRequestHeader("Authorization", token);
-        www.SendWebRequest();
-        while (!www.isDone)
-        {
-            yield return null;
-        }
-        if (!www.isHttpError && www.isNetworkError)
-            Debug.LogError("Error is" + www.error);
-        else
-        {
-            //MeetingRoomLeaveSocket();
-            Debug.LogError("Meeting Room Player  on leave : " + www.downloadHandler.text);
-        }
-    }
+    //public IEnumerator MeetingRoomLeave()
+    //{
+    //    Debug.LogError("Meeting Room Player  on leave 1111");
+    //    string token = ConstantsGod.AUTH_TOKEN;
+    //    WWWForm form = new WWWForm();
+    //    form.AddField("worldId", 4);            // here 4 is home consulting room id in Toyota world
+    //    form.AddField("email", toyotaUserEmail);
+    //    UnityWebRequest www;
+    //    www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.leavemeetingroom, form);
+    //    www.SetRequestHeader("Authorization", token);
+    //    www.SendWebRequest();
+    //    while (!www.isDone)
+    //    {
+    //        yield return null;
+    //    }
+    //    if (!www.isHttpError && www.isNetworkError)
+    //        Debug.LogError("Error is" + www.error);
+    //    else
+    //    {
+    //        //MeetingRoomLeaveSocket();
+    //        Debug.LogError("Meeting Room Player  on leave : " + www.downloadHandler.text);
+    //    }
+    //}
 
-   public void MeetingRoomLeaveSocket()
-    {
-        Debug.LogError("Meeting Room Player  on leave Socket 2222");
-        THALeaveRoom tHALeaveRoom = new THALeaveRoom();
-        tHALeaveRoom.userType = actorType.ToString();
-        tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
-        tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
-        string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
-        HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
+   //public void MeetingRoomLeaveSocket()
+   // {
+   //     Debug.LogError("Meeting Room Player  on leave Socket 2222");
+   //     THALeaveRoom tHALeaveRoom = new THALeaveRoom();
+   //     tHALeaveRoom.userType = actorType.ToString();
+   //     tHALeaveRoom.userId = ConstantsHolder.userId.ParseToInt();
+   //     tHALeaveRoom.world_id = ConstantsHolder.xanaConstants.builderMapID;
+   //     string jsonData = JsonConvert.SerializeObject(tHALeaveRoom);
+   //     HomeScoketHandler.instance.GetCallFromMeetingRoom(jsonData);
 
-        Debug.LogError("Actor Type : " + Instance.actorType + "userid : " + ConstantsHolder.userId);
-    }
+   //     Debug.LogError("Actor Type : " + Instance.actorType + "userid : " + ConstantsHolder.userId);
+   // }
 
 }
