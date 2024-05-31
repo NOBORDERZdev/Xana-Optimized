@@ -391,6 +391,7 @@ namespace Photon.Pun.Demo.PunBasics
                 GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
+        bool singleTimeCall = true;
         public string lastSceneName, lastLobbyName, lastRoomName;
 
         public void JoinRoomManually(string name)
@@ -405,6 +406,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public void MovePlayersToRandomGame()
         {
+            if (!singleTimeCall) return;
+            singleTimeCall = false;
              // Select a random room
             //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
             GameData gameId = multiplayerXanaParty.GetRandomAndRemove();
