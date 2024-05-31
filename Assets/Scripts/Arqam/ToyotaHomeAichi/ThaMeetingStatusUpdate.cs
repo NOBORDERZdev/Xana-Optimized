@@ -54,6 +54,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     private void SetMeetingCounter(int count)
     {
+        Debug.LogError("Count: " + count);
         FB_Notification_Initilizer.Instance.userInMeeting = count;
     }
 
