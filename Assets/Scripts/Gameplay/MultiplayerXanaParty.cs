@@ -31,7 +31,7 @@ public class MultiplayerXanaParty : MonoBehaviour
         int index = random.Next(copyList.Count);
         GameData rand = copyList[index];
         copyList.RemoveAt(index);
-
+        print("!!!!!!!!!");
         return rand;
     }
         
