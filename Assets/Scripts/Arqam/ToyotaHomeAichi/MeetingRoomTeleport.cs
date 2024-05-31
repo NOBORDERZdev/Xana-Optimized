@@ -26,22 +26,66 @@ public class MeetingRoomTeleport : MonoBehaviour
         {
             if (destinationPoint != null && other.GetComponent<PhotonView>().IsMine)
             {
-                GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
-
                 triggerObject = other.gameObject;
-
-                if (currentPortal == PortalType.Enter)
-                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
-                else if (currentPortal == PortalType.Exit)
-                    GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+                CheckMeetingStatus();
             }
         }
+    }
+
+    private void CheckMeetingStatus()
+    {
+        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
+            return;
+        if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
+               NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+        {
+            return;
+        }
+        else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
+                               NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+        {
+            return;
+        }
+
+        GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+        if (currentPortal == PortalType.Enter)
+            GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
+        else if (currentPortal == PortalType.Exit)
+            GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
     }
 
     public void RedirectToWorld()
     {
         if (triggerObject.GetComponent<PhotonView>().IsMine)
+        {
             this.StartCoroutine(Teleport());
+
+            if (currentPortal.Equals(PortalType.Enter))
+                EnterInMeeting();
+            else if (currentPortal.Equals(PortalType.Exit))
+                ExitFromMeeting();
+        }
+    }
+
+    private void EnterInMeeting()
+    {
+        FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
+
+        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+        {// for customer
+            NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
+            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+        }
+        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+        { // for interviewer
+            NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
+            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+        }
+    }
+
+    private void ExitFromMeeting()
+    {
+        FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
     }
 
     IEnumerator Teleport()

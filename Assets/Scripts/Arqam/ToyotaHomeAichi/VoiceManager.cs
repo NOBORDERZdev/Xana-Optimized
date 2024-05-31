@@ -1,9 +1,6 @@
 using Photon.Pun;
-using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
-using System.Collections;
-using System.Security.Cryptography;
 using UnityEngine;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
@@ -12,37 +9,32 @@ public class VoiceManager : MonoBehaviourPunCallbacks
     //public Speaker speaker;
     private byte currentGroup;
 
-    void Start()
-    {
-        BuilderEventManager.AfterPlayerInstantiated += UpdateVoiceGroup;
-    }
-    private void OnDisable()
-    {
-        BuilderEventManager.AfterPlayerInstantiated -= UpdateVoiceGroup;
-    }
+    //void Start()
+    //{
+    //    BuilderEventManager.AfterPlayerInstantiated += UpdateVoiceGroup;
+    //}
+    //private void OnDisable()
+    //{
+    //    BuilderEventManager.AfterPlayerInstantiated -= UpdateVoiceGroup;
+    //}
 
-    private void UpdateVoiceGroup()
-    {
-        Debug.LogError("Recorder or Speaker component is missing.");
-        if (recorder == null /*|| speaker == null*/)
-        {
-            Debug.LogError("Recorder or Speaker component is missing.");
-            return;
-        }
+    //private void UpdateVoiceGroup()
+    //{
+    //    Debug.LogError("Recorder or Speaker component is missing.");
+    //    if (recorder == null /*|| speaker == null*/)
+    //    {
+    //        Debug.LogError("Recorder or Speaker component is missing.");
+    //        return;
+    //    }
 
-        if (PhotonNetwork.InRoom)
-        {
-            SetVoiceGroup(1); // Default group for all users initially
-        }
-    }
+    //    if (PhotonNetwork.InRoom)
+    //    {
+    //        SetVoiceGroup(1); // Default group for all users initially
+    //    }
+    //}
 
     public void SetVoiceGroup(byte newGroup)
     {
-        StartCoroutine(Wait(newGroup));
-    }
-    IEnumerator Wait(byte newGroup)
-    {
-        yield return new WaitForSeconds(5f);
         byte oldGroup = currentGroup;
         currentGroup = newGroup;
 

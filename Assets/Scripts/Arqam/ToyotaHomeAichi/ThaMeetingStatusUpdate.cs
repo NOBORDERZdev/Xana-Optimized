@@ -20,12 +20,12 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
+        //BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
         pv = GetComponent<PhotonView>();
     }
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
+        //BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
     }
 
     public void UpdateMeetingParams(int status)
