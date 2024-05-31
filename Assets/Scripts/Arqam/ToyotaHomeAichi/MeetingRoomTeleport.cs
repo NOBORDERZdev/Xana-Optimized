@@ -130,7 +130,6 @@ public class MeetingRoomTeleport : MonoBehaviour
         else if (!APIBasepointManager.instance.IsXanaLive)
             ConstantsHolder.xanaConstants.MuseumID = "";       // meeting room mainnet id
         ConstantsHolder.userId = userId + ChatSocketManager.instance.socketId;
-
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         XanaChatSystem.instance.ClearChatTxtForMeeting();
 
@@ -138,6 +137,8 @@ public class MeetingRoomTeleport : MonoBehaviour
 
         NFT_Holder_Manager.instance.meetingStatus.GetActorNum(
         triggerObject.GetComponent<PhotonView>().Controller.ActorNumber, (int)FB_Notification_Initilizer.Instance.actorType);
+        if (FB_Notification_Initilizer.Instance.userInMeeting < 1)
+            NFT_Holder_Manager.instance.pushNotification.SendNotification();
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
