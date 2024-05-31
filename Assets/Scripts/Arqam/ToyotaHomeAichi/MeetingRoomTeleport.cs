@@ -57,16 +57,65 @@ public class MeetingRoomTeleport : MonoBehaviour
         GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
     }
 
-    public void RedirectToWorld()
+    public void RedirectToWorld()    // call on popup button click
     {
         if (triggerObject.GetComponent<PhotonView>().IsMine)
         {
             this.StartCoroutine(Teleport());
+        }
+    }
+    IEnumerator Teleport()
+    {
+        if (!isLocked)
+        {
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+            LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
+            //yield return new WaitForSeconds(.5f);
+            //RaycastHit hit;
+            //CheckAgain:
+            //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
+            //    {
+            //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
+            //        {
+            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //            goto CheckAgain;
+            //        }
+            //        else if (hit.collider.gameObject.tag != "GroundFloor")
+            //        {
+            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+
+            //            goto CheckAgain;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //        goto CheckAgain;
+            //    }
+            yield return new WaitForSeconds(.4f);
+
+            referrencesForDynamicMuseum.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
+            referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
+            yield return new WaitForSeconds(.8f);
+            referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
+            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            yield return new WaitForSeconds(.15f);
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
 
             if (currentPortal.Equals(PortalType.Enter))
                 EnterInMeeting();
             else if (currentPortal.Equals(PortalType.Exit))
                 StartCoroutine(ExitFromMeeting());
+        }
+        else
+        {
+            if (SNSNotificationHandler.Instance != null)
+                SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
+            yield return null;
         }
     }
 
@@ -111,55 +160,6 @@ public class MeetingRoomTeleport : MonoBehaviour
         }
     }
 
-    IEnumerator Teleport()
-    {
-        if (!isLocked)
-        {
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
-            LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
-            //yield return new WaitForSeconds(.5f);
-            //RaycastHit hit;
-            //CheckAgain:
-            //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-            //    {
-            //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
-            //        {
-            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-            //            goto CheckAgain;
-            //        }
-            //        else if (hit.collider.gameObject.tag != "GroundFloor")
-            //        {
-            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-
-            //            goto CheckAgain;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-            //        goto CheckAgain;
-            //    }
-            yield return new WaitForSeconds(.4f);
-
-            referrencesForDynamicMuseum.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
-            referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
-            yield return new WaitForSeconds(.8f);
-            referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
-            referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
-
-            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
-            yield return new WaitForSeconds(.15f);
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-        }
-        else
-        {
-            if (SNSNotificationHandler.Instance != null)
-                SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
-            yield return null;
-        }
-    }
 
 }
 
