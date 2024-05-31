@@ -52,28 +52,28 @@ public class MeetingRoomTeleport : MonoBehaviour
             LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
-            yield return new WaitForSeconds(.5f);
-            RaycastHit hit;
-        CheckAgain:
-            if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-            {
-                if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
-                {
-                    destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-                    goto CheckAgain;
-                }
-                else if (hit.collider.gameObject.tag != "GroundFloor")
-                {
-                    destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //yield return new WaitForSeconds(.5f);
+            //RaycastHit hit;
+        //CheckAgain:
+        //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
+        //    {
+        //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
+        //        {
+        //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+        //            goto CheckAgain;
+        //        }
+        //        else if (hit.collider.gameObject.tag != "GroundFloor")
+        //        {
+        //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
 
-                    goto CheckAgain;
-                }
-            }
-            else
-            {
-                destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-                goto CheckAgain;
-            }
+        //            goto CheckAgain;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+        //        goto CheckAgain;
+        //    }
             yield return new WaitForSeconds(.4f);
 
             referrencesForDynamicMuseum.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
