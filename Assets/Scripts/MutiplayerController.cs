@@ -411,12 +411,14 @@ namespace Photon.Pun.Demo.PunBasics
              // Select a random room
             //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
             GameData gameId = multiplayerXanaParty.GetRandomAndRemove();
+            print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.All, gameId.Id, gameId.WorldName); // Calling RPC from Master
         }
 
         [PunRPC]
         public void MovePlayersToRoom(int gameId, string gameName)
         {
+            print("RPC CALL "+ gameId + " : "+ gameName);
             // Leave the current room
             ConstantsHolder.xanaConstants.isJoinigXanaPartyGame=true;
             ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
