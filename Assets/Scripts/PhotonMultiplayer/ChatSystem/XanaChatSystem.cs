@@ -154,6 +154,13 @@ public class XanaChatSystem : MonoBehaviour
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
+
+    public void ClearChatTxtForMeeting()
+    {
+        this.CurrentChannelText.text = "";
+        this.PotriatCurrentChannelText.text = "";
+    }
+
     public void DisplayErrorMsg_FromSocket(string _msg, string errorType)
     {
 

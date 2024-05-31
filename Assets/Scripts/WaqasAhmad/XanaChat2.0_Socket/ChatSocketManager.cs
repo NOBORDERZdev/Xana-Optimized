@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;
 
-public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc};
+public enum CallBy { User, UserNpc, FreeSpeechNpc, NpcToNpc };
 public class ChatSocketManager : MonoBehaviour
 {
     // /api/v1/fetch-world-chat-byId/worldId/:userId/:page/:limit
@@ -159,8 +159,7 @@ public class ChatSocketManager : MonoBehaviour
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
 
-        if (ConstantsHolder.xanaConstants.EnviornmentName != "THA_Meeting_Room")
-            StartCoroutine(FetchOldMessages());
+        StartCoroutine(FetchOldMessages());
     }
 
     IEnumerator RetryConnection()
@@ -283,7 +282,7 @@ public class ChatSocketManager : MonoBehaviour
         if (!npcId.IsNullOrEmpty())
             userId = "npc-" + npcId;
 
-        if(callBy.Equals(CallBy.NpcToNpc))
+        if (callBy.Equals(CallBy.NpcToNpc))
             npcSendMsg.Invoke(msg);
 
         // //Debug.Log("<color=red> XanaChat -- MsgSend : " + userId /*+ " - " + event_Id + " - " + world_Id + " - " + msg */ + " : " + npcId + "</color>");
@@ -335,7 +334,7 @@ public class ChatSocketManager : MonoBehaviour
     {
         DisplayOldChat(oldChatResponse);
     }
-    IEnumerator FetchOldMessages()
+    public IEnumerator FetchOldMessages()
     {
         yield return new WaitForSeconds(5f);
 

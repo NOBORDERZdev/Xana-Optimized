@@ -13,11 +13,13 @@ public class MeetingRoomTeleport : MonoBehaviour
     private PlayerController ref_PlayerControllerNew;
     private ReferencesForGamePlay referrencesForDynamicMuseum;
     private GameObject triggerObject;
+    private string currentRoomId;
 
     private void Start()
     {
         referrencesForDynamicMuseum = ReferencesForGamePlay.instance;
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
+        currentRoomId = ConstantsHolder.xanaConstants.MuseumID;
         //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
     }
 
@@ -121,9 +123,15 @@ public class MeetingRoomTeleport : MonoBehaviour
 
     private void EnterInMeeting()
     {
-        NFT_Holder_Manager.instance.meetingStatus.GetActorNum(
-            triggerObject.GetComponent<PhotonView>().Controller.ActorNumber, (int)FB_Notification_Initilizer.Instance.actorType);
         FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
+        XanaChatSystem.instance.ClearChatTxtForMeeting();
+        if (!APIBasepointManager.instance.IsXanaLive)
+            ConstantsHolder.xanaConstants.MuseumID = "2399";   // meeting room testnet id
+        else if (!APIBasepointManager.instance.IsXanaLive)
+            ConstantsHolder.xanaConstants.MuseumID = "";       // meeting room mainnet id
+
+        NFT_Holder_Manager.instance.meetingStatus.GetActorNum(
+        triggerObject.GetComponent<PhotonView>().Controller.ActorNumber, (int)FB_Notification_Initilizer.Instance.actorType);
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
@@ -141,6 +149,9 @@ public class MeetingRoomTeleport : MonoBehaviour
     private IEnumerator ExitFromMeeting()
     {
         FindObjectOfType<VoiceManager>().SetVoiceGroup(0);
+        ConstantsHolder.xanaConstants.MuseumID = currentRoomId;
+        StartCoroutine(ChatSocketManager.instance.FetchOldMessages());
+
         int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         yield return new WaitForSeconds(1f);
