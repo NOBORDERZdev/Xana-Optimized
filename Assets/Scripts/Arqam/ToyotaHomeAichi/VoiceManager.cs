@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
+using System.Collections;
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     private void UpdateVoiceGroup()
     {
+        Debug.LogError("Recorder or Speaker component is missing.");
         if (recorder == null /*|| speaker == null*/)
         {
             Debug.LogError("Recorder or Speaker component is missing.");
@@ -36,6 +38,11 @@ public class VoiceManager : MonoBehaviourPunCallbacks
 
     public void SetVoiceGroup(byte newGroup)
     {
+        StartCoroutine(Wait(newGroup));
+    }
+    IEnumerator Wait(byte newGroup)
+    {
+        yield return new WaitForSeconds(5f);
         byte oldGroup = currentGroup;
         currentGroup = newGroup;
 
@@ -43,12 +50,22 @@ public class VoiceManager : MonoBehaviourPunCallbacks
         recorder.InterestGroup = newGroup;
 
         // Change the groups: unsubscribe from the old group and subscribe to the new group
-        ChangeGroups(new byte[] { oldGroup }, new byte[] { newGroup });
+        if (PhotonVoiceNetwork.Instance.Client.InRoom)
+            ChangeGroups(new byte[] { oldGroup }, new byte[] { newGroup });
+        else
+            Debug.LogError("Not connected to Game Server. Cannot change groups.");
     }
 
     private void ChangeGroups(byte[] groupsToLeave, byte[] groupsToJoin)
     {
-        PhotonVoiceNetwork.Instance.Client.OpChangeGroups(groupsToLeave, groupsToJoin);
+        if (PhotonVoiceNetwork.Instance.Client.InRoom)
+        {
+            PhotonVoiceNetwork.Instance.Client.OpChangeGroups(groupsToLeave, groupsToJoin);
+        }
+        else
+        {
+            Debug.LogError("Operation ChangeGroups not allowed because the client is not connected to the Game Server.");
+        }
     }
 
     //[PunRPC]
