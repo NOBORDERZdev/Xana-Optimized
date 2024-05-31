@@ -401,15 +401,17 @@ namespace Photon.Pun.Demo.PunBasics
 
         
 
-        #region 
+        #region XANA Party Games
        
 
         public void MovePlayersToRandomGame()
         {
+            print("MOVE PLAYER Random game call");
             if (!singleTimeCall) return;
             singleTimeCall = false;
              // Select a random room
             //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
+            print("~~~~~~ calling gameID" + multiplayerXanaParty.name);
             GameData gameId = multiplayerXanaParty.GetRandomAndRemove();
             print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.All, gameId.Id, gameId.WorldName); // Calling RPC from Master

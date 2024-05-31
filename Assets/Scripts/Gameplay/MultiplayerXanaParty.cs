@@ -23,7 +23,8 @@ public class MultiplayerXanaParty : MonoBehaviour
 
     public GameData GetRandomAndRemove()
     {
-        if (copyList.Count == 0)
+         print("!!!!!!!!!");
+        if (copyList.Count == 0 || copyList != null)
         {
             copyList = new List<GameData>(GameIds);
         }
@@ -31,7 +32,7 @@ public class MultiplayerXanaParty : MonoBehaviour
         int index = random.Next(copyList.Count);
         GameData rand = copyList[index];
         copyList.RemoveAt(index);
-        print("!!!!!!!!!");
+       
         return rand;
     }
         
