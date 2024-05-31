@@ -406,7 +406,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
              // Select a random room
             //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
-            GameData gameId = GetComponent<MultiplayerXanaParty>().GetRandomAndRemove();
+            GameData gameId = gameObject.GetComponent<MultiplayerXanaParty>().GetRandomAndRemove();
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.All, gameId.Id, gameId.WorldName); // Calling RPC from Master
         }
 
