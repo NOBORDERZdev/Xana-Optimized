@@ -18,6 +18,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     {
         referrencesForDynamicMuseum = ReferencesForGamePlay.instance;
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
+        GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,6 +93,17 @@ public class MeetingRoomTeleport : MonoBehaviour
         int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         yield return new WaitForSeconds(1f);
+        if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
+        {
+            NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
+            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+        }
+    }
+
+    private void LeaveMeetingOnExit()
+    {
+        int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
+        NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
         {
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
