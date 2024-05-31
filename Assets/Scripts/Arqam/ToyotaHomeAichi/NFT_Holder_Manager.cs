@@ -32,6 +32,7 @@ public class NFT_Holder_Manager : MonoBehaviour
     public AR_Nft_Manager currentRoom;
     [Space(5)]
     public ThaMeetingTxtUpdate meetingTxtUpdate;
+    public FB_PushNotificationSender pushNotification;
     public ThaMeetingStatusUpdate meetingStatus;
 
     private void Awake()

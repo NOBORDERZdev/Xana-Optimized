@@ -29,7 +29,7 @@ public class ThaMeetingController : MonoBehaviour
     private void OnEnable()
     {
         JoinMeeting();
-        GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeeting);
+       // GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeeting);
     }
 
     private void JoinMeeting()
@@ -58,11 +58,11 @@ public class ThaMeetingController : MonoBehaviour
             Debug.Log("Error is" + www.error);
     }
 
-    private void LeaveMeeting()
-    {
-        StartCoroutine(FB_Notification_Initilizer.Instance.MeetingRoomLeave());
-        FB_Notification_Initilizer.Instance.MeetingRoomLeaveSocket();
-    }
+    //private void LeaveMeeting()
+    //{
+    //    StartCoroutine(FB_Notification_Initilizer.Instance.MeetingRoomLeave());
+    //    FB_Notification_Initilizer.Instance.MeetingRoomLeaveSocket();
+    //}
 
 
 
