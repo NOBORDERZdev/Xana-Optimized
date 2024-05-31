@@ -34,24 +34,26 @@ public class MeetingRoomTeleport : MonoBehaviour
 
     private void CheckMeetingStatus()
     {
-        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
-            return;
-        if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
-               NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-        {
-            return;
-        }
-        else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
-                               NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-        {
-            return;
-        }
-
-        GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
         if (currentPortal == PortalType.Enter)
+        {
+            if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
+                return;
+            if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
+                   NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+            {
+                return;
+            }
+            else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
+                                   NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+            {
+                return;
+            }
             GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
+        }
         else if (currentPortal == PortalType.Exit)
             GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 3);
+
+        GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
     }
 
     public void RedirectToWorld()
@@ -104,26 +106,26 @@ public class MeetingRoomTeleport : MonoBehaviour
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
             //yield return new WaitForSeconds(.5f);
             //RaycastHit hit;
-        //CheckAgain:
-        //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-        //    {
-        //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
-        //        {
-        //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-        //            goto CheckAgain;
-        //        }
-        //        else if (hit.collider.gameObject.tag != "GroundFloor")
-        //        {
-        //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //CheckAgain:
+            //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
+            //    {
+            //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
+            //        {
+            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //            goto CheckAgain;
+            //        }
+            //        else if (hit.collider.gameObject.tag != "GroundFloor")
+            //        {
+            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
 
-        //            goto CheckAgain;
-        //        }
-        //    }
-        //    else
-        //    {
-        //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-        //        goto CheckAgain;
-        //    }
+            //            goto CheckAgain;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
+            //        goto CheckAgain;
+            //    }
             yield return new WaitForSeconds(.4f);
 
             referrencesForDynamicMuseum.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
