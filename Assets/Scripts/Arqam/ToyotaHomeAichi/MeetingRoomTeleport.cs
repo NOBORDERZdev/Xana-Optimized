@@ -121,6 +121,8 @@ public class MeetingRoomTeleport : MonoBehaviour
 
     private void EnterInMeeting()
     {
+        NFT_Holder_Manager.instance.meetingStatus.GetActorNum(
+            triggerObject.GetComponent<PhotonView>().Controller.ActorNumber, (int)FB_Notification_Initilizer.Instance.actorType);
         FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);

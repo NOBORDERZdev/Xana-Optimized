@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 using UnityEngine.Networking;
+using Unity.VisualScripting;
 
 public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
@@ -39,9 +40,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public void UpdateUserCounter(int countPram)
     {
-        Debug.LogError("Count: "+ countPram);
-        this.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter), RpcTarget.All, countPram); 
+        Debug.LogError("Count: " + countPram);
+        this.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter), RpcTarget.All, countPram);
     }
+
+    public void GetActorNum(int num, int actorType)
+    {
+        Debug.LogError("ActorNum: " + num);
+        this.GetComponent<PhotonView>().RPC(nameof(SetActorNum), RpcTarget.All, num, actorType);
+    }
+
     //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     //{
     //    base.OnRoomPropertiesUpdate(propertiesThatChanged);
@@ -58,6 +66,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         FB_Notification_Initilizer.Instance.userInMeeting = count;
     }
 
+    [PunRPC]
+    private void SetActorNum(int actorNum, int actorTypeIndex)
+    {
+        Debug.LogError("ActorNum: " + actorNum);
+        // if(FB_Notification_Initilizer.Instance.actorType == (ConstantsHolder.MeetingStatus)(num))
+        if (actorTypeIndex == 0)
+            FB_Notification_Initilizer.Instance.userActorNum = actorNum;
+        else if (actorTypeIndex == 1)
+            FB_Notification_Initilizer.Instance.toyotaUserActorNum = actorNum;
+    }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -66,6 +84,20 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         NewPlayerSpawned();
     }
 
+    public virtual void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        if(otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum 
+            || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum)
+        {
+            int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
+            NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
+            if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
+            {
+                NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)MeetingStatus.End);
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+            }
+        }
+    }
 
     private void NewPlayerSpawned()
     {

@@ -21,6 +21,8 @@ public class FB_Notification_Initilizer : MonoBehaviour
     public List<string> companyEmails = new List<string>();
     public List<string> fbTokens = new List<string>();
     public int userInMeeting = 0;
+    public int userActorNum = 0;
+    public int toyotaUserActorNum = 0;
     [Tooltip("Action invoke when device token received for push notification")]
     public Action<string> onReceiveToken;
     public static FB_Notification_Initilizer Instance;
