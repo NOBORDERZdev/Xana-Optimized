@@ -14,12 +14,14 @@ public class MeetingRoomTeleport : MonoBehaviour
     private ReferencesForGamePlay referrencesForDynamicMuseum;
     private GameObject triggerObject;
     private string currentRoomId;
+    private string userId;
 
     private void Start()
     {
         referrencesForDynamicMuseum = ReferencesForGamePlay.instance;
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
         currentRoomId = ConstantsHolder.xanaConstants.MuseumID;
+        userId = ConstantsHolder.userId;
         //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
     }
 
@@ -127,6 +129,8 @@ public class MeetingRoomTeleport : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = "2399";   // meeting room testnet id
         else if (!APIBasepointManager.instance.IsXanaLive)
             ConstantsHolder.xanaConstants.MuseumID = "";       // meeting room mainnet id
+        ConstantsHolder.userId = userId + ChatSocketManager.instance.socketId;
+
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         XanaChatSystem.instance.ClearChatTxtForMeeting();
 
@@ -151,6 +155,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     private IEnumerator ExitFromMeeting()
     {
         ConstantsHolder.xanaConstants.MuseumID = currentRoomId;
+        ConstantsHolder.userId = userId;
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         StartCoroutine(ChatSocketManager.instance.FetchOldMessages());
 
