@@ -23,10 +23,17 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         //BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
         pv = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsMasterClient)
+            CheckAndUpdateMeetingStatus();
     }
     private void OnDisable()
     {
         //BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
+    }
+
+    private void CheckAndUpdateMeetingStatus()
+    {
+
     }
 
     public void UpdateMeetingParams(int status)
@@ -108,13 +115,16 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         //{
         //    int parameterValue = (int)PhotonNetwork.CurrentRoom.CustomProperties[MeetingStatusPropertyName];
         //    Debug.LogError("New Player join room:::" + parameterValue);
-        if (pv != null)
-            pv.RPC(nameof(StartMeeting), RpcTarget.All, playerCount);
-        else
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
-                NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, playerCount);
-            Debug.LogError("PhotonViewNotExist: ");
+            if (pv != null)
+                pv.RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.tms);
+            else
+            {
+                if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
+                    NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.tms);
+                Debug.LogError("PhotonViewNotExist: ");
+            }
         }
         //}
         //else
@@ -144,78 +154,78 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             NFT_Holder_Manager.instance.meetingTxtUpdate.WrapObjectOnOff();
     }
 
-    private void GetPlayerCount()        // call in start when player join toyota world
-    {
-        CheckUsersCount(ConstantsHolder.xanaConstants.backFromMeeting, 0);
-    }
-    public void RemoteCheckUserCount()   // call when user exist from meeting
-    {
-        if (pv != null)
-            pv.RPC(nameof(CheckUsersCount), RpcTarget.All, true, pv.ViewID);
-        else
-        {
-            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(CheckUsersCount), RpcTarget.All, true,
-                NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().ViewID);
-            Debug.LogError("PhotonViewNotExist: ");
-        }
-    }
+    //private void GetPlayerCount()        // call in start when player join toyota world
+    //{
+    //    CheckUsersCount(ConstantsHolder.xanaConstants.backFromMeeting, 0);
+    //}
+    //public void RemoteCheckUserCount()   // call when user exist from meeting
+    //{
+    //    if (pv != null)
+    //        pv.RPC(nameof(CheckUsersCount), RpcTarget.All, true, pv.ViewID);
+    //    else
+    //    {
+    //        NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(CheckUsersCount), RpcTarget.All, true,
+    //            NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().ViewID);
+    //        Debug.LogError("PhotonViewNotExist: ");
+    //    }
+    //}
 
-    [PunRPC]
-    private async void CheckUsersCount(bool existFromMeeting, int photonId)
-    {
-        if (!existFromMeeting || photonId == gameObject.GetComponent<PhotonView>().ViewID)
-        {
-            StringBuilder ApiURL = new StringBuilder();
-            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
-            Debug.LogError("API URL is : " + ApiURL.ToString());
-            using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
-            {
-                request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-                await request.SendWebRequest();
-                if (request.isNetworkError || request.isHttpError)
-                {
-                    Debug.Log("Error is" + request.error);
-                }
-                else
-                {
-                    StringBuilder data = new StringBuilder();
-                    data.Append(request.downloadHandler.text);
-                    MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
-                    Debug.LogError("ActualPlayerCount: " + meetingRoomStatusResponse.data.Count);
+    //[PunRPC]
+    //private async void CheckUsersCount(bool existFromMeeting, int photonId)
+    //{
+    //    if (!existFromMeeting || photonId == gameObject.GetComponent<PhotonView>().ViewID)
+    //    {
+    //        StringBuilder ApiURL = new StringBuilder();
+    //        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.getmeetingroomcount + roomID);
+    //        Debug.LogError("API URL is : " + ApiURL.ToString());
+    //        using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
+    //        {
+    //            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+    //            await request.SendWebRequest();
+    //            if (request.isNetworkError || request.isHttpError)
+    //            {
+    //                Debug.Log("Error is" + request.error);
+    //            }
+    //            else
+    //            {
+    //                StringBuilder data = new StringBuilder();
+    //                data.Append(request.downloadHandler.text);
+    //                MeetingRoomStatusResponse meetingRoomStatusResponse = JsonConvert.DeserializeObject<MeetingRoomStatusResponse>(data.ToString());
+    //                Debug.LogError("ActualPlayerCount: " + meetingRoomStatusResponse.data.Count);
 
-                    playerCount = meetingRoomStatusResponse.data.Count;
-                    Debug.LogError("playerCount: " + playerCount);
-                    if (existFromMeeting)
-                    {
-                        ConstantsHolder.xanaConstants.backFromMeeting = false;
-                        //playerCount = playerCount >= 1 ? 2 : playerCount;
-                        if (playerCount >= 1)
-                        {
-                            playerCount = 2;
-                            Debug.LogError("Enter");
-                        }
-                        Debug.LogError("playerCount: " + playerCount + ":" + existFromMeeting);
-                    }
+    //                playerCount = meetingRoomStatusResponse.data.Count;
+    //                Debug.LogError("playerCount: " + playerCount);
+    //                if (existFromMeeting)
+    //                {
+    //                    ConstantsHolder.xanaConstants.backFromMeeting = false;
+    //                    //playerCount = playerCount >= 1 ? 2 : playerCount;
+    //                    if (playerCount >= 1)
+    //                    {
+    //                        playerCount = 2;
+    //                        Debug.LogError("Enter");
+    //                    }
+    //                    Debug.LogError("playerCount: " + playerCount + ":" + existFromMeeting);
+    //                }
 
-                    NFT_Holder_Manager.instance.meetingStatus.tms = (MeetingStatus)(playerCount);
-                    ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
-                }
-                TextUpdate();
-            }
-        }
+    //                NFT_Holder_Manager.instance.meetingStatus.tms = (MeetingStatus)(playerCount);
+    //                ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(playerCount);
+    //            }
+    //            TextUpdate();
+    //        }
+    //    }
 
-        void TextUpdate()
-        {
-            if (NFT_Holder_Manager.instance.meetingTxtUpdate == null) return;
+    //    void TextUpdate()
+    //    {
+    //        if (NFT_Holder_Manager.instance.meetingTxtUpdate == null) return;
 
-            if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.Inprogress))
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
-            else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.End))
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
-            else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.HouseFull))
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
-        }
-    }
+    //        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.Inprogress))
+    //            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
+    //        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.End))
+    //            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+    //        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(MeetingStatus.HouseFull))
+    //            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
+    //    }
+    //}
 
     public class MeetinRoomProperties
     {
