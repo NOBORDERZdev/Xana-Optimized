@@ -41,7 +41,7 @@ namespace Photon.Pun.Demo.PunBasics
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
         public static MutiplayerController instance;
-        [SerializeField] XANAPartyController multiplayerXanaParty;
+        [SerializeField] XANAPartyManager multiplayerXanaParty;
         public ScenesList working;
         #region Private Serializable Fields
         [Tooltip("The maximum number of players per room")]

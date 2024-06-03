@@ -7,9 +7,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Random = System.Random;
 
-public class XANAPartyController : MonoBehaviour
+public class XANAPartyManager : MonoBehaviour
 {
-    public static XANAPartyController Instance;
+    public static XANAPartyManager Instance;
     [SerializeField] List<GameData> GameIds = new List<GameData>();
     private List<GameData> copyList /*= new List<GameData>()*/;
     private Random random = new Random();
