@@ -102,7 +102,7 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
-        Invoke(nameof(TriggerXANAParty), 0f);
+        Invoke(nameof(TriggerXANAParty), 2f);
     }
 
     void TriggerXANAParty()
