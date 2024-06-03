@@ -24,7 +24,10 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         //BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
         pv = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
+        {
             CheckAndUpdateMeetingStatus();
+            ConstantsHolder.xanaConstants.meetingStatus = ConstantsHolder.MeetingStatus.End;
+        }
     }
     private void OnDisable()
     {

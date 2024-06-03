@@ -30,6 +30,7 @@ public class InRoomSoundHandler : MonoBehaviour
             if (roomName == "Home" && triggerType.Equals(TriggerType.RoomTrigger))
             {
                 TextUpdate();
+                NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.gameObject.SetActive(true);
             }
         }
 
@@ -47,6 +48,7 @@ public class InRoomSoundHandler : MonoBehaviour
             {
                 if (NFT_Holder_Manager.instance.meetingTxtUpdate != null)
                     NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
+                NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.gameObject.SetActive(false);
             }
         }
     }
