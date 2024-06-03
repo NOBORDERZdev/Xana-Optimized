@@ -7,16 +7,17 @@ public class XANAPartyMulitplayer : MonoBehaviour
 {
     bool singleTimeCall = true;
 
-    public void MovePlayersToRandomGame()
+    public IEnumerator MovePlayersToRandomGame()
     {
         print("MOVE PLAYER Random game call");
-        if (!singleTimeCall) return;
+        if (!singleTimeCall) yield return null;
         singleTimeCall = false;
         // Select a random room
         //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
         print("~~~~~~ calling gameID" + XANAPartyManager.Instance.name);
         GameData gameId =XANAPartyManager.Instance.GetRandomAndRemove();
         print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
+        yield return new WaitForSeconds(1f);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameId.Id, gameId.WorldName); // Calling RPC from Master
     }
 
