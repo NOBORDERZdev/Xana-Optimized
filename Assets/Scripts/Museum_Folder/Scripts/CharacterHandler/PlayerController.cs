@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
         innerJoystick.gameObject.AddComponent<JoyStickIssue>();
         innerJoystick_Portrait.gameObject.AddComponent<JoyStickIssue>();
 
+
         if (GamePlayButtonEvents.inst != null)
         {
             GamePlayButtonEvents.inst.OnSwitchCamera += SwitchCameraButton;
