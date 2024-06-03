@@ -413,7 +413,7 @@ namespace Photon.Pun.Demo.PunBasics
             print("~~~~~~ calling gameID" + XANAPartyManager.Instance.name);
             GameData gameId =XANAPartyManager.Instance.GetRandomAndRemove();
             print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
-            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameId.Id, gameId.WorldName); // Calling RPC from Master
+            XANAPartyManager.Instance.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameId.Id, gameId.WorldName); // Calling RPC from Master
         }
 
         [PunRPC]
