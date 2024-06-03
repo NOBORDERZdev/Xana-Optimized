@@ -390,7 +390,6 @@ namespace Photon.Pun.Demo.PunBasics
                 GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
-        bool singleTimeCall = true;
         public string lastSceneName, lastLobbyName, lastRoomName;
 
         public void JoinRoomManually(string name)
@@ -403,34 +402,9 @@ namespace Photon.Pun.Demo.PunBasics
         #region XANA Party Games
        
 
-        public void MovePlayersToRandomGame()
-        {
-            print("MOVE PLAYER Random game call");
-            if (!singleTimeCall) return;
-            singleTimeCall = false;
-             // Select a random room
-            //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
-            print("~~~~~~ calling gameID" + XANAPartyManager.Instance.name);
-            GameData gameId =XANAPartyManager.Instance.GetRandomAndRemove();
-            print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
-            XANAPartyManager.Instance.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameId.Id, gameId.WorldName); // Calling RPC from Master
-        }
+       
 
-        [PunRPC]
-        public void MovePlayersToRoom(int gameId, string gameName)
-        {
-            print("RPC CALL "+ gameId + " : "+ gameName);
-            // Leave the current room
-            ConstantsHolder.xanaConstants.isJoinigXanaPartyGame=true;
-            ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
-            ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
-            ConstantsHolder.xanaConstants.isBuilderScene = true;
-            ConstantsHolder.xanaConstants.MuseumID = gameId.ToString();
-            PhotonNetwork.LeaveRoom();
-            GameplayEntityLoader.instance._uiReferences.LoadMain(false);
-            // Join the new room
-            //PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
-        }
+        
         #endregion
 
     }
