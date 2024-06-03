@@ -638,7 +638,6 @@ public class InventoryManager : MonoBehaviour
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
     }
-
     void ClearingLists(int index)
     {
         //AssetBundle.UnloadAllAssetBundles(false);
