@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
-
-    public string sceneName;
+    public int domeId;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag=="PhotonLocalPlayer")
@@ -16,6 +15,6 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading()
     {
-        BuilderEventManager.LoadNewScene?.Invoke(sceneName);
+        BuilderEventManager.LoadNewScene?.Invoke(domeId,transform.GetChild(0).transform.position);
     }
 }

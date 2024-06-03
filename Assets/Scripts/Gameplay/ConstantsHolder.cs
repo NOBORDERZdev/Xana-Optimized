@@ -132,6 +132,9 @@ public class ConstantsHolder : MonoBehaviour
 
     //public static bool isDescriptionFullPage = false;
 
+    //XANA Summit 
+    public static bool isFromXANASummit=false;
+
     public string r_EmoteStoragePersistentPath
     {
         get

@@ -202,17 +202,24 @@ namespace Photon.Pun.Demo.PunBasics
             roomNames.Clear();
         }
 
-
+        bool roomListUpdated = false;
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            Debug.LogError("Room List Updated...." + roomList.Count + "--" + Time.time);
             availableRoomList = roomList;
+            roomListUpdated = true;
+        }
+
+        async Task WaitUntilRoomListUpdated()
+        {
+            while (!roomListUpdated)
+            {
+                await Task.Delay(1000);
+            }
         }
 
         async void CheckRoomAvailability()
         {
-            await Task.Delay(1);
-
+            await WaitUntilRoomListUpdated();
             if (ConstantsHolder.xanaConstants.isCameraMan)
             {
                 JoinRoomForCameraMan();
@@ -249,6 +256,7 @@ namespace Photon.Pun.Demo.PunBasics
                 foreach (RoomInfo info in availableRoomList)
                 {
                     roomNames.Add(info.Name);
+                    Debug.LogError(info.PlayerCount+"--"+ info.MaxPlayers+"--"+info.Name);
                     if (info.PlayerCount < info.MaxPlayers)
                     {
                         CurrRoomName = info.Name;
