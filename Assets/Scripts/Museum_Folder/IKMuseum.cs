@@ -14,6 +14,10 @@ public class IKMuseum : MonoBehaviour
     [Header("TargetPosition")]
     public GameObject m_TargetPosition;
     public GameObject Lookatorder;
+
+    [Header("Right Hand")]
+    public GameObject RightHand;
+
     [Header("Selfie Stick")]
     public GameObject m_SelfieStick;
 
@@ -201,4 +205,36 @@ public class IKMuseum : MonoBehaviour
         }
     }
 
+    #region XANA_Kanzaki Environment Events
+
+    public UIController_Shine uIController_Shine;
+
+    private void WashFin()
+    {
+        Destroy(uIController_Shine.SpawnedGourd);
+        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+        PlayerController.PlayerIsIdle?.Invoke();
+    }
+
+    private void BowTwiceFin()
+    {
+        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void ClapFin()
+    {
+        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void PrayFin()
+    {
+        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+    }
+
+    private void BowOnceFin()
+    {
+        uIController_Shine.GetOmikuziUI().gameObject.SetActive(true);
+    }
+
+    #endregion
 }

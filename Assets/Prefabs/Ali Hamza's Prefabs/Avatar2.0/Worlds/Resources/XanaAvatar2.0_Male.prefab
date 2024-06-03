@@ -6030,6 +6030,7 @@ MonoBehaviour:
   m_Animator: {fileID: 6365620064579044139}
   m_TargetPosition: {fileID: 1649589910172523810}
   Lookatorder: {fileID: 4343715114631671719}
+  RightHand: {fileID: 8387335810521491170}
   m_SelfieStick: {fileID: 4499856348682384797}
   m_SelfieStickOther: {fileID: 7427629154090922369}
   selfieCamera: {fileID: 6894718003392049027}
@@ -6038,6 +6039,7 @@ MonoBehaviour:
   handIkPos: 1
   handIkRot: 0
   m_IsIkActive: 0
+  uIController_Shine: {fileID: 0}
 --- !u!114 &4330299682629362913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6500,7 +6502,7 @@ MonoBehaviour:
   blendHolder: {fileID: 8378100162615653196}
   AllEyeBlendShapes: []
   blinkingRate: 20
-  isEyeClose: 0
+  AreEyesClosed: 0
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
@@ -9224,5 +9226,10 @@ Transform:
 --- !u!137 &8378100162615653196 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -7874971592227385933, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
+  m_PrefabInstance: {fileID: 7418139670085091071}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8387335810521491170 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7883749328917080035, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
   m_PrefabInstance: {fileID: 7418139670085091071}
   m_PrefabAsset: {fileID: 0}

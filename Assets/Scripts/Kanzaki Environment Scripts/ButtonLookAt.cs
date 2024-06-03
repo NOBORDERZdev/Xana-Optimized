@@ -8,7 +8,7 @@ public class ButtonLookAt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCamera = Camera.main.gameObject;
+        mainCamera = ReferencesForGamePlay.instance.randerCamera.gameObject;
     }
 
     // Update is called once per frame

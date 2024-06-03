@@ -70,9 +70,11 @@ public class UIController_Shine : MonoBehaviour
 
     // Models
     [SerializeField] private GameObject gourd;
+    [HideInInspector] public GameObject SpawnedGourd;
     [SerializeField] private GameObject DataManager_Shrine;
 
-    private GameObject player;
+    //player references
+    public Animator _playerAnimator;
 
     private void Awake() {
         informationUI = gameSpaceUI.transform.GetChild((int)GameSpaceUIChild.Information);
@@ -108,7 +110,6 @@ public class UIController_Shine : MonoBehaviour
             pointerArray[i].onClick.AddListener(() => openPopUp(pointerArray[index]));
             pointerArray[i].gameObject.SetActive(false);
         }
-        player = ReferencesForGamePlay.instance.MainPlayerParent; //
     }
 
     public void SetPointUI(string point) {
@@ -160,16 +161,22 @@ public class UIController_Shine : MonoBehaviour
 
         int idx = button.transform.GetSiblingIndex() >= (int)PointerUIChild.Emikage1 ? (int)PointerUIChild.Emikage1 : button.transform.GetSiblingIndex();
         if (idx == (int)PointerUIChild.Temizuya) {
-            if (player != null) {    
-                //player.GetComponent<vThirdPersonController>().freeSpeed.rotationSpeed = 0;
-                //player.GetComponent<vThirdPersonController>().freeSpeed.walkSpeed = 0;
-                //player.GetComponent<vThirdPersonController>().freeSpeed.runningSpeed = 0;
-                //player.GetComponent<vThirdPersonController>().freeSpeed.sprintSpeed = 0;
-                FindChildren(player.transform);
-                player.GetComponent<Animator>().SetTrigger("Washing");
-            } else {
-                Debug.LogWarning("Player not found!");
+            if (_playerAnimator == null)
+            {
+                _playerAnimator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator;
+                _playerAnimator.gameObject.GetComponent<IKMuseum>().uIController_Shine = this;
+
             }
+            Transform rightHand = _playerAnimator.gameObject.GetComponent<IKMuseum>().RightHand.transform;
+            SpawnedGourd = Instantiate(gourd, rightHand);
+
+            //Disabling gameplay UI intereactions
+            PlayerController.PlayerIsWalking?.Invoke();
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+
+            _playerAnimator.SetTrigger("KanzakiWorld");
+            _playerAnimator.SetTrigger("Washing");
+            
         } else {
             int gamespaceIdx = -1;
             switch ((PointerUIChild)idx)
@@ -204,30 +211,27 @@ public class UIController_Shine : MonoBehaviour
     }
 
 
-    void FindChildren(Transform parent) {
-        foreach (Transform child in parent) {
-            if (child.name == "RightHand") {
-                Instantiate(gourd, child);
-                break;
-            }
-            FindChildren(child);
-        }
-    }
-
     private void playWorshipAnimation() {
-        if (worshipAnimNum == 0) {            
-            //player.GetComponent<vThirdPersonController>().freeSpeed.rotationSpeed = 0;
-            //player.GetComponent<vThirdPersonController>().freeSpeed.walkSpeed = 0;
-            //player.GetComponent<vThirdPersonController>().freeSpeed.runningSpeed = 0;
-            //player.GetComponent<vThirdPersonController>().freeSpeed.sprintSpeed = 0;
+        if (_playerAnimator == null)
+        {
+            _playerAnimator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator;
+            _playerAnimator.gameObject.GetComponent<IKMuseum>().uIController_Shine = this;
+        }
 
-            player.GetComponent<Animator>().SetTrigger("BowTwice");            
+        _playerAnimator.SetTrigger("KanzakiWorld");
+
+        //Disabling gameplay UI intereactions
+        PlayerController.PlayerIsWalking?.Invoke();
+        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+
+        if (worshipAnimNum == 0) {            
+            _playerAnimator.SetTrigger("BowTwice");            
         } else if (worshipAnimNum == 1) {
-            player.GetComponent<Animator>().SetTrigger("Clap");            
+            _playerAnimator.SetTrigger("Clap");            
         } else if (worshipAnimNum == 2) {
-            player.GetComponent<Animator>().SetTrigger("Pray");            
+            _playerAnimator.SetTrigger("Pray");            
         } else if (worshipAnimNum == 3) {
-            player.GetComponent<Animator>().SetTrigger("BowOnce");
+            _playerAnimator.SetTrigger("BowOnce");
         }
         worshipAnimNum++;
         Debug.Log(worshipAnimNum);
@@ -248,10 +252,7 @@ public class UIController_Shine : MonoBehaviour
 
     private void closeOhudouUI() {
         ohudouUI.gameObject.SetActive(false);
-
-        //player.GetComponent<vThirdPersonController>().freeSpeed.rotationSpeed = 16;
-        //player.GetComponent<vThirdPersonController>().freeSpeed.walkSpeed = 2;
-        //player.GetComponent<vThirdPersonController>().freeSpeed.runningSpeed = 4;
-        //player.GetComponent<vThirdPersonController>().freeSpeed.sprintSpeed = 6;
+        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+        PlayerController.PlayerIsIdle?.Invoke();
     }
 }
