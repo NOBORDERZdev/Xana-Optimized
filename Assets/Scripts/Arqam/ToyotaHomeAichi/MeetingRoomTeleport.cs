@@ -127,7 +127,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     {
         if (!APIBasepointManager.instance.IsXanaLive)
             ConstantsHolder.xanaConstants.MuseumID = "2399";   // meeting room testnet id
-        else if (!APIBasepointManager.instance.IsXanaLive)
+        else if (APIBasepointManager.instance.IsXanaLive)
             ConstantsHolder.xanaConstants.MuseumID = "";       // meeting room mainnet id
         ConstantsHolder.userId = userId + ChatSocketManager.instance.socketId;
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
