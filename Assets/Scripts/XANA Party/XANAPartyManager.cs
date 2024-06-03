@@ -29,10 +29,10 @@ public class XANAPartyManager : MonoBehaviour
 
     private void Start()
     {
-        Invoke(nameof(EnablingXANAParty),2f);
+        
     }
 
-    void EnablingXANAParty()
+    public void EnablingXANAParty()
     {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (ShouldFetchXanaPartyGames())
