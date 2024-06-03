@@ -41,7 +41,6 @@ namespace Photon.Pun.Demo.PunBasics
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
         public static MutiplayerController instance;
-        [SerializeField] XANAPartyManager multiplayerXanaParty;
         public ScenesList working;
         #region Private Serializable Fields
         [Tooltip("The maximum number of players per room")]
@@ -411,8 +410,8 @@ namespace Photon.Pun.Demo.PunBasics
             singleTimeCall = false;
              // Select a random room
             //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
-            print("~~~~~~ calling gameID" + multiplayerXanaParty.name);
-            GameData gameId = multiplayerXanaParty.GetRandomAndRemove();
+            print("~~~~~~ calling gameID" + XANAPartyManager.Instance.name);
+            GameData gameId =XANAPartyManager.Instance.GetRandomAndRemove();
             print("GAME ID "+ gameId.Id + " : "+ gameId.WorldName);
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.All, gameId.Id, gameId.WorldName); // Calling RPC from Master
         }
