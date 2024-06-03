@@ -137,8 +137,11 @@ public class MeetingRoomTeleport : MonoBehaviour
 
         NFT_Holder_Manager.instance.meetingStatus.GetActorNum(
         triggerObject.GetComponent<PhotonView>().Controller.ActorNumber, (int)FB_Notification_Initilizer.Instance.actorType);
-        if (FB_Notification_Initilizer.Instance.userInMeeting < 1)
+        if (FB_Notification_Initilizer.Instance.actorType.Equals(FB_Notification_Initilizer.ActorType.User))
+        {
             NFT_Holder_Manager.instance.pushNotification.SendNotification();
+            Debug.LogError("Notification Sent");
+        }
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
         if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
