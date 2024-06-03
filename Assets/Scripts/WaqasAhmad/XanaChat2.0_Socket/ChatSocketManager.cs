@@ -301,6 +301,9 @@ public class ChatSocketManager : MonoBehaviour
         if (eventId != msg.event_id)
             return;
 
+        if (ConstantsHolder.xanaConstants.MuseumID != msg.world_id.ToString())
+            return;
+
         string tempUser = msg.name;
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0 && string.IsNullOrEmpty(msg.name))
             tempUser = msg.guestusername;
