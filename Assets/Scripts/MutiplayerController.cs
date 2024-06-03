@@ -426,6 +426,7 @@ namespace Photon.Pun.Demo.PunBasics
             ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
             ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
             ConstantsHolder.xanaConstants.isBuilderScene = true;
+            ConstantsHolder.xanaConstants.MuseumID = gameId.ToString();
             PhotonNetwork.LeaveRoom();
             GameplayEntityLoader.instance._uiReferences.LoadMain(false);
             // Join the new room

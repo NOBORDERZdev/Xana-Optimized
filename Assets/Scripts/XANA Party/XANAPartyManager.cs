@@ -119,12 +119,19 @@ public class XANAPartyManager : MonoBehaviour
 
     void LoadXanaPartyGame(bool isJoiningLobby)
     {
-                
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
         if (isJoiningLobby)
         {
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+               ConstantsHolder.xanaConstants.MuseumID = ""; // Main net Id
+            }
+            else
+            {
+               ConstantsHolder.xanaConstants.MuseumID = "2492"; // test net Id
+            }
         }
         else
         {
@@ -133,6 +140,7 @@ public class XANAPartyManager : MonoBehaviour
 
         HideLoadingScreens();
         ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+       
         WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.XanaPartyGameName;
         WorldManager.instance.PlayWorld();
     }
