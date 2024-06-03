@@ -20,6 +20,12 @@ public class Actor : MonoBehaviour
     public AnimatorOverrideController overrideController;
     bool _lastAction = false;
     [SerializeField] bool isPlayer;
+
+    private void Awake()
+    {
+        _PlayerAnimator = this.transform.GetComponent<Animator>();
+        overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
+    }
     private void OnEnable()
     {
         if(_startCoroutineFLag)
@@ -61,11 +67,6 @@ public class Actor : MonoBehaviour
      public void Init(ActorBehaviour playerBehaviour , Transform playerTransform)
     {
         _startCoroutineFLag = true;
-        _PlayerAnimator = this.transform.GetComponent<Animator>();
-         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
-        _PlayerAnimator.runtimeAnimatorController = overrideController;
-        _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
-        _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
         MoveTarget = playerTransform;
@@ -77,11 +78,6 @@ public class Actor : MonoBehaviour
     public void Init(ActorBehaviour playerBehaviour)
     {
         _startCoroutineFLag = true;
-        _PlayerAnimator = this.transform.GetComponent<Animator>();
-         overrideController = new AnimatorOverrideController(_PlayerAnimator.runtimeAnimatorController);
-        _PlayerAnimator.runtimeAnimatorController = overrideController;
-        _PlayerBehaviour = playerBehaviour.BehaviourOfMood;
-        _PlayerCategory = playerBehaviour.CategoryOfMode;
         foreach (MoveBehaviour move in playerBehaviour.ActorMoveBehaviours)
             SetMoveActions(move);
         MoveTarget = GameManager.Instance.avatarPathSystemManager.GetAvatarSpawnPoint();
