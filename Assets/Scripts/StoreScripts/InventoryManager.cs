@@ -35,19 +35,21 @@ public class InventoryManager : MonoBehaviour
     public GameObject WhiteRibbonImage;
     public Color HighlightedColor;
     public Color NormalColor;
-    [Header("Total Panels Cloths")]
+
+    [Header("Header Items")]
+    public List<StoreHeaderButton> headerBtns;
+
+    [Header("Cloths Panels")]
     public GameObject MainPanelCloth;
     public GameObject[] ClothsPanel;
-    public GameObject BtnsPanelCloth;
-    public GameObject ClothBtnLine;
-    public Text ClothBtnText;
-    [Header("Total Panels Avatar")]
-    public GameObject MainPanelAvatar;
 
+    [Header("Avatar Panels")]
+    public GameObject MainPanelAvatar;
     public GameObject[] AvatarPanel;
-    public GameObject BtnsPanelAvatar;
-    public GameObject AvatarBtnLine;
-    public Text AvatarBtnText;
+
+    [Header("Shop Panels")]
+    public GameObject MainPanelShop;
+    public GameObject[] ShopPanel;
 
     [Header("Return Home Pop up")]
     public GameObject ReturnHomePopUp;
@@ -193,7 +195,7 @@ public class InventoryManager : MonoBehaviour
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false; 
+        //CheckAPILoaded = false; 
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -1128,12 +1130,15 @@ public class InventoryManager : MonoBehaviour
 
     public void GetDataofGuestUser()
     {
-        BtnsPanelAvatar.GetComponent<SubBottons>().ClothBool = false;
-        BtnsPanelAvatar.GetComponent<SubBottons>().AvatarBool = true;
         // When Comming form home then set last panel to -1
         PreviousSelectionCount = -1;
         ConstantsHolder.xanaConstants.currentButtonIndex = 0;
-        BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
+
+        SubBottons _AvatarBtn = headerBtns[0].btn.GetComponent<SubBottons>();
+        _AvatarBtn.ClothBool = false;
+        _AvatarBtn.AvatarBool = true;
+        _AvatarBtn.ClickBtnFtn(0);
+
         ////Debug.Log("Store hair data call====");
         SelectPanel(1);
         PlayerPrefs.SetInt("TotalCoins", 0);
@@ -1398,46 +1403,65 @@ public class InventoryManager : MonoBehaviour
 
     public void SelectPanel(int TakeIndex)
     {
-        ////Debug.Log("<color=red> Panel Index:" + TakeIndex + "</color>");
         panelIndex = TakeIndex;
-
-        //  InventoryManager.instance.DeletePreviousItems();
-        //Resources.UnloadUnusedAssets();
 
         if (TakeIndex == 0)
         {
-            ////Debug.LogError("<color=red> Panel Index:" + TakeIndex + "</color>");
-            //Resources.UnloadUnusedAssets();
             // CLoth
             buttonIndex = 3;
             ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(true);
             MainPanelAvatar.SetActive(false);
-            //OpenClothContainerPanel(0);
-            BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(3);
-            ClothBtnLine.SetActive(true);
-            AvatarBtnLine.SetActive(false);
-            ClothBtnText.color = HighlightedColor;
-            AvatarBtnText.color = NormalColor;
+            MainPanelShop.SetActive(false);
+
+            // Avatar Setting
+            headerBtns[0].btnLine.SetActive(false);
+            headerBtns[0].btnText.color = HighlightedColor;
+
+            // ColthBtns Setting
+            headerBtns[1].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
+            headerBtns[1].btnLine.SetActive(false);
+            headerBtns[1].btnText.color = HighlightedColor;
+
             UpdateStoreSelection(3);
         }
-        else
+        else if(TakeIndex == 1)
         {
-            ////Debug.LogError("<color=red> Panel Index:" + TakeIndex + "</color>");
+            // Avatar
             buttonIndex = 0;
             ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(false);
             MainPanelAvatar.SetActive(true);
-            BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
+            MainPanelShop.SetActive(false);
 
-            // Header Buttons
-            ClothBtnLine.SetActive(false);
-            AvatarBtnLine.SetActive(true);
-            ClothBtnText.color = NormalColor;
-            AvatarBtnText.color = HighlightedColor;
+            headerBtns[0].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
+            headerBtns[0].btnLine.SetActive(true);
+            headerBtns[1].btnText.color = HighlightedColor;
 
-            //OpenAvatarContainerPanel(0);
-            ////Debug.Log("Undo Redo Call the btn functionality");
+            headerBtns[1].btnLine.SetActive(false);
+            headerBtns[1].btnText.color = NormalColor;
+
+            UpdateStoreSelection(0);
+        }
+        else
+        {
+            print("Hello Moto");
+            // Shop
+            buttonIndex = 0;
+            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
+            MainPanelCloth.SetActive(false);
+            MainPanelAvatar.SetActive(false);
+            MainPanelShop.SetActive(true);
+
+            headerBtns[2].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
+            headerBtns[2].btnLine.SetActive(true);
+            headerBtns[2].btnText.color = HighlightedColor;
+
+            headerBtns[1].btnLine.SetActive(false);
+            headerBtns[1].btnText.color = NormalColor;
+
+            headerBtns[0].btnLine.SetActive(false);
+            headerBtns[0].btnText.color = NormalColor;
 
             UpdateStoreSelection(0);
         }
@@ -3370,18 +3394,18 @@ public class InventoryManager : MonoBehaviour
     {
         int loopStart = GetDownloadedNumber(TempEnumVar);
         //_switchTab = false;
-        Debug.Log("Waqas : Start Coroutine: ");
+        //Debug.Log("Waqas : Start Coroutine: ");
 
         for (int i = loopStart; i < dataListOfItems.Count; i++)
         {
             if (_switchTab)
             {
-                Debug.Log("Waqas : Switch Tab : Breaking Loop" + i);
+                //Debug.Log("Waqas : Switch Tab : Breaking Loop" + i);
                 break;
             }
             else
             {
-                Debug.Log("Waqas : For Loop: " + i);
+                //Debug.Log("Waqas : For Loop: " + i);
                 InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
             }
             yield return new WaitForEndOfFrame();
@@ -4904,4 +4928,13 @@ public class SubitemData
 {
     public string gender;
     public GameObject obj;
+}
+
+[System.Serializable]
+public class StoreHeaderButton
+{
+    public string btnName;
+    public Text btnText;
+    public GameObject btn;
+    public GameObject btnLine;
 }

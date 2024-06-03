@@ -314,10 +314,9 @@ public class ItemDetail : MonoBehaviour
                 CategoriesEnumVar == EnumClass.CategoryEnum.SkinToneAvatar)
             {
 
-                // Added By Waqas Ahmad
                 // Eyebrow Icon resizing require
                 // Eyebrow button method is itemBtnClicked
-                //
+
                 if (CategoriesEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar || CategoriesEnumVar == EnumClass.CategoryEnum.EyeLashesAvatar)
                 {
                     this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
@@ -383,13 +382,13 @@ public class ItemDetail : MonoBehaviour
                     }
                     break;
             }
-            isPurchased = "true";
-
-            if (isPaid == "true")
-            {
-                PriceTxt.text = "Coming Soon";
-                this.gameObject.GetComponent<Button>().interactable = false;
-            }
+            
+            //isPurchased = "true";
+            //if (isPaid == "true")
+            //{
+            //    PriceTxt.text = "Coming Soon";
+            //    this.gameObject.GetComponent<Button>().interactable = false;
+            //}
         }
         if (CategoriesEnumVar == EnumClass.CategoryEnum.SkinToneAvatar)
         {
@@ -788,7 +787,7 @@ public class ItemDetail : MonoBehaviour
                 return;
 
 
-            if (isPurchased == "true")
+            if (string.Equals(isPurchased, "true", StringComparison.CurrentCultureIgnoreCase))
             {
                 if (!GameManager.Instance.isStoreAssetDownloading)
                 {
