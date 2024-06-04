@@ -31,7 +31,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         ConstantsHolder.xanaConstants.builderMapID = gameId;
-        PhotonNetwork.LeaveRoom();
+        //PhotonNetwork.LeaveRoom();
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         // Join the new room
         //PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
