@@ -288,9 +288,6 @@ public class ConstantsGod
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
     public static string toyotaNotificationApi = "/toyotaAichiWorlds/save-user-token";
-    public static string joinmeetingroom = "/toyotaAichiWorlds/join-meeting-room";
-    public static string leavemeetingroom = "/toyotaAichiWorlds/leave-meeting-room";
-    public static string getmeetingroomcount = "/toyotaAichiWorlds/check-meeting-members/";
     public static string wrapobjectApi = "/toyotaAichiWorlds/get-status-of-worldId/";
     #endregion
 }
