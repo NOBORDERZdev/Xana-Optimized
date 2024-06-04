@@ -386,8 +386,8 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
-            if (ConstantsHolder.xanaConstants.isBuilderScene)
-                GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
+            //if (ConstantsHolder.xanaConstants.isBuilderScene)
+                //GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
         public string lastSceneName, lastLobbyName, lastRoomName;
