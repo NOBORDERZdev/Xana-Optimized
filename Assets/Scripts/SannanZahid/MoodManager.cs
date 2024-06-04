@@ -56,6 +56,7 @@ public class MoodManager : MonoBehaviour
                         }
                     }
                     overrideController.ApplyOverrides(clips);
+                    _anim.runtimeAnimatorController = overrideController;
                 }
             }
             LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
@@ -95,26 +96,7 @@ public class MoodManager : MonoBehaviour
                 }
                 else
                 {
-                    var clips = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-                    overrideController.GetOverrides(clips);
-                    for (int i = 0; i < clips.Count; i++)
-                    {
-                        var stateName = clips[i].Key.name;
-                      //  Debug.LogError("Tag ----> " + stateName.ToString()+"  Replace ---->  "+ NodeAnimToReplace);
-                        if (stateName.Contains(NodeAnimToReplace))
-                        {
-                          //  Debug.LogError("Replaced");
-                            clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, loadOp.Result);
-                            if (NodeAnimToReplace == "Idle")
-                            {
-                                _anim.transform.GetComponent<Actor>().ActionClipTime = loadOp.Result.length;
-                            }
-                            yield return new WaitForSeconds(Time.deltaTime);
-                            _anim.SetBool("Menu Action", false);
-                            break;
-                        }
-                    }
-                    overrideController.ApplyOverrides(clips);
+                    OverridesAnimatorController(NodeAnimToReplace, overrideController, _anim, loadOp.Result);
                 }
             }
             else
@@ -122,5 +104,57 @@ public class MoodManager : MonoBehaviour
                 Debug.LogError("Get Animation Failed ----> ");
             }
         }
+    }
+
+    private void OverridesAnimatorController(string nodeAnimToReplace, AnimatorOverrideController overrideController, Animator anim, AnimationClip newClip)
+    {
+        if (overrideController == null)
+        {
+           // Debug.LogError("Override controller not set.");
+            return;
+        }
+
+        if (newClip == null)
+        {
+           // Debug.LogError("New animation clip not set.");
+            return;
+        }
+
+        // Get current overrides
+        var clips = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+        overrideController.GetOverrides(clips);
+
+
+        // Iterate through the clips to find and replace the specified animation clip
+        for (int i = 0; i < clips.Count; i++)
+        {
+            var stateName = clips[i].Key.name;
+            if (stateName.Contains(nodeAnimToReplace))
+            {
+                clips[i] = new KeyValuePair<AnimationClip, AnimationClip>(clips[i].Key, newClip);
+
+                if (nodeAnimToReplace == "Idle")
+                {
+                    anim.transform.GetComponent<Actor>().ActionClipTime = newClip.length;
+                }
+
+                StartCoroutine(ResetMenuActionBool(anim));
+                break;
+            }
+        }
+
+        // Apply the updated overrides back to the override controller
+        overrideController.ApplyOverrides(clips);
+
+        // Assign the override controller to the animator
+        anim.runtimeAnimatorController = overrideController;
+
+       // Debug.Log($"Replaced {nodeAnimToReplace} with {newClip.name}");
+    }
+
+    private IEnumerator ResetMenuActionBool(Animator _anim)
+    {
+        yield return new WaitForSeconds(Time.deltaTime);
+        _anim.SetBool("Menu Action", false);
     }
 }

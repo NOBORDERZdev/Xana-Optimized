@@ -16,7 +16,8 @@ public class PostScreenInput : MonoBehaviour
    [SerializeField] Color placeHolderColor = new Vector4();
    [SerializeField] Color normalColor = new Vector4();
    [SerializeField]  ContentSizeFitter BubbleContentSizeFitter;
-   int maxWidth = 270;
+   [SerializeField] TMP_Text ButtonTextRefrence;
+    int maxWidth = 270;
     int maxHeight = 125;
     float characterOffset = 5.0f;
 
@@ -67,6 +68,8 @@ public class PostScreenInput : MonoBehaviour
             {
                 GameManager.Instance.userAnimationPostFeature.postButton.interactable = true;
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color=Color.white;
+                ButtonTextRefrence.characterSpacing = 7.5f;
+                ButtonTextRefrence.outlineWidth = 0.18f;
             }
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
@@ -89,6 +92,8 @@ public class PostScreenInput : MonoBehaviour
             {
                 GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color = placeHolderColor;
+                ButtonTextRefrence.characterSpacing = 4f;
+                ButtonTextRefrence.outlineWidth = 0f;
             }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
