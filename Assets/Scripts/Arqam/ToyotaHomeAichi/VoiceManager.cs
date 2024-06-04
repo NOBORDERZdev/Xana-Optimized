@@ -5,8 +5,13 @@ using UnityEngine;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
-    public Recorder recorder;
+    private Recorder recorder;
     private byte currentGroup;
+    private void Start()
+    {
+        NFT_Holder_Manager.instance.voiceManager = this;
+        recorder = GameObject.FindObjectOfType<Recorder>();
+    }
     public void SetVoiceGroup(byte newGroup)
     {
         byte oldGroup = currentGroup;
