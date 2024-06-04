@@ -30,7 +30,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
         ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
-        ConstantsHolder.xanaConstants.MuseumID = gameId.ToString();
+        ConstantsHolder.xanaConstants.builderMapID = gameId;
         PhotonNetwork.LeaveRoom();
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         // Join the new room
