@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AirinController : MonoBehaviour
 {
     // Reference to the player
     public Transform player;
+    public bool isAirinActivated = false;
+    public UnityEvent<string> airinAction;
 
     private void Start()
     {
@@ -23,6 +26,12 @@ public class AirinController : MonoBehaviour
     {
         // Rotate Airin to face the player when clicked
         RotateTowardsPlayer();
+        if (!isAirinActivated)
+        {
+            isAirinActivated = true;
+            ConstantsHolder.xanaConstants.isShowChatToAll = false;
+            airinAction?.Invoke(XanaChatSystem.instance.UserName);
+        }
     }
 
     void RotateTowardsPlayer()

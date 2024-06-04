@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using System.Runtime.InteropServices.ComTypes;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
@@ -155,6 +156,12 @@ public class XanaChatSystem : MonoBehaviour
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
 
+    public void ShowAirinMsg(string senderName, string msgData)
+    {
+        this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
+        this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
+    }
+
     public void ClearChatTxtForMeeting()
     {
         this.CurrentChannelText.text = "";
@@ -264,7 +271,7 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
 
         print("Bad word !!" + removeBadWords);
 
@@ -284,10 +291,17 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
-        ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
-
-      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
+        if (ConstantsHolder.xanaConstants.isShowChatToAll)
+        {  // Airin AI character is not activated
+            ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
+            ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
+        }
+        else if (!ConstantsHolder.xanaConstants.isShowChatToAll)
+        {  // When User Activated the Airin for conversation
+            ShowAirinMsg(UserName, removeBadWords);
+            npcAlert?.Invoke(removeBadWords);
+        }
+        //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
         removeBadWords = "";

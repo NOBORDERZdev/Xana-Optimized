@@ -5,14 +5,31 @@ using UnityEngine.Networking;
 public class THA_AI_Conversation : MonoBehaviour
 {
     //https://avatarchat-ai.xana.net/tha_chat?input_string=Who%20are%20you%3F%20What%20is%20your%20oppupation&usr_id=1&owner_id=2121
-    public string msg = "Hello Airin. What are you doing?";
+    public string msg = "Hello Airin. What's going on?";
     [Space(5)]
     public AirinFeedback airinFeedback;
 
-    private void Update()
+    private string playerName = "";
+
+    private void OnEnable()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
-            StartCoroutine(SetApiData());
+        XanaChatSystem.instance.npcAlert += ReplyUserMsg;
+    }
+    private void OnDisable()
+    {
+        XanaChatSystem.instance.npcAlert -= ReplyUserMsg;
+    }
+
+    public void StartConversation(string name)
+    {
+        playerName = name;
+        StartCoroutine(SetApiData());
+    }
+
+    private void ReplyUserMsg(string msg)
+    {
+        this.msg = msg;
+        StartCoroutine(SetApiData());
     }
 
     IEnumerator SetApiData()
@@ -35,7 +52,8 @@ public class THA_AI_Conversation : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
-            Debug.LogError("Message: " + airinFeedback.data);
+            //Debug.LogError("Message: " + airinFeedback.data);
+            XanaChatSystem.instance.ShowAirinMsg("Airin" ,airinFeedback.data);
             yield return null;
         }
         else
