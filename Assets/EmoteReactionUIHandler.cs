@@ -124,4 +124,10 @@ public class EmoteReactionUIHandler : MonoBehaviour
             viewItem.gameObject.SetActive(false);
         }
     }
+    public virtual void CloseActionDisplayDialogScroll()
+    {
+        DisplayDialogScrollView.gameObject.SetActive(false);
+        TabItemViewEmotes.gameObject.SetActive(false);
+        TabItemViewReaction.gameObject.SetActive(false);
+    }
 }

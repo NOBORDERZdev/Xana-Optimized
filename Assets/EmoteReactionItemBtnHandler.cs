@@ -31,7 +31,6 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
         else
         {
             NameTxt.text = string.Empty;
-
         }
     }
     private void OnEnable()
@@ -53,10 +52,15 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
     }
     private void OnDisable()
     {
-        AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ActionThumbnail_Url, true);
+        ///>--MemoryClean Stoped  AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ActionThumbnail_Url, true);
     }
     public void ApplyAction()
     {
-
+        ActionData dataObj = new ActionData();
+        dataObj.AnimationName = ActionName;
+        dataObj.ThumbnailURL = ActionThumbnail_Url;
+        dataObj.TypeOfAction = TypeOfAction;
+        Debug.LogError("ApplyAction ---->  " + ActionName);
+        ActionManager.ActionBtnClick?.Invoke(dataObj);
     }
 }
