@@ -27,7 +27,7 @@ public class UserDailyRewardHandler : MonoBehaviour
         {
             if (APIBasepointManager.instance.IsXanaLive)
             {
-                return null; //Mainet socket url will be added here
+                return "https://mslog.xana.net";
             }
             else
             {
@@ -61,10 +61,6 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
 
         while (ConstantsHolder.userId == null)
             yield return new WaitForSeconds(0.5f);
@@ -84,18 +80,18 @@ public class UserDailyRewardHandler : MonoBehaviour
 
     private void OnSocketConnected(ConnectResponse resp)
     {
-        Debug.LogError("Daily Reward Socket Connected : " + resp);
+        Debug.Log("<color=green>Daily Reward Socket Connected : " + resp + "</color>");
         _socketManager.Socket.On<string>("xeny-rewarded", DailyRewardResponse);
     }
 
     private void OnSocketError(CustomError args)
     {
-        Debug.LogError("Daily Reward Socket Error : " + args);
+        Debug.Log("<color=red>Daily Reward Socket Error : " + args + "</color>");
     }
 
     private void OnSocketDisconnect(CustomError args)
     {
-        Debug.LogError("Daily Reward Socket Disconnected : " + args);
+        Debug.Log("<color=yellow>Daily Reward Socket Disconnected : " + args + "</color>");
     }
     private void DailyRewardResponse(string resp)
     {
@@ -119,7 +115,7 @@ public class UserDailyRewardHandler : MonoBehaviour
     {
         _dailyRewardPopup.SetActive(true);
         _hasToShowDailyPopup = false;
-        //InventoryManager.instance.UpdateUserXeny();
+        InventoryManager.instance.UpdateUserXeny();
     }
 
     //Executes when Home Scene is loaded
