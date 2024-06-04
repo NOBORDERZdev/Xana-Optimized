@@ -216,6 +216,26 @@ public class ConstantsGod
 
     #endregion
 
+
+    #region XENY Api
+
+    public static string GetUserXenyCoinsApi
+    {
+        get
+        {
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                return "https://prod-backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+            else
+            {
+                return "https://backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+        }
+    }
+
+    #endregion
+
     #region GrammyAward Api
 
     public static readonly string getAnimationTime = "/item/get-timeCount";
