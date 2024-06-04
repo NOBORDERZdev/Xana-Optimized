@@ -358,6 +358,7 @@ namespace Photon.Pun.Demo.PunBasics
         public void CreateGameRoom(string game){
             string roomName;
             roomName = game + UnityEngine.Random.Range(0, 9999).ToString();
+            print("newly "+game + " : " + roomName);
             PhotonNetwork.CreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));  
         }
 
