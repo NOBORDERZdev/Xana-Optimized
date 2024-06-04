@@ -536,7 +536,7 @@ public class FeedEventPrefab : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         }
-        MutiplayerController.sceneName = m_EnvName;
+       // MutiplayerController.sceneName = m_EnvName;
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
         if (userProfile.sprite == null)

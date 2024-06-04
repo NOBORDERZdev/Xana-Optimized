@@ -177,7 +177,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                         {
                             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
                         }
-                        WorldItemView.m_EnvName = MutiplayerController.sceneName = environmentDetails.data.name;
+                        WorldItemView.m_EnvName =/* MutiplayerController.sceneName =*/ environmentDetails.data.name;
 
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();

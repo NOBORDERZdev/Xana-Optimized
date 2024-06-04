@@ -135,7 +135,7 @@ public class XANAPartyManager : MonoBehaviour
         }
         else
         {
-            MutiplayerController.sceneName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+           // MutiplayerController.sceneName = ConstantsHolder.xanaConstants.XanaPartyGameName;
         }
 
         HideLoadingScreens();
