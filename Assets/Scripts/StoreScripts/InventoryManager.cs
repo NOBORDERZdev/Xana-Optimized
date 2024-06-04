@@ -236,6 +236,7 @@ public class InventoryManager : MonoBehaviour
         {
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
+
     }
 
     public void SetDefaultValues() // This is called When comming back from Worlds
@@ -2579,10 +2580,52 @@ public class InventoryManager : MonoBehaviour
 
 
     //  UserDetails Starts here ************************************************************************
-    private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
-    private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+    //private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
+    //private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+
+
+
+    public void UpdateUserXeny()
+    {
+        StartCoroutine(RequestUserXenyDataRoutine());
+    }
+
+    private IEnumerator RequestUserXenyDataRoutine()
+    {
+        XenyRequestedData xenyRequestData = new()
+        {
+            userAddress = PlayerPrefs.GetString("publicID")     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+        };
+        string jsonData = JsonConvert.SerializeObject(xenyRequestData);
+        // Convert the JSON data to a byte array
+        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+        UnityWebRequest request = UnityWebRequest.Post(ConstantsGod.GetUserXenyCoinsApi, "POST");
+        request.uploadHandler = new UploadHandlerRaw(postData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+
+        while (!request.isDone)
+        {
+            yield return new WaitForSecondsRealtime(Time.deltaTime);
+        }
+
+        if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
+        {
+            Debug.Log("<color=red> Get XENY Api Error: " + request.error + "</color>");
+        }
+        else
+        {
+            TotalGameCoins.text = request.downloadHandler.text;
+        }
+        request.Dispose();
+        StopCoroutine(RequestUserXenyDataRoutine());
+
+    }
+
     public void SubmitUserDetailAPI()
     {
+        UpdateUserXeny();
         //string localAPI = "";
         //if (!APIBasepointManager.instance.IsXanaLive)
         //{
@@ -2595,46 +2638,47 @@ public class InventoryManager : MonoBehaviour
         //}
         //StartCoroutine(XenyTokenUserAddrerss(localAPI));
     }
-    private RequestedData requestData;
 
-    IEnumerator XenyTokenUserAddrerss(string url)
-    {
+    //private XenyRequestedData xenyRequestData;
+    //IEnumerator XenyTokenUserAddrerss(string url)
+    //{
 
-        requestData = new RequestedData();
-        requestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
-        string jsonData = JsonConvert.SerializeObject(requestData);
-        // Convert the JSON data to a byte array
-        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
-        UnityWebRequest request = UnityWebRequest.Post(url, "POST");
-        request.uploadHandler = new UploadHandlerRaw(postData);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SendWebRequest();
-        while (!request.isDone)
-        {
-            yield return null;
-        }
-        //Debug.Log("hamara data v" + request.downloadHandler.text);
+    //    xenyRequestData = new XenyRequestedData();
+    //    xenyRequestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+    //    Debug.Log("User Address is = " + xenyRequestData.userAddress);
+    //    string jsonData = JsonConvert.SerializeObject(xenyRequestData);
+    //    // Convert the JSON data to a byte array
+    //    byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+    //    UnityWebRequest request = UnityWebRequest.Post(url, "POST");
+    //    request.uploadHandler = new UploadHandlerRaw(postData);
+    //    request.downloadHandler = new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type", "application/json");
+    //    request.SendWebRequest();
+    //    while (!request.isDone)
+    //    {
+    //        yield return null;
+    //    }
+    //    //Debug.Log("hamara data v" + request.downloadHandler.text);
 
-        if (!request.isHttpError && !request.isNetworkError)
-        {
-            if (request.error == null)
-            {
-                JObject json = JObject.Parse(request.downloadHandler.text);
-                string token = json["userXenyTokens"].ToString();
-                TotalGameCoins.text = token;
-                print("xeny coins are = " + token);
-            }
-        }
-        else
-        {
-            if (request.isNetworkError)
-            {
-                print("Error Occured " + request.error.ToUpper());
-            }
-        }
-        request.Dispose();
-    }
+    //    if (!request.isHttpError && !request.isNetworkError)
+    //    {
+    //        if (request.error == null)
+    //        {
+    //            JObject json = JObject.Parse(request.downloadHandler.text);
+    //            string token = json["userXenyTokens"].ToString();
+    //            TotalGameCoins.text = token;
+    //            print("xeny coins are = " + token);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (request.isNetworkError)
+    //        {
+    //            print("Error Occured " + request.error.ToUpper());
+    //        }
+    //    }
+    //    request.Dispose();
+    //}
     // Submit GetUser Details        
     //IEnumerator HitGetUserDetails(string url, string Jsondata)
     //{
@@ -4903,7 +4947,7 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
 }
-public class RequestedData
+public class XenyRequestedData
 {
     public string userAddress;
 }
