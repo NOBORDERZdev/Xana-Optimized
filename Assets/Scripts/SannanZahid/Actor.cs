@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
+    public static Dictionary<int, string> RandAnimKeys = new Dictionary<int, string>();
+    public int ActorId;
     ActorBehaviour.Behaviour _PlayerBehaviour;
     ActorBehaviour.Category _PlayerCategory;
     Animator _PlayerAnimator;
