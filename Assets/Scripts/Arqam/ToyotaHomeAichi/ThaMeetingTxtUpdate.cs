@@ -14,7 +14,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        //tmp.text = "Join Meeting Now!";
+        tmp.text = "";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this;
         portalMesh = GetComponent<MeshRenderer>();
         boxCollider = GetComponent<BoxCollider>();

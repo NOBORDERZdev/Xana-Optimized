@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 using System.Collections;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class MeetingRoomTeleport : MonoBehaviour
 {
@@ -173,6 +174,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
             triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
         }
+        NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
     }
 
     //private void LeaveMeetingOnExit()

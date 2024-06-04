@@ -32,7 +32,7 @@ public class FB_PushNotificationSender : MonoBehaviour
                 // Call your API for each item
                 yield return StartCoroutine(SendNotification(title, body));
             }
-        } 
+        }
     }
 
     IEnumerator SendNotification(string title, string body)
@@ -56,9 +56,8 @@ public class FB_PushNotificationSender : MonoBehaviour
             }
             else
             {
-                Debug.Log("Notification sent successfully!");
+                // Debug.Log("Notification sent successfully!");
             }
         }
     }
-
 }
