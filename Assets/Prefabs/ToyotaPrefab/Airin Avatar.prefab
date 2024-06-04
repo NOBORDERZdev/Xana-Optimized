@@ -1673,7 +1673,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5189377533677997952}
   - component: {fileID: 2226031160175678970}
+  - component: {fileID: 726840137619399718}
   - component: {fileID: 5502190711839115615}
+  - component: {fileID: 8715932035842901762}
   m_Layer: 0
   m_Name: Airin Avatar
   m_TagString: Untagged
@@ -1719,6 +1721,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &726840137619399718
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850253601013323066}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 1.4517539
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7336385, z: 0}
 --- !u!114 &5502190711839115615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1732,6 +1748,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  isAirinActivated: 0
+  airinAction:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8715932035842901762}
+        m_TargetAssemblyTypeName: THA_AI_Conversation, Assembly-CSharp
+        m_MethodName: StartConversation
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8715932035842901762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4850253601013323066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9719b916a45eb934a95304709239bfde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  msg: Hello Airin. What's going on?
+  airinFeedback:
+    data: 
 --- !u!1 &4879729306766984143
 GameObject:
   m_ObjectHideFlags: 0
