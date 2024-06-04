@@ -6,33 +6,12 @@ using UnityEngine;
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
     public Recorder recorder;
-    //public Speaker speaker;
     private byte currentGroup;
-
-    //void Start()
-    //{
-    //    BuilderEventManager.AfterPlayerInstantiated += UpdateVoiceGroup;
-    //}
-    //private void OnDisable()
-    //{
-    //    BuilderEventManager.AfterPlayerInstantiated -= UpdateVoiceGroup;
-    //}
-
-    //private void UpdateVoiceGroup()
-    //{
-    //    Debug.LogError("Recorder or Speaker component is missing.");
-    //    if (recorder == null /*|| speaker == null*/)
-    //    {
-    //        Debug.LogError("Recorder or Speaker component is missing.");
-    //        return;
-    //    }
-
-    //    if (PhotonNetwork.InRoom)
-    //    {
-    //        SetVoiceGroup(1); // Default group for all users initially
-    //    }
-    //}
-
+    private void Start()
+    {
+        NFT_Holder_Manager.instance.voiceManager = this;
+        recorder = GameObject.FindObjectOfType<Recorder>();
+    }
     public void SetVoiceGroup(byte newGroup)
     {
         byte oldGroup = currentGroup;

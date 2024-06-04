@@ -34,7 +34,7 @@ public class NFT_Holder_Manager : MonoBehaviour
     public ThaMeetingTxtUpdate meetingTxtUpdate;
     public FB_PushNotificationSender pushNotification;
     public ThaMeetingStatusUpdate meetingStatus;
-
+    public VoiceManager voiceManager;
     private void Awake()
     {
         if (instance == null)
