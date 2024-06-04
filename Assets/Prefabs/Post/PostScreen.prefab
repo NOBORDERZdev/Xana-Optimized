@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: 5679105566175421731}
   - component: {fileID: 533934749146310793}
   - component: {fileID: 7060819026761727746}
+  - component: {fileID: 6098365030900224718}
   m_Layer: 0
   m_Name: Mood Name Text (TMP)
   m_TagString: Untagged
@@ -306,6 +307,21 @@ MonoBehaviour:
   LocalizeText: {fileID: 0}
   LocalizeTextTMP: {fileID: 4315575899894766707}
 --- !u!114 &7060819026761727746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4315575899894766705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 4315575899894766707}
+--- !u!114 &6098365030900224718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3096,8 +3112,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
-  m_fontSizeBase: 23
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3106,7 +3122,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 2
+  m_characterSpacing: 4
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4170,6 +4186,7 @@ MonoBehaviour:
   placeHolderColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   normalColor: {r: 0, g: 0, b: 0, a: 1}
   BubbleContentSizeFitter: {fileID: 4315575900797177265}
+  ButtonTextRefrence: {fileID: 4315575900904102673}
   bubbleParent: {fileID: 4315575900611768228}
 --- !u!222 &3999022824970765749
 CanvasRenderer:

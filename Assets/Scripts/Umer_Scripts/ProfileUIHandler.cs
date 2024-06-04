@@ -217,11 +217,10 @@ public class ProfileUIHandler : MonoBehaviour
         int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);   
         avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
     }
-    public void SetUserAvatarDefaultClothingForHomeScreen(int _rand)
+    public void SetUserAvatarRandomClothingForProfile(int randPreset, string gender)
     {
-        //int _rand = Random.Range(0, 13);
-        ActivateProfileAvatarByGender(Random.Range(0f, 2f) <= 1f ? "Male" : "Female");
-        avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
+        ActivateProfileAvatarByGender(gender);
+        avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(randPreset);
     }
     public void SetMainScrollRefs()
     {

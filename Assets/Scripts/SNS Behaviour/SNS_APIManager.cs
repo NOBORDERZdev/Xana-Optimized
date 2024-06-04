@@ -589,6 +589,11 @@ public class SNS_APIManager : MonoBehaviour
                          FeedData _followingObj = obj as FeedData;
                          _followingObj.DressUpUserAvatar();
                      }
+                     else if (obj is CheckOnlineFriend)
+                     {
+                         CheckOnlineFriend _OnlineObj = obj as CheckOnlineFriend;
+                         _OnlineObj.DressUpUserAvatar();
+                     }
                  }
                  else
                  {
