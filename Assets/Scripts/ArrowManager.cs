@@ -521,6 +521,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
     }
+
+
+    public void ChangeVoiceGroup(int ViewID, byte newGroup)
+    {
+        this.GetComponent<PhotonView>().RPC("RemoteChangeVoice", RpcTarget.All, ViewID, newGroup);
+    }
+    [PunRPC]
+    public void RemoteChangeVoice(int ViewID, byte newGroup) //, int ViewID
+    {
+        if (gameObject.GetComponent<PhotonView>().ViewID == ViewID)
+            FindObjectOfType<VoiceManager>().SetVoiceGroup(newGroup);
+    }
     #endregion
 
 }
