@@ -30,8 +30,6 @@ public class AskForJoining : MonoBehaviour
     {
         ConstantsHolder.xanaConstants.isFromXanaLobby =false;
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
-        ConstantsHolder.xanaConstants.isBackToParentScane = false;
-
         float _rand = UnityEngine.Random.Range(6f, 10f);
         LoadingHandler.Instance.randCurrentValue = _rand;
         StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));

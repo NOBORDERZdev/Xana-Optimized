@@ -67,8 +67,6 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             {
                 StartCoroutine(LobbySceneSwitch("XANA Lobby")); // to Lobby if player enter in world from Xana lobby
             }
-            else if(ConstantsHolder.xanaConstants.isBackToParentScane && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
-                StartCoroutine(LobbySceneSwitch(ConstantsHolder.xanaConstants.parentSceneName));
             else
             {
                 if (changeOritentationChange)
