@@ -513,16 +513,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
-        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains(ConstantsHolder.xanaConstants.parentSceneName))
-        {
-            //if (ConstantsHolder.xanaConstants.parentSceneName == "D_Infinity_Labo")
-            //{
-            //    FindObjectOfType<ThaMeetingStatusUpdate>().UpdateMeetingParams(0); // set meeting status end for all users 
-            //    ArrowManager.Instance.UpdateMeetingTxt("Join Meeting Now!");
-            //}
-            ConstantsHolder.xanaConstants.isBackToParentScane = false;
-            ConstantsHolder.xanaConstants.parentSceneName = "";
-        }
         StartCoroutine(VoidCalculation());
         LightCullingScene();
 

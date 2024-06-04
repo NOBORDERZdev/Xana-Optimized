@@ -92,7 +92,7 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-      //  Debug.unityLogger.logEnabled = true;
+        //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -204,7 +204,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 ActivateFadder_AtLoadingStart();
             }
-           
+
         }
 
         //StartCoroutine(CustomLoading());
@@ -224,7 +224,7 @@ public class LoadingHandler : MonoBehaviour
             //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
         });
     }
-   
+
     void CustomLoading()
     {
         //if (needWait)
@@ -242,7 +242,7 @@ public class LoadingHandler : MonoBehaviour
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
-      
+
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
         {
@@ -256,7 +256,7 @@ public class LoadingHandler : MonoBehaviour
         else
             ConstantsHolder.xanaConstants.needToClearMemory = true;
     }
-   
+
     public void ResetLoadingValues()
     {
         //if (GameplayEntityLoader.instance)
@@ -279,15 +279,14 @@ public class LoadingHandler : MonoBehaviour
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy) //ConstantsHolder.xanaConstants.JjWorldSceneChange
         {
             isFirstTime = false;
-            ConstantsHolder.xanaConstants.isBackFromWorld = false;    
+            ConstantsHolder.xanaConstants.isBackFromWorld = false;
             return;
         }
-        
+
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.isBackToParentScane
-            && ConstantsHolder.xanaConstants.isBackFromWorld)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
@@ -466,7 +465,7 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
-        if(canvasGroup.alpha == 0)
+        if (canvasGroup.alpha == 0)
             canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
@@ -524,10 +523,8 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
-                || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
-                || ConstantsHolder.xanaConstants.isBackToParentScane) &&
-                teleportFeader.gameObject.activeInHierarchy)
+            if ((ConstantsHolder.xanaConstants.isFromXanaLobby
+                || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) && teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -550,7 +547,7 @@ public class LoadingHandler : MonoBehaviour
                     isLoadingComplete = true;
                 }
             }
-            else if(loadMainScene)
+            else if (loadMainScene)
             {
                 if (currentValue > 35f)
                 {
@@ -560,14 +557,12 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
-                    || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
-                    || ConstantsHolder.xanaConstants.isBackToParentScane) &&
-                    teleportFeader.gameObject.activeInHierarchy)
+                if ((ConstantsHolder.xanaConstants.isFromXanaLobby
+                    || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) && teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                   // yield return new WaitForSeconds(1f);
+                    // yield return new WaitForSeconds(1f);
                     //HideLoading(ScreenOrientation.Portrait);
                 }
                 else
