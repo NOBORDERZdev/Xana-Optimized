@@ -102,8 +102,16 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
-        Invoke(nameof(TriggerXANAParty), 2f);
+       StartCoroutine(nameof(XANAPARTY));
     }
+
+    IEnumerator XANAPARTY(){
+        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+          (PlayerPrefs.GetString("PlayerName") == ""))
+            yield return new WaitForSeconds(0.5f);
+
+        XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+     }
 
     void TriggerXANAParty()
     {

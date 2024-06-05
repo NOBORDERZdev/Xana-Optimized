@@ -34,6 +34,7 @@ public class XANAPartyManager : MonoBehaviour
 
     public void EnablingXANAParty()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (ShouldFetchXanaPartyGames())
         {
