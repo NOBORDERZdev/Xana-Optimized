@@ -15,6 +15,8 @@ public class SummitNPCAssetLoader : MonoBehaviour
 
     public string json;
 
+    public TMPro.TextMeshProUGUI npcName;
+
     private void Start()
     {
         stitcher = new Stitcher();

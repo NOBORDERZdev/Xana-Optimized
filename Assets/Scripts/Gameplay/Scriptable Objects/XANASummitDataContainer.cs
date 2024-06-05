@@ -8,34 +8,45 @@ public class XANASummitDataContainer : ScriptableObject
 {
     string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK’N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
-    public List<Data> summitData=new List<Data>();
+    public DomeData summitData=new DomeData();
 
     public AIData aiData=new AIData();
 
+    
     //private void OnEnable()
     //{
-    //    Debug.LogError("a");
-    //    for (int i = 0; i < 100; i++)
+    //    for(int i=0;i<100;i++)
     //    {
-    //        Data data = new Data();
-    //        data.domeId = i;
-    //        data.sceneName = s[Random.Range(0, s.Length)];
-
-    //        summitData.Add(data);
+    //        DomeGeneralData domeData = new DomeGeneralData();
+    //        domeData.id = i;
+    //        domeData.name = s[Random.Range(0, s.Length)];
+    //        summitData.root.Add(domeData);
     //    }
     //}
 
-    public async void GetAIData(string domeId, string npctype)
+    public async void GetAllDomesData()
     {
-        string url = ConstantsGod.BASE_URL + ConstantsGod.GETDOMENPCINFO + domeId + "/" + 1;
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.GETALLDOMES;
+        string result = await GetAsyncRequest(url);
+
+        summitData=JsonUtility.FromJson<DomeData>(result);
+    }
+
+    public async Task<bool> GetAIData(string domeId)
+    {
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.GETDOMENPCINFO + domeId + "/" + 1;
         string result=await GetAsyncRequest(url);
+
+        Debug.LogError(result);
         aiData = JsonUtility.FromJson<AIData>(result);
+
+        return aiData.root.Count > 0;
     }
 
     async Task<string> GetAsyncRequest(string url)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
-        www.SendWebRequest();
+        await www.SendWebRequest();
         while(!www.isDone)
             await System.Threading.Tasks.Task.Yield();
 
@@ -48,11 +59,26 @@ public class XANASummitDataContainer : ScriptableObject
     }
 
     #region DomeInfo
+
     [System.Serializable]
-    public class Data
+    public class DomeData
     {
-        public int domeId;
-        public string sceneName;
+        public List<DomeGeneralData> root;
+    }
+
+    [System.Serializable]
+    public class DomeGeneralData
+    {
+        public int id;
+        public string name;
+        public string description;
+        public string creatorName;
+        public string bgm;
+        public string thumbnail;
+        public string worldType;
+        public int worldId;
+        public string experienceType;
+        public string builderWorldId;
     }
     #endregion
 
@@ -62,13 +88,13 @@ public class XANASummitDataContainer : ScriptableObject
     [System.Serializable]
     public class AIData
     {
-        public List<AINPCInfo> data; 
+        public List<AINPCInfo> root; 
     }
 
     [System.Serializable]
     public class AINPCInfo
     {
-        public int id;
+        public string id;
         public int domeId;
         public string language;
         public string avatarCategory;
