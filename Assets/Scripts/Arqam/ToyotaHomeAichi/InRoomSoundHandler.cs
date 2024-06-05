@@ -9,7 +9,7 @@ public class InRoomSoundHandler : MonoBehaviour
     [SerializeField] string roomName = "";
     public static UnityAction<bool, string> playerInRoom;
     public static UnityAction<bool> soundAction;
-    int RoomId = 4;
+    int roomId = 4;
     public int playerCount;
     private void OnTriggerEnter(Collider other)
     {
