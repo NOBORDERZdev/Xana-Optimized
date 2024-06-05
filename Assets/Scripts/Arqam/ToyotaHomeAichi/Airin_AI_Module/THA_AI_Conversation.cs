@@ -5,11 +5,15 @@ using UnityEngine.Networking;
 public class THA_AI_Conversation : MonoBehaviour
 {
     //https://avatarchat-ai.xana.net/tha_chat?input_string=Who%20are%20you%3F%20What%20is%20your%20oppupation&usr_id=1&owner_id=2121
-    public string msg = "Hello Airin. What's going on?";
-    [Space(5)]
-    public AirinFeedback airinFeedback;
+    public class AirinFeedback
+    {
+        public string data = "";
+    }
 
-    private string playerName = "";
+    [SerializeField]
+    private string msg = "Hello Airin. What's going on?";
+    private AirinFeedback _airinFeedback;
+    private string _playerName = "";
 
     private void OnEnable()
     {
@@ -22,7 +26,7 @@ public class THA_AI_Conversation : MonoBehaviour
 
     public void StartConversation(string name)
     {
-        playerName = name;
+        _playerName = name;
         StartCoroutine(SetApiData());
     }
 
@@ -51,19 +55,14 @@ public class THA_AI_Conversation : MonoBehaviour
         yield return request.SendWebRequest();
         if (request.result == UnityWebRequest.Result.Success)
         {
-            airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
+            _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
             //Debug.LogError("Message: " + airinFeedback.data);
-            XanaChatSystem.instance.ShowAirinMsg("Airin" ,airinFeedback.data);
+            XanaChatSystem.instance.ShowAirinMsg("Airin" ,_airinFeedback.data);
             yield return null;
         }
         else
             Debug.LogError(request.error);
     }
-
-    [System.Serializable]
-    public class AirinFeedback
-    {
-        public string data = "";
-    }
+  
 
 }
