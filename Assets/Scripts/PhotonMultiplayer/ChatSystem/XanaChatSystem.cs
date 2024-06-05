@@ -291,12 +291,12 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        if (ConstantsHolder.xanaConstants.isShowChatToAll)
+        if (ConstantsHolder.xanaConstants.IsShowChatToAll)
         {  // Airin AI character is not activated
             ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
             ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
         }
-        else if (!ConstantsHolder.xanaConstants.isShowChatToAll)
+        else if (!ConstantsHolder.xanaConstants.IsShowChatToAll)
         {  // When User Activated the Airin for conversation
             ShowAirinMsg(UserName, removeBadWords);
             npcAlert?.Invoke(removeBadWords);
