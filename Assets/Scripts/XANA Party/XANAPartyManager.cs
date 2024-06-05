@@ -141,7 +141,7 @@ public class XANAPartyManager : MonoBehaviour
             if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
             {
                 print("not master ");
-                yield return new WaitForSeconds(15);
+                yield return new WaitForSeconds(10);
             }
             else
             {
