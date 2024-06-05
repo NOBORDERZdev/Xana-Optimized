@@ -128,4 +128,10 @@ public static class BuilderEventManager
     public static Action<UploadProperties> UploadPropertiesData;
     public static Action UploadPropertiesInit;
     public static Action<string> YoutubeVideoLoadedCallback;
+
+    //XANAParty
+    public static Action XANAPartyRaceStart;
+    public static Action XANAPartyRaceFinish;
+    public static Action XANAPartyWiatingForPlayer;
+    public static Action XANAPartyRaceResult;
 }

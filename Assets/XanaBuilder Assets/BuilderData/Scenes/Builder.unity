@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1956891594}
-  m_IndirectSpecularColor: {r: 0.44657815, g: 0.49641192, b: 0.57481617, a: 1}
+  m_IndirectSpecularColor: {r: 0.44402242, g: 0.49316543, b: 0.5722324, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -294,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 464787392}
   - component: {fileID: 464787391}
+  - component: {fileID: 464787394}
   - component: {fileID: 464787393}
   m_Layer: 0
   m_Name: GamificationComponentData
@@ -404,6 +405,19 @@ MonoBehaviour:
   sceneViewId: 100
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &464787394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 464787390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8132eb5a1dce14b469519be3823821b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  raceStart: 0
 --- !u!1 &504947475
 GameObject:
   m_ObjectHideFlags: 0

@@ -78,6 +78,13 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(addForceComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
+        PhysicsComponentData physicsComponentData = itemData.physicsComponentData;
+        if (physicsComponentData.isActive)
+        {
+            PhysicsComponent itemComponent = gameObject.AddComponent<PhysicsComponent>();
+            itemComponent.Init(physicsComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
         TimerComponentData timerComponentData = itemData.timerComponentData;
         if (timerComponentData.IsActive)
         {

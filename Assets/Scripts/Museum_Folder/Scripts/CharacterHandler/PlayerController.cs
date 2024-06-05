@@ -497,6 +497,8 @@ public class PlayerController : MonoBehaviour
 
         Vector3 move = transform.right * movementInput.x + transform.forward * movementInput.y;
         _IsGrounded = characterController.isGrounded;
+        if (GamificationComponentData.instance != null)
+            GamificationComponentData.instance.IsGrounded = _IsGrounded;
         animator.SetBool("IsGrounded", _IsGrounded);
         if (characterController.velocity.y < 0)
         {
@@ -873,7 +875,8 @@ public class PlayerController : MonoBehaviour
         }
 
         _IsGrounded = characterController.isGrounded;
-
+        if (GamificationComponentData.instance != null)
+            GamificationComponentData.instance.IsGrounded = _IsGrounded;
         CalculateMovingPlatformSpeed();
         if (_IsGrounded)
         {
@@ -1414,6 +1417,8 @@ public class PlayerController : MonoBehaviour
         //animator.SetFloat("Blend", 0.0f);
 
         _IsGrounded = characterController.isGrounded;
+        if (GamificationComponentData.instance != null)
+            GamificationComponentData.instance.IsGrounded = _IsGrounded;
         animator.SetBool("NinjaJump", _IsGrounded);
         animator.SetBool("IsGrounded", _IsGrounded);
         Vector2 movementInput = new Vector2(horizontal, vertical);

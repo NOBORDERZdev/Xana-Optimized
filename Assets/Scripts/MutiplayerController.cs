@@ -283,7 +283,7 @@ namespace Photon.Pun.Demo.PunBasics
                 do
                 {
                     temp = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
-                } 
+                }
                 while (roomNames.Contains(temp));
                 if (!ConstantsHolder.xanaConstants.isCameraMan)
                     PhotonNetwork.JoinOrCreateRoom(temp, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
@@ -366,6 +366,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
             }
+            if (ConstantsHolder.xanaConstants.isBuilderScene && ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                GamificationComponentData.instance.StartXANAPartyRace();
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
