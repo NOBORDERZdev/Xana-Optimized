@@ -626,7 +626,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
             PenguinPlayer = player;
-            StartCoroutine(SetXanaPartyControllers(player));
+            if (player != null)
+            {
+                StartCoroutine(SetXanaPartyControllers(player));
+            }
+          
         }
     }
 
