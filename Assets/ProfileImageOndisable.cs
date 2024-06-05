@@ -13,7 +13,6 @@ public class ProfileImageOndisable : MonoBehaviour
     {
         ImageRefrence.sprite = DefaultImage;
         ImageRefrence.sprite = DefaultImage;
-        UserLoginSignupManager.instance.ProfilePicText.enabled = true;
         UserLoginSignupManager.instance.SetProfileAvatarTempPath = "";
         UserLoginSignupManager.instance.SetProfileAvatarTempFilename = "";
     }

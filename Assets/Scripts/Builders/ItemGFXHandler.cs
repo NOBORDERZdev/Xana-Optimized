@@ -26,8 +26,12 @@ public class ItemGFXHandler : ItemComponent
         {
             for (int j = 0; j < _renderers[i].materials.Length; j++)
             {
-                color.a = _renderers[i].materials[j].color.a;
-                _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+                if (_renderers[i].materials[j].HasProperty("_Color"))
+                {
+                    color.a = _renderers[i].materials[j].color.a;
+                    _renderers[i].materials[j].SetColor(Constants.BaseColor, color);
+
+                }
             }
         }
     }
