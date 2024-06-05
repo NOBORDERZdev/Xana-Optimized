@@ -28,7 +28,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         ////}
         ////while (roomNames.Contains(roomName));
         //roomName = gameId.WorldName + UnityEngine.Random.Range(0, 9999).ToString();;
-        MutiplayerController.instance.CreateGameRoom(gameData.WorldName);
+        //MutiplayerController.instance.CreateGameRoom(gameData.WorldName);
        // PhotonNetwork.CreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(roomName, LobbyType.Default));
 
         yield return new WaitForSeconds(1f);
@@ -58,6 +58,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         ConstantsHolder.xanaConstants.builderMapID = gameId;
+        ConstantsHolder.xanaConstants.isMasterOfGame= PhotonNetwork.IsMasterClient;
         //PhotonNetwork.LeaveRoom();
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         // Join the new room

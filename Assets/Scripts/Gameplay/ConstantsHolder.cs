@@ -156,6 +156,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isJoinigXanaPartyGame = false;
     public int XanaPartyGameId;
     public string XanaPartyGameName;
+    public bool isMasterOfGame = false;
     #endregion
 
     public string r_EmoteReactionPersistentPath

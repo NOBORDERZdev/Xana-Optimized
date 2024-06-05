@@ -41,7 +41,7 @@ public class XANAPartyManager : MonoBehaviour
         }
         else
         {
-            LoadXanaPartyGame(false); // Joining XANA PARTY GAME
+           StartCoroutine( LoadXanaPartyGame(false) ); // Joining XANA PARTY GAME
         }   
     }
 
@@ -106,7 +106,7 @@ public class XANAPartyManager : MonoBehaviour
                     {
                         GameIds.Add(new GameData( (int)row["id"],row["name"].ToString()));
                     }
-                    LoadXanaPartyGame(true);
+                   StartCoroutine( LoadXanaPartyGame(true));
                 }
                 catch (Exception e)
                 {
@@ -117,7 +117,8 @@ public class XANAPartyManager : MonoBehaviour
         }
     }
 
-    void LoadXanaPartyGame(bool isJoiningLobby)
+    IEnumerator
+     LoadXanaPartyGame(bool isJoiningLobby)
     {
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
@@ -126,16 +127,26 @@ public class XANAPartyManager : MonoBehaviour
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {
-               ConstantsHolder.xanaConstants.MuseumID = ""; // Main net Id
+                ConstantsHolder.xanaConstants.MuseumID = ""; // Main net Id
             }
             else
             {
-               ConstantsHolder.xanaConstants.MuseumID = "2492"; // test net Id
+                ConstantsHolder.xanaConstants.MuseumID = "2492"; // test net Id
             }
+            yield return new WaitForSeconds(3);
         }
         else
         {
-           // MutiplayerController.sceneName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+            if (!ConstantsHolder.xanaConstants.isMasterOfGame)
+            {
+                yield return new WaitForSeconds(3);
+            }
+            else
+            {
+                yield return new WaitForSeconds(3);
+            }
+            
+            MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
         }
 
         HideLoadingScreens();
