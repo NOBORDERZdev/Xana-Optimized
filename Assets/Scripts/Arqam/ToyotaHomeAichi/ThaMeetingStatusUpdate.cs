@@ -9,17 +9,17 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 {
     public enum MeetingStatus { End, Inprogress, HouseFull }
     [SerializeField]
-    public MeetingStatus tms;
+    public MeetingStatus ThaMeetingStatus;
 
     //private const string MeetingStatusPropertyName = "MeetingStatus";
-    private const int roomID = 4;
-    private int playerCount;
-    private PhotonView pv;
+    private const int _roomID = 4;
+    private int _playerCount;
+    private PhotonView _pv;
 
     private void Start()
     {
         //BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
-        pv = GetComponent<PhotonView>();
+        _pv = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
         {
             CheckAndUpdateMeetingStatus();
@@ -96,23 +96,23 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (pv != null)
+            if (_pv != null)
             {
-                pv.RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.tms);
-                pv.RPC(nameof(SetMeetingCounter), RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
+                _pv.RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
+                _pv.RPC(nameof(SetMeetingCounter), RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
             }
             else
             {
                 if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
                 {
-                    NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.tms);
+                    NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
                     NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter),
                         RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
                 }
             }
         }
-        if (pv != null)
-            pv.RPC(nameof(UpdatePortal), RpcTarget.All);
+        if (_pv != null)
+            _pv.RPC(nameof(UpdatePortal), RpcTarget.All);
         else
         {
             if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
@@ -123,7 +123,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     [PunRPC]
     public void StartMeeting(int num)
     {
-        tms = (MeetingStatus)num;
+        ThaMeetingStatus = (MeetingStatus)num;
         ConstantsHolder.xanaConstants.meetingStatus = (ConstantsHolder.MeetingStatus)(num);
     }
 

@@ -9,7 +9,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
 {
     // Update user Token API
     //https://api-test.xana.net/toyotaAichiWorlds/save-user-token
-    private const int THARoomId = 4;     // Home cosulting room Id in Toyota World
+    private const int thaRoomId = 4;     // Home cosulting room Id in Toyota World
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
 
@@ -27,13 +27,13 @@ public class NotificationTokenApiHandler : MonoBehaviour
     {
         StartCoroutine(PostToken(token));
     }
-    IEnumerator PostToken(string token)
+    private IEnumerator PostToken(string token)
     {
         StringBuilder url = new StringBuilder();
         url.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaNotificationApi);
 
         WWWForm form = new WWWForm();
-        form.AddField("worldId", THARoomId);
+        form.AddField("worldId", thaRoomId);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
         form.AddField("userToken", token);
 
@@ -42,7 +42,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
-            Debug.LogError("Error: " + request.error);
+            Debug.Log("Error: " + request.error);
         else
         {
             GetUpdatedToken();
@@ -55,7 +55,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
     private async void GetUpdatedToken()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + THARoomId + "/" + thaPageNumber + "/" + thaPageSize);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + thaRoomId + "/" + thaPageNumber + "/" + thaPageSize);
         //Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
@@ -63,7 +63,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.LogError("Error is" + request.error);
+                Debug.Log("Error is" + request.error);
             }
             else
             {

@@ -7,7 +7,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     [SerializeField] Transform destinationPoint;
     public enum PortalType { Enter, Exit }
     public PortalType currentPortal;
-    public float cam_XValue = -50f;
+    public float Cam_XValue = -50f;
 
     private PlayerController ref_PlayerControllerNew;
     private ReferencesForGamePlay referrencesForDynamicMuseum;
@@ -40,15 +40,15 @@ public class MeetingRoomTeleport : MonoBehaviour
     {
         if (currentPortal == PortalType.Enter)
         {
-            if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
+            if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
                 return;
             if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
-                   NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+                   NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
             {
                 return;
             }
             else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
-                                   NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+                                   NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
             {
                 return;
             }
@@ -84,7 +84,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             referrencesForDynamicMuseum.MainPlayerParent.transform.position = destinationPoint.position;
             referrencesForDynamicMuseum.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
 
-            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(cam_XValue, 0.5f));
+            GameplayEntityLoader.instance.StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(Cam_XValue, 0.5f));
             yield return new WaitForSeconds(.15f);
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
 
@@ -121,12 +121,12 @@ public class MeetingRoomTeleport : MonoBehaviour
         }
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
-        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+        if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {// for customer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
             triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
         }
-        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+        else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
         { // for interviewer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
             triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
@@ -150,7 +150,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
             triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
         }
-        NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
+        NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
     }
 }
 

@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 using UnityEngine.Android;
 using System.Collections;
 using TMPro;
-using Newtonsoft.Json;
-using UnityEngine.Networking;
-
 public class FB_Notification_Initilizer : MonoBehaviour
 {
     public bool isShowLogs = false;
@@ -76,9 +73,7 @@ public class FB_Notification_Initilizer : MonoBehaviour
         else
             return false;
     }
-
-
-    IEnumerator InitilizeFirebase()
+    private IEnumerator InitilizeFirebase()
     {
         if (!Permission.HasUserAuthorizedPermission("android.permission.POST_NOTIFICATIONS"))
             Permission.RequestUserPermission("android.permission.POST_NOTIFICATIONS");
@@ -98,7 +93,7 @@ public class FB_Notification_Initilizer : MonoBehaviour
     }
 
     // Setup message event handlers.
-    void InitializeFirebase()
+    private void InitializeFirebase()
     {
         FirebaseMessaging.MessageReceived += OnMessageReceived;
         FirebaseMessaging.TokenReceived += OnTokenReceived;
@@ -108,13 +103,6 @@ public class FB_Notification_Initilizer : MonoBehaviour
         });
 
         DebugMsg("Firebase Messaging Initialized");
-
-        // On iOS, this will display the prompt to request permission to receive
-        // notifications if the prompt has not already been displayed before. (If
-        // the user already responded to the prompt, thier decision is cached by
-        // the OS and can be changed in the OS settings).
-        // On Android, this will return successfully immediately, as there is no
-        // equivalent system logic to run.
         FirebaseMessaging.RequestPermissionAsync().ContinueWithOnMainThread(
           task =>
           {
@@ -193,13 +181,15 @@ public class FB_Notification_Initilizer : MonoBehaviour
     public virtual void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {
         onReceiveToken?.Invoke(token.Token);
-        Debug.LogError("Token Generated: " + token.Token);
+        Debug.Log("Token Generated: " + token.Token);
     }
 
     private void DebugMsg(string msg)
     {
         if (isShowLogs)
-            Debug.LogError(msg);
+        {
+            Debug.Log(msg);
+        }
     }
 
     public void DeleteToken()
@@ -208,7 +198,5 @@ public class FB_Notification_Initilizer : MonoBehaviour
         toyotaUserEmail = "";
         companyEmails.Clear();
         fbTokens.Clear();
-
-        Debug.LogError("Token Deleted");
     }
 }
