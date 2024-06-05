@@ -44,7 +44,7 @@ public class THA_AI_Conversation : MonoBehaviour
         //    ip = "http://15.152.55.82:8054/";
 
         string url = ip + msg + "&usr_id=" + id + "&owner_id =" + worldId;
-        Debug.LogError("<color=red> Communication URL(Airin): " + url + "</color>");
+        //Debug.Log("<color=red> Communication URL(Airin): " + url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(url);
         request.downloadHandler = new DownloadHandlerBuffer();
