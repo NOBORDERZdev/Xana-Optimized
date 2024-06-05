@@ -21,11 +21,6 @@ public class HomeScoketHandler : MonoBehaviour
 
     public Action<FriendOnlineStatus> spaceJoinedFriendStatus;
     public Action<FriendOnlineStatus> spaceExitFriendStatus;
-
-    public Action<THALeaveRoom> meetingExitRoomStatus;
-
-
-
     private void Awake()
     {
         // Check if an instance already exists
@@ -72,23 +67,6 @@ public class HomeScoketHandler : MonoBehaviour
         ConnectSNSSockets();
         Manager.Socket.On<string>("user_enter_world", FriendJoinedSpace);
         Manager.Socket.On<string>("user_exit_world", FriendExitSpace);
-
-        Manager.Socket.On<string>("user-info-tha-exit-global", LeaveMeetingRoom); // Meeting Room Exit
-    }
-
-    public void LeaveMeetingRoom(string msg) //meeting room exit
-    {
-        //Manager.Socket.Emit("user_exit_toyota_world", ConstantsHolder.xanaConstants.MuseumID, ConstantsHolder.userId, FB_Notification_Initilizer.Instance.actorType);
-        //THALeaveRoom data = JsonConvert.DeserializeObject<THALeaveRoom>(msg);
-        Debug.LogError("Meeting Room Status Check" + msg);
-        //NFT_Holder_Manager.instance.meetingStatus.RemoteCheckUserCount();
-        //meetingExitRoomStatus?.Invoke(data);
-    }
-    public void GetCallFromMeetingRoom(string _data) //meeting room exit
-    {
-        Manager.Socket.Emit("user-info-on-tha-world-exit", _data);
-        Debug.LogError("Emit Leave Meeting Room" + _data);
-        //meetingExitRoomStatus?.Invoke(data);
     }
     void FriendJoinedSpace(string msg)
     {
@@ -335,10 +313,4 @@ public class FriendOnlineStatus
     public string msg;
     public RowList worldDetails;
     public bool isOnline;
-}
-public class THALeaveRoom
-{
-    public int world_id { get; set; }
-    public int userId { get; set; }
-    public string userType { get; set; }
 }
