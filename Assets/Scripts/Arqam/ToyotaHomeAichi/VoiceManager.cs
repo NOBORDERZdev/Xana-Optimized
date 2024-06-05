@@ -2,12 +2,21 @@ using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
     public Recorder recorder;
     private byte currentGroup;
     private void Start()
+    {
+        BuilderEventManager.AfterPlayerInstantiated += AssignReference;
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
+    }
+    private void AssignReference()
     {
         NFT_Holder_Manager.instance.voiceManager = this;
         recorder = GameObject.FindObjectOfType<Recorder>();
@@ -38,27 +47,4 @@ public class VoiceManager : MonoBehaviourPunCallbacks
             Debug.LogError("Operation ChangeGroups not allowed because the client is not connected to the Game Server.");
         }
     }
-
-    //[PunRPC]
-    //public void ChangePlayerVoiceGroup(int playerID, byte group)
-    //{
-    //    if (PhotonNetwork.LocalPlayer.ActorNumber == playerID)
-    //    {
-    //        SetVoiceGroup(group);
-    //    }
-    //}
-
-    //// Method to call from the game logic to change voice groups for specific players
-    //public void ChangeVoiceGroupForPlayer(Player player, byte newGroup)
-    //{
-    //    photonView.RPC("ChangePlayerVoiceGroup", player, player.ActorNumber, newGroup);
-    //}
-
-    //public override void OnJoinedRoom()
-    //{
-    //    base.OnJoinedRoom();
-    //    SetVoiceGroup(0); // Set default group when joined room
-    //}
-
-
 }

@@ -44,7 +44,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.LogError("Error is" + request.error);
+                Debug.Log("Error is" + request.error);
             }
             else
             {
@@ -52,7 +52,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
                 data.Append(request.downloadHandler.text);
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
 
-                Debug.LogError("Wrap Object Status is :: " + wrapObjectClass.data);
+                Debug.Log("Wrap Object Status is :: " + wrapObjectClass.data);
                 portalMesh.enabled = wrapObjectClass.data;
                 boxCollider.enabled = wrapObjectClass.data;
             }

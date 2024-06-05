@@ -47,9 +47,10 @@ public class NFT_Holder_Manager : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            GameObject meetingObj = GameplayEntityLoader.instance.SpawnThaMeetingObject();
+            GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+            meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
             meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
-            Debug.LogError("Instantiate Meeting Object");
+            //Debug.LogError("Instantiate Meeting Object");
         }
         else if (meetingStatus == null)
             meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();

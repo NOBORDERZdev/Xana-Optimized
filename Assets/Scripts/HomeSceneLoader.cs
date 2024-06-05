@@ -65,10 +65,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             exitOnce = false;
             if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
-                StartCoroutine(LobbySceneSwitch("XANA Lobby")); // to Lobby if player enter in world from Xana lobby
+                StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
-            else if(ConstantsHolder.xanaConstants.isBackToParentScane && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
-                StartCoroutine(LobbySceneSwitch(ConstantsHolder.xanaConstants.parentSceneName));
             else
             {
                 if (changeOritentationChange)
@@ -97,14 +95,14 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             }
         }
     }
-    private IEnumerator LobbySceneSwitch(string sceneName)
+    private IEnumerator LobbySceneSwitch()
     {
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.orientationchanged)
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         ConstantsHolder.xanaConstants.isBuilderScene = false;
         ConstantsHolder.xanaConstants.JjWorldSceneChange = true;
-        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = sceneName;
+        ConstantsHolder.xanaConstants.JjWorldTeleportSceneName = "XANA Lobby";
 
         // While Retruing from sub world to Xana Lobby
         // Storing Xana Lobby Ids

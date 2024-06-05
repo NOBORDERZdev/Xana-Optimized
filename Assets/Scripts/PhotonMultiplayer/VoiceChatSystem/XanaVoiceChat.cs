@@ -94,6 +94,10 @@ public class XanaVoiceChat : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Xana VoiceChat Start");
+        recorder = GameObject.FindObjectOfType<Recorder>();
+        voiceConnection = GetComponent<VoiceConnection>();
+
         //InvokeRepeating(nameof(MicroPhoneName), 2f, 2f);
 
         if (!ScreenOrientationManager._instance.isPotrait)

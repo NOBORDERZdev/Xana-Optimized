@@ -1,8 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
 using System.Collections;
-using static Unity.Burst.Intrinsics.X86.Avx;
-
 public class MeetingRoomTeleport : MonoBehaviour
 {
     [SerializeField] bool isLocked;
@@ -77,28 +75,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             LoadingHandler.Instance.JJLoadingSlider.fillAmount = 0;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(Random.Range(2f, 3f)));
-            //yield return new WaitForSeconds(.5f);
-            //RaycastHit hit;
-            //CheckAgain:
-            //    if (Physics.Raycast(destinationPoint.position, destinationPoint.transform.TransformDirection(Vector3.down), out hit, Mathf.Infinity))
-            //    {
-            //        if ((hit.collider.GetComponent<PhotonView>() != null) && hit.collider.GetComponent<PhotonView>().IsMine)
-            //        {
-            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-            //            goto CheckAgain;
-            //        }
-            //        else if (hit.collider.gameObject.tag != "GroundFloor")
-            //        {
-            //            destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
 
-            //            goto CheckAgain;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        destinationPoint.position = new Vector3(destinationPoint.position.x + Random.Range(-2, 2), destinationPoint.position.y, destinationPoint.position.z + Random.Range(-2, 2));
-            //        goto CheckAgain;
-            //    }
             yield return new WaitForSeconds(.4f);
 
             referrencesForDynamicMuseum.MainPlayerParent.transform.eulerAngles = destinationPoint.eulerAngles;
@@ -141,7 +118,6 @@ public class MeetingRoomTeleport : MonoBehaviour
         if (FB_Notification_Initilizer.Instance.actorType.Equals(FB_Notification_Initilizer.ActorType.User))
         {
             NFT_Holder_Manager.instance.pushNotification.SendNotification();
-            Debug.LogError("Notification Sent");
         }
         int temp = FB_Notification_Initilizer.Instance.userInMeeting + 1;
         NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
@@ -176,18 +152,5 @@ public class MeetingRoomTeleport : MonoBehaviour
         }
         NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
     }
-
-    //private void LeaveMeetingOnExit()
-    //{
-    //    int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
-    //    NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
-    //    if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
-    //    {
-    //        NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
-    //        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
-    //    }
-    //}
-
-
 }
 

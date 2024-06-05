@@ -286,8 +286,7 @@ public class LoadingHandler : MonoBehaviour
         if (!loadingPanel.activeInHierarchy)
             return;
 
-        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.isBackToParentScane
-            && ConstantsHolder.xanaConstants.isBackFromWorld)
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby && ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
@@ -524,9 +523,7 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
-                || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
-                || ConstantsHolder.xanaConstants.isBackToParentScane) &&
+            if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                 teleportFeader.gameObject.activeInHierarchy)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
@@ -560,9 +557,7 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((ConstantsHolder.xanaConstants.isFromXanaLobby 
-                    || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)
-                    || ConstantsHolder.xanaConstants.isBackToParentScane) &&
+                if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                     teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);

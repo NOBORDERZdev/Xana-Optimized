@@ -375,12 +375,9 @@ namespace Photon.Pun.Demo.PunBasics
             }
             for (int x = 0; x < playerobjects.Count; x++)
             {
-                if (playerobjects[x] != null && playerobjects[x].GetComponent<PhotonView>() != null)
+                if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
-                    if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
-                    {
-                        playerobjects.RemoveAt(x);
-                    }
+                    playerobjects.RemoveAt(x);
                 }
             }
         }
