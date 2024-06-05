@@ -1,4 +1,5 @@
 using Paroxe.PdfRenderer;
+using Photon.Pun;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
@@ -29,13 +30,35 @@ public class NFT_Holder_Manager : MonoBehaviour
     public RenderTexture renderTexture_4x3;
     [Space(5)]
     public AR_Nft_Manager currentRoom;
-
+    [Space(5)]
+    public ThaMeetingTxtUpdate meetingTxtUpdate;
+    public FB_PushNotificationSender pushNotification;
+    public ThaMeetingStatusUpdate meetingStatus;
+    public VoiceManager voiceManager;
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+    }
+
+    private void Start()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            GameObject meetingObj = Resources.Load("ThaMeetingObj") as GameObject;
+            meetingObj = PhotonNetwork.InstantiateRoomObject(meetingObj.name, new Vector3(0f, 0f, 0f), Quaternion.identity);
+            meetingStatus = meetingObj.GetComponent<ThaMeetingStatusUpdate>();
+            //Debug.LogError("Instantiate Meeting Object");
+        }
+        else if (meetingStatus == null)
+            meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+    }
+
+    public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
+    {
+        meetingStatus = meetingRef;
     }
 
     public void CloseBtnClicked()

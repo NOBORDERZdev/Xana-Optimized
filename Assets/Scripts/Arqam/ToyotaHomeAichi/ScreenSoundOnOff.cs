@@ -12,7 +12,7 @@ public class ScreenSoundOnOff : MonoBehaviour
     [SerializeField] RenderHeads.Media.AVProVideo.MediaPlayer livePlayer;
     [SerializeField] AudioSource preRecoredPlayer;
 
-    void Start()
+    private void Start()
     {
         AR_nft.OnVideoEnlargeAction += MuteSound;
         AR_nft.exitClickedAction += UnMuteSound;
