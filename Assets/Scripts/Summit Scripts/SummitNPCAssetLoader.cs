@@ -1,164 +1,302 @@
-using Photon.Pun;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class SummitNPCAssetLoader : MonoBehaviour
 {
-    /*void Custom_InitializeAvatar(SavingCharacterDataClass _data = null)
+    public SkinnedMeshRenderer _body;
+
+    public Color DefaultSkinColor, DefaultHairColor;
+
+    private GameObject wornShirt, wornPant, wornHair, wornShose;
+    private string shirt_TextureName, Pent_TextureName, Shoes_TextureName, Skin_ColorName, Eye_ColorName, Hair_ColorName;
+    private Stitcher stitcher;
+
+    public string json;
+
+    private void Start()
     {
-        string folderPath = GameManager.Instance.GetStringFolderPath();
-        if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
+        stitcher = new Stitcher();
+        shirt_TextureName = "_Shirt_Mask";
+        Pent_TextureName = "_Pant_Mask";
+        Shoes_TextureName = "_Shoes_Mask";
+        Hair_ColorName = "_Color";
+        Eye_ColorName = "_Mask_Color";
+
+        Custom_InitializeAvatar(json);
+    }
+
+    void Custom_InitializeAvatar(string aiAvatarJson)
+    {
+        SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
+        _CharacterData = _CharacterData.CreateFromJSON(aiAvatarJson);
+
+        var gender = _CharacterData.gender ?? "Male";
+        var avatarController = this.gameObject.GetComponent<AvatarController>();
+
+        if (_CharacterData.myItemObj.Count > 0)
         {
-            SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            if (_data != null)
-                _CharacterData = _data;
-            else
-                _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
-
-            clothJson = File.ReadAllText(folderPath);
-            var gender = _CharacterData.gender ?? "Male";
-            var avatarController = this.gameObject.GetComponent<AvatarController>();
-            sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
-            if (sceneName.Equals("Home") || sceneName.Equals("UGC")) // for store/ main menu
+            for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
-                if (string.IsNullOrEmpty(_CharacterData.avatarType) || _CharacterData.avatarType == "OldAvatar")
-                {
-                    int _rand = Random.Range(0, characterBodyParts.randomPresetData.Length);
-                    DownloadRandomPresets(_CharacterData, _rand);
-                }
-                else
-                {
-                    CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-                    SetAvatarClothDefault(gameObject, _CharacterData.gender);
+                var item = _CharacterData.myItemObj[i];
+                string type = _CharacterData.myItemObj[i].ItemType;
 
-                    if (_CharacterData.myItemObj.Count > 0)
+                DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
+
+            }
+        }
+    }
+
+    private void DownloadAddressableWearableWearable(string key, string ObjectType)
+    {
+        if (Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            try
+            {
+                AsyncOperationHandle loadObj;//= Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                bool flag = false;
+                loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                if (!flag)
+                    loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
+                loadObj.Completed += operationHandle =>
+                {
+                    OnLoadCompleted(operationHandle, ObjectType, key.ToLower());
+                };
+            }
+            catch (System.Exception)
+            {
+                WearDefault(ObjectType); // wear default cloth
+                throw new System.Exception("Error occur in loading addressable. Wear DefaultAvatar");
+            }
+        }
+    }
+
+    private void OnLoadCompleted(AsyncOperationHandle handle, string ObjectType, string key)
+    {
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            GameObject loadedObject = handle.Result as GameObject;
+            if (loadedObject != null)
+            {
+                StichItem((GameObject)(object)loadedObject, ObjectType, this.gameObject, false);
+            }
+            else if (loadedObject.Equals(null) || loadedObject == null)
+            {
+                WearDefault(ObjectType);
+                Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
+            }
+
+            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+        }
+        else if (handle.Status == AsyncOperationStatus.Failed)
+        {
+            WearDefault(ObjectType); // wear default cloth
+            Debug.LogError("Failed to load addressable: " + handle.OperationException);
+        }
+    }
+
+    private void WearDefault(string type)
+    {
+        switch (type)
+        {
+            case "Chest":
+                StichItem(DefaultClothDatabase.instance.DefaultShirt, "Chest", this.gameObject, false);
+                break;
+            case "Legs":
+                StichItem(DefaultClothDatabase.instance.DefaultPent, "Legs", this.gameObject, false);
+                break;
+            case "Feet":
+                StichItem(DefaultClothDatabase.instance.DefaultShoes, "Feet", this.gameObject, false);
+                break;
+            case "Hair":
+                StichItem(DefaultClothDatabase.instance.DefaultHair, "Hair", this.gameObject, false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void StichItem(GameObject item, string type, GameObject applyOn, bool applyHairColor = true)
+    {
+        UnStichItem(type);
+        if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().texture != null)
+        {
+            Texture tempTex = item.GetComponent<EffectedParts>().texture;
+            ApplyMaskTexture(type, tempTex, this.gameObject);
+        }
+
+        if (item.GetComponent<EffectedParts>() && item.GetComponent<EffectedParts>().variation_Texture != null)
+        {
+            item.GetComponentInChildren<SkinnedMeshRenderer>().sharedMaterial.SetTexture("_BaseMap", item.GetComponent<EffectedParts>().variation_Texture);
+        }
+
+        item = this.stitcher.Stitch(item, applyOn);
+        if (type == "Hair")
+        {
+            StartCoroutine(ImplementColors(Color.black, SliderType.HairColor, applyOn));
+        }
+        item.layer = 11;
+        switch (type)
+        {
+            case "Chest":
+                wornShirt = item;
+                break;
+            case "Legs":
+                wornPant = item;
+                break;
+            case "Hair":
+                wornHair = item;
+                break;
+            case "Feet":
+                wornShose = item;
+                break;
+        }
+
+        if (item.name.Contains("arabic"))
+        {
+            // Disable Pant
+            if (wornPant)
+                wornPant.SetActive(false);
+
+            // Disable Hair
+            if (wornHair)
+                wornHair.SetActive(false);
+        }
+        else if (wornShirt && (wornShirt.name.Contains("arabic") || wornShirt.name.Contains("Arabic")))
+        {
+            // Yes Arabic Wear , new pant or hair disable
+            if (wornPant)
+                wornPant.SetActive(false);
+
+            if (wornHair)
+                wornHair.SetActive(false);
+        }
+        else
+        {
+            if (wornPant)
+                wornPant.SetActive(true);
+            if (wornHair)
+                wornHair.SetActive(true);
+        }
+    }
+
+    private void UnStichItem(string type)
+    {
+        switch (type)
+        {
+            case "Chest":
+                Destroy(wornShirt);
+                break;
+            case "Legs":
+                Destroy(wornPant);
+                break;
+            case "Hair":
+                Destroy(wornHair);
+                break;
+            case "Feet":
+                Destroy(wornShose);
+                break;
+        }
+    }
+
+    private void ApplyMaskTexture(string type, Texture texture, GameObject applyOn)
+    {
+        if (type.Contains("Chest") || type.Contains("Shirt") || type.Contains("arabic"))
+        {
+            TextureForShirt(texture);
+        }
+        else if (type.Contains("Legs") || type.Contains("pant") || type.Contains("Pants"))
+        {
+            TextureForPant(texture);
+        }
+        else if (type.Contains("Feet") || type.Contains("Shose", System.StringComparison.CurrentCultureIgnoreCase) || type.Contains("Plain_mask", System.StringComparison.CurrentCultureIgnoreCase))
+        {
+            TextureForShoes(texture);
+        }
+    }
+
+    private void TextureForShirt(Texture texture)
+    {
+        _body.materials[0].SetTexture(shirt_TextureName, texture);
+    }
+
+    // Set texture For 
+    private void TextureForPant(Texture texture)
+    {
+        _body.materials[0].SetTexture(Pent_TextureName, texture);
+    }
+
+    private void TextureForShoes(Texture texture)
+    {
+        _body.materials[0].SetTexture(Shoes_TextureName, texture);
+    }
+
+    public IEnumerator ImplementColors(Color _color, SliderType _objColor, GameObject applyOn)
+    {
+        yield return new WaitForSeconds(0f);
+
+        switch (_objColor)
+        {
+            case SliderType.Skin:
+                {
+                    if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f) /*!SkinColor.Compare(Color.black)*/)
                     {
-                        for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
-                        {
-                            var item = _CharacterData.myItemObj[i];
-                            string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
-                            {
-
-                                HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
-                                if (itemTypes.Any(item => type.Contains(item)))
-                                {
-                                    //getHairColorFormFile = true;
-                                    if (!item.ItemName.Contains("md", StringComparison.CurrentCultureIgnoreCase))
-                                    {
-                                        if (type.Contains("Hair"))
-                                        {
-                                            if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
-                                                UnStichItem("Hair");
-                                            else
-                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
-                                        }
-                                        else
-                                            StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, Color.clear));
-                                    }
-                                    else
-                                    {
-                                        if (PlayerPrefs.HasKey("Equiped") || xanaConstants.isNFTEquiped)
-                                        {
-                                            if (item.ItemType.Contains("Chest") && wornShirt)
-                                            {
-                                                UnStichItem("Chest");
-                                                characterBodyParts.TextureForShirt(null);
-                                            }
-                                            else if (item.ItemType.Contains("Hair") && wornHair)
-                                            {
-                                                UnStichItem("Hair");
-                                            }
-                                            else if (item.ItemType.Contains("Legs") && wornPant)
-                                            {
-                                                UnStichItem("Legs");
-                                                characterBodyParts.TextureForPant(null);
-                                            }
-                                            else if (item.ItemType.Contains("Feet") && wornShoes)
-                                            {
-                                                UnStichItem("Feet");
-                                                characterBodyParts.TextureForShoes(null);
-                                            }
-                                            else if (item.ItemType.Contains("EyeWearable") && wornEyeWearable)
-                                            {
-                                                UnStichItem("EyeWearable");
-                                            }
-                                            else if (item.ItemType.Contains("Glove") && wornGloves)
-                                            {
-                                                UnStichItem("Glove");
-                                                characterBodyParts.TextureForGlove(null);
-                                            }
-                                            else if (item.ItemType.Contains("Chain") && wornChain)
-                                            {
-                                                UnStichItem("Chain");
-                                            }
-                                        }
-                                        else
-                                        {
-                                            WearDefaultItem(type, this.gameObject, gender);
-                                        }
-                                    }
-
-                                }
-                                else
-                                {
-                                    WearDefaultItem(type, this.gameObject, gender);
-                                }
-                            }
-                            else // wear the default item of that specific part.
-                            {
-                                if (xanaConstants.isNFTEquiped && type.Contains("Chest"))
-                                {
-                                    if (wornShirt)
-                                        UnStichItem("Chest");
-                                    characterBodyParts.TextureForShirt(null);
-                                }
-                                else
-                                {
-                                    //As one preset not have footwear, so unstitch the previous pair
-                                    if (_CharacterData.myItemObj[0].ItemName == "Boy_Pant_V009" && _CharacterData.myItemObj[1].ItemName == "Boy_Shirt_V009")
-                                    {
-                                        if (item.ItemType.Contains("Feet"))
-                                            UnStichItem("Feet");
-                                    }
-                                    else
-                                    {
-                                        WearDefaultItem(type, this.gameObject, gender);
-                                    }
-                                }
-                            }
-                        }
+                        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, _color);
+                        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, _color);
                     }
                     else
                     {
-                        WearDefaultItem("Legs", this.gameObject, gender);
-                        WearDefaultItem("Chest", this.gameObject, gender);
-                        WearDefaultItem("Feet", this.gameObject, gender);
-                        WearDefaultItem("Hair", this.gameObject, gender);
+                        applyOn.GetComponent<CharacterBodyParts>().head.materials[2].SetColor(Skin_ColorName, DefaultSkinColor);
+                        applyOn.GetComponent<CharacterBodyParts>().body.materials[0].SetColor(Skin_ColorName, DefaultSkinColor);
+                    }
+                }
+                break;
 
-                        if (wornEyeWearable)
-                            UnStichItem("EyeWearable");
-                        if (wornChain)
-                            UnStichItem("Chain");
-                        if (wornGloves)
+            case SliderType.HairColor:
+                {
+                    if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
+                    {
+                        AvatarController ac = applyOn.GetComponent<AvatarController>();
+                        if (ac.wornHair != null)
                         {
-                            UnStichItem("Glove");
-                            characterBodyParts.TextureForGlove(null);
+                            if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("_Band"))
+                            {
+                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Eye_ColorName, _color);
+                            }
+                            else if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials.Length > 1)
+                            {
+                                if (ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Cap") ||
+                                   ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].name.Contains("Hat"))
+                                    ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[1].SetColor(Hair_ColorName, _color);
+                                else
+                                    ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
+                            }
+                            else
+                                ac.wornHair.GetComponent<SkinnedMeshRenderer>().materials[0].SetColor(Hair_ColorName, _color);
                         }
                     }
-                    if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
-                    {
-                        ApplyAIData(_CharacterData, this.gameObject);
-                    }
-                    characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
                 }
-            }
+                break;
+
+            case SliderType.EyesColor:
+                {
+                    if (new Vector3(_color.r, _color.b, _color.g) != new Vector3(0.00f, 0.00f, 0.00f))
+                    {
+                        applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, _color);
+                    }
+                    else
+                    {
+                        applyOn.GetComponent<CharacterBodyParts>().head.materials[0].SetColor(Eye_ColorName, Color.white);
+                    }
+                }
+                break;
+
+            default:
+                break;
         }
-    }*/
+    }
+
 
 }

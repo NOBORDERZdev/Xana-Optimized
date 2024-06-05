@@ -976,7 +976,6 @@ GameObject:
   - component: {fileID: 79798792}
   - component: {fileID: 79798793}
   - component: {fileID: 79798794}
-  - component: {fileID: 79798795}
   m_Layer: 0
   m_Name: '[SceneManager]'
   m_TagString: SceneManager
@@ -1145,21 +1144,6 @@ MonoBehaviour:
   assetParent: {fileID: 0}
   assetDownloadingText: {fileID: 2082772788}
   assetDownloadingTextPotrait: {fileID: 1515718022}
---- !u!114 &79798795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79798787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 844c5b4409cf7ad47b8608255a14315e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  multiplayerController: {fileID: 860513761}
-  gameplayEntityLoader: {fileID: 79798788}
-  dataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
 --- !u!1 &86883061
 GameObject:
   m_ObjectHideFlags: 0
@@ -9842,6 +9826,21 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1463550899}
+--- !u!1 &1165704029 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6645817739051704586, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1165704030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6860018102289303315, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1165704031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2452571441084732663, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1211160632 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8457936016690739709, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
@@ -17199,6 +17198,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1971880479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2452571442035634497, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &1971880480 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2452571441910907390, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1971880481 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8972761585544118317, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1973350922
 GameObject:
   m_ObjectHideFlags: 0
@@ -17794,6 +17814,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008109228}
   m_CullTransparentMesh: 0
+--- !u!1 &2012812632
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2012812634}
+  - component: {fileID: 2012812633}
+  - component: {fileID: 2012812635}
+  m_Layer: 0
+  m_Name: XANA Summit Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2012812633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012812632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 844c5b4409cf7ad47b8608255a14315e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  multiplayerController: {fileID: 860513761}
+  gameplayEntityLoader: {fileID: 79798788}
+  dataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
+--- !u!4 &2012812634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012812632}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 31
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2012812635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2012812632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8d2b5bb06b0e24ab2fcd7195bb95ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatOutPutPenal: {fileID: 1165704031}
+  chatButton: {fileID: 1619158269}
+  chatCloseButton: {fileID: 0}
+  chatNotificationIcon: {fileID: 1165704030}
+  chatDialogBox: {fileID: 1165704031}
+  chatConfirmationPanel: {fileID: 1165704029}
+  ChatPanel: {fileID: 1971880481}
+  UserIdFormPanel: {fileID: 0}
+  InputFieldChat: {fileID: 2452571440786286108}
+  CurrentChannelText: {fileID: 9067209682325055449}
+  PotriatCurrentChannelText: {fileID: 832714692}
+  ChannelToggleToInstantiate: {fileID: 0}
+  XanaChatLand: {fileID: 0}
+  XanaChatPotrait: {fileID: 0}
+  outline: {fileID: 1971880480}
+  ChatScrollRect: {fileID: 1971880479}
+  XANASummitDataContainer: {fileID: 11400000, guid: 167db53466831ca41b397940080656f9, type: 2}
 --- !u!1 &2018235420
 GameObject:
   m_ObjectHideFlags: 0
@@ -20283,7 +20380,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0106414985, y: -0.00089248695, z: 0.000009499802, w: 0.999943}
+  m_LocalRotation: {x: 0.010641495, y: -0.0008924867, z: 0.000009499795, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39663,6 +39760,30 @@ PrefabInstance:
       propertyPath: actionImgPotrait
       value: 
       objectReference: {fileID: 149072517}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571440493795436, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2452571441569123080, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: XanaChatPotrait
       value: 
@@ -39671,6 +39792,18 @@ PrefabInstance:
       propertyPath: PotriatCurrentChannelText
       value: 
       objectReference: {fileID: 832714692}
+    - target: {fileID: 2452571441579370041, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571442124558974, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2452571442124558974, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_OnSubmit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2514870289050422892, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: micOnBtnPotrait
       value: 
@@ -39729,7 +39862,7 @@ PrefabInstance:
       objectReference: {fileID: 1808683680640967397}
     - target: {fileID: 6907531792610345431, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30.000183
+      value: 30.000153
       objectReference: {fileID: 0}
     - target: {fileID: 6922268560118772997, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: actionImgPotrait

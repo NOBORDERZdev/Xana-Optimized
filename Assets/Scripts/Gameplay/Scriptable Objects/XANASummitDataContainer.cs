@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Threading.Tasks;
 using UnityEngine;
-
+using UnityEngine.Networking;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/SummitDataContainer", fileName = "ScriptableObjects/SummitDataContainer")]
 public class XANASummitDataContainer : ScriptableObject
@@ -10,12 +10,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public List<Data> summitData=new List<Data>();
 
-    [System.Serializable]
-    public class Data
-    {
-        public int domeId;
-        public string sceneName;
-    }
+    public AIData aiData=new AIData();
 
     //private void OnEnable()
     //{
@@ -29,5 +24,58 @@ public class XANASummitDataContainer : ScriptableObject
     //        summitData.Add(data);
     //    }
     //}
+
+    public async void GetAIData(string domeId, string npctype)
+    {
+        string url = ConstantsGod.BASE_URL + ConstantsGod.GETDOMENPCINFO + domeId + "/" + 1;
+        string result=await GetAsyncRequest(url);
+        aiData = JsonUtility.FromJson<AIData>(result);
+    }
+
+    async Task<string> GetAsyncRequest(string url)
+    {
+        UnityWebRequest www = UnityWebRequest.Get(url);
+        www.SendWebRequest();
+        while(!www.isDone)
+            await System.Threading.Tasks.Task.Yield();
+
+        if (www.result == UnityWebRequest.Result.ConnectionError)
+        {
+            return www.error;
+        }
+        else
+            return www.downloadHandler.text;
+    }
+
+    #region DomeInfo
+    [System.Serializable]
+    public class Data
+    {
+        public int domeId;
+        public string sceneName;
+    }
+    #endregion
+
+
+
+    #region AINPC Data Classes
+    [System.Serializable]
+    public class AIData
+    {
+        public List<AINPCInfo> data; 
+    }
+
+    [System.Serializable]
+    public class AINPCInfo
+    {
+        public int id;
+        public int domeId;
+        public string language;
+        public string avatarCategory;
+        public string name;
+        public int[] spawnPosition;
+        public string personalityURL;
+    }
+    #endregion
 
 }

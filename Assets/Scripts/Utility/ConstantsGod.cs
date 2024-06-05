@@ -285,4 +285,9 @@ public class ConstantsGod
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
+
+
+    #region XANA Summit Api's
+    public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
+    #endregion
 }
