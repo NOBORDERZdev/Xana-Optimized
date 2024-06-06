@@ -153,12 +153,12 @@ public class XANAPartyManager : MonoBehaviour
             if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
             {
                 print("not master ");
-                yield return new WaitForSeconds(10);
+                yield return new WaitForSeconds(15);
             }
             else
             {
                 print("master entering a GAME!");
-                yield return new WaitForSeconds(2);
+                yield return new WaitForSeconds(4);
             }
             
             MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
