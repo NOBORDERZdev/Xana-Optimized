@@ -14,6 +14,7 @@ public class THA_AI_Conversation : MonoBehaviour
     private string msg = "Hello Airin. What's going on?";
     private AirinFeedback _airinFeedback;
     private string _playerName = "";
+    private Animator _animator;
 
     private void OnEnable()
     {
@@ -22,6 +23,11 @@ public class THA_AI_Conversation : MonoBehaviour
     private void OnDisable()
     {
         XanaChatSystem.instance.npcAlert -= ReplyUserMsg;
+    }
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
     }
 
     public void StartConversation(string name)
@@ -42,6 +48,7 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         this.msg = msg;
         XanaChatSystem.instance.ShowMsgLocally("Airin", "typing...");
+        _animator.SetBool("isChating", true);
         StartCoroutine(SetApiData());
     }
 
@@ -65,8 +72,9 @@ public class THA_AI_Conversation : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
-            Debug.LogError("Message: " + _airinFeedback.data);
+            //Debug.LogError("Message: " + _airinFeedback.data);
             XanaChatSystem.instance.ShowAirinMsg("Airin" ,_airinFeedback.data);
+            _animator.SetBool("isChating", false);
             yield return null;
         }
         else
