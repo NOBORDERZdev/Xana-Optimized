@@ -6,107 +6,121 @@ using UnityEngine.Events;
 
 public class AirinController : MonoBehaviour
 {
-    public enum RotateType { Linear, Smooth }
+ 
     public UnityEvent<string> AirinAlertAction;
 
     [SerializeField]
-    private RotateType _rotateType;
-    [SerializeField]
     [Range(0, 5)]
-    private float RotationSpeed = 2.0f;
+    private float _rotationSpeed = 2.0f;
     [SerializeField]
-    [Space(2)]
-    private bool IsAirinActivated = false;
+    private bool _isAirinActivated = false;
     [SerializeField]
     private float maxDistance = 10.0f;
     private Transform _player;
-    private int _playerViewId = 0;
-    private Coroutine _coroutine;
+    private Quaternion _startRot;
+    private Coroutine _distanceCor;
+    private Coroutine _rotateCor;
+    private enum RotateType { Linear, Smooth }
+
 
     private void Start()
     {
         BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
     }
+
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= GetActivePlayer;
     }
 
 
-
     private void GetActivePlayer()
     {
+        _startRot = transform.rotation;
         _player = ReferencesForGamePlay.instance.m_34player.transform;
     }
 
     private void OnMouseDown()
     {
-        // Rotate Airin to face the player when clicked
-        StartCoroutine(RotateTowardsPlayer());
-        if (!IsAirinActivated)
+        if (!_isAirinActivated)
         {
-            IsAirinActivated = true;
+            // Rotate Airin to face the player when clicked
+            _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Smooth));
+            _isAirinActivated = true;
             ConstantsHolder.xanaConstants.IsShowChatToAll = false;
             AirinAlertAction?.Invoke(XanaChatSystem.instance.UserName);
-            _playerViewId = ArrowManager.Instance.gameObject.GetComponent<PhotonView>().ViewID;
-            _coroutine = StartCoroutine(CalculateDistance());
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<PhotonView>().ViewID == _playerViewId)
-        {
-            DeactivateAirin();
+            _distanceCor = StartCoroutine(CalculateDistance());
         }
     }
 
     private void DeactivateAirin()
     {
-        IsAirinActivated = false;
-        _playerViewId = 0;
+        _isAirinActivated = false;
+        //_playerViewId = 0;
         ConstantsHolder.xanaConstants.IsShowChatToAll = true;
-        if (_coroutine != null)
+        if (_distanceCor != null)
         {
-            StopCoroutine(_coroutine);
+            StopCoroutine(_distanceCor);
         }
-    }
-
-    private IEnumerator RotateTowardsPlayer()
-    {
-        Vector3 direction = _player.position - transform.position;
-        direction.y = 0;
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        if (_rotateType.Equals(RotateType.Linear))
-            transform.rotation = targetRotation;
-        else if (_rotateType.Equals(RotateType.Smooth))
+        if (_rotateCor != null)
         {
-            while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * RotationSpeed);
-                // Wait for the next frame
-                yield return null;
-            }
-            transform.rotation = targetRotation;
+            StopCoroutine(_rotateCor);
         }
+        StartCoroutine(RotateToOriginalPosition());
     }
 
     private IEnumerator CalculateDistance()
     {
-        while (IsAirinActivated)
+        while (_isAirinActivated)
         {
 
             Vector3 direction = _player.position - transform.position;
             if (direction.magnitude > maxDistance)
             {
                 DeactivateAirin();
-                yield break; 
+                yield break;
             }
             direction.y = 0;
             yield return new WaitForSeconds(0.5f);
+            if (_rotateCor == null)
+            {
+                _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear));
+            }
         }
     }
+    private IEnumerator RotateTowardsPlayer(Vector3 targetPos, RotateType _rotateType)
+    {
+        Debug.LogError("call: " + _rotateType);
+        Vector3 direction = targetPos - transform.position;
+        direction.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
 
+        if (_rotateType.Equals(RotateType.Linear))
+        {
+            transform.rotation = targetRotation;
+        }
+        else if (_rotateType.Equals(RotateType.Smooth))
+        {
+            while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
+                // Wait for the next frame
+                yield return null;
+            }
+            transform.rotation = targetRotation;
+        }
+        _rotateCor = null;
+    }
+    private IEnumerator RotateToOriginalPosition()
+    {
+        // Rotate back to the original position smoothly
+        while (Quaternion.Angle(transform.rotation, _startRot) > 0.1f)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, _startRot, Time.deltaTime * _rotationSpeed);
+            yield return null;
+        }
+        // Ensure the final rotation is exactly the original rotation
+        transform.rotation = _startRot;
+    }
 
 }
