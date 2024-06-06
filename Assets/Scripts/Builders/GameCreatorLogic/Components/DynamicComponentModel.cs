@@ -104,6 +104,7 @@ public class ItemData
     public WarpFunctionComponentData warpFunctionComponentData;
     public BlindComponentData blindComponentData;
     public PhysicsComponentData physicsComponentData;
+    public StartPoint startPoint;
     #endregion
 
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
@@ -174,6 +175,7 @@ public class ItemData
         this.warpFunctionComponentData = new WarpFunctionComponentData();
         this.blindComponentData = new BlindComponentData();
         this.physicsComponentData = new PhysicsComponentData();
+        this.startPoint = new StartPoint();
     }
 
     public ItemData(ItemData itemData)

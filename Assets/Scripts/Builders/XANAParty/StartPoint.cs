@@ -39,7 +39,7 @@ public class StartPoint : MonoBehaviour
     {
         print("Disable collider call");
         //triggerCollider.SetActive(false);
-        gameObject.GetComponent<PhotonView>().RPC(nameof(TriggerStartGame),RpcTarget.All);
+        this.gameObject.GetComponent<PhotonView>().RPC(nameof(TriggerStartGame),RpcTarget.All);
         //StartCoroutine(StartGame());
     }
 
