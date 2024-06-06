@@ -83,7 +83,7 @@ public class XANAPartyManager : MonoBehaviour
 
         GameIds.RemoveAt(index);
        
-        return rand;
+        return  GameIds[16];//rand;
     }
         
     IEnumerator FetchXanaPartyGames()
