@@ -70,7 +70,7 @@ public class AirinController : MonoBehaviour
         {
 
             Vector3 direction = _player.position - transform.position;
-            if (direction.magnitude > maxDistance)
+            if (direction.magnitude > _maxDistance)
             {
                 DeactivateAirin();
                 yield break;
