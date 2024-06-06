@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
-using System.Runtime.InteropServices.ComTypes;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
