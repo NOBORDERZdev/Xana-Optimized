@@ -1047,7 +1047,7 @@ public class InventoryManager : MonoBehaviour
     ////////////////////////// <SUB Category STARTS here> ///////////////////////////////////////////////
     private string AccessIndexOfSpecificCategory()
     {
-        if(ArrayofMainCategories.Length>0){
+        if(ArrayofMainCategories != null && ArrayofMainCategories.Length>0){
             var result = string.Join(",", ArrayofMainCategories);
             result = "[" + result + "]";
             return result; 
