@@ -395,6 +395,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
         {
+             print("XANAPartyRaceStart EVENT Call");
             new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
             if (PhotonNetwork.IsMasterClient)
             {

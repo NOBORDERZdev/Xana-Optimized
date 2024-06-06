@@ -37,6 +37,7 @@ public class StartPoint : MonoBehaviour
 
     void DisableCollider()
     {
+         print("DisableCollider Call");
         //triggerCollider.SetActive(false);
         StartCoroutine(StartGame());
     }
