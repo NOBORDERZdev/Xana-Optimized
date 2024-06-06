@@ -635,6 +635,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){ 
+        if(player == null)
+            yield return null;
         ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
         CharacterManager characterManager = player.GetComponent<CharacterManager>();
         XanaPartyCamera.characterManager = characterManager;
@@ -646,9 +648,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
         yield return new WaitForSeconds(0.1f);
-        GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
-        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
-        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        if(GamificationComponentData.instance != null){
+            GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
         // Landscape
         tempRef.XanaFeaturesLandsacape.SetActive(false);
         tempRef.XanaChatCanvasLandsacape.SetActive(false);

@@ -477,6 +477,10 @@ namespace PhysicsCharacterController
                 }
                 return;
             }
+            if (GamificationComponentData.instance == null )
+            {
+                return;
+            }
 
             RaycastHit hitData;
 
