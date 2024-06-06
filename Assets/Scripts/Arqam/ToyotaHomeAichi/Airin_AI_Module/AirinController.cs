@@ -1,7 +1,4 @@
-using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -9,6 +6,7 @@ public class AirinController : MonoBehaviour
 {
 
     public UnityEvent<string> AirinAlertAction;
+    public UnityEvent AirinDeActivate;
 
     [SerializeField]
     [Range(0, 5)]
@@ -53,7 +51,7 @@ public class AirinController : MonoBehaviour
     private void DeactivateAirin()
     {
         _isAirinActivated = false;
-        //_playerViewId = 0;
+        AirinDeActivate.Invoke();
         ConstantsHolder.xanaConstants.IsShowChatToAll = true;
         if (_distanceCor != null)
         {

@@ -16,22 +16,20 @@ public class THA_AI_Conversation : MonoBehaviour
     private string _playerName = "";
     private Animator _animator;
 
-    private void OnEnable()
-    {
-        XanaChatSystem.instance.npcAlert += ReplyUserMsg;
-    }
-    private void OnDisable()
-    {
-        XanaChatSystem.instance.npcAlert -= ReplyUserMsg;
-    }
-
     private void Start()
     {
         _animator = GetComponent<Animator>();
     }
 
+
+    public void AirinDeActivated()
+    {
+        XanaChatSystem.instance.npcAlert -= ReplyUserMsg;
+    }
+
     public void StartConversation(string name)
     {
+        XanaChatSystem.instance.npcAlert += ReplyUserMsg;
         _playerName = name;
         StartCoroutine(SetApiData());
         StartCoroutine(EnableChatWindow());
@@ -52,7 +50,7 @@ public class THA_AI_Conversation : MonoBehaviour
         StartCoroutine(SetApiData());
     }
 
-    IEnumerator SetApiData()
+    private IEnumerator SetApiData()
     {
         string id = ConstantsHolder.userId;
         string worldId = ConstantsHolder.xanaConstants.MuseumID;
