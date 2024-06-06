@@ -46,8 +46,15 @@ public class FinishPoint : MonoBehaviour
         {
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
+            StartCoroutine(triggerBackToLobby());
             triggerCollider.SetActive(true);
         }
+    }
+
+    IEnumerator triggerBackToLobby()
+    {
+        yield return new WaitForSeconds(3.5f);
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
     }
 
     void FindStartPoint()
