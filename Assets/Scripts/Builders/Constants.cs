@@ -191,7 +191,8 @@ public static class Constants
         BlindfoldedDisplayComponent = 28,
         HyperLinkPopComponent = 29,
         BlindComponent = 30,
-        none = 31
+        Physics=31,
+        none = 32
     }
     #endregion
 

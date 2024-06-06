@@ -102,7 +102,11 @@ public class BuilderAssetDownloader : MonoBehaviour
             temp.Scale = BuilderData.mapData.data.json.otherItems[i].Scale;
 
             builderDataDictionary.Add(i.ToString(), BuilderData.mapData.data.json.otherItems[i]);
-            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") || BuilderData.mapData.data.json.otherItems[i].spawnComponent)
+            if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SFP") && BuilderData.mapData.data.worldType == 1)
+            {
+                BuilderData.preLoadStartFinishPoints.Add(temp);
+            }
+            else if (BuilderData.mapData.data.json.otherItems[i].ItemID.Contains("SPW") || BuilderData.mapData.data.json.otherItems[i].spawnComponent)
             {
                 //Debug.LogError(BuilderData.mapData.data.json.otherItems[i].Position);
                 temp.IsActive = BuilderData.mapData.data.json.otherItems[i].spawnerComponentData.IsActive;
@@ -179,7 +183,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         StartCoroutine(CheckShortIntervalSorting());
 
         //Remove spw count from Item count
-        int objCount = BuilderData.mapData.data.json.otherItems.Count - BuilderData.preLoadspawnPoint.Count;
+        int objCount = BuilderData.mapData.data.json.otherItems.Count - (BuilderData.preLoadStartFinishPoints.Count + BuilderData.preLoadspawnPoint.Count);
 
         if (objCount == 0)
         {
@@ -281,6 +285,31 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     public IEnumerator DownloadSpawnPointsPreload()
     {
+        for (int i = 0; i < BuilderData.preLoadStartFinishPoints.Count; i++)
+        {
+            string downloadKey = prefabPrefix + BuilderData.preLoadStartFinishPoints[i].ItemID + prefabSuffix;
+            string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
+            //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            //bool flag = false;
+            //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
+            //if (!flag)
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            while (!_async.IsDone)
+            {
+                yield return null;
+            }
+            if (_async.Status == AsyncOperationStatus.Succeeded)
+            {
+                InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
+                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+            }
+            else
+            {
+                Debug.LogError(_async.Status);
+            }
+            yield return new WaitForEndOfFrame();
+        }
+
         for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
@@ -377,7 +406,16 @@ public class BuilderAssetDownloader : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
+
+        if (_itemData.ItemID.Contains("SFP") && BuilderData.mapData.data.worldType == 1)
+        {
+            StartFinishPointData startFinishPlatform = new StartFinishPointData();
+            startFinishPlatform.ItemID = _itemData.ItemID;
+            startFinishPlatform.SpawnObject = newObj;
+            startFinishPlatform.IsStartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>() != null ? true : false;
+            BuilderData.StartFinishPoints.Add(startFinishPlatform);
+        }
+        else if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
@@ -534,6 +572,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
+        BuilderData.StartFinishPoints.Clear();
+        BuilderData.preLoadStartFinishPoints.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;

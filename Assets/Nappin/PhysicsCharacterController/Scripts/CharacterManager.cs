@@ -203,6 +203,17 @@ namespace PhysicsCharacterController
         /**/
         private PhotonView photonView;
 
+        //Moving plateform
+        private Transform movingPlatform;
+        private Rigidbody movingPlatformRb;
+        private Vector3 rayOffset = new Vector3(0f, -.3f, 0f);
+        private float rayDistance = .3f;
+        private Vector3 lastMovePlatformPosition;
+        private Vector3 lastMovePlatformRotation;
+        private Vector3 movedPosition;
+        private Vector3 movedRotation;
+        internal bool isOnMovingPlatform;
+
         private void Awake()
         {
             photonView = this.GetComponent<PhotonView>();
@@ -220,7 +231,8 @@ namespace PhysicsCharacterController
         private void Update()
         {
             //input
-            if (photonView.IsMine){ 
+            if (photonView.IsMine)
+            {
                 axisInput = input.axisInput;
                 jump = input.jump;
                 jumpHold = input.jumpHold;
@@ -237,6 +249,7 @@ namespace PhysicsCharacterController
                 return;
             }
             //local vectors
+            CalculateMovingPlatformSpeed();
             CheckGrounded();
             CheckStep();
             CheckWall();
@@ -265,6 +278,8 @@ namespace PhysicsCharacterController
         {
             prevGrounded = isGrounded;
             isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, originalColliderHeight / 2f, 0), groundCheckerThrashold, groundMask);
+            if (GamificationComponentData.instance != null)
+                GamificationComponentData.instance.IsGrounded = isGrounded;
         }
 
 
@@ -449,6 +464,61 @@ namespace PhysicsCharacterController
                 SetFriction(frictionAgainstFloor, true);
                 currentLockOnSlope = lockOnSlope;
             }
+        }
+
+        private void CalculateMovingPlatformSpeed()
+        {
+            if (!isGrounded)
+            {
+                if (movingPlatform != null)
+                {
+                    movingPlatform = null;
+                    movedPosition = lastMovePlatformPosition = Vector3.zero;
+                }
+                return;
+            }
+
+            RaycastHit hitData;
+
+            isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
+
+            if (debug) Debug.DrawRay(transform.position + rayOffset, -transform.up * rayDistance, (hitData.collider != null) ? Color.red : Color.green);
+
+            if (!isOnMovingPlatform)
+            {
+                movingPlatform = null;
+                movedPosition = lastMovePlatformPosition = Vector3.zero;
+                return;
+            }
+
+            if (movingPlatform == null || hitData.transform.GetInstanceID() != movingPlatform.GetInstanceID())
+            {
+                if (hitData.transform.GetComponentInParent<TranslateComponent>() == null && hitData.transform.GetComponentInParent<TransformComponent>() == null && hitData.transform.GetComponentInParent<RotatorComponent>() == null) return;
+                movingPlatform = hitData.transform;
+                movingPlatformRb = movingPlatform.GetComponentInParent<Rigidbody>();
+                lastMovePlatformPosition = movingPlatform.position;
+                lastMovePlatformRotation = movingPlatform.eulerAngles;
+            }
+
+            //if ((movingPlatform.position != lastMovePlatformPosition || movingPlatform.eulerAngles != lastMovePlatformRotation) && transform.parent.parent != movingPlatform)
+            //{
+            //    transform.parent.SetParent(movingPlatform);
+            //}
+            movedPosition = movingPlatform.position - lastMovePlatformPosition;
+            lastMovePlatformPosition = movingPlatform.position;
+            movedRotation = movingPlatform.eulerAngles - lastMovePlatformRotation;
+            lastMovePlatformRotation = movingPlatform.eulerAngles;
+
+            if (movedRotation.y > 0)
+            {
+                rigidbody.transform.RotateAround(movingPlatform.position, Vector3.up, movedRotation.y);
+                try { targetAngle = targetAngle + movedRotation.y; }
+                catch { /* Debug.Log("There is no player on the platform") */ }
+            }
+
+            if (movingPlatformRb != null && movingPlatformRb.velocity.magnitude > 0) rigidbody.velocity += movingPlatformRb.velocity;
+
+            rigidbody.position += movedPosition;
         }
 
         #endregion

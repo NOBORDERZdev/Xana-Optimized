@@ -97,6 +97,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
+    internal Rigidbody PlayerRigidBody;
+    internal bool IsGrounded;
 
     private void Awake()
     {
@@ -356,6 +358,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         }
     }
     MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
+
     internal void SetMultiplayerComponentData(MultiplayerComponentData multiplayerComponentData)
     {
         var hash = new ExitGames.Client.Photon.Hashtable();
@@ -385,6 +388,16 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                 if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
                     xanaItem.SetData(xanaItem.itemData);
             }
+        }
+    }
+
+    public void StartXANAPartyRace()
+    {
+        if (PhotonNetwork.CountOfPlayers == 2 && PhotonNetwork.IsMasterClient)
+        {
+            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+            PhotonNetwork.CurrentRoom.IsOpen = false;
         }
     }
     #endregion

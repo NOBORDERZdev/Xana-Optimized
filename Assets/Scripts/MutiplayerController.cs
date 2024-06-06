@@ -305,6 +305,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
             }
+            if (ConstantsHolder.xanaConstants.isBuilderScene && ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                GamificationComponentData.instance.StartXANAPartyRace();
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
