@@ -11,7 +11,7 @@ public class THA_AI_Conversation : MonoBehaviour
     }
 
     [SerializeField]
-    private string msg = "Hello Airin. What's going on?";
+    private string _msg = "Hello Airin. What's going on?";
     private AirinFeedback _airinFeedback;
     private string _playerName = "";
     private Animator _animator;
@@ -44,7 +44,7 @@ public class THA_AI_Conversation : MonoBehaviour
 
     private void ReplyUserMsg(string msg)
     {
-        this.msg = msg;
+        this._msg = msg;
         XanaChatSystem.instance.ShowMsgLocally("Airin", "typing...");
         _animator.SetBool("isChating", true);
         StartCoroutine(SetApiData());
@@ -61,7 +61,7 @@ public class THA_AI_Conversation : MonoBehaviour
         //else if (APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://15.152.55.82:8054/";
 
-        string url = ip + msg + "&usr_id=" + id + "&owner_id =" + worldId;
+        string url = ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
         //Debug.Log("<color=red> Communication URL(Airin): " + url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(url);
