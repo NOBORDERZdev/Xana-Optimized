@@ -396,6 +396,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     private static void InstantiateAsset(GameObject objectTobeInstantiate, ItemData _itemData)
     {
+        
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, assetParentStatic);
         //Rigidbody rb = null;
         //newObj.TryGetComponent(out rb);
@@ -409,10 +410,12 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         if (_itemData.ItemID.Contains("SFP") && BuilderData.mapData.data.worldType == 1)
         {
+            
             StartFinishPointData startFinishPlatform = new StartFinishPointData();
             startFinishPlatform.ItemID = _itemData.ItemID;
             startFinishPlatform.SpawnObject = newObj;
             startFinishPlatform.IsStartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>() != null ? true : false;
+            GamificationComponentData.instance.StartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>();
             BuilderData.StartFinishPoints.Add(startFinishPlatform);
         }
         else if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)

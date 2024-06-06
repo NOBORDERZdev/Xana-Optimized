@@ -9,6 +9,7 @@ public class StartPoint : MonoBehaviour
     public List<Transform> SpawnPoints;
     public string FinishPointItemID;
     public GameObject triggerCollider;
+    public bool isStartPoint;
     FinishPoint _finishPoint;
 
     private void OnEnable()
@@ -39,7 +40,8 @@ public class StartPoint : MonoBehaviour
     {
          print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-        gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        //gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        StartCoroutine(nameof(StartGame));
     }
 
 
@@ -55,13 +57,7 @@ public class StartPoint : MonoBehaviour
         ?.SpawnObject.GetComponent<FinishPoint>();
     }
 
-    [PunRPC]
-    void StartGameRPC()
-    {
-        StartCoroutine(StartGame());
-    }
-
-    IEnumerator StartGame()
+   IEnumerator StartGame()
     {
         print("Start GAME Call");
         BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
@@ -70,4 +66,6 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(2);
         triggerCollider.SetActive(false);
     }
+
+   
 }

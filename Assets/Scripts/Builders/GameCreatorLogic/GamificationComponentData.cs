@@ -95,6 +95,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     //platformLayers
     public LayerMask platformLayers;
 
+    public StartPoint StartPoint;
+
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
     internal Rigidbody PlayerRigidBody;
@@ -396,16 +398,27 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
         {
             print("XANAPartyRaceStart EVENT Call");
-            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+           //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+            photonView.RPC(nameof(StartGameRPC), RpcTarget.All);
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.IsVisible = false;
                 PhotonNetwork.CurrentRoom.IsOpen = false;
             }
         }
+    } 
+    
+    [PunRPC]
+    void StartGameRPC()
+    {
+        new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
 
+     
+
     #endregion
+
+
 }
 
 [Serializable]
