@@ -9,6 +9,7 @@ public class SubBottons : MonoBehaviour
     public Color HighlightedColor;
     public bool ClothBool;
     public bool AvatarBool;
+    public bool ShopBool;
 
     private AvatarCustomizationUIHandler customizationUIManager;
 
@@ -62,6 +63,20 @@ public class SubBottons : MonoBehaviour
             {
                 AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
             }
+        }
+        else if (ShopBool)
+        {
+            InventoryManager.instance.OpenShopContainerPanel(m_Index);
+            //currentSelectedCategoryIndex = m_Index;
+
+            //if (m_Index == 10 || m_Index == 6)
+            //{
+            //    AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
+            //}
+            //else
+            //{
+            //    AvatarCustomizationUIHandler.Instance.LoadMyFaceCustomizationPanel();
+            //}
         }
         // print(m_Index);
     }

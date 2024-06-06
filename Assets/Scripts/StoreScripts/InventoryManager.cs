@@ -11,6 +11,7 @@ using SuperStar.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DG.DemiLib;
+using System.Security.Cryptography;
 //using HSVPicker;
 
 
@@ -80,7 +81,7 @@ public class InventoryManager : MonoBehaviour
 
     private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
         shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
-        eyeBrowColorDwonloadedCount, eyeLashesDwonloadedCount, eyesDwonloadedCount, lipsDwonloadedCount;
+        eyeBrowColorDwonloadedCount, eyeLashesDwonloadedCount, eyesDwonloadedCount, lipsDwonloadedCount, shopHairDwonloadedCount, shopOuterDwonloadedCount, shopBottomDwonloadedCount, shopShoesDwonloadedCount;
 
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
@@ -105,6 +106,8 @@ public class InventoryManager : MonoBehaviour
     // Get Data FromJsonFiles
     [HideInInspector]
     public GetAllInfo JsonDataObj;
+
+    bool _shopOpened = false;
 
     // New APIS Integration //
     // APIS
@@ -719,7 +722,9 @@ public class InventoryManager : MonoBehaviour
     /// <New APIS>
     IEnumerator WaitForAPICallCompleted(int m_GetIndex)
     {
-        print("wait Until");
+        CheckAPILoaded = true;
+
+        print("wait Until : " + CheckAPILoaded);
         yield return new WaitUntil(() => CheckAPILoaded == true);
         if (CheckAPILoaded)
         {
@@ -746,26 +751,44 @@ public class InventoryManager : MonoBehaviour
         public string order;
         public string sort;
         public int gender;
-        public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize)
-        {
-            ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
-            myObj.subCategories = jsonString;
-            myObj.pageNumber = _pageNumber;
-            myObj.pageSize = _PageSize;
-            return myObj;
-        }
+        public bool purchased;
 
-        public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order)
-        {
-            ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
-            myObj.subCategories = jsonString;
-            myObj.pageNumber = _pageNumber;
-            myObj.pageSize = _PageSize;
-            myObj.order = _order;
-            return myObj;
-        }
+        #region Old Implementation
+        //public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize)
+        //{
+        //    ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
+        //    myObj.subCategories = jsonString;
+        //    myObj.pageNumber = _pageNumber;
+        //    myObj.pageSize = _PageSize;
+        //    return myObj;
+        //}
+        //public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order)
+        //{
+        //    ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
+        //    myObj.subCategories = jsonString;
+        //    myObj.pageNumber = _pageNumber;
+        //    myObj.pageSize = _PageSize;
+        //    myObj.order = _order;
+        //    return myObj;
+        //}
+        //public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order, string sortingType)
+        //{
+        //    ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
+        //    myObj.subCategories = jsonString;
+        //    myObj.pageNumber = _pageNumber;
+        //    myObj.pageSize = _PageSize;
+        //    myObj.order = _order;
+        //    myObj.sort = sortingType;
 
-        public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order, string sortingType)
+        //    if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+        //        myObj.gender = 0;
+        //    else
+        //        myObj.gender = 1;
+        //    return myObj;
+        //}
+        #endregion
+
+        public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order, string sortingType, bool _isItemPurchasedByUser)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
             myObj.subCategories = jsonString;
@@ -773,6 +796,7 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             myObj.order = _order;
             myObj.sort = sortingType;
+            myObj.purchased = _isItemPurchasedByUser;
 
             if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
                 myObj.gender = 0;
@@ -799,7 +823,7 @@ public class InventoryManager : MonoBehaviour
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name")); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name",!_shopOpened)); // API Update New Parameter added for sorting
             
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
@@ -915,7 +939,7 @@ public class InventoryManager : MonoBehaviour
         public string name;
         public bool isPaid;
         public string price;
-        public bool isPurchased;
+        public bool isPurchased; // It is used to make accessible the Free Item
         public bool isFavourite;
         public bool isOccupied;
         public bool isDeleted;
@@ -923,6 +947,7 @@ public class InventoryManager : MonoBehaviour
         public string createdAt;
         public string updatedAt;
         public string[] itemTags;
+        public bool userPurchased; // is purchased by User
     }
     // **************************** Get Items by Sub categories ENDSSSSS ******************************//
 
@@ -1404,67 +1429,34 @@ public class InventoryManager : MonoBehaviour
     public void SelectPanel(int TakeIndex)
     {
         panelIndex = TakeIndex;
-
+        DisableAllItems();
+        _shopOpened = false;
         if (TakeIndex == 0)
         {
             // CLoth
             buttonIndex = 3;
-            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
             MainPanelCloth.SetActive(true);
-            MainPanelAvatar.SetActive(false);
-            MainPanelShop.SetActive(false);
-
-            // Avatar Setting
-            headerBtns[0].btnLine.SetActive(false);
-            headerBtns[0].btnText.color = HighlightedColor;
-
-            // ColthBtns Setting
-            headerBtns[1].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
-            headerBtns[1].btnLine.SetActive(false);
-            headerBtns[1].btnText.color = HighlightedColor;
-
-            UpdateStoreSelection(3);
+            UpdatePanelStatus(1);
         }
         else if(TakeIndex == 1)
         {
             // Avatar
             buttonIndex = 0;
-            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
-            MainPanelCloth.SetActive(false);
             MainPanelAvatar.SetActive(true);
-            MainPanelShop.SetActive(false);
-
-            headerBtns[0].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
-            headerBtns[0].btnLine.SetActive(true);
-            headerBtns[1].btnText.color = HighlightedColor;
-
-            headerBtns[1].btnLine.SetActive(false);
-            headerBtns[1].btnText.color = NormalColor;
-
-            UpdateStoreSelection(0);
+            UpdatePanelStatus(0);
         }
         else
         {
-            print("Hello Moto");
+            print("Shop Btn Clicked");
             // Shop
-            buttonIndex = 0;
-            ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
-            MainPanelCloth.SetActive(false);
-            MainPanelAvatar.SetActive(false);
+            _shopOpened = true;
+            buttonIndex = 2;
             MainPanelShop.SetActive(true);
-
-            headerBtns[2].btn.GetComponent<SubBottons>().ClickBtnFtn(3);
-            headerBtns[2].btnLine.SetActive(true);
-            headerBtns[2].btnText.color = HighlightedColor;
-
-            headerBtns[1].btnLine.SetActive(false);
-            headerBtns[1].btnText.color = NormalColor;
-
-            headerBtns[0].btnLine.SetActive(false);
-            headerBtns[0].btnText.color = NormalColor;
-
-            UpdateStoreSelection(0);
+            UpdatePanelStatus(TakeIndex);
         }
+
+        ConstantsHolder.xanaConstants.currentButtonIndex = buttonIndex;
+        UpdateStoreSelection(buttonIndex);
 
         if (PlayerPrefs.GetInt("presetPanel") == 1)
         {
@@ -1479,6 +1471,27 @@ public class InventoryManager : MonoBehaviour
 
         DisableColorPanels();
     }
+    void DisableAllItems()
+    {
+        // Close Panels
+        MainPanelCloth.SetActive(false);
+        MainPanelAvatar.SetActive(false);
+        MainPanelShop.SetActive(false);
+
+        // Update Button Colors
+        for (int i = 0; i < headerBtns.Count; i++)
+        {
+            headerBtns[i].btnLine.SetActive(false);
+            headerBtns[i].btnText.color = NormalColor;
+        }
+    }
+    void UpdatePanelStatus(int activePanleIndex)
+    {
+        headerBtns[activePanleIndex].btn.GetComponent<SubBottons>().ClickBtnFtn(buttonIndex);
+        headerBtns[activePanleIndex].btnLine.SetActive(true);
+        headerBtns[activePanleIndex].btnText.color = HighlightedColor;
+    }
+
 
 
     //public void UpdateUserCoins()
@@ -1547,6 +1560,64 @@ public class InventoryManager : MonoBehaviour
                 // Debug.LogError("second time :- " + m_GetIndex);
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex + 8].id, false);
+            }
+
+        }
+        else
+        {
+            // Debug.LogError("second time :- " + m_GetIndex);
+            StartCoroutine(WaitForAPICallCompleted(m_GetIndex));
+        }
+    }
+    public void OpenShopContainerPanel(int m_GetIndex)
+    {
+        //functionInd == name == dataIndex
+        //1 == Outer == 3
+        //2 == Bottom == 5
+        //3 == Shoes == 7
+        //0 == Hair == 8
+
+        switch (m_GetIndex)
+        {
+            case 0:
+                IndexofPanel = 8;
+                panelIndex = 27;
+                break;
+
+            case 1:
+                IndexofPanel = 3;
+                panelIndex = 28;
+                break;
+
+            case 2:
+                IndexofPanel = 5;
+                panelIndex = 29;
+                break;
+
+            case 3:
+                IndexofPanel = 7;
+                panelIndex = 30;
+                break;
+
+            default:
+                IndexofPanel = 8;
+                panelIndex = 27;
+                break;
+        }
+
+        buttonIndex = m_GetIndex;
+        for (int i = 0; i < ShopPanel.Length; i++)
+        {
+            ShopPanel[i].SetActive(false);
+        }
+        ShopPanel[m_GetIndex].SetActive(true);
+        if (CheckAPILoaded)
+        {
+            if (SubCategoriesList.Count > 0)
+            {
+                // Debug.LogError("second time :- " + m_GetIndex);
+                //print(SubCategoriesList[m_GetIndex + 8].id);
+                SubmitAllItemswithSpecificSubCategory(SubCategoriesList[IndexofPanel].id, false);
             }
 
         }
@@ -2475,66 +2546,74 @@ public class InventoryManager : MonoBehaviour
             SliderColor,
             AvatarBtns,
             WearableBtns,
+            ShopHair,
+            ShopOuter,
+            ShopBottom,
+            ShopShoes,
             None
         }
     }
 
+    #region Old Purchasing Code
     // Purchase Item Starts Here
-    private void SubmitPurchaseAPI(string[] TakeArrayofBuyItems)
-    {
-        var result = string.Join(",", TakeArrayofBuyItems);
-        result = "[" + result + "]";
-        ClassforPurchaseAPI purchaseCLassObj = new ClassforPurchaseAPI();
-        string bodyJson = JsonUtility.ToJson(purchaseCLassObj.CreateTOJSON(result)); ;
-        StartCoroutine(HitPurchaseAPI(ConstantsGod.API_BASEURL + ConstantsGod.PurchasedAPI, bodyJson));
-    }
-    IEnumerator HitPurchaseAPI(string url, string Jsondata)
-    {
-        var request = new UnityWebRequest(url, "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
-        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        request.SendWebRequest();
-        while (request.isDone)
-        {
-            yield return null;
-        }
-        ClassforPurchaseDataExtract PurchaseDataExtractObj = new ClassforPurchaseDataExtract();
-        PurchaseDataExtractObj = PurchaseDataExtractObj.CreateFromJSON(request.downloadHandler.text);
-        if (!request.isHttpError && !request.isNetworkError)
-        {
-            if (request.error == null)
-            {
-                if (PurchaseDataExtractObj.success == true)
-                {
-                    RefreshDefault();
-                    SubmitUserDetailAPI();
-                    SubmitDefaultAPI();
-                }
-            }
-        }
-        else
-        {
-            if (request.isNetworkError)
-            {
-                print("Error Accured " + request.error.ToUpper());
-            }
-            else
-            {
-                if (request.error != null)
-                {
-                    if (PurchaseDataExtractObj.success == false)
-                    {
-                        print("Hey success false " + PurchaseDataExtractObj.msg);
-                    }
-                }
-            }
-        }
-        request.Dispose();
+    //private void SubmitPurchaseAPI(string[] TakeArrayofBuyItems)
+    //{
+    //    var result = string.Join(",", TakeArrayofBuyItems);
+    //    result = "[" + result + "]";
+    //    ClassforPurchaseAPI purchaseCLassObj = new ClassforPurchaseAPI();
+    //    string bodyJson = JsonUtility.ToJson(purchaseCLassObj.CreateTOJSON(result)); ;
+    //    StartCoroutine(HitPurchaseAPI(ConstantsGod.API_BASEURL + ConstantsGod.PurchasedAPI, bodyJson));
+    //}
+    //IEnumerator HitPurchaseAPI(string url, string Jsondata)
+    //{
+    //    var request = new UnityWebRequest(url, "POST");
+    //    byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
+    //    request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+    //    request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type", "application/json");
+    //    request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+    //    request.SendWebRequest();
+    //    while (request.isDone)
+    //    {
+    //        yield return null;
+    //    }
+    //    ClassforPurchaseDataExtract PurchaseDataExtractObj = new ClassforPurchaseDataExtract();
+    //    PurchaseDataExtractObj = PurchaseDataExtractObj.CreateFromJSON(request.downloadHandler.text);
+    //    if (!request.isHttpError && !request.isNetworkError)
+    //    {
+    //        if (request.error == null)
+    //        {
+    //            if (PurchaseDataExtractObj.success == true)
+    //            {
+    //                RefreshDefault();
+    //                SubmitUserDetailAPI();
+    //                SubmitDefaultAPI();
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (request.isNetworkError)
+    //        {
+    //            print("Error Accured " + request.error.ToUpper());
+    //        }
+    //        else
+    //        {
+    //            if (request.error != null)
+    //            {
+    //                if (PurchaseDataExtractObj.success == false)
+    //                {
+    //                    print("Hey success false " + PurchaseDataExtractObj.msg);
+    //                }
+    //            }
+    //        }
+    //    }
+    //    request.Dispose();
 
-    }
+    //}
+
+    #endregion
+
     void RefreshDefault()
     {
         CategorieslistHeads.Clear();
@@ -3162,7 +3241,10 @@ public class InventoryManager : MonoBehaviour
         List<ItemDetail> TempitemDetail;
         TempitemDetail = new List<ItemDetail>();
         Transform TempSubcategoryParent = null;
-        //    //Debug.Log("<color=red>Planel Index: " + IndexofPanel + "</color>");
+
+        if (panelIndex > 26) // After 26 Shop panels started
+            IndexofPanel = panelIndex;
+
         switch (IndexofPanel)
         {
             case 0: //TempSubcategoryParent = ParentOfBtnsForHeads;  //TempEnumVar = EnumClass.CategoryEnum.Head;  // CategorieslistHeads = TempitemDetail;
@@ -3389,8 +3471,7 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
             case 16: // EyeLashes
-                {// EyeBrowPoints
-
+                {
                     //TempSubcategoryParent = ParentOfBtnsAvatarEyeLashes;
                     myIndexInList = 11;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
@@ -3403,6 +3484,85 @@ public class InventoryManager : MonoBehaviour
                         else
                             AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                     }
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
+                    break;
+                }
+                
+            case 27: // Shop-Hair
+                {
+                    myIndexInList = IndexofPanel;
+                    TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
+                    CategorieslistOuter = TempitemDetail;
+                    TempEnumVar = EnumClass.CategoryEnum.ShopHair;
+
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
+                    break;
+                }
+            case 28: // Shop-Outer
+                {
+                    myIndexInList = IndexofPanel;
+                    TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
+                    CategorieslistOuter = TempitemDetail;
+                    TempEnumVar = EnumClass.CategoryEnum.ShopOuter;
+
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
+                    break;
+                }
+            case 29: // Shop-Bottom
+                {
+                    //TempSubcategoryParent = ParentOfBtnsForOuter;
+                    myIndexInList = IndexofPanel;
+                    TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
+                    CategorieslistOuter = TempitemDetail;
+                    TempEnumVar = EnumClass.CategoryEnum.ShopBottom;
+
+                    if (previousCoroutine != null)
+                    {
+                        _switchTab = true;
+                        StopCoroutine(previousCoroutine);
+                    }
+
+                    previousCoroutine = GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail);
+                    yield return new WaitForEndOfFrame();
+                    _switchTab = false;
+                    StartCoroutine(previousCoroutine);
+                    break;
+                }
+            case 30: // Shop-Shoes
+                {
+                    //TempSubcategoryParent = ParentOfBtnsForOuter;
+                    myIndexInList = IndexofPanel;
+                    TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
+                    CategorieslistOuter = TempitemDetail;
+                    TempEnumVar = EnumClass.CategoryEnum.ShopShoes;
+
                     if (previousCoroutine != null)
                     {
                         _switchTab = true;
@@ -3435,23 +3595,37 @@ public class InventoryManager : MonoBehaviour
     bool _switchTab = false;
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
+        int _ShopItemCountForTesting = 0;
         int loopStart = GetDownloadedNumber(TempEnumVar);
-        //_switchTab = false;
-        //Debug.Log("Waqas : Start Coroutine: ");
-
         for (int i = loopStart; i < dataListOfItems.Count; i++)
         {
             if (_switchTab)
             {
-                //Debug.Log("Waqas : Switch Tab : Breaking Loop" + i);
                 break;
             }
             else
             {
-                //Debug.Log("Waqas : For Loop: " + i);
-                InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                if(_shopOpened && !dataListOfItems[i].isPurchased && !dataListOfItems[i].userPurchased)
+                {
+                    _ShopItemCountForTesting++;
+                    InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                }
+                else if(!_shopOpened && (dataListOfItems[i].isPurchased || dataListOfItems[i].userPurchased))
+                {
+                    InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                }
+                
             }
             yield return new WaitForEndOfFrame();
+        }
+
+        if (_shopOpened)
+        {
+            if (_ShopItemCountForTesting == 0)
+            {
+                parentObj.transform.parent.GetChild(1).gameObject.SetActive(true);
+                Debug.LogError("No Item Available in Shop");
+            }
         }
     }
 
@@ -3471,7 +3645,8 @@ public class InventoryManager : MonoBehaviour
         abc.isOccupied = useDefaultValue ? "False" : dataListOfItems[objId].isOccupied.ToString();
         abc.isPaid = useDefaultValue ? "False" : dataListOfItems[objId].isPaid.ToString();
         abc.isPurchased = useDefaultValue ? "true" : dataListOfItems[objId].isPurchased.ToString();
-        abc.name = useDefaultValue ? objName : dataListOfItems[objId].name.ToString(); ;
+        abc.userPurchased = useDefaultValue ? "false" : dataListOfItems[objId].userPurchased.ToString();
+        abc.name = useDefaultValue ? objName : dataListOfItems[objId].name.ToString();
         abc.price = useDefaultValue ? "0" : dataListOfItems[objId].price;
         abc.categoryId = useDefaultValue ? "0" : dataListOfItems[objId].categoryId.ToString();
         abc.subCategory = useDefaultValue ? "0" : dataListOfItems[objId].subCategoryId.ToString();
@@ -3480,6 +3655,11 @@ public class InventoryManager : MonoBehaviour
 
         UpdateCategoryDownloadedInt(TempEnumVar);
         L_ItemBtnObj.SetActive(true);
+        if (_shopOpened)
+        {
+            abc.PriceTxt.gameObject.SetActive(true);
+            abc._coinImg.gameObject.SetActive(true);
+        }
         if (abc.transform.parent.gameObject.activeSelf)
         {
             abc.StartRun();
@@ -3579,6 +3759,14 @@ public class InventoryManager : MonoBehaviour
             case EnumClass.CategoryEnum.LipsAvatar:
                 return lipsDwonloadedCount;
 
+            case EnumClass.CategoryEnum.ShopHair:
+                return shopHairDwonloadedCount;
+            case EnumClass.CategoryEnum.ShopOuter:
+                return shopOuterDwonloadedCount;
+            case EnumClass.CategoryEnum.ShopBottom:
+                return shopBottomDwonloadedCount;
+            case EnumClass.CategoryEnum.ShopShoes:
+                return shopShoesDwonloadedCount;
         }
         return 0;
     }
@@ -3678,6 +3866,27 @@ public class InventoryManager : MonoBehaviour
                     break;
                 }
 
+                case EnumClass.CategoryEnum.ShopHair:
+                {
+                    shopHairDwonloadedCount++;
+                    break;
+                }
+                case EnumClass.CategoryEnum.ShopOuter:
+                {
+                    shopOuterDwonloadedCount++;
+                    break;
+                }
+                case EnumClass.CategoryEnum.ShopBottom:
+                {
+                    shopBottomDwonloadedCount++;
+                    break;
+                }
+                case EnumClass.CategoryEnum.ShopShoes:
+                {
+                    shopShoesDwonloadedCount++;
+                    break;
+                }
+           
         }
     }
 

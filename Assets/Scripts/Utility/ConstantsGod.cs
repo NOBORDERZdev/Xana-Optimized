@@ -28,10 +28,10 @@ public class ConstantsGod
     public static string EMOTE_SELECTION_INDEX = "EmoteAnimSelectionIndex";
     public static string SELECTED_ANIMATION_NAME = "selectedAnimName";
 
-    public static string POSTTIMESTAMP = "post time";
-    public static string POSTDESCRIPTION = "post description";
-    public static string POSTUSERNAME = "post username";
-    public static string POSTMEMBERSCOUNT = "member count";
+    //public static string POSTTIMESTAMP = "post time";
+    //public static string POSTDESCRIPTION = "post description";
+    //public static string POSTUSERNAME = "post username";
+    //public static string POSTMEMBERSCOUNT = "member count";
 
 
     public static string NFTTHUMB = "nft thumb";
@@ -56,7 +56,8 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
+    //public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
+    public static string GETALLSTOREITEMS = "/item/v5/all-items"; // Added new Parameter for Purchasing Items
 
 
 

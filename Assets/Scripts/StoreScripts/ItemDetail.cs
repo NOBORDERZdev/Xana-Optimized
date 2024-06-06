@@ -31,11 +31,14 @@ public class ItemDetail : MonoBehaviour
     public string createdAt;
     public string updatedAt;
     public string[] itemTags;
+    public string userPurchased;
+
     public Image SelectImg;
     public Text PriceTxt;
     public int MyIndex;
     public bool SelectedBool;
     public Image _iconImg;
+    public Image _coinImg;
     private string _clothetype;
     private string DefaultTempString;
     [HideInInspector]

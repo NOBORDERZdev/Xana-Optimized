@@ -11,17 +11,21 @@ public class ButtonScript : MonoBehaviour
 
     public int Index;
     public Text BtnTxt;
-
+    public bool IsShopBtn;
     // Start is called before the first frame update
     InventoryManager inventoryManager;
     void Start()
     {
         inventoryManager = InventoryManager.instance;
-
-        this.gameObject.GetComponent<Button>().onClick.AddListener(BtnClicked);
-        this.gameObject.GetComponent<Button>().onClick.AddListener(ButtonPressed);
+        if (IsShopBtn)
+            this.gameObject.GetComponent<Button>().onClick.AddListener(ShopSubBtnClicked);
+        else
+        {
+            this.gameObject.GetComponent<Button>().onClick.AddListener(BtnClicked);
+            this.gameObject.GetComponent<Button>().onClick.AddListener(ButtonPressed);
+            inventoryManager.UpdateXanaConstants();
+        }
         //InventoryManager.instance.UpdateXanaConstants();
-        inventoryManager.UpdateXanaConstants();
     }
 
     public void BtnClicked()
@@ -103,6 +107,26 @@ public class ButtonScript : MonoBehaviour
 
     }
 
+    public void ShopSubBtnClicked()
+    {
+
+        if (ConstantsHolder.xanaConstants.currentButtonIndex == Index)
+        {
+            // If click on the same panel Do Nothing & return
+            return;
+        }
+        // Items which are not downloaded stop them to download
+        // because new category is opened
+        ConstantsHolder.xanaConstants.currentButtonIndex = Index;
+        
+        inventoryManager.StopAllCoroutines();
+        inventoryManager.UpdateXanaConstants();
+        inventoryManager.UpdateStoreSelection(Index);
+
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
+        GetComponentInParent<SubBottons>().ClickBtnFtn(Index);
+    }
 
     void ResetSelectedItems()
     {
