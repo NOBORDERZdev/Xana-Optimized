@@ -1,6 +1,8 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class JjWorldChanger : MonoBehaviour
 {
@@ -15,9 +17,11 @@ public class JjWorldChanger : MonoBehaviour
     public bool isBuilderWorld;
 
     Collider collider;
+
+    bool reSetCollider = false;
+
     private GameObject triggerObject;
     public bool isEnteringPopup;
-
     private void Start()
     {
         collider = GetComponent<Collider>();
@@ -25,31 +29,9 @@ public class JjWorldChanger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-
         triggerObject = other.gameObject;
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            // For toyota bussiness meeting world only
-            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo") && ConstantsHolder.xanaConstants)
-            {
-                FindObjectOfType<VoiceManager>().SetVoiceGroup(5);
-                //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-                //    5);
-
-                if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
-                    return;
-                if (FB_Notification_Initilizer.Instance.actorType != FB_Notification_Initilizer.ActorType.CompanyUser &&
-                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-                {
-                    return;
-                }
-                else if (FB_Notification_Initilizer.Instance.actorType == FB_Notification_Initilizer.ActorType.CompanyUser &&
-                                       NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-                {
-                    return;
-                }
-            }
-
             GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
             if (ReferencesForGamePlay.instance.m_34player)
             {
@@ -61,42 +43,23 @@ public class JjWorldChanger : MonoBehaviour
             else
                 GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 1);
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (triggerObject.GetComponent<PhotonView>().IsMine)
-            FindObjectOfType<VoiceManager>().SetVoiceGroup(1);
-        //triggerObject.GetComponent<ArrowManager>().ChangeVoiceGroup(triggerObject.GetComponent<PhotonView>().ViewID,
-        //            0);
     }
-
     public void RedirectToWorld()
     {
         if (triggerObject.CompareTag("PhotonLocalPlayer") && triggerObject.GetComponent<PhotonView>().IsMine)
         {
+            //Gautam Commented below code due to shows pop up again and again.
+
+            //collider.enabled = false;
             if (checkWorldComingSoon(WorldName) || isBuilderWorld)
             {
-
-                // For toyota bussiness meeting world only
-                if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("D_Infinity_Labo"))
-                {
-                    if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
-                    {// for customer
-                        NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
-                        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
-                    }
-                    else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
-                    { // for interviewer
-                        NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
-                        triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
-                    }
-
-                    ConstantsHolder.xanaConstants.isBackToParentScane = true;
-                }
-
                 this.StartCoroutine(swtichScene(WorldName));
             }
+            //else
+            //{
+            //    this.StartCoroutine(ResetColider());
+            //}
         }
     }
 

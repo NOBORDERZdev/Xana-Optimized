@@ -64,7 +64,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "15";  //13
+        string gameVersion = "13";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -375,12 +375,9 @@ namespace Photon.Pun.Demo.PunBasics
             }
             for (int x = 0; x < playerobjects.Count; x++)
             {
-                if (playerobjects[x] != null && playerobjects[x].GetComponent<PhotonView>() != null)
+                if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
-                    if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
-                    {
-                        playerobjects.RemoveAt(x);
-                    }
+                    playerobjects.RemoveAt(x);
                 }
             }
         }

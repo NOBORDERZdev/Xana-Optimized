@@ -1,14 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
-using System.Collections;
-using Photon.Realtime;
-using System.Text;
-using UnityEngine.Networking;
-using System.Collections.Generic;
-using System;
-using Newtonsoft.Json;
-
 public class InRoomSoundHandler : MonoBehaviour
 {
     public enum TriggerType { RoomTrigger, SoundTrigger }
@@ -17,8 +9,8 @@ public class InRoomSoundHandler : MonoBehaviour
     [SerializeField] string roomName = "";
     public static UnityAction<bool, string> playerInRoom;
     public static UnityAction<bool> soundAction;
-    int RoomId = 4;
-    public int playerCount;
+    private int _roomId = 4;
+    public int PlayerCount;
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
@@ -46,7 +38,7 @@ public class InRoomSoundHandler : MonoBehaviour
             if (roomName == "Home" && triggerType.Equals(TriggerType.RoomTrigger))
             {
                 if (NFT_Holder_Manager.instance.meetingTxtUpdate != null)
-                    NFT_Holder_Manager.instance.meetingTxtUpdate.tmp.text = "";
+                    NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
             }
         }
     }
@@ -54,20 +46,20 @@ public class InRoomSoundHandler : MonoBehaviour
     {
         if (NFT_Holder_Manager.instance.meetingTxtUpdate == null) return;
 
-        if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
+        if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
-            Debug.LogError("Join Meeting Now!");
+            //Debug.LogError("Join Meeting Now!");
         }
-        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
+        else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
-            Debug.LogError("Meeting Ended");
+            //Debug.LogError("Meeting Ended");
         }
-        else if (NFT_Holder_Manager.instance.meetingStatus.tms.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
+        else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
         {
             NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
-            Debug.LogError("House Full");
+            //Debug.LogError("House Full");
         }
     }
 

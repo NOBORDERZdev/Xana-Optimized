@@ -6,18 +6,18 @@ using UnityEngine.Networking;
 
 public class ThaMeetingTxtUpdate : MonoBehaviour
 {
-    public TextMeshProUGUI tmp;
+    public TextMeshProUGUI MeetingRoomText;
 
-    private MeshRenderer portalMesh;
-    private BoxCollider boxCollider;
+    private MeshRenderer _portalMesh;
+    private BoxCollider _boxCollider;
 
     // Start is called before the first frame update
     void Awake()
     {
-        //tmp.text = "Join Meeting Now!";
+        MeetingRoomText.text = "";
         NFT_Holder_Manager.instance.meetingTxtUpdate = this;
-        portalMesh = GetComponent<MeshRenderer>();
-        boxCollider = GetComponent<BoxCollider>();
+        _portalMesh = GetComponent<MeshRenderer>();
+        _boxCollider = GetComponent<BoxCollider>();
     }
 
     private void OnEnable()
@@ -27,10 +27,10 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
 
     public void UpdateMeetingTxt(string data)
     {
-        tmp.text = "";
-        tmp.text = data;
+        MeetingRoomText.text = "";
+        MeetingRoomText.text = data;
         // tmp.color = txtColor;
-        tmp.alpha = 1f;
+        MeetingRoomText.alpha = 1f;
     }
 
     public async void WrapObjectOnOff()
@@ -44,7 +44,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             await request.SendWebRequest();
             if (request.isNetworkError || request.isHttpError)
             {
-                Debug.LogError("Error is" + request.error);
+                Debug.Log("Error is" + request.error);
             }
             else
             {
@@ -52,9 +52,9 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
                 data.Append(request.downloadHandler.text);
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
 
-                Debug.LogError("Wrap Object Status is :: " + wrapObjectClass.data);
-                portalMesh.enabled = wrapObjectClass.data;
-                boxCollider.enabled = wrapObjectClass.data;
+                Debug.Log("Wrap Object Status is :: " + wrapObjectClass.data);
+                _portalMesh.enabled = wrapObjectClass.data;
+                _boxCollider.enabled = wrapObjectClass.data;
             }
         }
     }

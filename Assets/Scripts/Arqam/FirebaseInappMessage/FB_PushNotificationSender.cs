@@ -20,7 +20,7 @@ public class FB_PushNotificationSender : MonoBehaviour
         StartCoroutine(CallAPISequentially(title, body)); ;
     }
 
-    IEnumerator CallAPISequentially(string title, string body)
+    private IEnumerator CallAPISequentially(string title, string body)
     {
         int length = FB_Notification_Initilizer.Instance.fbTokens.Count;
         for (int i = 0; i < length; i++)
@@ -32,10 +32,10 @@ public class FB_PushNotificationSender : MonoBehaviour
                 // Call your API for each item
                 yield return StartCoroutine(SendNotification(title, body));
             }
-        } 
+        }
     }
 
-    IEnumerator SendNotification(string title, string body)
+    private IEnumerator SendNotification(string title, string body)
     {
         string url = "https://fcm.googleapis.com/fcm/send";
         string jsonBody = "{\"to\": \"" + recipientToken + "\", \"notification\": {\"title\": \"" + title + "\", \"body\": \"" + body + "\"}}";
@@ -52,13 +52,12 @@ public class FB_PushNotificationSender : MonoBehaviour
 
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.LogError("Error sending notification: " + www.error);
+                Debug.Log("Error sending notification: " + www.error);
             }
             else
             {
-                Debug.Log("Notification sent successfully!");
+                // Debug.Log("Notification sent successfully!");
             }
         }
     }
-
 }

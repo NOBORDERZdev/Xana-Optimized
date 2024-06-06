@@ -48,6 +48,7 @@ public class UserPostFeature : MonoBehaviour
         }
         if (GameManager.Instance.moodManager.PostMood)
         {
+            RetrievedPostPlayer.data.text_mood = moodToSend;
             GameManager.Instance.moodManager.PostMood = false;
             // Debug.LogError("---> "+moodToSend+"   --->"+ GameManager.Instance.moodManager.LastMoodSelected);
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
@@ -56,7 +57,21 @@ public class UserPostFeature : MonoBehaviour
             GameManager.Instance.moodManager.LastMoodSelected = "";
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        {
+            AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        }
+    }
+
+    private void AssignRandomAnimationIfUserNotPosted(AnimatorOverrideController animatorOverrideController, Animator animator)
+    {
+        Actor actor=animator.transform.GetComponent<Actor>();
+        if (!Actor.RandAnimKeys.TryGetValue(actor.ActorId, out string randomAnimKey) || string.IsNullOrEmpty(randomAnimKey))
+        {
+            string randomAnimName = GameManager.Instance.ActorManager.actorBehaviour[GameManager.Instance.ActorManager.GetPostRandomDefaultAnim()].Name;
+
+            Actor.RandAnimKeys[actor.ActorId] = randomAnimName;
+        }
+        GameManager.Instance.moodManager.SetMoodPosted(Actor.RandAnimKeys[actor.ActorId], true, animatorOverrideController, animator);
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -109,7 +124,7 @@ public class UserPostFeature : MonoBehaviour
         while (ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN")
             yield return new WaitForSeconds(0.5f);
 
-        while (PlayerPrefs.GetString("UserNameAndPassword") == "")
+        while (ConstantsHolder.userId.IsNullOrEmpty())
             yield return new WaitForSeconds(0.5f);
 
         string FinalUrl = PrepareApiURL("Receive") + ConstantsHolder.userId;
@@ -148,8 +163,11 @@ public class UserPostFeature : MonoBehaviour
                     _postBubbleFlag = false;
                     Bubble.gameObject.SetActive(false);
                 }
-                textElement.text = RetrievedPostPlayer.data.text_post;
-                InsertNewlines(textElement);
+                if (!RetrievedPostPlayer.data.text_post.IsNullOrEmpty())
+                {
+                    textElement.text = RetrievedPostPlayer.data.text_post;
+                    InsertNewlines(textElement);
+                }
 
                 if (RetrievedPostPlayer.data.text_mood != "null" && RetrievedPostPlayer.data.text_mood != null && RetrievedPostPlayer.data.text_mood != "")
                 {
@@ -159,7 +177,9 @@ public class UserPostFeature : MonoBehaviour
                     GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+                {
+                    AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+                }
             }
             www.Dispose();
         }
@@ -190,7 +210,9 @@ public class UserPostFeature : MonoBehaviour
             GameManager.Instance.mainCharacter.GetComponent<Actor>().SetNewBehaviour(GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == RetrievedPostPlayer.data.text_mood));
         }
         else
-            GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        {
+            AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        }
     }
 
 
@@ -201,6 +223,7 @@ public class UserPostFeature : MonoBehaviour
 
     IEnumerator GetLatestPostOfFriendFromServer(int friend_id, PlayerPostBubbleHandler friendBubbleRef, Actor friendActor)
     {
+        friendActor.ActorId = friend_id;
         string FinalUrl = PrepareApiURL("Receive") + friend_id;
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {
@@ -250,11 +273,13 @@ public class UserPostFeature : MonoBehaviour
                     }
                     else
                     {
-                        GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
+                        AssignRandomAnimationIfUserNotPosted(friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
                     }
                 }
                 else
-                    GameManager.Instance.moodManager.SetMoodPosted("Fun Happy", false, friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
+                {
+                    AssignRandomAnimationIfUserNotPosted(friendActor.overrideController, friendActor.transform.GetComponent<Animator>());
+                }
             }
             www.Dispose();
         }

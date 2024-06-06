@@ -2,37 +2,25 @@ using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
     public Recorder recorder;
-    //public Speaker speaker;
     private byte currentGroup;
-
-    //void Start()
-    //{
-    //    BuilderEventManager.AfterPlayerInstantiated += UpdateVoiceGroup;
-    //}
-    //private void OnDisable()
-    //{
-    //    BuilderEventManager.AfterPlayerInstantiated -= UpdateVoiceGroup;
-    //}
-
-    //private void UpdateVoiceGroup()
-    //{
-    //    Debug.LogError("Recorder or Speaker component is missing.");
-    //    if (recorder == null /*|| speaker == null*/)
-    //    {
-    //        Debug.LogError("Recorder or Speaker component is missing.");
-    //        return;
-    //    }
-
-    //    if (PhotonNetwork.InRoom)
-    //    {
-    //        SetVoiceGroup(1); // Default group for all users initially
-    //    }
-    //}
-
+    private void Start()
+    {
+        BuilderEventManager.AfterPlayerInstantiated += AssignReference;
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
+    }
+    private void AssignReference()
+    {
+        NFT_Holder_Manager.instance.voiceManager = this;
+        recorder = GameObject.FindObjectOfType<Recorder>();
+    }
     public void SetVoiceGroup(byte newGroup)
     {
         byte oldGroup = currentGroup;
@@ -59,27 +47,4 @@ public class VoiceManager : MonoBehaviourPunCallbacks
             Debug.LogError("Operation ChangeGroups not allowed because the client is not connected to the Game Server.");
         }
     }
-
-    //[PunRPC]
-    //public void ChangePlayerVoiceGroup(int playerID, byte group)
-    //{
-    //    if (PhotonNetwork.LocalPlayer.ActorNumber == playerID)
-    //    {
-    //        SetVoiceGroup(group);
-    //    }
-    //}
-
-    //// Method to call from the game logic to change voice groups for specific players
-    //public void ChangeVoiceGroupForPlayer(Player player, byte newGroup)
-    //{
-    //    photonView.RPC("ChangePlayerVoiceGroup", player, player.ActorNumber, newGroup);
-    //}
-
-    //public override void OnJoinedRoom()
-    //{
-    //    base.OnJoinedRoom();
-    //    SetVoiceGroup(0); // Set default group when joined room
-    //}
-
-
 }

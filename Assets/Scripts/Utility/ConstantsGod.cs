@@ -56,7 +56,7 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ "/item/v3/all-items";
+    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
 
 
 
@@ -213,6 +213,26 @@ public class ConstantsGod
     public static readonly string GetGroupDetailsAPI = "/item/get-sets";
     public static readonly string SaveNonce = "/auth/save-user-nonce";
 
+
+    #endregion
+
+
+    #region XENY Api
+
+    public static string GetUserXenyCoinsApi
+    {
+        get
+        {
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                return "https://prod-backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+            else
+            {
+                return "https://backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+        }
+    }
 
     #endregion
 

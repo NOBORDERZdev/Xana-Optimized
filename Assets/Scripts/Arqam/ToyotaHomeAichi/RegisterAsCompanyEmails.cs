@@ -4,15 +4,13 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-
-
 public class RegisterAsCompanyEmails : MonoBehaviour
 {
-    [SerializeField] int thaCompanyId;
-    [SerializeField] int thaPageNumber;
-    [SerializeField] int thaPageSize;
+    [SerializeField] private int _thaCompanyId;
+    [SerializeField] private int _thaPageNumber;
+    [SerializeField] private int _thaPageSize;
     
-    private string toyotaUserEmail;
+    private string _toyotaUserEmail;
 
     private void Start()
     {
@@ -25,14 +23,14 @@ public class RegisterAsCompanyEmails : MonoBehaviour
 
     private void UserLoggedIn(string userEmail)
     {
-        toyotaUserEmail = userEmail;
+        _toyotaUserEmail = userEmail;
         GetEmailData();
     }
 
     public async void GetEmailData()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + thaCompanyId + "/" + thaPageNumber + "/" + thaPageSize);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaCompanyId + "/" + _thaPageNumber);
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
@@ -60,9 +58,8 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     // Call when user logged In
     private void SetEmailData()
     {
-        FB_Notification_Initilizer.Instance.InitPushNotification(toyotaUserEmail);
+        FB_Notification_Initilizer.Instance.InitPushNotification(_toyotaUserEmail);
     }
-
 
     #region OutputClasses
     public class THAJson
