@@ -41,9 +41,6 @@ public class StartPoint : MonoBehaviour
         StartCoroutine(StartGame());
     }
 
-    void TriggerStartGame(){ 
-        StartCoroutine(StartGame());    
-    }
 
     void EnableCollider()
     {
@@ -57,9 +54,9 @@ public class StartPoint : MonoBehaviour
         ?.SpawnObject.GetComponent<FinishPoint>();
     }
 
-    [PunRPC]
     IEnumerator StartGame()
     {
+        print("Start GAME Call");
         BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         yield return new WaitForSeconds(3);
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("Race Start...", 2, true);
