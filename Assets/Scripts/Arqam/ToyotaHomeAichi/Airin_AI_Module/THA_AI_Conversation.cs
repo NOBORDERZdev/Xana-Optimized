@@ -66,12 +66,14 @@ public class THA_AI_Conversation : MonoBehaviour
 
         UnityWebRequest request = UnityWebRequest.Get(url);
         request.downloadHandler = new DownloadHandlerBuffer();
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+            yield return null;
         if (request.result == UnityWebRequest.Result.Success)
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
             //Debug.LogError("Message: " + _airinFeedback.data);
-            XanaChatSystem.instance.ShowAirinMsg("Airin" ,_airinFeedback.data);
+            XanaChatSystem.instance.ShowAirinMsg("Airin", _airinFeedback.data);
             _animator.SetBool("isChating", false);
             yield return null;
         }
@@ -80,6 +82,6 @@ public class THA_AI_Conversation : MonoBehaviour
 
         request.Dispose();
     }
-  
+
 
 }
