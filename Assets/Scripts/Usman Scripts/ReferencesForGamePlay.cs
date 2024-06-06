@@ -356,7 +356,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                    
                 }
 
-                if (PlayerCount == 2/*RoomMaxPlayerCount*/){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
                     {
                         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();

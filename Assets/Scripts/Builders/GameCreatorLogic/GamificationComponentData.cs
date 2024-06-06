@@ -393,7 +393,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
-        if (PhotonNetwork.CountOfPlayers == 2 && PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers && PhotonNetwork.IsMasterClient)
         {
             new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
             PhotonNetwork.CurrentRoom.IsVisible = false;

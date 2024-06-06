@@ -1,6 +1,8 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class StartPoint : MonoBehaviour
 {
@@ -36,7 +38,12 @@ public class StartPoint : MonoBehaviour
     void DisableCollider()
     {
         //triggerCollider.SetActive(false);
-        StartCoroutine(StartGame());
+        gameObject.GetComponent<PhotonView>().RPC(nameof(TriggerStartGame),RpcTarget.All);
+        //StartCoroutine(StartGame());
+    }
+
+    void TriggerStartGame(){ 
+        StartCoroutine(StartGame());    
     }
 
     void EnableCollider()
@@ -51,6 +58,7 @@ public class StartPoint : MonoBehaviour
         ?.SpawnObject.GetComponent<FinishPoint>();
     }
 
+    [PunRPC]
     IEnumerator StartGame()
     {
         BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
