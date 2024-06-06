@@ -666,7 +666,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-4239280375737890726
+--- !u!114 &-2866400564130141127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,19 +675,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 1340121080983441071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eb7590630a9ecd4fbebc3e6c1ce4dea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents: []
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  SpawnPoints:
+  - {fileID: 7554660424266354010}
+  - {fileID: 419641253818400644}
+  - {fileID: 2227751641935785716}
+  - {fileID: 7932406288400427862}
+  - {fileID: 6792359754850247197}
+  - {fileID: 9128923740113855848}
+  - {fileID: 6259278978952580732}
+  - {fileID: 6314189699422873814}
+  - {fileID: 6712453203133898645}
+  - {fileID: 723845267048945877}
+  - {fileID: 1342358046581868077}
+  - {fileID: 964737935750429710}
+  - {fileID: 482579265213747778}
+  - {fileID: 8928362484228430641}
+  - {fileID: 8474319470205968687}
+  FinishPointItemID: 
+  triggerCollider: {fileID: 3922072639761231410}
 --- !u!114 &2907248149606871112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -703,5 +711,10 @@ MonoBehaviour:
 --- !u!4 &1860762528837506069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4921872830565811825, guid: cc36a5b9f8bd4084f875488f514c5ba1, type: 3}
+  m_PrefabInstance: {fileID: 6745478454645494372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3922072639761231410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7778491314698271830, guid: cc36a5b9f8bd4084f875488f514c5ba1, type: 3}
   m_PrefabInstance: {fileID: 6745478454645494372}
   m_PrefabAsset: {fileID: 0}
