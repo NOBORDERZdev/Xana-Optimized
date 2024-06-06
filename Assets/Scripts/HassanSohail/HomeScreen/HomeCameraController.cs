@@ -12,7 +12,7 @@ public class HomeCameraController : MonoBehaviour
     float ZoomSpeedTouch = 0.1f;
     float ZoomSpeedMouse = 0.5f;
     float[] BoundsX = new float[]{1f, 7f};
-    float[] BoundsZ = new float[]{-7f, -5f};
+    float[] BoundsZ = new float[]{-6f, -5f};
     float[] ZoomBounds = new float[]{35f, 45f};
     
     private Camera cam;
