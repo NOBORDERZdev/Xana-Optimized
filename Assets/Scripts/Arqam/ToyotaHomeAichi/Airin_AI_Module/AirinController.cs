@@ -1,6 +1,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +19,7 @@ public class AirinController : MonoBehaviour
     private float maxDistance = 10.0f;
     private Transform _player;
     private Quaternion _startRot;
+    private AnimatorController _animController;
     private Coroutine _distanceCor;
     private Coroutine _rotateCor;
     private enum RotateType { Linear, Smooth }
@@ -25,6 +27,7 @@ public class AirinController : MonoBehaviour
 
     private void Start()
     {
+        _animController = GetComponent<AnimatorController>();
         BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
     }
 
