@@ -158,7 +158,7 @@ public class XANAPartyManager : MonoBehaviour
             else
             {
                 print("master entering a GAME!");
-                yield return new WaitForSeconds(0);
+                yield return new WaitForSeconds(2);
             }
             
             MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
