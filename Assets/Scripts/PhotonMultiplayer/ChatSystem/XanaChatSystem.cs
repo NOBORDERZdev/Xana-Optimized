@@ -46,6 +46,8 @@ public class XanaChatSystem : MonoBehaviour
     private const string UsernamePrefs = "UsernamePref";
     [SerializeField]
     public string UserName { get; set; }
+    [HideInInspector]
+    public bool isChatOpen;
 
     [Header("UI Elements")]
     public GameObject chatButton;
@@ -156,10 +158,29 @@ public class XanaChatSystem : MonoBehaviour
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
 
+    public void ShowMsgLocally(string senderName, string msgData)
+    {
+            this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
+            this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
+    }
     public void ShowAirinMsg(string senderName, string msgData)
     {
-        this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
-        this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
+        // Split the text into lines
+        string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+        // Replace the first line with the AI response
+        if (lines.Length > 0)
+        {
+            lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
+        }
+        else
+        {
+            // If there are no lines, just set the text to the AI response
+            lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
+        }
+
+        this.CurrentChannelText.text = string.Join("\n", lines);
+        this.PotriatCurrentChannelText.text = string.Join("\n", lines);
     }
 
     public void ClearChatTxtForMeeting()
@@ -234,7 +255,6 @@ public class XanaChatSystem : MonoBehaviour
         //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
-    private bool isChatOpen;
 
     public void OpenCloseChatDialog()
     {
@@ -298,7 +318,7 @@ public class XanaChatSystem : MonoBehaviour
         }
         else if (!ConstantsHolder.xanaConstants.IsShowChatToAll)
         {  // When User Activated the Airin for conversation
-            ShowAirinMsg(UserName, removeBadWords);
+            ShowMsgLocally(UserName, removeBadWords);
             npcAlert?.Invoke(removeBadWords);
         }
         //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //

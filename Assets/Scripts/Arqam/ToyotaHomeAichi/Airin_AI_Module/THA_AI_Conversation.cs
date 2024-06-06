@@ -28,11 +28,20 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         _playerName = name;
         StartCoroutine(SetApiData());
+        StartCoroutine(EnableChatWindow());
+    }
+
+    private IEnumerator EnableChatWindow()
+    {
+        yield return new WaitForSeconds(2f);
+        if (!XanaChatSystem.instance.isChatOpen)
+            XanaChatSystem.instance.OpenCloseChatDialog();
     }
 
     private void ReplyUserMsg(string msg)
     {
         this.msg = msg;
+        XanaChatSystem.instance.ShowMsgLocally("Airin", "typing...");
         StartCoroutine(SetApiData());
     }
 
@@ -56,12 +65,14 @@ public class THA_AI_Conversation : MonoBehaviour
         if (request.result == UnityWebRequest.Result.Success)
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
-            //Debug.LogError("Message: " + airinFeedback.data);
+            Debug.LogError("Message: " + _airinFeedback.data);
             XanaChatSystem.instance.ShowAirinMsg("Airin" ,_airinFeedback.data);
             yield return null;
         }
         else
             Debug.LogError(request.error);
+
+        request.Dispose();
     }
   
 

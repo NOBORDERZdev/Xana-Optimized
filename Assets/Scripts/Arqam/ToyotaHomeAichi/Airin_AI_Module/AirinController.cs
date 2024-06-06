@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class AirinController : MonoBehaviour
 {
- 
+
     public UnityEvent<string> AirinAlertAction;
 
     [SerializeField]
@@ -19,7 +19,7 @@ public class AirinController : MonoBehaviour
     private float maxDistance = 10.0f;
     private Transform _player;
     private Quaternion _startRot;
-    private AnimatorController _animController;
+    private Animator _animator;
     private Coroutine _distanceCor;
     private Coroutine _rotateCor;
     private enum RotateType { Linear, Smooth }
@@ -27,7 +27,7 @@ public class AirinController : MonoBehaviour
 
     private void Start()
     {
-        _animController = GetComponent<AnimatorController>();
+        _animator = GetComponent<Animator>();
         BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
     }
 
@@ -48,11 +48,15 @@ public class AirinController : MonoBehaviour
         if (!_isAirinActivated)
         {
             // Rotate Airin to face the player when clicked
-            _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Smooth));
+            _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear, true));
             _isAirinActivated = true;
             ConstantsHolder.xanaConstants.IsShowChatToAll = false;
             AirinAlertAction?.Invoke(XanaChatSystem.instance.UserName);
             _distanceCor = StartCoroutine(CalculateDistance());
+        }
+        else
+        {
+            _animator.SetTrigger("hy");
         }
     }
 
@@ -87,13 +91,12 @@ public class AirinController : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
             if (_rotateCor == null)
             {
-                _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear));
+                _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear, false));
             }
         }
     }
-    private IEnumerator RotateTowardsPlayer(Vector3 targetPos, RotateType _rotateType)
+    private IEnumerator RotateTowardsPlayer(Vector3 targetPos, RotateType _rotateType, bool _isGreeting)
     {
-        Debug.LogError("call: " + _rotateType);
         Vector3 direction = targetPos - transform.position;
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
@@ -112,6 +115,11 @@ public class AirinController : MonoBehaviour
             }
             transform.rotation = targetRotation;
         }
+        if (_isGreeting)
+        {
+            _animator.SetTrigger("active");
+        }
+
         _rotateCor = null;
     }
     private IEnumerator RotateToOriginalPosition()
