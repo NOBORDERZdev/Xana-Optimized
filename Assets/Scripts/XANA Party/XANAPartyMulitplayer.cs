@@ -1,67 +1,65 @@
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
-using Photon.Realtime;
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.XR;
 using UnityEngine;
 
 public class XANAPartyMulitplayer : MonoBehaviour
 {
-    bool singleTimeCall = true;
-    private RoomOptions roomOptions;
+    private PhotonView photonView;
+    private HomeSceneLoader uiReferences;
+    private ConstantsHolder xanaConstants;
 
-    public IEnumerator MovePlayersToRandomGame()
+    // Cache references in Awake for better performance
+    private void Awake()
     {
-        print("MOVE PLAYER Random game call");
-        if (!singleTimeCall) yield return null;
-        singleTimeCall = false;
-        // Select a random room
-        //string newRoom = GetComponent<MultiplayerXanaParty>().GetXanaPartyWorld();
-        print("~~~~~~ calling gameID" + XANAPartyManager.Instance.name);
-        GameData gameData = XANAPartyManager.Instance.GetRandomAndRemove();
-        print("GAME ID " + gameData.Id + " : " + gameData.WorldName);
-        //string roomName;
-        ////do
-        ////{
-        ////    roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
-        ////}
-        ////while (roomNames.Contains(roomName));
-        //roomName = gameId.WorldName + UnityEngine.Random.Range(0, 9999).ToString();;
-        //MutiplayerController.instance.CreateGameRoom(gameData.WorldName);
-       // PhotonNetwork.CreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(roomName, LobbyType.Default));
-
-        yield return new WaitForSeconds(1f);
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName); // Calling RPC from Master
-
+        photonView = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>();
+        uiReferences = GameplayEntityLoader.instance._uiReferences;
+        xanaConstants = ConstantsHolder.xanaConstants;
     }
 
-     public RoomOptions RoomOptionsRequest()
+    // Coroutine to move players to a random game
+    public IEnumerator MovePlayersToRandomGame()
     {
-            roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
-            roomOptions.IsOpen = true;
-            roomOptions.IsVisible = true;
+        // If already joining a game, exit coroutine
+        if (xanaConstants.isJoinigXanaPartyGame) yield break;
+        xanaConstants.isJoinigXanaPartyGame = true;
 
-            roomOptions.PublishUserId = true;
-            roomOptions.CleanupCacheOnLeave = true;
-            return roomOptions;
-        }
+        // Get a random game data
+        GameData gameData = XANAPartyManager.Instance.GetRandomAndRemove();
+        yield return new WaitForSeconds(1f);
 
+        // Call the RPC to move players to the selected room
+        photonView.RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
+    }
+
+    // RPC to move players to the selected room
     [PunRPC]
-    public void MovePlayersToRoom(int gameId, string gameName)
+    void MovePlayersToRoom(int gameId, string gameName)
     {
-        print("RPC CALL "+ gameId + " : "+ gameName);
-        // Leave the current room
-        ConstantsHolder.xanaConstants.isJoinigXanaPartyGame=true;
-        ConstantsHolder.xanaConstants.XanaPartyGameId = gameId;
-        ConstantsHolder.xanaConstants.XanaPartyGameName = gameName;
-        ConstantsHolder.xanaConstants.isBuilderScene = true;
-        ConstantsHolder.xanaConstants.builderMapID = gameId;
-        ConstantsHolder.xanaConstants.isMasterOfGame= PhotonNetwork.IsMasterClient;
-        //PhotonNetwork.LeaveRoom();
-        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
-        // Join the new room
-        //PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(lobbyName, LobbyType.Default), null);
+
+        // Set the game details in the constants holder
+        xanaConstants.isJoinigXanaPartyGame = true;
+        xanaConstants.XanaPartyGameId = gameId;
+        xanaConstants.XanaPartyGameName = gameName;
+        xanaConstants.isBuilderScene = true;
+        xanaConstants.builderMapID = gameId;
+        xanaConstants.isMasterOfGame = PhotonNetwork.IsMasterClient;
+
+        // Load the main scene
+        uiReferences.LoadMain(false);
+    }
+
+    // Method to move the player back to the lobby
+    public void BackToLobby()
+    {
+        // Reset the game details in the constants holder
+        xanaConstants.isJoinigXanaPartyGame = false;
+        xanaConstants.XanaPartyGameId = 0;
+        xanaConstants.XanaPartyGameName = "";
+        xanaConstants.isBuilderScene = false;
+        xanaConstants.builderMapID = 0;
+        xanaConstants.isMasterOfGame = false;
+
+        // Load the main scene
+        uiReferences.LoadMain(false);
     }
 }
