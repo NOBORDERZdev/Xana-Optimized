@@ -14,7 +14,7 @@ public class AirinController : MonoBehaviour
     [SerializeField]
     private bool _isAirinActivated = false;
     [SerializeField]
-    private float maxDistance = 10.0f;
+    private float _maxDistance = 10.0f;
     private Transform _player;
     private Quaternion _startRot;
     private Animator _animator;
