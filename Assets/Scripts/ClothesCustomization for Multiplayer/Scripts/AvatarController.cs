@@ -2314,7 +2314,7 @@ public class AvatarController : MonoBehaviour
                         if (!_CharacterData.myItemObj[i].ItemName.ToLowerInvariant().Contains("md"))
                         {
                             var item = _CharacterData.myItemObj[i];
-                            var gender = _CharacterData.gender ?? "Male";
+                            var gender = _CharacterData.gender ?? characterBodyParts.randomPresetData[_rand].GenderType;
                             var avatarController = this.gameObject.GetComponent<AvatarController>();
                             if (addressableDownloader== null)
                             {

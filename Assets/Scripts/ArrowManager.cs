@@ -509,8 +509,30 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
 
 
+    #region ToyotaMeetingArea
+    public void UpdateMeetingTxt(string message)
+    {
+        this.GetComponent<PhotonView>().RPC("RemoteUpdateTxt", RpcTarget.AllBuffered, message); //ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID
+    }
+
+    [PunRPC]
+    public void RemoteUpdateTxt(string message) //, int ViewID
+    {
+        if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingTxtUpdate != null)
+            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt(message);
+    }
 
 
-
+    public void ChangeVoiceGroup(int ViewID, byte newGroup)
+    {
+        this.GetComponent<PhotonView>().RPC("RemoteChangeVoice", RpcTarget.All, ViewID, newGroup);
+    }
+    [PunRPC]
+    public void RemoteChangeVoice(int ViewID, byte newGroup) //, int ViewID
+    {
+        if (gameObject.GetComponent<PhotonView>().ViewID == ViewID)
+            FindObjectOfType<VoiceManager>().SetVoiceGroup(newGroup);
+    }
+    #endregion
 
 }

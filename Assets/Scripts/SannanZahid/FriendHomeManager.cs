@@ -19,6 +19,8 @@ public class FriendHomeManager : MonoBehaviour
 
     public GameObject menuLightObj;
     public GameObject profileLightingObj;
+
+    private int _randAvatarGender;
     private void OnEnable()
     {
         StartCoroutine(BuildMoodDialog());
@@ -127,7 +129,8 @@ public class FriendHomeManager : MonoBehaviour
         }
         else
         {
-            avatarPrefab = (UnityEngine.Random.Range(0, 2) == 0 ? femaleFriendAvatarPrefab : maleFriendAvatarPrefab).gameObject;
+            _randAvatarGender = UnityEngine.Random.Range(0, 2);
+            avatarPrefab = (_randAvatarGender == 0 ? femaleFriendAvatarPrefab : maleFriendAvatarPrefab).gameObject;
         }
         CreatedFriend = Instantiate(avatarPrefab, avatarPrefab.transform.parent).transform;
         //Transform CreatedFriend = Instantiate(FriendAvatarPrefab, FriendAvatarPrefab.parent).transform;
@@ -153,6 +156,7 @@ public class FriendHomeManager : MonoBehaviour
             int _rand = UnityEngine.Random.Range(0, CreatedFriend.GetComponent<CharacterBodyParts>().randomPresetData.Length);
             CreatedFriend.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
             CreatedNameTag.GetComponent<CheckOnlineFriend>().randomPreset = _rand;
+            CreatedNameTag.GetComponent<CheckOnlineFriend>().randomPresetGender = (_randAvatarGender == 0) ? "Female":"Male";
         }
         CreatedFriend.GetComponent<PlayerPostBubbleHandler>().InitObj(CreatedFriendPostBubble,
             CreatedFriendPostBubble.GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMPro.TMP_Text>());
