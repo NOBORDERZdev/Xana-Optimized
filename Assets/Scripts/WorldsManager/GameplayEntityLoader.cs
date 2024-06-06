@@ -639,8 +639,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
         yield return new WaitForSeconds(0.1f);
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
+        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
+        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         // Landscape
         tempRef.XanaFeaturesLandsacape.SetActive(false);
         tempRef.XanaChatCanvasLandsacape.SetActive(false);
@@ -707,7 +708,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.tag == "Player" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
             {
-                spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
+                {
+                    StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+                    StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+                    BuilderData.StartPointID = startFinishPoint.ItemID;
+                    spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                }
+                else
+                {
+                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                }
                 goto CheckAgain;
             } //else if()
 
@@ -733,6 +744,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             playerRB.isKinematic = true;
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
+            GamificationComponentData.instance.PlayerRigidBody = playerRB;
             player.AddComponent<KeyValues>();
             GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
@@ -1012,20 +1024,31 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         Transform tempSpawnPoint = null;
         LoadingHandler.Instance.UpdateLoadingStatusText("Getting World Ready....");
-        if (BuilderData.spawnPoint.Count == 1)
+
+        if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
         {
-            tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
-            BuilderSpawnPoint = true;
+            StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+            StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+            BuilderData.StartPointID = startFinishPoint.ItemID;
+            tempSpawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform;
         }
-        else if (BuilderData.spawnPoint.Count > 1)
+        else
         {
-            foreach (SpawnPointData g in BuilderData.spawnPoint)
+            if (BuilderData.spawnPoint.Count == 1)
             {
-                if (g.IsActive)
+                tempSpawnPoint = BuilderData.spawnPoint[0].spawnObject.transform;
+                BuilderSpawnPoint = true;
+            }
+            else if (BuilderData.spawnPoint.Count > 1)
+            {
+                foreach (SpawnPointData g in BuilderData.spawnPoint)
                 {
-                    BuilderSpawnPoint = true;
-                    tempSpawnPoint = g.spawnObject.transform;
-                    break;
+                    if (g.IsActive)
+                    {
+                        BuilderSpawnPoint = true;
+                        tempSpawnPoint = g.spawnObject.transform;
+                        break;
+                    }
                 }
             }
         }
@@ -1160,20 +1183,31 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (BuilderAssetDownloader.isPostLoading)
         {
             //Debug.LogError("here resetting player .... ");
-            if (BuilderData.spawnPoint.Count == 1)
+            if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
             {
                 BuilderSpawnPoint = true;
-                spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
+                StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+                StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+                BuilderData.StartPointID = startFinishPoint.ItemID;
+                spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.localPosition;
             }
-            else if (BuilderData.spawnPoint.Count > 1)
+            else
             {
-                foreach (SpawnPointData g in BuilderData.spawnPoint)
+                if (BuilderData.spawnPoint.Count == 1)
                 {
-                    if (g.IsActive)
+                    BuilderSpawnPoint = true;
+                    spawnPoint = BuilderData.spawnPoint[0].spawnObject.transform.localPosition;
+                }
+                else if (BuilderData.spawnPoint.Count > 1)
+                {
+                    foreach (SpawnPointData g in BuilderData.spawnPoint)
                     {
-                        BuilderSpawnPoint = true;
-                        spawnPoint = g.spawnObject.transform.localPosition;
-                        break;
+                        if (g.IsActive)
+                        {
+                            BuilderSpawnPoint = true;
+                            spawnPoint = g.spawnObject.transform.localPosition;
+                            break;
+                        }
                     }
                 }
             }
@@ -1197,7 +1231,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 PhotonView pv = hit.collider.GetComponent<PhotonView>();
                 if (pv == null || !pv.IsMine)
                 {
-                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                    if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
+                    {
+                        StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+                        StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+                        BuilderData.StartPointID = startFinishPoint.ItemID;
+                        spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                    }
+                    else
+                    {
+                        spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
+                    }
                     goto CheckAgain;
                 }
             } //else if()

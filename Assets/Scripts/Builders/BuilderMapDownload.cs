@@ -64,6 +64,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerProperties;
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
+        BuilderData.StartFinishPoints.Clear();
 
         Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
@@ -190,6 +191,11 @@ public class BuilderMapDownload : MonoBehaviour
         {
             yield return StartCoroutine(DownloadAddressableGamificationObject());
             yield return StartCoroutine(GemificationObjectLoadWait(1f));
+        }
+
+        if (serverData.data.worldType == 1)
+        {
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
         }
 
         //Debug.LogError("Map is downloaed");
@@ -774,7 +780,15 @@ public class BuilderMapDownload : MonoBehaviour
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
         newObj.transform.localScale = _itemData.Scale;
-        if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
+        if (_itemData.ItemID.Contains("SFP") && serverData.data.worldType == 1)
+        {
+            StartFinishPointData startFinishPlatform = new StartFinishPointData();
+            startFinishPlatform.ItemID = _itemData.ItemID;
+            startFinishPlatform.SpawnObject = newObj;
+            startFinishPlatform.IsStartPoint = startFinishPlatform.SpawnObject.GetComponent<StartPoint>() != null ? true : false;
+            BuilderData.StartFinishPoints.Add(startFinishPlatform);
+        }
+        else if (_itemData.ItemID.Contains("SPW") || _itemData.spawnComponent)
         {
             SpawnPointData spawnPointData = new SpawnPointData();
             spawnPointData.spawnObject = newObj;
@@ -895,6 +909,7 @@ public class Data
     public string map_json_link;
     public User user;
 
+    public int worldType;
     // Count Variable Added by WaqasAhmad
     // Same Class used in Analytics Script
     public string count;
