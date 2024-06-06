@@ -39,7 +39,7 @@ public class StartPoint : MonoBehaviour
     {
          print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-        StartCoroutine(StartGame());
+        gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
     }
 
 
@@ -53,6 +53,12 @@ public class StartPoint : MonoBehaviour
         _finishPoint = BuilderData.StartFinishPoints
         .Find(item => item.ItemID == FinishPointItemID)
         ?.SpawnObject.GetComponent<FinishPoint>();
+    }
+
+    [PunRPC]
+    void StartGameRPC()
+    {
+        StartCoroutine(StartGame());
     }
 
     IEnumerator StartGame()
