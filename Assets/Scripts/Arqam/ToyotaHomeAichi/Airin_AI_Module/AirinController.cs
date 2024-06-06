@@ -28,20 +28,10 @@ public class AirinController : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        BuilderEventManager.AfterPlayerInstantiated += GetActivePlayer;
-    }
-
-    private void OnDisable()
-    {
-        BuilderEventManager.AfterPlayerInstantiated -= GetActivePlayer;
-    }
-
-
-    private void GetActivePlayer()
-    {
         _startRot = transform.rotation;
         _player = ReferencesForGamePlay.instance.m_34player.transform;
     }
+
 
     private void OnMouseDown()
     {
