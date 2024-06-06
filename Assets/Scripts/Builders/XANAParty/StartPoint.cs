@@ -37,12 +37,14 @@ public class StartPoint : MonoBehaviour
 
     void DisableCollider()
     {
+        print("Disable collider call");
         //triggerCollider.SetActive(false);
         gameObject.GetComponent<PhotonView>().RPC(nameof(TriggerStartGame),RpcTarget.All);
         //StartCoroutine(StartGame());
     }
 
     void TriggerStartGame(){ 
+        print("Trigger collider call");
         StartCoroutine(StartGame());    
     }
 
@@ -61,6 +63,7 @@ public class StartPoint : MonoBehaviour
     [PunRPC]
     IEnumerator StartGame()
     {
+        print("Start Game Coutruotine call");
         BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         yield return new WaitForSeconds(3);
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("Race Start...", 2, true);
