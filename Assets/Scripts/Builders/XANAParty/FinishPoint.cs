@@ -53,8 +53,17 @@ public class FinishPoint : MonoBehaviour
 
     IEnumerator triggerBackToLobby()
     {
-        yield return new WaitForSeconds(3.5f);
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
+        if (tempPenguin.GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForSeconds(3.5f);
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+        }
+        else
+        {
+            yield return null;
+        }
+      
     }
 
     void FindStartPoint()
