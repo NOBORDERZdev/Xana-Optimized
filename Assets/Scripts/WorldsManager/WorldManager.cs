@@ -102,23 +102,16 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
-       StartCoroutine(nameof(XANAPARTY));
+        StartCoroutine(nameof(xanaParty));
     }
 
-    IEnumerator XANAPARTY(){
+    IEnumerator xanaParty(){
         while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
           (PlayerPrefs.GetString("PlayerName") == ""))
             yield return new WaitForSeconds(0.5f);
 
         XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
-     }
-
-    void TriggerXANAParty()
-    {
-         //Invoke(nameof(EnablingXANAParty),2f);
-         XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
     }
-
 
     /*public void CheckWorldTabAndReset(APIURL tab)
     {
@@ -239,7 +232,6 @@ public class WorldManager : MonoBehaviour
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
-
 
     public string PrepareApiURL(APIURL aPIURL, int recordPerPage = 30)
     {
@@ -1113,10 +1105,6 @@ public class WorldItemDetail
     public string WorldVisitCount;
     public bool isFavourite;
 }
-
-
-
-
 
 //public enum APIURL
 //{

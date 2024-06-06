@@ -1047,9 +1047,12 @@ public class InventoryManager : MonoBehaviour
     ////////////////////////// <SUB Category STARTS here> ///////////////////////////////////////////////
     private string AccessIndexOfSpecificCategory()
     {
-        var result = string.Join(",", ArrayofMainCategories);
-        result = "[" + result + "]";
-        return result;
+        if(ArrayofMainCategories.Length>0){
+            var result = string.Join(",", ArrayofMainCategories);
+            result = "[" + result + "]";
+            return result; 
+        }
+        return "";
     }
     [System.Serializable]
     public class ConvertMainCat_Index_ToJson

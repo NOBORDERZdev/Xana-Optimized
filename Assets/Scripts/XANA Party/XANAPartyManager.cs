@@ -10,8 +10,12 @@ using Random = System.Random;
 public class XANAPartyManager : MonoBehaviour
 {
     public static XANAPartyManager Instance;
-    [SerializeField] List<GameData> GameIds = new List<GameData>();
-    private List<GameData> copyList /*= new List<GameData>()*/;
+
+    [SerializeField] List<GameData> GameIds = new List<GameData>(); // List of games to play 
+    [SerializeField] bool debugMode = false; // To test a specific game
+    [SerializeField] int debugGameId = 0; // Index of the game to test
+
+    //private List<GameData> copyList /*= new List<GameData>()*/;
     private Random random = new Random();
 
     private void Awake()
@@ -82,8 +86,16 @@ public class XANAPartyManager : MonoBehaviour
         Debug.LogError("GetRandomAndRemove---- >  6");
 
         GameIds.RemoveAt(index);
-       
-        return  GameIds[16];//rand;
+
+        if (debugMode)
+        {
+            return  GameIds[debugGameId];//rand;
+
+        }
+        else
+        {
+            return rand;
+        }
     }
         
     IEnumerator FetchXanaPartyGames()
@@ -119,7 +131,7 @@ public class XANAPartyManager : MonoBehaviour
     }
 
     IEnumerator
-     LoadXanaPartyGame(bool isJoiningLobby)
+    LoadXanaPartyGame(bool isJoiningLobby)
     {
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
