@@ -399,7 +399,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         {
             print("XANAPartyRaceStart EVENT Call");
            //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-            photonView.RPC(nameof(StartGameRPC), RpcTarget.All);
+            GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.IsVisible = false;
