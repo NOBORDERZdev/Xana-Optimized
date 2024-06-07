@@ -53,10 +53,10 @@ public class StartPoint : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("Ready?", 2, true);
+        yield return new WaitForSeconds(2);
         BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         yield return new WaitForSeconds(3);
-        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("Race Start...", 2, true);
-        yield return new WaitForSeconds(2);
         triggerCollider.SetActive(false);
     }
 }

@@ -1,32 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
-using Photon.Realtime;
 
-public class XANAPartyRaceHandler : MonoBehaviourPunCallbacks
+public class XANAPartyRaceHandler : MonoBehaviour
 {
-    public bool raceStart;
-    //new void OnEnable()
-    //{
+    public bool ForceRaceStart = false;
 
-    //}
-    //public override void OnPlayerEnteredRoom(Player newPlayer)
-    //{
-    //    if (PhotonNetwork.CurrentRoom.PlayerCount >= 2 && PhotonNetwork.LocalPlayer.IsMasterClient)
-    //    {
-    //        BuilderEventManager.XANAPartyRaceStart?.Invoke();
-    //    }
-    //}
+    void OnEnable()
+    {
+        BuilderEventManager.AfterWorldInstantiated += StartRaceSinglePlayer;
+    }
+
+    void OnDisable()
+    {
+        BuilderEventManager.AfterWorldInstantiated -= StartRaceSinglePlayer;
+    }
+
 
     private void Update()
     {
-        if (raceStart)
+        if (ForceRaceStart)
         {
-            BuilderEventManager.XANAPartyRaceStart?.Invoke();
-            raceStart = false;
+            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 2f);
+            ForceRaceStart = false;
         }
     }
 
+    void StartRaceSinglePlayer()
+    {
+        if (GamificationComponentData.instance.SinglePlayer)
+        {
+            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 2f);
+        }
+    }
 
 }

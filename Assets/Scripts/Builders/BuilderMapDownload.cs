@@ -15,6 +15,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -187,15 +188,16 @@ public class BuilderMapDownload : MonoBehaviour
         if (levelData.audioPropertiesBGM != null)
             BuilderEventManager.BGMDownloader?.Invoke(levelData.audioPropertiesBGM);
 
+        if (serverData.data.worldType == 1)
+        {
+            GamificationComponentData.instance.withMultiplayer = true;
+            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
+        }
+
         if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
         {
             yield return StartCoroutine(DownloadAddressableGamificationObject());
             yield return StartCoroutine(GemificationObjectLoadWait(1f));
-        }
-
-        if (serverData.data.worldType == 1)
-        {
-            ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
         }
 
         //Debug.LogError("Map is downloaed");
@@ -690,6 +692,10 @@ public class BuilderMapDownload : MonoBehaviour
 
             BuilderEventManager.CombineMeshes?.Invoke();
         }
+
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", true);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
 
         PlayerSetup();
 
