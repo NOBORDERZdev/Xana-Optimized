@@ -116,6 +116,8 @@ namespace PhysicsCharacterController
         public GameObject characterCamera;
         [Tooltip("Character model")]
         public GameObject characterModel;
+        [Tooltip("Mulitplayer")]
+        public XANAPartyMulitplayer mulitplayer;
         [Tooltip("Character rotation speed when the forward direction is changed")]
         public float characterModelRotationSmooth = 0.1f;
         [Space(10)]
@@ -631,6 +633,7 @@ namespace PhysicsCharacterController
                 isJumping = false;
                 coyoteJumpMultiplier = 1f;
             }
+
         }
 
         #endregion

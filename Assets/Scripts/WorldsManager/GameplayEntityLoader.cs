@@ -633,39 +633,46 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
-    IEnumerator SetXanaPartyControllers(GameObject player){ 
-        if(player == null)
-            yield return null;
-        ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
-        CharacterManager characterManager = player.GetComponent<CharacterManager>();
-        XanaPartyCamera.characterManager = characterManager;
-        characterManager.input= XanaPartyInput;
-        characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
-        XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
-        XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
-        characterManager.enabled =true;
-        XanaPartyCamera.SetCamera();
-        XanaPartyCamera.SetDebug();
-        yield return new WaitForSeconds(0.1f);
-        if(GamificationComponentData.instance != null){
-            GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
-            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
-            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+    IEnumerator SetXanaPartyControllers(GameObject player){
+        if (player.GetComponent<PhotonView>().IsMine)
+        {
+            if(player == null)
+                yield return null;
+            ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
+            CharacterManager characterManager = player.GetComponent<CharacterManager>();
+            XanaPartyCamera.characterManager = characterManager;
+            characterManager.input= XanaPartyInput;
+            characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
+            XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
+            XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
+            characterManager.enabled =true;
+            XanaPartyCamera.SetCamera();
+            XanaPartyCamera.SetDebug();
+            yield return new WaitForSeconds(0.1f);
+            if(GamificationComponentData.instance != null){
+                GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
+                GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
+                GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+            }
+            // Landscape
+            tempRef.XanaFeaturesLandsacape.SetActive(false);
+            tempRef.XanaChatCanvasLandsacape.SetActive(false);
+            tempRef.XanaJumpLandsacape.SetActive(false);
+            tempRef.EmoteFavLandsacape.SetActive(false);
+            tempRef.PartyChatCanvasLandsacape.SetActive(true);
+            tempRef.PartJumpLandsacape.SetActive(true);
+            // Potrait
+            tempRef.XanaFeaturesPotraite.SetActive(false);
+            tempRef.XanaChatCanvasPotraite.SetActive(false);
+            tempRef.XanaJumpPotraite.SetActive(false);
+            //tempRef.EmoteFavPotraite.SetActive(false);
+            tempRef.PartyChatCanvasPotraite.SetActive(true);
+            tempRef.PartJumpPotraite.SetActive(true);
         }
-        // Landscape
-        tempRef.XanaFeaturesLandsacape.SetActive(false);
-        tempRef.XanaChatCanvasLandsacape.SetActive(false);
-        tempRef.XanaJumpLandsacape.SetActive(false);
-        tempRef.EmoteFavLandsacape.SetActive(false);
-        tempRef.PartyChatCanvasLandsacape.SetActive(true);
-        tempRef.PartJumpLandsacape.SetActive(true);
-        // Potrait
-        tempRef.XanaFeaturesPotraite.SetActive(false);
-        tempRef.XanaChatCanvasPotraite.SetActive(false);
-        tempRef.XanaJumpPotraite.SetActive(false);
-        //tempRef.EmoteFavPotraite.SetActive(false);
-        tempRef.PartyChatCanvasPotraite.SetActive(true);
-        tempRef.PartJumpPotraite.SetActive(true);
+        else
+        {
+            player.GetComponent<CharacterManager>().enabled = false;
+        }
     }
 
     void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){

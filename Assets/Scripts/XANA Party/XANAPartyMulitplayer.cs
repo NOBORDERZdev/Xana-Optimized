@@ -1,9 +1,17 @@
 using Photon.Pun;
+using PhysicsCharacterController;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class XANAPartyMulitplayer : MonoBehaviour
 {
+    [SerializeField] Animator animator;
+    PhotonView photonView;
+    private void Start()
+    {
+        photonView = GetComponent<PhotonView>();
+    }
     // Coroutine to move players to a random game
     public IEnumerator MovePlayersToRandomGame()
     {
@@ -50,4 +58,20 @@ public class XANAPartyMulitplayer : MonoBehaviour
         // Load the main scene
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
+
+
+
+    public void JumpRPCTrigger(){
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(JumpRPC), RpcTarget.AllBuffered, GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().ViewID);
+    }
+
+    [PunRPC]
+    void JumpRPC(int photonID)
+    {
+        if (photonView.ViewID == photonID)
+        {
+            animator.SetBool("isJump", true);
+        }
+    }
+
 }
