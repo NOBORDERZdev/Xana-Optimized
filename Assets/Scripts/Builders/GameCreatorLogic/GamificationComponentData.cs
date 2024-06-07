@@ -396,9 +396,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
+        print("!!! Start party race");
         if (SinglePlayer)
             return;
-        if (PhotonNetwork.CountOfPlayers == 2)
+        if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
         {
             if (PhotonNetwork.IsMasterClient)
             {
@@ -410,16 +411,19 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     }
 
     IEnumerator WaitForWorldLoadingAllPlayer()
-    {
+    {       
+        print("!!! WaitForWorldLoadingAllPlayer");
+
         bool allPalyerReady = false;
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
+                print("~~ for each");
                 if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsReady", out bool isReady))
                     break;
-
+                  print("~~ for IsReady");
                     allPalyerReady = (bool)player.CustomProperties["IsReady"];
 
                     if (!allPalyerReady) break;
