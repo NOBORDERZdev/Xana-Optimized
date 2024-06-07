@@ -47,9 +47,9 @@ public class Crab : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PhotonLocalPlayer"))
+        if (other.CompareTag("Player"))
         {
-            other.GetComponent<TouchHandler>().TouchingCrab();
+            other.GetComponentInParent<XanaDuneControllerHandler>().TouchingCrab();
             ParticleSystem bang = GetComponentInChildren<ParticleSystem>();
             bang.transform.position = other.ClosestPoint(transform.position);
             bang.Play();

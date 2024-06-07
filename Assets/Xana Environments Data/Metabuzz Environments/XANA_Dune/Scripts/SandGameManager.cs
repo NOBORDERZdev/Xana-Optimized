@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using EnumCheck;
 using UnityEngine.Networking;
+using Unity.VisualScripting;
+using Cinemachine;
 
 public class SandGameManager : MonoBehaviour
 {
@@ -23,9 +25,9 @@ public class SandGameManager : MonoBehaviour
     InputManager input;
 
     Animator animator;
+    [SerializeField] Vector3 _player34InitialPos;
+    private bool _isSkatingControllerOn = false;
 
-    //vThirdPersonInput playerInput;
-    Transform playerCamera;
 
     private string url = "https://7cjaa2ckmj.execute-api.ap-northeast-1.amazonaws.com/default/Lambda-XANA";
 
@@ -59,7 +61,7 @@ public class SandGameManager : MonoBehaviour
 
     public string id = "88";
 
-    public Localiztion local = Localiztion.Jp;
+    public Localiztion local = Localiztion.En;
 
     private void Awake()
     {
@@ -67,6 +69,8 @@ public class SandGameManager : MonoBehaviour
         {
             instance = this;
         }
+        player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
+        player.AddComponent<XanaDuneControllerHandler>();
     }
 
     public static SandGameManager Instance
@@ -92,12 +96,20 @@ public class SandGameManager : MonoBehaviour
     }
 
 
-    void Start()
+    IEnumerator Start()
     {
         //playerInput = player.GetComponent<vThirdPersonInput>();
         //playerCamera = Camera.main.GetComponent<vThirdPersonCamera>();
+        yield return new WaitUntil(() => ReferencesForGamePlay.instance.m_34player);
+
+        yield return new WaitUntil(() => ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedSkateBoard);
+        board = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedSkateBoard.transform;
+
+        yield return new WaitUntil(() => ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedMarkObject);
+        mark = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedMarkObject.transform;
+
         input = board.GetComponent<InputManager>();
-        animator = player.GetComponent<Animator>();
+        animator = ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
 
         uiMgr.AddCallback(Des.SandInform, () => { StartBoarding(); });
 
@@ -125,6 +137,8 @@ public class SandGameManager : MonoBehaviour
 
     public void StartBoarding()
     {
+        _isSkatingControllerOn = true;
+        SwitchToSkatingController();
         isStart = true;
         animator.SetBool("IsStart", true);
         SetPlayerStartPos();
@@ -133,16 +147,60 @@ public class SandGameManager : MonoBehaviour
         StartCoroutine(StartBoardingControl());
     }
 
+    public void SwitchToSkatingController()
+    {
+        if (_isSkatingControllerOn)
+        {
+            player.GetComponent<PlayerController>().enabled = false;
+            player.GetComponent<CharacterController>().enabled = false;
+            ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterController>().enabled = false;
+            foreach (CapsuleCollider child in ReferencesForGamePlay.instance.m_34player.GetComponents<CapsuleCollider>())
+            {
+                child.enabled = false;
+            }
+            _player34InitialPos = ReferencesForGamePlay.instance.m_34player.transform.localPosition;
+            ReferencesForGamePlay.instance.m_34player.transform.localPosition = new Vector3(_player34InitialPos.x, 0.014f, _player34InitialPos.z);
+            Rigidbody playerRb =  player.AddComponent<Rigidbody>();
+            playerRb.mass = 0.1f;
+            playerRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            board.GetComponent<FixedJoint>().connectedBody = playerRb;
+            //player.AddComponent<XanaDuneControllerHandler>();
+            player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
+            StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(2.21f, 1f));
+            PlayerCameraController.instance.lockRotation = true;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
+
+        }
+        else
+        {
+            player.GetComponent<XanaDuneControllerHandler>().DisableSkating();
+            Destroy(player.GetComponent<Rigidbody>());
+            foreach (CapsuleCollider child in ReferencesForGamePlay.instance.m_34player.GetComponents<CapsuleCollider>())
+            {
+                child.enabled = true;
+            }
+            ReferencesForGamePlay.instance.m_34player.transform.localPosition = _player34InitialPos;
+            player.GetComponent<CharacterController>().enabled = true;
+            ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterController>().enabled = true;
+            player.GetComponent<PlayerController>().enabled = true;
+            PlayerCameraController.instance.lockRotation = false;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 1.75f;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.47f;
+
+        }
+    }
+
     IEnumerator StartBoardingControl()
     {
+        yield return new WaitForSeconds(0.1f);
         Rigidbody rb = player.GetComponent<Rigidbody>();
         rb.mass = 0.1f;
         rb.freezeRotation = false;
-        
-        input.enabled = true;
-        input.force = 250;
 
         board.gameObject.SetActive(true);
+        input.enabled = true;
+        input.force = 250;
         int i = 0;
         Debug.Log("Boarding ready set");
 
@@ -344,24 +402,22 @@ public class SandGameManager : MonoBehaviour
 
     void SetPlayerStartPos()
     {
-        //Quaternion currentRot = playerInput.cameraMain.transform.rotation;
-        //float offset = 30;
+        Quaternion currentRot = ReferencesForGamePlay.instance.randerCamera.transform.rotation;
+        float offset = 30;
 
-        //float y = currentRot.eulerAngles.x;
-        //if (y > 180)
-        //{
-        //    Debug.Log(y);
-        //    Debug.Log(offset);
-        //    y -= 360;
-        //}
-        //playerCamera.RotateCamera(-currentRot.eulerAngles.y / 3, (y - offset) / 3);
+        float y = currentRot.eulerAngles.x;
+        if (y > 180)
+        {
+            Debug.Log(y);
+            Debug.Log(offset);
+            y -= 360;
+        }
 
         SetPlayerPosition(startPoint.position);
     }
 
     void SetPlayerPosition(Vector3 pos)
     {
-        //playerInput.enabled = false;
         Player.position = pos;
         Player.rotation = Quaternion.Euler(0, 30, 0);
     }
@@ -387,8 +443,10 @@ public class SandGameManager : MonoBehaviour
         rb.freezeRotation = true;
 
         board.gameObject.SetActive(false);
-        //playerInput.enabled = true;
         animator.SetBool("IsStart", false);
+        _isSkatingControllerOn = false;
+        SwitchToSkatingController();
+
         uiMgr.OpenPointUI();
     }
 

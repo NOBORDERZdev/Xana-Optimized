@@ -3,12 +3,11 @@
 */
 using UnityEngine;
 using System.Collections;
-
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] JoyStick joyStick;
-
+    //public JoyStick joyStick;
     [Tooltip("Forward force applied to player")]
     public float force = 1250.0f;
 
@@ -23,10 +22,17 @@ public class InputManager : MonoBehaviour
 
     public bool canRotate = false;
     private bool isTouchingCrab = false;
-    private bool isTouchingGround = false;
-    private Gyroscope gyro;
+    public bool isTouchingGround = false;
+    private UnityEngine.Gyroscope gyro;
     private Rigidbody rb;
+    private float vertical;
+    private float horizontal;
 
+    Controls controls;
+    private void Awake()
+    {
+        controls = new Controls();
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -36,9 +42,28 @@ public class InputManager : MonoBehaviour
             gyro.enabled = true;
         else
             gyro.enabled = false;
+
+        horizontal = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().horizontal;
     }
 
-
+    private void OnEnable()
+    {
+        controls.Gameplay.Enable();
+        controls.Gameplay.Move.performed += OnMovePerformed;
+        controls.Gameplay.Move.canceled += OnMovePerformed;
+    }
+    private void OnDisable()
+    {
+        controls.Gameplay.Move.performed -= OnMovePerformed;
+        controls.Gameplay.Move.canceled -= OnMovePerformed;
+    }
+    private void OnMovePerformed(InputAction.CallbackContext context)
+    {
+        Vector2 moveInput = context.ReadValue<Vector2>();
+        horizontal = moveInput.normalized.x;
+        vertical = moveInput.normalized.y;
+        // Debug.Log("Move Input"+ moveInput);
+    }
     float getTilt()
     {
         if (!canRotate) return 0;
@@ -51,22 +76,24 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            //if (Input.GetKey(KeyCode.D))
-            //    direction += 1.0f;
+            if (Input.GetKey(KeyCode.D))
+                direction += 1.0f;
 
-            //if (Input.GetKey(KeyCode.A))
-            //    direction -= 1.0f;
+            if (Input.GetKey(KeyCode.A))
+                direction -= 1.0f;
 
             // for mobile device
-            direction += joyStick.Horizontal();
+            //direction += horizontal;
+            Debug.Log("Sohaib skating horizontal: " + horizontal);
+            direction += horizontal;
+            Debug.Log("Sohaib skating direction: " + direction);
+
         }
 
         return direction;
     }
-
     void FixedUpdate()
     {
-
         if (isTouchingGround)
         {
             rb.MoveRotation(rb.rotation * Quaternion.Euler(0.0f, getTilt() * rotationSpeed * Time.deltaTime, 0.0f));

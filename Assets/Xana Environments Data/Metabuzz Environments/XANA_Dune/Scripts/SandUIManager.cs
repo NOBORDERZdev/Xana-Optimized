@@ -18,7 +18,6 @@ public class SandUIManager : MonoBehaviour
     [SerializeField] Image result;
     [SerializeField] Image rankingBoard;
     [SerializeField] Image timer;
-    [SerializeField] Image joyStick;
     [SerializeField] Image Point;
 
     [SerializeField] Button nxtBtn;
@@ -46,7 +45,6 @@ public class SandUIManager : MonoBehaviour
             desImgs.Add(Des.StartInform, startInformImagesEn);
             desImgs.Add(Des.SandInform, sandGameImagesEn);
         }
-        joyStick.gameObject.SetActive(false);
         camelBtn.onClick.AddListener(() => DescriptionStart(Des.SandInform));
         camel2Btn.onClick.AddListener(() => SandGameManager.Instance.ResetPlayerPos());
 
@@ -92,7 +90,7 @@ public class SandUIManager : MonoBehaviour
     public void TimerStart()
     {
         timer.gameObject.SetActive(true);
-        joyStick.gameObject.SetActive(true);
+        //joyStick.gameObject.SetActive(true);
         Point.gameObject.SetActive(false);
 
         StartCoroutine(TimeStart());
@@ -135,7 +133,6 @@ public class SandUIManager : MonoBehaviour
 
     public void ShowResult(string playRecord,string bestRecord, string rank, string reward)
     {
-        joyStick.gameObject.SetActive(false);
 
         result.gameObject.SetActive(true);
         result.transform.GetChild(1).GetComponent<Text>().text = playRecord;

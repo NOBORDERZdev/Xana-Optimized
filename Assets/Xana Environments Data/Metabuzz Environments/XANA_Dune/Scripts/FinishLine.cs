@@ -6,9 +6,9 @@ public class FinishLine : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("PhotonLocalPlayer"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            other.GetComponent<TouchHandler>().TouchingFinish();
+            other.GetComponentInParent<XanaDuneControllerHandler>().TouchingFinish();
         }
     }
 }
