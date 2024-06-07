@@ -26,7 +26,7 @@ public class FinishPoint : MonoBehaviour
     private void OnDisable()
     {
         DisableCollider();
-        if (BuilderData.mapData.data.worldType != 1)
+        if (BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             FinishRaceCollider.enabled = false;
             return;
