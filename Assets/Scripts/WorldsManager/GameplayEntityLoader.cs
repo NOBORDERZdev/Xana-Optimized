@@ -634,10 +634,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){
-         print("mine ~~ "+ player.GetComponent<PhotonView>().IsMine);
+         print("mine ~~ " + player.GetComponent<PhotonView>().IsMine + "view Id :"+player.GetComponent<PhotonView>().ViewID);
         if (player.GetComponent<PhotonView>().IsMine)
         {
-           
+            print("call IF  for "+player.GetComponent<PhotonView>().ViewID);
             ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
             CharacterManager characterManager = player.GetComponent<CharacterManager>();
             XanaPartyCamera.characterManager = characterManager;
@@ -671,8 +671,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
+            print("call else for "+player.GetComponent<PhotonView>().ViewID);
             player.GetComponent<CharacterManager>().enabled = false;
             player.GetComponentInChildren<AnimatedController>().enabled= false;
+
         }
     }
 
