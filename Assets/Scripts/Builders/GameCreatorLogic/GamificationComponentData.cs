@@ -421,12 +421,13 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             foreach (Player player in PhotonNetwork.PlayerList)
             {
                 print("~~ for each");
-                if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsReady", out bool isReady))
-                    break;
+                if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
+                   
                   print("~~ for IsReady");
-                    allPalyerReady = (bool)player.CustomProperties["IsReady"];
+                    allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
 
                     if (!allPalyerReady) break;
+                }
             }
             allPalyerReady = true;
         }
