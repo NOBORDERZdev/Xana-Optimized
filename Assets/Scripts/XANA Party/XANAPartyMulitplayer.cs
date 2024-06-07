@@ -47,7 +47,6 @@ public class XANAPartyMulitplayer : MonoBehaviour
         xanaConstants.isBuilderScene = false;
         xanaConstants.builderMapID = 0;
         xanaConstants.isMasterOfGame = false;
-
         // Load the main scene
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
