@@ -11,7 +11,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
-        Invoke(nameof(DisbleAnimatedController),2);
+        Invoke(nameof(DisbleAnimatedController),0.1f);
     }
 
     void DisbleAnimatedController()
