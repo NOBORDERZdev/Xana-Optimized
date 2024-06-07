@@ -600,9 +600,11 @@ namespace PhysicsCharacterController
 
         private void MoveJump()
         {
+           
             //jumped
             if (jump && isGrounded && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
             {
+                 mulitplayer.JumpRPCTrigger();
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
             }
