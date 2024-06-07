@@ -69,8 +69,9 @@ public class XANAPartyMulitplayer : MonoBehaviour
     [PunRPC]
     void JumpRPC(int photonID)
     {
-        print("CALLING JUMP RPC");
-        if (photonView.ViewID == photonID)
+        print("Target id " + photonID);
+        print("CALLING JUMP RPC "+photonView.ViewID);
+        if (photonView != null && photonView.ViewID == photonID)
         {
             print("Setting JUMP RPC");
             animator.SetBool("isJump", true);
