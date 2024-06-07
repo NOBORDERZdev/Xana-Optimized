@@ -672,6 +672,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         else
         {
             player.GetComponent<CharacterManager>().enabled = false;
+            player.GetComponentInChildren<AnimatedController>().enabled= false;
         }
     }
 
