@@ -20,14 +20,14 @@ public class InventoryManager : MonoBehaviour
     [Header("Holds Api response")]
     public ResponseHolder apiResponseHolder;
 
-    //public DownloadandRigClothes _DownloadRigClothes;
     public static InventoryManager instance;
     [Header("Main Panels Store")]
     public GameObject StoreItemsPanel;
-    //public GameObject CheckOutBuyItemPanel;
     public GameObject ShowSignUpPanel;
+
     //public GameObject LowCoinsPanel;
     //public GameObject ShopBuyCoinsPanel;
+    
     public EnumClass.CategoryEnum CategoriesEnumVar;
     public Text textskin;
 
@@ -51,13 +51,15 @@ public class InventoryManager : MonoBehaviour
     [Header("Shop Panels")]
     public GameObject MainPanelShop;
     public GameObject[] ShopPanel;
+    public GameObject buyBtn;
 
     [Header("Return Home Pop up")]
     public GameObject ReturnHomePopUp;
+
     [Header("Total Buying Btns")]
-    public GameObject BuyStoreBtn;
     public GameObject SaveStoreBtn; // Store Save Button
     public GameObject saveButton;  // Popup Save Button
+
     [Header("Total Texts money Display")]
     public Text BuyCountertxt;
     public Text TotalGameCoins;
@@ -1257,7 +1259,6 @@ public class InventoryManager : MonoBehaviour
             case "StoreItemsPanel":
                 {
                     StoreItemsPanel.SetActive(true);
-
                     break;
                 }
             case "CheckOutBuyItemPanel":
@@ -1452,6 +1453,7 @@ public class InventoryManager : MonoBehaviour
             _shopOpened = true;
             buttonIndex = 2;
             MainPanelShop.SetActive(true);
+            buyBtn.SetActive(true);
             UpdatePanelStatus(TakeIndex);
         }
 
@@ -1477,7 +1479,7 @@ public class InventoryManager : MonoBehaviour
         MainPanelCloth.SetActive(false);
         MainPanelAvatar.SetActive(false);
         MainPanelShop.SetActive(false);
-
+        buyBtn.SetActive(false);
         // Update Button Colors
         for (int i = 0; i < headerBtns.Count; i++)
         {
@@ -3625,6 +3627,11 @@ public class InventoryManager : MonoBehaviour
             {
                 parentObj.transform.parent.GetChild(1).gameObject.SetActive(true);
                 Debug.LogError("No Item Available in Shop");
+            }
+            else
+            {
+                Debug.LogError("Item Available in Shop");
+                parentObj.transform.parent.GetChild(1).gameObject.SetActive(false);
             }
         }
     }

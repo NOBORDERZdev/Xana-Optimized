@@ -57,12 +57,13 @@ public class ItemDetail : MonoBehaviour
     private AddressableDownloader downloader;
     CharacterBodyParts characterBodyParts;
     InventoryManager store;
-   
-    
-    
+    ShopCartHandler shopCartHandler;
+
     private void Start()
     {
         store = InventoryManager.instance;
+        shopCartHandler = store.GetComponent<ShopCartHandler>();    
+
         characterBodyParts = GameManager.Instance.mainCharacter.GetComponent<CharacterBodyParts>();
 
         if (CategoriesEnumVar.Equals(EnumClass.CategoryEnum.HairAvatar) && this.id == ConstantsHolder.xanaConstants.hair)
@@ -72,8 +73,6 @@ public class ItemDetail : MonoBehaviour
         }
         CheckDeemoNft();
     }
-
-
     private void OnEnable()
     {
         downloader = AddressableDownloader.Instance;
@@ -321,28 +320,31 @@ public class ItemDetail : MonoBehaviour
                 // Eyebrow button method is itemBtnClicked
 
                 if (CategoriesEnumVar == EnumClass.CategoryEnum.EyeBrowAvatar || CategoriesEnumVar == EnumClass.CategoryEnum.EyeLashesAvatar)
-                {
                     this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
-                    this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
-                }
-                //
                 else
                     this.gameObject.GetComponent<Button>().onClick.AddListener(ColorBtnClicked);
-
 
                 PriceTxt.gameObject.SetActive(false);
                 _iconImg.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
                 _iconImg.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 0);
-
+            }
+            else if (CategoriesEnumVar.ToString().Contains("Shop"))
+            {
+                this.gameObject.GetComponent<Button>().onClick.AddListener(ShopItemBtnClicked);
             }
             else
             {
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
-                this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
             }
-            decimal PriceInDecimal = decimal.Parse(price);
-            int priceint = (int)PriceInDecimal;
-            PriceTxt.text = priceint.ToString();
+
+            this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
+
+            //decimal PriceInDecimal = decimal.Parse(price);
+            //int priceint = (int)PriceInDecimal;
+            //PriceTxt.text = priceint.ToString();
+
+            PriceTxt.text = price;
+
             switch (CategoriesEnumVar)
             {
                 case EnumClass.CategoryEnum.HairAvatar:
@@ -385,7 +387,7 @@ public class ItemDetail : MonoBehaviour
                     }
                     break;
             }
-            
+
             //isPurchased = "true";
             //if (isPaid == "true")
             //{
@@ -469,14 +471,12 @@ public class ItemDetail : MonoBehaviour
         }
 
     }
-
     public void UpdateValues()
     {
         decimal PriceInDecimal = decimal.Parse(price);
         int priceint = (int)PriceInDecimal;
         PriceTxt.text = priceint.ToString();
     }
-
     public IEnumerator addsprite(Image data, string rewview)
     {
         // WHEN IMAGES ARE IN PNG FORMAT
@@ -903,7 +903,32 @@ public class ItemDetail : MonoBehaviour
             }
         }
     }
+    public void ShopItemBtnClicked()
+    {
+        if (GameManager.Instance.isStoreAssetDownloading)
+            return;
 
+        if (!completedCoroutine)
+            return;
+
+        //if (!GameManager.Instance.isStoreAssetDownloading)
+        //{
+        //    GameManager.Instance.isStoreAssetDownloading = true;
+        //    downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, true));
+        //}
+
+        if (this.GetComponent<Image>().enabled) 
+        {
+            this.GetComponent<Image>().enabled = false;
+            shopCartHandler.selectedItems.Remove(this);
+        }
+        else
+        {
+            this.GetComponent<Image>().enabled = true;
+            shopCartHandler.selectedItems.Add(this);
+        }
+
+    }
     void ResetButtonState()
     {
         obj.currentButtonState = ButtonState.none;
