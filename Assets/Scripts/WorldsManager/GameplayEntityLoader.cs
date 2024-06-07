@@ -634,48 +634,36 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){
-         print("mine ~~ " + player.GetComponent<PhotonView>().IsMine + "view Id :"+player.GetComponent<PhotonView>().ViewID);
-        if (player.GetComponent<PhotonView>().IsMine)
-        {
-            print("call IF  for "+player.GetComponent<PhotonView>().ViewID);
-            ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
-            CharacterManager characterManager = player.GetComponent<CharacterManager>();
-            XanaPartyCamera.characterManager = characterManager;
-            characterManager.input= XanaPartyInput;
-            characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
-            XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
-            XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
-            characterManager.enabled =true;
-            XanaPartyCamera.SetCamera();
-            XanaPartyCamera.SetDebug();
-            yield return new WaitForSeconds(0.1f);
-            if(GamificationComponentData.instance != null){
-                GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
-                GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
-                GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
-            }
-            // Landscape
-            tempRef.XanaFeaturesLandsacape.SetActive(false);
-            tempRef.XanaChatCanvasLandsacape.SetActive(false);
-            tempRef.XanaJumpLandsacape.SetActive(false);
-            tempRef.EmoteFavLandsacape.SetActive(false);
-            tempRef.PartyChatCanvasLandsacape.SetActive(true);
-            tempRef.PartJumpLandsacape.SetActive(true);
-            // Potrait
-            tempRef.XanaFeaturesPotraite.SetActive(false);
-            tempRef.XanaChatCanvasPotraite.SetActive(false);
-            tempRef.XanaJumpPotraite.SetActive(false);
-            //tempRef.EmoteFavPotraite.SetActive(false);
-            tempRef.PartyChatCanvasPotraite.SetActive(true);
-            tempRef.PartJumpPotraite.SetActive(true);
+        ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
+        CharacterManager characterManager = player.GetComponent<CharacterManager>();
+        XanaPartyCamera.characterManager = characterManager;
+        characterManager.input= XanaPartyInput;
+        characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
+        XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
+        XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
+        characterManager.enabled =true;
+        XanaPartyCamera.SetCamera();
+        XanaPartyCamera.SetDebug();
+        yield return new WaitForSeconds(0.1f);
+        if(GamificationComponentData.instance != null){
+            GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
         }
-        else
-        {
-            print("call else for "+player.GetComponent<PhotonView>().ViewID);
-            player.GetComponent<CharacterManager>().enabled = false;
-            player.GetComponentInChildren<AnimatedController>().enabled= false;
-
-        }
+        // Landscape
+        tempRef.XanaFeaturesLandsacape.SetActive(false);
+        tempRef.XanaChatCanvasLandsacape.SetActive(false);
+        tempRef.XanaJumpLandsacape.SetActive(false);
+        tempRef.EmoteFavLandsacape.SetActive(false);
+        tempRef.PartyChatCanvasLandsacape.SetActive(true);
+        tempRef.PartJumpLandsacape.SetActive(true);
+        // Potrait
+        tempRef.XanaFeaturesPotraite.SetActive(false);
+        tempRef.XanaChatCanvasPotraite.SetActive(false);
+        tempRef.XanaJumpPotraite.SetActive(false);
+        //tempRef.EmoteFavPotraite.SetActive(false);
+        tempRef.PartyChatCanvasPotraite.SetActive(true);
+        tempRef.PartJumpPotraite.SetActive(true);
     }
 
     void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){
