@@ -62,14 +62,17 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
 
     public void JumpRPCTrigger(){
+        print("Trigger JUMP RPC");
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(JumpRPC), RpcTarget.AllBuffered, GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().ViewID);
     }
 
     [PunRPC]
     void JumpRPC(int photonID)
     {
+        print("CALLING JUMP RPC");
         if (photonView.ViewID == photonID)
         {
+            print("Setting JUMP RPC");
             animator.SetBool("isJump", true);
         }
     }
