@@ -102,6 +102,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal Rigidbody PlayerRigidBody;
     internal bool IsGrounded;
 
+    public bool SinglePlayer = false;
+
     private void Awake()
     {
         instance = this;
@@ -395,27 +397,39 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
+        if (SinglePlayer)
+            return;
         if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
         {
-            print("XANAPartyRaceStart EVENT Call");
-           //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-            GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
             if (PhotonNetwork.IsMasterClient)
             {
                 PhotonNetwork.CurrentRoom.IsVisible = false;
                 PhotonNetwork.CurrentRoom.IsOpen = false;
             }
+            StartCoroutine(WaitForWorldLoadingAllPlayer());
         }
-    } 
-    
+    }
+
+    IEnumerator WaitForWorldLoadingAllPlayer()
+    {
+        bool allPalyerReady = false;
+        while (!allPalyerReady)
+        {
+            yield return new WaitForSeconds(0.5f);
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                allPalyerReady = (bool)player.CustomProperties["IsReady"];
+                if (!allPalyerReady) break;
+            }
+            allPalyerReady = true;
+        }
+        GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+    }
     [PunRPC]
     void StartGameRPC()
     {
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
-
-     
-
     #endregion
 
 
