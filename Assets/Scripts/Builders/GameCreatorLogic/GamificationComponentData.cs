@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using ExitGames.Client.Photon.StructWrapping;
 using Models;
 using Photon.Pun;
 using Photon.Realtime;
@@ -416,8 +417,12 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(0.5f);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                allPalyerReady = (bool)player.CustomProperties["IsReady"];
-                if (!allPalyerReady) break;
+                if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("IsReady", out bool isReady))
+                    break;
+
+                    allPalyerReady = (bool)player.CustomProperties["IsReady"];
+
+                    if (!allPalyerReady) break;
             }
             allPalyerReady = true;
         }
