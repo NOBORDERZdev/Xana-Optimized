@@ -634,10 +634,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){
-        if (/*player.GetComponent<PhotonView>().IsMine*/ true)
-        {
-            if(player == null)
+        if(player == null)
                 yield return null;
+        if (player.GetComponent<PhotonView>().IsMine)
+        {
             ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
             CharacterManager characterManager = player.GetComponent<CharacterManager>();
             XanaPartyCamera.characterManager = characterManager;
