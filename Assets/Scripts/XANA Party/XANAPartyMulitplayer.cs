@@ -6,7 +6,7 @@ using UnityEngine.Playables;
 
 public class XANAPartyMulitplayer : MonoBehaviour
 {
-    [SerializeField] Animator animator;
+    //[SerializeField] Animator animator;
     PhotonView photonView;
     private void Start()
     {
@@ -74,7 +74,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         if (photonView != null && photonView.ViewID == photonID)
         {
             print("Setting JUMP RPC");
-            animator.SetBool("isJump", true);
+            this.GetComponent<CharacterManager>().MoveJump();
         }
     }
 

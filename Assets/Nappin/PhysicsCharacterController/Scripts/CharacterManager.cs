@@ -598,7 +598,7 @@ namespace PhysicsCharacterController
         }
 
 
-        private void MoveJump()
+        public void MoveJump()
         {
            
             //jumped
