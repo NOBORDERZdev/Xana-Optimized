@@ -60,15 +60,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     {
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-        {
-            ConstantsHolder.xanaConstants.isJoinigXanaPartyGame= false;
-            ConstantsHolder.xanaConstants.isMasterOfGame = false;
-            ConstantsHolder.xanaConstants.XanaPartyGameId = 0;
-            ConstantsHolder.xanaConstants.XanaPartyGameName = "";
-            ConstantsHolder.xanaConstants.isBuilderScene = false;
-            ConstantsHolder.xanaConstants.builderMapID = 0;
-        }
+        
        
         if (exitOnce)
         {

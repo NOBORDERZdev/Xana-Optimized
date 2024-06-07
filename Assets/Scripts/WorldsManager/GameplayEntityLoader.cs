@@ -630,7 +630,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             {
                 StartCoroutine(SetXanaPartyControllers(player));
             }
-          
         }
     }
 
