@@ -14,7 +14,7 @@ public class StartPoint : MonoBehaviour
 
     private void OnEnable()
     {
-        if (BuilderData.mapData.data.worldType != 1)
+        if ( BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();
             return;
@@ -26,7 +26,7 @@ public class StartPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        if (BuilderData.mapData.data.worldType != 1)
+        if (BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();
             return;
