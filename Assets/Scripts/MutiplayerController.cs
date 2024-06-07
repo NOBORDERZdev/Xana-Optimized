@@ -256,7 +256,6 @@ namespace Photon.Pun.Demo.PunBasics
                 foreach (RoomInfo info in availableRoomList)
                 {
                     roomNames.Add(info.Name);
-                    Debug.LogError(info.PlayerCount+"--"+ info.MaxPlayers+"--"+info.Name);
                     if (info.PlayerCount < info.MaxPlayers)
                     {
                         CurrRoomName = info.Name;

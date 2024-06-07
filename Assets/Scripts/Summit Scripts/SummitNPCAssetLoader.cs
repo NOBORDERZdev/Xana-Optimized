@@ -13,6 +13,7 @@ public class SummitNPCAssetLoader : MonoBehaviour
     private string shirt_TextureName, Pent_TextureName, Shoes_TextureName, Skin_ColorName, Eye_ColorName, Hair_ColorName;
     private Stitcher stitcher;
 
+    [HideInInspector]
     public string json;
 
     public TMPro.TextMeshProUGUI npcName;
@@ -34,18 +35,13 @@ public class SummitNPCAssetLoader : MonoBehaviour
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = _CharacterData.CreateFromJSON(aiAvatarJson);
 
-        var gender = _CharacterData.gender ?? "Male";
-        var avatarController = this.gameObject.GetComponent<AvatarController>();
-
         if (_CharacterData.myItemObj.Count > 0)
         {
             for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
             {
-                var item = _CharacterData.myItemObj[i];
-                string type = _CharacterData.myItemObj[i].ItemType;
-
+                if (string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName))
+                    continue;
                 DownloadAddressableWearableWearable(_CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType);
-
             }
         }
     }

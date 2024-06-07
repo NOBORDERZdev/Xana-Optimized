@@ -6,7 +6,7 @@ using UnityEngine;
 public class AINPCTrigger : MonoBehaviour
 {
     public string[] welcomeMsgs;
-    public string npcID;
+    public int npcID;
     public void OnTriggerEnter(Collider other)
     {
         if(other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
@@ -19,7 +19,7 @@ public class AINPCTrigger : MonoBehaviour
     {
         if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.AINPCActivated?.Invoke(npcID, welcomeMsgs);
+            BuilderEventManager.AINPCDeactivated?.Invoke(npcID);
         }
     }
 

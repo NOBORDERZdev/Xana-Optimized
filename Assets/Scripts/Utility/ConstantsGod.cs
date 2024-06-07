@@ -290,5 +290,6 @@ public class ConstantsGod
     #region XANA Summit Api's
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
     public static string GETALLDOMES = "/domes/getcreatedDomes";
+    public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
     #endregion
 }
