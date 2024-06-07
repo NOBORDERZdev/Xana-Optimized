@@ -634,7 +634,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
 
     IEnumerator SetXanaPartyControllers(GameObject player){
-        if (player.GetComponent<PhotonView>().IsMine)
+        if (/*player.GetComponent<PhotonView>().IsMine*/ true)
         {
             if(player == null)
                 yield return null;
