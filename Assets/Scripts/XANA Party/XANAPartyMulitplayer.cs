@@ -11,6 +11,15 @@ public class XANAPartyMulitplayer : MonoBehaviour
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
+        Invoke(nameof(DisbleAnimatedController),2);
+    }
+
+    void DisbleAnimatedController()
+    {
+        if (photonView != null && !photonView.IsMine) {
+            this.GetComponentInChildren<AnimatedController>().enabled = false;
+        }
+       
     }
     // Coroutine to move players to a random game
     public IEnumerator MovePlayersToRandomGame()
