@@ -882,7 +882,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 534.51746, y: 20}
+  m_AnchoredPosition: {x: 534.5175, y: 20}
   m_SizeDelta: {x: 427.5, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &73056489
@@ -8022,16 +8022,11 @@ MonoBehaviour:
   connectionState: 1
   matchMakingState: 2
   internetState: 1
-  multiplayerXanaParty: {fileID: 0}
   working: 0
-  maxPlayersPerRoom: 4
-  LFF: {fileID: 79798788}
-  playerobjects: []
-  isConnecting: 0
   roomNames: []
-  lastSceneName: 
-  lastLobbyName: 
-  lastRoomName: 
+  playerobjects: []
+  LFF: {fileID: 79798788}
+  isConnecting: 0
 --- !u!4 &860513762
 Transform:
   m_ObjectHideFlags: 0
@@ -12719,7 +12714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 534.51746, y: -160}
+  m_AnchoredPosition: {x: 534.5175, y: -160}
   m_SizeDelta: {x: 427.5, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1439763798
@@ -21406,7 +21401,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641504, y: -0.00089248695, z: 0.000009499807, w: 0.999943}
+  m_LocalRotation: {x: 0.0106414985, y: -0.00089248456, z: 0.000009499775, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -26745,7 +26740,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 534.51746, y: -70}
+  m_AnchoredPosition: {x: 534.5175, y: -70}
   m_SizeDelta: {x: 427.5, y: 90}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &2620792478504866626
@@ -35278,6 +35273,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: 
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4338721142732702075}
+        m_TargetAssemblyTypeName: HomeSceneLoader, Assembly-CSharp
+        m_MethodName: XANAPartyBackToLobby
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
