@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
+
 public class THA_AI_Conversation : MonoBehaviour
 {
     //https://avatarchat-ai.xana.net/tha_chat?input_string=Who%20are%20you%3F%20What%20is%20your%20oppupation&usr_id=1&owner_id=2121
@@ -15,6 +16,7 @@ public class THA_AI_Conversation : MonoBehaviour
     private AirinFeedback _airinFeedback;
     private string _playerName = "";
     private Animator _animator;
+    
 
     private void Start()
     {
@@ -24,12 +26,17 @@ public class THA_AI_Conversation : MonoBehaviour
 
     public void AirinDeActivated()
     {
-        XanaChatSystem.instance.npcAlert -= ReplyUserMsg;
+        NFT_Holder_Manager.instance.Extended_XCS.AirinQuestion -= ReplyUserMsg;
+        XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.RuntimeOnly);
+        NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.RemoveAllListeners();
     }
 
     public void StartConversation(string name)
     {
-        XanaChatSystem.instance.npcAlert += ReplyUserMsg;
+        XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.Off);
+        NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.AddListener(NFT_Holder_Manager.instance.Extended_XCS.SendMessage);
+        NFT_Holder_Manager.instance.Extended_XCS.AirinQuestion += ReplyUserMsg;
+
         _playerName = name;
         StartCoroutine(SetApiData());
         StartCoroutine(EnableChatWindow());
@@ -38,14 +45,15 @@ public class THA_AI_Conversation : MonoBehaviour
     private IEnumerator EnableChatWindow()
     {
         yield return new WaitForSeconds(2f);
-        if (!XanaChatSystem.instance.isChatOpen)
+        if (!NFT_Holder_Manager.instance.Extended_XCS.IsShowChatWindow())
             XanaChatSystem.instance.OpenCloseChatDialog();
     }
 
     private void ReplyUserMsg(string msg)
     {
+        Debug.LogError("msg: " + msg);
         this._msg = msg;
-        XanaChatSystem.instance.ShowMsgLocally("Airin", "typing...");
+        NFT_Holder_Manager.instance.Extended_XCS.ShowMsgLocally("Airin", "typing...");
         _animator.SetBool("isChating", true);
         StartCoroutine(SetApiData());
     }
@@ -73,7 +81,7 @@ public class THA_AI_Conversation : MonoBehaviour
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
             //Debug.LogError("Message: " + _airinFeedback.data);
-            XanaChatSystem.instance.ShowAirinMsg("Airin", _airinFeedback.data);
+            NFT_Holder_Manager.instance.Extended_XCS.ShowAirinMsg("Airin", _airinFeedback.data);
             _animator.SetBool("isChating", false);
             yield return null;
         }

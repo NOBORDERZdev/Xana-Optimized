@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Exit Games GmbH"/>
 // <summary>Demo code for Photon Chat in Unity.</summary>
 // <author>developer@exitgames.com</author>
@@ -45,8 +45,6 @@ public class XanaChatSystem : MonoBehaviour
     private const string UsernamePrefs = "UsernamePref";
     [SerializeField]
     public string UserName { get; set; }
-    [HideInInspector]
-    public bool isChatOpen;
 
     [Header("UI Elements")]
     public GameObject chatButton;
@@ -157,31 +155,6 @@ public class XanaChatSystem : MonoBehaviour
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
 
-    public void ShowMsgLocally(string senderName, string msgData)
-    {
-            this.CurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.CurrentChannelText.text;
-            this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
-    }
-    public void ShowAirinMsg(string senderName, string msgData)
-    {
-        // Split the text into lines
-        string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-        // Replace the first line with the AI response
-        if (lines.Length > 0)
-        {
-            lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
-        }
-        else
-        {
-            // If there are no lines, just set the text to the AI response
-            lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
-        }
-
-        this.CurrentChannelText.text = string.Join("\n", lines);
-        this.PotriatCurrentChannelText.text = string.Join("\n", lines);
-    }
-
     public void ClearChatTxtForMeeting()
     {
         this.CurrentChannelText.text = "";
@@ -254,6 +227,7 @@ public class XanaChatSystem : MonoBehaviour
         //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
+    protected bool isChatOpen;
 
     public void OpenCloseChatDialog()
     {
@@ -290,7 +264,7 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-        string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
 
         print("Bad word !!" + removeBadWords);
 
@@ -310,17 +284,10 @@ public class XanaChatSystem : MonoBehaviour
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        if (ConstantsHolder.xanaConstants.IsShowChatToAll)
-        {  // Airin AI character is not activated
-            ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
-            ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
-        }
-        else if (!ConstantsHolder.xanaConstants.IsShowChatToAll)
-        {  // When User Activated the Airin for conversation
-            ShowMsgLocally(UserName, removeBadWords);
-            npcAlert?.Invoke(removeBadWords);
-        }
-        //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
+        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
+        ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
+
+      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
         removeBadWords = "";
