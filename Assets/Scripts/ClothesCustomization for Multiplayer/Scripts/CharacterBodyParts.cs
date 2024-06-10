@@ -85,6 +85,7 @@ public class CharacterBodyParts : MonoBehaviour
 
 
     public RandomPreset[] randomPresetData;
+    public AvatarGender AvatarGender;
 
     [Header("New Character PelvisBone")]
     public GameObject pelvisBoneNewCharacter;
@@ -214,7 +215,15 @@ public class CharacterBodyParts : MonoBehaviour
     }
     void DefaultTextureForNewCharacter()
     {
-        CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
+        CharacterHandler.AvatarData avatarData;
+        if (AvatarGender == AvatarGender.Male)
+        {
+            avatarData = CharacterHandler.instance.maleAvatarData;
+        }    
+        else
+        {
+            avatarData = CharacterHandler.instance.femaleAvatarData;
+        }
 
         body.materials[0].SetTexture(Shoes_TextureName, null);
         //if (ApplyClothMask)
@@ -257,7 +266,15 @@ public class CharacterBodyParts : MonoBehaviour
     // Set Default Texture for Sinfle Item player
     public void DefaultTextureForNewCharacter_Single(string itemType)
     {
-        CharacterHandler.AvatarData avatarData = CharacterHandler.instance.GetActiveAvatarData();
+        CharacterHandler.AvatarData avatarData;
+        if (AvatarGender == AvatarGender.Male)
+        {
+            avatarData = CharacterHandler.instance.maleAvatarData;
+        }
+        else
+        {
+            avatarData = CharacterHandler.instance.femaleAvatarData;
+        }
 
         Material mat = this.body.materials[0];
         switch (itemType)
