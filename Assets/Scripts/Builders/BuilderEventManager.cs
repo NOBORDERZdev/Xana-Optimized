@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
+using UnityEngine.Video;
 
 public static class BuilderEventManager
 {
@@ -134,5 +135,7 @@ public static class BuilderEventManager
     public static Action<int, Vector3> LoadNewScene;
     public static Action<int,string[]> AINPCActivated;
     public static Action<int> AINPCDeactivated;
+
+    public static Action<VideoClip> spaceXActivated;
 
 }

@@ -58,6 +58,32 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.Connect(sceneData[0]);
     }
 
+    public void LoadingNewScene(string SceneName)
+    {
+        if (string.IsNullOrEmpty(SceneName))
+            return;
+
+        GetPlayerPosition(playerPos);
+        string existingSceneName = WorldItemView.m_EnvName;
+        WorldItemView.m_EnvName = SceneName;
+        ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
+        gameplayEntityLoader.currentEnvironment = null;
+        multiplayerController.isConnecting = false;
+        gameplayEntityLoader.isEnvLoaded = false;
+        gameplayEntityLoader.isAlreadySpawned = true;
+        ConstantsHolder.isFromXANASummit = true;
+        multiplayerController.Disconnect();
+
+        XanaWorldDownloader.ResetAll();
+
+        multiplayerController.playerobjects.Clear();
+
+        SceneManager.UnloadSceneAsync(existingSceneName);
+
+        multiplayerController.Connect(SceneName);
+    }
+
+
     void LoadBuilderSceneLoading(string[] sceneData)
     {
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(sceneData[2]);
