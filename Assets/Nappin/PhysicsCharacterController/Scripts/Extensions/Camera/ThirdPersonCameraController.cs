@@ -1,5 +1,7 @@
 ﻿using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace PhysicsCharacterController
@@ -8,7 +10,8 @@ namespace PhysicsCharacterController
     {
         [Header("Camera controls")]
         public Vector2 mouseSensivity = new Vector2(5f, 1f);
-        public float smoothSpeed = 0.17f;
+        public RectTransform targetPanel; 
+        private float smoothSpeed = 0.17f;
 
 
         private CinemachineFreeLook cinemachineFreeLook;
@@ -29,23 +32,29 @@ namespace PhysicsCharacterController
         {
             cinemachineFreeLook = this.GetComponent<CinemachineFreeLook>();
             movementActions = new MovementActions();
+            smoothSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.17f);
         }
 
 
         private void Update()
         {
+            if ( AllowTouch())
+            {
+                print("~~~~~ allow move");
+                 input += movementActions.Gameplay.Camera.ReadValue<Vector2>() * mouseSensivity * new Vector2(0.01f, 0.001f);
+
+                //ENABLE if using old input system
+                //input = Input.mousePosition * mouseSensivity * new Vector2(0.01f, 0.001f);
+
+                if (input.y > 1f) input.y = 1f;
+                else if (input.y < 0f) input.y = 0f;
+
+                currentInputVector = Vector2.SmoothDamp(currentInputVector, input, ref smoothVelocity, smoothSpeed);
+                cinemachineFreeLook.m_XAxis.Value = currentInputVector.x;
+                cinemachineFreeLook.m_YAxis.Value = currentInputVector.y;
+            }
             //DISABLE if using old input system
-            input += movementActions.Gameplay.Camera.ReadValue<Vector2>() * mouseSensivity * new Vector2(0.01f, 0.001f);
-
-            //ENABLE if using old input system
-            //input = Input.mousePosition * mouseSensivity * new Vector2(0.01f, 0.001f);
-
-            if (input.y > 1f) input.y = 1f;
-            else if (input.y < 0f) input.y = 0f;
-
-            currentInputVector = Vector2.SmoothDamp(currentInputVector, input, ref smoothVelocity, smoothSpeed);
-            cinemachineFreeLook.m_XAxis.Value = currentInputVector.x;
-            cinemachineFreeLook.m_YAxis.Value = currentInputVector.y;
+           
         }
 
 
@@ -73,6 +82,50 @@ namespace PhysicsCharacterController
         {
             movementActions.Disable();
         }
+
+        //public bool AllowTouch(){
+        //    //PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        //    //eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        //    //List<RaycastResult> results = new List<RaycastResult>();
+        //    //EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        //    //for (int i = 0; i < results.Count; i++)
+        //    //{
+        //    //    if (results[i].gameObject.layer == LayerMask.NameToLayer("NFTDisplayPanel") || results[i].gameObject.layer == LayerMask.NameToLayer("Ignore Raycast"))
+        //    //    {
+        //    //        ////Debug.Log("Object is hover===" + results[i].gameObject.name);
+        //    //        return true;
+        //    //    }
+        //    //}
+        //    // return false;
+        //    //Check for touch count
+           
+        //}
+
+        public bool AllowTouch()
+        {
+            // Check for touch count
+            #if UNITY_EDITOR
+            // In the Unity editor, use the mouse position
+            if (RectTransformUtility.RectangleContainsScreenPoint(targetPanel, Input.mousePosition))
+            {
+                return true;
+            }
+            #else
+            // On a mobile device, use the touch position
+            for (int i = 0; i < Input.touchCount; i++)
+            {
+                Touch touch = Input.GetTouch(i);
+                if (RectTransformUtility.RectangleContainsScreenPoint(targetPanel, touch.position))
+                {
+                    return true;
+                }
+            }
+            #endif
+
+            return false;
+        }    
 
         #endregion
 
