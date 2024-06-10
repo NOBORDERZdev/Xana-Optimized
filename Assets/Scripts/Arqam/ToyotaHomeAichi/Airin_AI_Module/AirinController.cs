@@ -76,7 +76,7 @@ public class AirinController : MonoBehaviour
                 yield break;
             }
             direction.y = 0;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             if (_rotateCor == null)
             {
                 _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear, false));

@@ -86,8 +86,9 @@ public class THA_AI_Conversation : MonoBehaviour
             yield return null;
         }
         else
+        {
             Debug.LogError(request.error);
-
+        }
         request.Dispose();
     }
 
