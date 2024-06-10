@@ -16,7 +16,7 @@ public class THA_AI_Conversation : MonoBehaviour
     private AirinFeedback _airinFeedback;
     private string _playerName = "";
     private Animator _animator;
-    
+    private bool _isAirinTyping = false;
 
     private void Start()
     {
@@ -51,8 +51,8 @@ public class THA_AI_Conversation : MonoBehaviour
 
     private void ReplyUserMsg(string msg)
     {
-        Debug.LogError("msg: " + msg);
         this._msg = msg;
+        _isAirinTyping = true;
         NFT_Holder_Manager.instance.Extended_XCS.ShowMsgLocally("Airin", "typing...");
         _animator.SetBool("isChating", true);
         StartCoroutine(SetApiData());
@@ -81,7 +81,8 @@ public class THA_AI_Conversation : MonoBehaviour
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
             //Debug.LogError("Message: " + _airinFeedback.data);
-            NFT_Holder_Manager.instance.Extended_XCS.ShowAirinMsg("Airin", _airinFeedback.data);
+            NFT_Holder_Manager.instance.Extended_XCS.ShowAirinMsg("Airin", _airinFeedback.data, _isAirinTyping);
+            _isAirinTyping = false;
             _animator.SetBool("isChating", false);
         }
         else

@@ -23,24 +23,31 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         this.PotriatCurrentChannelText.text = "<b>" + senderName + " : " + "</b>" + msgData + "\n" + this.PotriatCurrentChannelText.text;
     }
 
-    public void ShowAirinMsg(string senderName, string msgData)
+    public void ShowAirinMsg(string senderName, string msgData, bool airinTyping)
     {
-        // Split the text into lines
-        string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-
-        // Replace the first line with the AI response
-        if (lines.Length > 0)
+        if (!airinTyping)
         {
-            lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
+            ShowMsgLocally(senderName, msgData);
         }
-        else
+        else if (airinTyping)
         {
-            // If there are no lines, just set the text to the AI response
-            lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
-        }
+            // Split the text into lines
+            string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
 
-        this.CurrentChannelText.text = string.Join("\n", lines);
-        this.PotriatCurrentChannelText.text = string.Join("\n", lines);
+            // Replace the first line with the AI response
+            if (lines.Length > 0)
+            {
+                lines[0] = "<b>" + senderName + " : " + "</b>" + msgData;
+            }
+            else
+            {
+                // If there are no lines, just set the text to the AI response
+                lines = new string[] { "<b>" + senderName + " : " + "</b>" + msgData };
+            }
+
+            this.CurrentChannelText.text = string.Join("\n", lines);
+            this.PotriatCurrentChannelText.text = string.Join("\n", lines);
+        }
     }
 
     private void OnEnterSend()
