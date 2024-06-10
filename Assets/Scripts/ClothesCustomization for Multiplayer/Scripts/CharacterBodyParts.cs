@@ -90,6 +90,7 @@ public class CharacterBodyParts : MonoBehaviour
     [Header("New Character PelvisBone")]
     public GameObject pelvisBoneNewCharacter;
 
+    private CharacterHandler.AvatarData _avatarData;
     private void Awake()
     {
         //instance = this;
@@ -215,25 +216,17 @@ public class CharacterBodyParts : MonoBehaviour
     }
     void DefaultTextureForNewCharacter()
     {
-        CharacterHandler.AvatarData avatarData;
-        if (AvatarGender == AvatarGender.Male)
-        {
-            avatarData = CharacterHandler.instance.maleAvatarData;
-        }    
-        else
-        {
-            avatarData = CharacterHandler.instance.femaleAvatarData;
-        }
+        _avatarData = GetAvatarData();
 
         body.materials[0].SetTexture(Shoes_TextureName, null);
         //if (ApplyClothMask)
         {
-            if (avatarData.DPent_Texture != null)
-                body.materials[0].SetTexture(Pent_TextureName, avatarData.DPent_Texture);
-            if (avatarData.DShirt_Texture != null)
-                body.materials[0].SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
-            if (avatarData.DShoe_Texture != null)
-                body.materials[0].SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
+            if (_avatarData.DPent_Texture != null)
+                body.materials[0].SetTexture(Pent_TextureName, _avatarData.DPent_Texture);
+            if (_avatarData.DShirt_Texture != null)
+                body.materials[0].SetTexture(shirt_TextureName, _avatarData.DShirt_Texture);
+            if (_avatarData.DShoe_Texture != null)
+                body.materials[0].SetTexture(Shoes_TextureName, _avatarData.DShoe_Texture);
         }
 
         #region #region Xana Avatar 1.0 //--> remove for xana avatar2.0
@@ -266,36 +259,40 @@ public class CharacterBodyParts : MonoBehaviour
     // Set Default Texture for Sinfle Item player
     public void DefaultTextureForNewCharacter_Single(string itemType)
     {
-        CharacterHandler.AvatarData avatarData;
-        if (AvatarGender == AvatarGender.Male)
-        {
-            avatarData = CharacterHandler.instance.maleAvatarData;
-        }
-        else
-        {
-            avatarData = CharacterHandler.instance.femaleAvatarData;
-        }
+        _avatarData = GetAvatarData();
 
         Material mat = this.body.materials[0];
         switch (itemType)
         {
             case "Pent":
-                if (avatarData.DPent_Texture != null)
-                    mat.SetTexture(Pent_TextureName, avatarData.DPent_Texture);
+                if (_avatarData.DPent_Texture != null)
+                    mat.SetTexture(Pent_TextureName, _avatarData.DPent_Texture);
                 break;
 
             case "Shirt":
-                if (avatarData.DShirt_Texture != null)
-                    mat.SetTexture(shirt_TextureName, avatarData.DShirt_Texture);
+                if (_avatarData.DShirt_Texture != null)
+                    mat.SetTexture(shirt_TextureName, _avatarData.DShirt_Texture);
                 break;
 
             case "Shoes":
-                if (avatarData.DShoe_Texture != null)
-                    mat.SetTexture(Shoes_TextureName, avatarData.DShoe_Texture);
+                if (_avatarData.DShoe_Texture != null)
+                    mat.SetTexture(Shoes_TextureName, _avatarData.DShoe_Texture);
                 break;
 
             default:
                 break;
+        }
+    }
+
+    private CharacterHandler.AvatarData GetAvatarData()
+    {
+        if (AvatarGender == AvatarGender.Male)
+        {
+            return CharacterHandler.instance.maleAvatarData;
+        }
+        else
+        {
+            return CharacterHandler.instance.femaleAvatarData;
         }
     }
 
