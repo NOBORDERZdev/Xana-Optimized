@@ -19,7 +19,7 @@ public class AirinController : MonoBehaviour
     private Quaternion _startRot;
     private Animator _animator;
     private Coroutine _distanceCor;
-    private Coroutine _rotateCor;
+
     private enum RotateType { Linear, Smooth }
 
 
@@ -36,7 +36,7 @@ public class AirinController : MonoBehaviour
         if (!_isAirinActivated)
         {
             // Rotate Airin to face the player when clicked
-            _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear, true));
+            RotateTowardsPlayer(_player.position, RotateType.Linear, true);
             _isAirinActivated = true;
             ConstantsHolder.xanaConstants.IsShowChatToAll = false;
             AirinAlertAction?.Invoke(XanaChatSystem.instance.UserName);
@@ -57,10 +57,6 @@ public class AirinController : MonoBehaviour
         {
             StopCoroutine(_distanceCor);
         }
-        if (_rotateCor != null)
-        {
-            StopCoroutine(_rotateCor);
-        }
         StartCoroutine(RotateToOriginalPosition());
     }
 
@@ -77,39 +73,33 @@ public class AirinController : MonoBehaviour
             }
             direction.y = 0;
             yield return new WaitForSeconds(0.2f);
-            if (_rotateCor == null)
-            {
-                _rotateCor = StartCoroutine(RotateTowardsPlayer(_player.position, RotateType.Linear, false));
-            }
+            RotateTowardsPlayer(_player.position, RotateType.Linear, false);
         }
     }
-    private IEnumerator RotateTowardsPlayer(Vector3 targetPos, RotateType _rotateType, bool _isGreeting)
+    private void RotateTowardsPlayer(Vector3 targetPos, RotateType rotateType, bool isGreeting)
     {
         Vector3 direction = targetPos - transform.position;
         direction.y = 0;
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        if (_rotateType.Equals(RotateType.Linear))
+        if (rotateType.Equals(RotateType.Linear))
         {
             transform.rotation = targetRotation;
         }
-        else if (_rotateType.Equals(RotateType.Smooth))
+        else if (rotateType.Equals(RotateType.Smooth))
         {
             while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * _rotationSpeed);
-                // Wait for the next frame
-                yield return null;
             }
             transform.rotation = targetRotation;
         }
-        if (_isGreeting)
+        if (isGreeting)
         {
             _animator.SetTrigger("active");
         }
-
-        _rotateCor = null;
     }
+
     private IEnumerator RotateToOriginalPosition()
     {
         // Rotate back to the original position smoothly

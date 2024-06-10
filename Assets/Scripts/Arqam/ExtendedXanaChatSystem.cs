@@ -6,29 +6,9 @@ public class ExtendedXanaChatSystem : XanaChatSystem
 {
     public Action<string> AirinQuestion;
 
-    public void SendMessage(string _msgData)
+    public void SendMessage(string msgData)
     {
         OnEnterSend();
-    }
-
-    private void OnEnterSend()
-    {
-        string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
-        if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
-        {
-            this.InputFieldChat.text = "";
-            removeBadWords = "";
-            return;
-        }
-
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
-
-        // When User Activated the Airin for conversation
-        ShowMsgLocally(UserName, removeBadWords);
-        AirinQuestion?.Invoke(removeBadWords);
-
-        this.InputFieldChat.text = "";
-        removeBadWords = "";
     }
 
     public bool IsShowChatWindow()
@@ -61,6 +41,26 @@ public class ExtendedXanaChatSystem : XanaChatSystem
 
         this.CurrentChannelText.text = string.Join("\n", lines);
         this.PotriatCurrentChannelText.text = string.Join("\n", lines);
+    }
+
+    private void OnEnterSend()
+    {
+        string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
+        {
+            this.InputFieldChat.text = "";
+            removeBadWords = "";
+            return;
+        }
+
+        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
+
+        // When User Activated the Airin for conversation
+        ShowMsgLocally(UserName, removeBadWords);
+        AirinQuestion?.Invoke(removeBadWords);
+
+        this.InputFieldChat.text = "";
+        removeBadWords = "";
     }
 
 }
