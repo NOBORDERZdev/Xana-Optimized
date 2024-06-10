@@ -83,11 +83,7 @@ public class InputManager : MonoBehaviour
                 direction -= 1.0f;
 
             // for mobile device
-            //direction += horizontal;
-            Debug.Log("Sohaib skating horizontal: " + horizontal);
             direction += horizontal;
-            Debug.Log("Sohaib skating direction: " + direction);
-
         }
 
         return direction;

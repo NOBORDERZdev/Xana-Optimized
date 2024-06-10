@@ -400,7 +400,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             }
             RaycastHit hit;
-        CheckAgain:
+            CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -461,6 +461,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             {              // added by AR for ToyotaHome world
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+            }
+            if (WorldItemView.m_EnvName.Contains("XANA_DUNE"))
+            {
+                mainPlayer.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+                StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+            }
+            if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI"))
+            {
+                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                StartCoroutine(setPlayerCamAngle(0f, 0.5f));
             }
             //else
             //{

@@ -30,8 +30,8 @@ public class XanaDuneControllerHandler : MonoBehaviour
     private void Start()
     {
         Player34 = ReferencesForGamePlay.instance.m_34player.transform;
-        _skateBoardPrefab = Resources.Load("Game_Board") as GameObject;
-        _markPrefab = Resources.Load("Mark") as GameObject;
+        _skateBoardPrefab = Resources.Load("XANADunePrefab/GameBoard") as GameObject;
+        _markPrefab = Resources.Load("XANADunePrefab/Mark") as GameObject;
         _spawnedSkateBoard = Instantiate(_skateBoardPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false);
         _spawnedMarkObject = Instantiate(_markPrefab, Player34, false);
     }
@@ -40,7 +40,7 @@ public class XanaDuneControllerHandler : MonoBehaviour
     {
         animator = ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
         animator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-
+        animator.SetBool("IsEmote", false);
         // prevents the collider from slipping on ramps
         _maxFrictionPhysics = new PhysicMaterial();
         _maxFrictionPhysics.name = "_maxFrictionPhysics";
@@ -61,6 +61,8 @@ public class XanaDuneControllerHandler : MonoBehaviour
         _capsuleCollider.height = 1.5f;
 
         _capsuleCollider.material = _maxFrictionPhysics;
+        EnableDisableUI(false);
+        //EmoteAnimationHandler.Instance.StopAnimation();
 
     }
     public void DisableSkating()
@@ -69,8 +71,13 @@ public class XanaDuneControllerHandler : MonoBehaviour
         _capsuleCollider.radius = _colliderRadius;
         _capsuleCollider.height = _colliderHeight;
         _capsuleCollider.material = null;
-
+        EnableDisableUI(true);
     }
+    private void EnableDisableUI(bool setActive)
+    {
+        Enable_DisableObjects.Instance.EnableDisableUIObjects(setActive);
+    }
+
     public void TouchingCrab()
     {
         _spawnedSkateBoard.GetComponent<InputManager>().OnTouchingCrab();

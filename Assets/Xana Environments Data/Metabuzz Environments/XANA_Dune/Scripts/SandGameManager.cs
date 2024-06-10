@@ -5,6 +5,7 @@ using EnumCheck;
 using UnityEngine.Networking;
 using Unity.VisualScripting;
 using Cinemachine;
+using Photon.Pun;
 
 public class SandGameManager : MonoBehaviour
 {
@@ -25,7 +26,7 @@ public class SandGameManager : MonoBehaviour
     InputManager input;
 
     Animator animator;
-    [SerializeField] Vector3 _player34InitialPos;
+    private Vector3 _player34InitialPos;
     private bool _isSkatingControllerOn = false;
 
 
@@ -166,7 +167,7 @@ public class SandGameManager : MonoBehaviour
             board.GetComponent<FixedJoint>().connectedBody = playerRb;
             //player.AddComponent<XanaDuneControllerHandler>();
             player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
-            StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(2.21f, 1f));
+            StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(-88f, 1f));
             PlayerCameraController.instance.lockRotation = true;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
@@ -198,7 +199,9 @@ public class SandGameManager : MonoBehaviour
         rb.mass = 0.1f;
         rb.freezeRotation = false;
 
-        board.gameObject.SetActive(true);
+        var playerPv= ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>();
+        playerPv.RPC(nameof(EnableSkateBoardRpc), RpcTarget.All, playerPv.ViewID);
+        //board.gameObject.SetActive(true);
         input.enabled = true;
         input.force = 250;
         int i = 0;
@@ -223,6 +226,18 @@ public class SandGameManager : MonoBehaviour
             yield return null;
         }
     }
+
+    //[PunRPC]
+    //private void EnableSkateBoardRpc(int viewId)
+    //{
+    //    // get all photonviews in the scene
+    //    //PhotonView.Find(viewId).gameObject.SetActive(true);
+
+    //    if (ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID == viewId)
+    //    {
+    //        board.gameObject.SetActive(true);
+    //    }
+    //}
 
     public void GameOver()
     {

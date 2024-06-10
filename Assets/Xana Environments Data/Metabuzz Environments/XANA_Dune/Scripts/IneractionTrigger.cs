@@ -19,7 +19,7 @@ public class IneractionTrigger : MonoBehaviour
     {
         if (other.CompareTag("PhotonLocalPlayer"))
         {
-            triggerBtn.transform.LookAt(Camera.main.transform);
+            triggerBtn.transform.LookAt(ReferencesForGamePlay.instance.randerCamera.transform);
         }
     }
     private void OnTriggerExit(Collider other)
