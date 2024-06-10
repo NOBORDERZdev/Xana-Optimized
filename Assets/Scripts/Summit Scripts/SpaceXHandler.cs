@@ -30,12 +30,16 @@ public class SpaceXHandler : MonoBehaviour
     private void VideoPlayer_loopPointReached(VideoPlayer source)
     {
         planetOptions.SetActive(true);
-
     }
 
     void DisableVideoPlayer()
     {
         videoPlayer.gameObject.SetActive(false);
+    }
+
+    void DisablePlanetOptionScreen()
+    {
+        planetOptions.SetActive(false);
     }
 
     public void LoadPlanetScene(int x)
@@ -45,6 +49,7 @@ public class SpaceXHandler : MonoBehaviour
         summitSceneLoading.LoadingNewScene(sceneName);
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
+        DisablePlanetOptionScreen();
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 

@@ -62,8 +62,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (string.IsNullOrEmpty(SceneName))
             return;
-
-        GetPlayerPosition(playerPos);
+        Vector3 pp = GameplayEntityLoader.instance.mainController.transform.position;
+        GetPlayerPosition(pp);
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;

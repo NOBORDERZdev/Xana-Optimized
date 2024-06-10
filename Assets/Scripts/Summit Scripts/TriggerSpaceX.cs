@@ -17,7 +17,6 @@ public class TriggerSpaceX : MonoBehaviour
     private void AsyncOp_Completed(AsyncOperationHandle obj)
     {
         vClip = (VideoClip)obj.Result;
-        throw new System.NotImplementedException();
     }
 
     public void OnTriggerEnter(Collider other)
