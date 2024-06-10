@@ -33,7 +33,7 @@ public class EmoteManager : MonoBehaviour
                 {
                     if (EmoteServerData.success == true)
                     {
-
+                        Debug.LogError(request.downloadHandler.text.ToString());
                     }
                 }
             }

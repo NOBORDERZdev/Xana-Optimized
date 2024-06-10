@@ -2,12 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EmoteReactionUIHandler : MonoBehaviour
 {
     public static Action ClearViewItemsReaction;
     public static Action< List<EmoteAnimationList>, EmoteReactionItemBtnHandler.ItemType> SetViewItemsEmote;
     public static Action< List<ReactionAnimationList>, EmoteReactionItemBtnHandler.ItemType> SetViewItemsReaction;
+
+    public static Action<int, int> SetTabSelectedEmoteAction;
+    public static Action<int, int> SetTabSelectedReactionAction;
+    public static Action<EmoteReactionItemBtnHandler.ItemType, string, int> SetSeeAllTabSelectedReactionAction;
+
     public Transform DisplayDialogScrollView;
     public Transform DisplayContentScrollView;
     public List<Transform> ViewItemsInScrollView = new List<Transform>();
@@ -15,18 +21,71 @@ public class EmoteReactionUIHandler : MonoBehaviour
     protected EmoteReactionItemBtnHandler.ItemType SelectedAction;
     public Transform TabItemViewEmotes;
     public Transform TabItemViewReaction;
+    public List<Transform> EmoteTabs = new List<Transform>();
+    public List<Transform> ReactionTabs = new List<Transform>();
+    private int _selectedTabEmote = 0;
+    private int _selectedTabReaction = 0;
+    public Color SelectedColorTab;
+    public Color UnSelectedColorTab;
 
+    public void SetTabSelectedEmote(int selectedTabEmote, int selectedTab)
+    {
+        _selectedTabEmote = selectedTab;
+        for (int i = 0; i < EmoteTabs.Count; i++)
+        {
+            if(i == _selectedTabEmote)
+            {
+                EmoteTabs[i].GetComponent<Text>().color = SelectedColorTab;
+            }
+            else
+            {
+                 EmoteTabs[i].GetComponent<Text>().color = UnSelectedColorTab;
+            }
+        }
+    }
+    public void SetTabSelectedReaction(int selectedTabReaction, int selectedTab)
+    {
+        _selectedTabReaction = selectedTab;
+        for (int i = 0; i < ReactionTabs.Count; i++)
+        {
+            if (i == _selectedTabReaction)
+            {
+                ReactionTabs[i].GetComponent<Text>().color = SelectedColorTab;
+            }
+            else
+            {
+                ReactionTabs[i].GetComponent<Text>().color = UnSelectedColorTab;
+            }
+        }
+    }
+    public void SetSeeAllTabSelectAction(EmoteReactionItemBtnHandler.ItemType actionType, string actionName, int TabIndex)
+    {
+        if (actionType == EmoteReactionItemBtnHandler.ItemType.Emote)
+        {
+            EmoteTabs[_selectedTabEmote].GetComponent<ActionHeaderTabHandler>().SetTabDetails(TabIndex, actionName);
+        }
+        else
+        {
+            ReactionTabs[_selectedTabReaction].GetComponent<ActionHeaderTabHandler>().SetTabDetails(TabIndex, actionName);
+        }
+    }
     private void Awake()
     {
         SetViewItemsEmote += PopulateViewItemsEmotes;
         SetViewItemsReaction += PopulateViewItemsReaction;
         ClearViewItemsReaction += ClearItemsInView;
+        SetTabSelectedEmoteAction += SetTabSelectedEmote;
+        SetTabSelectedReactionAction += SetTabSelectedReaction;
+        SetSeeAllTabSelectedReactionAction += SetSeeAllTabSelectAction;
     }
     private void OnDisable()
     {
         SetViewItemsEmote -= PopulateViewItemsEmotes;
         SetViewItemsReaction -= PopulateViewItemsReaction;
         ClearViewItemsReaction -= ClearItemsInView;
+        SetTabSelectedEmoteAction -= SetTabSelectedEmote;
+        SetTabSelectedReactionAction -= SetTabSelectedReaction;
+        SetSeeAllTabSelectedReactionAction -= SetSeeAllTabSelectAction;
     }
     private void SetTabOfItem()
     {

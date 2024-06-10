@@ -8,26 +8,56 @@ using UnityEngine.UI;
 
 public class ActionFavouriteCircleBtn : MonoBehaviour
 {
-    public bool IsActionSelected = false;
     public int IndexOfBtn = 0;
     private bool _actionSelected = false;
     [SerializeField] private Image _ActionImg;
     public string AnimationName;
     public string ThumbnailURL;
-
     public EmoteReactionItemBtnHandler.ItemType TypeOfAction;
+    bool _longPress = default;
+    float _timer = 0f, longPressTimer = 2f;
 
+    public void PointerDown()
+    {
+        _longPress = true;
+    }
+    public void PointerUp()
+    {
+        _timer = 0f;
+        _longPress = false;
+    }
+    public void PointerClicked()
+    {
+        PlayerActionInteraction();
+    }
     private void OnEnable()
     {
         InitializeBtn();
     }
     private void OnDisable()
     {
-        if(ThumbnailURL != "")
+        if (ThumbnailURL != "")
         {
             ///>--MemoryClean Stoped AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ThumbnailURL, true);
         }
     }
+    private void Update()
+    {
+        if (!_longPress)
+        {
+            return;
+        }
+
+        _timer += Time.deltaTime;
+
+        if (_timer >= longPressTimer)
+        {
+            ActionManager.OpenActionFavouritPanel.Invoke(true);
+            _longPress = false;
+            _timer = 0f;
+        }
+    }
+
     public void InitializeBtn()
     {
         Debug.LogError("InitializeBtn -----> ");
@@ -37,6 +67,7 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
             AnimationName = actionData.AnimationName;
             TypeOfAction = actionData.TypeOfAction;
             ThumbnailURL = actionData.ThumbnailURL;
+            _actionSelected = true;
             LoadImageFromURL();
         }
         else
@@ -45,6 +76,7 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
             ThumbnailURL = default;
             _ActionImg.sprite = default;
             _ActionImg.gameObject.SetActive(false);
+            _actionSelected = false;
         }
     }
     public void SelectedAction(ActionData dataObj)

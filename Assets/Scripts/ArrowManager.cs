@@ -23,7 +23,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     private bool iscashed = false;
     Dictionary<object, object> cashed_data = new Dictionary<object, object>();
 
-
     public bool isBear;
     public TMPro.TextMeshProUGUI PhotonUserName;
     public Image VoiceImage;

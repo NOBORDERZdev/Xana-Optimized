@@ -11,16 +11,19 @@ public class ActionManager : MonoBehaviour
     public ActionFavouriteManager ActionFavouriteManager;
     public static Action<ActionData> ActionBtnClick;
     public static Action<bool> OpenActionFavouritPanel;
+    public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
 
     private void OnEnable()
     {
         ActionBtnClick += ProcessAction;
         OpenActionFavouritPanel += OpenActionFavouritSelectionPanel;
+        OpenActionCategoryTab += SetActionCategoryTab;
     }
     private void OnDisable()
     {
         ActionBtnClick -= ProcessAction;
         OpenActionFavouritPanel -= OpenActionFavouritSelectionPanel;
+        OpenActionCategoryTab -= SetActionCategoryTab;
     }
     public void Start()
     {
@@ -45,14 +48,36 @@ public class ActionManager : MonoBehaviour
     }
     public void ProcessAction(ActionData dataObj)
     {
-        if(ActionFavouriteManager.isActiveAndEnabled)
+        Debug.LogError("----- ProcessAction --- >  " + ActionFavouriteManager.IsInActionSelection);
+        if(ActionFavouriteManager.IsInActionSelection)
         {
             /// Save Action
             ActionFavouriteManager.SetFavouriteAction(dataObj);
         }
         else
         {
+            if(dataObj.TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
+            {
+
+            }
+            else
+            {
+                PlayerPrefs.SetString(ConstantsGod.ReactionThumb, dataObj.ThumbnailURL);
+                ArrowManager.OnInvokeReactionButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
+            }
+            Debug.LogError("----- Play Animation ----");
             /// Run action on player
+        }
+    }
+    public void SetActionCategoryTab(EmoteReactionItemBtnHandler.ItemType itemType, int categoryIndex)
+    {
+        if(itemType == EmoteReactionItemBtnHandler.ItemType.Emote)
+        {
+            EmoteManager.OpenEmoteDialogUITabClick(categoryIndex);
+        }
+        else
+        {
+            ReactionManager.OpenReactionDialogUITabClick(categoryIndex);
         }
     }
 }

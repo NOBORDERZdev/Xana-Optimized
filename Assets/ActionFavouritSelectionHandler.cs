@@ -78,6 +78,8 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
             item.GetComponent<ActionFavouriteDialogBtn>().SaveActionSelected();
         }
         EmoteReactionUIHandlerLandscape.CloseDisplayDialogScrollView?.Invoke();
+        ActionManager.OpenActionFavouritPanel.Invoke(false);
+
     }
     public bool IsValidActionToSave(ActionData dataObj)
     {

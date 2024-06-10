@@ -10,8 +10,9 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
     public static Action DisplayActionDuplicateMessage;
     public static Action CloseDisplayDialogScrollView;
     public Transform DuplicateMessage;
-   [SerializeField] public Transform ActionFavouritDialogObj;
-    public List<Transform> ActionFavouritCircleBtn= new List<Transform> ();
+    [SerializeField] public Transform ActionFavouritDialogObj;
+    public List<Transform> ActionFavouritCircleBtn = new List<Transform> ();
+
     private void OnEnable()
     {
         DisplayActionDuplicateMessage += DuplicateActionMessage;
