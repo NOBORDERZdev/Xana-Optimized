@@ -31,9 +31,10 @@ namespace Photon.Pun.Demo.PunBasics
     /// <summary>
     /// Launch manager. Connect, join a random room or create one if none or all full.
     /// </summary>
-    public class MutiplayerController : MonoBehaviourPunCallbacks
+    public class MutiplayerController : MultiplayerMultisectionController
     {
-        public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
+        //Zeel Comment this for parent inherit
+       /* public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
         public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
@@ -64,12 +65,14 @@ namespace Photon.Pun.Demo.PunBasics
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
         string gameVersion = "13";
-        #endregion
+        #endregion*/
+       
 
         #region MonoBehaviour CallBacks
 
-        void Awake()
+       public override void Awake()
         {
+        
             if (instance == null)
             {
                 instance = this;
@@ -97,6 +100,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 DestroyImmediate(this);
             }
+            base.Awake();
         }
         private void Start()
         {
@@ -130,8 +134,16 @@ namespace Photon.Pun.Demo.PunBasics
         /// - if not yet connected, Connect this application instance to Photon Cloud Network
         /// </summary>
         /// 
-        public void Connect(string lobbyN)
+        public override void Connect(string lobbyN)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.Connect(lobbyN);
+                return;
+            }
+
+
+
             working = ScenesList.AddressableScene;
             CurrLobbyName = lobbyN;
 
@@ -173,6 +185,11 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                 base.OnConnectedToMaster();
+                return;
+            }
             connectionState = ServerConnectionStates.ConnectedToServer;
             if (working == ScenesList.MainMenu)
                 return;
@@ -187,12 +204,24 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnJoinedLobby();
+                return;
+            }
             Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name+"--"+Time.time);
             CheckRoomAvailability();
         }
 
+       
+
         public override void OnLeftLobby()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnLeftLobby();
+                return;
+            }
             if (working == ScenesList.AddressableScene)
             {
                 working = ScenesList.MainMenu;
@@ -205,6 +234,11 @@ namespace Photon.Pun.Demo.PunBasics
         bool roomListUpdated = false;
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnRoomListUpdate(roomList);
+                return;
+            }
             availableRoomList = roomList;
             roomListUpdated = true;
         }
@@ -277,7 +311,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
         }
 
-        public RoomOptions RoomOptionsRequest()
+        public  RoomOptions RoomOptionsRequest()
         {
             roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
@@ -296,11 +330,21 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedRoom()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnJoinedRoom();
+                return;
+            }
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             LFF.LoadFile();
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnPlayerEnteredRoom(newPlayer);
+                return;
+            }
             if (newPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
@@ -308,6 +352,12 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnPlayerLeftRoom(otherPlayer);
+                return;
+            }
+            Debug.Log("OnPlayerLeft  ..... " + otherPlayer.NickName);
             if (otherPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
@@ -323,6 +373,11 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnJoinRandomFailed(returnCode,message);
+                return;
+            }
             GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
@@ -332,11 +387,21 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnDisconnected(cause);
+                return;
+            }
             playerobjects.Clear();
         }
 
-        public void Disconnect()
+        public override void Disconnect()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.Disconnect();
+                return;
+            }
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
@@ -344,14 +409,24 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnMasterClientSwitched(newMasterClient);
+                return;
+            }
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
 
 
-        public void JoinRoomManually(string name)
+        public override void JoinRoomManually(string name)
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.JoinRoomManually(name);
+                return;
+            }
             PhotonNetwork.JoinRoom(name);
         }
 

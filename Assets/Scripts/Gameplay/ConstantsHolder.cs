@@ -134,6 +134,7 @@ public class ConstantsHolder : MonoBehaviour
 
     //XANA Summit 
     public static bool isFromXANASummit=false;
+    public static bool MultiSectionPhoton = false;
     public static string domeId;
 
 
