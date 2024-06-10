@@ -70,6 +70,9 @@ public class PostScreenInput : MonoBehaviour
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color=Color.white;
                 ButtonTextRefrence.characterSpacing = 7.5f;
                 ButtonTextRefrence.outlineWidth = 0.18f;
+                ButtonTextRefrence.outlineColor = Color.white;
+                
+                
             }
             ShowText.text = inputField.text;
             ShowText.color = normalColor;
@@ -94,6 +97,7 @@ public class PostScreenInput : MonoBehaviour
                 GameManager.Instance.userAnimationPostFeature.postButtonText.color = placeHolderColor;
                 ButtonTextRefrence.characterSpacing = 4f;
                 ButtonTextRefrence.outlineWidth = 0f;
+               
             }
             ShowText.text = placeHolderText;
             ShowText.color = placeHolderColor;
