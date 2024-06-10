@@ -48,6 +48,7 @@ public class UserPostFeature : MonoBehaviour
         }
         if (GameManager.Instance.moodManager.PostMood)
         {
+            RetrievedPostPlayer.data.text_mood = moodToSend;
             GameManager.Instance.moodManager.PostMood = false;
             // Debug.LogError("---> "+moodToSend+"   --->"+ GameManager.Instance.moodManager.LastMoodSelected);
             bool flagg = GameManager.Instance.ActorManager.actorBehaviour.Find(x => x.Name == GameManager.Instance.moodManager.LastMoodSelected).IdleAnimationFlag;
@@ -63,8 +64,14 @@ public class UserPostFeature : MonoBehaviour
 
     private void AssignRandomAnimationIfUserNotPosted(AnimatorOverrideController animatorOverrideController, Animator animator)
     {
-        string randAnimKey = GameManager.Instance.ActorManager.actorBehaviour[GameManager.Instance.ActorManager.GetPostRandomDefaultAnim()].Name;
-        GameManager.Instance.moodManager.SetMoodPosted(randAnimKey, true, animatorOverrideController, animator);
+        Actor actor=animator.transform.GetComponent<Actor>();
+        if (!Actor.RandAnimKeys.TryGetValue(actor.ActorId, out string randomAnimKey) || string.IsNullOrEmpty(randomAnimKey))
+        {
+            string randomAnimName = GameManager.Instance.ActorManager.actorBehaviour[GameManager.Instance.ActorManager.GetPostRandomDefaultAnim()].Name;
+
+            Actor.RandAnimKeys[actor.ActorId] = randomAnimName;
+        }
+        GameManager.Instance.moodManager.SetMoodPosted(Actor.RandAnimKeys[actor.ActorId], true, animatorOverrideController, animator);
     }
     public void GetLatestPost(TMPro.TMP_Text textElement)
     {
@@ -216,6 +223,7 @@ public class UserPostFeature : MonoBehaviour
 
     IEnumerator GetLatestPostOfFriendFromServer(int friend_id, PlayerPostBubbleHandler friendBubbleRef, Actor friendActor)
     {
+        friendActor.ActorId = friend_id;
         string FinalUrl = PrepareApiURL("Receive") + friend_id;
         using (UnityWebRequest www = UnityWebRequest.Get(FinalUrl))
         {

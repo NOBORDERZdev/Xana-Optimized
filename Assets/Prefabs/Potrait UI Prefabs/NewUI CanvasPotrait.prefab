@@ -1,5 +1,82 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &733351246
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 733351247}
+  - component: {fileID: 733351249}
+  - component: {fileID: 733351248}
+  m_Layer: 5
+  m_Name: Builder Assets Downloading BG Potrait
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &733351247
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733351246}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1515718021}
+  m_Father: {fileID: 6181471327539254227}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -216}
+  m_SizeDelta: {x: 482, y: 46}
+  m_Pivot: {x: 0, y: 1}
+--- !u!222 &733351249
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733351246}
+  m_CullTransparentMesh: 1
+--- !u!114 &733351248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733351246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 52bea5ad983468b439e1b009ca84c00a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1495891641
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +197,141 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &1515718020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1515718021}
+  - component: {fileID: 1515718023}
+  - component: {fileID: 1515718022}
+  m_Layer: 5
+  m_Name: Builder Assets Downloading Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1515718021
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515718020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 733351247}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 48, y: 0}
+  m_SizeDelta: {x: 321.7, y: 46}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!222 &1515718023
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515718020}
+  m_CullTransparentMesh: 1
+--- !u!114 &1515718022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1515718020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 23
+  m_fontSizeBase: 23
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 1.5
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &22286769876782067
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,6 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 8053329022428690913}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &6308886233068299866
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1272,6 +1485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7513249074477346630}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &4995720958488191809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,6 +1941,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 3184790800109807701}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &6586977892392867534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2532,6 +2747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 1069499086222947255}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &7150014138465211297
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2625,6 +2841,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 846962310879480494}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &815039275487743650
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4931,6 +5148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 5744642874127965254}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &7704471336575483943
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5322,7 +5540,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 300}
+  m_SizeDelta: {x: 350, y: 250}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &89996342471044581
 CanvasRenderer:
@@ -7237,6 +7455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 4822566102131968392}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &8272897380248964149
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8031,6 +8250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 4033990557759829411}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &1754722771626329285
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10659,6 +10879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 8696369165187649121}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &6513051640038279549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11749,6 +11970,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 6083970298574379036}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &3653109414219415122
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12589,6 +12811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 3079184946748928312}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &3938885567145559010
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13562,6 +13785,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 2526237739065959029}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &1763116655595206851
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19790,6 +20014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 3467337829019238126}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &5451737036948780481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20521,6 +20746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 983307382760654869}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &4200944088617253647
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21156,6 +21382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 2690736797819165001}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &2872391279923751994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26564,6 +26791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 712820329666048231}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &1703161773453929492
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -26741,6 +26969,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7743099777670049336}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &6745390862457035097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27615,6 +27844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 2378639984879816907}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &2009043960869271355
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -30376,6 +30606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 1511271404866812270}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &8577589067977799146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30853,6 +31084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7313771387068380390}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &4780940680988780880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31305,6 +31537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7865548351646121869}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &3539986362025504748
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43524,6 +43757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 288740323017853730}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &4889901910158957101
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -43617,6 +43851,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 5242770524465984036}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &3043024419397696337
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -46765,6 +47000,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6181471327205592373}
+  - {fileID: 733351247}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46785,7 +47021,7 @@ Canvas:
   m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
-  m_PixelPerfect: 1
+  m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -47893,6 +48129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 6585673534158974823}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &8001620512192223039
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -52652,6 +52889,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 3098704274442252040}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!114 &2033873862246107402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54369,6 +54607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 875560903592582517}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &7176394499577229803
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54659,6 +54898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7570312874858951344}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &3063372169512386177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -59416,6 +59656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 171551466585067126}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &4874227124187746436
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -63185,6 +63426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 1359579333118984121}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &8956872672705509600
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -63278,6 +63520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionImg: {fileID: 0}
   actionImgPotrait: {fileID: 7726561574749591200}
+  emoteSelectionBtnScript: {fileID: 0}
 --- !u!222 &7171293438132974488
 CanvasRenderer:
   m_ObjectHideFlags: 0

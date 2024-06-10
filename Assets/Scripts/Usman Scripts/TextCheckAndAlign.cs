@@ -12,7 +12,7 @@ public class TextCheckAndAlign : MonoBehaviour
     public bool IsUseForChangeAllign, IsUseForChangeMargin, IsUseForChangePOS;
     public float X, Y;
 
-    void Start()
+    private void OnEnable()
     {
         Invoke("ChangeCharacterSpacingForJP", 0.1f);
     }

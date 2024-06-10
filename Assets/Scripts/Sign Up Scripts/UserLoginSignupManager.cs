@@ -83,8 +83,10 @@ public class UserLoginSignupManager : MonoBehaviour
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
     public static UserLoginSignupManager instance;
+    public Action logoutAction;
     EyesBlinking ref_EyesBlinking;
-    
+
+    private bool _isUserClothDataFetched = false;
 
     private void OnEnable()
     {
@@ -276,7 +278,11 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
-        GetUserClothData();
+        if (!_isUserClothDataFetched)
+        {
+            GetUserClothData();
+            _isUserClothDataFetched = true;
+        }
         GetOwnedNFTsFromAPI();
         
         UserPassManager.Instance.GetGroupDetails("freeuser");
@@ -450,7 +456,11 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
-        GetUserClothData();
+        if (!_isUserClothDataFetched)
+        {
+            GetUserClothData();
+            _isUserClothDataFetched = true;
+        }
         GetOwnedNFTsFromAPI();
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
@@ -994,6 +1004,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     UserRegisteredCallBack(true);
                 }
+                PlayerPrefs.SetString("PlayerName", localUsername);
                 GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(localUsername);
             }
         }
@@ -1522,9 +1533,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
     IEnumerator OnSucessLogout()
     {
-        
+        _isUserClothDataFetched = false;
         Debug.Log("Logout Successfully");
-        
+        logoutAction?.Invoke();
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);
         userRoleScriptScriptableObj.userNftRoleSlist.Clear();
