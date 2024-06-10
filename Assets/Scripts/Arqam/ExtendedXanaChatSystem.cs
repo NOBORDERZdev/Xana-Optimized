@@ -60,8 +60,6 @@ public class ExtendedXanaChatSystem : XanaChatSystem
             return;
         }
 
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
-
         // When User Activated the Airin for conversation
         ShowMsgLocally(UserName, removeBadWords);
         AirinQuestion?.Invoke(removeBadWords);
