@@ -57,6 +57,11 @@ public class GameManager : MonoBehaviour
     public HomeFooterHandler bottomTabManagerInstance;
     public WorldManager SpaceWorldManagerRef;
     internal string selectedPresetData="";
+
+    private void OnEnable()
+    {
+        Invoke("AssignQuestButton", 1f);
+    }
     private void Awake()
     {
         Debug.Log("GameManager Awake");
@@ -68,7 +73,6 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
     }
-    
     public void HomeCameraInputHandler(bool flag)
     {
         HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;

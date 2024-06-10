@@ -26,6 +26,7 @@ public class SNSSettingController : MonoBehaviour
     public TextMeshProUGUI personalInfoEmailText;
     public TextMeshProUGUI personalInfoPhoneNumberText;
     public TextMeshProUGUI personalInfoPublicaddressText;
+    public GameObject Questbutton;
 
     [Header("Confirmation Panel for delete Account")]
     public GameObject deleteAccountPopup;
@@ -37,7 +38,7 @@ public class SNSSettingController : MonoBehaviour
     public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     //public Sprite offBtn, onBtn;
-
+    
 
     #region Setting Screen.......
     //this method is used to Open Setting Screen.......
@@ -283,5 +284,7 @@ public class SNSSettingController : MonoBehaviour
     private void OnEnable()
     {
         CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
+        QuestDataHandler.instance.questButton = Questbutton;
+        QuestDataHandler.instance.QuestButton();
     }
 }
