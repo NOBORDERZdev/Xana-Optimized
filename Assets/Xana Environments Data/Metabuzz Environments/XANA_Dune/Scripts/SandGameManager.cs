@@ -199,8 +199,8 @@ public class SandGameManager : MonoBehaviour
         rb.mass = 0.1f;
         rb.freezeRotation = false;
 
-        var playerPv= ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>();
-        playerPv.RPC(nameof(EnableSkateBoardRpc), RpcTarget.All, playerPv.ViewID);
+        //var playerPv= ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>();
+        //playerPv.RPC(nameof(EnableSkateBoardRpc), RpcTarget.All, playerPv.ViewID);
         //board.gameObject.SetActive(true);
         input.enabled = true;
         input.force = 250;
