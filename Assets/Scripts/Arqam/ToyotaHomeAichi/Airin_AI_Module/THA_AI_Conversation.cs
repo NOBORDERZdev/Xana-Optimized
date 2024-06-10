@@ -83,7 +83,6 @@ public class THA_AI_Conversation : MonoBehaviour
             //Debug.LogError("Message: " + _airinFeedback.data);
             NFT_Holder_Manager.instance.Extended_XCS.ShowAirinMsg("Airin", _airinFeedback.data);
             _animator.SetBool("isChating", false);
-            yield return null;
         }
         else
         {
