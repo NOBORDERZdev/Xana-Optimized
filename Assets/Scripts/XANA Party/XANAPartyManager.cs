@@ -114,6 +114,7 @@ public class XANAPartyManager : MonoBehaviour
                 try
                 {
                     var data = JObject.Parse(www.downloadHandler.text);
+                    print("DATA "+data.ToString());
                     var rows = data["data"]["rows"];
                     foreach (var row in rows)
                     {
