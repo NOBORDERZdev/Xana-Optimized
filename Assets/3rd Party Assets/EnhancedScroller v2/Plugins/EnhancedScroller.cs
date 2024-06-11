@@ -386,9 +386,27 @@ namespace EnhancedUI.EnhancedScroller
             get
             {
                 if (scrollDirection == ScrollDirectionEnum.Vertical)
-                    return Mathf.Max(_container.rect.height - _scrollRectTransform.rect.height, 0);
+                {
+                    if (_container != null)
+                    {
+                        return Mathf.Max(_container.rect.height - _scrollRectTransform.rect.height, 0);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
                 else
-                    return Mathf.Max(_container.rect.width - _scrollRectTransform.rect.width, 0);
+                {
+                    if (_container != null)
+                    {
+                        return Mathf.Max(_container.rect.width - _scrollRectTransform.rect.width, 0);
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
             }
         }
 

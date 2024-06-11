@@ -89,6 +89,7 @@ public class HomeFooterHandler : MonoBehaviour
         }
         else
         {
+            Invoke(nameof(LoadHomeScreenWorlds), 0.1f);
             gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
         }
     }
@@ -102,6 +103,13 @@ public class HomeFooterHandler : MonoBehaviour
     private void OnDisable()
     {
         MainSceneEventHandler.OnSucessFullLogin -= CheckLoginOrNotForFooterButton;
+    }
+
+    private void LoadHomeScreenWorlds()
+    {
+        if (notLoadedAgain == false)
+            WorldManager.LoadHomeScreenWorlds?.Invoke();
+        notLoadedAgain = true;
     }
 
     public void OnSelectedClick(int index)
