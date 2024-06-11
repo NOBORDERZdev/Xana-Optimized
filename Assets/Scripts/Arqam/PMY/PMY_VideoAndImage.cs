@@ -170,8 +170,8 @@ namespace PMY
         {
             StartCoroutine(GetSprite(_imageLink, (response) =>
             {
-                if (PMY_Nft_Manager.Instance && response != null)
-                    PMY_Nft_Manager.Instance.NFTLoadedSprites.Add(response);
+                //if (PMY_Nft_Manager.Instance && response != null)
+                //    PMY_Nft_Manager.Instance.NFTLoadedSprites.Add(response);
 
                 if (ApplyImageOnTexture && imageMesh != null)
                 {
@@ -325,7 +325,7 @@ namespace PMY
             }
         }
 
-        RenderTexture renderTexture_temp;
+        //RenderTexture renderTexture_temp;
         void SetVideo()
         {
             if (imgVideo16x9)
@@ -354,7 +354,7 @@ namespace PMY
             {
                 RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
                 PMY_Nft_Manager.Instance.videoRenderObject = imgVideo16x9;
-                renderTexture_temp = renderTexture;
+                //renderTexture_temp = renderTexture;
                 imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
                 imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
                 if (isMultipleScreen)
@@ -394,8 +394,8 @@ namespace PMY
                 SetThumbail(imageLink);
             }
 
-            if (PMY_Nft_Manager.Instance && renderTexture_temp != null)
-                PMY_Nft_Manager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
+            //if (PMY_Nft_Manager.Instance && renderTexture_temp != null)
+            //    PMY_Nft_Manager.Instance.NFTLoadedVideos.Add(renderTexture_temp);
 
             if (isCreateFrame)
                 CreateFrame();   //create frame

@@ -25,7 +25,7 @@ namespace PMY
         [Header("PDF Data Refrences")]
         public GameObject pdfPanel_L;
         public GameObject pdfPanel_P;
-        public PDFViewer pdfViewer_L; 
+        public PDFViewer pdfViewer_L;
         public PDFViewer pdfViewer_P;
 
         [Space(10)]
@@ -75,8 +75,8 @@ namespace PMY
         public string nftTitle;
         public string firebaseEventName;
         public int clickedNftInd;
-        public List<Texture> NFTLoadedSprites = new List<Texture>();
-        public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
+        //public List<Texture> NFTLoadedSprites = new List<Texture>();
+        //public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
 
         public GameObject videoRenderObject;
 
@@ -127,7 +127,7 @@ namespace PMY
                 else
                     PMY_RoomId = PMY_RoomId_test;
             }
-                Int_PMY_Nft_Manager();
+            Int_PMY_Nft_Manager();
         }
 
         /// <summary>
@@ -267,11 +267,11 @@ namespace PMY
                                 worldInfos[i].url = worldData[j].descriptionHyperlink;
                             }
                         }
-                        else if(worldData[j].media_type == "PDF")
+                        else if (worldData[j].media_type == "PDF")
                         {
                             worldInfos[i].Type = PMY_DataType.PDF;
                             worldInfos[i].pdfURL = worldData[j].pdf_url;
-                            worldInfos[i].thumbnail= worldData[j].thumbnail;
+                            worldInfos[i].thumbnail = worldData[j].thumbnail;
                             NftPlaceholderList[i].GetComponent<PMY_VideoAndImage>().InitData(worldData[j].thumbnail, null, worldInfos[i].pmyRatio, PMY_DataType.PDF, PMY_VideoTypeRes.none);
                         }
                         else if (worldData[j].media_type == "QUIZ")
@@ -347,7 +347,7 @@ namespace PMY
         }
 
 
-        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData ,int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
+        public void SetInfo(PMY_Ratio ratio, string title, string aurthur, string des, string url, Texture2D image, PMY_DataType type, string videoLink, PMY_VideoTypeRes videoType, string pdfURL, QuizData quizData, int nftId = 0, PMY_VideoAndImage.RoomType roomType = PMY_VideoAndImage.RoomType.Gallery)
         {
             nftTitle = title;
             _Ratio = ratio;
@@ -366,7 +366,7 @@ namespace PMY
 
             if (type == PMY_DataType.PDF)
             {
-                pdfViewer_L.FileURL= pdfURL;
+                pdfViewer_L.FileURL = pdfURL;
                 pdfViewer_P.FileURL = pdfURL;
                 Enable_PDF_Panel();
             }
@@ -567,6 +567,18 @@ namespace PMY
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
+            // release video player memory after use it
+            for (int i = 0; i < VideoPlayers.Count; i++)
+            {
+                VideoPlayers[i].Stop();
+                if (VideoPlayers[i].targetTexture)
+                {
+                    VideoPlayers[i].targetTexture.Release();
+                    VideoPlayers[i].targetTexture = null;
+                    GC.Collect();
+                }
+            }
+
         }
 
         private void ErrorOnVideo(VideoPlayer source, string message)
@@ -574,7 +586,7 @@ namespace PMY
             if (videoRetry <= RetryChances)
             {
                 videoRetry++;
-                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType, _pdfURL,_quiz_data);
+                SetInfo(_Ratio, _Title, _Aurthor, _Des, _URL, _image, _Type, _VideoLink, _videoType, _pdfURL, _quiz_data);
             }
             else
             {
