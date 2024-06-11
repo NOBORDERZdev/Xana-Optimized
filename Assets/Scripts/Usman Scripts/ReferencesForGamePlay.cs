@@ -4,6 +4,7 @@ using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,10 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject landscapeMoveWhileDancingButton;
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
+
+    [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
+    [SerializeField] TMP_Text XANAPartyCounterText;
+
 
     //[SerializeField] CanvasGroup PartyJump;
 
@@ -357,11 +362,8 @@ public class ReferencesForGamePlay : MonoBehaviour
                 }
 
                 if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
-                    if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-                    {
-                        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-                        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
-                    }
+
+                    StartCoroutine(ShowLobbyCounter());
                 }
                     
                 //else
@@ -380,6 +382,20 @@ public class ReferencesForGamePlay : MonoBehaviour
         goto CheckAgain;
     }
     
+    IEnumerator ShowLobbyCounter()
+    {
+        XANAPartyLobbyyCounterPanel.SetActive(true);
+        for (int i = 5; i >= 1; i--)
+        {
+            XANAPartyCounterText.text = i.ToString();
+            yield return new WaitForSeconds(1);
+        }
+        if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        {
+            var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+            xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+        }
+    }
 }
 
 

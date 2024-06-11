@@ -131,8 +131,7 @@ public class XANAPartyManager : MonoBehaviour
         }
     }
 
-    IEnumerator
-    LoadXanaPartyGame(bool isJoiningLobby)
+    IEnumerator LoadXanaPartyGame(bool isJoiningLobby)
     {
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
