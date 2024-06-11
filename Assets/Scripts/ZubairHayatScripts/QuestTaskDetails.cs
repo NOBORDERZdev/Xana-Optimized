@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class QuestTaskDetails : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int task_id;
-    public RawImage taskIcon;
-    public Image taskButtonImage;
-    public TextMeshProUGUI taskDescription;
-    public TextMeshProUGUI taskButtonText;
-    public Button taskButton;
+    public int Task_id;
+    public RawImage TaskIcon;
+    public Image TaskButtonImage;
+    public TextMeshProUGUI TaskDescription;
+    public TextMeshProUGUI TaskButtonText;
+    public Button TaskButton;
 }

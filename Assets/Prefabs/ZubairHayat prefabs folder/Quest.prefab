@@ -1084,7 +1084,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be02d213666188b4f9a81ee3f335c46a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest:
+  MyQuestButton: {fileID: 0}
+  _quest:
     success: 0
     data:
       questData:
@@ -1095,28 +1096,32 @@ MonoBehaviour:
         rewards: 0
       rows: []
       count: 0
-  currentTask:
+  _reward:
+    success: 0
+    data:
+      isClaimed: 0
+    msg: 
+  _currentTask:
     _taskType: 0
     task_id: 0
     numberOfTimesTaskPrefrom: 0
     isActive: 0
     isCompleted: 0
-  totalReward: {fileID: 8493687712015162638}
-  totalQuestCompleted: {fileID: 6198663967982242290}
-  blackSpriteOnButton: {fileID: 21300000, guid: 72a9a062c368be744afec9986107a446, type: 3}
-  greySpriteOnButton: {fileID: 21300000, guid: ca68d048ecc87b242ac894e5fde7b3f0, type: 3}
-  totalQuesttaskFilledbar: {fileID: 6198663966979381372}
-  backButton: {fileID: 6198663966624968476}
-  claimButton: {fileID: 6388328581376451474}
-  taskPrefab: {fileID: 5722903507718645408, guid: 18f4932ce80d74b498d1fa29944ae11d, type: 3}
-  questButton: {fileID: 0}
-  questPanel: {fileID: 6198663966683168984}
-  rewardPopUp: {fileID: 2823155764256096188}
-  parentobject: {fileID: 7140418180921124638}
-  container: {fileID: 6198663967479906451}
-  questTaskDetails: []
-  countCompletedTasks: 0
-  currentTaskIndex: 0
+  _totalReward: {fileID: 8493687712015162638}
+  _totalQuestCompleted: {fileID: 6198663967982242290}
+  _blackSpriteOnButton: {fileID: 21300000, guid: 72a9a062c368be744afec9986107a446, type: 3}
+  _greySpriteOnButton: {fileID: 21300000, guid: ca68d048ecc87b242ac894e5fde7b3f0, type: 3}
+  _totalQuesttaskFilledbar: {fileID: 6198663966979381372}
+  _backButton: {fileID: 6198663966624968476}
+  _claimButton: {fileID: 6388328581376451474}
+  _taskPrefab: {fileID: 5722903507718645408, guid: 18f4932ce80d74b498d1fa29944ae11d, type: 3}
+  _questPanel: {fileID: 6198663966683168984}
+  _rewardPopUp: {fileID: 2823155764256096188}
+  _parentobject: {fileID: 7140418180921124638}
+  _container: {fileID: 6198663967479906451}
+  _questTaskDetails: []
+  _countCompletedTasks: 0
+  _currentTaskIndex: 0
 --- !u!1 &4989158523498042258
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,7 +1861,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -115, y: 0}
-  m_SizeDelta: {x: 312.47998, y: 389.28}
+  m_SizeDelta: {x: 312, y: 390}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &6198663966955161730
 CanvasRenderer:
@@ -2071,7 +2076,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.088
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -2793,7 +2798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 1/7
+  m_text: 0/7
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}
   m_sharedMaterial: {fileID: -5506446132504035655, guid: 65b688a162ac48d44b255114129c8c4f, type: 2}

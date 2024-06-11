@@ -8,80 +8,74 @@ using TMPro;
 public class QuestDataHandler : MonoBehaviour
 {
     // Start is called before the first frame update
-    public static QuestDataHandler instance;
+    public static QuestDataHandler Instance;
+    public GameObject MyQuestButton;
+
     [Header("*APIDATA*")]
-    [SerializeField] QuestTask quest;
-    CompareQuestTask CompareQuestTask;
+    [SerializeField] private QuestTask _quest;
+    private CompareQuestTask _compareQuestTask;
+    [SerializeField] private ClaimReward _reward;
+
     [Header("*CurrentActiveTask*")]
-    [SerializeField] Activetask currentTask;
+    [SerializeField] private Activetask _currentTask;
+
     [Header("*UI-References*")]
-    [SerializeField] TextMeshProUGUI totalReward;
-    [SerializeField] TextMeshProUGUI totalQuestCompleted;
-    [SerializeField] Sprite blackSpriteOnButton;
-    [SerializeField] Sprite greySpriteOnButton;
-    [SerializeField] Image totalQuesttaskFilledbar;
-    [SerializeField] Button backButton;
-    [SerializeField] Button claimButton;
+    [SerializeField] private TextMeshProUGUI _totalReward;
+    [SerializeField] private TextMeshProUGUI _totalQuestCompleted;
+    [SerializeField] private Sprite _blackSpriteOnButton;
+    [SerializeField] private Sprite _greySpriteOnButton;
+    [SerializeField] private Image _totalQuesttaskFilledbar;
+    [SerializeField] private Button _backButton;
+    [SerializeField] private Button _claimButton;
 
     [Header("*GameObject-References*")]
-    [SerializeField] GameObject taskPrefab;
-    public GameObject questButton;
-    [SerializeField] GameObject questPanel;
-    [SerializeField] GameObject rewardPopUp;
-    [SerializeField] GameObject parentobject;
-    [SerializeField] RectTransform container;
-    [SerializeField] List<QuestTaskDetails> questTaskDetails;
+    [SerializeField] private GameObject _taskPrefab;
+    [SerializeField] private GameObject _questPanel;
+    [SerializeField] private GameObject _rewardPopUp;
+    [SerializeField] private GameObject _parentobject;
+    [SerializeField] private RectTransform _container;
+    [SerializeField] private List<QuestTaskDetails> _questTaskDetails;
 
     [Header("*Variables*")]
-    [SerializeField] int countCompletedTasks;
-    [SerializeField] int currentTaskIndex;
-
-
-
-    private int pageNumber = 1;
-    private int pageSize = 10;
-
-    private bool questDataLoaded = false;
-    private bool compareQuestDataLoaded = false;
-
+    [SerializeField] private int _countCompletedTasks;
+    [SerializeField] private int _currentTaskIndex;
+    private bool _currentActiveTask = false;
+    private int _pageNumber = 1;
+    private int _pageSize = 10;
+    private bool _questDataLoaded = false;
+    private bool _compareQuestDataLoaded = false;
     private string msg;
 
+    #region Mono Functions
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
-            DontDestroyOnLoad(parentobject);
+            Instance = this;
+            DontDestroyOnLoad(_parentobject);
+            Invoke("CallingAPI", 3f);
         }
         else
         {
-            Destroy(parentobject);
+            Destroy(_parentobject);
         }
     }
-
-    void Start()
+    private void Start()
     {
-        Invoke("CallingAPI", 5f);
-        backButton.onClick.AddListener(() => OpenAndCloseQuestPanel(false));
+        _backButton.onClick.AddListener(() => OpenAndCloseQuestPanel(false));
     }
-
     private void OnDisable()
     {
         UserPostFeature.OnPostButtonPressed -= TaskProgession;
         FindFriendWithNameItem.OnFollowButtonPressed -= TaskProgession;
         PlayerSelfieController.OnSelfieButtonPressed -= TaskProgession;
     }
-
-    private void CallingAPI()
-    {
-        GetQuestTaskDataFromAPI();
-        GetComapreQuestTaskDataFromAPI();
-    }
+    #endregion
 
     #region API Calling and UI mentaining 
-    private async void GetQuestTaskDataFromAPI()
+    private async void ClaimMyQuestReward()
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.GetAllTaskDataFromCurrentQuest + pageNumber + "/" + pageSize;
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.ClaimQuestRewardCheque + _quest.data.questData.id;
         UnityWebRequest response = UnityWebRequest.Get(url);
         response.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
         try
@@ -93,7 +87,9 @@ public class QuestDataHandler : MonoBehaviour
             }
             else
             {
-                quest = JsonUtility.FromJson<QuestTask>(response.downloadHandler.text.ToString());
+                _reward = JsonUtility.FromJson<ClaimReward>(response.downloadHandler.text.ToString());
+                ClaimDataResposne();
+                updateCountQuestbar();
             }
 
         }
@@ -102,7 +98,31 @@ public class QuestDataHandler : MonoBehaviour
 
         }
         response.Dispose();
-        questDataLoaded = true;
+    }
+    private async void GetQuestTaskDataFromAPI()
+    {
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.GetAllTaskDataFromCurrentQuest + _pageNumber + "/" + _pageSize;
+        UnityWebRequest response = UnityWebRequest.Get(url);
+        response.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        try
+        {
+            await response.SendWebRequest();
+            if (response.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log(response.error);
+            }
+            else
+            {
+                _quest = JsonUtility.FromJson<QuestTask>(response.downloadHandler.text.ToString());
+            }
+
+        }
+        catch (System.Exception ex)
+        {
+
+        }
+        response.Dispose();
+        _questDataLoaded = true;
         CompareAndUpdateData();
     }
     private async void GetComapreQuestTaskDataFromAPI()
@@ -119,7 +139,7 @@ public class QuestDataHandler : MonoBehaviour
             }
             else
             {
-                CompareQuestTask = JsonUtility.FromJson<CompareQuestTask>(response.downloadHandler.text.ToString());
+                _compareQuestTask = JsonUtility.FromJson<CompareQuestTask>(response.downloadHandler.text.ToString());
             }
 
         }
@@ -128,54 +148,61 @@ public class QuestDataHandler : MonoBehaviour
 
         }
         response.Dispose();
-        compareQuestDataLoaded = true;
+        _compareQuestDataLoaded = true;
         CompareAndUpdateData();
     }
     private void CompareAndUpdateData() // continue 
     {
-        if (compareQuestDataLoaded && questDataLoaded)
+        if (_compareQuestDataLoaded && _questDataLoaded)
         {
-            for (int i = 0; i < quest.data.count; i++)
+            for (int i = 0; i < _quest.data.count; i++)
             {
-                for (int j = 0; j < CompareQuestTask.data.Length; j++)
+                for (int j = 0; j < _compareQuestTask.data.Length; j++)
                 {
-                    if (quest.data.rows[i].id == CompareQuestTask.data[j].questTaskId)
+                    if (_quest.data.rows[i].id == _compareQuestTask.data[j].questTaskId)
                     {
                         // update all task quest list 
-                        quest.data.rows[i].actionCount = CompareQuestTask.data[j].actionCount;
-                        quest.data.rows[i].status = CompareQuestTask.data[j].isComplete;
-                        quest.data.rows[i].isActive = CompareQuestTask.data[j].isActive;
+                        _quest.data.rows[i].actionCount = _compareQuestTask.data[j].actionCount;
+                        _quest.data.rows[i].status = _compareQuestTask.data[j].isComplete;
+                        _quest.data.rows[i].isActive = _compareQuestTask.data[j].isActive;
                     }
                 }
             }
-            CompareQuestTask = null;
+            _compareQuestTask = null;
             TransferData();
         }
     }
     private void TransferData()
     {
-        for (int i = 0; i < quest.data.count; i++)
+        for (int i = 0; i < _quest.data.count; i++)
         {
-            string str = quest.data.rows[i].taskName.ToLower();
+            string str = _quest.data.rows[i].taskName.ToLower();
             str.Trim();
             switch (str)
             {
                 case "selfie":
-                    quest.data.rows[i]._taskType = TaskData.taskType.Selfie;
+                    _quest.data.rows[i]._taskType = TaskData.taskType.Selfie;
                     if (TakeReferenceOfActiveTask(i))
                     {
                         PlayerSelfieController.OnSelfieButtonPressed += TaskProgession;
                     }
                     break;
-                case "follow ":
-                    quest.data.rows[i]._taskType = TaskData.taskType.Follow;
+                case "follow":
+                    _quest.data.rows[i]._taskType = TaskData.taskType.Follow;
+                    if (TakeReferenceOfActiveTask(i))
+                    {
+                        FindFriendWithNameItem.OnFollowButtonPressed += TaskProgession;
+                    }
+                    break;
+                case "folllow"://dummy remove this 
+                    _quest.data.rows[i]._taskType = TaskData.taskType.Follow;
                     if (TakeReferenceOfActiveTask(i))
                     {
                         FindFriendWithNameItem.OnFollowButtonPressed += TaskProgession;
                     }
                     break;
                 case "post":
-                    quest.data.rows[i]._taskType = TaskData.taskType.Post;
+                    _quest.data.rows[i]._taskType = TaskData.taskType.Post;
                     if (TakeReferenceOfActiveTask(i))
                     {
                         UserPostFeature.OnPostButtonPressed += TaskProgession;
@@ -190,15 +217,15 @@ public class QuestDataHandler : MonoBehaviour
     {
         bool value = false;
 
-        if (quest.data.rows[i].isActive)
+        if (_quest.data.rows[i].isActive)
         {
 
-            currentTask.task_id = quest.data.rows[i].id;
-            currentTask._taskType = (Activetask.taskType)quest.data.rows[i]._taskType;
-            currentTask.numberOfTimesTaskPrefrom = quest.data.rows[i].actionCount;
-            currentTask.isActive = quest.data.rows[i].isActive;
-            currentTask.isCompleted = quest.data.rows[i].status;
-            currentTaskIndex = i;
+            _currentTask.task_id = _quest.data.rows[i].id;
+            _currentTask._taskType = (Activetask.taskType)_quest.data.rows[i]._taskType;
+            _currentTask.numberOfTimesTaskPrefrom = _quest.data.rows[i].actionCount;
+            _currentTask.isActive = _quest.data.rows[i].isActive;
+            _currentTask.isCompleted = _quest.data.rows[i].status;
+            _currentTaskIndex = i;
             value = true;
         }
 
@@ -207,37 +234,40 @@ public class QuestDataHandler : MonoBehaviour
     private void InitQuestData(int i)
     {
 
-        totalReward.text = quest.data.questData.rewards.ToString();
-        GameObject task = Instantiate(taskPrefab, container) as GameObject;
+        _totalReward.text = _quest.data.questData.rewards.ToString();
+        GameObject task = Instantiate(_taskPrefab, _container) as GameObject;
         QuestTaskDetails taskDetails = task.GetComponent<QuestTaskDetails>();
-        taskDetails.taskDescription.text = quest.data.rows[i].description;
-        StartCoroutine(ImagesDownload(quest.data.rows[i].taskIcon, taskDetails.taskIcon));
-        if (quest.data.rows[i].status)
+        taskDetails.TaskDescription.text = _quest.data.rows[i].description;
+        StartCoroutine(ImagesDownload(_quest.data.rows[i].taskIcon, taskDetails.TaskIcon));
+        if (_quest.data.rows[i].status)
         {
-            taskDetails.taskButtonImage.sprite = blackSpriteOnButton;
-            taskDetails.taskButtonText.text = "Done";
-            taskDetails.taskButtonText.color = Color.white;
-            taskDetails.taskButton.interactable = false;
-            countCompletedTasks++;
+            taskDetails.TaskButtonImage.sprite = _blackSpriteOnButton;
+            taskDetails.TaskButtonText.text = "Done";
+            taskDetails.TaskButtonText.color = Color.white;
+            taskDetails.TaskButton.interactable = false;
+            _countCompletedTasks++;
         }
-        else if (currentTask.task_id == quest.data.rows[i].id)
+        else if (_currentTask.task_id == _quest.data.rows[i].id)
         {
-            taskDetails.taskButtonImage.sprite = blackSpriteOnButton;
-            taskDetails.taskButtonText.text = "Active";
-            taskDetails.taskButtonText.color = Color.white;
+            taskDetails.TaskButtonImage.sprite = _blackSpriteOnButton;
+            taskDetails.TaskButtonText.text = "Active";
+            taskDetails.TaskButtonText.color = Color.white;
+            taskDetails.TaskButton.interactable = false;
+            _currentActiveTask = true;
         }
         else
         {
-            taskDetails.taskButtonImage.sprite = greySpriteOnButton;
-            taskDetails.taskButtonText.text = "Start";
-            taskDetails.taskButton.onClick.AddListener(() => OnclickQuestStartButton());
-
+            taskDetails.TaskButtonImage.sprite = _greySpriteOnButton;
+            taskDetails.TaskButtonText.text = "Start";
+            taskDetails.TaskButton.onClick.AddListener(() => OnclickQuestStartButton());
+            if (_currentActiveTask)
+                taskDetails.TaskButton.interactable = false;
         }
-        questTaskDetails.Add(taskDetails);
-        taskDetails.task_id = quest.data.rows[i].id;
-        CheckForCurrentlyActiveTask();
+        _questTaskDetails.Add(taskDetails);
+        taskDetails.Task_id = _quest.data.rows[i].id;
+        // CheckForCurrentlyActiveTask();
     }
-    IEnumerator ImagesDownload(string url, RawImage icon)
+    private IEnumerator ImagesDownload(string url, RawImage icon)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
         yield return request.SendWebRequest();
@@ -248,7 +278,7 @@ public class QuestDataHandler : MonoBehaviour
             icon.texture = downloadTexture;
         }
     }
-    IEnumerator SaveTaskInformationVivaApi(int task_id, int actionCount, bool isComplete, bool isActive)
+    private IEnumerator SaveTaskInformationVivaApi(int task_id, int actionCount, bool isComplete, bool isActive)
     {
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
@@ -269,12 +299,12 @@ public class QuestDataHandler : MonoBehaviour
         else
             Debug.Log("Error Update Task Details" + www.error);
     }
-    IEnumerator QuestRewardClaimedByUser(int Quest_id, int Coins)
+    private IEnumerator QuestRewardClaimedByUser(int quest_id, int coins)
     {
         string token = ConstantsGod.AUTH_TOKEN;
         WWWForm form = new WWWForm();
-        form.AddField("questId", Quest_id);
-        form.AddField("rewards", Coins.ToString());
+        form.AddField("questId", quest_id);
+        form.AddField("rewards", coins.ToString());
         UnityWebRequest www;
         www = UnityWebRequest.Post(ConstantsGod.API_BASEURL + ConstantsGod.ClaimQuestReward, form);
         www.SetRequestHeader("Authorization", token);
@@ -288,149 +318,153 @@ public class QuestDataHandler : MonoBehaviour
         else
             Debug.Log("Error in Claiming Reward" + www.error);
     }
-    public void QuestButton()
-    {
-        if (quest.data.count > 0)
-        {
-            questButton.GetComponent<Button>().onClick.AddListener(() => OpenAndCloseQuestPanel(true));
-        }
-        else
-        {
-            questButton.SetActive(false);
-        }
-    }
     #endregion
 
     #region Quest Task related functions 
-    private void CheckForCurrentlyActiveTask()
+    public void CollectQuestReward()
     {
-        for (int i = 0; i < questTaskDetails.Count; i++)
-        {
-            if (currentTask.task_id != -1)
-            {
-                questTaskDetails[i].taskButton.interactable = true;
-            }
-        }
-
-        updateCountQuestbar();
+        _claimButton.interactable = false;
+        _rewardPopUp.SetActive(true);
+        StartCoroutine(QuestRewardClaimedByUser(_quest.data.questData.id, _quest.data.questData.rewards));
+    }
+    public void OpenAndCloseQuestPanel(bool value)
+    {
+        _questPanel.SetActive(value);
     }
     private void updateCountQuestbar()
     {
-        if (countCompletedTasks == 0)
+        if (_countCompletedTasks == 0)
         {
             return;
         }
         else
         {
-            float fillAmount = (float)countCompletedTasks / quest.data.count;
-            totalQuesttaskFilledbar.fillAmount = fillAmount;
-            totalQuestCompleted.text = countCompletedTasks.ToString() + "/" + quest.data.count.ToString();
-            if (fillAmount == 1)
+            float fillAmount = (float)_countCompletedTasks / _quest.data.count;
+            _totalQuesttaskFilledbar.fillAmount = fillAmount;
+            _totalQuestCompleted.text = _countCompletedTasks.ToString() + "/" + _quest.data.count.ToString();
+            if (!_reward.data.isClaimed && _quest.data.count == _countCompletedTasks)
             {
-                claimButton.interactable = true;
+                _claimButton.interactable = true;
                 print("All task Completed !");
                 // add sparkling animation
             }
         }
     }
+    private void ClaimDataResposne()
+    {
+        if (!_reward.data.isClaimed && _quest.data.count == _countCompletedTasks)
+        {
+            _claimButton.interactable = true;
+            print("All task Completed ! v2");
+            // add sparkling animation
+        }
+    }
     public void OnclickQuestStartButton()
     {
         GameObject temp = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.transform.parent.transform.parent.gameObject;
-        int id = temp.GetComponent<QuestTaskDetails>().task_id;
+        int id = temp.GetComponent<QuestTaskDetails>().Task_id;
         CurrentlyTaskInProgress(id);
 
     }
     private void CurrentlyTaskInProgress(int id)
     {
-        for (int i = 0; i < questTaskDetails.Count; i++)
+        for (int i = 0; i < _questTaskDetails.Count; i++)
         {
-            if (questTaskDetails[i].task_id == id)
+            if (_questTaskDetails[i].Task_id == id)
             {
-                currentTask.task_id = quest.data.rows[i].id;
-                currentTask._taskType = (Activetask.taskType)quest.data.rows[i]._taskType;
-                currentTask.numberOfTimesTaskPrefrom = quest.data.rows[i].actionCount;
-                currentTask.isActive = true;
+                _currentTask.task_id = _quest.data.rows[i].id;
+                _currentTask._taskType = (Activetask.taskType)_quest.data.rows[i]._taskType;
+                _currentTask.numberOfTimesTaskPrefrom = _quest.data.rows[i].actionCount;
+                _currentTask.isActive = true;
+                _currentTaskIndex = i;
 
-                questTaskDetails[i].taskButton.GetComponent<Image>().sprite = blackSpriteOnButton;
-                questTaskDetails[i].taskButtonText.text = "Active";
-                questTaskDetails[i].taskButtonText.color = Color.white;
-                questTaskDetails[i].taskButton.onClick.RemoveListener(() => OnclickQuestStartButton());
+                _questTaskDetails[i].TaskButton.GetComponent<Image>().sprite = _blackSpriteOnButton;
+                _questTaskDetails[i].TaskButtonText.text = "Active";
+                _questTaskDetails[i].TaskButtonText.color = Color.white;
+                _questTaskDetails[i].TaskButton.interactable = false;
+                _questTaskDetails[i].TaskButton.onClick.RemoveListener(() => OnclickQuestStartButton());
 
-                switch (currentTask._taskType)
+                switch (_currentTask._taskType)
                 {
                     case Activetask.taskType.Selfie:
-                        UserPostFeature.OnPostButtonPressed += TaskProgession;
-                        StartCoroutine(SaveTaskInformationVivaApi(quest.data.rows[i].id, quest.data.rows[i].actionCount, false, true));
+                        PlayerSelfieController.OnSelfieButtonPressed += TaskProgession;
+                        StartCoroutine(SaveTaskInformationVivaApi(_quest.data.rows[i].id, _quest.data.rows[i].actionCount, false, true));
                         break;
                     case Activetask.taskType.Follow:
-                        UserPostFeature.OnPostButtonPressed += TaskProgession;
-                        StartCoroutine(SaveTaskInformationVivaApi(quest.data.rows[i].id, quest.data.rows[i].actionCount, false, true));
+                        FindFriendWithNameItem.OnFollowButtonPressed += TaskProgession;
+                        StartCoroutine(SaveTaskInformationVivaApi(_quest.data.rows[i].id, _quest.data.rows[i].actionCount, false, true));
                         break;
                     case Activetask.taskType.Post:
                         UserPostFeature.OnPostButtonPressed += TaskProgession;
-                        StartCoroutine(SaveTaskInformationVivaApi(quest.data.rows[i].id, quest.data.rows[i].actionCount, false, true));
+                        StartCoroutine(SaveTaskInformationVivaApi(_quest.data.rows[i].id, _quest.data.rows[i].actionCount, false, true));
                         break;
                 }
 
-                msg = "Your Xana Quest Task [" + questTaskDetails[i].taskDescription + "] is Started";
+                msg = "Your Xana Quest Task [" + _questTaskDetails[i].TaskDescription + "] is Started";
                 SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
             }
-            else
+        }
+
+        DisableEnableAllStartFunctions(false);
+    }
+    private void DisableEnableAllStartFunctions(bool value)
+    {
+        for (int i = 0; i < _questTaskDetails.Count; i++)
+        {
+            if (_quest.data.rows[i].isActive == false && _quest.data.rows[i].status == false)
             {
-                questTaskDetails[i].taskButton.interactable = false;
+                _questTaskDetails[i].TaskButton.interactable = value;
             }
         }
     }
     private void UpdateQuestUITaskList()
     {
-        questTaskDetails[currentTaskIndex].taskButtonText.text = "Done";
-        for (int i = 0; i < questTaskDetails.Count; i++)
-        {
-            questTaskDetails[i].taskButton.interactable = true;
-        }
-        countCompletedTasks++;
+        _questTaskDetails[_currentTaskIndex].TaskButtonText.text = "Done";
+        _countCompletedTasks++;
+        DisableEnableAllStartFunctions(true);
         updateCountQuestbar();
-    }
-    public void OpenAndCloseQuestPanel(bool value)
-    {
-        questPanel.SetActive(value);
-    }
-    public void CollectQuestReward()
-    {
-        rewardPopUp.SetActive(true);
-        StartCoroutine(QuestRewardClaimedByUser(quest.data.questData.id, quest.data.questData.rewards));
     }
     #endregion
 
     #region Custom Funtions
+    public void QuestButton()
+    {
+        if (_quest.data.count > 0)
+        {
+            MyQuestButton.GetComponent<Button>().onClick.AddListener(() => OpenAndCloseQuestPanel(true));
+        }
+        else
+        {
+            MyQuestButton.SetActive(false);
+        }
+    }
     private void TaskProgession()
     {
-        if (currentTask.numberOfTimesTaskPrefrom > 0)
+        if (_currentTask.numberOfTimesTaskPrefrom > 0)
         {
-            currentTask.numberOfTimesTaskPrefrom = currentTask.numberOfTimesTaskPrefrom - 1;
-            if (currentTask.numberOfTimesTaskPrefrom == 0)
+            _currentTask.numberOfTimesTaskPrefrom = _currentTask.numberOfTimesTaskPrefrom - 1;
+            if (_currentTask.numberOfTimesTaskPrefrom == 0)
             {
                 print("Complete");
-                quest.data.rows[currentTaskIndex].status = true;
-                quest.data.rows[currentTaskIndex].isActive = false;
-                msg = "Your Xana Quest Task [" + quest.data.rows[currentTaskIndex].description + "] is Completed";
+                _quest.data.rows[_currentTaskIndex].status = true;
+                _quest.data.rows[_currentTaskIndex].isActive = false;
+                msg = "Your Xana Quest Task [" + _quest.data.rows[_currentTaskIndex].description + "] is Completed";
                 SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
-                StartCoroutine(SaveTaskInformationVivaApi(currentTask.task_id, 0, true, false));
+                StartCoroutine(SaveTaskInformationVivaApi(_currentTask.task_id, 0, true, false));
                 UnsubscribeEvents();
                 UpdateQuestUITaskList();
             }
             else
             {
-                StartCoroutine(SaveTaskInformationVivaApi(currentTask.task_id, currentTask.numberOfTimesTaskPrefrom, false, true));
+                StartCoroutine(SaveTaskInformationVivaApi(_currentTask.task_id, _currentTask.numberOfTimesTaskPrefrom, false, true));
                 print("remove 1");
 
             }
         }
     }
-
     private void UnsubscribeEvents()
     {
-        switch (currentTask._taskType)
+        switch (_currentTask._taskType)
         {
             case Activetask.taskType.Selfie:
                 PlayerSelfieController.OnSelfieButtonPressed -= TaskProgession;
@@ -442,6 +476,12 @@ public class QuestDataHandler : MonoBehaviour
                 FindFriendWithNameItem.OnFollowButtonPressed -= TaskProgession;
                 break;
         }
+    }
+    private void CallingAPI()
+    {
+        GetQuestTaskDataFromAPI();
+        GetComapreQuestTaskDataFromAPI();
+        Invoke("ClaimMyQuestReward", 2f);
     }
     #endregion
 
@@ -531,6 +571,20 @@ public class ComapreTaskCount
     public bool isComplete;
     public bool isActive;
 }
+
+[System.Serializable]
+public class ClaimReward
+{
+    public bool success;
+    public ClaimRewardData data;
+    public string msg;
+}
+[System.Serializable]
+public class ClaimRewardData
+{
+    public bool isClaimed;
+}
+
 #endregion
 
 

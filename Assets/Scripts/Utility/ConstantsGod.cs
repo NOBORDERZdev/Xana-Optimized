@@ -320,5 +320,6 @@ public class ConstantsGod
     public static string UpdateQuestTaskDataPerformance = "/quest/update-user-performance";
     public static string UpdateComapreQuestTaskDataPerformance = "/quest/get-user-performed-list";
     public static string ClaimQuestReward = "/quest/claim-quest-reward";
+    public static string ClaimQuestRewardCheque = "/quest/claim-status/";
     #endregion
 }

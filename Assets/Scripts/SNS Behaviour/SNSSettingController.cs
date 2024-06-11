@@ -284,7 +284,7 @@ public class SNSSettingController : MonoBehaviour
     private void OnEnable()
     {
         CheckBtnStatus(PlayerPrefs.GetInt("ShowLiveUserCounter"));
-        QuestDataHandler.instance.questButton = Questbutton;
-        QuestDataHandler.instance.QuestButton();
+        QuestDataHandler.Instance.MyQuestButton = Questbutton;
+        QuestDataHandler.Instance.QuestButton();
     }
 }
