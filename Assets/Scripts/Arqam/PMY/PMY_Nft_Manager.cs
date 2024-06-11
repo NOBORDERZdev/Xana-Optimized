@@ -574,7 +574,6 @@ namespace PMY
                 if (VideoPlayers[i].targetTexture)
                 {
                     VideoPlayers[i].targetTexture.Release();
-                    VideoPlayers[i].targetTexture = null;
                     GC.Collect();
                 }
             }
