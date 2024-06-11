@@ -851,6 +851,9 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
+        if (SceneManager.sceneCount > 1)
+            return;
+
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{

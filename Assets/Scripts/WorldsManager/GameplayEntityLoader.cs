@@ -181,7 +181,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //LoadEnvironment(FeedEventPrefab.m_EnvName);
         if (currentEnvironment == null)
         {
-            Debug.LogError("env loading.");
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 SetupEnvirnmentForBuidlerScene();
             else

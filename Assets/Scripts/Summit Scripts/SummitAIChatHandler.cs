@@ -18,22 +18,23 @@ public class SummitAIChatHandler : XanaChatSystem
     private void OnEnable()
     {
         BuilderEventManager.AINPCActivated += LoadAIChat;
+        BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
-        //npcURL = "http://182.70.242.10:8042/npc-chat?input_string=a&npc_id=21id00&personality_id=21personalityId00&usr_id=sadasddsasd&personality_name=asd";
     }
     private void OnDisable()
     {
         BuilderEventManager.AINPCActivated -= LoadAIChat;
+        BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
     }
 
     void LoadNPC()
     {
         if (ConstantsHolder.isFromXANASummit)
-            GetNPCDATA("6");
+            GetNPCDATA(ConstantsHolder.domeId);
     }
 
-    async void GetNPCDATA(string domeId)
+    async void GetNPCDATA(int domeId)
     {
         bool flag = await XANASummitDataContainer.GetAIData(domeId);
         if (flag)
@@ -42,31 +43,37 @@ public class SummitAIChatHandler : XanaChatSystem
 
     void InstantiateAINPC()
     {
-        for (int i = 0; i < XANASummitDataContainer.aiData.root.Count; i++)
+        for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
-            GameObject AIPrefab = Resources.Load("SummitAINPC") as GameObject;
-            GameObject AINPCAvatar = Instantiate(AIPrefab);
-            AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.root[i].spawnPosition[0], XANASummitDataContainer.aiData.root[i].spawnPosition[1], XANASummitDataContainer.aiData.root[i].spawnPosition[2]);
-            AINPCAvatar.name = XANASummitDataContainer.aiData.root[i].name;
-            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.root[i].name;
-            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.aiData.root[i].avatarCategory;
-            AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.root[i].id;
+            GameObject AINPCAvatar;
+            if (XANASummitDataContainer.aiData.npcData[i].avatarId>10)
+                AINPCAvatar = Instantiate(XANASummitDataContainer.femaleAIAvatar);
+            else
+                AINPCAvatar = Instantiate(XANASummitDataContainer.maleAIAvatar);
+
+
+            AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
+            AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
+            int avatarPresetId= XANASummitDataContainer.aiData.npcData[i].avatarId;
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId-1];
+            AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
         }
     }
 
-    void GetNPCInfo(string npcID)
+    void GetNPCInfo(int npcID)
     {
-        for (int i = 0; i < XANASummitDataContainer.aiData.root.Count; i++)
+        for (int i = 0; i < XANASummitDataContainer.aiData.npcData.Count; i++)
         {
-            if (XANASummitDataContainer.aiData.root[i].id.ToString() == npcID)
+            if (XANASummitDataContainer.aiData.npcData[i].id == npcID)
             {
-                npcName = XANASummitDataContainer.aiData.root[i].name;
-                npcURL = XANASummitDataContainer.aiData.root[i].personalityURL;
+                npcName = XANASummitDataContainer.aiData.npcData[i].name;
+                npcURL = XANASummitDataContainer.aiData.npcData[i].personalityURL;
             }
         }
     }
 
-    void LoadAIChat(string npcID, string[] welcomeMsgs)
+    void LoadAIChat(int npcID, string[] welcomeMsgs)
     {
         AddAIListenerOnChatField();
         GetNPCInfo(npcID);
@@ -74,6 +81,13 @@ public class SummitAIChatHandler : XanaChatSystem
         OpenChatBox();
         foreach (string msg in welcomeMsgs)
             DisplayMsg_FromSocket(npcName, msg);
+    }
+
+    void RemoveAIChat(int npcId)
+    {
+        ClearOldMessages();
+        RemoveAIListenerFromChatField();
+        LoadOldChat();
     }
 
     void ClearOldMessages()
@@ -117,7 +131,7 @@ public class SummitAIChatHandler : XanaChatSystem
     async Task<string> GetAIResponse(string url)
     {
         UnityWebRequest www = UnityWebRequest.Get(url);
-        www.SendWebRequest();
+        await www.SendWebRequest();
         while (!www.isDone)
             await System.Threading.Tasks.Task.Yield();
 

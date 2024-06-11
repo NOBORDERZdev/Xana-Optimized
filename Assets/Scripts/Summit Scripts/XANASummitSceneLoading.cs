@@ -27,6 +27,71 @@ public class XANASummitSceneLoading : MonoBehaviour
         GamePlayButtonEvents.inst.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
     }
 
+    void LoadingNewScene(int domeId, Vector3 playerPos)
+    {
+        string[] sceneData = GetSceneName(domeId);
+
+        if (string.IsNullOrEmpty(sceneData[0]))
+            return;
+            //SNSNotificationHandler.Instance.ShowNotificationMsg("");
+
+        GetPlayerPosition(playerPos);
+        string existingSceneName = WorldItemView.m_EnvName;
+        WorldItemView.m_EnvName = sceneData[0];
+        ConstantsHolder.xanaConstants.EnviornmentName = sceneData[0];
+        gameplayEntityLoader.currentEnvironment = null;
+        multiplayerController.isConnecting = false;
+        gameplayEntityLoader.isEnvLoaded = false;
+        gameplayEntityLoader.isAlreadySpawned = true;
+        ConstantsHolder.isFromXANASummit = true;
+        multiplayerController.Disconnect();
+
+        XanaWorldDownloader.ResetAll();
+
+        multiplayerController.playerobjects.Clear();
+
+        SceneManager.UnloadSceneAsync(existingSceneName);
+
+        if (sceneData[1] == "1")
+            LoadBuilderSceneLoading(sceneData);
+
+        multiplayerController.Connect(sceneData[0]);
+    }
+
+    public void LoadingNewScene(string SceneName)
+    {
+        if (string.IsNullOrEmpty(SceneName))
+            return;
+        Vector3 pp = GameplayEntityLoader.instance.mainController.transform.position;
+        GetPlayerPosition(pp);
+        string existingSceneName = WorldItemView.m_EnvName;
+        WorldItemView.m_EnvName = SceneName;
+        ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
+        gameplayEntityLoader.currentEnvironment = null;
+        multiplayerController.isConnecting = false;
+        gameplayEntityLoader.isEnvLoaded = false;
+        gameplayEntityLoader.isAlreadySpawned = true;
+        ConstantsHolder.isFromXANASummit = true;
+        multiplayerController.Disconnect();
+
+        XanaWorldDownloader.ResetAll();
+
+        multiplayerController.playerobjects.Clear();
+
+        SceneManager.UnloadSceneAsync(existingSceneName);
+
+        multiplayerController.Connect(SceneName);
+    }
+
+
+    void LoadBuilderSceneLoading(string[] sceneData)
+    {
+        ConstantsHolder.xanaConstants.builderMapID = int.Parse(sceneData[2]);
+        ConstantsHolder.xanaConstants.isBuilderScene = true;
+        SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+    }
+
+
     void LoadingXANASummitOnBack()
     {
         if (ConstantsHolder.isFromXANASummit == false)
@@ -50,43 +115,20 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.Connect(sceneName);
     }
-
-    void LoadingNewScene(int domeId,Vector3 playerPos)
+    string[] GetSceneName(int sceneId)
     {
-        string sceneName=GetSceneName(domeId);
-
-        GetPlayerPosition(playerPos);
-        string existingSceneName = WorldItemView.m_EnvName;
-        WorldItemView.m_EnvName = sceneName;
-        ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
-        gameplayEntityLoader.currentEnvironment = null;
-        multiplayerController.isConnecting = false;
-        gameplayEntityLoader.isEnvLoaded = false;
-        gameplayEntityLoader.isAlreadySpawned = true;
-        ConstantsHolder.isFromXANASummit = true;
-        multiplayerController.Disconnect();
-
-        XanaWorldDownloader.ResetAll();
-
-        multiplayerController.playerobjects.Clear();
-
-        SceneManager.UnloadSceneAsync(existingSceneName);
-
-        multiplayerController.Connect(sceneName);
-    }
-
-
-    string GetSceneName(int sceneId)
-    {
-        for (int i = 0;i<dataContainer.summitData.root.Count;i++)
+        for (int i = 0; i < dataContainer.summitData.domes.Count; i++)
         {
-            if (dataContainer.summitData.root[i].id==sceneId)
+            if (dataContainer.summitData.domes[i].id == sceneId)
             {
-                return dataContainer.summitData.root[i].name;
+                if (dataContainer.summitData.domes[i].worldType)
+                    return new[] { dataContainer.summitData.domes[i].name, "1", dataContainer.summitData.domes[i].builderWorldId };
+                else
+                    return new[] { dataContainer.summitData.domes[i].name, "0", dataContainer.summitData.domes[i].builderWorldId };
             }
         }
 
-        return string.Empty;
+        return new[] { string.Empty, "0", "0" };
     }
 
     void GetPlayerPosition(Vector3 _playerPos)
@@ -98,7 +140,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void SetPlayerTransform()
     {
-        if (ConstantsHolder.isFromXANASummit==false)
+        if (ConstantsHolder.isFromXANASummit == false)
             return;
 
         if (WorldItemView.m_EnvName == "XANA Summit")

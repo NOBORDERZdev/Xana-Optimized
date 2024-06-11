@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -51,10 +52,12 @@ public class XanaWorldDownloader : MonoBehaviour
     private string response;
 
     private float unloadDistance = 50;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    private static XanaWorldDownloader xanaWorldDownloader;
+
+    private void Start()
+    {
+        xanaWorldDownloader = this;
     }
 
     void GetDataFromAPI(string worldID, bool islocal)
@@ -267,7 +270,7 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
@@ -286,6 +289,7 @@ public class XanaWorldDownloader : MonoBehaviour
             {
                 downloadDataQueue.RemoveAt(0);
                 DisplayDownloadedAssetText();
+
             }
             else
             {
@@ -315,7 +319,7 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
 
             while (!_async.IsDone)
             {
@@ -331,16 +335,8 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             yield return new WaitForEndOfFrame();
             yield return new WaitForSeconds(0.01f);
-            if (_async.Status == AsyncOperationStatus.Succeeded)
-            {
-                downloadFailed.RemoveAt(0);
-                DisplayDownloadedAssetText();
-            }
-            else
-            {
-                downloadFailed.RemoveAt(0);
-                DisplayDownloadedAssetText();
-            }
+            downloadFailed.RemoveAt(0);
+            DisplayDownloadedAssetText();
         }
         isfailedObjectsDownloaded = true;
         if (totalAssetCount == downloadedTillNow)
@@ -363,7 +359,7 @@ public class XanaWorldDownloader : MonoBehaviour
             //    yield break;
             //}
             //else
-                _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
                 yield return null;
@@ -416,8 +412,6 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
 
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
@@ -430,8 +424,6 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
@@ -443,14 +435,21 @@ public class XanaWorldDownloader : MonoBehaviour
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
                     assetDownloadingTextPotrait.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
-                    assetDownloadingText.color = Color.green;
-                    assetDownloadingTextPotrait.color = Color.green;
                     assetDownloadingText.transform.parent.gameObject.SetActive(false);
                     assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
                 }
                 break;
         }
     }
+
+    void ResetDisplayDownloadText()
+    {
+        assetDownloadingText.text = string.Empty;
+        assetDownloadingTextPotrait.text = string.Empty;
+        assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+    }
+
 
     GameObject GetObjectFromPool(string objectKey)
     {
@@ -499,7 +498,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
-        AssignDomeId(newObj,_itemData);
+        AssignDomeId(newObj, _itemData);
     }
 
     private static void InstantiateAsset(GameObject ObjectFromPool, ObjectsInfo _itemData, bool alreadyInstantiated)
@@ -530,15 +529,17 @@ public class XanaWorldDownloader : MonoBehaviour
 
     static void AssignDomeId(GameObject DomeObject, ObjectsInfo _itemData)
     {
-        if(_itemData.summitDomeInfo.domeIndex!=0)
+        if (_itemData.summitDomeInfo.domeIndex != 0)
         {
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+
         }
     }
 
     IEnumerator CheckForUnloading()
     {
-    CheckingAgain:
+        CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
@@ -656,7 +657,6 @@ public class XanaWorldDownloader : MonoBehaviour
 
     public static void ResetAll()
     {
-
         stopDownloading = true;
 
         downloadDataQueue.Clear();
@@ -675,6 +675,9 @@ public class XanaWorldDownloader : MonoBehaviour
         isDefaultPriorityObjectDownloaded = false;
         isfailedObjectsDownloaded = false;
         isSpawnDownloaded = false;
+
+        xanaWorldDownloader.ResetDisplayDownloadText();
+        xanaWorldDownloader.StopAllCoroutines();
     }
 
 }
