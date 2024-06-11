@@ -567,16 +567,6 @@ namespace PMY
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
-            //// release video player memory after use it
-            //for (int i = 0; i < VideoPlayers.Count; i++)
-            //{
-            //    VideoPlayers[i].Stop();
-            //    if (VideoPlayers[i].targetTexture)
-            //    {
-            //        VideoPlayers[i].targetTexture.Release();
-            //        GC.Collect();
-            //    }
-            //}
             try
             {
                 if (ratioReferences[ratioId].l_videoPlayer)
