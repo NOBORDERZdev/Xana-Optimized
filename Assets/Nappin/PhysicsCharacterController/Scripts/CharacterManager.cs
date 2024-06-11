@@ -575,6 +575,10 @@ namespace PhysicsCharacterController
             else rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, Vector3.zero * crouchMultiplier, ref currVelocity, dampSpeedDown);
         }
 
+        public float GetInputAxis()
+        {
+            return axisInput.magnitude;
+        }
 
         private void MoveRotation()
         {

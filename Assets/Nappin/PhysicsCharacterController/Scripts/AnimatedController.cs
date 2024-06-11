@@ -39,8 +39,8 @@ namespace PhysicsCharacterController
 
         private void Update()
         {
-            anim.SetFloat("velocity", rigidbodyCharacter.velocity.magnitude * velocityAnimationMultiplier);
-
+            anim.SetFloat("velocity", rigidbodyCharacter.velocity.magnitude /** velocityAnimationMultiplier*/);
+            anim.SetFloat("inputAxis",characterManager.GetInputAxis() );
             anim.SetBool("isGrounded", CheckAnimationGrounded());
 
             anim.SetBool("isJump", characterManager.GetJumping());
