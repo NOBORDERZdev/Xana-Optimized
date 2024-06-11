@@ -25,7 +25,13 @@ public class SandGameManager : MonoBehaviour
 
     InputManager input;
 
-    Animator animator;
+    Animator Animator34
+    {
+        get
+        {
+            return ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
+        }
+    }
     private Vector3 _player34InitialPos;
     private bool _isSkatingControllerOn = false;
 
@@ -72,6 +78,15 @@ public class SandGameManager : MonoBehaviour
         }
         player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
         player.AddComponent<XanaDuneControllerHandler>();
+
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+        {
+            local = Localiztion.Jp;
+        }
+        else
+        {
+            local = Localiztion.En;
+        }
     }
 
     public static SandGameManager Instance
@@ -96,8 +111,19 @@ public class SandGameManager : MonoBehaviour
         }
     }
 
+    public void EnableSkating()
+    {
+        StartCoroutine(InitRoutine());
+        ReferencesForGamePlay.instance.MainPlayerParent.transform.rotation = Quaternion.Euler(0, 90, 0);
 
-    IEnumerator Start()
+    }
+    public void DisableSkating()
+    {
+        SetBoardOff();
+        crabSpr.OnCrabStop();
+    }
+
+    IEnumerator InitRoutine()
     {
         //playerInput = player.GetComponent<vThirdPersonInput>();
         //playerCamera = Camera.main.GetComponent<vThirdPersonCamera>();
@@ -110,11 +136,12 @@ public class SandGameManager : MonoBehaviour
         mark = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedMarkObject.transform;
 
         input = board.GetComponent<InputManager>();
-        animator = ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
+        //Animator34 = ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
 
         uiMgr.AddCallback(Des.SandInform, () => { StartBoarding(); });
 
         StartCoroutine(CheckPoint());
+        StopCoroutine(InitRoutine());  
         //StartCoroutine(Test());
     }
 
@@ -141,7 +168,7 @@ public class SandGameManager : MonoBehaviour
         _isSkatingControllerOn = true;
         SwitchToSkatingController();
         isStart = true;
-        animator.SetBool("IsStart", true);
+        Animator34.SetBool("IsStart", true);
         SetPlayerStartPos();
 
         uiMgr.TimerStart();
@@ -152,6 +179,7 @@ public class SandGameManager : MonoBehaviour
     {
         if (_isSkatingControllerOn)
         {
+            //disable XANA controller and enable skating controller
             player.GetComponent<PlayerController>().enabled = false;
             player.GetComponent<CharacterController>().enabled = false;
             ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterController>().enabled = false;
@@ -175,6 +203,7 @@ public class SandGameManager : MonoBehaviour
         }
         else
         {
+            //enable XANA controller and disable skating controller
             player.GetComponent<XanaDuneControllerHandler>().DisableSkating();
             Destroy(player.GetComponent<Rigidbody>());
             foreach (CapsuleCollider child in ReferencesForGamePlay.instance.m_34player.GetComponents<CapsuleCollider>())
@@ -201,7 +230,7 @@ public class SandGameManager : MonoBehaviour
 
         //var playerPv= ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>();
         //playerPv.RPC(nameof(EnableSkateBoardRpc), RpcTarget.All, playerPv.ViewID);
-        //board.gameObject.SetActive(true);
+        board.gameObject.SetActive(true);
         input.enabled = true;
         input.force = 250;
         int i = 0;
@@ -216,7 +245,7 @@ public class SandGameManager : MonoBehaviour
 
         input.canRotate = true;
         input.force = 600;
-        animator.SetTrigger("BoardOn");
+        Animator34.SetTrigger("BoardOn");
         Debug.Log("Boarding Start");
         crabSpr.OnCrabStart();
 
@@ -458,7 +487,7 @@ public class SandGameManager : MonoBehaviour
         rb.freezeRotation = true;
 
         board.gameObject.SetActive(false);
-        animator.SetBool("IsStart", false);
+        Animator34.SetBool("IsStart", false);
         _isSkatingControllerOn = false;
         SwitchToSkatingController();
 

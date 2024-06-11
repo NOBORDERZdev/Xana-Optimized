@@ -396,6 +396,10 @@ public class WorldItemView : EnhancedScrollerCellView
         {
             ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
         }
+        else if (m_EnvironmentName == "XANA_DUNE" || m_EnvironmentName == "XANA_KANZAKI")
+        {
+            ConstantsHolder.xanaConstants.userLimit = "1";
+        }
         else
         {
             ConstantsHolder.xanaConstants.userLimit = userLimit;

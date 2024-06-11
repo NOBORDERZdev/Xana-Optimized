@@ -18,7 +18,7 @@ public class DataManager_Shrine : MonoBehaviour
     [SerializeField] private GameObject coinParticle;
 
     void Start() {
-        player = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
+        //player = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
         worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
 
         StartCoroutine(CheckPoint());

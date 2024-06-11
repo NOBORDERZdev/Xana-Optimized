@@ -1,3 +1,5 @@
+using Cinemachine;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,11 +31,15 @@ public class XanaDuneControllerHandler : MonoBehaviour
 
     private void Start()
     {
-        Player34 = ReferencesForGamePlay.instance.m_34player.transform;
         _skateBoardPrefab = Resources.Load("XANADunePrefab/GameBoard") as GameObject;
         _markPrefab = Resources.Load("XANADunePrefab/Mark") as GameObject;
         _spawnedSkateBoard = Instantiate(_skateBoardPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false);
-        _spawnedMarkObject = Instantiate(_markPrefab, Player34, false);
+        _spawnedMarkObject = Instantiate(_markPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false);
+    }
+
+    public void AddComponentOn34()
+    {
+        ReferencesForGamePlay.instance.m_34player.AddComponent<SkatingConenctionErrorHandler>();
     }
 
     public void EnableSkating()
@@ -73,11 +79,56 @@ public class XanaDuneControllerHandler : MonoBehaviour
         _capsuleCollider.material = null;
         EnableDisableUI(true);
     }
+
     private void EnableDisableUI(bool setActive)
     {
         Enable_DisableObjects.Instance.EnableDisableUIObjects(setActive);
     }
 
+
+    //public void SwitchToSkatingController()
+    //{
+    //    if (_isSkatingControllerOn)
+    //    {
+    //        player.GetComponent<PlayerController>().enabled = false;
+    //        player.GetComponent<CharacterController>().enabled = false;
+    //        ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterController>().enabled = false;
+    //        foreach (CapsuleCollider child in ReferencesForGamePlay.instance.m_34player.GetComponents<CapsuleCollider>())
+    //        {
+    //            child.enabled = false;
+    //        }
+    //        _player34InitialPos = ReferencesForGamePlay.instance.m_34player.transform.localPosition;
+    //        ReferencesForGamePlay.instance.m_34player.transform.localPosition = new Vector3(_player34InitialPos.x, 0.014f, _player34InitialPos.z);
+    //        Rigidbody playerRb = player.AddComponent<Rigidbody>();
+    //        playerRb.mass = 0.1f;
+    //        playerRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+    //        board.GetComponent<FixedJoint>().connectedBody = playerRb;
+    //        //player.AddComponent<XanaDuneControllerHandler>();
+    //        player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
+    //        StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(-88f, 1f));
+    //        PlayerCameraController.instance.lockRotation = true;
+    //        PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
+    //        PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
+
+    //    }
+    //    else
+    //    {
+    //        player.GetComponent<XanaDuneControllerHandler>().DisableSkating();
+    //        Destroy(player.GetComponent<Rigidbody>());
+    //        foreach (CapsuleCollider child in ReferencesForGamePlay.instance.m_34player.GetComponents<CapsuleCollider>())
+    //        {
+    //            child.enabled = true;
+    //        }
+    //        ReferencesForGamePlay.instance.m_34player.transform.localPosition = _player34InitialPos;
+    //        player.GetComponent<CharacterController>().enabled = true;
+    //        ReferencesForGamePlay.instance.m_34player.GetComponent<CharacterController>().enabled = true;
+    //        player.GetComponent<PlayerController>().enabled = true;
+    //        PlayerCameraController.instance.lockRotation = false;
+    //        PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 1.75f;
+    //        PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.47f;
+
+    //    }
+    //}
     public void TouchingCrab()
     {
         _spawnedSkateBoard.GetComponent<InputManager>().OnTouchingCrab();

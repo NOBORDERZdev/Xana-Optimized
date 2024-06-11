@@ -520,6 +520,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
             }
         }
+        if (WorldItemView.m_EnvName.Contains("XANA_DUNE"))
+        {
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>().AddComponentOn34();
+        }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
