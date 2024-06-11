@@ -127,18 +127,21 @@ public class ConstantsHolder : MonoBehaviour
     [HideInInspector]
     public bool needToClearMemory = true;
     // Tutorials
-    public bool isTutorialLoaded=false;
+    public bool isTutorialLoaded = false;
     public bool isLobbyTutorialLoaded = false;
 
-    //public static bool isDescriptionFullPage = false;
+    //Toyota Home Aichi
+    public enum MeetingStatus { End, Inprogress, HouseFull }
+    [SerializeField]
+    public MeetingStatus meetingStatus;
+    public bool IsShowChatToAll = true;
+
 
     //XANA Summit 
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
     public static string domeId;
     public static int domeId;
-
-
     public string r_EmoteStoragePersistentPath
     {
         get
@@ -153,7 +156,7 @@ public class ConstantsHolder : MonoBehaviour
     private AsyncOperationHandle downloadHandle;
 
     public bool IsProfileVisit = false; // bool to check is player in profile section.
-    public int SnsProfileID=0; // Id of user profile when the user visit the profile section.
+    public int SnsProfileID = 0; // Id of user profile when the user visit the profile section.
     public bool IsOtherProfileVisit = false; // to Check is other profile player visit
     public string r_EmoteReactionPersistentPath
     {

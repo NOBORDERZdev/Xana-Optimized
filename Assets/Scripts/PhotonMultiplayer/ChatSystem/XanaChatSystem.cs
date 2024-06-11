@@ -1,4 +1,4 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------------------------------
 // <copyright company="Exit Games GmbH"/>
 // <summary>Demo code for Photon Chat in Unity.</summary>
 // <author>developer@exitgames.com</author>
@@ -157,6 +157,13 @@ public class XanaChatSystem : MonoBehaviour
 
         //this.CurrentChannelText.text = _userName + " : " + _msg + "\n" + this.CurrentChannelText.text;
     }
+
+    public void ClearChatTxtForMeeting()
+    {
+        this.CurrentChannelText.text = "";
+        this.PotriatCurrentChannelText.text = "";
+    }
+
     public void DisplayErrorMsg_FromSocket(string _msg, string errorType)
     {
 
@@ -223,7 +230,7 @@ public class XanaChatSystem : MonoBehaviour
         //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
-    private bool isChatOpen;
+    protected bool isChatOpen;
 
     public void OpenCloseChatDialog()
     {
