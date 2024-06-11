@@ -2118,6 +2118,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadingHandler
       objectReference: {fileID: 0}
+    - target: {fileID: 4879429447214640527, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5639781524024468899, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6329041106788721842, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7496875700343763344, guid: 6eb45e3a978e8fa4cb7b20bceb37ff30, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2761,7 +2773,7 @@ PrefabInstance:
       objectReference: {fileID: 5733907664898954176}
     - target: {fileID: 580625885621899111, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -3.8925781
+      value: -3.892517
       objectReference: {fileID: 0}
     - target: {fileID: 1222633700808300328, guid: 41b0fd8193f107446a93a916d39048f7, type: 3}
       propertyPath: m_IsActive
@@ -4461,6 +4473,11 @@ MonoBehaviour:
   IsProfileVisit: 0
   SnsProfileID: 0
   IsOtherProfileVisit: 0
+  isXanaPartyWorld: 1
+  isJoinigXanaPartyGame: 0
+  XanaPartyGameId: 0
+  XanaPartyGameName: 
+  isMasterOfGame: 0
 --- !u!4 &454488015
 Transform:
   m_ObjectHideFlags: 0
@@ -8763,7 +8780,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3995237291109791917, guid: 4ab5542617c727a46adf4a14f799a6b4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -14847,6 +14864,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1549620715}
     m_Modifications:
+    - target: {fileID: 4528328824257109121, guid: 6f6f148e42527e743be481ca7feb394d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.20019531
+      objectReference: {fileID: 0}
     - target: {fileID: 7092096440731713844, guid: 6f6f148e42527e743be481ca7feb394d, type: 3}
       propertyPath: m_Name
       value: WorldDetailPanelParent
@@ -14934,6 +14955,10 @@ PrefabInstance:
     - target: {fileID: 7092096440731713845, guid: 6f6f148e42527e743be481ca7feb394d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632937321954278225, guid: 6f6f148e42527e743be481ca7feb394d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.34960938
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f6f148e42527e743be481ca7feb394d, type: 3}
@@ -20947,7 +20972,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: IsXanaLive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2090902525, guid: 86d53a621ce38a54c980d35882e6d122, type: 3}
       propertyPath: screenSpace
@@ -22368,6 +22393,67 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &537965767295686726
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 537965766821732860, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: debugMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_RootOrder
+      value: 46
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.445318
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 532.23895
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -81.25766
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732861, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 537965766821732863, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
+      propertyPath: m_Name
+      value: XANAPartyManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: eddf9f5c4c99be64e9a4c6763ef32356, type: 3}
 --- !u!222 &556924244021445126
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27994,7 +28080,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4315575900349432258, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6.269287
+      value: -6.2692566
       objectReference: {fileID: 0}
     - target: {fileID: 4315575900349432258, guid: 96ec97d32e6875a48b01125a20950e4c, type: 3}
       propertyPath: m_AnchoredPosition.y

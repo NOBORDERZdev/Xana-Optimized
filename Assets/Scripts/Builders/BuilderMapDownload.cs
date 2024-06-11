@@ -829,7 +829,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     bool IsMultiplayerComponent(ItemData itemData)
     {
-        if (itemData.rotatorComponentData.IsActive || itemData.addForceComponentData.isActive || itemData.toFroComponentData.IsActive || itemData.translateComponentData.IsActive || itemData.scalerComponentData.IsActive || itemData.rotateComponentData.IsActive)
+        if (itemData.rotatorComponentData.IsActive || itemData.addForceComponentData.isActive || itemData.toFroComponentData.IsActive || itemData.translateComponentData.IsActive || itemData.scalerComponentData.IsActive || itemData.rotateComponentData.IsActive )
         {
             return true;
         }

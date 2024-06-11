@@ -25,6 +25,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject YoutubeStreamPlayer;
+    public GameObject PenguinPlayer;
 
     public CinemachineFreeLook PlayerCamera;
     public CinemachineFreeLook playerCameraCharacterRender;
@@ -56,8 +57,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] Button HomeBtn;
 
     public double eventRemainingTime;
-
+    [SerializeField] int autoSwitchTime;
     public HomeSceneLoader _uiReferences;
+
     [Header("XANA Party")]
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
@@ -623,11 +625,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
-            StartCoroutine(SetXanaPartyControllers(player));
+            PenguinPlayer = player;
+            if (player != null)
+            {
+                StartCoroutine(SetXanaPartyControllers(player));
+            }
         }
     }
 
-    IEnumerator SetXanaPartyControllers(GameObject player){ 
+    IEnumerator SetXanaPartyControllers(GameObject player){
         ScreenOrientationManager tempRef = ScreenOrientationManager._instance;
         CharacterManager characterManager = player.GetComponent<CharacterManager>();
         XanaPartyCamera.characterManager = characterManager;
@@ -639,9 +645,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
         yield return new WaitForSeconds(0.1f);
-        GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
-        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
-        GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        if(GamificationComponentData.instance != null){
+            GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.None;
+            GamificationComponentData.instance.PlayerRigidBody.constraints = RigidbodyConstraints.FreezeRotation;
+        }
         // Landscape
         tempRef.XanaFeaturesLandsacape.SetActive(false);
         tempRef.XanaChatCanvasLandsacape.SetActive(false);
@@ -683,7 +691,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //Debug.Log("<color=red> NPC Chat Object Loaded </color>");
     }
 
-    [SerializeField] int autoSwitchTime;
     public IEnumerator BackToMainmenuforAutoSwtiching()
     {
         print("AUTO BACK CALL");

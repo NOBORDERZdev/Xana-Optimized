@@ -1,17 +1,20 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class StartPoint : MonoBehaviour
 {
     public List<Transform> SpawnPoints;
     public string FinishPointItemID;
     public GameObject triggerCollider;
+    public bool isStartPoint;
     FinishPoint _finishPoint;
 
     private void OnEnable()
     {
-        if (BuilderData.mapData.data.worldType != 1)
+        if ( BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();
             return;
@@ -23,7 +26,7 @@ public class StartPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        if (BuilderData.mapData.data.worldType != 1)
+        if (BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             DisableCollider();
             return;
@@ -35,9 +38,12 @@ public class StartPoint : MonoBehaviour
 
     void DisableCollider()
     {
+         print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-        StartCoroutine(StartGame());
+        //gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        StartCoroutine(nameof(StartGame));
     }
+
 
     void EnableCollider()
     {
@@ -51,7 +57,7 @@ public class StartPoint : MonoBehaviour
         ?.SpawnObject.GetComponent<FinishPoint>();
     }
 
-    IEnumerator StartGame()
+   IEnumerator StartGame()
     {
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("Ready?", 2, true);
         yield return new WaitForSeconds(2);
@@ -59,4 +65,6 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(3);
         triggerCollider.SetActive(false);
     }
+
+   
 }

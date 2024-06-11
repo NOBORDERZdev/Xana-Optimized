@@ -56,7 +56,7 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ "/item/v3/all-items";
+    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
 
 
 
@@ -284,5 +284,9 @@ public class ConstantsGod
 
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
+
+    #region XANA Party Api's
+    public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  
     #endregion
 }

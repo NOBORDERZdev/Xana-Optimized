@@ -90,7 +90,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
-            if (ConstantsHolder.xanaConstants.isBuilderScene)
+            if (GamificationComponentData.instance!= null && ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {

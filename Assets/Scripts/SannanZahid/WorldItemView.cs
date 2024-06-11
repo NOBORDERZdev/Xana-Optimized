@@ -381,7 +381,7 @@ public class WorldItemView : EnhancedScrollerCellView
         {
             ConstantsHolder.xanaConstants.isXanaPartyWorld = false;
         }
-        MutiplayerController.sceneName = m_EnvName;
+       // MutiplayerController.sceneName = m_EnvName;
 
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{

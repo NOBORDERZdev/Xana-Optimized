@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using ExitGames.Client.Photon.StructWrapping;
 using Models;
 using Photon.Pun;
 using Photon.Realtime;
@@ -94,7 +95,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     //platformLayers
     public LayerMask platformLayers;
-
+    public StartPoint StartPoint;
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
     internal Rigidbody PlayerRigidBody;
@@ -395,9 +396,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
+        print("!!! Start party race");
         if (SinglePlayer)
             return;
-        if (PhotonNetwork.CountOfPlayers == 2)
+        if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
         {
             if (PhotonNetwork.IsMasterClient)
             {
@@ -409,18 +411,33 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     }
 
     IEnumerator WaitForWorldLoadingAllPlayer()
-    {
+    {       
+        print("!!! WaitForWorldLoadingAllPlayer");
+
         bool allPalyerReady = false;
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                allPalyerReady = (bool)player.CustomProperties["IsReady"];
-                if (!allPalyerReady) break;
+                print("~~ for each");
+                if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
+                   
+                  print("~~ for IsReady");
+                    allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
+
+                    if (!allPalyerReady) break;
+                }
             }
             allPalyerReady = true;
         }
+        print("invoke action of counter");
+        //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+        GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+    }
+    [PunRPC]
+    void StartGameRPC()
+    {
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
     #endregion

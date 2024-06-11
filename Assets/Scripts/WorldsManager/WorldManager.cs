@@ -102,7 +102,17 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
+        StartCoroutine(nameof(xanaParty));
     }
+
+    IEnumerator xanaParty(){
+        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+          (PlayerPrefs.GetString("PlayerName") == ""))
+            yield return new WaitForSeconds(0.5f);
+
+        XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+    }
+
     /*public void CheckWorldTabAndReset(APIURL tab)
     {
         if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
@@ -222,7 +232,6 @@ public class WorldManager : MonoBehaviour
             GetBuilderWorlds(aPIURLGlobal, (a) => { });
         }
     }
-
 
     public string PrepareApiURL(APIURL aPIURL, int recordPerPage = 30)
     {
@@ -734,7 +743,7 @@ public class WorldManager : MonoBehaviour
         if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
         {
             WorldItemView.m_EnvName = "D_Infinity_Labo";
-            MutiplayerController.sceneName = WorldItemView.m_EnvName;
+           // MutiplayerController.sceneName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail_PlayBtn.ToString());
         }
@@ -986,11 +995,11 @@ public class WorldManager : MonoBehaviour
                     ConstantsHolder.xanaConstants.userLimit = "15";
                 }
             }
-            MutiplayerController.sceneName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
+           // MutiplayerController.sceneName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
     }
-
+   
     public void GoToUGC()
     {
         GameManager.Instance.HomeCameraInputHandler(false);
@@ -1096,10 +1105,6 @@ public class WorldItemDetail
     public string WorldVisitCount;
     public bool isFavourite;
 }
-
-
-
-
 
 //public enum APIURL
 //{

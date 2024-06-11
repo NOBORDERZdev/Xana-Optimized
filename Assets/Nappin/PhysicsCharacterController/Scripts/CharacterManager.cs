@@ -116,6 +116,8 @@ namespace PhysicsCharacterController
         public GameObject characterCamera;
         [Tooltip("Character model")]
         public GameObject characterModel;
+        [Tooltip("Mulitplayer")]
+        public XANAPartyMulitplayer mulitplayer;
         [Tooltip("Character rotation speed when the forward direction is changed")]
         public float characterModelRotationSmooth = 0.1f;
         [Space(10)]
@@ -477,6 +479,10 @@ namespace PhysicsCharacterController
                 }
                 return;
             }
+            if (GamificationComponentData.instance == null )
+            {
+                return;
+            }
 
             RaycastHit hitData;
 
@@ -569,6 +575,10 @@ namespace PhysicsCharacterController
             else rigidbody.velocity = Vector3.SmoothDamp(rigidbody.velocity, Vector3.zero * crouchMultiplier, ref currVelocity, dampSpeedDown);
         }
 
+        public float GetInputAxis()
+        {
+            return axisInput.magnitude;
+        }
 
         private void MoveRotation()
         {
@@ -592,11 +602,13 @@ namespace PhysicsCharacterController
         }
 
 
-        private void MoveJump()
+        public void MoveJump()
         {
+           
             //jumped
             if (jump && isGrounded && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
             {
+              
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
             }
@@ -627,6 +639,7 @@ namespace PhysicsCharacterController
                 isJumping = false;
                 coyoteJumpMultiplier = 1f;
             }
+
         }
 
         #endregion

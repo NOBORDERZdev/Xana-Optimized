@@ -26,7 +26,7 @@ public class FinishPoint : MonoBehaviour
     private void OnDisable()
     {
         DisableCollider();
-        if (BuilderData.mapData.data.worldType != 1)
+        if (BuilderData.mapData != null && BuilderData.mapData.data.worldType != 1)
         {
             FinishRaceCollider.enabled = false;
             return;
@@ -46,8 +46,24 @@ public class FinishPoint : MonoBehaviour
         {
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
+            StartCoroutine(triggerBackToLobby());
             triggerCollider.SetActive(true);
         }
+    }
+
+    IEnumerator triggerBackToLobby()
+    {
+        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
+        if (tempPenguin.GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForSeconds(3.5f);
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+        }
+        else
+        {
+            yield return null;
+        }
+      
     }
 
     void FindStartPoint()

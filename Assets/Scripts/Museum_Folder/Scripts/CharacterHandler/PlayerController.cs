@@ -789,6 +789,10 @@ public class PlayerController : MonoBehaviour
 
     public void ButtonsToggleOnOff(bool b)
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            return;
+        }
         m_FreeFloatCam = b;
         StopBuilderComponent();
         FreeFloatCamCharacterController.gameObject.SetActive(b);

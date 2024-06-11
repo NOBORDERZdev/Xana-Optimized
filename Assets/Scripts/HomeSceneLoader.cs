@@ -60,6 +60,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     {
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
+        
+       
         if (exitOnce)
         {
             exitOnce = false;
@@ -157,4 +159,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         Resources.UnloadUnusedAssets();
         Debug.LogError("memory released here..");
     }
+
+    public void XANAPartyBackToLobby()
+    {
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+    }
+
 }
