@@ -17,14 +17,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         BuilderEventManager.LoadNewScene += LoadingNewScene;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
-        GamePlayButtonEvents.inst.OnExitButtonXANASummit += LoadingXANASummitOnBack;
+        GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.LoadNewScene -= LoadingNewScene;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerTransform;
-        GamePlayButtonEvents.inst.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
+        GamePlayButtonEvents.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
     }
 
     void LoadingNewScene(int domeId, Vector3 playerPos)
@@ -57,6 +57,32 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.Connect(sceneData[0]);
     }
+
+    public void LoadingNewScene(string SceneName,Vector3 playerPos)
+    {
+        if (string.IsNullOrEmpty(SceneName))
+            return;
+        
+        GetPlayerPosition(playerPos);
+        string existingSceneName = WorldItemView.m_EnvName;
+        WorldItemView.m_EnvName = SceneName;
+        ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
+        gameplayEntityLoader.currentEnvironment = null;
+        multiplayerController.isConnecting = false;
+        gameplayEntityLoader.isEnvLoaded = false;
+        gameplayEntityLoader.isAlreadySpawned = true;
+        ConstantsHolder.isFromXANASummit = true;
+        multiplayerController.Disconnect();
+
+        XanaWorldDownloader.ResetAll();
+
+        multiplayerController.playerobjects.Clear();
+
+        SceneManager.UnloadSceneAsync(existingSceneName);
+
+        multiplayerController.Connect(SceneName);
+    }
+
 
     void LoadBuilderSceneLoading(string[] sceneData)
     {

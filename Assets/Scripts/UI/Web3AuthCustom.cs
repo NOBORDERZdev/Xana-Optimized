@@ -37,6 +37,8 @@ public class Web3AuthCustom : MonoBehaviour
     public List<Button> myButtons;
     public float cooldownTime;
     public static Web3AuthCustom Instance;
+    public Action<string> onLoginAction;
+
     private void Awake()
     {
         if(Instance==null)
@@ -223,9 +225,11 @@ public class Web3AuthCustom : MonoBehaviour
             return;
 
 #endif
-            Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         userInfo = response.userInfo;
         privateKey = response.privKey;
+        onLoginAction?.Invoke(userInfo.email);
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
         updateConsole(JsonConvert.SerializeObject(response, Formatting.Indented));
