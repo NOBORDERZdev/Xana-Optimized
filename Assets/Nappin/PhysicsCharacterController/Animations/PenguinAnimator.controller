@@ -131,7 +131,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Grounded
-  m_Speed: 1
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -1780095395610373491}
@@ -366,7 +366,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.05
+  m_TransitionDuration: 0.03
   m_TransitionOffset: 0
   m_ExitTime: 0.7115385
   m_HasExitTime: 0
@@ -439,8 +439,8 @@ AnimatorStateTransition:
     m_ConditionEvent: isGrounded
     m_EventTreshold: 0
   - m_ConditionMode: 4
-    m_ConditionEvent: velocity
-    m_EventTreshold: 1
+    m_ConditionEvent: inputAxis
+    m_EventTreshold: 0.1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1645721381428298237}
   m_Solo: 0
@@ -464,7 +464,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 4
-    m_ConditionEvent: velocity
+    m_ConditionEvent: inputAxis
     m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1645721381428298237}
@@ -764,11 +764,11 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0
+  m_TransitionDuration: 0.15
   m_TransitionOffset: 0
   m_ExitTime: 0.05
   m_HasExitTime: 0
-  m_HasFixedDuration: 0
+  m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
@@ -1044,7 +1044,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0.1
   m_TransitionOffset: 0
   m_ExitTime: 0.6052631
   m_HasExitTime: 0
@@ -1091,7 +1091,7 @@ AnimatorStateMachine:
     m_Position: {x: -140, y: 120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7530964843350520777}
-    m_Position: {x: 600, y: 150, z: 0}
+    m_Position: {x: 530, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6823336072108480029}
     m_Position: {x: 490, y: 400, z: 0}
@@ -1273,7 +1273,7 @@ BlendTree:
     m_Motion: {fileID: 1827226128182048838, guid: 605a45b4b2ec16e48be1c177fdb4056b, type: 3}
     m_Threshold: 1
     m_Position: {x: 0, y: 0}
-    m_TimeScale: 1.2
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: velocity
     m_Mirror: 0
