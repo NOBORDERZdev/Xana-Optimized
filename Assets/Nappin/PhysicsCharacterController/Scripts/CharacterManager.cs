@@ -228,6 +228,7 @@ namespace PhysicsCharacterController
             }
             else
             {
+                rigidbody.constraints = RigidbodyConstraints.FreezeAll;
                 this.GetComponent<CharacterManager>().enabled= false;
             }
             currentLockOnSlope = lockOnSlope;
