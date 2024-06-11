@@ -361,7 +361,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                    
                 }
 
-                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
 
                     StartCoroutine(ShowLobbyCounter());
                 }
@@ -384,13 +384,14 @@ public class ReferencesForGamePlay : MonoBehaviour
     
     IEnumerator ShowLobbyCounter()
     {
+        yield return new WaitForSeconds(1);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
             XANAPartyCounterText.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
-        if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        if (PhotonNetwork.IsMasterClient )
         {
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
             xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
