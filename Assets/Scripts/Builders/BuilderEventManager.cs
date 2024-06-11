@@ -136,6 +136,6 @@ public static class BuilderEventManager
     public static Action<int,string[]> AINPCActivated;
     public static Action<int> AINPCDeactivated;
 
-    public static Action<VideoClip> spaceXActivated;
+    public static Action<VideoClip,Vector3> spaceXActivated;
 
 }

@@ -23,7 +23,7 @@ public class GamePlayButtonEvents : MonoBehaviour
     public event Action OnHelpButton;
     public event Action OnSettingButton;
     public event Action OnExitButton;
-    public event Action OnExitButtonXANASummit;
+    public static event Action OnExitButtonXANASummit;
     public event Action OnPeope;
     public event Action OnAnnouncement;
     public event Action OnInvite;

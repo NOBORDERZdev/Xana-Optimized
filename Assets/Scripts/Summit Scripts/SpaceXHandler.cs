@@ -10,6 +10,8 @@ public class SpaceXHandler : MonoBehaviour
 
     public XANASummitSceneLoading summitSceneLoading;
 
+    private Vector3 returnPlayerPos;
+
     private void OnEnable()
     {
         BuilderEventManager.spaceXActivated += StartVideoPlayer;   
@@ -19,8 +21,9 @@ public class SpaceXHandler : MonoBehaviour
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
     }
 
-    void StartVideoPlayer(VideoClip videoClip)
+    void StartVideoPlayer(VideoClip videoClip,Vector3 _returnPlayerPos)
     {
+        returnPlayerPos = _returnPlayerPos;
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.clip=videoClip; 
         videoPlayer.Play();
@@ -45,8 +48,9 @@ public class SpaceXHandler : MonoBehaviour
     public void LoadPlanetScene(int x)
     {
         LoadingHandler.Instance.FadeIn();
+        Debug.LogError("fade in"+System.DateTime.Now);
         string sceneName = planetNames[x];
-        summitSceneLoading.LoadingNewScene(sceneName);
+        summitSceneLoading.LoadingNewScene(sceneName,returnPlayerPos);
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();
@@ -55,7 +59,8 @@ public class SpaceXHandler : MonoBehaviour
 
     private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
     {
-        LoadingHandler.Instance.FadeOut();
+        Debug.LogError("fade out" + System.DateTime.Now);
+        //LoadingHandler.Instance.FadeOut();
     }
 
 }

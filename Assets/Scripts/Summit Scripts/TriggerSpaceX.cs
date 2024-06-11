@@ -8,6 +8,7 @@ public class TriggerSpaceX : MonoBehaviour
 {
 
     private VideoClip vClip;
+    public Transform playerPos;
     private void OnEnable()
     {
         AsyncOperationHandle AsyncOp=Addressables.LoadAssetAsync<VideoClip>("SpaceX");
@@ -23,7 +24,7 @@ public class TriggerSpaceX : MonoBehaviour
     {
         if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
         {
-            BuilderEventManager.spaceXActivated?.Invoke(vClip);
+            BuilderEventManager.spaceXActivated?.Invoke(vClip,playerPos.position);
         }
     }
 }
