@@ -121,6 +121,8 @@ public class GamePlayUIHandler : MonoBehaviour
             currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
         else if (currentPortalObject.GetComponent<JjWorldChanger>())
             currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+        else if(currentPortalObject.GetComponent<MeetingRoomTeleport>())
+            currentPortalObject.GetComponent<MeetingRoomTeleport>().RedirectToWorld();
     }
 
     public void ClosePortalPopup()
