@@ -827,8 +827,19 @@ public class FeedUIController : MonoBehaviour
             UpdateAdFrndBtnStatus(0);
         }
     }
-
-     public void OnClickRecommedationFrnd(){
+    public void OnClickHotFrndfromProfile()
+    {
+        if (!HotFriendPanel.activeInHierarchy)
+        {
+            SetAddFriendScreen(true);
+            SNS_APIManager.Instance.SetHotFriend();
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.gameObject.SetActive(false);
+            OnClickHotFrnd();
+            ResetAllFeedScreen(true);
+        }
+    }
+    public void OnClickRecommedationFrnd(){
         if (!AddFrndRecommendedPanel.activeInHierarchy){ 
             HotFriendPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(false);
