@@ -226,6 +226,10 @@ namespace PhysicsCharacterController
             {
                 SetFriction(frictionAgainstFloor, true);
             }
+            else
+            {
+                this.GetComponent<CharacterManager>().enabled= false;
+            }
             currentLockOnSlope = lockOnSlope;
         }
 
