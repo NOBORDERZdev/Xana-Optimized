@@ -567,17 +567,34 @@ namespace PMY
                 CanvasButtonsHandler.inst.gamePlayUIParent.SetActive(true);
             }
 
-            // release video player memory after use it
-            for (int i = 0; i < VideoPlayers.Count; i++)
+            //// release video player memory after use it
+            //for (int i = 0; i < VideoPlayers.Count; i++)
+            //{
+            //    VideoPlayers[i].Stop();
+            //    if (VideoPlayers[i].targetTexture)
+            //    {
+            //        VideoPlayers[i].targetTexture.Release();
+            //        GC.Collect();
+            //    }
+            //}
+            try
             {
-                VideoPlayers[i].Stop();
-                if (VideoPlayers[i].targetTexture)
+                if (ratioReferences[ratioId].l_videoPlayer)
                 {
-                    VideoPlayers[i].targetTexture.Release();
-                    GC.Collect();
+                    ratioReferences[ratioId].l_videoPlayer.Stop();
+                    ratioReferences[ratioId].l_videoPlayer.targetTexture.Release();
+                    ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
                 }
+                renderTexture_16x9.Release();
+                renderTexture_1x1.Release();
+                renderTexture_4x3.Release();
+                renderTexture_9x16.Release();
+                GC.Collect();
             }
-
+            catch (Exception ex)
+            {
+                Debug.LogError(ex.Message);
+            }
         }
 
         private void ErrorOnVideo(VideoPlayer source, string message)
