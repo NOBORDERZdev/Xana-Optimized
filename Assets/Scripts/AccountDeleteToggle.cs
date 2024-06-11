@@ -19,7 +19,7 @@ public class AccountDeleteToggle : MonoBehaviour
         else
         {
             Button.interactable = false;
-            DescriptionText.color = new Color32(65, 65, 65, 100);
+            DescriptionText.color = new Color32(65, 65, 65, 255);
         }
 
    }
