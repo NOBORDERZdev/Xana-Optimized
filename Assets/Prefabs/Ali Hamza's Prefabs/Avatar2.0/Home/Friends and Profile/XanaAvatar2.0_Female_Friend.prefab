@@ -1443,6 +1443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActorId: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 0}
   overrideController: {fileID: 0}
@@ -1518,7 +1519,7 @@ MonoBehaviour:
   blendHolder: {fileID: 1411546753714733415}
   AllEyeBlendShapes: []
   blinkingRate: 20
-  isEyeClose: 0
+  AreEyesClosed: 0
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
@@ -2268,6 +2269,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_478
       ObjectType: Feet
+  AvatarGender: 1
   pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &3781558948022801262
 MonoBehaviour:
