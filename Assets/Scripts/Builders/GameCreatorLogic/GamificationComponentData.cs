@@ -433,6 +433,38 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     {
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
+
+
+    public void TriggerRaceStatusUpdate()
+    {
+        this.GetComponent<PhotonView>().RPC(nameof(UpdateRaceStatus), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void UpdateRaceStatus(){ 
+        GamificationComponentData.instance.RaceFinishCount++;
+        int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
+        if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
+        {
+            StartCoroutine(triggerBackToLobby());
+        }
+    }
+
+    IEnumerator triggerBackToLobby()
+    {
+        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
+        if (tempPenguin.GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForSeconds(3.5f);
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+        }
+        else
+        {
+            yield return null;
+        }
+      
+    }
     #endregion
 }
 

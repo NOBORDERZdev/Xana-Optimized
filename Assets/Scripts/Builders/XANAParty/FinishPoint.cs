@@ -48,33 +48,14 @@ public class FinishPoint : MonoBehaviour
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
             triggerCollider.SetActive(true);
-            UpdateRaceStatus();
+            GamificationComponentData gamificationTemp = GamificationComponentData.instance;
+            gamificationTemp.TriggerRaceStatusUpdate();
         }
     }
+    
+   
 
-    public void UpdateRaceStatus(){ 
-        GamificationComponentData.instance.RaceFinishCount++;
-        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ ConstantsHolder.XanaPartyMaxPlayers);
-        if (GamificationComponentData.instance.RaceFinishCount >= ConstantsHolder.XanaPartyMaxPlayers)
-        {
-            StartCoroutine(triggerBackToLobby());
-        }
-    }
-
-    IEnumerator triggerBackToLobby()
-    {
-        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
-        if (tempPenguin.GetComponent<PhotonView>().IsMine)
-        {
-            yield return new WaitForSeconds(3.5f);
-            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
-        }
-        else
-        {
-            yield return null;
-        }
-      
-    }
+    
 
     void FindStartPoint()
     {
