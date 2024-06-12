@@ -408,6 +408,7 @@ public class ReferencesForGamePlay : MonoBehaviour
             XANAPartyCounterText.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
+         XANAPartyLobbyyCounterPanel.SetActive(false);
         if (PhotonNetwork.IsMasterClient )
         {
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
