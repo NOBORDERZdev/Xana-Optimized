@@ -190,7 +190,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             if (_tagsTraversedCount <= 0)
             {
-                GetUsersMostVisitedTags(true);
+                GetUsersMostVisitedTags(1,true);
             }
         }));
     }
@@ -212,7 +212,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     //    //}));
     //}
 
-    public void GetUsersMostVisitedTags(bool _firstTimeLoad = false)
+    public void GetUsersMostVisitedTags(int totalTagsToLoad, bool _firstTimeLoad = false)
     {
         mostVisitedTagList.Clear();
         tagAsCategoryData.Clear();
@@ -242,7 +242,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     //{
                     //    CategoryLoading(i);
                     //}
-                    StartCoroutine(LoadUserTagsAsCategoriesPagination(_firstTimeLoad));
+                    StartCoroutine(LoadUserTagsAsCategoriesPagination(totalTagsToLoad, _firstTimeLoad));
                 }
             }
             else
@@ -252,7 +252,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
         }));
     }
 
-    IEnumerator LoadUserTagsAsCategoriesPagination(bool _firstTimeLoad = false)
+    IEnumerator LoadUserTagsAsCategoriesPagination(int totalTagsToLoad, bool _firstTimeLoad = false)
     {
         //Debug.Log("User most visited tags count: " + mostVisitedTagList.Count);
         //Initialize only 7 on first call and wait for paginated call for more data
@@ -269,7 +269,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
                     break;
                 }
                 yield return CategoryLoading(_tagsTraversedCount, _firstTimeLoad);
-            } while (totalTagsInstCount < 7);
+            } while (totalTagsInstCount < totalTagsToLoad);
 
             //Setting tags data as category on pagination call
             _event = new WorldItemDetail();

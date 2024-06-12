@@ -247,7 +247,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
     {
         Debug.LogError("hereerererer");
         paginationLoaderRef.ShowApiLoader(true);
-        WorldManager.instance.worldSpaceHomeScreenRef.GetUsersMostVisitedTags();
+        WorldManager.instance.worldSpaceHomeScreenRef.GetUsersMostVisitedTags(5);
     }
 
         #endregion
