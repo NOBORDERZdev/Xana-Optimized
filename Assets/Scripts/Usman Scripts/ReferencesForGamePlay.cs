@@ -384,23 +384,23 @@ public class ReferencesForGamePlay : MonoBehaviour
     
     IEnumerator ShowLobbyCounter()
     {
-        bool allPalyerReady = false;
-        while (!allPalyerReady)
-        {
-            yield return new WaitForSeconds(0.5f);
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                print("~~ for each");
-                if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
+        //bool allPalyerReady = false;
+        //while (!allPalyerReady)
+        //{
+        //    yield return new WaitForSeconds(0.5f);
+        //    foreach (Player player in PhotonNetwork.PlayerList)
+        //    {
+        //        print("~~ for each");
+        //        if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
                    
-                  print("~~ for IsReady");
-                    allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
+        //          print("~~ for IsReady");
+        //            allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
 
-                    if (!allPalyerReady) break;
-                }
-            }
-            allPalyerReady = true;
-        }
+        //            if (!allPalyerReady) break;
+        //        }
+        //    }
+        //    allPalyerReady = true;
+        //}
         yield return new WaitForSeconds(1);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
