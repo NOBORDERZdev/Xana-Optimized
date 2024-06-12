@@ -12,5 +12,9 @@ public class FinishRace : MonoBehaviour
         {
             _finishPoint.FinishRace();
         }
+        else if(_other.gameObject.tag == "PhotonLocalPlayer" && !_other.gameObject.GetComponent<PhotonView>().IsMine )
+        {
+            _finishPoint.UpdateRaceStatus();
+        }
     }
 }

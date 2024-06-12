@@ -45,15 +45,19 @@ public class FinishPoint : MonoBehaviour
     {
         if (BuilderData.StartPointID == StartPointItemID)
         {
-            GamificationComponentData.instance.RaceFinishCount++;
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
             triggerCollider.SetActive(true);
-            print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ ConstantsHolder.XanaPartyMaxPlayers);
-            if (GamificationComponentData.instance.RaceFinishCount >= ConstantsHolder.XanaPartyMaxPlayers)
-            {
-                StartCoroutine(triggerBackToLobby());
-            }
+            UpdateRaceStatus();
+        }
+    }
+
+    public void UpdateRaceStatus(){ 
+        GamificationComponentData.instance.RaceFinishCount++;
+        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ ConstantsHolder.XanaPartyMaxPlayers);
+        if (GamificationComponentData.instance.RaceFinishCount >= ConstantsHolder.XanaPartyMaxPlayers)
+        {
+            StartCoroutine(triggerBackToLobby());
         }
     }
 

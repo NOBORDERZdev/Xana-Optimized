@@ -43,7 +43,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
     [SerializeField] TMP_Text XANAPartyCounterText;
-
+    private bool isCounterStarted = false;
 
     //[SerializeField] CanvasGroup PartyJump;
 
@@ -361,7 +361,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                    
                 }
 
-                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
 
                     StartCoroutine(ShowLobbyCounter());
                 }
@@ -401,7 +401,8 @@ public class ReferencesForGamePlay : MonoBehaviour
         //    }
         //    allPalyerReady = true;
         //}
-        yield return new WaitForSeconds(1);
+        isCounterStarted = true;
+        //yield return new WaitForSeconds(1);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
