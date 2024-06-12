@@ -68,7 +68,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private void Awake()
     {
         instance = this;
-        //    LoadFile();
         setLightOnce = false;
     }
 
@@ -79,9 +78,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         Resources.UnloadUnusedAssets();
         GC.SuppressFinalize(this);
         GC.Collect(0);
-
-        //    Caching.ClearCache();
-
     }
 
     private void Start()
@@ -112,16 +108,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     void OnEnable()
     {
         BuilderEventManager.AfterWorldInstantiated += ResetPlayerAfterInstantiation;
+        GamePlayButtonEvents.OnExitButtonXANASummit += DestroyYoutubePlayer;
     }
 
 
     private void OnDisable()
     {
         BuilderEventManager.AfterWorldInstantiated -= ResetPlayerAfterInstantiation;
-        Resources.UnloadUnusedAssets();
-        GC.SuppressFinalize(this);
-        GC.Collect(0);
-        //  Caching.ClearCache();
+        GamePlayButtonEvents.OnExitButtonXANASummit -= DestroyYoutubePlayer;
     }
 
 
@@ -169,16 +163,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public void LoadFile()
     {
         mainPlayer.SetActive(false);
-        ////Debug.Log("Env Name : " + FeedEventPrefab.m_EnvName);
-        //if (!setLightOnce)
-        //{
-        //    LoadLightSettings(FeedEventPrefab.m_EnvName);
-        //    setLightOnce = true;
-        //}
-        //LoadEnvironment(FeedEventPrefab.m_EnvName);
         if (currentEnvironment == null)
         {
-            Debug.LogError("env loading.");
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 SetupEnvirnmentForBuidlerScene();
             else
@@ -194,32 +180,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         PlayerCamera.gameObject.SetActive(true);
         environmentCameraRender.gameObject.SetActive(true);
-        //environmentCameraRender.transform.GetChild(0).gameObject.SetActive(true);
-
         PlayerSelfieController.Instance.DisableSelfieFromStart();
-
-
-
     }
 
     void InstantiateYoutubePlayer()
     {
         if (YoutubeStreamPlayer == null)
         {
-            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
             if (WorldItemView.m_EnvName.Contains("DJ Event"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
                 YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
                 YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -232,16 +202,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#else
-                //  YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-
                 YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
                 YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -255,16 +215,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
                 YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
                 YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
@@ -277,25 +227,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
             {
                 YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
-                //YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
-
-
-
-
                 YoutubeStreamPlayer.SetActive(false);
                 if (YoutubeStreamPlayer)
                 {
@@ -304,6 +235,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
         }
     }
+
+    void DestroyYoutubePlayer()
+    {
+        Destroy(YoutubeStreamPlayer);
+    }
+
     void CharacterLightCulling()
     {
         if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !ConstantsHolder.xanaConstants.isBuilderScene)
@@ -481,7 +418,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
 
         // Firebase Event for Join World
-        Debug.Log("Player Spawn Completed --  Join World");
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         /// <summary>
@@ -790,15 +726,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
-            //RaycastHit hit;
-            //if (Physics.Raycast(new Vector3(spawnPoint.x, spawnPoint.y + 1000, spawnPoint.z), Vector3.down, out hit, 3000))
-            //{
-            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
-            //}
-            //else
-            //{
-            //    mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
-            //}
             //Player respawn at spawn point after jump down from world
             mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
 
@@ -909,21 +836,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             {
                 yield return new WaitForSeconds(1f);
             }
-            //yield return StartCoroutine(DownloadEnvoirnmentDependanceies(environmentLabel));
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
-            //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
-            //{
-            //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(0.5f,0.7f), 0.1f);
-            //}
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
                 LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
-                //LoadingHandler.Instance.UpdateLoadingSlider(.6f, true);
             }
-            yield return handle;
+            while (!handle.IsDone)
+                yield return null;
             addressableSceneName = environmentLabel;
-            //...
-
+            
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
@@ -939,7 +860,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
                 HomeBtn.onClick.Invoke();
             }
-            // Addressables.Release(handle);
         }
         else
         {

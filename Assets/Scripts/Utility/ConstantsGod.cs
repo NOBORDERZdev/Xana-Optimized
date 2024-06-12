@@ -18,7 +18,7 @@ public class ConstantsGod
     public static readonly string MIC = "MIC VOLUME";
     public static readonly string VIDEO_VOLUME = "VIDEO VOLUME";
     public static readonly string CAMERA_SENSITIVITY = "CAMERA SENSITIVITY";
-    public static readonly string BASE_URL = "https://api-xana.angelium.net/api/";
+    //public static readonly string BASE_URL = "https://api-xana.angelium.net/api/";
     public static string ReactionThumb = "reaction thumb";
     public static string SENDMESSAGETEXT = "send message";
     public static string GUSTEUSERNAME = "guste user";
@@ -56,13 +56,13 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ "/item/v3/all-items";
+    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
 
 
 
     public static string GETENVIRONMENTSAPINew = "/item/environment/1/30";
     public static string GetAllMuseumsAPI = "/item/museums/2/1/25";
-    
+
     // public static string GetAllMuseumsAPI = "/item/museums/v2/1/20";
     public static string BACKGROUNDFILES = "/item/background-files";
     public static string ANIMATIONFILES = "/item/animations";
@@ -122,7 +122,7 @@ public class ConstantsGod
 
     // Xana Lobby WOrlds
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
-    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";  
+    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";
 
     public static string GETXANAOFFICIALWORLDBYID = "";
 
@@ -165,9 +165,9 @@ public class ConstantsGod
     public static string r_url_HotUsers = /*"/social/get-non-friends/"*/ "/users/hot-users/";
     public static string r_url_RecommendedUser = "/social/get-friends-recommendations/";
     public static string r_url_MutalFrnd = "/social/follow/get-user-mutual-followers/";
-    public static string r_url_GetBestFrnd ="/social/get-close-friends/";
-    public static string r_url_AdBestFrnd ="/social/create-close-friend/";
-    public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";
+    public static string r_url_GetBestFrnd = "/social/get-close-friends/";
+    public static string r_url_AdBestFrnd = "/social/create-close-friend/";
+    public static string r_url_RemoveBestFrnd = "/social/remove-close-friend/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";
@@ -216,6 +216,26 @@ public class ConstantsGod
 
     #endregion
 
+
+    #region XENY Api
+
+    public static string GetUserXenyCoinsApi
+    {
+        get
+        {
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                return "https://prod-backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+            else
+            {
+                return "https://backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+        }
+    }
+
+    #endregion
+
     #region GrammyAward Api
 
     public static readonly string getAnimationTime = "/item/get-timeCount";
@@ -254,7 +274,7 @@ public class ConstantsGod
 
 
     #endregion
-   
+
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
@@ -279,10 +299,25 @@ public class ConstantsGod
 
     public static string FeedGetAllByUserId = "/item/get-following-text-post/";
     public static string FeedLikeDislikePost = "/item/like-text-post";
-    public static string FeedSearch="/item/search-following-text-post";
+    public static string FeedSearch = "/item/search-following-text-post";
     #endregion
 
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
+
+
+    #region XANA Summit Api's
+    public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
+    public static string GETALLDOMES = "/domes/getcreatedDomes";
+    public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
+    #endregion
+    #region Toyota Email Api's
+    public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
+    public static string toyotaNotificationApi = "/toyotaAichiWorlds/save-user-token";
+    public static string joinmeetingroom = "/toyotaAichiWorlds/join-meeting-room";
+    public static string leavemeetingroom = "/toyotaAichiWorlds/leave-meeting-room";
+    public static string getmeetingroomcount = "/toyotaAichiWorlds/check-meeting-members/";
+    public static string wrapobjectApi = "/toyotaAichiWorlds/get-status-of-worldId/";
     #endregion
 }

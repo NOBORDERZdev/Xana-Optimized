@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Models;
 using UnityEngine;
+using UnityEngine.Video;
 
 public static class BuilderEventManager
 {
@@ -18,9 +19,6 @@ public static class BuilderEventManager
     public static Action AfterMapDataDownloaded;
     public static Action<string> XanaMapDataDownloaded;
     public static Action AfterPlayerInstantiated;
-    public static Action UnSubscribeEvent;
-
-    public static Action<int,Vector3> LoadNewScene;
 
     public static Action AfterWorldInstantiated;
     public static Action AfterWorldOffcialWorldsInatantiated;
@@ -131,4 +129,13 @@ public static class BuilderEventManager
     public static Action<UploadProperties> UploadPropertiesData;
     public static Action UploadPropertiesInit;
     public static Action<string> YoutubeVideoLoadedCallback;
+
+
+    //XANA Summit Specific Events 
+    public static Action<int, Vector3> LoadNewScene;
+    public static Action<int,string[]> AINPCActivated;
+    public static Action<int> AINPCDeactivated;
+
+    public static Action<VideoClip,Vector3> spaceXActivated;
+
 }
