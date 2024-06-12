@@ -134,6 +134,7 @@ public class ConstantsHolder : MonoBehaviour
 
     //XANA Summit 
     public static bool isFromXANASummit=false;
+    public int DomeID = 0;
 
     public string r_EmoteStoragePersistentPath
     {

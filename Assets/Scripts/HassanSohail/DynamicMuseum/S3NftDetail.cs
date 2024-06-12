@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -50,5 +51,27 @@ public class DynamicData {
     //public int count;
     public bool success;
     public List<S3NftDetail> data;
+}
+
+[System.Serializable]
+public class DomeNFTData
+{
+    public int id;
+    public int dome_id;
+    public int index;
+    public string name;
+    public string description;
+    public string thumbnail;
+    public int type;
+    public string videoType;
+    public string videoUrl;
+    public DateTime createdAt;
+    public DateTime updatedAt;
+}
+
+[System.Serializable]
+public class DomeNFTDataArray
+{
+    public List<DomeNFTData> getcontentbyDomeId;
 }
 
