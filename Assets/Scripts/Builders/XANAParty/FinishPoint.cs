@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
@@ -44,10 +45,14 @@ public class FinishPoint : MonoBehaviour
     {
         if (BuilderData.StartPointID == StartPointItemID)
         {
+            GamificationComponentData.instance.RaceFinishCount++;
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
-            StartCoroutine(triggerBackToLobby());
             triggerCollider.SetActive(true);
+            if (GamificationComponentData.instance.RaceFinishCount >= ConstantsHolder.XanaPartyMaxPlayers)
+            {
+                StartCoroutine(triggerBackToLobby());
+            }
         }
     }
 
