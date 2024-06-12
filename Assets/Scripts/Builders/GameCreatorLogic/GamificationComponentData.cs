@@ -426,7 +426,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-        GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
     }
     [PunRPC]
     void StartGameRPC()
