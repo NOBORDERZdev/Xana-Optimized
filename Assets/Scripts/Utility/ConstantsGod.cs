@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using static System.Net.WebRequestMethods;
 
 public class ConstantsGod
-
 {
     public static string AUTH_TOKEN = "AUTH_TOKEN";
     public static string ANIMATIONNAME = "animation name";
@@ -28,18 +27,11 @@ public class ConstantsGod
     public static string EMOTE_SELECTION_INDEX = "EmoteAnimSelectionIndex";
     public static string SELECTED_ANIMATION_NAME = "selectedAnimName";
 
-    //public static string POSTTIMESTAMP = "post time";
-    //public static string POSTDESCRIPTION = "post description";
-    //public static string POSTUSERNAME = "post username";
-    //public static string POSTMEMBERSCOUNT = "member count";
-
-
     public static string NFTTHUMB = "nft thumb";
     public static string NFTOWNER = "nft owner";
     public static string NFTCREATOR = "nft creator";
     public static string NFTDES = "nft des";
     public static string NFTLINK = "nft link";
-
 
     public static string API = "https://api.xana.net/";
     public static string SERVER = "ws://socket-lb-648131231.us-east-2.elb.amazonaws.com:3000";
@@ -84,8 +76,7 @@ public class ConstantsGod
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
     // public static string GetUserDetailsAPI = "users/single-user";
-    public static string PurchasedAPI = "/items/purchase-items";
-    public static string SendCoinsAPI = "/users/update-coins";
+
     public static string WALLETSTATUS = "/auth/get-wallet-status";
     public static string GETSETS = "/item/get-sets";
     public static string LogoutFromotherDeviceAPI = "/auth/logout-from-other";
@@ -219,7 +210,6 @@ public class ConstantsGod
 
 
     #region XENY Api
-
     public static string GetUserXenyCoinsApi
     {
         get
@@ -234,6 +224,7 @@ public class ConstantsGod
             }
         }
     }
+    public static string PURCHASEWITHXENY = "/item/purchase-asset-by-xeny";
 
     #endregion
 

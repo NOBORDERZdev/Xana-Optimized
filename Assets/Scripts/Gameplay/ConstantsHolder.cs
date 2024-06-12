@@ -159,7 +159,7 @@ public class ConstantsHolder : MonoBehaviour
         }
     }
 
-
+    public float availableBalance;
     public void Awake()
     {
         if (xanaConstants)
