@@ -102,6 +102,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal bool IsGrounded;
 
     public bool SinglePlayer = false;
+    public int RaceFinishCount = 0;
 
     private void Awake()
     {
@@ -396,7 +397,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
-        print("!!! Start party race");
         if (SinglePlayer)
             return;
         if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
@@ -412,33 +412,58 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     IEnumerator WaitForWorldLoadingAllPlayer()
     {       
-        print("!!! WaitForWorldLoadingAllPlayer");
-
         bool allPalyerReady = false;
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                print("~~ for each");
                 if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
-                   
-                  print("~~ for IsReady");
                     allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
-
                     if (!allPalyerReady) break;
                 }
             }
             allPalyerReady = true;
         }
-        print("invoke action of counter");
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-        GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
     }
     [PunRPC]
     void StartGameRPC()
     {
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+    }
+
+
+    public void TriggerRaceStatusUpdate()
+    {
+        this.GetComponent<PhotonView>().RPC(nameof(UpdateRaceStatus), RpcTarget.All);
+    }
+
+    [PunRPC]
+    void UpdateRaceStatus(){ 
+        GamificationComponentData.instance.RaceFinishCount++;
+        int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
+        if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
+        {
+            StartCoroutine(triggerBackToLobby());
+        }
+    }
+
+    IEnumerator triggerBackToLobby()
+    {
+        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
+        if (tempPenguin.GetComponent<PhotonView>().IsMine)
+        {
+            yield return new WaitForSeconds(3.5f);
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
+        }
+        else
+        {
+            yield return null;
+        }
+      
     }
     #endregion
 }

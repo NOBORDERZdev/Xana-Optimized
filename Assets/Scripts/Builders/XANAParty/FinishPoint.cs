@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
@@ -46,25 +47,15 @@ public class FinishPoint : MonoBehaviour
         {
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
-            StartCoroutine(triggerBackToLobby());
             triggerCollider.SetActive(true);
+            GamificationComponentData gamificationTemp = GamificationComponentData.instance;
+            gamificationTemp.TriggerRaceStatusUpdate();
         }
     }
+    
+   
 
-    IEnumerator triggerBackToLobby()
-    {
-        GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
-        if (tempPenguin.GetComponent<PhotonView>().IsMine)
-        {
-            yield return new WaitForSeconds(3.5f);
-            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
-        }
-        else
-        {
-            yield return null;
-        }
-      
-    }
+    
 
     void FindStartPoint()
     {
