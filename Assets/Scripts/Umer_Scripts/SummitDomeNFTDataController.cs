@@ -95,7 +95,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                 RoomCount = 4;
             }
         }
-        _mussuemLink = _singleDomeMusuemApi + ConstantsHolder.xanaConstants.DomeID;
+        _mussuemLink = _singleDomeMusuemApi + ConstantsHolder.domeId;
         print("-============ " + _mussuemLink);
         Invoke(nameof(GetNFTDataDetails), 1f);
     }
