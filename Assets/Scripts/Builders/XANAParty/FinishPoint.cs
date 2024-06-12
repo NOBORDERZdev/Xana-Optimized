@@ -49,6 +49,7 @@ public class FinishPoint : MonoBehaviour
             FinishRaceCollider.enabled = false;
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
             triggerCollider.SetActive(true);
+            print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ ConstantsHolder.XanaPartyMaxPlayers);
             if (GamificationComponentData.instance.RaceFinishCount >= ConstantsHolder.XanaPartyMaxPlayers)
             {
                 StartCoroutine(triggerBackToLobby());
