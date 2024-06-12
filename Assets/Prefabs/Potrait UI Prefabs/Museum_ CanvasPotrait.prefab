@@ -5384,7 +5384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050862631509397883}
-  - component: {fileID: 5803140533243410890}
+  - component: {fileID: 182969097530946499}
   m_Layer: 2
   m_Name: Toggle-Ultra
   m_TagString: Untagged
@@ -5414,7 +5414,7 @@ RectTransform:
   m_AnchoredPosition: {x: 1232.77, y: -66.7}
   m_SizeDelta: {x: 248, y: 103.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5803140533243410890
+--- !u!114 &182969097530946499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5423,7 +5423,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 863057972550464433}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -5455,25 +5455,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2250286146052128900}
-  toggleTransition: 1
-  graphic: {fileID: 7835021470233749777}
-  m_Group: {fileID: 4580785168961971765}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ReferencesForGamePlay, Assembly-CSharp
-        m_MethodName: SetQualitySettings
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
 --- !u!1 &864442628200792412
 GameObject:
   m_ObjectHideFlags: 0
@@ -11030,7 +11014,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6880300009031340680}
-  - component: {fileID: 4580785168961971765}
   - component: {fileID: 6215302136812110415}
   m_Layer: 2
   m_Name: Toggle Group
@@ -11063,19 +11046,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000018835068, y: 0}
   m_SizeDelta: {x: 1048.93, y: 135}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4580785168961971765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2587248454548030516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AllowSwitchOff: 0
 --- !u!114 &6215302136812110415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12580,7 +12550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8687671383999857087}
-  - component: {fileID: 4879599346040567418}
+  - component: {fileID: 3711022783908531299}
   m_Layer: 2
   m_Name: Toggle-Low
   m_TagString: Untagged
@@ -12610,7 +12580,7 @@ RectTransform:
   m_AnchoredPosition: {x: 124, y: -66.7}
   m_SizeDelta: {x: 248, y: 103.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4879599346040567418
+--- !u!114 &3711022783908531299
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12619,7 +12589,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3056573720220713068}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -12651,25 +12621,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 4053864331561592599}
-  toggleTransition: 1
-  graphic: {fileID: 444003278775283055}
-  m_Group: {fileID: 4580785168961971765}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ReferencesForGamePlay, Assembly-CSharp
-        m_MethodName: SetQualitySettings
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
 --- !u!1 &3075385665196878199
 GameObject:
   m_ObjectHideFlags: 0
@@ -23239,7 +23193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8909085222060117640}
-  - component: {fileID: 4306605576229333908}
+  - component: {fileID: 7179806748115818737}
   m_Layer: 2
   m_Name: Toggle-High
   m_TagString: Untagged
@@ -23269,7 +23223,7 @@ RectTransform:
   m_AnchoredPosition: {x: 863.18, y: -66.7}
   m_SizeDelta: {x: 248, y: 103.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4306605576229333908
+--- !u!114 &7179806748115818737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23278,7 +23232,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6764148956344052322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -23310,25 +23264,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7388623099473367260}
-  toggleTransition: 1
-  graphic: {fileID: 7716451942334764294}
-  m_Group: {fileID: 4580785168961971765}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ReferencesForGamePlay, Assembly-CSharp
-        m_MethodName: SetQualitySettings
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 0
+      m_Calls: []
 --- !u!1 &6823942014408356684
 GameObject:
   m_ObjectHideFlags: 0
@@ -24083,7 +24021,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1326987169894901771}
-  - component: {fileID: 2275974577234708371}
+  - component: {fileID: 7458967015949963735}
   m_Layer: 2
   m_Name: Toggle-Standard
   m_TagString: Untagged
@@ -24113,7 +24051,7 @@ RectTransform:
   m_AnchoredPosition: {x: 493.59, y: -66.7}
   m_SizeDelta: {x: 248, y: 103.4}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2275974577234708371
+--- !u!114 &7458967015949963735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -24122,7 +24060,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7058162686016460904}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -24154,25 +24092,9 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2766710191012112765}
-  toggleTransition: 1
-  graphic: {fileID: 621329934432749227}
-  m_Group: {fileID: 4580785168961971765}
-  onValueChanged:
+  m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ReferencesForGamePlay, Assembly-CSharp
-        m_MethodName: SetQualitySettings
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 1
+      m_Calls: []
 --- !u!1 &7096943982749803491
 GameObject:
   m_ObjectHideFlags: 0

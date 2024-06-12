@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class QualityManager : MonoBehaviour
 {
-    public Toggle[] LandscapeQualityToggles;
-    public Toggle[] PortraitQualityToggles;
+    public GameObject[] LandscapeQualityToggles;
+    public GameObject[] PortraitQualityToggles;
     public RenderPipelineAsset[] QualityLevels;
     void Start()
     {
@@ -18,15 +18,27 @@ public class QualityManager : MonoBehaviour
             PlayerPrefs.SetInt("DefaultQuality", 1);
         }
         //QualityToggles[PlayerPrefs.GetInt("QualitySettings")].isOn = true;
-        SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
-        //SetQualitySettings(PlayerPrefs.GetInt("QualitySettings"));
+        //SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
+        SetQualitySettings(PlayerPrefs.GetInt("QualitySettings"));
     }
     public void SetQualityToggles(int index)
     {
-        if(ScreenOrientationManager._instance.isPotrait)
-            PortraitQualityToggles[index].isOn = true;
+        if (ScreenOrientationManager._instance.isPotrait)
+        {
+            foreach (GameObject go in PortraitQualityToggles)
+            {
+                go.SetActive(false);
+            }
+            PortraitQualityToggles[index].SetActive(true);
+        }
         else
-            LandscapeQualityToggles[index].isOn = true;
+        {
+            foreach (GameObject go in LandscapeQualityToggles)
+            {
+                go.SetActive(false);
+            }
+            LandscapeQualityToggles[index].SetActive(true);
+        }
     }
     public void SetQualitySettings(int index)
     {
@@ -35,6 +47,7 @@ public class QualityManager : MonoBehaviour
             PlayerPrefs.SetInt("QualitySettings", index);
             QualitySettings.SetQualityLevel(index);
             QualitySettings.renderPipeline = QualityLevels[index];
+            SetQualityToggles(index);
         }
     }
 }
