@@ -609,6 +609,7 @@ public class PlayerSelfieController : MonoBehaviour
     {
         for (int i = 0; i < m_ObjectsToClose.Length; i++)
         {
+            if(m_ObjectsToClose[i] !=null)
             m_ObjectsToClose[i].SetActive(l_State);
         }
     }

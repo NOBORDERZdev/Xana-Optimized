@@ -226,6 +226,11 @@ namespace PhysicsCharacterController
             {
                 SetFriction(frictionAgainstFloor, true);
             }
+            else
+            {
+                rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+                this.GetComponent<CharacterManager>().enabled= false;
+            }
             currentLockOnSlope = lockOnSlope;
         }
 
