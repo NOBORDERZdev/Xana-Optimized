@@ -402,7 +402,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //    allPalyerReady = true;
         //}
         isCounterStarted = true;
-        //yield return new WaitForSeconds(1);
+        //.yield return new WaitForSeconds(1);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {

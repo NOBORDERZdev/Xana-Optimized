@@ -10,10 +10,12 @@ public class FinishRace : MonoBehaviour
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            print("Finish call for player");
             _finishPoint.FinishRace();
         }
         else if(_other.gameObject.tag == "PhotonLocalPlayer" && !_other.gameObject.GetComponent<PhotonView>().IsMine )
         {
+            print("Finish call for OTHER player");
             _finishPoint.UpdateRaceStatus();
         }
     }
