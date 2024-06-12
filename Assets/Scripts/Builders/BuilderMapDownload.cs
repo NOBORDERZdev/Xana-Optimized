@@ -73,6 +73,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
+        print("~~ TOKEN" +ConstantsGod.AUTH_TOKEN );
         BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
