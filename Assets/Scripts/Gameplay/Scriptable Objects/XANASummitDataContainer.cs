@@ -82,11 +82,11 @@ public class XANASummitDataContainer : ScriptableObject
 
     public string GetAudioFile(int domeId)
     {
-        for (int i = 0;i<summitData.domes.Count;i++)
+        for (int i = 0;i<summitData1.domes.Count;i++)
         {
-            if (domeId == summitData.domes[i].id)
+            if (domeId == summitData1.domes[i].id)
             {
-                return summitData.domes[i].bgm;
+                return summitData1.domes[i].bgm;
             }
         }
 
@@ -114,7 +114,7 @@ public class XANASummitDataContainer : ScriptableObject
         public int worldId;
         public string world;
         public string experienceType;
-        public string builderWorldId;
+        public int builderWorldId;
     }
     #endregion
 

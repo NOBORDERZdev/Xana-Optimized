@@ -1,4 +1,5 @@
 using Photon.Pun.Demo.PunBasics;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.LoadNewScene += LoadingNewScene;
+        BuilderEventManager.LoadSummitScene += LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
     }
@@ -23,24 +25,36 @@ public class XANASummitSceneLoading : MonoBehaviour
     private void OnDisable()
     {
         BuilderEventManager.LoadNewScene -= LoadingNewScene;
+        BuilderEventManager.LoadSummitScene -= LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
     }
 
+    void LoadDomesData()
+    {
+        dataContainer.GetAllDomesData();
+    }
+
     void LoadingNewScene(int domeId, Vector3 playerPos)
     {
-        string[] sceneData = GetSceneName(domeId);
+        //zero index SceneName
+        //1st index builder or not
+        //2nd index Builder Id
+        XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
+        //string[] sceneData = GetSceneName(domeId);
+        domeGeneralData = GetDomeData(domeId);
 
-        if (string.IsNullOrEmpty(sceneData[0]))
+        if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
-            //SNSNotificationHandler.Instance.ShowNotificationMsg("");
 
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
-        WorldItemView.m_EnvName = sceneData[0];
-        ConstantsHolder.xanaConstants.EnviornmentName = sceneData[0];
+        WorldItemView.m_EnvName = domeGeneralData.world;
+        ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
         gameplayEntityLoader.currentEnvironment = null;
+        gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;
+        multiplayerController.singlePlayerInstance = domeGeneralData.experienceType;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
@@ -51,11 +65,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.playerobjects.Clear();
 
         SceneManager.UnloadSceneAsync(existingSceneName);
+        
+        if (domeGeneralData.worldType)
+            LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
-        if (sceneData[1] == "1")
-            LoadBuilderSceneLoading(sceneData);
-
-        multiplayerController.Connect(sceneData[0]);
+        multiplayerController.Connect(domeGeneralData.world);
     }
 
     public void LoadingNewScene(string SceneName,Vector3 playerPos)
@@ -68,6 +82,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         gameplayEntityLoader.currentEnvironment = null;
+        gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
@@ -84,13 +99,18 @@ public class XANASummitSceneLoading : MonoBehaviour
     }
 
 
-    void LoadBuilderSceneLoading(string[] sceneData)
+    void LoadBuilderSceneLoading(int builderMapId)
     {
-        ConstantsHolder.xanaConstants.builderMapID = int.Parse(sceneData[2]);
+        ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
-        SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+        AsyncOperation handle=SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+        handle.completed += Handle_completed;
     }
 
+    private void Handle_completed(AsyncOperation obj)
+    {
+        obj.allowSceneActivation = true;
+    }
 
     void LoadingXANASummitOnBack()
     {
@@ -115,20 +135,25 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.Connect(sceneName);
     }
-    string[] GetSceneName(int sceneId)
+    XANASummitDataContainer.DomeGeneralData GetDomeData(int sceneId)
     {
-        for (int i = 0; i < dataContainer.summitData.domes.Count; i++)
+        XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
+        for (int i = 0; i < dataContainer.summitData1.domes.Count; i++)
         {
-            if (dataContainer.summitData.domes[i].id == sceneId)
+            if (dataContainer.summitData1.domes[i].id == sceneId)
             {
-                if (dataContainer.summitData.domes[i].worldType)
-                    return new[] { dataContainer.summitData.domes[i].name, "1", dataContainer.summitData.domes[i].builderWorldId };
-                else
-                    return new[] { dataContainer.summitData.domes[i].name, "0", dataContainer.summitData.domes[i].builderWorldId };
+                domeGeneralData.world = dataContainer.summitData1.domes[i].world;
+                domeGeneralData.worldType= dataContainer.summitData1.domes[i].worldType;
+                domeGeneralData.experienceType = dataContainer.summitData1.domes[i].experienceType;
+                domeGeneralData.builderWorldId= dataContainer.summitData1.domes[i].builderWorldId;
+                //if (dataContainer.summitData1.domes[i].worldType)
+                //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
+                //else
+                //    return new[] { dataContainer.summitData1.domes[i].world, "0", dataContainer.summitData1.domes[i].builderWorldId };
             }
         }
-
-        return new[] { string.Empty, "0", "0" };
+        return domeGeneralData;
+        //return new[] { string.Empty, "0", "0" };
     }
 
     void GetPlayerPosition(Vector3 _playerPos)

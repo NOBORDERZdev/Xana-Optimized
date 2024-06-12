@@ -96,6 +96,12 @@ public class SummitAIChatHandler : XanaChatSystem
         PotriatCurrentChannelText.text = string.Empty;
     }
 
+    void ClearInputField()
+    {
+        InputFieldChat.text = "";
+        InputFieldChat.Select();
+    }
+
     void OpenChatBox()
     {
         chatDialogBox.SetActive(true);
@@ -119,7 +125,13 @@ public class SummitAIChatHandler : XanaChatSystem
     {
         DisplayMsg_FromSocket(ConstantsHolder.userName, InputFieldChat.text);
 
-        string url = npcURL + "&input_string=" + InputFieldChat.text;
+        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + InputFieldChat.text;
+
+        ClearInputField();
+
+        Debug.LogError(url);
+
+        UriBuilder uriBuilder = new UriBuilder(url);
 
         string response = await GetAIResponse(url);
 
