@@ -114,18 +114,10 @@ public class PlayerSelfieController : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            if (Instance.m_IKLookAt != null)
-                m_IKLookAt = Instance.m_IKLookAt;
 
-            if (Instance.m_CharacterParent != null)
-                m_CharacterParent = Instance.m_CharacterParent;
+        if (Instance == null)
+            Instance = this;
 
-            ReassignValues_OnOrientationChange();
-        }
-
-        Instance = this;
     }
 
     void ReassignValues_OnOrientationChange()
@@ -138,9 +130,18 @@ public class PlayerSelfieController : MonoBehaviour
 
     public void OnEnable()
     {
-        if (Instance != this)
-            Instance = this;
+        if (Instance != null && Instance != this)
+        {
+            if (Instance.m_IKLookAt != null)
+                m_IKLookAt = Instance.m_IKLookAt;
 
+            if (Instance.m_CharacterParent != null)
+                m_CharacterParent = Instance.m_CharacterParent;
+
+            ReassignValues_OnOrientationChange();
+        }
+
+        Instance = this;
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnSelfieButton += EnbaleSelfieFeature;
     }
 
