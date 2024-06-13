@@ -447,23 +447,38 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
         if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
         {
-            StartCoroutine(triggerBackToLobby());
+            if (PhotonNetwork.IsMasterClient)
+            {
+                var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+                XANAPartyManager.Instance.GameIndex++;
+                if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
+                {
+                    XANAPartyManager.Instance.GameIndex = 0;
+                    this.GetComponent<PhotonView>().RPC(nameof(BackToLobby), RpcTarget.AllBuffered);
+                }
+                else
+                {
+                    xanaPartyMulitplayer.ResetValuesOnCompleteRace();
+                    xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+                }
+            }
         }
     }
 
+    [PunRPC]
+    public void BackToLobby()
+    {
+        StartCoroutine(triggerBackToLobby());
+    }
     IEnumerator triggerBackToLobby()
     {
         GameObject tempPenguin = GameplayEntityLoader.instance.PenguinPlayer;
-        if (tempPenguin.GetComponent<PhotonView>().IsMine)
+        if (tempPenguin.GetComponent<PhotonView>().IsMine && !PhotonNetwork.IsMasterClient)
         {
             yield return new WaitForSeconds(3.5f);
-            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
         }
-        else
-        {
-            yield return null;
-        }
-      
+
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby();
     }
     #endregion
 }

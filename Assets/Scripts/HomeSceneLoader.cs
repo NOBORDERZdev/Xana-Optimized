@@ -160,9 +160,5 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         Debug.LogError("memory released here..");
     }
 
-    public void XANAPartyBackToLobby()
-    {
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
-    }
 
 }
