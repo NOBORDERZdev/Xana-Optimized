@@ -45,7 +45,8 @@ public class HomeScoketHandler : MonoBehaviour
     {
             socketId = resp.sid;
            // Debug.Log("<color=blue> Post -- Connected  </color>");
-            EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
+
+           // EmitUserSocketToApi(); // calling api to update user Socket id for BE to recive messages
 
             // Bind Events to listen
             Manager.Socket.On<string>("send_xana_text_post_info", ReceivePost);
