@@ -556,8 +556,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 17.177212, y: 2.1811385, z: 5.6519384}
-  m_Center: {x: -0.0599885, y: 1.6423206, z: 0.34537315}
+  m_Size: {x: 17.177212, y: 2.1811385, z: 4.992075}
+  m_Center: {x: -0.05998802, y: 1.6423206, z: 0.675305}
 --- !u!114 &3332379196659039583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,6 +718,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 8328838025020672181, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
+      propertyPath: m_Size.z
+      value: 0.25044608
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328838025020672181, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
+      propertyPath: m_Center.z
+      value: -0.34374082
+      objectReference: {fileID: 0}
     - target: {fileID: 8844710742248025289, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -801,7 +809,6 @@ MonoBehaviour:
   - {fileID: 6271675922181922504}
   - {fileID: 3052566516501501883}
   - {fileID: 2603603840112749989}
-  StartPointItemID: SFP0110003
   triggerCollider: {fileID: 2578409834582804464}
   FinishRaceCollider: {fileID: 8171762641635037080}
 --- !u!4 &8936301448379051229 stripped
