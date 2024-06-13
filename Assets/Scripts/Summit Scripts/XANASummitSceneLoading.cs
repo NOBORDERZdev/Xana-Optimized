@@ -37,11 +37,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void LoadingNewScene(int domeId, Vector3 playerPos)
     {
-        //zero index SceneName
-        //1st index builder or not
-        //2nd index Builder Id
+        StartCoroutine(LoadingHandler.Instance.FadeIn());
+
         XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
-        //string[] sceneData = GetSceneName(domeId);
         domeGeneralData = GetDomeData(domeId);
 
         if (string.IsNullOrEmpty(domeGeneralData.world))
@@ -54,7 +52,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;
-        multiplayerController.singlePlayerInstance = domeGeneralData.experienceType;
+        multiplayerController.singlePlayerInstance = domeGeneralData.experienceType=="double";
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
@@ -103,6 +101,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
+        WorldItemView.m_EnvName = "Builder";
+        ConstantsHolder.xanaConstants.EnviornmentName = "Builder";
         AsyncOperation handle=SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
         handle.completed += Handle_completed;
     }
@@ -116,12 +116,13 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
-
+        StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = sceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
         gameplayEntityLoader.currentEnvironment = null;
+        ConstantsHolder.xanaConstants.isBuilderScene = false;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
@@ -138,14 +139,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     XANASummitDataContainer.DomeGeneralData GetDomeData(int sceneId)
     {
         XANASummitDataContainer.DomeGeneralData domeGeneralData=new XANASummitDataContainer.DomeGeneralData();
-        for (int i = 0; i < dataContainer.summitData1.domes.Count; i++)
+        for (int i = 0; i < dataContainer.summitData.domes.Count; i++)
         {
-            if (dataContainer.summitData1.domes[i].id == sceneId)
+            if (dataContainer.summitData.domes[i].id == sceneId)
             {
-                domeGeneralData.world = dataContainer.summitData1.domes[i].world;
-                domeGeneralData.worldType= dataContainer.summitData1.domes[i].worldType;
-                domeGeneralData.experienceType = dataContainer.summitData1.domes[i].experienceType;
-                domeGeneralData.builderWorldId= dataContainer.summitData1.domes[i].builderWorldId;
+                domeGeneralData.world = dataContainer.summitData.domes[i].world;
+                domeGeneralData.worldType= dataContainer.summitData.domes[i].worldType;
+                domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
+                domeGeneralData.builderWorldId= dataContainer.summitData.domes[i].builderWorldId;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
@@ -175,5 +176,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
             ConstantsHolder.isFromXANASummit = false;
         }
+
+        StartCoroutine(LoadingHandler.Instance.FadeOut());
     }
 }

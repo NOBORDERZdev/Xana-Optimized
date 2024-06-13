@@ -16,7 +16,6 @@ public class XANASummitDataContainer : ScriptableObject
     string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK’N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
     public DomeData summitData=new DomeData();
-    public DomeData summitData1=new DomeData();
 
     public AIData aiData=new AIData();
 
@@ -40,7 +39,7 @@ public class XANASummitDataContainer : ScriptableObject
     {
         string url = ConstantsGod.API_BASEURL + ConstantsGod.GETALLDOMES;
         string result = await GetAsyncRequest(url);
-        summitData1=JsonUtility.FromJson<DomeData>(result);
+        summitData=JsonUtility.FromJson<DomeData>(result);
     }
 
     public async Task<bool> GetAIData(int domeId)
@@ -82,11 +81,11 @@ public class XANASummitDataContainer : ScriptableObject
 
     public string GetAudioFile(int domeId)
     {
-        for (int i = 0;i<summitData1.domes.Count;i++)
+        for (int i = 0;i<summitData.domes.Count;i++)
         {
-            if (domeId == summitData1.domes[i].id)
+            if (domeId == summitData.domes[i].id)
             {
-                return summitData1.domes[i].bgm;
+                return summitData.domes[i].bgm;
             }
         }
 

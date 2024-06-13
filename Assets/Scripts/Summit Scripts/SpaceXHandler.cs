@@ -47,20 +47,18 @@ public class SpaceXHandler : MonoBehaviour
 
     public void LoadPlanetScene(int x)
     {
-        LoadingHandler.Instance.FadeIn();
-        Debug.LogError("fade in"+System.DateTime.Now);
+        StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = planetNames[x];
         summitSceneLoading.LoadingNewScene(sceneName,returnPlayerPos);
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();
-        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+       // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
-    private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
-    {
-        Debug.LogError("fade out" + System.DateTime.Now);
-        //LoadingHandler.Instance.FadeOut();
-    }
+    //private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    //{
+    //    StartCoroutine(LoadingHandler.Instance.FadeOut());
+    //}
 
 }
