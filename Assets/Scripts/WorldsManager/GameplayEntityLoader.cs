@@ -353,18 +353,41 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool CheckVoid()
     {
-        if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            RaycastHit hit;
-            if (Physics.Raycast(mainController.transform.position, mainController.transform.TransformDirection(Vector3.down), out hit, 1000))
+            if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
             {
-                updatedSpawnpoint.transform.localPosition = new Vector3(spawnPoint.x, hit.transform.localPosition.y, spawnPoint.z);
-                return false;
+                RaycastHit hit;
+                if (Physics.Raycast(mainController.transform.position, mainController.transform.TransformDirection(Vector3.down), out hit, 1000))
+                {
+                    updatedSpawnpoint.transform.localPosition = new Vector3(spawnPoint.x, hit.transform.localPosition.y, spawnPoint.z);
+                    return false;
+                }
+                else
+                {
+                    updatedSpawnpoint.localPosition = spawnPoint;
+                    return true;
+                }
             }
-            else
+        }
+        else
+        {
+            if (XanaPartyCamera.characterManager != null)
             {
-                updatedSpawnpoint.localPosition = spawnPoint;
-                return true;
+                if (XanaPartyCamera.characterManager.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(XanaPartyCamera.characterManager.transform.position, XanaPartyCamera.characterManager.transform.TransformDirection(Vector3.down), out hit, 1000))
+                    {
+                        updatedSpawnpoint.transform.localPosition = new Vector3(spawnPoint.x, hit.transform.localPosition.y, spawnPoint.z);
+                        return false;
+                    }
+                    else
+                    {
+                        updatedSpawnpoint.localPosition = spawnPoint;
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -624,6 +647,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
+            spawnPoint.y += 1;
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);    // Instantiate Penguin
             PenguinPlayer = player;
             if (player != null)
@@ -980,8 +1004,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //    mainController.transform.localPosition = new Vector3(spawnPoint.x, 100, spawnPoint.z);
             //}
             //Player respawn at spawn point after jump down from world
-            mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
-
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
+            else if (XanaPartyCamera.characterManager != null)
+                XanaPartyCamera.characterManager.transform.localPosition = AvoidAvatarMergeInBuilderScene();
         }
         else
         {
@@ -1196,7 +1222,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
                 StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
                 BuilderData.StartPointID = startFinishPoint.ItemID;
-                spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.localPosition;
+                spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
             }
             else
             {
@@ -1219,7 +1245,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 }
             }
 
-            mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
+            else if (XanaPartyCamera.characterManager != null)
+                XanaPartyCamera.characterManager.transform.localPosition = AvoidAvatarMergeInBuilderScene();
         }
     }
 
