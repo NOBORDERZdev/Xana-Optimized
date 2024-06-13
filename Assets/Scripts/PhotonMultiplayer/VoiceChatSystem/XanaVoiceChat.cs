@@ -148,6 +148,8 @@ public class XanaVoiceChat : MonoBehaviour
                 ConstantsHolder.xanaConstants.mic = 0;
             }
             StartCoroutine(CheckVoiceConnect());
+
+            
         }
     }
 
@@ -231,7 +233,7 @@ public class XanaVoiceChat : MonoBehaviour
         }
         //recorder.TransmitEnabled = true;
         recorder.DebugEchoMode = false;
-        if (ConstantsHolder.xanaConstants.mic == 1)
+        if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             TurnOnMic();
         }
@@ -239,6 +241,8 @@ public class XanaVoiceChat : MonoBehaviour
         {
             TurnOffMic();
         }
+
+
         //GetLocalSpeaker();
         //ToggleVoiceChat(false);
     }
