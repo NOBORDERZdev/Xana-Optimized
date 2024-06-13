@@ -6,38 +6,38 @@ using UnityEngine.UI;
 
 public class QualityManager : MonoBehaviour
 {
-    public GameObject[] LandscapeQualityToggles;
-    public GameObject[] PortraitQualityToggles;
-    public RenderPipelineAsset[] QualityLevels;
+    [SerializeField]
+    private GameObject[] _landscapeQualityToggles;
+    [SerializeField]
+    private GameObject[] _portraitQualityToggles;
+    [SerializeField]
+    private RenderPipelineAsset[] _qualityLevels;
     void Start()
     {
-        //int i = PlayerPrefs.GetInt("QualitySettings");
         if (PlayerPrefs.GetInt("DefaultQuality") == 0 && PlayerPrefs.GetInt("QualitySettings") == 0)
         {
             PlayerPrefs.SetInt("QualitySettings", 1);
             PlayerPrefs.SetInt("DefaultQuality", 1);
         }
-        //QualityToggles[PlayerPrefs.GetInt("QualitySettings")].isOn = true;
-        //SetQualityToggles(PlayerPrefs.GetInt("QualitySettings"));
         SetQualitySettings(PlayerPrefs.GetInt("QualitySettings"));
     }
     public void SetQualityToggles(int index)
     {
         if (ScreenOrientationManager._instance.isPotrait)
         {
-            foreach (GameObject go in PortraitQualityToggles)
+            foreach (GameObject go in _portraitQualityToggles)
             {
                 go.SetActive(false);
             }
-            PortraitQualityToggles[index].SetActive(true);
+            _portraitQualityToggles[index].SetActive(true);
         }
         else
         {
-            foreach (GameObject go in LandscapeQualityToggles)
+            foreach (GameObject go in _landscapeQualityToggles)
             {
                 go.SetActive(false);
             }
-            LandscapeQualityToggles[index].SetActive(true);
+            _landscapeQualityToggles[index].SetActive(true);
         }
     }
     public void SetQualitySettings(int index)
@@ -46,7 +46,7 @@ public class QualityManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("QualitySettings", index);
             QualitySettings.SetQualityLevel(index);
-            QualitySettings.renderPipeline = QualityLevels[index];
+            QualitySettings.renderPipeline = _qualityLevels[index];
             SetQualityToggles(index);
         }
     }
