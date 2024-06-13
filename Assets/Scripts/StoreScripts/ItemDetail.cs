@@ -789,8 +789,8 @@ public class ItemDetail : MonoBehaviour
             if (!completedCoroutine)
                 return;
 
-
-            if (string.Equals(isPurchased, "true", StringComparison.CurrentCultureIgnoreCase))
+            // No Need to check IsPurchased for now
+            //if (string.Equals(isPurchased, "true", StringComparison.CurrentCultureIgnoreCase))
             {
                 if (!GameManager.Instance.isStoreAssetDownloading)
                 {

@@ -1166,7 +1166,7 @@ public class InventoryManager : MonoBehaviour
         {
             //BtnsPanelCloth.GetComponent<SubBottons>().ClickBtnFtn(0);
             //BtnsPanelAvatar.GetComponent<SubBottons>().ClickBtnFtn(0);
-            SelectPanel(1);
+            SelectPanel(2);
         }
         else
         {
@@ -3527,7 +3527,7 @@ public class InventoryManager : MonoBehaviour
 
         if (_shopOpened)
         {
-            if (_ShopItemCountForTesting == 0)
+            if (_ShopItemCountForTesting == 0 && loopStart != dataListOfItems.Count)
             {
                 parentObj.transform.parent.GetChild(1).gameObject.SetActive(true);
                 Debug.LogError("No Item Available in Shop");

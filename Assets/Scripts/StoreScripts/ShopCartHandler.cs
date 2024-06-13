@@ -2,29 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using static InventoryManager;
-using UnityEditor.PackageManager;
+using SimpleJSON;
 using UnityEngine.Networking;
-using System.Security.Policy;
+using System.Text;
+using System;
+using DigitalRubyShared;
 
 public class ShopCartHandler : MonoBehaviour
 {
     public List<ItemDetail> selectedItems;
-    public GameObject cartPanel;
-    public GameObject cartItemPrefab;
-    public GameObject parentObj;
-    public TextMeshProUGUI itemCounter; 
+    public TextMeshProUGUI itemCounter;
     public TextMeshProUGUI totalPriceTxt;
     public float totalPrice;
     public GameObject buyTxt, buyLoading;
-
+    public GameObject cartParentObj; // MainCartPanel
+    public GameObject parentObj; // This is the parent object of the cart items
+    public GameObject cartItemPrefab;
+    public GameObject _CartPanel;
     public GameObject _PurchaseSuccessPanel;
     public GameObject _PurchaseFailPanel;
     public GameObject _LowBalancePanel;
 
     float currentBalance = 1000;
 
-
+    private void Start()
+    {
+        RegisterNewTouchInput();
+    }
     public void EnableCartPanel()
     {
         if (selectedItems.Count == 0)
@@ -38,14 +42,12 @@ public class ShopCartHandler : MonoBehaviour
     }
     void SetCartItems()
     {
-
         for (int i = 0; i < selectedItems.Count; i++)
         {
            GameObject _cartObj =  Instantiate(cartItemPrefab, parentObj.transform);
             _cartObj.GetComponent<PurchaseableItemHandler>().DataSetter(selectedItems[i], this);     
-
         }
-        cartPanel.SetActive(true);
+        cartParentObj.SetActive(true);
         UpdateTotalCount_Amount();
     }
     public void UpdateTotalCount_Amount()
@@ -76,136 +78,126 @@ public class ShopCartHandler : MonoBehaviour
         buyLoading.SetActive(true);
         StartCoroutine(BuyItemsCoroutine());
     }
-
     IEnumerator BuyItemsCoroutine()
     {
         string APIUrl = ConstantsGod.API_BASEURL + ConstantsGod.PURCHASEWITHXENY;
-        var result = string.Join(",", selectedItems.ConvertAll(item => item.id).ToArray());
-        result = "[" + result + "]";
-       
+
+        // Preparing the itemId array correctly for JSON
+        var itemIds = selectedItems.ConvertAll(item => item.id).ToArray();
         RequireDataForPurchasing data = new RequireDataForPurchasing
         {
-            itemId = result,
+            itemId = itemIds,
             amount = totalPrice
         };
 
         string jsonData = JsonUtility.ToJson(data);
-        string json1 = "{\"itemId\":\"[2499,2751]\",\"amount\":2.0}";
+        Debug.Log("Selected Object Json Data : " + jsonData);
 
-        Debug.Log("Json Data : " + jsonData);
-        Debug.Log("Dummy Data : " + jsonData);
-                
-        using (UnityWebRequest www = UnityWebRequest.Post(APIUrl, json1))
+        using (UnityWebRequest request = new UnityWebRequest(APIUrl, "POST"))
         {
-            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            yield return www.SendWebRequest();
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
 
-            if (www.result == UnityWebRequest.Result.Success)
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log(www.downloadHandler.text);
+                Debug.Log("<color=red> PurchasingYes -- </color> " + request.downloadHandler.text);
+                string json = request.downloadHandler.text;
+                var _ParsingJson = JSON.Parse(json);
+                bool _Success = _ParsingJson["success"].AsBool;
+                if (_Success)
+                {
+                    _PurchaseSuccessPanel.SetActive(true);
+                    ConstantsHolder.xanaConstants.availableBalance -= totalPrice;
+                    currentBalance = ConstantsHolder.xanaConstants.availableBalance;
+                    selectedItems.Clear();
+                    itemCounter.text = "0";
+                    totalPriceTxt.text = "0";
+
+                    InventoryManager.instance.UpdateUserXeny();
+                }
+                else
+                {
+                    Debug.Log("<color=red> PurchasingError -- </color> " + request.downloadHandler.text);
+                    _PurchaseFailPanel.SetActive(true);
+                }
             }
             else
             {
-                Debug.Log("<color=red> PurchasingError -- </color> " + www.downloadHandler.text);
+                Debug.Log("<color=red> PurchasingError -- </color> " + request.error);
+                _PurchaseFailPanel.SetActive(true);
+            }
+
+            _CartPanel.SetActive(false);
+            buyTxt.SetActive(true);
+            buyLoading.SetActive(false);
+        }
+    }
+
+
+   public void DisablePanels(int index)
+    {
+        if (index == 1)
+        {
+            _PurchaseSuccessPanel.SetActive(false);
+        }
+        else if (index == 2)
+        {
+            _PurchaseFailPanel.SetActive(false);
+        }
+        else if (index == 3)
+        {
+            _LowBalancePanel.SetActive(false);
+        }
+    }
+
+
+    #region Close Panel On Swipe
+
+    private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
+    public SwipeGestureRecognizerDirection lastSwipeMovement;
+    void RegisterNewTouchInput()
+    {
+        swipe1.StateUpdated += Swipe_Updated;
+        swipe1.AllowSimultaneousExecution(null);
+        swipe1.DirectionThreshold = 1f;
+        swipe1.MinimumSpeedUnits = 1f;
+        swipe1.PlatformSpecificView = cartParentObj.transform.GetChild(0).gameObject;
+        swipe1.MinimumNumberOfTouchesToTrack = 1;
+        swipe1.ThresholdSeconds = 1f;
+        swipe1.MinimumDistanceUnits = 5f;
+        swipe1.EndMode = SwipeGestureRecognizerEndMode.EndWhenTouchEnds;
+        FingersScript.Instance.AddGesture(swipe1);
+    }
+    public void Swipe_Updated(DigitalRubyShared.GestureRecognizer gesture)
+    {
+        if (swipe1.EndDirection == SwipeGestureRecognizerDirection.Down)
+        {
+            lastSwipeMovement = swipe1.EndDirection;
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (lastSwipeMovement == SwipeGestureRecognizerDirection.Down)
+            {
+                if(cartParentObj.activeInHierarchy)
+                    cartParentObj.SetActive(false);
+
+                lastSwipeMovement = SwipeGestureRecognizerDirection.Any;
             }
         }
 
-        #region Method 2
-        //UnityWebRequest request = new UnityWebRequest(APIUrl, "POST");
-        //byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonString);
-        //request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
-        //request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        //request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        //yield return request.SendWebRequest();
-        //if (request.result == UnityWebRequest.Result.Success)
-        //{
-        //    Debug.Log("Data sent successfully");
-        //    // Optionally handle response here
-        //}
-        //else
-        //{
-        //    Debug.LogError("Error sending data: " + request.error);
-        //}
-        #endregion
-
-        #region Method 3
-        //string APIUrl2 = ConstantsGod.API_BASEURL + ConstantsGod.PURCHASEWITHXENY;
-        //WWWForm form = new WWWForm();
-        //// Add itemId and amount to the form
-        //for (int i = 0; i < selectedItems.Count; i++)
-        //{
-        //    form.AddField("itemId", selectedItems[i].id);
-        //}
-        //form.AddField("itemId", selectedItems[0].id);
-        //form.AddField("amount", totalPrice.ToString());
-
-        //// Send the request
-        //using (UnityWebRequest www = UnityWebRequest.Post(APIUrl, form))
-        //{
-        //    www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-        //    yield return www.SendWebRequest();
-
-        //    if (www.result == UnityWebRequest.Result.Success)
-        //    {
-        //        Debug.Log(www.downloadHandler.text);
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("<color=red> Purchasing Issue -- </color>" + www.downloadHandler.text);
-        //    }
-        //}
-        #endregion
     }
-
-
-    //IEnumerator BuyItemsCoroutine()
-    //{
-    //    string APIUrl = ConstantsGod.API_BASEURL + ConstantsGod.PURCHASEWITHXENY;
-
-    //    // Create a new WWWForm
-    //    WWWForm form = new WWWForm();
-
-    //    // Add itemId and amount to the form
-    //    //for (int i = 0; i < selectedItems.Count; i++)
-    //    //{
-    //    //    form.AddField("itemId", selectedItems[i].id);
-    //    //}
-    //    form.AddField("itemId", selectedItems[0].id);
-    //    form.AddField("amount", totalPrice.ToString());
-
-    //    // Send the request
-    //    using (UnityWebRequest www = UnityWebRequest.Post(APIUrl, form))
-    //    {
-    //        www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-    //        yield return www.SendWebRequest();
-
-    //        if (www.result == UnityWebRequest.Result.Success)
-    //        {
-    //            Debug.Log(www.downloadHandler.text);
-    //        }
-    //        else
-    //        {
-    //            Debug.Log("<color=red> Purchasing Issue -- </color>" + www.downloadHandler.text);
-    //        }
-    //    }
-    //}
-
-
+    #endregion
 }
 
+[System.Serializable]
 public class RequireDataForPurchasing
 {
-    public string itemId;
+    public string[] itemId; // Updated to use an array
     public float amount;
-
-    //public RequireDataForPurchasing(string[] itemId, float amount)
-    //{
-    //    this.itemId = itemId;
-    //    this.amount = amount;
-    //}
-
-    public string ToJson()
-    {
-        return JsonUtility.ToJson(this);
-    }
 }
