@@ -7,10 +7,8 @@ using UnityEngine.Playables;
 public class StartPoint : MonoBehaviour
 {
     public List<Transform> SpawnPoints;
-    public string FinishPointItemID;
     public GameObject triggerCollider;
     public bool isStartPoint;
-    FinishPoint _finishPoint;
 
     private void OnEnable()
     {
@@ -19,7 +17,6 @@ public class StartPoint : MonoBehaviour
             DisableCollider();
             return;
         }
-        BuilderEventManager.AfterWorldInstantiated += FindFinishPoint;
         BuilderEventManager.XANAPartyRaceStart += DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer += EnableCollider;
     }
@@ -31,7 +28,6 @@ public class StartPoint : MonoBehaviour
             DisableCollider();
             return;
         }
-        BuilderEventManager.AfterWorldInstantiated -= FindFinishPoint;
         BuilderEventManager.XANAPartyRaceStart -= DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer -= EnableCollider;
     }
@@ -44,17 +40,9 @@ public class StartPoint : MonoBehaviour
         StartCoroutine(nameof(StartGame));
     }
 
-
     void EnableCollider()
     {
         triggerCollider.SetActive(true);
-    }
-
-    void FindFinishPoint()
-    {
-        _finishPoint = BuilderData.StartFinishPoints
-        .Find(item => item.ItemID == FinishPointItemID)
-        ?.SpawnObject.GetComponent<FinishPoint>();
     }
 
    IEnumerator StartGame()
@@ -65,6 +53,4 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(3);
         triggerCollider.SetActive(false);
     }
-
-   
 }

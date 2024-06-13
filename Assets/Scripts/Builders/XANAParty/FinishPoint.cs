@@ -7,10 +7,8 @@ using UnityEngine;
 public class FinishPoint : MonoBehaviour
 {
     public List<Transform> SpawnPoints;
-    public string StartPointItemID;
     public GameObject triggerCollider;
     public Collider FinishRaceCollider;
-    StartPoint _startPoint;
 
     private void OnEnable()
     {
@@ -20,7 +18,6 @@ public class FinishPoint : MonoBehaviour
             FinishRaceCollider.enabled = false;
             return;
         }
-        BuilderEventManager.AfterWorldInstantiated += FindStartPoint;
         BuilderEventManager.XANAPartyRaceFinish += EnableCollider;
     }
 
@@ -32,7 +29,6 @@ public class FinishPoint : MonoBehaviour
             FinishRaceCollider.enabled = false;
             return;
         }
-        BuilderEventManager.AfterWorldInstantiated -= FindStartPoint;
         BuilderEventManager.XANAPartyRaceFinish -= EnableCollider;
     }
 
@@ -43,25 +39,11 @@ public class FinishPoint : MonoBehaviour
 
     void EnableCollider()
     {
-        if (BuilderData.StartPointID == StartPointItemID)
-        {
-            FinishRaceCollider.enabled = false;
-            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
-            triggerCollider.SetActive(true);
-            GamificationComponentData gamificationTemp = GamificationComponentData.instance;
-            gamificationTemp.TriggerRaceStatusUpdate();
-        }
-    }
-    
-   
-
-    
-
-    void FindStartPoint()
-    {
-        _startPoint = BuilderData.StartFinishPoints
-        .Find(item => item.ItemID == StartPointItemID)
-        ?.SpawnObject.GetComponent<StartPoint>();
+        FinishRaceCollider.enabled = false;
+        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
+        triggerCollider.SetActive(true);
+        GamificationComponentData gamificationTemp = GamificationComponentData.instance;
+        gamificationTemp.TriggerRaceStatusUpdate();
     }
 
     internal void FinishRace()
