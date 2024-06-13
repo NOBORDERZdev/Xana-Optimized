@@ -56,6 +56,9 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.ApplySkyoxSettings += SetSkyProperties;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerProperties;
         BuilderEventManager.AfterWorldInstantiated += XanaSetItemData;
+
+        if (ConstantsHolder.XanaPartyMaxPlayers == 1)
+            GamificationComponentData.instance.SinglePlayer = true;
     }
 
     private void OnDisable()
