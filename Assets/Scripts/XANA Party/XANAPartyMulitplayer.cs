@@ -65,6 +65,8 @@ public class XANAPartyMulitplayer : MonoBehaviour
         xanaConstants.builderMapID = 0;
         xanaConstants.isMasterOfGame = false;
         // Load the main scene
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 

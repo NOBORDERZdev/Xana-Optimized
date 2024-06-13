@@ -162,6 +162,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
     public void XANAPartyBackToLobby()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().BackToLobby();
     }
 

@@ -411,6 +411,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
          XANAPartyLobbyyCounterPanel.SetActive(false);
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (PhotonNetwork.IsMasterClient )
         {
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
