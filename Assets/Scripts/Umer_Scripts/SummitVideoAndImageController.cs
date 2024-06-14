@@ -106,7 +106,7 @@ public class SummitVideoAndImageController : MonoBehaviour
         if (PlayerController.isJoystickDragging == true)
             return;
         //SummitDomeNFTDataController.Instance.firebaseEventName = firebaseEventName;
-        if (SummitDomeNFTDataController.Instance != null && _videoType != VideoTypeRes.islive)
+        if (SummitDomeNFTDataController.Instance != null /*&& _videoType != VideoTypeRes.islive*/)
         {
             if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
             {
@@ -301,153 +301,174 @@ public class SummitVideoAndImageController : MonoBehaviour
 
         if (_videoType == VideoTypeRes.islive && liveVideoPlayer)
         {
-            SummitDomeNFTDataController.Instance.videoRenderObject = liveVideoPlayer;
-            if (liveVideoPlayer)
-                liveVideoPlayer.SetActive(true);
-            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-            //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
-            if (streamYoutubeVideo != null)
-                streamYoutubeVideo.StreamYtVideo(videoLink, true);
-            SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-            SoundSettings.soundManagerSettings.setNewSliderValues();
-        }
-        else if (_videoType == VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
-        {
-            RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_16x9);
-            SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-            SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-            SoundSettings.soundManagerSettings.setNewSliderValues();
-            SummitDomeNFTDataController.Instance.videoRenderObject = imgVideo16x9;
-            renderTexture_temp = renderTexture;
-            imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
-            imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-            if (isMultipleScreen)
+            if (string.IsNullOrEmpty(imageLink))
             {
-                for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
-                {
-                    imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
-                    imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                }
-            }
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
-            VideoPlayer tempVideoPlayer;
-            if (applyVideoMesh)
-            {
-                tempVideoPlayer = videoMesh;
+                SummitDomeNFTDataController.Instance.videoRenderObject = liveVideoPlayer;
+                if (liveVideoPlayer)
+                    liveVideoPlayer.SetActive(true);
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                if (streamYoutubeVideo != null)
+                    streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
+                SoundSettings.soundManagerSettings.setNewSliderValues();
             }
             else
             {
-                tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
+                SetImage();
             }
-
-            //preRecordedPlayer.SetActive(true);
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-            //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
-            if (streamYoutubeVideo != null)
-                streamYoutubeVideo.StreamYtVideo(videoLink, false);
-            imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
-            imgVideo16x9.SetActive(true);
-            if (imgVideoFrame16x9)
+        }
+        else if (_videoType == VideoTypeRes.prerecorded /*&& preRecordedPlayer*/)
+        {
+            if (string.IsNullOrEmpty(imageLink))
             {
-                EnableImageVideoFrame(imgVideoFrame16x9);
+                RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_16x9);
+                SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                SoundSettings.soundManagerSettings.setNewSliderValues();
+                SummitDomeNFTDataController.Instance.videoRenderObject = imgVideo16x9;
+                renderTexture_temp = renderTexture;
+                imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                if (isMultipleScreen)
+                {
+                    for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
+                    {
+                        imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
+                        imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                    }
+                }
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.showThumbnailBeforeVideoLoad = false;
+                VideoPlayer tempVideoPlayer;
+                if (applyVideoMesh)
+                {
+                    tempVideoPlayer = videoMesh;
+                }
+                else
+                {
+                    tempVideoPlayer = imgVideo16x9.GetComponent<VideoPlayer>();
+                }
+
+                //preRecordedPlayer.SetActive(true);
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                if (streamYoutubeVideo != null)
+                    streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
+                imgVideo16x9.SetActive(true);
+                if (imgVideoFrame16x9)
+                {
+                    EnableImageVideoFrame(imgVideoFrame16x9);
+                }
+            }
+            else
+            {
+                SetImage();
             }
         }
         else if (_videoType == VideoTypeRes.aws)
         {
-            if (_imgVideoRatio == JjRatio.SixteenXNineWithDes || _imgVideoRatio == JjRatio.SixteenXNineWithoutDes)
+            if (string.IsNullOrEmpty(imageLink))
             {
-                if (imgVideo16x9)
+                if (_imgVideoRatio == JjRatio.SixteenXNineWithDes || _imgVideoRatio == JjRatio.SixteenXNineWithoutDes)
                 {
-                    if (imgVideoFrame16x9)
+                    if (imgVideo16x9)
                     {
-                        EnableImageVideoFrame(imgVideoFrame16x9);
-                    }
-                    imgVideo16x9.SetActive(true);
-                    imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
-                    //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                    RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_16x9);
-                    renderTexture_temp = renderTexture;
-                    if (!isForceAudioOn)
-                    {
-                        imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        if (imgVideoFrame16x9)
+                        {
+                            EnableImageVideoFrame(imgVideoFrame16x9);
+                        }
+                        imgVideo16x9.SetActive(true);
+                        imgVideo16x9.GetComponent<VideoPlayer>().enabled = true;
+                        //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
+                        RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_16x9);
+                        renderTexture_temp = renderTexture;
+                        if (!isForceAudioOn)
+                        {
+                            imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
 
-                    }
-                    else
-                    {
+                        }
+                        else
+                        {
 
-                        SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-                        SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-                        SoundSettings.soundManagerSettings.setNewSliderValues();
+                            SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                            SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                            SoundSettings.soundManagerSettings.setNewSliderValues();
+                        }
+                        imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                        imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
+                        imgVideo16x9.GetComponent<VideoPlayer>().Play();
                     }
-                    imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
-                    imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                    imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
-                    imgVideo16x9.GetComponent<VideoPlayer>().Play();
+                }
+                else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
+                {
+                    if (imgVideo9x16)
+                    {
+                        if (imgVideoFrame9x16)
+                        {
+                            EnableImageVideoFrame(imgVideoFrame9x16);
+                        }
+                        imgVideo9x16.SetActive(true);
+                        imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
+                        //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
+                        RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_9x16);
+                        renderTexture_temp = renderTexture;
+                        imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        imgVideo9x16.GetComponent<RawImage>().texture = renderTexture;
+                        imgVideo9x16.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        imgVideo9x16.GetComponent<VideoPlayer>().url = videoLink;
+                        imgVideo9x16.GetComponent<VideoPlayer>().Play();
+                    }
+                }
+                else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
+                {
+                    if (imgVideo1x1)
+                    {
+                        if (imgVideoFrame1x1)
+                        {
+                            EnableImageVideoFrame(imgVideoFrame1x1);
+                        }
+                        imgVideo1x1.SetActive(true);
+                        imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
+                        //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
+                        RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_1x1);
+                        renderTexture_temp = renderTexture;
+                        imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        imgVideo1x1.GetComponent<RawImage>().texture = renderTexture;
+                        imgVideo1x1.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        imgVideo1x1.GetComponent<VideoPlayer>().url = videoLink;
+                        imgVideo1x1.GetComponent<VideoPlayer>().Play();
+                    }
+                }
+                else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
+                {
+                    if (imgVideo4x3)
+                    {
+                        if (imgVideoFrame4x3)
+                        {
+                            EnableImageVideoFrame(imgVideoFrame4x3);
+                        }
+                        imgVideo4x3.SetActive(true);
+                        imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
+                        //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
+                        RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_4x3);
+                        renderTexture_temp = renderTexture;
+                        imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                        imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
+                        imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
+                        imgVideo4x3.GetComponent<VideoPlayer>().Play();
+                    }
                 }
             }
-            else if (_imgVideoRatio == JjRatio.NineXSixteenWithDes || _imgVideoRatio == JjRatio.NineXSixteenWithoutDes)
+            else
             {
-                if (imgVideo9x16)
-                {
-                    if (imgVideoFrame9x16)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame9x16);
-                    }
-                    imgVideo9x16.SetActive(true);
-                    imgVideo9x16.GetComponent<VideoPlayer>().enabled = true;
-                    //imgVideo9x16.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                    RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_9x16);
-                    renderTexture_temp = renderTexture;
-                    imgVideo9x16.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                    imgVideo9x16.GetComponent<RawImage>().texture = renderTexture;
-                    imgVideo9x16.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                    imgVideo9x16.GetComponent<VideoPlayer>().url = videoLink;
-                    imgVideo9x16.GetComponent<VideoPlayer>().Play();
-                }
-            }
-            else if (_imgVideoRatio == JjRatio.OneXOneWithDes || _imgVideoRatio == JjRatio.OneXOneWithoutDes)
-            {
-                if (imgVideo1x1)
-                {
-                    if (imgVideoFrame1x1)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame1x1);
-                    }
-                    imgVideo1x1.SetActive(true);
-                    imgVideo1x1.GetComponent<VideoPlayer>().enabled = true;
-                    //imgVideo1x1.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                    RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_1x1);
-                    renderTexture_temp = renderTexture;
-                    imgVideo1x1.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                    imgVideo1x1.GetComponent<RawImage>().texture = renderTexture;
-                    imgVideo1x1.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                    imgVideo1x1.GetComponent<VideoPlayer>().url = videoLink;
-                    imgVideo1x1.GetComponent<VideoPlayer>().Play();
-                }
-            }
-            else if (_imgVideoRatio == JjRatio.FourXThreeWithDes || _imgVideoRatio == JjRatio.FourXThreeWithoutDes)
-            {
-                if (imgVideo4x3)
-                {
-                    if (imgVideoFrame4x3)
-                    {
-                        EnableImageVideoFrame(imgVideoFrame4x3);
-                    }
-                    imgVideo4x3.SetActive(true);
-                    imgVideo4x3.GetComponent<VideoPlayer>().enabled = true;
-                    //imgVideo4x3.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                    RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_4x3);
-                    renderTexture_temp = renderTexture;
-                    imgVideo4x3.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
-                    imgVideo4x3.GetComponent<RawImage>().texture = renderTexture;
-                    imgVideo4x3.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-                    imgVideo4x3.GetComponent<VideoPlayer>().url = videoLink;
-                    imgVideo4x3.GetComponent<VideoPlayer>().Play();
-                }
+                SetImage();
             }
         }
 

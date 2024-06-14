@@ -65,6 +65,7 @@ public class DomeNFTData
     public int type;
     public string videoType;
     public string videoUrl;
+    public bool isYoutubeUrl;
     public DateTime createdAt;
     public DateTime updatedAt;
 }

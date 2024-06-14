@@ -196,24 +196,24 @@ public class SummitDomeNFTDataController : MonoBehaviour
                         if (worldPlayingVideos) // to play video's in world
                         {
                             NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().isCreateFrame = true;
-                            if (worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  //for Live Video 
+                            if (worldData[j].PrercrdOrLiveURL == "Live" && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  //for Live Video 
                             {
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.islive;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
+                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.islive);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().videoLink = worldData[i].youtubeUrl;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().CheckForPlayValidPlayer();
                             }
-                            else if (!worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  // for Prerecorded video
+                            else if (worldData[j].PrercrdOrLiveURL == "Prerecorded" && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  // for Prerecorded video
                             {
                                 yield return new WaitForSeconds(1f);
                                 worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                 worldInfos[i].videoType = VideoTypeRes.prerecorded;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
+                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].youtubeUrl, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.prerecorded);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = true;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = false;
@@ -224,7 +224,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
                             {
                                 worldInfos[i].VideoLink = worldData[j].asset_link;
                                 worldInfos[i].videoType = VideoTypeRes.aws;
-                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(null, worldData[j].asset_link + compersionPrfex, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
+                                NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].thumbnail + compersionPrfex, worldData[j].asset_link + compersionPrfex, worldInfos[i].JjRatio, DataType.Video, VideoTypeRes.aws);
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isLiveVideo = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isPrerecoreded = false;
                                 //NftPlaceholder[i].GetComponent<JjVideo>().isFromAws = true;
@@ -300,14 +300,23 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         _jjAssetObj.description = new string[] { _domeNFTDataObj.description };
         _jjAssetObj.descriptionHyperlink = "";
         _jjAssetObj.title = new string[] { _domeNFTDataObj.name };
-        _jjAssetObj.ratio = "1:1";
+        _jjAssetObj.ratio = "16:9";
         _jjAssetObj.asset_link = _domeNFTDataObj.thumbnail;
+        _jjAssetObj.PrercrdOrLiveURL = _domeNFTDataObj.videoType;
+        _jjAssetObj.youtubeUrlCheck = _domeNFTDataObj.isYoutubeUrl;
         if (_domeNFTDataObj.type == 1)
         {
             _jjAssetObj.media_type = "VIDEO";
-            _jjAssetObj.youtubeUrlCheck = false;
-            _jjAssetObj.asset_link = _domeNFTDataObj.videoUrl;
-            //_jjAssetObj.youtubeUrl = _domeNFTDataObj.videoUrl;
+            if (_jjAssetObj.youtubeUrlCheck)//Youtube Pre-recorded/Live Video Case
+            {
+                _jjAssetObj.youtubeUrl = _domeNFTDataObj.videoUrl;
+            }
+            else//AWS Video Case
+            {
+                _jjAssetObj.youtubeUrl = "";
+                _jjAssetObj.asset_link = _domeNFTDataObj.videoUrl;
+            }
+            _jjAssetObj.thumbnail = _domeNFTDataObj.thumbnail;
             worldPlayingVideos = true;
         }
         else
@@ -315,7 +324,6 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             _jjAssetObj.media_type = "IMAGE";
             _jjAssetObj.asset_link = _domeNFTDataObj.thumbnail;
         }
-        //_jjAssetObj.youtubeUrl = _domeNFTDataObj.videoUrl;
         _jjAssetObj.createdAt = _domeNFTDataObj.createdAt;
         _jjAssetObj.updatedAt = _domeNFTDataObj.updatedAt;
 
@@ -352,7 +360,17 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         else
         {
             ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-            ratioReferences[ratioId].l_videoPlayer.url = videoLink;
+            //ratioReferences[ratioId].l_videoPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(_VideoLink, true);
+            if (_videoType == VideoTypeRes.islive)
+            {
+                StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].l_videoPlayer, ratioId, _VideoLink, true));
+            }
+            else
+            {
+                StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].l_videoPlayer, ratioId, _VideoLink, false));
+            }
+            ratioReferences[ratioId].l_videoPlayer.enabled = true;
+            //ratioReferences[ratioId].l_videoPlayer.url = videoLink;
         }
 
         // Setting Potraite Data
@@ -368,7 +386,18 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         else
         {
             ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-            ratioReferences[ratioId].p_videoPlayer.url = videoLink;
+            if (_videoType == VideoTypeRes.islive)
+            {
+                StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].p_videoPlayer, ratioId, _VideoLink, true));
+                ratioReferences[ratioId].p_Loader.SetActive(false);
+                ratioReferences[ratioId].l_Loader.SetActive(false);
+            }
+            else
+            {
+                StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].p_videoPlayer, ratioId, _VideoLink, false));
+            }
+            ratioReferences[ratioId].p_videoPlayer.enabled = true;
+            //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
         }
         if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
@@ -388,16 +417,16 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     ratioReferences[ratioId].l_videoPlayer.enabled = false;
                     ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
                     ratioReferences[ratioId].l_LivePlayer.SetActive(true);
-                    ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                    ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                    //ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                    //ratioReferences[ratioId].l_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                 }
                 else if (videoType == VideoTypeRes.prerecorded)
                 {
                     ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
                     ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
                     ratioReferences[ratioId].l_LivePlayer.SetActive(false);
-                    ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                    ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                    //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                    //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
                     ratioReferences[ratioId].l_videoPlayer.playOnAwake = true;
                     ratioReferences[ratioId].l_videoPlayer.enabled = true;
                 }
@@ -435,16 +464,16 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     ratioReferences[ratioId].p_videoPlayer.enabled = false;
                     ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
                     ratioReferences[ratioId].p_LivePlayer.SetActive(true);
-                    ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                    ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+                    //ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                    //ratioReferences[ratioId].p_LivePlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
                 }
                 else if (videoType == VideoTypeRes.prerecorded)
                 {
                     ratioReferences[ratioId].p_videoPlayer.GetComponent<RawImage>().enabled = true;
                     ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(true);
                     ratioReferences[ratioId].p_LivePlayer.SetActive(false);
-                    ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
-                    ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                    //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                    //ratioReferences[ratioId].p_PrerecordedPlayer.GetComponent<YoutubeSimplified>().Play();
                     ratioReferences[ratioId].p_videoPlayer.playOnAwake = true;
                     ratioReferences[ratioId].p_videoPlayer.enabled = true;
                 }
@@ -475,12 +504,33 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         //#endregion
     }
 
+    IEnumerator PlayVideoAfterDelay(VideoPlayer _videoPLayer, int _id, string _videoLink, bool _isLive)
+    {
+        yield return new WaitForSeconds(0.5f);
+        _videoPLayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(_videoLink, _isLive);
+    }
+
+    public void TurnOfLdrOnPlayLiveVideo()
+    {
+        Invoke(nameof(TurnLiveVideoImageOn), 5f);
+    }
+
+    public void TurnLiveVideoImageOn()
+    {
+        ratioReferences[ratioId].p_Loader.SetActive(false);
+        ratioReferences[ratioId].l_Loader.SetActive(false);
+        ratioReferences[ratioId].l_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(true);
+        ratioReferences[ratioId].p_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(true);
+    }
+
     public void CloseInfoPop()
     {
         ratioReferences[ratioId].l_obj.SetActive(false);
         ratioReferences[ratioId].p_obj.SetActive(false);
         ratioReferences[ratioId].p_Loader.SetActive(false);
         ratioReferences[ratioId].l_Loader.SetActive(false);
+        ratioReferences[ratioId].l_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(false);
+        ratioReferences[ratioId].p_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(false);
         LandscapeObj.SetActive(false);
         PotraiteObj.SetActive(false);
         if (GamePlayUIHandler.inst.gameObject.activeInHierarchy)

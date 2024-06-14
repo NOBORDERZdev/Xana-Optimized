@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 8605584682576034891}
   - component: {fileID: 674083547783345604}
   - component: {fileID: 6987459826732007562}
+  - component: {fileID: 1284944115648433326}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -687,7 +688,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568746071817175963}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -742,6 +743,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &1284944115648433326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568746071817175963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &572806703180821442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2005,6 +2028,7 @@ GameObject:
   - component: {fileID: 658065307671632751}
   - component: {fileID: 658065307671632750}
   - component: {fileID: 658065307671632749}
+  - component: {fileID: 8972341070408906598}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -2049,7 +2073,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065307671632747}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -2104,6 +2128,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &8972341070408906598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065307671632747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &658065307711694626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2427,6 +2473,7 @@ GameObject:
   - component: {fileID: 658065307740175389}
   - component: {fileID: 658065307740175388}
   - component: {fileID: 658065307740175387}
+  - component: {fileID: 3212566652720450905}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -2471,7 +2518,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065307740175385}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -2526,6 +2573,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &3212566652720450905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065307740175385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &658065307749267338
 GameObject:
   m_ObjectHideFlags: 0
@@ -4119,6 +4188,7 @@ GameObject:
   - component: {fileID: 658065308239061482}
   - component: {fileID: 658065308239061481}
   - component: {fileID: 658065308239061480}
+  - component: {fileID: 457956677518277833}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -4163,12 +4233,12 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065308239061462}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: bcb42d5b74d6a6e409fbde272b667871, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -4211,13 +4281,47 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: bcb42d5b74d6a6e409fbde272b667871, type: 2}
+  m_Texture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
     height: 1
+--- !u!114 &457956677518277833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065308239061462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 8352549697692332774}
+  SumitDomeNftCntrlrRef: {fileID: 7905879506377309225}
+  mediaPlayer: {fileID: 8737634600085804439}
+  videoPlayer: {fileID: 658065308239061481}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7905879506377309225}
+        m_TargetAssemblyTypeName: SummitDomeNFTDataController, Assembly-CSharp
+        m_MethodName: TurnOfLdrOnPlayLiveVideo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  id: 
 --- !u!1 &658065308250351596
 GameObject:
   m_ObjectHideFlags: 0
@@ -4461,6 +4565,7 @@ GameObject:
   - component: {fileID: 658065308400113180}
   - component: {fileID: 658065308400113179}
   - component: {fileID: 658065308400113178}
+  - component: {fileID: 6298367882404909641}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -4505,7 +4610,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065308400113176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -4560,6 +4665,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6298367882404909641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065308400113176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &658065308451256707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4824,6 +4951,7 @@ GameObject:
   - component: {fileID: 658065308606146022}
   - component: {fileID: 658065308606146021}
   - component: {fileID: 658065308606146020}
+  - component: {fileID: 6433685374527733206}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -4868,7 +4996,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065308606146018}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -4923,6 +5051,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6433685374527733206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065308606146018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &658065308643597250
 GameObject:
   m_ObjectHideFlags: 0
@@ -6013,6 +6163,7 @@ GameObject:
   - component: {fileID: 658065309113588965}
   - component: {fileID: 658065309113588964}
   - component: {fileID: 658065309113588963}
+  - component: {fileID: 2144324222022113647}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -6057,7 +6208,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065309113588961}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -6112,6 +6263,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2144324222022113647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065309113588961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &658065309121325829
 GameObject:
   m_ObjectHideFlags: 0
@@ -6124,6 +6297,7 @@ GameObject:
   - component: {fileID: 658065309121325849}
   - component: {fileID: 658065309121325848}
   - component: {fileID: 658065309121325831}
+  - component: {fileID: 1654887589047353147}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -6168,12 +6342,12 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658065309121325829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: bcb42d5b74d6a6e409fbde272b667871, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -6216,13 +6390,47 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: bcb42d5b74d6a6e409fbde272b667871, type: 2}
+  m_Texture: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
     y: 0
     width: 1
     height: 1
+--- !u!114 &1654887589047353147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 658065309121325829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 4497284207816935615}
+  SumitDomeNftCntrlrRef: {fileID: 7905879506377309225}
+  mediaPlayer: {fileID: 8737634598520849389}
+  videoPlayer: {fileID: 658065309121325848}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7905879506377309225}
+        m_TargetAssemblyTypeName: SummitDomeNFTDataController, Assembly-CSharp
+        m_MethodName: TurnOfLdrOnPlayLiveVideo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  id: 
 --- !u!1 &727338612858881907
 GameObject:
   m_ObjectHideFlags: 0
@@ -7490,6 +7698,7 @@ GameObject:
   - component: {fileID: 1796233885264867600}
   - component: {fileID: 1507134898652985492}
   - component: {fileID: 4771375940845504526}
+  - component: {fileID: 5229951444706582255}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -7534,7 +7743,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739914541108367082}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -7589,6 +7798,40 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &5229951444706582255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1739914541108367082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 3701981252465694153}
+  SumitDomeNftCntrlrRef: {fileID: 7905879506377309225}
+  mediaPlayer: {fileID: 8737634598737674160}
+  videoPlayer: {fileID: 1507134898652985492}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7905879506377309225}
+        m_TargetAssemblyTypeName: SummitDomeNFTDataController, Assembly-CSharp
+        m_MethodName: TurnOfLdrOnPlayLiveVideo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  id: 
 --- !u!1 &1814786373439058510
 GameObject:
   m_ObjectHideFlags: 0
@@ -7833,6 +8076,7 @@ GameObject:
   - component: {fileID: 7871286482742600271}
   - component: {fileID: 4057341193331477245}
   - component: {fileID: 3396966999569096135}
+  - component: {fileID: 7015842772477556417}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -7877,7 +8121,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853404734719360301}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -7932,6 +8176,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &7015842772477556417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853404734719360301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &1880766665923952210
 GameObject:
   m_ObjectHideFlags: 0
@@ -8526,6 +8792,7 @@ GameObject:
   - component: {fileID: 7767256289773836237}
   - component: {fileID: 3009796161294338833}
   - component: {fileID: 965244160069814439}
+  - component: {fileID: 4480606463756236259}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -8570,7 +8837,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2392788595775762965}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -8625,6 +8892,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &4480606463756236259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2392788595775762965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &2925743289745374820
 GameObject:
   m_ObjectHideFlags: 0
@@ -9070,6 +9359,7 @@ GameObject:
   - component: {fileID: 4181560127093599305}
   - component: {fileID: 6217405186574915493}
   - component: {fileID: 5117587482688963124}
+  - component: {fileID: 2740821928764403045}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -9114,7 +9404,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3146877267324639420}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -9169,6 +9459,40 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &2740821928764403045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3146877267324639420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 4829312258691287099}
+  SumitDomeNftCntrlrRef: {fileID: 7905879506377309225}
+  mediaPlayer: {fileID: 8737634600185175495}
+  videoPlayer: {fileID: 6217405186574915493}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7905879506377309225}
+        m_TargetAssemblyTypeName: SummitDomeNFTDataController, Assembly-CSharp
+        m_MethodName: TurnOfLdrOnPlayLiveVideo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  id: 
 --- !u!1 &3230552889831701438
 GameObject:
   m_ObjectHideFlags: 0
@@ -10107,6 +10431,7 @@ GameObject:
   - component: {fileID: 8451704115770308808}
   - component: {fileID: 1052119024244431715}
   - component: {fileID: 855884171300355160}
+  - component: {fileID: 486330232325635634}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -10151,7 +10476,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3559487970236173141}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -10206,6 +10531,104 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &486330232325635634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3559487970236173141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
+--- !u!1 &3701981252465694153
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1712506365679373193}
+  - component: {fileID: 5916455977444990730}
+  - component: {fileID: 6300676433223581937}
+  m_Layer: 0
+  m_Name: LiveVideoPlayUIObj (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1712506365679373193
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701981252465694153}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737634598737674174}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5916455977444990730
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701981252465694153}
+  m_CullTransparentMesh: 1
+--- !u!114 &6300676433223581937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3701981252465694153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3824225820558582701
 GameObject:
   m_ObjectHideFlags: 0
@@ -10952,6 +11375,158 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!1 &4497284207816935615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9107717842013514851}
+  - component: {fileID: 3290406663525210263}
+  - component: {fileID: 1091273342812741153}
+  m_Layer: 0
+  m_Name: LiveVideoPlayUIObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &9107717842013514851
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4497284207816935615}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737634598520849387}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &3290406663525210263
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4497284207816935615}
+  m_CullTransparentMesh: 1
+--- !u!114 &1091273342812741153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4497284207816935615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4829312258691287099
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4024549519374498536}
+  - component: {fileID: 7595620977691981327}
+  - component: {fileID: 5222785959043526069}
+  m_Layer: 0
+  m_Name: LiveVideoPlayUIObj (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &4024549519374498536
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829312258691287099}
+  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737634600185175501}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7595620977691981327
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829312258691287099}
+  m_CullTransparentMesh: 1
+--- !u!114 &5222785959043526069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4829312258691287099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &5051514885009230546
 GameObject:
   m_ObjectHideFlags: 0
@@ -12095,6 +12670,7 @@ GameObject:
   - component: {fileID: 3821461249424244131}
   - component: {fileID: 5797997812724897124}
   - component: {fileID: 7103268438408521820}
+  - component: {fileID: 5283234403278231574}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -12139,7 +12715,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6188589309271267125}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -12194,6 +12770,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &5283234403278231574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6188589309271267125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &6419364552558896509
 GameObject:
   m_ObjectHideFlags: 0
@@ -12455,6 +13053,7 @@ GameObject:
   - component: {fileID: 4874682456982932749}
   - component: {fileID: 7234396427722364029}
   - component: {fileID: 6102058170417733247}
+  - component: {fileID: 9211512576791049924}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -12499,7 +13098,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6713181383494591402}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -12554,6 +13153,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &9211512576791049924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6713181383494591402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 8737634599418299748}
+  videoPlayer: {fileID: 7234396427722364029}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &6891733547622389770
 GameObject:
   m_ObjectHideFlags: 0
@@ -13547,6 +14168,82 @@ MonoBehaviour:
   initialPoolSize: 32
   pooledObjectsforFrame: []
   pooledObjectsforSpotLight: []
+--- !u!1 &7391751875150549577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 783189695033949063}
+  - component: {fileID: 888221492097481764}
+  - component: {fileID: 5757378768641276292}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &783189695033949063
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391751875150549577}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737634599418299746}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &888221492097481764
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391751875150549577}
+  m_CullTransparentMesh: 1
+--- !u!114 &5757378768641276292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7391751875150549577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7403991624983025804
 GameObject:
   m_ObjectHideFlags: 0
@@ -15082,7 +15779,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416385850037}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418110120762}
@@ -15131,7 +15828,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416394919396}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417583347631}
@@ -15180,7 +15877,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416398700138}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417540914175}
@@ -15393,7 +16090,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416445568623}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418261885646}
@@ -16198,8 +16895,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416476911237
 CanvasRenderer:
@@ -16504,8 +17201,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416509987294
 CanvasRenderer:
@@ -17741,8 +18438,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416599587375
 CanvasRenderer:
@@ -17883,14 +18580,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418138514848}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -17900,6 +18591,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416625566295
 GameObject:
   m_ObjectHideFlags: 0
@@ -18342,14 +19039,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418045116738}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -18359,6 +19050,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416677200634
 GameObject:
   m_ObjectHideFlags: 0
@@ -18495,7 +19192,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416705925253}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416915843864}
@@ -18561,7 +19258,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8141283416710276030}
   - component: {fileID: 8141283416710276025}
-  - component: {fileID: 4058790251241694183}
   - component: {fileID: 177208411812245966}
   m_Layer: 23
   m_Name: 2
@@ -18601,25 +19297,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   NftRatio: 0
---- !u!114 &4058790251241694183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8141283416710276031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  streamAbleUrl: 
-  mediaPlayer: {fileID: 8141283418009081541}
-  videoPlayer: {fileID: 8141283416791263719}
-  liveVideoPlay:
-    m_PersistentCalls:
-      m_Calls: []
-  id: 
 --- !u!114 &177208411812245966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18640,14 +19317,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418009081550}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -18657,6 +19328,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416711606443
 GameObject:
   m_ObjectHideFlags: 0
@@ -18835,14 +19512,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416373383916}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -18852,6 +19523,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416717483466
 GameObject:
   m_ObjectHideFlags: 0
@@ -18976,14 +19653,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416890747735}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -18993,6 +19664,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416736752614
 GameObject:
   m_ObjectHideFlags: 0
@@ -19280,14 +19957,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418146176698}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -19297,6 +19968,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416780635663
 GameObject:
   m_ObjectHideFlags: 0
@@ -19598,8 +20275,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416791263713
 CanvasRenderer:
@@ -19945,14 +20622,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417623471544}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -19962,6 +20633,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416818140948
 GameObject:
   m_ObjectHideFlags: 0
@@ -19998,8 +20675,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416818140944
 CanvasRenderer:
@@ -20205,14 +20882,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417872496676}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -20222,6 +20893,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416841534787
 GameObject:
   m_ObjectHideFlags: 0
@@ -20961,7 +21638,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283416857851840}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417764280641}
@@ -21129,8 +21806,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416882226285
 CanvasRenderer:
@@ -22136,8 +22813,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283416915843861
 CanvasRenderer:
@@ -22278,14 +22955,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418057622708}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -22295,6 +22966,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283416947206244
 GameObject:
   m_ObjectHideFlags: 0
@@ -23173,14 +23850,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417662505847}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -23190,6 +23861,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417020332660
 GameObject:
   m_ObjectHideFlags: 0
@@ -23381,8 +24058,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417038786164
 CanvasRenderer:
@@ -24038,7 +24715,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417071830386}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417168951468}
@@ -24097,8 +24774,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417075963824
 CanvasRenderer:
@@ -25511,8 +26188,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417168951465
 CanvasRenderer:
@@ -25686,14 +26363,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417724893781}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -25703,6 +26374,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417194736967
 GameObject:
   m_ObjectHideFlags: 0
@@ -26594,14 +27271,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418465069664}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -26611,6 +27282,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417264943577
 GameObject:
   m_ObjectHideFlags: 0
@@ -26637,7 +27314,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417264943577}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417355286117}
@@ -27178,8 +27855,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417328522533
 CanvasRenderer:
@@ -27277,7 +27954,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417337941927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416882226288}
@@ -27336,8 +28013,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417355286118
 CanvasRenderer:
@@ -28431,7 +29108,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417427990835}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416476911240}
@@ -28480,7 +29157,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417430910435}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416818140951}
@@ -29031,14 +29708,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417045047330}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -29048,6 +29719,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417525582087
 GameObject:
   m_ObjectHideFlags: 0
@@ -29193,8 +29870,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417540914168
 CanvasRenderer:
@@ -29335,14 +30012,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283418022736412}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -29352,6 +30023,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417563038105
 GameObject:
   m_ObjectHideFlags: 0
@@ -29378,7 +30055,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417563038105}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417883019707}
@@ -29427,7 +30104,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417564457236}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417328522536}
@@ -29585,7 +30262,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417575241732}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418019843978}
@@ -29677,8 +30354,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417583347624
 CanvasRenderer:
@@ -30888,14 +31565,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417251844659}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -30905,6 +31576,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283417662505847
 GameObject:
   m_ObjectHideFlags: 0
@@ -32166,8 +32843,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417764280642
 CanvasRenderer:
@@ -32298,7 +32975,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417830354381}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417038786171}
@@ -33178,8 +33855,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283417883019700
 CanvasRenderer:
@@ -33923,7 +34600,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283417958507436}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418279619505}
@@ -34654,7 +35331,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418011810323}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416509987293}
@@ -34822,8 +35499,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418019843975
 CanvasRenderer:
@@ -36585,14 +37262,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417161968312}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -36602,6 +37273,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418082066797
 GameObject:
   m_ObjectHideFlags: 0
@@ -36628,7 +37305,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418082066797}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416599587378}
@@ -36720,8 +37397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418107765669
 CanvasRenderer:
@@ -36829,8 +37506,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418110120759
 CanvasRenderer:
@@ -37869,14 +38546,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416450522683}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -37886,6 +38557,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418164094657
 GameObject:
   m_ObjectHideFlags: 0
@@ -37912,7 +38589,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418164094657}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283417075963831}
@@ -38222,14 +38899,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416911906222}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -38239,6 +38910,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418188419873
 GameObject:
   m_ObjectHideFlags: 0
@@ -38308,14 +38985,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416849378571}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -38325,6 +38996,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418189144929
 GameObject:
   m_ObjectHideFlags: 0
@@ -38716,7 +39393,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418233488163}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418107765672}
@@ -38863,14 +39540,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416380259746}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -38880,6 +39551,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418261870052
 GameObject:
   m_ObjectHideFlags: 0
@@ -38971,8 +39648,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418261885643
 CanvasRenderer:
@@ -39226,8 +39903,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418279619506
 CanvasRenderer:
@@ -39335,8 +40012,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0.15}
-  m_SizeDelta: {x: 15.59, y: 8.8}
+  m_AnchoredPosition: {x: -0.039, y: -0.342}
+  m_SizeDelta: {x: 13.8, y: 7.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8141283418292340637
 CanvasRenderer:
@@ -39819,7 +40496,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418348958443}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283416791263716}
@@ -40460,7 +41137,7 @@ RectTransform:
   m_GameObject: {fileID: 8141283418424087230}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.135, y: 1.135, z: 1.135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8141283418292340640}
@@ -40790,14 +41467,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283417421434140}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -40807,6 +41478,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418455072807
 GameObject:
   m_ObjectHideFlags: 0
@@ -41094,14 +41771,8 @@ MonoBehaviour:
   liveVideoPlayer: {fileID: 8141283416965028370}
   videoLink: 
   imageLink: 
-  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
-  ApplyImageOnTexture: 0
-  imageMesh: {fileID: 0}
-  imageMat: {fileID: 0}
-  applyVideoMesh: 0
-  videoMesh: {fileID: 0}
   firebaseEventName: 
   imgVideoFrame16x9: {fileID: 0}
   imgVideoFrame9x16: {fileID: 0}
@@ -41111,6 +41782,12 @@ MonoBehaviour:
   isCreateFrame: 1
   museumType: 0
   roomNumber: 1
+  isForceAudioOn: 0
+  ApplyImageOnTexture: 0
+  imageMesh: {fileID: 0}
+  imageMat: {fileID: 0}
+  applyVideoMesh: 0
+  videoMesh: {fileID: 0}
 --- !u!1 &8141283418465069664
 GameObject:
   m_ObjectHideFlags: 0
@@ -41913,6 +42590,82 @@ MonoBehaviour:
   m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &8352549697692332774
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8292096531876586966}
+  - component: {fileID: 7184734522500791081}
+  - component: {fileID: 3733550065948213689}
+  m_Layer: 0
+  m_Name: LiveVideoPlayUIObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &8292096531876586966
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352549697692332774}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8737634600085804445}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &7184734522500791081
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352549697692332774}
+  m_CullTransparentMesh: 1
+--- !u!114 &3733550065948213689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8352549697692332774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &8485161823421405317
 GameObject:
   m_ObjectHideFlags: 0
@@ -42078,6 +42831,7 @@ GameObject:
   - component: {fileID: 7465122602987521876}
   - component: {fileID: 2185259090065856052}
   - component: {fileID: 2763808403412313376}
+  - component: {fileID: 994295797356293557}
   m_Layer: 23
   m_Name: Video
   m_TagString: Untagged
@@ -42122,7 +42876,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8504457990042593453}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
@@ -42177,6 +42931,28 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &994295797356293557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8504457990042593453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
+  mediaPlayer: {fileID: 0}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &8585038098997242439
 GameObject:
   m_ObjectHideFlags: 0
@@ -42990,7 +43766,7 @@ GameObject:
   - component: {fileID: 8737634598520849391}
   - component: {fileID: 8737634598520849384}
   - component: {fileID: 8737634598520849385}
-  - component: {fileID: 8737634598520849386}
+  - component: {fileID: 1208102879228099646}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -43009,7 +43785,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 9107717842013514851}
   m_Father: {fileID: 658065309121325830}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -43350,7 +44127,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634598520849396}
   m_CullTransparentMesh: 1
---- !u!114 &8737634598520849386
+--- !u!114 &1208102879228099646
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43359,21 +44136,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737634598520849396}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 8737634598520849389}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _media: {fileID: 8737634598520849389}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &8737634598529426918
 GameObject:
   m_ObjectHideFlags: 0
@@ -44956,7 +45730,7 @@ GameObject:
   - component: {fileID: 8737634598737674162}
   - component: {fileID: 8737634598737674163}
   - component: {fileID: 8737634598737674172}
-  - component: {fileID: 8737634598737674173}
+  - component: {fileID: 2553336136555215452}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -44975,7 +45749,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1712506365679373193}
   m_Father: {fileID: 6551290279797355547}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45316,7 +46091,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634598737674175}
   m_CullTransparentMesh: 1
---- !u!114 &8737634598737674173
+--- !u!114 &2553336136555215452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45325,21 +46100,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737634598737674175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 8737634598737674160}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _media: {fileID: 8737634598737674160}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &8737634598810618984
 GameObject:
   m_ObjectHideFlags: 0
@@ -48094,7 +48866,7 @@ GameObject:
   - component: {fileID: 8737634599418299750}
   - component: {fileID: 8737634599418299751}
   - component: {fileID: 8737634599418299744}
-  - component: {fileID: 8737634599418299739}
+  - component: {fileID: 7919221217348845266}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -48113,7 +48885,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 783189695033949063}
   m_Father: {fileID: 7346558078238944586}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -48454,7 +49227,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634599418299747}
   m_CullTransparentMesh: 1
---- !u!114 &8737634599418299739
+--- !u!114 &7919221217348845266
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48463,21 +49236,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737634599418299747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 8737634599418299748}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 0
+  _media: {fileID: 8737634599418299748}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &8737634599422135181
 GameObject:
   m_ObjectHideFlags: 0
@@ -51175,7 +51945,7 @@ GameObject:
   - component: {fileID: 8737634600085804433}
   - component: {fileID: 8737634600085804434}
   - component: {fileID: 8737634600085804435}
-  - component: {fileID: 8737634600085804444}
+  - component: {fileID: 443260806654276419}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -51194,7 +51964,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8292096531876586966}
   m_Father: {fileID: 658065308239061463}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51535,7 +52306,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634600085804446}
   m_CullTransparentMesh: 1
---- !u!114 &8737634600085804444
+--- !u!114 &443260806654276419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -51544,21 +52315,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737634600085804446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 8737634600085804439}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _media: {fileID: 8737634600085804439}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &8737634600146802982
 GameObject:
   m_ObjectHideFlags: 0
@@ -52069,7 +52837,7 @@ GameObject:
   - component: {fileID: 8737634600185175489}
   - component: {fileID: 8737634600185175490}
   - component: {fileID: 8737634600185175491}
-  - component: {fileID: 8737634600185175500}
+  - component: {fileID: 645395030884278765}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -52088,7 +52856,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4024549519374498536}
   m_Father: {fileID: 3346955502777015070}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52429,7 +53198,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634600185175502}
   m_CullTransparentMesh: 1
---- !u!114 &8737634600185175500
+--- !u!114 &645395030884278765
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52438,21 +53207,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8737634600185175502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75f3b319d2d69934d8bf545ab45c918d, type: 3}
+  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mediaPlayer: {fileID: 8737634600185175495}
-  _scaleMode: 2
-  _color: {r: 1, g: 1, b: 1, a: 1}
-  _allowTransparency: 0
-  _useDepth: 0
-  _depth: 0
-  _isAreaFullScreen: 1
-  _areaX: 0
-  _areaY: 0
-  _areaWidth: 1
-  _areaHeight: 1
-  _showAreaInEditor: 1
+  _media: {fileID: 8737634600185175495}
+  _automaticStereoPacking: 1
+  _overrideStereoPacking: 0
+  _stereoRedGreenTint: 0
+  _defaultTexture: {fileID: 0}
+  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  _texturePropertyName: _MainTex
+  _offset: {x: 0, y: 0}
+  _scale: {x: 1, y: 1}
 --- !u!1 &8737634600199790266
 GameObject:
   m_ObjectHideFlags: 0
@@ -53863,7 +54629,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd612767fda5d9d40987f3c565131bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldPlayingVideos: 0
   ratioReferences:
   - name: 1:1 WithDes
     l_obj: {fileID: 658065308648731174}
@@ -54017,25 +54782,6 @@ MonoBehaviour:
     p_LivePlayer: {fileID: 8737634600173207245}
     p_PrerecordedPlayer: {fileID: 8737634598513652518}
     p_Loader: {fileID: 1827156270173355010}
-  VideoPlayers:
-  - {fileID: 7234396427722364029}
-  - {fileID: 658065308239061481}
-  - {fileID: 658065307740175388}
-  - {fileID: 658065308606146021}
-  - {fileID: 658065308400113179}
-  - {fileID: 658065309121325848}
-  - {fileID: 658065309113588964}
-  - {fileID: 658065307671632750}
-  - {fileID: 2185259090065856052}
-  - {fileID: 6217405186574915493}
-  - {fileID: 3009796161294338833}
-  - {fileID: 1052119024244431715}
-  - {fileID: 5797997812724897124}
-  - {fileID: 1507134898652985492}
-  - {fileID: 4057341193331477245}
-  - {fileID: 674083547783345604}
-  LandscapeObj: {fileID: 6970621815644340307}
-  PotraiteObj: {fileID: 6970621816946616333}
   worldInfos:
   - Title:
     - YUSF SKATEARK
@@ -54600,11 +55346,10 @@ MonoBehaviour:
   - {fileID: 8141283418182553300}
   - {fileID: 8141283416607316730}
   - {fileID: 8141283418064545260}
-  renderTexture_16x9: {fileID: 8400000, guid: bcb42d5b74d6a6e409fbde272b667871, type: 2}
-  renderTexture_9x16: {fileID: 8400000, guid: 9b726521b6e59624ea96c204e496ecff, type: 2}
+  renderTexture_16x9: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
+  renderTexture_9x16: {fileID: 8400000, guid: 607e7a72a0692fc44a57a4ee5f17d846, type: 2}
   renderTexture_1x1: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
   renderTexture_4x3: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
-  RetryChances: 3
   nftTitle: 
   firebaseEventName: 
   clickedNftInd: 0
@@ -54619,6 +55364,27 @@ MonoBehaviour:
   NFTDataFetchScrptRef: {fileID: 0}
   NFTDataHandlerScrptRef: {fileID: 0}
   RoomCount: 0
+  worldPlayingVideos: 0
+  RetryChances: 3
+  VideoPlayers:
+  - {fileID: 7234396427722364029}
+  - {fileID: 658065308239061481}
+  - {fileID: 658065307740175388}
+  - {fileID: 658065308606146021}
+  - {fileID: 658065308400113179}
+  - {fileID: 658065309121325848}
+  - {fileID: 658065309113588964}
+  - {fileID: 658065307671632750}
+  - {fileID: 2185259090065856052}
+  - {fileID: 6217405186574915493}
+  - {fileID: 3009796161294338833}
+  - {fileID: 1052119024244431715}
+  - {fileID: 5797997812724897124}
+  - {fileID: 1507134898652985492}
+  - {fileID: 4057341193331477245}
+  - {fileID: 674083547783345604}
+  LandscapeObj: {fileID: 6970621815644340307}
+  PotraiteObj: {fileID: 6970621816946616333}
   AllS3Nfts: []
 --- !u!1 &9104401757522244355
 GameObject:
