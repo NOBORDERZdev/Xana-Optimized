@@ -183,6 +183,9 @@ namespace PhysicsCharacterController
         private bool isTouchingWall = false;
         private bool isJumping = false;
         private bool isCrouch = false;
+        private bool canJumpNow = true;
+
+        private float PhyJumpTimeout = 0.8f;
 
         private Vector2 axisInput;
         private bool jump;
@@ -611,18 +614,23 @@ namespace PhysicsCharacterController
         {
            
             //jumped
-            if (jump && isGrounded && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
+            if (jump && canJumpNow && isGrounded && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
             {
               
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
+                canJumpNow = false;
+                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
             }
             //jumped from wall
-            else if (jump && !isGrounded && isTouchingWall)
+            else if (jump && canJumpNow && !isGrounded && isTouchingWall)
             {
                 rigidbody.velocity += wallNormal * jumpFromWallMultiplier + (Vector3.up * jumpFromWallMultiplier) * multiplierVerticalLeap;
                 isJumping = true;
 
+
+                canJumpNow = false;
+                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
                 targetAngle = Mathf.Atan2(wallNormal.x, wallNormal.z) * Mathf.Rad2Deg;
 
                 forward = wallNormal;
