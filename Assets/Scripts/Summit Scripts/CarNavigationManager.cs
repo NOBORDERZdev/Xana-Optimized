@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ public class CarNavigationManager : MonoBehaviour
 
     private void Start()
     {
+        MutiplayerController.instance.ADDReference?.Invoke();
        SummitEntityManager.instance.InstantiateCAR();
     }
 

@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,15 +42,15 @@ public class SplineFollower : MonoBehaviour {
 
     private void Start()
     {
-        if (CarNavigationManager.instance != null)
-        {
-            CarNavigationManager.instance.Cars.Add(view.ViewID, view);
-        }
-        else
-        {
-            Debug.LogError("WHY NULLL");
-        }
+        MutiplayerController.instance.ADDReference += addReferences;
     }
+
+    private void addReferences()
+    {
+
+        CarNavigationManager.instance.Cars.Add(view.ViewID, view);
+    }
+
     public void Setup(byte Name) {
         spline = SplineDone.Instance;
         switch (movementType) {

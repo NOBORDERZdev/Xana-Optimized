@@ -2,6 +2,7 @@
 using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using Photon.Voice.PUN;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Remoting.Messaging;
@@ -61,6 +62,8 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     /// </summary>
     protected string gameVersion = "13";
     #endregion
+
+    public Action ADDReference;
 
     public virtual void Awake()
     {
