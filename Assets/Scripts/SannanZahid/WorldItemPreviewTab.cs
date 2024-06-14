@@ -1,5 +1,6 @@
 using AdvancedInputFieldPlugin;
 using SuperStar.Helpers;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -264,12 +265,17 @@ public class WorldItemPreviewTab : MonoBehaviour
     public TextMeshProUGUI wrongCodeText;
     public void PMY_CodeEnter()
     {
-        if(Application.isEditor && XanaConstants.xanaConstants.pmy_isTesting)
+        WorldItemView.m_EnvName = "PMY ACADEMY";
+
+        if (Application.isEditor && XanaConstants.xanaConstants.pmy_isTesting)
             WorldManager.instance.PlayWorld();
 
         // Check Enter code is Ok or Not
         if (IsClassCodeValid((classCodeInputField_text.text)))
         {
+            if (WorldItemView.m_EnvName == "PMY ACADEMY")
+                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn_PMY.ToString());
+
             // Yes Class Available, Create Room for that Class
             Debug.Log("<color=green> PMY -- Class Available  </color>");
             XanaConstants.xanaConstants.pmy_isClassAvailable = true;

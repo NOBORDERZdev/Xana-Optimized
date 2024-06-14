@@ -5,6 +5,8 @@ public class PMY_Metaverse : MonoBehaviour
 {
     public BottomTabManager bottomTabManager;
     public Canvas[] canvas;
+    [Space(5)]
+    public GameObject ClassCodeScreen;
 
     private void OnDisable()
     {
@@ -29,8 +31,8 @@ public class PMY_Metaverse : MonoBehaviour
     {
         //if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
         //{
-            //XanaConstants.xanaConstants.isBackFromPMY = false;
-            if (IsLoggedIn())
+        //XanaConstants.xanaConstants.isBackFromPMY = false;
+        if (IsLoggedIn())
             {
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
                 StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
@@ -39,10 +41,11 @@ public class PMY_Metaverse : MonoBehaviour
                 UserRegisterationManager.instance.welcomeScreen.SetActive(true);
         //}
         //else
-            PlayPMYManually();  // call when user launch the app except very first time
+        // PlayPMYManually();  // call when user launch the app except very first time
 
         //UserRegisterationManager.instance.StartGameAction += PlayPMYManually;
         //Swipe_menu.instance.StartGameAction += PlayPMYManually;
+        ClassCodeScreen.SetActive(true);
     }
 
     //public void BindMe()

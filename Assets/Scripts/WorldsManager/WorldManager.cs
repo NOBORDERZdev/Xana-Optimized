@@ -739,6 +739,7 @@ public class WorldManager : MonoBehaviour
             //    LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
             //}
             XanaConstants.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            LoadingHandler.Instance.loadingPanel.SetActive(true);
             LoadingHandler.Instance.ShowLoading();
             LoadingHandler.Instance.UpdateLoadingSlider(0);
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
