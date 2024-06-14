@@ -324,6 +324,11 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnCreatedRoom()
         {
+            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            {
+                base.OnCreatedRoom();
+                return;
+            }
             print("OnCreatedRoom called");
         }
 

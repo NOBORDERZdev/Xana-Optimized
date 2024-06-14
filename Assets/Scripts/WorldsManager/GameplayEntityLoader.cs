@@ -322,39 +322,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
         }
-        if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
-        {
-            /*spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-            RaycastHit hit;
-            CheckAgain:
-            // Does the ray intersect any objects excluding the player layer
-            if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
-            {
-                if (hit.collider.gameObject.tag == "PhotonLocalPlayer" || hit.collider.gameObject.layer == LayerMask.NameToLayer("NoPostProcessing"))
-                {
-                    spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
-                    goto CheckAgain;
-                }
-                spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
-            }
-            SetPlayerCameraAngle();*/
-        }
-
-        // mainPlayer.transform.position = new Vector3(0, 0, 0);
-
-
-        // mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-
-        /* if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
-         {
-             player = Instantiate(MutiplayerController.instance.MalePlayer, spawnPoint, Quaternion.identity );    // Instantiate Male Avatar
-             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
-         }
-         else
-         {
-             player = Instantiate(MutiplayerController.instance.FemalePlayer, spawnPoint, Quaternion.identity );  // Instantiate Female Avatar
-             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
-         }*/
+        
         spawnPoint = player.transform.position;
         Destroy(player);
         Debug.Log("player shoud be destroyed");

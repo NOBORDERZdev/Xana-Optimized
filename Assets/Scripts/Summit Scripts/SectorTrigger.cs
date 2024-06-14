@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,12 +11,14 @@ public class SectorTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "PhotonLocalPlayer")
+            if(other.GetComponent<PhotonView>().IsMine)
             SectorManager.Instance.Triggered();
     }
 
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.tag == "PhotonLocalPlayer")
-            SectorManager.Instance.TriggeredExit(gameObject.name);
+            if (other.GetComponent<PhotonView>().IsMine)
+                SectorManager.Instance.TriggeredExit(gameObject.name);
     }
 }

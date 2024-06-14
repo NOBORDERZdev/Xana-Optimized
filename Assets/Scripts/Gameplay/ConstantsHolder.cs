@@ -140,7 +140,7 @@ public class ConstantsHolder : MonoBehaviour
     //XANA Summit 
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
-    public static string domeId;
+    public static bool TempDiasableMultiPartPhoton = false;
     public static int domeId;
     public string r_EmoteStoragePersistentPath
     {
