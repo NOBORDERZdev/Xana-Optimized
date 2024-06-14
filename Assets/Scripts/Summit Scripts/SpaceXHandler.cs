@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
@@ -7,6 +8,10 @@ public class SpaceXHandler : MonoBehaviour
     public GameObject planetOptions;
     public VideoPlayer videoPlayer;
     public string[] planetNames;
+
+    //public AudioSource launchCountingAudioSource;
+    //public AudioClip countingAudioClip;
+    public TMPro.TextMeshProUGUI launchCounter;
 
     public XANASummitSceneLoading summitSceneLoading;
 
@@ -21,14 +26,38 @@ public class SpaceXHandler : MonoBehaviour
         BuilderEventManager.spaceXActivated -= StartVideoPlayer;
     }
 
-    void StartVideoPlayer(VideoClip videoClip,Vector3 _returnPlayerPos)
+    async void StartVideoPlayer(VideoClip videoClip,Vector3 _returnPlayerPos)
     {
+        await ShowCounter();
         returnPlayerPos = _returnPlayerPos;
         videoPlayer.gameObject.SetActive(true);
         videoPlayer.clip=videoClip; 
         videoPlayer.Play();
         videoPlayer.loopPointReached += VideoPlayer_loopPointReached;
     }
+
+    async Task ShowCounter()
+    {
+        
+        //AudioClip audioClip = launchCountingAudioSource.clip;
+        //launchCountingAudioSource.clip = countingAudioClip;
+        //launchCountingAudioSource.volume = 1;
+        //launchCountingAudioSource.Play();
+        //await Task.Delay(4000);
+        int x = 10;
+        launchCounter.gameObject.SetActive(true);
+        while (x> 0)
+        {
+            launchCounter.text=x.ToString();
+            await Task.Delay(1000);
+            x--;
+        }
+        //launchCounter.GetComponent<Animator>().StopPlayback();
+        await Task.Delay(1000);
+        //launchCountingAudioSource.clip=audioClip;
+        launchCounter.gameObject.SetActive(false);
+    }
+
 
     private void VideoPlayer_loopPointReached(VideoPlayer source)
     {
