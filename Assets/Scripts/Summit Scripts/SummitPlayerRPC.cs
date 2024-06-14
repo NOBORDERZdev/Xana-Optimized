@@ -37,10 +37,10 @@ public class SummitPlayerRPC : MonoBehaviour
     [PunRPC]
     void ExitCAr()
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
+        //if(PhotonNetwork.IsMasterClient)
+      //  {
             CarNavigationManager.instance.ExitCar(carID);
-        }
+       // }
 
       
         StartCoroutine(exitCoolDown());
