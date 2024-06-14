@@ -471,10 +471,7 @@ public class UserLoginSignupManager : MonoBehaviour
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
-        if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
-        {
-            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        }
+       
     }
 
     public void CheckForValidationAndSignUp(bool resendOtp = false)

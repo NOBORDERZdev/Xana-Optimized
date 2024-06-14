@@ -35,6 +35,11 @@ public class NFT_Holder_Manager : MonoBehaviour
     public FB_PushNotificationSender pushNotification;
     public ThaMeetingStatusUpdate meetingStatus;
     public VoiceManager voiceManager;
+    public ExtendedXanaChatSystem Extended_XCS;
+
+    private XanaChatSystem _chatSystem;
+
+
     private void Awake()
     {
         if (instance == null)
@@ -54,6 +59,20 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
         else if (meetingStatus == null)
             meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
+
+        _chatSystem = XanaChatSystem.instance;
+        if (_chatSystem != null)
+        {
+            Extended_XCS = gameObject.AddComponent<ExtendedXanaChatSystem>();
+            Extended_XCS.PotriatCurrentChannelText = _chatSystem.PotriatCurrentChannelText;
+            Extended_XCS.CurrentChannelText = _chatSystem.CurrentChannelText;
+            Extended_XCS.UserName = _chatSystem.UserName;
+            Extended_XCS.chatDialogBox = _chatSystem.chatDialogBox;
+            Extended_XCS.chatNotificationIcon = _chatSystem.chatNotificationIcon;
+            Extended_XCS.chatButton = _chatSystem.chatButton;
+            Extended_XCS.ChatScrollRect = _chatSystem.ChatScrollRect;
+            Extended_XCS.InputFieldChat = _chatSystem.InputFieldChat;
+        }
     }
 
     public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)

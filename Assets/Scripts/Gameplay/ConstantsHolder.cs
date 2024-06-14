@@ -134,7 +134,7 @@ public class ConstantsHolder : MonoBehaviour
     public enum MeetingStatus { End, Inprogress, HouseFull }
     [SerializeField]
     public MeetingStatus meetingStatus;
-
+    public bool IsShowChatToAll = true;
     public string r_EmoteStoragePersistentPath
     {
         get
