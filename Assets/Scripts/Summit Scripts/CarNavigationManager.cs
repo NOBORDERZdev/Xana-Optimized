@@ -28,8 +28,9 @@ public class CarNavigationManager : MonoBehaviour
 
     private void Start()
     {
-        MutiplayerController.instance.ADDReference?.Invoke();
+       
        SummitEntityManager.instance.InstantiateCAR();
+        MutiplayerController.instance.ADDReference?.Invoke();
     }
 
     public void StopCar(GameObject car)

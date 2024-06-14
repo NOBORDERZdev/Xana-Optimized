@@ -38,11 +38,14 @@ public class SplineFollower : MonoBehaviour {
     public byte PrivateRoomName;
     public bool stopcar = false;
 
-   
+    private void Awake()
+    {
+
+        MutiplayerController.instance.ADDReference += addReferences;
+    }
 
     private void Start()
     {
-        MutiplayerController.instance.ADDReference += addReferences;
     }
 
     private void addReferences()
@@ -64,13 +67,14 @@ public class SplineFollower : MonoBehaviour {
                 break;
         }
         // syncdata(moveAmount);
-        view.RPC("syncdata", RpcTarget.AllBuffered, moveAmount,Name);
+        view.RPC("syncdata", RpcTarget.AllBufferedViaServer, moveAmount,Name);
     }
 
 
     [PunRPC]
     public void syncdata(float moveAmount,byte Room)
-    { 
+    {
+        Debug.Log("Buffered RPC");
         this.moveAmount = moveAmount;
         spline =SplineDone.Instance;
         PrivateRoomName = Room;
