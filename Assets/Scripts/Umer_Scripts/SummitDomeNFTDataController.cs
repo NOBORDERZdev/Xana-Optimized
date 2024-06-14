@@ -578,11 +578,11 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     }
                     else
                     {
-                        foreach (var item in DoomNFTData.getcontentbyDomeId)
-                        {
-                            Debug.Log($"ID: {item.id}, Name: {item.name}");
-                            Debug.Log("Count of array: " + DoomNFTData.getcontentbyDomeId.Count);
-                        }
+                        //foreach (var item in DoomNFTData.getcontentbyDomeId)
+                        //{
+                        //    Debug.Log($"ID: {item.id}, Name: {item.name}");
+                        //    Debug.Log("Count of array: " + DoomNFTData.getcontentbyDomeId.Count);
+                        //}
                         StartCoroutine(InitData(DoomNFTData, NftPlaceholder));
                     }// data count check if end
                 } // error check if end
