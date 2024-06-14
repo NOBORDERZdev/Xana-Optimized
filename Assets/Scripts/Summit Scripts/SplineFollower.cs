@@ -53,6 +53,7 @@ public class SplineFollower : MonoBehaviour {
 
         CarNavigationManager.instance.Cars.Add(view.ViewID, view);
         spline = SplineDone.Instance;
+        maxMoveAmount = spline.GetSplineLength(0.001f);
     }
 
     public void Setup(byte Name) {
@@ -77,7 +78,7 @@ public class SplineFollower : MonoBehaviour {
     {
         Debug.Log("Buffered RPC");
         this.moveAmount = moveAmount;
-  
+
         PrivateRoomName = Room;
         
       transform.position = new Vector3(transform.position.x,0f,transform.position.z);

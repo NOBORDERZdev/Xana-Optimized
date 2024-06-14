@@ -28,7 +28,7 @@ public class CarStopTrigger : MonoBehaviour
             StopCar = true;
         }
 
-        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty))
+        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty) && PhotonNetwork.IsMasterClient)
         {
             CarNavigationManager.instance.StopCar(other.gameObject);
             StartCoroutine(CarNavigationManager.instance.TPlayer(other.gameObject, Players,this));

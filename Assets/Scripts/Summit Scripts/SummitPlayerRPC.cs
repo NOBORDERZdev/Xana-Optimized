@@ -71,7 +71,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
-
+              
             }
             else
             {
@@ -80,6 +80,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 transform.parent = Parent;
                 transform.position = car.DriverExitPosition.transform.position;
+                transform.localScale = Vector3.one * 1.14f;
             }
             //transform.position = car.DriverPos;
             car.hidelove();
@@ -100,6 +101,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
+                
 
             }
             else
@@ -109,6 +111,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 transform.parent = Parent;
                 transform.position = car.PassengerExitPosition.transform.position;
+                transform.localScale = Vector3.one * 1.14f;
             }
             car.hidelove();
         }
@@ -149,6 +152,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.transform.parent = car.transform;
                 transform.localPosition = Vector3.zero;
                 transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
+             
                 CarNavigationManager.instance.EnableExitCanvas();
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -162,10 +166,12 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<PhotonTransformView>().enabled = false;
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+       
                 Parent = transform.parent;
                 transform.parent = car.transform;
                 transform.localPosition = car.DriverPosition.transform.localPosition;
+                transform.localRotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = Vector3.one*1.368f;
             }
             //transform.position = car.DriverPos;
             if (gameObject.name.Contains("XanaAvatar2.0_Female"))
@@ -204,17 +210,19 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
                 CarNavigationManager.instance.onExitpress += Exit;
                 CarNavigationManager.instance.onCancelPress += CancelExit;
-
+                transform.parent.transform.localScale = Vector3.one;
             }
             else
             {
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
                 gameObject.GetComponent<PhotonTransformView>().enabled = false;
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+               
                 Parent = transform.parent;
                 transform.parent = car.transform;
                 transform.localPosition = car.PacengerPosition.transform.localPosition;
+                transform.localRotation = new Quaternion(0, 0, 0, 0);
+                transform.localScale = Vector3.one * 1.368f;
             }
             GetComponent<Animator>().SetTrigger("EnterCar");
             if (gameObject.name.Contains("XanaAvatar2.0_Female"))
