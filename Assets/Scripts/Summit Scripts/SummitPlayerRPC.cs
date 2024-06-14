@@ -70,14 +70,14 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-
+                gameObject.GetComponent<PhotonTransformView>().enabled = true;
 
             }
             else
             {
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-
+                gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 transform.parent = Parent;
                 transform.position = car.DriverExitPosition.transform.position;
             }
@@ -99,14 +99,14 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-
+                gameObject.GetComponent<PhotonTransformView>().enabled = true;
 
             }
             else
             {
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-
+                gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 transform.parent = Parent;
                 transform.position = car.PassengerExitPosition.transform.position;
             }
@@ -144,7 +144,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
-
+                gameObject.GetComponent<PhotonTransformView>().enabled = false;
                 Parent = transform.parent.transform.parent;
                 transform.parent.transform.parent = car.transform;
                 transform.localPosition = Vector3.zero;
@@ -159,8 +159,10 @@ public class SummitPlayerRPC : MonoBehaviour
             }
             else
             {
+                gameObject.GetComponent<PhotonTransformView>().enabled = false;
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
+                transform.rotation = new Quaternion(0, 0, 0, 0);
                 Parent = transform.parent;
                 transform.parent = car.transform;
                 transform.localPosition = car.DriverPosition.transform.localPosition;
@@ -190,6 +192,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
+                gameObject.GetComponent<PhotonTransformView>().enabled = false;
 
                 Parent = transform.parent.transform.parent;
                 transform.parent.transform.parent = car.transform;
@@ -207,6 +210,8 @@ public class SummitPlayerRPC : MonoBehaviour
             {
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
+                gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                transform.rotation = new Quaternion(0, 0, 0, 0);
                 Parent = transform.parent;
                 transform.parent = car.transform;
                 transform.localPosition = car.PacengerPosition.transform.localPosition;

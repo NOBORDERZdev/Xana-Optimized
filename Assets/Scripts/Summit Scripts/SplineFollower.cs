@@ -87,7 +87,7 @@ public class SplineFollower : MonoBehaviour {
 
 
     private void Update() {
-        if(spline == null|| stopcar) { return; }
+        if(spline == null|| stopcar || !PhotonNetwork.IsMasterClient) { return; }
         moveAmount = (moveAmount + (Time.deltaTime * speed)) % maxMoveAmount;
 
         switch (movementType) {

@@ -355,14 +355,14 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
       
         Destroy(player.GetComponent<PhotonAnimatorView>());
         Destroy(player.GetComponent<PhotonTransformView>());
-        Destroy(player.GetComponent<PhotonView>());
         Destroy(player.GetComponent<PhotonVoiceView>());
-        foreach(var p in playerobjects)
+        Destroy(player.GetComponent<PhotonView>());
+        foreach (var p in playerobjects)
         {
             Destroy(p.GetComponent<PhotonAnimatorView>());
             Destroy(p.GetComponent<PhotonTransformView>());
-            Destroy(p.GetComponent<PhotonView>());
             Destroy(p.GetComponent<PhotonVoiceView>());
+            Destroy(p.GetComponent<PhotonView>());
         }
         this.SectorName = SectorName;
         PhotonNetwork.LeaveRoom();

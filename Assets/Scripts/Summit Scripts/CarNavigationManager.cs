@@ -49,13 +49,16 @@ public class CarNavigationManager : MonoBehaviour
        if(car.driverseatempty)
         {
             Players[0].GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, true);
-            
+            Players.RemoveAt(0);
             triger.Pop();
+            yield break;
         }
        if(car.pasengerseatemty && Players.Count>0)
         {
             Players[0].GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, false);
+            Players.RemoveAt(0);
             triger.Pop();
+            yield break;
         }
         //teleport to car pending.....
 

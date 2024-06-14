@@ -338,10 +338,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GetComponent<PostProcessManager>().SetPostProcessing();
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
-        InstantiateYoutubePlayer();
-
-        SetAddressableSceneActive();
-        CharacterLightCulling();
+        
         if (!ConstantsHolder.xanaConstants.isCameraMan)
         {
             LoadingHandler.Instance.HideLoading();
@@ -370,7 +367,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
         StartCoroutine(VoidCalculation());
-        LightCullingScene();
+    
 
         if (ConstantsHolder.xanaConstants.isCameraMan)
         {
