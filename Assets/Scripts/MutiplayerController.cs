@@ -44,11 +44,14 @@ namespace Photon.Pun.Demo.PunBasics
         public static string CurrLobbyName, CurrRoomName;
 
         private RoomOptions roomOptions;
-        private List<RoomInfo> availableRoomList=new List<RoomInfo>();
+        private List<RoomInfo> availableRoomList = new List<RoomInfo>();
         public List<string> roomNames;
         public List<GameObject> playerobjects;
 
         public GameplayEntityLoader LFF;
+
+        [HideInInspector]
+        public bool singlePlayerInstance;
 
         #endregion
 
@@ -157,7 +160,7 @@ namespace Photon.Pun.Demo.PunBasics
             else
             {
                 //Once it connected to server OnConnectedToMaster callback it sent from their we can join lobby.
-                bool isConnected=PhotonNetwork.ConnectUsingSettings();
+                bool isConnected = PhotonNetwork.ConnectUsingSettings();
                 PhotonNetwork.GameVersion = this.gameVersion;
                 JoinLobby(CurrLobbyName);
             }
@@ -180,14 +183,14 @@ namespace Photon.Pun.Demo.PunBasics
 
         private async void JoinLobby(String lobbyName)
         {
-            while(!PhotonNetwork.IsConnectedAndReady)
-            await Task.Delay(1);
+            while (!PhotonNetwork.IsConnectedAndReady)
+                await Task.Delay(1);
             PhotonNetwork.JoinLobby(new TypedLobby(lobbyName, LobbyType.Default));
         }
 
         public override void OnJoinedLobby()
         {
-            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name+"--"+Time.time);
+            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time);
             CheckRoomAvailability();
         }
 
@@ -223,6 +226,10 @@ namespace Photon.Pun.Demo.PunBasics
             if (ConstantsHolder.xanaConstants.isCameraMan)
             {
                 JoinRoomForCameraMan();
+            }
+            else if (ConstantsHolder.isFromXANASummit && singlePlayerInstance)
+            {
+                JoinRoomSeperateSingleRoom();
             }
             else
             {
@@ -275,6 +282,19 @@ namespace Photon.Pun.Demo.PunBasics
                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
         }
+
+        private void JoinRoomSeperateSingleRoom()
+        {
+            string roomName;
+            do
+            {
+                roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
+            }
+            while (roomNames.Contains(roomName));
+
+            PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
+        }
+
 
         public RoomOptions RoomOptionsRequest()
         {

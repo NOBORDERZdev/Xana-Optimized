@@ -312,6 +312,7 @@ GameObject:
   - component: {fileID: 7479087223999055101}
   - component: {fileID: 7479087223999055102}
   - component: {fileID: 4224067735979679189}
+  - component: {fileID: 8239988752213726737}
   m_Layer: 0
   m_Name: SM_Metal_Stopper_018
   m_TagString: Untagged
@@ -393,10 +394,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721650412469382917}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7129471055965056754, guid: dbdf53f5d99d1ce4c8e90ac48c29da3e, type: 3}
 --- !u!114 &4224067735979679189
@@ -412,6 +413,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPos: {fileID: 1718000519}
+--- !u!65 &8239988752213726737
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 721650412469382917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 895.98047, y: 224.90729, z: 892.5111}
+  m_Center: {x: -2.769923e-21, y: 104.644775, z: 0.00390625}
 --- !u!1 &866568764853445976
 GameObject:
   m_ObjectHideFlags: 0

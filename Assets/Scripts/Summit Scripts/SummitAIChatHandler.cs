@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -12,6 +13,8 @@ public class SummitAIChatHandler : XanaChatSystem
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
 
+    private List<GameObject> aiNPC=new List<GameObject>();
+
     private string npcName;
     private string npcURL;
 
@@ -20,12 +23,14 @@ public class SummitAIChatHandler : XanaChatSystem
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
+        GamePlayButtonEvents.OnExitButtonXANASummit += ResetOnExit;
     }
     private void OnDisable()
     {
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
+        GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnExit;
     }
 
     void LoadNPC()
@@ -51,7 +56,7 @@ public class SummitAIChatHandler : XanaChatSystem
             else
                 AINPCAvatar = Instantiate(XANASummitDataContainer.maleAIAvatar);
 
-
+            aiNPC.Add(AINPCAvatar);
             AINPCAvatar.transform.position = new Vector3(XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[0], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[1], XANASummitDataContainer.aiData.npcData[i].spawnPositionArray[2]);
             AINPCAvatar.name = XANASummitDataContainer.aiData.npcData[i].name;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
@@ -96,12 +101,26 @@ public class SummitAIChatHandler : XanaChatSystem
         PotriatCurrentChannelText.text = string.Empty;
     }
 
+    void ClearInputField()
+    {
+        InputFieldChat.text = "";
+        InputFieldChat.Select();
+    }
+
     void OpenChatBox()
     {
         chatDialogBox.SetActive(true);
         chatNotificationIcon.SetActive(false);
         chatButton.GetComponent<Image>().enabled = true;
     }
+
+    void CloseChatBox()
+    {
+        chatDialogBox.SetActive(false);
+        chatNotificationIcon.SetActive(false);
+        chatButton.GetComponent<Image>().enabled = false;
+    }
+
 
     void AddAIListenerOnChatField()
     {
@@ -119,7 +138,13 @@ public class SummitAIChatHandler : XanaChatSystem
     {
         DisplayMsg_FromSocket(ConstantsHolder.userName, InputFieldChat.text);
 
-        string url = npcURL + "&input_string=" + InputFieldChat.text;
+        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + InputFieldChat.text;
+
+        ClearInputField();
+
+        Debug.LogError(url);
+
+        UriBuilder uriBuilder = new UriBuilder(url);
 
         string response = await GetAIResponse(url);
 
@@ -142,6 +167,26 @@ public class SummitAIChatHandler : XanaChatSystem
         else
             return www.downloadHandler.text;
     }
+
+
+    void ResetOnExit()
+    {
+        ClearInputField();
+        CloseChatBox();
+        DestroyNPC();
+    }
+
+    void DestroyNPC()
+    {
+        for(int i = 0;i<aiNPC.Count;i++)
+        {
+            if (aiNPC[i] != null)
+                Destroy(aiNPC[i]);
+        }
+
+        aiNPC.Clear();
+    }
+
 
     [System.Serializable]
     public class AIResponse
