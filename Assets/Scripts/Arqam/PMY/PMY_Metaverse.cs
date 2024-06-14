@@ -1,6 +1,3 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +10,8 @@ public class PMY_Metaverse : MonoBehaviour
     {
         if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
         {
-            UserRegisterationManager.instance.StartGameAction -= PlayPMYManually;
+            //UserRegisterationManager.instance.StartGameAction -= PlayPMYManually;
+            //Swipe_menu.instance.StartGameAction -= PlayPMYManually;
             AdditiveScenesManager.OnAllSceneLoaded -= SetDataForPMY;
         }
     }
@@ -29,9 +27,9 @@ public class PMY_Metaverse : MonoBehaviour
 
     void SetDataForPMY()
     {
-        if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
-        {
-            XanaConstants.xanaConstants.isBackFromPMY = false;
+        //if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
+        //{
+            //XanaConstants.xanaConstants.isBackFromPMY = false;
             if (IsLoggedIn())
             {
                 StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
@@ -39,12 +37,18 @@ public class PMY_Metaverse : MonoBehaviour
             }
             else
                 UserRegisterationManager.instance.welcomeScreen.SetActive(true);
-        }
-        else
+        //}
+        //else
             PlayPMYManually();  // call when user launch the app except very first time
 
-        UserRegisterationManager.instance.StartGameAction += PlayPMYManually;
+        //UserRegisterationManager.instance.StartGameAction += PlayPMYManually;
+        //Swipe_menu.instance.StartGameAction += PlayPMYManually;
     }
+
+    //public void BindMe()
+    //{
+    //    Swipe_menu.instance.StartGameAction += PlayPMYManually;
+    //}
 
     private void PlayPMYManually()
     {

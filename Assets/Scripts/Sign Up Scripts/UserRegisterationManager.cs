@@ -3396,7 +3396,7 @@ public class UserRegisterationManager : MonoBehaviour
     }
 
 
-    public Action StartGameAction;
+    //public Action StartGameAction;
 
     public void EnterUserName()
     {
@@ -3467,8 +3467,8 @@ public class UserRegisterationManager : MonoBehaviour
             UsernamescreenLoader.SetActive(false);
         }
 
-        if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
-            StartGameAction?.Invoke();    // only for PMY World
+        //if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+        //    StartGameAction?.Invoke();    // only for PMY World
 
         GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(Localusername);
         if (isSetXanaliyaUserName)//rik
@@ -4244,8 +4244,8 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                     DynamicEventManager.deepLink?.Invoke("Login user here");
 
-                    if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
-                        StartGameAction?.Invoke();    // only for PMY World
+                    //if (XanaConstants.xanaConstants.metaverseType == XanaConstants.MetaverseType.PMY)
+                    //    StartGameAction?.Invoke();    // only for PMY World
 
                     if (myObject1.data.isAdmin)
                     {
