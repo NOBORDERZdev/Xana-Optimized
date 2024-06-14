@@ -10,7 +10,7 @@ using static ReactionManager;
 public class EmoteManager : MonoBehaviour
 {
     public EmoteAnimationResponse EmoteServerData;
-    public enum EmoteGroup {Dance, Moves, Reaction, Idle, Walk}
+    public enum EmoteGroup { Moves, Dance, Reaction, Idle, Walk}
     public EmoteGroup EmoteGroupSelected = EmoteGroup.Moves;
     public void GetServerData()
     {
@@ -55,6 +55,7 @@ public class EmoteManager : MonoBehaviour
     }
     public void OpenEmoteDialogUI()
     {
+        Debug.LogError("OpenEmoteDialogUI ---->  " + EmoteGroupSelected.ToString());
         List<EmoteAnimationList> items = EmoteServerData.data.animationList.FindAll(x => x.group == EmoteGroupSelected.ToString());
         EmoteReactionUIHandler.SetViewItemsEmote?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Emote);
     }
