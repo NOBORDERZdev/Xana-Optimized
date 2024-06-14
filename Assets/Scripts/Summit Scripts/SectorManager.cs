@@ -44,7 +44,8 @@ public class SectorManager : MonoBehaviour
         {
             StopCoroutine(routine);
         }
-        StartCoroutine(WaitBeforeHandover(Name));
+        
+       routine= StartCoroutine(WaitBeforeHandover(Name));
 
 
     }

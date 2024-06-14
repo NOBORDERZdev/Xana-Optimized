@@ -271,6 +271,10 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         print("OnCreatedRoom called");
+        if(PhotonNetwork.IsMasterClient  && SummitEntityManager.instance) {
+            CarNavigationManager.instance.Cars.Clear();
+            SummitEntityManager.instance.InstantiateCAR();
+        }
     }
 
     public override void OnJoinedRoom()
@@ -320,6 +324,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     {
         Debug.Log("Disconnected");
         playerobjects.Clear();
+
     }
 
     public virtual void Disconnect()

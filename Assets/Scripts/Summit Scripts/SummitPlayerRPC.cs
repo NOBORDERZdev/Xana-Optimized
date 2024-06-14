@@ -231,7 +231,7 @@ public class SummitPlayerRPC : MonoBehaviour
     public void Exit()
     {
         showExit = true;
- 
+        CarNavigationManager.instance.DisableExitCanvas();
     }
     public void CancelExit()
     {
