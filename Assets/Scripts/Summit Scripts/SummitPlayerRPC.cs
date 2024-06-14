@@ -42,6 +42,14 @@ public class SummitPlayerRPC : MonoBehaviour
             CarNavigationManager.instance.ExitCar(carID);
         }
 
+      
+        StartCoroutine(exitCoolDown());
+    
+
+    }
+    IEnumerator exitCoolDown()
+    {
+        yield return new WaitForSeconds(1) ;
         var car = CarNavigationManager.instance.Cars[carID].gameObject.GetComponent<SplineFollower>();
         GetComponent<Animator>().SetTrigger("ExitCar");
         showExit = false;
@@ -57,7 +65,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.DriverExitPosition.transform.position;
-          
+
                 transform.parent.gameObject.GetComponent<CharacterController>().enabled = true;
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
@@ -69,8 +77,8 @@ public class SummitPlayerRPC : MonoBehaviour
             {
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-   
-                transform.parent =Parent;
+
+                transform.parent = Parent;
                 transform.position = car.DriverExitPosition.transform.position;
             }
             //transform.position = car.DriverPos;
@@ -82,7 +90,7 @@ public class SummitPlayerRPC : MonoBehaviour
             car.pasengerseatemty = true;
             if (GetComponent<PhotonView>().IsMine)
             {
-               
+
 
                 CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
@@ -91,14 +99,14 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
-             
-              
+
+
             }
             else
             {
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
- 
+
                 transform.parent = Parent;
                 transform.position = car.PassengerExitPosition.transform.position;
             }
@@ -106,14 +114,8 @@ public class SummitPlayerRPC : MonoBehaviour
         }
 
 
-        Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName } , new byte[] { voiceNetwork.Client.GlobalInterestGroup } ));
-        StartCoroutine(exitCoolDown());
-    
-
-    }
-    IEnumerator exitCoolDown()
-    {
-        yield return new WaitForSeconds(2) ;
+        Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
+        yield return new WaitForSeconds(2);
         isInsideCAr = false;
     }
 
