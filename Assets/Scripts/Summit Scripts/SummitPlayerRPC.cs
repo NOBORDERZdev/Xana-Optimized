@@ -166,23 +166,26 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<PhotonTransformView>().enabled = false;
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
-       
+
+               
                 Parent = transform.parent;
-                transform.parent = car.transform;
+                GameObject gasme = new GameObject();
+                gasme.transform.parent = car.transform;
+                transform.parent = gasme.transform;
                 transform.localPosition = car.DriverPosition.transform.localPosition;
                 transform.localRotation = new Quaternion(0, 0, 0, 0);
-                transform.localScale = Vector3.one*1.368f;
+                gasme.transform.localScale = new Vector3(1.368f, 1.368f, 1.368f);
             }
             //transform.position = car.DriverPos;
             if (gameObject.name.Contains("XanaAvatar2.0_Female"))
             {
                 car.isDriverMale = false;
             }
-            if (!car.isPassengerMale && car.isDriverMale && car.pasengerseatemty && car.driverseatempty)
+            if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
             {
                 car.showLove();
             }
-            else if (car.isPassengerMale && !car.isDriverMale && car.pasengerseatemty && car.driverseatempty)
+            else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && car.driverseatempty)
             {
                 car.showLove();
             }
@@ -210,7 +213,7 @@ public class SummitPlayerRPC : MonoBehaviour
                 transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
                 CarNavigationManager.instance.onExitpress += Exit;
                 CarNavigationManager.instance.onCancelPress += CancelExit;
-                transform.parent.transform.localScale = Vector3.one;
+             
             }
             else
             {
@@ -218,22 +221,25 @@ public class SummitPlayerRPC : MonoBehaviour
                 gameObject.GetComponent<ArrowManager>().enabled = false;
                 gameObject.GetComponent<PhotonTransformView>().enabled = false;
                
+                
                 Parent = transform.parent;
-                transform.parent = car.transform;
+                GameObject gasme = new GameObject();
+                gasme.transform.parent = car.transform;
+                transform.parent = gasme.transform;
                 transform.localPosition = car.PacengerPosition.transform.localPosition;
                 transform.localRotation = new Quaternion(0, 0, 0, 0);
-                transform.localScale = Vector3.one * 1.368f;
+                gasme.transform.localScale = new Vector3(1.368f, 1.368f, 1.368f);
             }
             GetComponent<Animator>().SetTrigger("EnterCar");
             if (gameObject.name.Contains("XanaAvatar2.0_Female"))
             {
                 car.isPassengerMale = false;
             }
-            if (!car.isPassengerMale && car.isDriverMale && car.pasengerseatemty && car.driverseatempty)
+            if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
             {
                 car.showLove();
             }
-            else if (car.isPassengerMale && !car.isDriverMale && car.pasengerseatemty && car.driverseatempty)
+            else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
             {
                 car.showLove();
             }
