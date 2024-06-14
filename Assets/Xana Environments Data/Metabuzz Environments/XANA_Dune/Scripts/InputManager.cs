@@ -106,18 +106,18 @@ public class InputManager : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.gameObject.tag == "Terrain")
+        if (collision.collider.gameObject.name == "Ground_Main_Sand")
             isTouchingGround = true;
     }
     void OnCollisionStay(Collision collision)
     {
-        if (collision.collider.gameObject.tag == "Terrain")
+        if (collision.collider.gameObject.name == "Ground_Main_Sand")
             isTouchingGround = true;
     }
 
     void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.gameObject.tag == "Terrain")
+        if (collision.collider.gameObject.name == "Ground_Main_Sand")
             isTouchingGround = false;
     }
 

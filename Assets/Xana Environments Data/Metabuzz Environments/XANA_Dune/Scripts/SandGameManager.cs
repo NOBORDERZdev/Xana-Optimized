@@ -195,7 +195,9 @@ public class SandGameManager : MonoBehaviour
             board.GetComponent<FixedJoint>().connectedBody = playerRb;
             //player.AddComponent<XanaDuneControllerHandler>();
             player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
-            StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(-88f, 1f));
+            //StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(-88f, 1f));
+            GameplayEntityLoader.instance.PlayerCamera.m_XAxis.Value = -88f;
+            GameplayEntityLoader.instance.PlayerCamera.m_YAxis.Value = 1f;
             PlayerCameraController.instance.lockRotation = true;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
@@ -482,9 +484,9 @@ public class SandGameManager : MonoBehaviour
 
     public void SetBoardOff()
     {
-        Rigidbody rb = player.GetComponent<Rigidbody>();
-        rb.mass = 50f;
-        rb.freezeRotation = true;
+        //Rigidbody rb = player.GetComponent<Rigidbody>();
+        //rb.mass = 50f;
+        //rb.freezeRotation = true;
 
         board.gameObject.SetActive(false);
         Animator34.SetBool("IsStart", false);

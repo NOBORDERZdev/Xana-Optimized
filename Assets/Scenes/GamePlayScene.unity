@@ -4361,10 +4361,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 429271913, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1495891643, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1808683680640967397}
+    - target: {fileID: 463399597260185209, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 536599160913117861, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: actionImg
       value: 
@@ -4373,6 +4381,10 @@ PrefabInstance:
       propertyPath: actionImg
       value: 
       objectReference: {fileID: 9067209682325055453}
+    - target: {fileID: 644357998125211101, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 863866572217059626, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: actionImg
       value: 
@@ -4421,10 +4433,26 @@ PrefabInstance:
       propertyPath: actionImg
       value: 
       objectReference: {fileID: 456511132}
+    - target: {fileID: 4724797608476731533, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724797608476731533, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4724797608476731533, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5330190933736358587, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: actionImg
       value: 
       objectReference: {fileID: 9067209682325055451}
+    - target: {fileID: 5921988300261766869, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6181471327539254227, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -4533,6 +4561,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 79798790}
+    - target: {fileID: 7513490394910654503, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7545938813068912597, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
       propertyPath: actionImg
       value: 
@@ -4557,6 +4589,10 @@ PrefabInstance:
       propertyPath: actionImg
       value: 
       objectReference: {fileID: 9067209682325055458}
+    - target: {fileID: 8960113893667095853, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
 --- !u!1 &429271889 stripped
@@ -9153,25 +9189,93 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: _jump
+      value: 
+      objectReference: {fileID: 1542650061}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: EmotePanel
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 813728259}
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: ActionPanel
       value: 
       objectReference: {fileID: 429271893}
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: _micOnButton
+      value: 
+      objectReference: {fileID: 429271911}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: ReactionPanel
       value: 
       objectReference: {fileID: 429271900}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: _micOffButton
+      value: 
+      objectReference: {fileID: 429271889}
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: ChatInputField
       value: 
       objectReference: {fileID: 429271909}
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: _animationcloseButton
+      value: 
+      objectReference: {fileID: 1540426459}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[0]
+      value: 
+      objectReference: {fileID: 429271908}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[1]
+      value: 
+      objectReference: {fileID: 429271907}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[2]
+      value: 
+      objectReference: {fileID: 429271905}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[3]
+      value: 
+      objectReference: {fileID: 429271906}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[4]
+      value: 
+      objectReference: {fileID: 429271903}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[5]
+      value: 
+      objectReference: {fileID: 429271890}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[6]
+      value: 
+      objectReference: {fileID: 429271891}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[7]
+      value: 
+      objectReference: {fileID: 429271902}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[8]
+      value: 
+      objectReference: {fileID: 429271901}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[9]
+      value: 
+      objectReference: {fileID: 429271899}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: ButtontoUninteractable.Array.size
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[10]
+      value: 
+      objectReference: {fileID: 429271910}
+    - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
+      propertyPath: UiObjectsToDisable.Array.data[11]
+      value: 
+      objectReference: {fileID: 1528995366}
     - target: {fileID: 1539265686373339524, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
       propertyPath: ButtontoUninteractable.Array.data[0]
       value: 
@@ -13246,6 +13350,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherButton: {fileID: 606396804}
+--- !u!1 &1542650061 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1495891641, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+  m_PrefabInstance: {fileID: 429271888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1547223302
 GameObject:
   m_ObjectHideFlags: 0
@@ -19577,7 +19686,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153501369240}
-  m_LocalRotation: {x: 0.039276537, y: -0.0008918464, z: 0.000035055702, w: 0.999228}
+  m_LocalRotation: {x: 0.039276537, y: -0.0008918507, z: 0.000035055873, w: 0.999228}
   m_LocalPosition: {x: 0, y: 1.555, z: -3}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20202,7 +20311,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154157259590}
-  m_LocalRotation: {x: 0.039276533, y: -0.00089184626, z: 0.000035057565, w: 0.999228}
+  m_LocalRotation: {x: 0.039276533, y: -0.00089185056, z: 0.000035057732, w: 0.999228}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20280,7 +20389,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641493, y: -0.00089248497, z: 0.000009499775, w: 0.999943}
+  m_LocalRotation: {x: 0.010641497, y: -0.00089248514, z: 0.00000949978, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -20745,12 +20854,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2039359221}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _screenRotateButton
+      value: 
+      objectReference: {fileID: 466089224}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: _animationcloseButton
       value: 
       objectReference: {fileID: 913098791}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: UiObjectsToDisable.Array.size
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: UiObjectsToDisable.Array.data[0]
@@ -39744,6 +39857,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewUI Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2185985444613829997, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2185985444613829998, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_PixelPerfect
       value: 0
@@ -39822,7 +39939,7 @@ PrefabInstance:
       objectReference: {fileID: 1808683680640967397}
     - target: {fileID: 6907531792610345431, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30.000183
+      value: 30.000214
       objectReference: {fileID: 0}
     - target: {fileID: 6922268560118772997, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: actionImgPotrait

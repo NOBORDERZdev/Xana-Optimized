@@ -22,6 +22,7 @@ public class Enable_DisableObjects : MonoBehaviour
     [SerializeField] private GameObject _micOnButton;
     [SerializeField] private GameObject _micOffButton;
     [SerializeField] private GameObject _animationcloseButton;
+    [SerializeField] private GameObject _screenRotateButton;
     private bool _wasMicOn;
     private bool _once = false;
 
@@ -123,6 +124,11 @@ public class Enable_DisableObjects : MonoBehaviour
             }
         }
 
+    }
+
+    public void DisableScreenRotaionButton()
+    {
+        _screenRotateButton.SetActive(false);
     }
 
 }
