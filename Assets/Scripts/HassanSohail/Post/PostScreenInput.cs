@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
-using static UnityEngine.Rendering.DebugUI;
 using System.Text.RegularExpressions;
 
 public class PostScreenInput : MonoBehaviour
@@ -53,6 +51,7 @@ public class PostScreenInput : MonoBehaviour
         ActiveInputFeild();
         StartCoroutine(SetBubblePos());
         bubbleHeightCheck = false;
+        bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
     }
 
     private void Start(){ 
@@ -135,11 +134,13 @@ public class PostScreenInput : MonoBehaviour
         }
         if (ShowText.text.Count() <= 10)
         {
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
             bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
             bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
         }
         if (ShowText.text.Count() >= 70)
         {
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.6f;
             bubbleParent.anchorMin = new Vector2(0.1023894f, 0.5964248f);
             bubbleParent.anchorMax = new Vector2(0.8206365f, 0.7767635f);
         }
