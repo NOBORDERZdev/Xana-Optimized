@@ -431,6 +431,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             newObj.SetActive(false);
             if (PhotonNetwork.IsMasterClient)
             {
+                GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
                 var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
