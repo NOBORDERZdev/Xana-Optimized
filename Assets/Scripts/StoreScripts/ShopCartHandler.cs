@@ -7,6 +7,7 @@ using UnityEngine.Networking;
 using System.Text;
 using System;
 using DigitalRubyShared;
+using DG.Tweening;
 
 public class ShopCartHandler : MonoBehaviour
 {
@@ -22,13 +23,15 @@ public class ShopCartHandler : MonoBehaviour
     public GameObject _PurchaseSuccessPanel;
     public GameObject _PurchaseFailPanel;
     public GameObject _LowBalancePanel;
+    public Transform _ScallingObj;
+
 
     float currentBalance = 1000;
 
-    private void Start()
-    {
-        RegisterNewTouchInput();
-    }
+    //private void Start()
+    //{
+    //    RegisterNewTouchInput();
+    //}
     public void EnableCartPanel()
     {
         if (selectedItems.Count == 0)
@@ -48,8 +51,22 @@ public class ShopCartHandler : MonoBehaviour
             _cartObj.GetComponent<PurchaseableItemHandler>().DataSetter(selectedItems[i], this);     
         }
         cartParentObj.SetActive(true);
+        _ScallingObj.DOScaleY(1, 0.2f).SetEase(Ease.Linear);
         UpdateTotalCount_Amount();
     }
+
+    public void CloseCartPanel()
+    {
+        _ScallingObj.DOScaleY(0, 0.2f).SetEase(Ease.Linear).OnComplete(delegate 
+        {
+            cartParentObj.SetActive(false);
+            foreach (Transform child in parentObj.transform)
+            {
+               child.gameObject.SetActive(false);
+            }
+        });
+    }
+
     public void UpdateTotalCount_Amount()
     {
         totalPrice = 0;
@@ -89,10 +106,16 @@ public class ShopCartHandler : MonoBehaviour
             itemId = itemIds,
             amount = totalPrice
         };
+        
+        // Manually constructing the itemId array as a JSON string
+        string itemIdJsonArray = "[\"" + string.Join("\", \"", data.itemId) + "\"]";
 
-        string jsonData = JsonUtility.ToJson(data);
-        Debug.Log("Selected Object Json Data : " + jsonData);
+        // Escaping double quotes for JSON string
+        string escapedItemIdJsonArray = itemIdJsonArray.Replace("\"", "\\\"");
 
+        // Constructing the final JSON string
+        string jsonData = $"{{\"itemId\": \"{escapedItemIdJsonArray}\",\r\n    \"amount\": {data.amount}}}";
+      
         using (UnityWebRequest request = new UnityWebRequest(APIUrl, "POST"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
@@ -111,6 +134,7 @@ public class ShopCartHandler : MonoBehaviour
                 bool _Success = _ParsingJson["success"].AsBool;
                 if (_Success)
                 {
+                    ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully = true;
                     _PurchaseSuccessPanel.SetActive(true);
                     ConstantsHolder.xanaConstants.availableBalance -= totalPrice;
                     currentBalance = ConstantsHolder.xanaConstants.availableBalance;
@@ -119,6 +143,7 @@ public class ShopCartHandler : MonoBehaviour
                     totalPriceTxt.text = "0";
 
                     InventoryManager.instance.UpdateUserXeny();
+                    InventoryManager.instance.SelectPanel(0);
                 }
                 else
                 {
@@ -132,7 +157,8 @@ public class ShopCartHandler : MonoBehaviour
                 _PurchaseFailPanel.SetActive(true);
             }
 
-            _CartPanel.SetActive(false);
+            cartParentObj.SetActive(false);
+            //_CartPanel.SetActive(false);
             buyTxt.SetActive(true);
             buyLoading.SetActive(false);
         }
@@ -156,43 +182,43 @@ public class ShopCartHandler : MonoBehaviour
     }
 
 
-    #region Close Panel On Swipe
+    //#region Close Panel On Swipe
 
-    private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
-    public SwipeGestureRecognizerDirection lastSwipeMovement;
-    void RegisterNewTouchInput()
-    {
-        swipe1.StateUpdated += Swipe_Updated;
-        swipe1.AllowSimultaneousExecution(null);
-        swipe1.DirectionThreshold = 1f;
-        swipe1.MinimumSpeedUnits = 1f;
-        swipe1.PlatformSpecificView = cartParentObj.transform.GetChild(0).gameObject;
-        swipe1.MinimumNumberOfTouchesToTrack = 1;
-        swipe1.ThresholdSeconds = 1f;
-        swipe1.MinimumDistanceUnits = 5f;
-        swipe1.EndMode = SwipeGestureRecognizerEndMode.EndWhenTouchEnds;
-        FingersScript.Instance.AddGesture(swipe1);
-    }
-    public void Swipe_Updated(DigitalRubyShared.GestureRecognizer gesture)
-    {
-        if (swipe1.EndDirection == SwipeGestureRecognizerDirection.Down)
-        {
-            lastSwipeMovement = swipe1.EndDirection;
-        }
+    //private SwipeGestureRecognizer swipe1 = new SwipeGestureRecognizer();
+    //public SwipeGestureRecognizerDirection lastSwipeMovement;
+    //void RegisterNewTouchInput()
+    //{
+    //    swipe1.StateUpdated += Swipe_Updated;
+    //    swipe1.AllowSimultaneousExecution(null);
+    //    swipe1.DirectionThreshold = 1f;
+    //    swipe1.MinimumSpeedUnits = 1f;
+    //    swipe1.PlatformSpecificView = cartParentObj.transform.GetChild(0).gameObject;
+    //    swipe1.MinimumNumberOfTouchesToTrack = 1;
+    //    swipe1.ThresholdSeconds = 1f;
+    //    swipe1.MinimumDistanceUnits = 5f;
+    //    swipe1.EndMode = SwipeGestureRecognizerEndMode.EndWhenTouchEnds;
+    //    FingersScript.Instance.AddGesture(swipe1);
+    //}
+    //public void Swipe_Updated(DigitalRubyShared.GestureRecognizer gesture)
+    //{
+    //    if (swipe1.EndDirection == SwipeGestureRecognizerDirection.Down)
+    //    {
+    //        lastSwipeMovement = swipe1.EndDirection;
+    //    }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (lastSwipeMovement == SwipeGestureRecognizerDirection.Down)
-            {
-                if(cartParentObj.activeInHierarchy)
-                    cartParentObj.SetActive(false);
+    //    if (Input.GetMouseButtonUp(0))
+    //    {
+    //        if (lastSwipeMovement == SwipeGestureRecognizerDirection.Down)
+    //        {
+    //            if(cartParentObj.activeInHierarchy)
+    //                cartParentObj.SetActive(false);
 
-                lastSwipeMovement = SwipeGestureRecognizerDirection.Any;
-            }
-        }
+    //            lastSwipeMovement = SwipeGestureRecognizerDirection.Any;
+    //        }
+    //    }
 
-    }
-    #endregion
+    //}
+    //#endregion
 }
 
 [System.Serializable]

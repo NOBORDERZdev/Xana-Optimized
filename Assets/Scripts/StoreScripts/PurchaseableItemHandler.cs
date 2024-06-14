@@ -17,10 +17,12 @@ public class PurchaseableItemHandler : MonoBehaviour
     ItemDetail _MyData;
     public ShopCartHandler _ShopCartHandler;
 
+    List<ItemDetail> _selectedItemInCart;
 
 
     void Start()
     {
+        _selectedItemInCart = _ShopCartHandler.selectedItems;
         StartCoroutine(AddIconSprite(_MyData.iconLink));
     }
     IEnumerator AddIconSprite(string iconLink)
@@ -64,12 +66,12 @@ public class PurchaseableItemHandler : MonoBehaviour
         if (selectImageIcon.sprite == selected)
         {
             selectImageIcon.sprite = unselected;
-            _ShopCartHandler.selectedItems.Remove(_MyData);
+            _selectedItemInCart.Remove(_MyData);
         }
         else
         {
             selectImageIcon.sprite = selected;
-            _ShopCartHandler.selectedItems.Add(_MyData);
+            _selectedItemInCart.Add(_MyData);
         }
        
         _ShopCartHandler.UpdateTotalCount_Amount();

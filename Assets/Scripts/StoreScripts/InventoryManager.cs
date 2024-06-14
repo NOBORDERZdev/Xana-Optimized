@@ -815,7 +815,8 @@ public class InventoryManager : MonoBehaviour
     Coroutine itemLoading, hitAllItemAPICorountine;
     IEnumerator HitALLItemsAPI(string url, string Jsondata)
     {
-        if (apiResponseHolder.CheckResponse(url + Jsondata))
+        
+        if (!ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully && apiResponseHolder.CheckResponse(url + Jsondata))
         {
             GetItemInfoNewAPI JsonDataObj1 = new GetItemInfoNewAPI();
             JsonDataObj1 = JsonUtility.FromJson<GetItemInfoNewAPI>(apiResponseHolder.GetResponse(url + Jsondata));
@@ -861,7 +862,15 @@ public class InventoryManager : MonoBehaviour
 
                     dataListOfItems = JsonDataObj.data[0].items;
                     PutDataInOurAPPNewAPI();
-                    apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
+                    if (ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully && apiResponseHolder.CheckResponse(url + Jsondata))
+                    {
+                        apiResponseHolder.ChangeReponse(url + Jsondata, request.downloadHandler.text);
+                    }
+                    else
+                    {
+                        apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
+                    }
+                        
                     if (LoadingHandler.Instance)
                         LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
                 }

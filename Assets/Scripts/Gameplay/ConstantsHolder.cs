@@ -87,7 +87,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isCameraMan;
     public bool isCameraManInRoom = false;
     public bool isBackfromSns = false;
-
+    public bool isStoreItemPurchasedSuccessfully = false;   
     public bool isBackFromWorld = false;
     public String MuseumID;
 
