@@ -56,7 +56,7 @@ public class ConstantsGod
     //All Item Api
     public static string GETALLSTOREITEMCATEGORY = "/item/all-category";
     public static string GETALLSTOREITEMSUBCATEGORY = "/item/subcategories";
-    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ "/item/v3/all-items";
+    public static string GETALLSTOREITEMS = /*"/item/all-items"*/ /*"/item/v2/all-items"*/ /*"/item/v3/all-items"*/"/item/v4/all-items";
 
 
 
@@ -216,6 +216,26 @@ public class ConstantsGod
 
     #endregion
 
+
+    #region XENY Api
+
+    public static string GetUserXenyCoinsApi
+    {
+        get
+        {
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                return "https://prod-backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+            else
+            {
+                return "https://backend.xanalia.com/sale-nft/get-xeny-balance-by-user-in-eth";
+            }
+        }
+    }
+
+    #endregion
+
     #region GrammyAward Api
 
     public static readonly string getAnimationTime = "/item/get-timeCount";
@@ -284,5 +304,13 @@ public class ConstantsGod
 
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
+    #region Toyota Email Api's
+    public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
+    public static string toyotaNotificationApi = "/toyotaAichiWorlds/save-user-token";
+    public static string joinmeetingroom = "/toyotaAichiWorlds/join-meeting-room";
+    public static string leavemeetingroom = "/toyotaAichiWorlds/leave-meeting-room";
+    public static string getmeetingroomcount = "/toyotaAichiWorlds/check-meeting-members/";
+    public static string wrapobjectApi = "/toyotaAichiWorlds/get-status-of-worldId/";
     #endregion
 }

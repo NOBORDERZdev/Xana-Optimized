@@ -187,6 +187,9 @@ public class FeedUIController : MonoBehaviour
         AddFriendPanel.SetActive(flag);    
         HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);
@@ -197,12 +200,21 @@ public class FeedUIController : MonoBehaviour
         AddFriendSerachBar.SetActive(!AddFriendSerachBar.activeInHierarchy);
         if (AddFriendSerachBar.activeInHierarchy)
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=105;
+            HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = true;
         }
         else
         {
-            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top= 50;
+            HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
         }
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddToHeightPaddingForSearchUI();
+        //if (AddFriendSerachBar.activeInHierarchy)
+        //{
+        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=105;
+        //}
+        //else
+        //{
+        //AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        //}
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
@@ -594,6 +606,9 @@ public class FeedUIController : MonoBehaviour
         MyProfileDataManager.Instance.myProfileScreen.SetActive(false); 
         AddFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
+        HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         OnClickHotFrnd();
         SNS_APIManager.Instance.SetHotFriend();
     }
@@ -812,8 +827,19 @@ public class FeedUIController : MonoBehaviour
             UpdateAdFrndBtnStatus(0);
         }
     }
-
-     public void OnClickRecommedationFrnd(){
+    public void OnClickHotFrndfromProfile()
+    {
+        if (!HotFriendPanel.activeInHierarchy)
+        {
+            SetAddFriendScreen(true);
+            SNS_APIManager.Instance.SetHotFriend();
+            findFriendInputFieldAdvanced.Text = "";
+            findFriendScreen.gameObject.SetActive(false);
+            OnClickHotFrnd();
+            ResetAllFeedScreen(true);
+        }
+    }
+    public void OnClickRecommedationFrnd(){
         if (!AddFrndRecommendedPanel.activeInHierarchy){ 
             HotFriendPanel.SetActive(false);
             AddFrndFollowingPanel.SetActive(false);

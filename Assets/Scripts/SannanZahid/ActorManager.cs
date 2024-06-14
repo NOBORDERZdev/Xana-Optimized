@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public class ActorManager : MonoBehaviour
 {
     [NonReorderable]
@@ -97,20 +97,22 @@ public class ActorManager : MonoBehaviour
         return actor.NumberOfIdleAnimations;
     }
 
-    int GetPostRandomDefaultAnim(){ 
-        float _rand = UnityEngine.Random.Range(0.1f, 3.0f);
-        int value; 
-        if (_rand <= 1.0f)
+    // Randomly select a post animation that fits well on the home screen (1-4), (11-13), (19-21)
+    public int GetPostRandomDefaultAnim()  
+    { 
+        int _rand = Random.Range(1, 4);
+        int value;
+        switch (_rand)
         {
-            value= 0;
-        }
-        else if (_rand >= 1.0f && _rand <= 2.0f)
-        {
-            value= 1;
-        }
-        else
-        {
-            value= 2;
+            case 1:
+                value = Random.Range(1, 5);
+                break;
+            case 2:
+                value = Random.Range(11, 14);
+                break;
+            default:
+                value = Random.Range(19, 22);
+                break;
         }
         return value;
     } 

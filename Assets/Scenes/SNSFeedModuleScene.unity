@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4926,7 +4926,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ed267139911591f4193aa958eda4e5f5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9f3d6efda71df6e46a4ead5eba0ad336, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23895,6 +23895,7 @@ GameObject:
   - component: {fileID: 2101923127}
   - component: {fileID: 2101923126}
   - component: {fileID: 2101923125}
+  - component: {fileID: 2101923129}
   m_Layer: 5
   m_Name: Public ID
   m_TagString: Untagged
@@ -24028,6 +24029,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101923123}
   m_CullTransparentMesh: 0
+--- !u!114 &2101923129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101923123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e697d33baddcc71428704f1fe8d736e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: 2
+  holdDuration: 0.5
+  onLongPress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2101923129}
+        m_TargetAssemblyTypeName: ButtonLongPressListener, Assembly-CSharp
+        m_MethodName: DisplayMsg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: User your Wallet Address is Copied !
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2103297986
 GameObject:
   m_ObjectHideFlags: 0
@@ -28081,6 +28111,7 @@ GameObject:
   - component: {fileID: 1287258196783830756}
   - component: {fileID: 1287258196783830757}
   - component: {fileID: 1287258196783830762}
+  - component: {fileID: 1287258196783830764}
   m_Layer: 5
   m_Name: PhoneNumber
   m_TagString: Untagged
@@ -28132,6 +28163,35 @@ RectTransform:
   m_AnchoredPosition: {x: 540, y: -65}
   m_SizeDelta: {x: 1080, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1287258196783830764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287258196783830760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e697d33baddcc71428704f1fe8d736e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: 1
+  holdDuration: 0.5
+  onLongPress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1287258196783830764}
+        m_TargetAssemblyTypeName: ButtonLongPressListener, Assembly-CSharp
+        m_MethodName: DisplayMsg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: User your Phone Number is Copied !
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1287258196845776322
 GameObject:
   m_ObjectHideFlags: 0
@@ -28361,6 +28421,7 @@ GameObject:
   - component: {fileID: 1287258197060396724}
   - component: {fileID: 1287258197060396725}
   - component: {fileID: 1287258197060396730}
+  - component: {fileID: 1287258197060396732}
   m_Layer: 5
   m_Name: EmailPart
   m_TagString: Untagged
@@ -28412,6 +28473,35 @@ RectTransform:
   m_AnchoredPosition: {x: 540, y: -65}
   m_SizeDelta: {x: 1080, y: 130}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1287258197060396732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287258197060396728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e697d33baddcc71428704f1fe8d736e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: 0
+  holdDuration: 0.5
+  onLongPress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1287258197060396732}
+        m_TargetAssemblyTypeName: ButtonLongPressListener, Assembly-CSharp
+        m_MethodName: DisplayMsg
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: User your Email Address is Copied !
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1287258197124718808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37254,7 +37344,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -37837,7 +37927,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4282466625
-  m_fontColor: {r: 0.25490198, g: 0.25490198, b: 0.25490198, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -37996,7 +38086,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -38159,8 +38249,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed6ebbca55ead4b4c81ae78cb0125d94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toggle: {fileID: 5999778472016838738}
-  _button: {fileID: 5999778472104809438}
+  Toggle: {fileID: 5999778472016838738}
+  Button: {fileID: 5999778472104809438}
+  DescriptionText: {fileID: 5999778471378761733}
 --- !u!1 &5999778472104809436
 GameObject:
   m_ObjectHideFlags: 0
@@ -39384,6 +39475,10 @@ PrefabInstance:
     - target: {fileID: 7640599501441984718, guid: 9621b17e070756a429db0c3d000fd1ad, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 249.99951
+      objectReference: {fileID: 0}
+    - target: {fileID: 7668149493869480609, guid: 9621b17e070756a429db0c3d000fd1ad, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9621b17e070756a429db0c3d000fd1ad, type: 3}
