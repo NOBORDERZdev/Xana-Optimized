@@ -29,7 +29,10 @@ public class StreamYoutubeVideo : MonoBehaviour
         }
         else
         {
-            SumitDomeNftCntrlrRef.TurnOfLdrOnPlayLiveVideo();
+            if (SumitDomeNftCntrlrRef)
+            {
+                SumitDomeNftCntrlrRef.TurnOfLdrOnPlayLiveVideo();
+            }
         }
     }
     public IEnumerator GetStreamableUrl(string Url, bool isLive)

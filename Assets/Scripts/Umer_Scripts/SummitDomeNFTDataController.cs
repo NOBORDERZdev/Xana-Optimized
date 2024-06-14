@@ -567,7 +567,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             {
                 if (request.error == null)
                 {
-                    print("~!~!~! " + request.downloadHandler.text);
+                    //print("~!~!~! " + request.downloadHandler.text);
 
                     DomeNFTDataArray DoomNFTData = new DomeNFTDataArray();
                     DoomNFTData = JsonUtility.FromJson<DomeNFTDataArray>(request.downloadHandler.text);
