@@ -85,6 +85,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 {
                     LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
                 }
+
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+
                 LoadingHandler.Instance.ShowLoading();
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(1f,true));
 

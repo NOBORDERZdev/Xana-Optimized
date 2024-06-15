@@ -54,7 +54,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 
-    public void MoveToLobby()
+    public IEnumerator MoveToLobby()
     {
         // Reset the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = false;
@@ -65,6 +65,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         // Load the main scene
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        yield return new WaitForSeconds(2f);
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 
