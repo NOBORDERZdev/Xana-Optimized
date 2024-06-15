@@ -241,7 +241,7 @@ namespace PhysicsCharacterController
         private void Update()
         {
             //input
-            if (photonView.IsMine)
+            if (photonView.IsMine && input!= null)
             {
                 axisInput = input.axisInput;
                 jump = input.jump;

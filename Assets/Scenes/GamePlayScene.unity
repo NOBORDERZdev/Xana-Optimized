@@ -1018,6 +1018,7 @@ MonoBehaviour:
   XanaPartyController: {fileID: 1043578925}
   XanaPartyCamera: {fileID: 1788077269}
   XanaPartyInput: {fileID: 4422376555776512726}
+  penguinLook: {fileID: 607259253}
 --- !u!4 &79798789
 Transform:
   m_ObjectHideFlags: 0
@@ -5940,6 +5941,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   otherButton: {fileID: 1541432457}
+--- !u!1 &607259251
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 607259252}
+  - component: {fileID: 607259253}
+  m_Layer: 0
+  m_Name: PenguinLook
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &607259252
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607259251}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1043578926}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &607259253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607259251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15fcc8a9302178d41a22b762977de124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referenceObject: {fileID: 0}
+  positionSmoothSpeed: 0.125
+  rotationSmoothSpeed: 0.125
+  characterManager: {fileID: 0}
 --- !u!1 &619478969
 GameObject:
   m_ObjectHideFlags: 0
@@ -9448,6 +9497,7 @@ Transform:
   - {fileID: 1788077268}
   - {fileID: 4422376555776512725}
   - {fileID: 1417427441}
+  - {fileID: 607259252}
   m_Father: {fileID: 0}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16145,6 +16195,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1043578926}
     m_Modifications:
+    - target: {fileID: 7823351806651475549, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 607259252}
+    - target: {fileID: 7823351806651475549, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
+      propertyPath: m_LookAt
+      value: 
+      objectReference: {fileID: 607259252}
     - target: {fileID: 7823351807975455078, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
       propertyPath: m_Name
       value: '[Cameras]'
@@ -16192,10 +16250,6 @@ PrefabInstance:
     - target: {fileID: 7823351807975455079, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7823351807975455128, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
@@ -20630,7 +20684,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806947, y: -0.0008904597, z: 0.000060755927, w: 0.99768025}
+  m_LocalRotation: {x: 0.068069465, y: -0.0008904671, z: 0.000060756418, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
