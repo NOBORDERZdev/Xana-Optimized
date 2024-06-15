@@ -9,14 +9,17 @@ public class SummitBGMSoundManager : MonoBehaviour
 {
     public AudioSource audioSource;
     public XANASummitDataContainer summitDataContainer;
+    AudioClip clip;
     private void OnEnable()
     {
         BuilderEventManager.AfterPlayerInstantiated += StartBGMSound;
+        GamePlayButtonEvents.OnExitButtonXANASummit += StopBGM;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= StartBGMSound;
+        GamePlayButtonEvents.OnExitButtonXANASummit -= StopBGM;
     }
 
     void StartBGMSound()
@@ -43,7 +46,7 @@ public class SummitBGMSoundManager : MonoBehaviour
             }
             else
             {
-                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+                clip = DownloadHandlerAudioClip.GetContent(www);
                 audioSource.clip = clip;
                 audioSource.loop = true;
                 audioSource.Play();
@@ -52,14 +55,12 @@ public class SummitBGMSoundManager : MonoBehaviour
         }
     }
 
-    //public static AudioClip ByteArrayToAudioClip(byte[] bytes, int channels, int frequency)
-    //{
-    //    // Convert binary array to AudioClip
-    //    float[] nsamples = new float[bytes.Length / sizeof(float)];
-    //    Buffer.BlockCopy(bytes, 0, nsamples, 0, bytes.Length);
-    //    AudioClip clip = AudioClip.Create("Generated Clip", nsamples.Length, channels, frequency, false);
-    //    clip.SetData(nsamples, 0);
 
-    //    return clip;
-    //}
+    void StopBGM()
+    {
+        audioSource.Stop();
+        audioSource.clip = null;
+        Destroy(clip); 
+    }
+    
 }

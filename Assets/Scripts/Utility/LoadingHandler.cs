@@ -477,7 +477,7 @@ public class LoadingHandler : MonoBehaviour
     {
         fader.gameObject.SetActive(true);
         // loop over 1 second
-        for (float i = 0; i <= 1; i += Time.deltaTime)
+        for (float i = 0; i <= 1; i += (Time.deltaTime*5))
         {
             // set color with i as alpha
             fader.color = new Color(0, 0, 0, i);
