@@ -10,8 +10,12 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     #region Positioning Mechanics
     private void Start()
     {
-       
+        if (name.Contains("Home"))
+        {
+            UpdateNameText(PlayerPrefs.GetString("PlayerName"));
+        }
         StartCoroutine(SetName());
+       
     }
     public void SetNameOfPlayerAgain()
     {
