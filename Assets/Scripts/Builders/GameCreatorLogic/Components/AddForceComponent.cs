@@ -21,6 +21,7 @@ public class AddForceComponent : ItemComponent
     float _forceMultiplier = .4f;
     float _playerEndVelocity = 40;
 
+    bool collideWithComponent;
     public void Init(AddForceComponentData addForceComponentData)
     {
         _rigidBody = GetComponent<Rigidbody>();
@@ -121,9 +122,18 @@ public class AddForceComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
+        if (collideWithComponent)
+            return;
+        collideWithComponent = true;
+        Invoke(nameof(CollideWithComponet), 0.5f);
         ApplyAddForce();
         ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
 
+    }
+
+    void CollideWithComponet()
+    {
+        collideWithComponent = false;
     }
     private void StopComponent()
     {

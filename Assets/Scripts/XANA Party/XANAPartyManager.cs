@@ -11,11 +11,14 @@ public class XANAPartyManager : MonoBehaviour
 {
     public static XANAPartyManager Instance;
 
-    [SerializeField] List<GameData> GameIds = new List<GameData>(); // List of games to play 
+    [SerializeField] List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
+    [SerializeField] List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
+    public List<GameData> GamesToVisitInCurrentRound = new List<GameData>(); // List of games to visit in the current round
+    public int GamesToVisitInCurrentRoundCount = 5; // Number of games to visit in the current round
+    public int GameIndex = 0; // Index of the game to visit
+
     [SerializeField] bool debugMode = false; // To test a specific game
     [SerializeField] int debugGameId = 0; // Index of the game to test
-
-    //private List<GameData> copyList /*= new List<GameData>()*/;
     private Random random = new Random();
 
     private void Awake()
@@ -55,83 +58,96 @@ public class XANAPartyManager : MonoBehaviour
         return ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.JjWorldSceneChange && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame;
     }
 
+    
 
-    public GameData GetRandomAndRemove()
+    public void RandomizeAndUpdateGameData()
     {
-         print("!!!!!!!!!");
-        //Debug.LogError("GetRandomAndRemove---- >  1");
-        //Debug.LogError("GetRandomAndRemove---- >  1.1 "+copyList.Count);
-
-        //if (copyList.Count == 0 || copyList != null)
-        //{
-        //Debug.LogError("GetRandomAndRemove---- >  2");
-         
-        //}
-        //Debug.LogError("GetRandomAndRemove---- >  3");
-        //   copyList = new List<GameData>(GameIds);
-        //Debug.LogError("GetRandomAndRemove---- >  4");
-
-        //int index = random.Next(copyList.Count);
-        //Debug.LogError("GetRandomAndRemove---- >  5");
-
-        //GameData rand = copyList[index];
-        //Debug.LogError("GetRandomAndRemove---- >  6");
-
-        //copyList.RemoveAt(index);
-
-         int index = random.Next(GameIds.Count);
-        Debug.LogError("GetRandomAndRemove---- >  5");
-
-        GameData rand = GameIds[index];
-        Debug.LogError("GetRandomAndRemove---- >  6");
-
-        GameIds.RemoveAt(index);
-
-        if (debugMode)
+        if(RemainingGamesToVisit.Count == 0)      // If all games are visited
         {
-            return  GameIds[debugGameId];//rand;
+            RemainingGamesToVisit = new List<GameData>(TotalGamesToVisit);
+        }
 
+        if (RemainingGamesToVisit.Count < 5)     // If remaining games are less than 5
+        {
+            GamesToVisitInCurrentRoundCount = RemainingGamesToVisit.Count;
         }
         else
         {
-            return rand;
+            GamesToVisitInCurrentRoundCount = 5;
+        }
+
+
+        GamesToVisitInCurrentRound.Clear();
+
+        for (int i = 0; i < GamesToVisitInCurrentRoundCount; i++)     
+        {
+            int randIndex = random.Next(RemainingGamesToVisit.Count);
+            GamesToVisitInCurrentRound.Add(RemainingGamesToVisit[randIndex]);  
+            RemainingGamesToVisit.RemoveAt(randIndex);
+        }
+    }
+
+    public GameData GetGameToVisitNow()
+    {
+        if (GameIndex >= GamesToVisitInCurrentRound.Count) // If all games in the current round are visited
+        {
+            RandomizeAndUpdateGameData();
+        }
+
+        if (debugMode)
+        {
+            return RemainingGamesToVisit[debugGameId];
+        }
+        else
+        {
+            return GamesToVisitInCurrentRound[GameIndex];
         }
     }
         
     IEnumerator FetchXanaPartyGames()
     {
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.GetXanaPartyWorlds;
-        using (UnityWebRequest www = UnityWebRequest.Get(url))
+        if (TotalGamesToVisit.Count != 0)
         {
-            yield return www.SendWebRequest();
+            RandomizeAndUpdateGameData();
+            StartCoroutine(LoadXanaPartyGame(true));
+        }
+        else
+        {
+            string url = ConstantsGod.API_BASEURL + ConstantsGod.GetXanaPartyWorlds;
+            using (UnityWebRequest www = UnityWebRequest.Get(url))
+            {
+                yield return www.SendWebRequest();
 
-            if (www.result != UnityWebRequest.Result.Success)
-            {
-                Debug.Log($"Error on XANA PARTY WORLD FETCH : <color=red>{www.error}</color>");
-            }
-            else
-            {
-                try
+                if (www.result != UnityWebRequest.Result.Success)
                 {
-                    var data = JObject.Parse(www.downloadHandler.text);
-                    print("DATA "+data.ToString());
-                    var rows = data["data"]["rows"];
-                    foreach (var row in rows)
-                    {
-                        GameIds.Add(new GameData( (int)row["id"],row["name"].ToString()));
-                    }
-                   StartCoroutine( LoadXanaPartyGame(true));
+                    Debug.Log($"Error on XANA PARTY WORLD FETCH : <color=red>{www.error}</color>");
                 }
-                catch (Exception e)
+                else
                 {
-                    Debug.Log($"Error on XANA PARTY WORLD Parse : <color=red>{e.Message}</color>");
-                    throw;
+                    try
+                    {
+                        var data = JObject.Parse(www.downloadHandler.text);
+                        print("DATA " + data.ToString());
+                        var rows = data["data"]["rows"];
+                        foreach (var row in rows)
+                        {
+                            TotalGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
+                            RemainingGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
+                        }
+                        RandomizeAndUpdateGameData();
+                        StartCoroutine(LoadXanaPartyGame(true));
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log($"Error on XANA PARTY WORLD Parse : <color=red>{e.Message}</color>");
+                        throw;
+                    }
                 }
             }
         }
     }
 
-    IEnumerator LoadXanaPartyGame(bool isJoiningLobby)
+    public IEnumerator LoadXanaPartyGame(bool isJoiningLobby)
     {
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
@@ -150,18 +166,17 @@ public class XANAPartyManager : MonoBehaviour
         }
         else
         {
-            if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
-            {
-                print("not master ");
-                yield return new WaitForSeconds(15);
-            }
-            else
-            {
-                print("master entering a GAME!");
-                yield return new WaitForSeconds(4);
-            }
-            
             MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+        }
+        if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
+        {
+            print("not master ");
+            yield return new WaitForSeconds(15);
+        }
+        else
+        {
+            print("master entering a GAME!");
+            yield return new WaitForSeconds(4);
         }
 
         HideLoadingScreens();

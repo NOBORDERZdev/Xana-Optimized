@@ -73,7 +73,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &1927154725259993613
@@ -91,20 +91,20 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 513
-  movementSpeed: 3.5
+  movementSpeed: 4.5
   crouchSpeedMultiplier: 0.248
   movementThrashold: 0
   dampSpeedUp: 0.2
   dampSpeedDown: 0.1
-  jumpVelocity: 7
-  fallMultiplier: 5
+  jumpVelocity: 25
+  fallMultiplier: 3
   holdJumpMultiplier: 5
   frictionAgainstFloor: 0.2
   frictionAgainstWall: 0.082
   canLongJump: 0
-  groundCheckerThrashold: 0.1
-  slopeCheckerThrashold: 0.2
-  stepCheckerThrashold: 0.1
+  groundCheckerThrashold: 0.04
+  slopeCheckerThrashold: 0.7
+  stepCheckerThrashold: 0.07
   maxClimbableSlopeAngle: 53.6
   maxStepHeight: 0.3
   speedMultiplierOnAngle:
@@ -134,7 +134,7 @@ MonoBehaviour:
   canSlideMultiplierCurve: 0.061
   cantSlideMultiplierCurve: 0.039
   climbingStairsMultiplierCurve: 0.086
-  gravityMultiplier: 2
+  gravityMultiplier: 1.5
   gravityMultiplyerOnSlideChange: 2
   gravityMultiplierIfUnclimbableSlope: 30
   lockOnSlope: 1

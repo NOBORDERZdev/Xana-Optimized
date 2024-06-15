@@ -872,6 +872,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
+        if (PhotonNetwork.IsMasterClient && GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
+        {
+            foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
+            {
+                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                MultiplayerComponentData multiplayerComponentData = new();
+                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+            }
+        }
+
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
