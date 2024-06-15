@@ -16195,6 +16195,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1043578926}
     m_Modifications:
+    - target: {fileID: 1788077271, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
+      propertyPath: lookSpeedd
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 7823351806651475549, guid: 60542c78ea7861c4381d91d66fa28c9a, type: 3}
       propertyPath: m_Follow
       value: 
@@ -21136,7 +21140,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0106414985, y: -0.00089248456, z: 0.000009499775, w: 0.999943}
+  m_LocalRotation: {x: 0.0106415, y: -0.0008924873, z: 0.000009499807, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -35024,18 +35028,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4338721142732702075}
-        m_TargetAssemblyTypeName: HomeSceneLoader, Assembly-CSharp
-        m_MethodName: XANAPartyBackToLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &6408302776192530264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40948,7 +40940,7 @@ PrefabInstance:
       objectReference: {fileID: 1808683680640967397}
     - target: {fileID: 6860018103360372071, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.12500381
+      value: 0.12500763
       objectReference: {fileID: 0}
     - target: {fileID: 6922268560118772997, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: actionImgPotrait
