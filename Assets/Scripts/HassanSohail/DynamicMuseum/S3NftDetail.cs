@@ -68,6 +68,7 @@ public class DomeNFTData
     public bool isYoutubeUrl;
     public DateTime createdAt;
     public DateTime updatedAt;
+    public bool check;
 }
 
 [System.Serializable]

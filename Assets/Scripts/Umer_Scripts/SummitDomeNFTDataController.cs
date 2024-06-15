@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using VTabs.Libs;
 
 public class SummitDomeNFTDataController : MonoBehaviour
 {
@@ -29,9 +30,9 @@ public class SummitDomeNFTDataController : MonoBehaviour
     public MediaPlayer livePlayerSource;
     public int clRoomId;
     public string roomName;
-    public DynamicMuseumManager DynamicManager;
     public NFTFromServer NFTDataFetchScrptRef;
     public GalleryImageManager NFTDataHandlerScrptRef;
+    public DomeNFTDataArray DoomNFTData;
     public int RoomCount;
     [SerializeField] bool worldPlayingVideos;
     [SerializeField] int RetryChances = 3;
@@ -40,7 +41,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
     [SerializeField] GameObject LandscapeObj;
     [SerializeField] GameObject PotraiteObj;
     [SerializeField]
-    List<S3NftDetail> AllS3Nfts = new List<S3NftDetail>();
+    List<DomeNFTData> AllS3Nfts = new List<DomeNFTData>();
     int ratioId;
     int videoRetry = 0;
     JjRatio _Ratio;
@@ -83,20 +84,15 @@ public class SummitDomeNFTDataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (DynamicManager == null)
-        {
-            DynamicManager = FindObjectOfType<DynamicMuseumManager>();
-            if (DynamicManager)
+            if (NFTDataFetchScrptRef.dynamicManager)
             {
-                RoomCount = DynamicManager.rooms.Count;
+                RoomCount = NFTDataFetchScrptRef.dynamicManager.rooms.Count;
             }
             else
             {
                 RoomCount = 4;
             }
-        }
         _mussuemLink = _singleDomeMusuemApi + ConstantsHolder.domeId;
-        print("-============ " + _mussuemLink);
         Invoke(nameof(GetNFTDataDetails), 1f);
     }
 
@@ -114,7 +110,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
 
     public IEnumerator InitData(DomeNFTDataArray data, List<GameObject> NftPlaceholderList)
     {
-        int nftPlaceHolder = NftPlaceholderList.Count;
+        int nftPlaceHolder = data.getcontentbyDomeId.Count;
         List<JjAsset> worldData= new List<JjAsset>(new JjAsset[data.getcontentbyDomeId.Count]);
         for (int i = 0; i < nftPlaceHolder; i++)
         {
@@ -171,6 +167,8 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     {
 
                         worldInfos[i].Type = DataType.Image;
+                        NftPlaceholderList[i].name = i.ToString();
+                        NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().id = i;
                         NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().isCreateFrame = true;
                         NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().InitData(worldData[j].asset_link + compersionPrfex, null, worldInfos[i].JjRatio, DataType.Image, VideoTypeRes.none);
                         //if (!string.IsNullOrEmpty(worldData[j].title[0]) && !string.IsNullOrEmpty(worldData[j].authorName[0]) && !string.IsNullOrEmpty(worldData[j].description[0]))
@@ -250,17 +248,18 @@ public class SummitDomeNFTDataController : MonoBehaviour
                     }
                     if (NFTDataFetchScrptRef)
                     {
-                        NftPlaceholderList[j].transform.position = new Vector3(NFTDataFetchScrptRef.spawnPoints[j].transform.position.x,
+
+                        NftPlaceholderList[i].transform.position = new Vector3(NFTDataFetchScrptRef.spawnPoints[j].transform.position.x,
     (NFTDataFetchScrptRef.spawnPoints[j].transform.position.y + 0.72f),
     NFTDataFetchScrptRef.spawnPoints[j].transform.position.z);
-                        NftPlaceholderList[j].transform.eulerAngles = NFTDataFetchScrptRef.spawnPoints[j].transform.eulerAngles;
+                        NftPlaceholderList[i].transform.eulerAngles = NFTDataFetchScrptRef.spawnPoints[j].transform.eulerAngles;
                     }
                     else if(NFTDataHandlerScrptRef)
                     {
-                        NftPlaceholderList[j].transform.position = new Vector3(NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.x,
+                        NftPlaceholderList[i].transform.position = new Vector3(NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.x,
 (NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.y + 0.72f),
 NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
-                        NftPlaceholderList[j].transform.eulerAngles = NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.eulerAngles;
+                        NftPlaceholderList[i].transform.eulerAngles = NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.eulerAngles;
                     }
                     break;
                 }
@@ -282,8 +281,8 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             //}
             // else
             //{
-            //   NftPlaceholderList[i].gameObject.SetActive(false);
-            //   NftPlaceholderList[i].GetComponent<SummitVideoAndImageController>().TurnOffAllImageAndVideo();
+            //   _nftPlaceHolderPrefab.gameObject.SetActive(false);
+            //   _nftPlaceHolderPrefab.GetComponent<SummitVideoAndImageController>().TurnOffAllImageAndVideo();
             //}
         }
 
@@ -552,7 +551,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         //    AllS3Nfts.Add(new S3NftDetail());
         //}
 
-        print("~~~~~~~~~ " + ConstantsGod.API_BASEURL + _mussuemLink);
+        //print("~~~~~~~~~ " + ConstantsGod.API_BASEURL + _mussuemLink);
         //print("TOKEN : "+ ConstantsGod.AUTH_TOKEN);
 
         using (UnityWebRequest request = UnityWebRequest.Get(ConstantsGod.API_BASEURL + _mussuemLink))
@@ -569,7 +568,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                 {
                     //print("~!~!~! " + request.downloadHandler.text);
 
-                    DomeNFTDataArray DoomNFTData = new DomeNFTDataArray();
+                    /*DomeNFTDataArray */DoomNFTData = new DomeNFTDataArray();
                     DoomNFTData = JsonUtility.FromJson<DomeNFTDataArray>(request.downloadHandler.text);
 
                     if (DoomNFTData.getcontentbyDomeId.Count == 0)
@@ -592,13 +591,29 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                 Debug.Log(request.error);
             }
             request.Dispose();
+            if (NFTDataFetchScrptRef)
+            {
+                InitializeS3NFTObjt();
+            }
             //yield return StartCoroutine(UdpdatData(AllS3Nfts));
+        }
+    }
+
+    public void InitializeS3NFTObjt()
+    {
+        if (DoomNFTData.getcontentbyDomeId.Count > 0 )
+        {
+            for (int i = 0; i < DoomNFTData.getcontentbyDomeId.Count; i++)
+            {
+                DoomNFTData.getcontentbyDomeId[i].check = true;
+            }
+            UpdateRoomStatus(DoomNFTData.getcontentbyDomeId);
         }
     }
 
     IEnumerator UdpdatData(List<S3NftDetail> allS3Nfts)
     {
-        allS3Nfts = UpdateRoomStatus(allS3Nfts);
+        //allS3Nfts = UpdateRoomStatus(allS3Nfts);
         int i = 0;
         foreach (S3NftDetail d in allS3Nfts)
         {
@@ -617,7 +632,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
             data.SpotLightObj = NFTDataFetchScrptRef.spotLightSprite;
             data.isDynamicMuseum = NFTDataFetchScrptRef.isDynamicMuseum;
-            data.framePrefab = DynamicManager.frame;
+            data.framePrefab = NFTDataFetchScrptRef.dynamicManager.frame;
 
             int tempIndex;
             string ratio;
@@ -642,31 +657,31 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             {
                 tempIndex = 0;
             }
-            data.FrameLocalPos = DynamicManager.exhibatsSizes[tempIndex].FrameLocalPos;
-            data.FrameLocalScale = DynamicManager.exhibatsSizes[tempIndex].FrameLocalScale;
-            data.SpotLightPos = DynamicManager.exhibatsSizes[tempIndex].SpotLightPos;
-            data.ColliderSize = DynamicManager.exhibatsSizes[tempIndex].ColliderSize;
-            data.ColiderPos = DynamicManager.exhibatsSizes[tempIndex].ColiderPos;
-            data.spotLightPrefabPos = DynamicManager.exhibatsSizes[tempIndex].SpotLightPrefabPos;
+            data.FrameLocalPos = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].FrameLocalPos;
+            data.FrameLocalScale = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].FrameLocalScale;
+            data.SpotLightPos = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].SpotLightPos;
+            data.ColliderSize = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].ColliderSize;
+            data.ColiderPos = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].ColiderPos;
+            data.spotLightPrefabPos = NFTDataFetchScrptRef.dynamicManager.exhibatsSizes[tempIndex].SpotLightPrefabPos;
 
-            //data.FrameLocalPos = DynamicManager.FrameLocalPos;
-            //data.FrameLocalScale = DynamicManager.FrameLocalScale;
-            //data.SpotLightPos = DynamicManager.SpotLightPos;
-            //data.ColliderSize = DynamicManager.ColliderSize;
-            data.spotLightPrefab = DynamicManager.spotLightPrefab;
-            data.FrameMat = DynamicManager.FrameMaterial;
-            data.potraiteSize = DynamicManager.potraiteSize;
-            data.landscapeSize = DynamicManager.landscapeSize;
+            //data.FrameLocalPos = NFTDataFetchScrptRef.dynamicManager.FrameLocalPos;
+            //data.FrameLocalScale = NFTDataFetchScrptRef.dynamicManager.FrameLocalScale;
+            //data.SpotLightPos = NFTDataFetchScrptRef.dynamicManager.SpotLightPos;
+            //data.ColliderSize = NFTDataFetchScrptRef.dynamicManager.ColliderSize;
+            data.spotLightPrefab = NFTDataFetchScrptRef.dynamicManager.spotLightPrefab;
+            data.FrameMat = NFTDataFetchScrptRef.dynamicManager.FrameMaterial;
+            data.potraiteSize = NFTDataFetchScrptRef.dynamicManager.potraiteSize;
+            data.landscapeSize = NFTDataFetchScrptRef.dynamicManager.landscapeSize;
 
             // if user is joining through event then video square size should be this 
             if (XanaEventDetails.eventDetails.DataIsInitialized)
             {
-                data.squareSize = DynamicManager.VideosquarSize;
+                data.squareSize = NFTDataFetchScrptRef.dynamicManager.VideosquarSize;
 
             }
             else
             {
-                data.squareSize = DynamicManager.squarSize;
+                data.squareSize = NFTDataFetchScrptRef.dynamicManager.squarSize;
             }
 
             NFTDataFetchScrptRef.spawnPoints[i].GetComponent<DynamicGalleryData>().StartNow();
@@ -680,7 +695,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
     /// update room according to data fetch from server
     /// </summary>
     /// <param name="dataList"> sever response data </param>
-    List<S3NftDetail> UpdateRoomStatus(List<S3NftDetail> allS3Nfts)
+    void UpdateRoomStatus(List<DomeNFTData> allS3Nfts)
     {
         int index = 0;
         int endIndex = 0;
@@ -691,26 +706,32 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
             endIndex = endIndex + 16;
             for (int no = index; no <= endIndex; no++)
             {
-                if (allS3Nfts[no].check == true/*allS3Nfts[no].Title != "" && allS3Nfts[no].NFTImageLink != ""*/)
+                if (no < allS3Nfts.Count)
                 {
-                    nftCount++;
+                    if (allS3Nfts[no].check == true/*allS3Nfts[no].Title != "" && allS3Nfts[no].NFTImageLink != ""*/)
+                    {
+                        nftCount++;
+                    }
+                }
+                else
+                {
+                    break;
                 }
             }
             if (nftCount <= 0)
             {
-                DynamicManager.rooms[roomNo].IsInUse = false;
+                NFTDataFetchScrptRef.dynamicManager.rooms[roomNo].IsInUse = false;
             }
             else
             {
-                DynamicManager.rooms[roomNo].IsInUse = true;
+                NFTDataFetchScrptRef.dynamicManager.rooms[roomNo].IsInUse = true;
             }
             index = endIndex;
             nftCount = 0;
         }
-        List<S3NftDetail> temp = new List<S3NftDetail>(allS3Nfts);
-        allS3Nfts = SwapData(temp);
+        //List<DomeNFTData> temp = new List<DomeNFTData>(allS3Nfts);
+        //allS3Nfts = SwapData(temp);
         CloseAndOpenRoom();
-        return allS3Nfts;
     }
 
     /// <summary>
@@ -718,7 +739,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
     /// </summary>
     /// <param name="allS3Nfts"> nft list from the server</param>
     /// <returns></returns>
-    List<S3NftDetail> SwapData(List<S3NftDetail> allS3Nfts)
+    List<DomeNFTData> SwapData(List<DomeNFTData> allS3Nfts)
     {
         int endIndex;
         int groupFirstIndex;
@@ -726,17 +747,17 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         groupFirstIndex = endIndex - 16;
         for (int r = RoomCount - 1; r >= 1; r--)
         {
-            if (DynamicManager.rooms[r].IsInUse) // check current room is in use ?
+            if (NFTDataFetchScrptRef.dynamicManager.rooms[r].IsInUse) // check current room is in use ?
             {
-                if (!DynamicManager.rooms[r - 1].IsInUse) // check previous room is in use?
+                if (!NFTDataFetchScrptRef.dynamicManager.rooms[r - 1].IsInUse) // check previous room is in use?
                 {
                     for (int i = endIndex; i > groupFirstIndex; i--)
                     {
                         allS3Nfts[i - 16] = allS3Nfts[i];
                         allS3Nfts[i] = null;
                     }
-                    DynamicManager.rooms[r].IsInUse = false;
-                    DynamicManager.rooms[r - 1].IsInUse = true;
+                    NFTDataFetchScrptRef.dynamicManager.rooms[r].IsInUse = false;
+                    NFTDataFetchScrptRef.dynamicManager.rooms[r - 1].IsInUse = true;
                     return SwapData(allS3Nfts);
                 }
             }
@@ -753,19 +774,19 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
     {
         for (int i = 1; i < RoomCount; i++)
         {
-            if (DynamicManager.rooms[i].IsInUse)
+            if (NFTDataFetchScrptRef.dynamicManager.rooms[i].IsInUse)
             {
-                DynamicManager.rooms[i].Obj.SetActive(true);
-                if (DynamicManager.rooms[i].Door)
+                NFTDataFetchScrptRef.dynamicManager.rooms[i].Obj.SetActive(true);
+                if (NFTDataFetchScrptRef.dynamicManager.rooms[i].Door)
                 {
-                    DynamicManager.rooms[i].Door.SetActive(false);
+                    NFTDataFetchScrptRef.dynamicManager.rooms[i].Door.SetActive(false);
                 }
             }
             else
             {
-                DynamicManager.rooms[i].Obj.SetActive(false);
-                if (DynamicManager.rooms[i].Door)
-                    DynamicManager.rooms[i].Door.SetActive(true);
+                NFTDataFetchScrptRef.dynamicManager.rooms[i].Obj.SetActive(false);
+                if (NFTDataFetchScrptRef.dynamicManager.rooms[i].Door)
+                    NFTDataFetchScrptRef.dynamicManager.rooms[i].Door.SetActive(true);
             }
         }
     }
