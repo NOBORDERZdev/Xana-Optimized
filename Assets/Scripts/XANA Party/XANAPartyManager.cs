@@ -167,17 +167,19 @@ public class XANAPartyManager : MonoBehaviour
         else
         {
             MutiplayerController.CurrLobbyName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+
+            if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
+            {
+                print("not master ");
+                yield return new WaitForSeconds(6);
+            }
+            else
+            {
+                print("master entering a GAME!");
+                yield return new WaitForSeconds(3);
+            }
         }
-        if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
-        {
-            print("not master ");
-            yield return new WaitForSeconds(15);
-        }
-        else
-        {
-            print("master entering a GAME!");
-            yield return new WaitForSeconds(4);
-        }
+        
 
         HideLoadingScreens();
         ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.XanaPartyGameName;

@@ -597,11 +597,6 @@ PrefabInstance:
     - {fileID: 1232517126857748535, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
     - {fileID: 732875958853094580, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
---- !u!1 &517105355292958184 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1014379558328205776, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
-  m_PrefabInstance: {fileID: 666229562239245368}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2794350084807102988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3456911669679148596, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
@@ -656,8 +651,8 @@ MonoBehaviour:
   - {fileID: 8366134350609568347}
   - {fileID: 671009727124216616}
   - {fileID: 518715765642469686}
-  FinishPointItemID: 
-  triggerCollider: {fileID: 517105355292958184}
+  triggerCollider: {fileID: 9213151788256856557}
+  isStartPoint: 0
 --- !u!114 &2735370269927750978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,3 +665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a461b58c85e048dfae13f90b3854883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &9213151788256856557 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8567356108860839381, guid: a07e13b075bd021429a84bbb43fcce6b, type: 3}
+  m_PrefabInstance: {fileID: 666229562239245368}
+  m_PrefabAsset: {fileID: 0}
