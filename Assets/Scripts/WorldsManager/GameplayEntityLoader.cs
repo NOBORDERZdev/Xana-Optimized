@@ -132,8 +132,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //  Caching.ClearCache();
     }
 
-
-
     public void StartEventTimer()
     {
         eventUnivStartDateTime = DateTime.Parse(XanaEventDetails.eventDetails.startTime);
@@ -668,6 +666,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         characterManager.enabled =true;
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
+        XanaPartyCamera.thirdPersonCamera.GetComponent<XANAPartyCameraController>().SetReference(player,characterManager.headPoint.gameObject);
         yield return new WaitForSeconds(0.1f);
         if(GamificationComponentData.instance != null){
             GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();
