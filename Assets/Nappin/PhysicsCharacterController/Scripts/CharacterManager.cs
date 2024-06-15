@@ -241,7 +241,7 @@ namespace PhysicsCharacterController
         private void Update()
         {
             //input
-            if (photonView.IsMine)
+            if (photonView.IsMine && input!= null)
             {
                 axisInput = input.axisInput;
                 jump = input.jump;
@@ -281,6 +281,14 @@ namespace PhysicsCharacterController
             UpdateEvents();
         }
 
+        public void HidePlayer(){ 
+            meshCharacter.SetActive(false);
+        }
+
+        public void ShowPlayer()
+        {
+            meshCharacter.SetActive(true);
+        }
 
         #region Checks
 
