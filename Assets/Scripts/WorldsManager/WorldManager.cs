@@ -109,9 +109,9 @@ public class WorldManager : MonoBehaviour
         //while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
         //  (PlayerPrefs.GetString("PlayerName") == ""))
         //    yield return new WaitForSeconds(0.5f);
-        yield return new WaitForSeconds(1f);
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //yield return new WaitForSeconds(1f);
         XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
         yield return null;
     }

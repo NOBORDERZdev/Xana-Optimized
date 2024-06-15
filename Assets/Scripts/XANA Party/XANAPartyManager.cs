@@ -149,6 +149,8 @@ public class XANAPartyManager : MonoBehaviour
 
     public IEnumerator LoadXanaPartyGame(bool isJoiningLobby)
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
 
         if (isJoiningLobby)
@@ -162,7 +164,7 @@ public class XANAPartyManager : MonoBehaviour
             {
                 ConstantsHolder.xanaConstants.MuseumID = "2492"; // test net Id
             }
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(1);
         }
         else
         {
