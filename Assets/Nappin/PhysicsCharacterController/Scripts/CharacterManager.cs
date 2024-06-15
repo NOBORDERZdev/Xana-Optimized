@@ -281,6 +281,14 @@ namespace PhysicsCharacterController
             UpdateEvents();
         }
 
+        public void HidePlayer(){ 
+            meshCharacter.SetActive(false);
+        }
+
+        public void ShowPlayer()
+        {
+            meshCharacter.SetActive(true);
+        }
 
         #region Checks
 
