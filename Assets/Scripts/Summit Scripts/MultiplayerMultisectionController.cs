@@ -34,6 +34,8 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     public GameplayEntityLoader LFF;
 
 
+    [HideInInspector]
+    public bool singlePlayerInstance;
 
     #endregion
 
