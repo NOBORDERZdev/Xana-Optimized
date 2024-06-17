@@ -49,6 +49,22 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     }
     private void Start()
     {
+        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
+        {
+            this.gameObject.AddComponent<Speaker>();
+        }
+       
+        if(ConstantsHolder.isFixedHumanoid)
+        {
+            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[1] = XANASummitDataContainer.fixedAvatarJson as object;
+            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
+
+            CheckRpc(_mydatatosend);
+
+            return;
+        }
+
         if (this.GetComponent<PhotonView>().IsMine)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
@@ -56,10 +72,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
             Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
             //CallRpcInvoke();
-        }
-        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
-        {
-            this.gameObject.AddComponent<Speaker>();
         }
     }
 

@@ -103,10 +103,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-            // Seperate the live and test environment
-            string _LobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + ConstantsHolder.xanaConstants.EnviornmentName) : ("Test" + ConstantsHolder.xanaConstants.EnviornmentName);
-            Debug.Log("Lobby Name: " + _LobbyName);
-            Connect(_LobbyName);
+            Connect(ConstantsHolder.xanaConstants.EnviornmentName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -135,8 +132,9 @@ namespace Photon.Pun.Demo.PunBasics
         /// 
         public void Connect(string lobbyN)
         {
+            CurrLobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + lobbyN) : ("Test" + lobbyN);
+
             working = ScenesList.AddressableScene;
-            CurrLobbyName = lobbyN;
 
             if (!PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("ゲスト") &&
                     !PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("Guest") && !string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.PLAYERNAME)))
@@ -299,7 +297,7 @@ namespace Photon.Pun.Demo.PunBasics
         public RoomOptions RoomOptionsRequest()
         {
             roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+            roomOptions.MaxPlayers = (byte)ConstantsHolder.xanaConstants.userLimit;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
 

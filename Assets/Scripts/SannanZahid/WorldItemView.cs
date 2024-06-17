@@ -393,11 +393,11 @@ public class WorldItemView : EnhancedScrollerCellView
             WorldDescriptionPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.xanaConstants.userLimit = int.Parse(userLimit);
         }
         else
         {
-            ConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.xanaConstants.userLimit = int.Parse(userLimit);
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());

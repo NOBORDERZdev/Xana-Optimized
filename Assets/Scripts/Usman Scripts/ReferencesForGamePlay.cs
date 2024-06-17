@@ -96,7 +96,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         instance = this;
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
+            RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);
             if (PhotonNetwork.CurrentRoom != null)
             {
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
@@ -109,7 +109,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //}
         else
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit);
+            RoomMaxPlayerCount = ConstantsHolder.xanaConstants.userLimit;
             if (PhotonNetwork.CurrentRoom != null)
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         }

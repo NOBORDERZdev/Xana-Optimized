@@ -49,6 +49,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
+        ConstantsHolder.xanaConstants.userLimit = domeGeneralData.maxPlayer;
+        XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;
@@ -79,6 +81,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
+        ConstantsHolder.xanaConstants.userLimit = 25;
+        XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;

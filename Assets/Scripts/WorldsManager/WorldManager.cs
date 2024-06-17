@@ -973,17 +973,17 @@ public class WorldManager : MonoBehaviour
             WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
             if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
-                ConstantsHolder.xanaConstants.userLimit = "16";
+                ConstantsHolder.xanaConstants.userLimit = 16;
             }
             else
             {
                 if (ConstantsHolder.xanaConstants.isBuilderScene)
                 {
-                    ConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.xanaConstants.userLimit = 15;
                 }
                 else
                 {
-                    ConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.xanaConstants.userLimit = 15;
                 }
             }
             PlayWorld();
