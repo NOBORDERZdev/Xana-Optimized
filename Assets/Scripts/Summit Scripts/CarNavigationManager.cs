@@ -44,7 +44,7 @@ public class CarNavigationManager : MonoBehaviour
     public IEnumerator TPlayer(GameObject Car, List<GameObject> Players ,CarStopTrigger triger)
     {
          
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
        if(car.driverseatempty)
         {
@@ -66,10 +66,10 @@ public class CarNavigationManager : MonoBehaviour
 
     IEnumerator WaitAtCarStop(GameObject car)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(1f);
         car.GetComponent<SplineFollower>().speed = 0;
        // car.GetComponent<SplineFollower>().stopcar = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         car.GetComponent<SplineFollower>().speed = 5;
         //car.GetComponent<SplineFollower>().stopcar = false;
     }

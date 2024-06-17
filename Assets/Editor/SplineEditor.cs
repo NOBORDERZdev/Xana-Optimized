@@ -59,7 +59,7 @@ public class SplineEditor : Editor {
         List<SplineDone.Anchor> anchorList = spline.GetAnchorList();
         if (anchorList != null) {
             foreach (SplineDone.Anchor anchor in spline.GetAnchorList()) {
-                Handles.color = Color.white;
+                Handles.color = Color.red;
                 Handles.DrawWireCube(transformPosition + anchor.position, Vector3.one * .5f);
 
                 EditorGUI.BeginChangeCheck();
@@ -104,14 +104,15 @@ public class SplineEditor : Editor {
             for (int i = 0; i < spline.GetAnchorList().Count - 1; i++) {
                 SplineDone.Anchor anchor = spline.GetAnchorList()[i];
                 SplineDone.Anchor nextAnchor = spline.GetAnchorList()[i + 1];
-                Handles.DrawBezier(transformPosition + anchor.position, transformPosition + nextAnchor.position, transformPosition + anchor.handleBPosition, transformPosition + nextAnchor.handleAPosition, Color.grey, null, 3f);
+                Handles.DrawBezier(transformPosition + anchor.position, transformPosition + nextAnchor.position, transformPosition + anchor.handleBPosition, transformPosition + nextAnchor.handleAPosition, Color.red, null, 5f);
             }
 
             if (spline.GetClosedLoop()) {
                 // Spline is Closed Loop
                 SplineDone.Anchor anchor = spline.GetAnchorList()[spline.GetAnchorList().Count - 1];
                 SplineDone.Anchor nextAnchor = spline.GetAnchorList()[0];
-                Handles.DrawBezier(transformPosition + anchor.position, transformPosition + nextAnchor.position, transformPosition + anchor.handleBPosition, transformPosition + nextAnchor.handleAPosition, Color.grey, null, 3f);
+                Handles.color = Color.red;
+                Handles.DrawBezier(transformPosition + anchor.position, transformPosition + nextAnchor.position, transformPosition + anchor.handleBPosition, transformPosition + nextAnchor.handleAPosition, Color.red, null,5f);
             }
         }
     }

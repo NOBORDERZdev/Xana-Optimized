@@ -27,7 +27,7 @@ public class SummitEntityManager : MonoBehaviour
     {
         if(!PhotonNetwork.IsMasterClient) { return; }
             CarSpline = SplineDone.Instance;
-        var length = CarSpline.GetSplineLength(0.001f);
+        var length = CarSpline.GetSplineLength(.0005f);
        var distancebetweencar = length / 8;
 
         float firstSpawn = Random.Range(0, (int)length);

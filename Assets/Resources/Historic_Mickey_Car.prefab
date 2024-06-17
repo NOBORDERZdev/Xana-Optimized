@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 219662701}
   - component: {fileID: 219662702}
   - component: {fileID: 8595180133148763289}
+  - component: {fileID: 8349318907581950050}
   m_Layer: 0
   m_Name: Historic_Mickey_Car
   m_TagString: CAR
@@ -459,7 +460,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3519169386107185965}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 50
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
@@ -480,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spline: {fileID: 0}
-  speed: 10
+  speed: 5
   movementType: 1
   DriverPos: {x: -0.308, y: 0.25, z: -0.507}
   PacengerPosr: {x: 0.292, y: 0.25, z: -0.478}
@@ -545,10 +546,24 @@ BoxCollider:
   m_GameObject: {fileID: 3519169386107185965}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.0037928, y: 1.7998921, z: 4.299335}
   m_Center: {x: -0.024740994, y: 0.9886653, z: -0.26267803}
+--- !u!136 &8349318907581950050
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519169386107185965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.24
+  m_Height: 5
+  m_Direction: 2
+  m_Center: {x: 0.059999973, y: 1.15, z: -0.14120162}
 --- !u!1 &3598931486028223864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1889,31 +1904,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.9999711
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.0075768447
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.00040320586
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.00060315005
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -0.868
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 0.046
       objectReference: {fileID: 0}
     - target: {fileID: 6892833620271071858, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 0.069
       objectReference: {fileID: 0}
     - target: {fileID: 8501921025105119520, guid: c8eda10e60e312b49a7d86281644a8ab, type: 3}
       propertyPath: m_Name
@@ -1928,6 +1943,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4295670183804629399}
     m_Modifications:
+    - target: {fileID: 7665291183280547593, guid: b44b79941d33055468b6c2c9453cc961, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94d3057bba1fcbe44b161d71f018ced6, type: 2}
     - target: {fileID: 8182252135825094131, guid: b44b79941d33055468b6c2c9453cc961, type: 3}
       propertyPath: m_RootOrder
       value: 7

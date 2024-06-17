@@ -53,7 +53,7 @@ public class SplineFollower : MonoBehaviour {
 
         CarNavigationManager.instance.Cars.Add(view.ViewID, view);
         spline = SplineDone.Instance;
-        maxMoveAmount = spline.GetSplineLength(0.001f);
+        maxMoveAmount = spline.GetSplineLength(0.0005f);
     }
 
     public void Setup(byte Name) {
@@ -64,8 +64,8 @@ public class SplineFollower : MonoBehaviour {
                 maxMoveAmount = 1f;
                 break;
             case MovementType.Units:
-                maxMoveAmount = spline.GetSplineLength(0.001f);
-                Debug.Log("Spline Length " + spline.GetSplineLength(0.001f));
+                maxMoveAmount = spline.GetSplineLength(0.0005f);
+                Debug.Log("Spline Length " + spline.GetSplineLength(0.0005f));
                 break;
         }
         // syncdata(moveAmount);
@@ -100,9 +100,9 @@ public class SplineFollower : MonoBehaviour {
                 transform.forward = new Vector3(forw.x, transform.position.y, forw.z);
                 break;
             case MovementType.Units:
-                var pose = spline.GetPositionAtUnits(moveAmount,.001f);
+                var pose = spline.GetPositionAtUnits(moveAmount,.0005f);
                 transform.position = new Vector3(pose.x, transform.position.y, pose.z);
-                var forwa = spline.GetForwardAtUnits(moveAmount,.001f);
+                var forwa = spline.GetForwardAtUnits(moveAmount,.0005f);
                 transform.forward = forwa; //new Vector3(forwa.x, transform.position.y, forwa.z);
                 break;
         }

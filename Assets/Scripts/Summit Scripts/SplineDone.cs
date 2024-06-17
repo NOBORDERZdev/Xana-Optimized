@@ -25,7 +25,7 @@ public class SplineDone : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
-        splineLength = GetSplineLength(0.001f);
+        splineLength = GetSplineLength(0.0005f);
         SetupPointList();
     }
 
@@ -120,7 +120,7 @@ public class SplineDone : MonoBehaviour {
         return closestPoint;
     }
 
-    public Vector3 GetPositionAtUnits(float unitDistance, float stepSize = .0001f) {
+    public Vector3 GetPositionAtUnits(float unitDistance, float stepSize = .0005f) {
         float splineUnitDistance = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
@@ -149,7 +149,7 @@ public class SplineDone : MonoBehaviour {
         return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / splineLength);
     }
 
-    public Vector3 GetForwardAtUnits(float unitDistance, float stepSize = .0001f) {
+    public Vector3 GetForwardAtUnits(float unitDistance, float stepSize = .0005f) {
         float splineUnitDistance = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
@@ -227,7 +227,7 @@ public class SplineDone : MonoBehaviour {
         }
     }
 
-    public float GetSplineLength(float stepSize = .01f) {
+    public float GetSplineLength(float stepSize = .0005f) {
         float splineLength = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
@@ -307,7 +307,7 @@ public class SplineDone : MonoBehaviour {
         }
     }
     public void SetDirty() {
-        splineLength = GetSplineLength(0.001f);
+        splineLength = GetSplineLength(0.0005f);
 
         UpdatePointList();
 
