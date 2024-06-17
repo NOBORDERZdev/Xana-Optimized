@@ -4463,21 +4463,9 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1973299267}
-    - target: {fileID: 231199687552157540, guid: 66b06104788b22e4bbe239e57163fef5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ExitCar
-      objectReference: {fileID: 0}
-    - target: {fileID: 231199687552157540, guid: 66b06104788b22e4bbe239e57163fef5, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: CarNavigationManager, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 1883008843635698513, guid: 66b06104788b22e4bbe239e57163fef5, type: 3}
       propertyPath: m_Name
       value: SummitCarCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 1883008843635698513, guid: 66b06104788b22e4bbe239e57163fef5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1883008843635698517, guid: 66b06104788b22e4bbe239e57163fef5, type: 3}
       propertyPath: m_Pivot.x
@@ -8545,20 +8533,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Point
       objectReference: {fileID: 0}
-    - target: {fileID: 1630292006568017760, guid: 07d49dde5d76d7a46b162221f7cebdd2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2143168548926704278, guid: 07d49dde5d76d7a46b162221f7cebdd2, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483403045188569695, guid: 07d49dde5d76d7a46b162221f7cebdd2, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4483403045188569695, guid: 07d49dde5d76d7a46b162221f7cebdd2, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07d49dde5d76d7a46b162221f7cebdd2, type: 3}
 --- !u!4 &1942118960 stripped
 Transform:
@@ -8664,66 +8639,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946576049}
   m_Mesh: {fileID: -3945352009964234566, guid: bab640d85ca27f34dbcc05cc61ec33e3, type: 3}
---- !u!1 &1973299266
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1973299269}
-  - component: {fileID: 1973299268}
-  - component: {fileID: 1973299267}
-  m_Layer: 0
-  m_Name: Car System
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1973299267
+--- !u!114 &1973299267 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1301967768690633183, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+  m_PrefabInstance: {fileID: 1301967770074612124}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973299266}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6e71f4ca929fbe3418974f0bfb5b55be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CarCanvas: {fileID: 940601335}
---- !u!114 &1973299268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973299266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8654c5fd87f7d2746ae66798a9fecb98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CarSpawnpoint: {fileID: 1942118960}
-  CarSpline: {fileID: 0}
---- !u!4 &1973299269
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1973299266}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 118.49432, y: 43.84683, z: -255.86205}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2008289142
 GameObject:
   m_ObjectHideFlags: 0
@@ -9422,3 +9348,68 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfac66a5b6171994e9eec4c976e01cc0, type: 3}
+--- !u!1001 &1301967770074612124
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1301967768690633176, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: CarSpawnpoint
+      value: 
+      objectReference: {fileID: 1942118960}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 118.49432
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 43.84683
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -255.86205
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633177, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633182, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: m_Name
+      value: Car System
+      objectReference: {fileID: 0}
+    - target: {fileID: 1301967768690633183, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
+      propertyPath: CarCanvas
+      value: 
+      objectReference: {fileID: 940601335}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7374eacecc28ab14f949b414517a996e, type: 3}
