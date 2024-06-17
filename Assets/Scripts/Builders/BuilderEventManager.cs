@@ -132,6 +132,7 @@ public static class BuilderEventManager
 
 
     //XANA Summit Specific Events 
+    public static Action LoadSummitScene;
     public static Action<int, Vector3> LoadNewScene;
     public static Action<int,string[]> AINPCActivated;
     public static Action<int> AINPCDeactivated;
