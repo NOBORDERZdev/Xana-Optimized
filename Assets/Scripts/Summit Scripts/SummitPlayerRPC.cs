@@ -142,7 +142,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     public IEnumerator WaitforInstance(int id, bool isDriver)
     {
-        while (!CarNavigationManager.instance)
+        while (!CarNavigationManager.instance|| CarNavigationManager.instance.Cars.Count<8)
         {
             yield return new WaitForSeconds(1f);
         }
