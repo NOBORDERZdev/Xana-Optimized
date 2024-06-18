@@ -33,7 +33,7 @@ namespace Photon.Pun.Demo.PunBasics
     /// </summary>
     public class MutiplayerController : MultiplayerMultisectionController
     {
-        //Zeel Comment this for parent inherit
+        // Comment this for parent inherit
        /* public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
         public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
@@ -139,7 +139,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// 
         public override void Connect(string lobbyN)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.Connect(lobbyN);
                 return;
@@ -188,7 +188,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                  base.OnConnectedToMaster();
                 return;
@@ -207,7 +207,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnJoinedLobby();
                 return;
@@ -220,7 +220,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnLeftLobby()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnLeftLobby();
                 return;
@@ -237,7 +237,7 @@ namespace Photon.Pun.Demo.PunBasics
         bool roomListUpdated = false;
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnRoomListUpdate(roomList);
                 return;
@@ -344,7 +344,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnCreatedRoom()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnCreatedRoom();
                 return;
@@ -354,7 +354,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedRoom()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnJoinedRoom();
                 return;
@@ -364,8 +364,9 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
+                Debug.Log("OnPlayerEnteredRoom");
                 base.OnPlayerEnteredRoom(newPlayer);
                 return;
             }
@@ -376,7 +377,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnPlayerLeftRoom(otherPlayer);
                 return;
@@ -397,7 +398,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnJoinRandomFailed(returnCode,message);
                 return;
@@ -411,7 +412,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnDisconnected(cause);
                 return;
@@ -421,7 +422,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void Disconnect()
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.Disconnect();
                 return;
@@ -433,7 +434,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.OnMasterClientSwitched(newMasterClient);
                 return;
@@ -446,7 +447,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void JoinRoomManually(string name)
         {
-            if (ConstantsHolder.MultiSectionPhoton) //Zeel Added for summit.
+            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
                 base.JoinRoomManually(name);
                 return;

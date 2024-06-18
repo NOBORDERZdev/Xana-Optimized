@@ -316,7 +316,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
        StartCoroutine(SpawnPlayerSection());
         
     }
-    public IEnumerator SpawnPlayerSection()  //Zeel Created this for summit
+    public IEnumerator SpawnPlayerSection()  // Created this for summit
     {
         if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {

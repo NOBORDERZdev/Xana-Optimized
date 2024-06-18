@@ -1,11 +1,12 @@
 using Photon.Pun;
+using Photon.Pun.Demo.PunBasics;
 using Photon.Realtime;
 using Photon.Voice.PUN;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummitPlayerRPC : MonoBehaviourPunCallbacks
+public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 {
     [SerializeField]
     private PhotonView view;
@@ -26,7 +27,8 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
     private void Awake()
     {
         voiceNetwork = FindObjectOfType<PhotonVoiceNetwork>();
-        
+      //  MutiplayerController.instance.OnEnteredRoom += OnPlayerEnteredRoom;
+        PhotonNetwork.AddCallbackTarget(this);
     }
 
     // Start is called before the first frame update
@@ -134,6 +136,17 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
     void EnterCAr(int id, bool isDriver)
     {
 
+      StartCoroutine(WaitforInstance(id, isDriver));
+
+    }
+
+    public IEnumerator WaitforInstance(int id, bool isDriver)
+    {
+        while (!CarNavigationManager.instance)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
         var car = CarNavigationManager.instance.Cars[id].gameObject.GetComponent<SplineFollower>();
         this.isdriver = isDriver;
         isInsideCAr = true;
@@ -154,7 +167,7 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
                 transform.parent.transform.parent = car.transform;
                 transform.localPosition = Vector3.zero;
                 transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
-             
+
                 CarNavigationManager.instance.EnableExitCanvas();
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -169,7 +182,7 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
 
-               
+
                 Parent = transform.parent;
                 GameObject gasme = new GameObject();
                 gasme.transform.parent = car.transform;
@@ -210,20 +223,20 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
                 transform.localPosition = Vector3.zero;
                 transform.parent.transform.localPosition = car.PacengerPosition.transform.localPosition;
                 CarNavigationManager.instance.EnableExitCanvas();
-             
+
                 transform.rotation = new Quaternion(0, 0, 0, 0);
                 transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
                 CarNavigationManager.instance.onExitpress += Exit;
                 CarNavigationManager.instance.onCancelPress += CancelExit;
-             
+
             }
             else
             {
                 gameObject.GetComponent<CharacterController>().enabled = false;
                 gameObject.GetComponent<ArrowManager>().enabled = false;
                 gameObject.GetComponent<PhotonTransformView>().enabled = false;
-               
-                
+
+
                 Parent = transform.parent;
                 GameObject gasme = new GameObject();
                 gasme.transform.parent = car.transform;
@@ -246,13 +259,13 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
                 car.showLove();
             }
             Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-           
-        }
 
+        }
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    public  void OnPlayerEnteredRoom(Player newPlayer)
     {
+        Debug.LogError("OnPlayerEnteredRoo");
         if (isInsideCAr)
         {
             view.RPC("EnterCAr", newPlayer, carID, isdriver);
@@ -286,5 +299,23 @@ public class SummitPlayerRPC : MonoBehaviourPunCallbacks
         
     }
 
-    
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+     
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+      
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+       
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+      
+    }
 }
