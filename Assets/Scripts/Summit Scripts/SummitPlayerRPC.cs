@@ -1,10 +1,11 @@
 using Photon.Pun;
+using Photon.Realtime;
 using Photon.Voice.PUN;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummitPlayerRPC : MonoBehaviour
+public class SummitPlayerRPC : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private PhotonView view;
@@ -25,6 +26,7 @@ public class SummitPlayerRPC : MonoBehaviour
     private void Awake()
     {
         voiceNetwork = FindObjectOfType<PhotonVoiceNetwork>();
+        
     }
 
     // Start is called before the first frame update
@@ -249,6 +251,14 @@ public class SummitPlayerRPC : MonoBehaviour
 
     }
 
+    public override void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        if (isInsideCAr)
+        {
+            view.RPC("EnterCAr", newPlayer, carID, isdriver);
+        }
+    }
+
     public void Exit()
     {
         showExit = true;
@@ -275,4 +285,6 @@ public class SummitPlayerRPC : MonoBehaviour
             CarNavigationManager.instance.DisableExitCanvas();
         
     }
+
+    
 }
