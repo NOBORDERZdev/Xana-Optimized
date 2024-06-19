@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SplineFollower : MonoBehaviour {
+public class SplineFollower : MonoBehaviour,IPunObservable {
 
 
 
@@ -31,6 +31,7 @@ public class SplineFollower : MonoBehaviour {
     public bool isDriverMale = true; 
     public bool isPassengerMale = true;
 
+    
     public float moveAmount;
     private float maxMoveAmount;
     public PhotonView view;
@@ -38,6 +39,7 @@ public class SplineFollower : MonoBehaviour {
     public byte PrivateRoomName;
     public bool stopcar = false;
 
+    private bool checkforrigidbody = true;
     private void Awake()
     {
 
@@ -81,14 +83,20 @@ public class SplineFollower : MonoBehaviour {
 
         PrivateRoomName = Room;
         
-      transform.position = new Vector3(transform.position.x,0f,transform.position.z);
+      transform.position = new Vector3(transform.position.x,.5f,transform.position.z);
     }
 
-   
 
 
-    private void Update() {
+    
+    private void FixedUpdate() {
         if(spline == null|| stopcar || !PhotonNetwork.IsMasterClient) { return; }
+      
+      
+        if (checkforrigidbody)
+        {
+            if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } checkforrigidbody = false;
+        }
         moveAmount = (moveAmount + (Time.deltaTime * speed)) % maxMoveAmount;
 
         switch (movementType) {
@@ -108,6 +116,17 @@ public class SplineFollower : MonoBehaviour {
         }
     }
 
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(moveAmount);
+        }
+        else
+        {
+            moveAmount= (float)stream.ReceiveNext();
+        }
+    }
     public void showLove()
     {
         Love.SetActive(true);
