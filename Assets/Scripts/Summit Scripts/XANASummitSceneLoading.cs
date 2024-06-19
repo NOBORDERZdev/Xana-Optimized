@@ -69,7 +69,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
-        multiplayerController.Connect(domeGeneralData.world);
+        multiplayerController.Connect("XANA Summit-"+domeGeneralData.world);
     }
 
     public void LoadingNewScene(string SceneName,Vector3 playerPos)
@@ -82,7 +82,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         ConstantsHolder.xanaConstants.userLimit = 25;
-        XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
+        //XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = string.Empty;
         multiplayerController.isConnecting = false;
