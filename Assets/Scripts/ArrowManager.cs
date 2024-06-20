@@ -71,20 +71,27 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //    PhotonUserName.enabled = false;
         //}
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
-        if (XanaChatSystem.instance.UserName.Length > 12)
+        try
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            if (XanaChatSystem.instance.UserName.Length > 12)
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            }
+            else
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            }
         }
-        else
+        catch(Exception e)
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            PhotonNetwork.NickName = ConstantsHolder.userName;
         }
+        
 
         arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
         playerMat = Resources.Load<Material>("Material #25");
         mainPlayerParent = AvatarSpawnerOnDisconnect.Instance.spawnPoint.transform;
-        print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -95,7 +102,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 this.transform.localPosition = new Vector3(0, -0.081f, 0);
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
-                print("nick name 3==" + XanaChatSystem.instance.UserName);
                 PhotonUserName.text = PhotonNetwork.NickName;
 
                 //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
@@ -115,7 +121,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
         }
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        Debug.Log("call arrow");
         //GameObject myobj = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
         //Debug.Log("Arrow manager for is mine " + myobj.GetComponent<PhotonView>().IsMine + "view id object==" + myobj.GetComponent<PhotonView>().ViewID);
         //myobj.GetComponent<RPCCallforBufferPlayers>().sendData();
@@ -208,10 +213,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"sendDatatext {text}");
 
-        if (!string.IsNullOrEmpty(text)
-                 )
+        if (!string.IsNullOrEmpty(text))
         {
-            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.All, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.Others, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
             text = string.Empty;
         }
         //if ((!string.IsNullOrEmpty(text))
@@ -425,14 +429,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void InstantiateArrow(Transform parent, bool isOtherPlayer)
     {
-        if (XanaChatSystem.instance.UserName.Length > 12)
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
-        }
-        else
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
-        }
 
         GameObject go = Instantiate(arrow, parent);
         go.layer = 17;

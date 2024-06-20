@@ -52,7 +52,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.userLimit = domeGeneralData.maxPlayer;
         XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
         gameplayEntityLoader.currentEnvironment = null;
-        gameplayEntityLoader.addressableSceneName = string.Empty;
+        gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         multiplayerController.isConnecting = false;
         multiplayerController.singlePlayerInstance = domeGeneralData.experienceType=="double";
         gameplayEntityLoader.isEnvLoaded = false;
@@ -84,7 +84,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.userLimit = 25;
         //XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
         gameplayEntityLoader.currentEnvironment = null;
-        gameplayEntityLoader.addressableSceneName = string.Empty;
+        gameplayEntityLoader.addressableSceneName = SceneName;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
