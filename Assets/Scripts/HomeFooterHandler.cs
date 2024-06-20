@@ -238,7 +238,7 @@ public class HomeFooterHandler : MonoBehaviour
             {
                 gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
                 gameManager.defaultSelection = 0;
-                if (additiveScenesManager != null)
+                if (additiveScenesManager != null && additiveScenesManager.SNSmodule)
                 {
                     additiveScenesManager.SNSmodule.SetActive(false);
                     //additiveScenesManager.SNSMessage.SetActive(false);
@@ -872,7 +872,10 @@ public class HomeFooterHandler : MonoBehaviour
     }
     public void ShopButtonClicked()
     {
-        if (additiveScenesManager != null)
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
+        if (additiveScenesManager != null && additiveScenesManager.SNSmodule)
         {
             additiveScenesManager.SNSmodule.SetActive(false);
             // additiveScenesManager.SNSMessage.SetActive(false);
