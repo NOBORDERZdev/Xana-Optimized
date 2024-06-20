@@ -65,7 +65,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] GameObject XanaPartyController;
     [SerializeField] public CameraManager XanaPartyCamera;
     [SerializeField] InputReader XanaPartyInput;
-
+    [SerializeField] PenguinLookPointTracker penguinLook;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -131,8 +131,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GC.Collect(0);
         //  Caching.ClearCache();
     }
-
-
 
     public void StartEventTimer()
     {
@@ -663,11 +661,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         XanaPartyCamera.characterManager = characterManager;
         characterManager.input= XanaPartyInput;
         characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
-        XanaPartyCamera.thirdPersonCamera.Follow = characterManager.headPoint;
-        XanaPartyCamera.thirdPersonCamera.LookAt = characterManager.headPoint;
+        //penguinLook.referenceObject = characterManager.headPoint.gameObject;
+       // penguinLook.characterManager = characterManager;
+        XanaPartyCamera.thirdPersonCamera.Follow = player.transform;// characterManager.headPoint;
+        XanaPartyCamera.thirdPersonCamera.LookAt = player.transform;// characterManager.headPoint;
         characterManager.enabled =true;
         XanaPartyCamera.SetCamera();
         XanaPartyCamera.SetDebug();
+        XanaPartyCamera.thirdPersonCamera.GetComponent<XANAPartyCameraController>().SetReference(player,characterManager.headPoint.gameObject);
         yield return new WaitForSeconds(0.1f);
         if(GamificationComponentData.instance != null){
             GamificationComponentData.instance.PlayerRigidBody = player.GetComponent<Rigidbody>();

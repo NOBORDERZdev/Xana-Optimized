@@ -403,6 +403,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //}
         isCounterStarted = true;
         //.yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(30);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
@@ -410,6 +411,9 @@ public class ReferencesForGamePlay : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
          XANAPartyLobbyyCounterPanel.SetActive(false);
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        yield return new WaitForSeconds(2);
         if (PhotonNetwork.IsMasterClient )
         {
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();

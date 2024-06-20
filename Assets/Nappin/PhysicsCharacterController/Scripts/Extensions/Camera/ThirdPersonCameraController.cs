@@ -32,7 +32,7 @@ namespace PhysicsCharacterController
         {
             cinemachineFreeLook = this.GetComponent<CinemachineFreeLook>();
             movementActions = new MovementActions();
-            smoothSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.17f);
+            smoothSpeed = 1;// PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.17f);
         }
 
 

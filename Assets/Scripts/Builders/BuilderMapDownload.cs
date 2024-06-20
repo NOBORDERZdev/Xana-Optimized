@@ -42,6 +42,8 @@ public class BuilderMapDownload : MonoBehaviour
     public ReflectionProbe reflectionProbe;
     private byte[] deformationData;
 
+    public GameObject XANAPartyLoading;
+
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
@@ -76,6 +78,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void Start()
     {
+        print("~~ TOKEN" +ConstantsGod.AUTH_TOKEN );
         BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, ConstantsGod.AUTH_TOKEN);
         GamificationComponentData.instance.isSkyLoaded = false;
     }
@@ -202,7 +205,7 @@ public class BuilderMapDownload : MonoBehaviour
             yield return StartCoroutine(DownloadAddressableGamificationObject());
             yield return StartCoroutine(GemificationObjectLoadWait(1f));
         }
-
+        XANAPartyLoading.SetActive(false);
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -1019,6 +1022,7 @@ public class SkyProperties
     public int skyId;
     public AISkyboxItem aISkyboxItem = new AISkyboxItem();
     #endregion
+
 
     public SkyProperties()
     {

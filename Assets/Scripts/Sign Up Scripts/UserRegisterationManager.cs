@@ -474,7 +474,10 @@ public class UserRegisterationManager : MonoBehaviour
             }
         }
     }
-
+    private void Start()
+    {
+         StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+    }
     // Start is called before the first frame update
     //void Start()
     //{

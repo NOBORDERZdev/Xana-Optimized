@@ -106,11 +106,14 @@ public class WorldManager : MonoBehaviour
     }
 
     IEnumerator xanaParty(){
-        while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
-          (PlayerPrefs.GetString("PlayerName") == ""))
-            yield return new WaitForSeconds(0.5f);
-
+        //while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+        //  (PlayerPrefs.GetString("PlayerName") == ""))
+        //    yield return new WaitForSeconds(0.5f);
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        //yield return new WaitForSeconds(1f);
         XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+        yield return null;
     }
 
     /*public void CheckWorldTabAndReset(APIURL tab)

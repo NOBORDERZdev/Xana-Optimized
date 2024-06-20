@@ -485,8 +485,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         {
             yield return new WaitForSeconds(3.5f);
         }
-
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby();
+        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
     }
     #endregion
 }

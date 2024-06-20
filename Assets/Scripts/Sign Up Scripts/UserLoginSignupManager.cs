@@ -117,7 +117,54 @@ public class UserLoginSignupManager : MonoBehaviour
         verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
     }
+     private void Start()
+        {
+             StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        }
 
+     IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
+        {
+            var operation = www.SendWebRequest();
+            while (!operation.isDone)
+            {
+                yield return null;
+            }
+            ClassWithToken myObject1 = new ClassWithToken();
+            myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
+            if (!www.isHttpError && !www.isNetworkError)
+            {
+                if (www.error == null)
+                {
+                    if (myObject1.success)
+                    {
+                        ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+                        if (PlayerPrefs.GetInt("shownWelcome") == 1)
+                        {
+                            //DynamicEventManager.deepLink?.Invoke("Guest login");
+                        }
+                        if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                        {
+                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                            {
+                                UserPassManager.Instance.GetGroupDetails("guest");
+                            }
+                        }
+                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                        PlayerPrefs.SetInt("FirstTime", 1);
+                        PlayerPrefs.Save();
+
+                        ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                    }
+                }
+            }
+        }
+    }
 
     void CheckForAutoLogin()
     {
