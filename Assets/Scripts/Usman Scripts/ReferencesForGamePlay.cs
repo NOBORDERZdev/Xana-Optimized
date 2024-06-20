@@ -402,8 +402,8 @@ public class ReferencesForGamePlay : MonoBehaviour
         //    allPalyerReady = true;
         //}
         isCounterStarted = true;
-        //.yield return new WaitForSeconds(1);
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(5); // wait to show that other player spwan and then lobby full
+        //yield return new WaitForSeconds(30);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
