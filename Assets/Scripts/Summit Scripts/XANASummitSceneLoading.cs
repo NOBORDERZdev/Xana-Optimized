@@ -54,7 +54,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
         multiplayerController.isConnecting = false;
-        multiplayerController.singlePlayerInstance = domeGeneralData.experienceType=="double";
+        multiplayerController.singlePlayerInstance = domeGeneralData.experienceType!="double";
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
