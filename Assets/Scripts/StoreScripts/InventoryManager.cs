@@ -4323,7 +4323,8 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (ConstantsHolder.xanaConstants.shoes != "")
                     {
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
+                        GameObject currentShoes = GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes;
+                        if (currentShoes &&   GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
                         {
                             for (int i = 0; i < AllCategoriesData[7].parentObj.transform.childCount; i++)
                             {
