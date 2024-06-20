@@ -401,7 +401,7 @@ namespace PhysicsCharacterController
             prevGroundNormal = groundNormal;
 
             RaycastHit slopeHit;
-            if (Physics.SphereCast(transform.position, slopeCheckerThrashold, Vector3.down, out slopeHit, originalColliderHeight / 2f + 0.5f, groundMask))
+            if (Physics.SphereCast(transform.position - new Vector3(0, originalColliderHeight / 2f, 0), slopeCheckerThrashold, Vector3.down, out slopeHit, originalColliderHeight / 2f + 0.5f, groundMask))
             {
                 groundNormal = slopeHit.normal;
 
