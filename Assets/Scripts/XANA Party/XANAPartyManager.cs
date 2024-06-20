@@ -10,7 +10,7 @@ using Random = System.Random;
 public class XANAPartyManager : MonoBehaviour
 {
     public static XANAPartyManager Instance;
-
+    public bool EnableXANAPartyGuest;
     [SerializeField] List<GameData> TotalGamesToVisit = new List<GameData>(); // List of games to play 
     [SerializeField] List<GameData> RemainingGamesToVisit = new List<GameData>(); // List of remaining games to visit
     public List<GameData> GamesToVisitInCurrentRound = new List<GameData>(); // List of games to visit in the current round
