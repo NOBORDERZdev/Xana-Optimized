@@ -406,7 +406,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             return;
         }
 
-        if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
+        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
         {
             if (PhotonNetwork.IsMasterClient)
             {

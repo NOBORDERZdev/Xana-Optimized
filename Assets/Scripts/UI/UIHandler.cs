@@ -53,10 +53,12 @@ public class UIHandler : MonoBehaviour
 
         if(PlayerPrefs.GetString("PlayerName") == "")
         {
+            Screen.orientation = ScreenOrientation.Portrait;
             portraitSplashScreen.SetActive(true);
         }
         else
         {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
             portraitSplashScreen.SetActive(false);
         }
     }

@@ -151,7 +151,7 @@ public class XANAPartyManager : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
+        ConstantsHolder.xanaConstants.userLimit = "3"; // update the user limit for xana party
 
         if (isJoiningLobby)
         {
@@ -173,12 +173,12 @@ public class XANAPartyManager : MonoBehaviour
             if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
             {
                 print("not master ");
-                yield return new WaitForSeconds(6);
+                yield return new WaitForSeconds(20);
             }
             else
             {
                 print("master entering a GAME!");
-                yield return new WaitForSeconds(3);
+                yield return new WaitForSeconds(2);
             }
         }
         
