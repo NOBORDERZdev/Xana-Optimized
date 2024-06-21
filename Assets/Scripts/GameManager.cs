@@ -58,8 +58,6 @@ public class GameManager : MonoBehaviour
     public HomeFooterHandler bottomTabManagerInstance;
     public WorldManager SpaceWorldManagerRef;
     internal string selectedPresetData="";
-
-
     private void Awake()
     {
         Debug.Log("GameManager Awake");
