@@ -37,7 +37,7 @@ public class ConstantsHolder : MonoBehaviour
     public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
-    public int userLimit;
+    public static int userLimit;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;

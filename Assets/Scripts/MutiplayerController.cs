@@ -188,7 +188,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
-            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time);
+            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name);
             CheckRoomAvailability();
         }
 
@@ -270,10 +270,11 @@ namespace Photon.Pun.Demo.PunBasics
                 }
             if (joinedRoom == false)
             {
+                int x = 1;
                 string roomName;
                 do
                 {
-                    roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
+                    roomName = PhotonNetwork.CurrentLobby.Name +"-Room:"+x.ToString();
                 }
                 while (roomNames.Contains(roomName));
 
@@ -297,7 +298,7 @@ namespace Photon.Pun.Demo.PunBasics
         public RoomOptions RoomOptionsRequest()
         {
             roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = (byte)ConstantsHolder.xanaConstants.userLimit;
+            roomOptions.MaxPlayers = (byte)ConstantsHolder.userLimit;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
 

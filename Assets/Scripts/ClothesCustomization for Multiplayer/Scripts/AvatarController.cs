@@ -428,11 +428,22 @@ public class AvatarController : MonoBehaviour
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             if (_data != null)
                 _CharacterData = _data;
+
+            if (ConstantsHolder.isPenguin)
+                return;
+            else if(ConstantsHolder.isFixedHumanoid)
+            {
+                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.fixedAvatarJson);
+                clothJson = XANASummitDataContainer.fixedAvatarJson;
+            }
             else
+            {
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+                clothJson = File.ReadAllText(folderPath);
+            }
 
             _PCharacterData = _CharacterData;
-            clothJson = File.ReadAllText(folderPath);
+            
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.

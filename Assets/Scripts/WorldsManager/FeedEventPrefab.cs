@@ -550,11 +550,11 @@ public class FeedEventPrefab : MonoBehaviour
         m_WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit));
+            ConstantsHolder.userLimit = (Convert.ToInt32(userLimit));
         }
         else
         {
-            ConstantsHolder.xanaConstants.userLimit = int.Parse(userLimit);
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         //tempWorldName = m_WorldName.text.ToString();
         ConstantsHolder.xanaConstants.MuseumID = idOfObject;

@@ -115,9 +115,10 @@ public class XANASummitDataContainer : ScriptableObject
         public string world;
         public string experienceType;
         public int builderWorldId;
-        public bool isPenguin;
-        public bool isHumanoid;
-        public int avatarId;
+        public bool IsPenguin;
+        public bool Ishumanoid;
+        public int AvatarIndex;
+        public string Avatarjson;
         public int maxPlayer;
     }
     #endregion
