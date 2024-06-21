@@ -59,10 +59,7 @@ public class GameManager : MonoBehaviour
     public WorldManager SpaceWorldManagerRef;
     internal string selectedPresetData="";
 
-    private void OnEnable()
-    {
 
-    }
     private void Awake()
     {
         Debug.Log("GameManager Awake");
