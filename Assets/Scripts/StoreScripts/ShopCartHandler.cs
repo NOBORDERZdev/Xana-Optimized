@@ -154,7 +154,7 @@ public class ShopCartHandler : MonoBehaviour
                     totalPriceTxt.text = "0";
 
                     InventoryManager.instance.UpdateUserXeny();
-                    InventoryManager.instance.SelectPanel(0);
+                    //InventoryManager.instance.SelectPanel(0);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ public class ShopCartHandler : MonoBehaviour
                 _PurchaseFailPanel.SetActive(true);
             }
 
-            cartParentObj.SetActive(false);
+            //cartParentObj.SetActive(false);
             //_CartPanel.SetActive(false);
             buyTxt.SetActive(true);
             buyLoading.SetActive(false);
@@ -180,6 +180,9 @@ public class ShopCartHandler : MonoBehaviour
         if (index == 1)
         {
             _PurchaseSuccessPanel.SetActive(false);
+            selectedItems.Clear();
+            CloseCartPanel();
+            InventoryManager.instance.SelectPanel(0);
         }
         else if (index == 2)
         {
