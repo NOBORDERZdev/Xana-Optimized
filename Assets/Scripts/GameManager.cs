@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        Invoke("AssignQuestButton", 1f);
+
     }
     private void Awake()
     {
