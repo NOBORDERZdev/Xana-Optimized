@@ -26,33 +26,33 @@ public class AskForJoining : MonoBehaviour
     }
 
 
-    void LoadMain()
-    {
-        ConstantsHolder.xanaConstants.isFromXanaLobby =false;
-        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
+    //void LoadMain()
+    //{
+    //    ConstantsHolder.xanaConstants.isFromXanaLobby =false;
+    //    ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
-        float _rand = UnityEngine.Random.Range(6f, 10f);
-        LoadingHandler.Instance.randCurrentValue = _rand;
-        StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
-        ConstantsHolder.xanaConstants.isBackFromWorld = true;  
-        LoadingHandler.Instance.ShowLoading();
-        print("Hello Ask to Join");
-        //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
-        //LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
-        if (GameManager.currentLanguage == "ja")
-        {
-            LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
-        }
-        else if (GameManager.currentLanguage == "en")
-        {
-            LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
-        }
-        asyncLoading = SceneManager.LoadSceneAsync("Home");
-        //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
+    //    float _rand = UnityEngine.Random.Range(6f, 10f);
+    //    LoadingHandler.Instance.randCurrentValue = _rand;
+    //    StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
+    //    ConstantsHolder.xanaConstants.isBackFromWorld = true;  
+    //    LoadingHandler.Instance.ShowLoading();
+    //    print("Hello Ask to Join");
+    //    //string a = TextLocalization.GetLocaliseTextByKey("Going Back to Home");
+    //    //LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+    //    if (GameManager.currentLanguage == "ja")
+    //    {
+    //        LoadingHandler.Instance.UpdateLoadingStatusText("ホームに戻っています");
+    //    }
+    //    else if (GameManager.currentLanguage == "en")
+    //    {
+    //        LoadingHandler.Instance.UpdateLoadingStatusText("Going Back to Home");
+    //    }
+    //    asyncLoading = SceneManager.LoadSceneAsync("Home");
+    //    //InvokeRepeating("AsyncProgress", 0.1f, 0.1f);
 
-        // Connection Lost Going To Main Update User Count
-        UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
-    }
+    //    // Connection Lost Going To Main Update User Count
+    //    UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
+    //}
 
     void AsyncProgress()
     {
@@ -63,7 +63,8 @@ public class AskForJoining : MonoBehaviour
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-            LoadMain();
+           // LoadMain();
+            GameplayEntityLoader.instance._uiReferences.LoadMain(true);
             TurnCameras(true);
             try
             {

@@ -225,7 +225,8 @@ public class Web3AuthCustom : MonoBehaviour
             return;
 
 #endif
-            Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         userInfo = response.userInfo;
         privateKey = response.privKey;
         onLoginAction?.Invoke(userInfo.email);
