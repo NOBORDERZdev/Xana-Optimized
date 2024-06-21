@@ -102,22 +102,33 @@ public class WorldManager : MonoBehaviour
     {
         //ChangeWorldTab(APIURL.Hot);
         Invoke(nameof(LoadJjworld), 0);
-        StartCoroutine(nameof(xanaParty));
+        //StartCoroutine(nameof(xanaParty));
     }
 
-    IEnumerator xanaParty(){
+    public IEnumerator xanaParty(){
         if (!XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
             while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
             (PlayerPrefs.GetString("PlayerName") == ""))
                     yield return new WaitForSeconds(0.5f);
         }
-      
-        Screen.orientation = ScreenOrientation.LandscapeLeft;
-        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        //yield return new WaitForSeconds(1f);
-        XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
-        yield return null;
+        else if(XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            if((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+            (PlayerPrefs.GetString("PlayerName") == ""))
+            {
+                GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+                UserLoginSignupManager.instance.OpenUserNamePanel();
+            }
+            else
+            {
+                Screen.orientation = ScreenOrientation.LandscapeLeft;
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));;
+                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+                 yield return null;
+            }
+        }
+
     }
 
     /*public void CheckWorldTabAndReset(APIURL tab)

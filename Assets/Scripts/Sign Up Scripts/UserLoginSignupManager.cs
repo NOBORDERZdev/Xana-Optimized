@@ -120,6 +120,7 @@ public class UserLoginSignupManager : MonoBehaviour
      private void Start()
         {
              StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+             StartCoroutine(WorldManager.instance.xanaParty());
         }
 
      IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
@@ -848,6 +849,11 @@ public class UserLoginSignupManager : MonoBehaviour
         string displayrname = displayrNameField.Text;
         string userUsername = userUsernameField.Text;
         string keytoLocalize;
+
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            userUsername = displayrname; 
+        }
         if (displayrname == "" || userUsername == "")
         {
             keytoLocalize = TextLocalization.GetLocaliseTextByKey("Display name or username should not be empty.");
@@ -896,8 +902,19 @@ public class UserLoginSignupManager : MonoBehaviour
         string url = ConstantsGod.API_BASEURL + ConstantsGod.RegisterWithEmail;
         MyClassOfRegisterWithEmail myobjectOfEmail = new MyClassOfRegisterWithEmail();
         string _bodyJson = JsonUtility.ToJson(myobjectOfEmail.GetdataFromClass(emailForSignup, passwordForSignup));
-        
-        
+
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            PlayerPrefs.SetInt("IsLoggedIn", 1);
+            PlayerPrefs.SetString("PlayerName", userUsername);
+            ConstantsHolder.userName = userUsername;
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
+            OpenUIPanel(16);
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+            return;
+        }
 
         if (ConstantsHolder.isWalletLogin)
         {

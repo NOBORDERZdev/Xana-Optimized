@@ -10,6 +10,7 @@ public class UIHandler : MonoBehaviour
     public GameObject LoginRegisterScreen, SignUpScreen, HomePage, Canvas,HomeWorldScreen;
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
+    public GameObject portraitSplashScreen;
 
     public Transform _postScreen,_postCamera;
     public bool IsSplashActive = true;
@@ -49,6 +50,15 @@ public class UIHandler : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
+
+        if(PlayerPrefs.GetString("PlayerName") == "")
+        {
+            portraitSplashScreen.SetActive(true);
+        }
+        else
+        {
+            portraitSplashScreen.SetActive(false);
+        }
     }
     bool a =false;
 
