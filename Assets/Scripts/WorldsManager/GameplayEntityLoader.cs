@@ -689,6 +689,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //tempRef.EmoteFavPotraite.SetActive(false);
         tempRef.PartyChatCanvasPotraite.SetActive(true);
         tempRef.PartJumpPotraite.SetActive(true);
+        ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
     }
 
     void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){
