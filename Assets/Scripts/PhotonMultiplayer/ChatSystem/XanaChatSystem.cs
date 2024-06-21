@@ -264,6 +264,7 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
+        string removeBadWords = "";
         if (!string.IsNullOrEmpty(InputFieldChat.text))
         {
             removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
