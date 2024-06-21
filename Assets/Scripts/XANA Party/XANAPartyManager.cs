@@ -151,7 +151,7 @@ public class XANAPartyManager : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        ConstantsHolder.xanaConstants.userLimit = "3"; // update the user limit for xana party
+        ConstantsHolder.xanaConstants.userLimit = ConstantsHolder.XanaPartyMaxPlayers.ToString();//"3"; // update the user limit for xana party
 
         if (isJoiningLobby)
         {
