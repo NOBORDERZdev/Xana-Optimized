@@ -1,8 +1,12 @@
+using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UFE3D;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.tvOS;
 
 public class ActionManager : MonoBehaviour
 {
@@ -12,18 +16,22 @@ public class ActionManager : MonoBehaviour
     public static Action<ActionData> ActionBtnClick;
     public static Action<bool> OpenActionFavouritPanel;
     public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
+    public static Action StopActionAnimation;
+
 
     private void OnEnable()
     {
         ActionBtnClick += ProcessAction;
         OpenActionFavouritPanel += OpenActionFavouritSelectionPanel;
         OpenActionCategoryTab += SetActionCategoryTab;
+        StopActionAnimation += StopAnimation;
     }
     private void OnDisable()
     {
         ActionBtnClick -= ProcessAction;
         OpenActionFavouritPanel -= OpenActionFavouritSelectionPanel;
         OpenActionCategoryTab -= SetActionCategoryTab;
+        StopActionAnimation -= StopAnimation;
     }
     public void Start()
     {
@@ -58,7 +66,7 @@ public class ActionManager : MonoBehaviour
         {
             if(dataObj.TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
             {
-
+                this.transform.GetComponent<ActionAnimationApplyToPlayer>().LoadAnimationAccrossInstance(dataObj.AnimationName);
             }
             else
             {
@@ -79,6 +87,10 @@ public class ActionManager : MonoBehaviour
         {
             ReactionManager.OpenReactionDialogUITabClick(categoryIndex);
         }
+    }
+    public void StopAnimation()
+    {
+        this.transform.GetComponent<ActionAnimationApplyToPlayer>().StopAnimation();
     }
 }
 [Serializable]

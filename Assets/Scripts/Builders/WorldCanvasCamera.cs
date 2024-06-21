@@ -61,8 +61,9 @@ public class WorldCanvasCamera : MonoBehaviour
         }
         if (EmoteAnimationHandler.Instance.isAnimRunning && !state)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            //// EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
         }
     }
 

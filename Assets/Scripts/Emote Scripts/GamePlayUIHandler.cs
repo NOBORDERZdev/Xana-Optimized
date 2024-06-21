@@ -175,7 +175,9 @@ public class GamePlayUIHandler : MonoBehaviour
         {
 
             stopCurrentPlayingAnim = false;
-            EmoteAnimationHandler.Instance.StopAnimation();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            // EmoteAnimationHandler.Instance.StopAnimation();
         }
 
         ref_LoadEmoteAnimations.CloseAnimationSelectionPanel();

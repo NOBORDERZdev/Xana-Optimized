@@ -437,8 +437,9 @@ public class PlayerController : MonoBehaviour
             {
                 if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationHandler.Instance.StopAnimation();
-                    EmoteAnimationHandler.Instance.StopAllCoroutines();
+                    ActionManager.StopActionAnimation?.Invoke();
+                    // EmoteAnimationHandler.Instance.StopAnimation();
+                    //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                 }
                 FirstPersonCameraMove(); // FOR FIRST PERSON MOVEMENT XX
             }
@@ -448,8 +449,9 @@ public class PlayerController : MonoBehaviour
                 {
                     if (ReferencesForGamePlay.instance.moveWhileDanceCheck == 0)
                     {
-                        EmoteAnimationHandler.Instance.StopAnimation();
-                        EmoteAnimationHandler.Instance.StopAllCoroutines();
+                        ActionManager.StopActionAnimation?.Invoke();
+                        //  EmoteAnimationHandler.Instance.StopAnimation();
+                        //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                     }
                 }
                 Move();
@@ -1231,8 +1233,10 @@ public class PlayerController : MonoBehaviour
 
         if (EmoteAnimationHandler.Instance.isAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
     }
@@ -1337,8 +1341,10 @@ public class PlayerController : MonoBehaviour
 
         if (EmoteAnimationHandler.Instance.isAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
     }
 
