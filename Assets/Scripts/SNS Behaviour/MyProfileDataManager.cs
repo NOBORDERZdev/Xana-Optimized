@@ -892,6 +892,7 @@ public class MyProfileDataManager : MonoBehaviour
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
+            tempStr = tempStr.Replace("@", "");
             uniqueUsername = tempStr;
             checkEditInfoUpdated = 1;
         }
