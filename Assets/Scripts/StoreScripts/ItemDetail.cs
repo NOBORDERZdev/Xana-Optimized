@@ -348,24 +348,28 @@ public class ItemDetail : MonoBehaviour
             switch (CategoriesEnumVar)
             {
                 case EnumClass.CategoryEnum.HairAvatar:
+                case EnumClass.CategoryEnum.ShopHair:
                     {
                         _clothetype = "Hair";
                         DefaultTempString = "/MDhairs.";
                     }
                     break;
                 case EnumClass.CategoryEnum.Shoes:
+                case EnumClass.CategoryEnum.ShopShoes:
                     {
                         _clothetype = "Feet";
                         DefaultTempString = "/MDshoes.";
                     }
                     break;
                 case EnumClass.CategoryEnum.Outer:
+                case EnumClass.CategoryEnum.ShopOuter:
                     {
                         _clothetype = "Chest";
                         DefaultTempString = "/MDshirt.";
                     }
                     break;
                 case EnumClass.CategoryEnum.Bottom:
+                case EnumClass.CategoryEnum.ShopBottom:
                     {
                         _clothetype = "Legs";
                         DefaultTempString = "/MDpant.";
@@ -540,65 +544,7 @@ public class ItemDetail : MonoBehaviour
 
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
-
-
-        switch (CurrentString)
-        {
-            case "Shoes":
-                {
-                    CurrentString = "Shoes";
-                    break;
-                }
-            case "Outer":
-                {
-                    CurrentString = "Shirts/Outer";
-                    break;
-                }
-            case "HairAvatar":
-                {
-                    CurrentString = "Hairs";
-                    break;
-                }
-            // Added by Ahsan
-            case "HairAvatarColor":
-                {
-                    CurrentString = "HairColor";
-                    break;
-                }
-            case "Bottom":
-                {
-                    CurrentString = "Pents /Bottom";
-                    break;
-                }
-            // Added By WaqasAhmad
-            case "EyeBrowAvatar":
-                {
-                    CurrentString = "Eye Brow";
-                    break;
-                }
-            // Added by Ahsan
-            case "EyeBrowAvatarColor":
-                {
-                    CurrentString = "EyeBrowColor";
-                    break;
-                }
-            // Added By WaqasAhmad
-            case "EyeLashesAvatar":
-                {
-                    CurrentString = "Eye Lashes";
-                    break;
-                }
-            case "EyesAvatarColor":
-                {
-                    CurrentString = "EyesColor";
-                    break;
-                }
-            case "LipsAvatarColor":
-                {
-                    CurrentString = "LipsColor";
-                    break;
-                }
-        }
+        SetItemCatagory(CurrentString);
 
         if (!UserPassManager.Instance.CheckSpecificItem(CurrentString))
         {
@@ -911,11 +857,9 @@ public class ItemDetail : MonoBehaviour
         if (!completedCoroutine)
             return;
 
-        //if (!GameManager.Instance.isStoreAssetDownloading)
-        //{
-        //    GameManager.Instance.isStoreAssetDownloading = true;
-        //    downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, true));
-        //}
+        string CurrentString = "";
+        CurrentString = CategoriesEnumVar.ToString();
+        SetItemCatagory(CurrentString);
 
         if (this.GetComponent<Image>().enabled) 
         {
@@ -924,11 +868,83 @@ public class ItemDetail : MonoBehaviour
         }
         else
         {
+            if (!GameManager.Instance.isStoreAssetDownloading)
+            {
+                GameManager.Instance.isStoreAssetDownloading = true;
+                downloader.StartCoroutine(downloader.DownloadAddressableObj(int.Parse(id), name, _clothetype, "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear, true));
+            }
             this.GetComponent<Image>().enabled = true;
             shopCartHandler.selectedItems.Add(this);
         }
 
     }
+
+    void SetItemCatagory(string CurrentString)
+    {
+        switch (CurrentString)
+        {
+            case "Shoes":
+            case "ShopShoes":
+                {
+                    CurrentString = "Shoes";
+                    break;
+                }
+            case "Outer":
+            case "ShopOuter":
+                {
+                    CurrentString = "Shirts/Outer";
+                    break;
+                }
+            case "HairAvatar":
+            case "ShopHair":
+                {
+                    CurrentString = "Hairs";
+                    break;
+                }
+            // Added by Ahsan
+            case "HairAvatarColor":
+                {
+                    CurrentString = "HairColor";
+                    break;
+                }
+            case "Bottom":
+            case "ShopBottom":
+                {
+                    CurrentString = "Pents /Bottom";
+                    break;
+                }
+            // Added By WaqasAhmad
+            case "EyeBrowAvatar":
+                {
+                    CurrentString = "Eye Brow";
+                    break;
+                }
+            // Added by Ahsan
+            case "EyeBrowAvatarColor":
+                {
+                    CurrentString = "EyeBrowColor";
+                    break;
+                }
+            // Added By WaqasAhmad
+            case "EyeLashesAvatar":
+                {
+                    CurrentString = "Eye Lashes";
+                    break;
+                }
+            case "EyesAvatarColor":
+                {
+                    CurrentString = "EyesColor";
+                    break;
+                }
+            case "LipsAvatarColor":
+                {
+                    CurrentString = "LipsColor";
+                    break;
+                }
+        }
+    }
+
+
     void ResetButtonState()
     {
         obj.currentButtonState = ButtonState.none;

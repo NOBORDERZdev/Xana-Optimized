@@ -180,11 +180,11 @@ public class GameManager : MonoBehaviour
     {
         UiManager.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
-        //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
+        InventoryManager inventoryObj = InventoryManager.instance;
         if (ConstantsHolder.loggedIn) 
         {
             UiManager.HomePage.SetActive(false);
-            InventoryManager.instance.SignUpAndLoginPanel(3);
+            inventoryObj.SignUpAndLoginPanel(3);
             BGPlane.SetActive(true);
         }
         //else  // Disable Guest Sceniro
@@ -194,9 +194,11 @@ public class GameManager : MonoBehaviour
         //    //UserRegisterationManager.instance.OpenUIPanal(17);
 
         //UserLoginSignupManager.instance.ShowWelcomeScreen();
-        InventoryManager.instance.AvatarUpdated.SetActive(false);
-        InventoryManager.instance.AvatarSaved.SetActive(false);
-        InventoryManager.instance.AvatarSavedGuest.SetActive(false);
+        inventoryObj.AvatarUpdated.SetActive(false);
+        inventoryObj.AvatarSaved.SetActive(false);
+        inventoryObj.AvatarSavedGuest.SetActive(false);
+
+        
     }
     public void BottomAvatarBtnPressed()
     {

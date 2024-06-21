@@ -45,6 +45,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject MainPanelShop;
     public GameObject[] ShopPanel;
     public GameObject buyBtn;
+    public ShopCartHandler _ShopCartHandler;
 
     [Header("Return Home Pop up")]
     public GameObject ReturnHomePopUp;
@@ -177,6 +178,9 @@ public class InventoryManager : MonoBehaviour
     {
         load = LoadPlayerAvatar.instance_loadplayer.loader;
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
+        _ShopCartHandler = GetComponent<ShopCartHandler>();
+
+
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
         //CheckAPILoaded = false; 
@@ -609,13 +613,48 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
+        // Shop Item
+        if (AllCategoriesData[27].parentObj.transform.childCount >= 1) // Outer
+        {
+            for (int i = AllCategoriesData[27].parentObj.transform.childCount - 1; i >= 0; i--)
+            {
+                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[27].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+                Destroy(AllCategoriesData[27].parentObj.transform.GetChild(i).gameObject);
+            }
+        }
+        if (AllCategoriesData[28].parentObj.transform.childCount >= 1) // Outer
+        {
+            for (int i = AllCategoriesData[28].parentObj.transform.childCount - 1; i >= 0; i--)
+            {
+                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[28].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+                Destroy(AllCategoriesData[28].parentObj.transform.GetChild(i).gameObject);
+            }
+        }
+        if (AllCategoriesData[29].parentObj.transform.childCount >= 1) // Outer
+        {
+            for (int i = AllCategoriesData[29].parentObj.transform.childCount - 1; i >= 0; i--)
+            {
+                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[29].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+                Destroy(AllCategoriesData[29].parentObj.transform.GetChild(i).gameObject);
+            }
+        }
+        if (AllCategoriesData[30].parentObj.transform.childCount >= 1) // Outer
+        {
+            for (int i = AllCategoriesData[30].parentObj.transform.childCount - 1; i >= 0; i--)
+            {
+                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[30].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+                Destroy(AllCategoriesData[30].parentObj.transform.GetChild(i).gameObject);
+            }
+        }
+
+
         // Cleared Stored References
         for (int i = 0; i < AllCategoriesData.Count; i++)
         {
             AllCategoriesData[i].subItems.Clear();
         }
 
-       
+        _ShopCartHandler.selectedItems.Clear();
 
         ResetDownloadCount();
 
@@ -804,7 +843,7 @@ public class InventoryManager : MonoBehaviour
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name",!_shopOpened)); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 100, "asc", "name",!_shopOpened)); // API Update New Parameter added for sorting
             
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
@@ -1425,6 +1464,7 @@ public class InventoryManager : MonoBehaviour
             // CLoth
             buttonIndex = 3;
             MainPanelCloth.SetActive(true);
+            _ShopCartHandler.RemoveTryonCloth();
             UpdatePanelStatus(1);
         }
         else if(TakeIndex == 1)
@@ -1432,6 +1472,7 @@ public class InventoryManager : MonoBehaviour
             // Avatar
             buttonIndex = 0;
             MainPanelAvatar.SetActive(true);
+            _ShopCartHandler.RemoveTryonCloth();
             UpdatePanelStatus(0);
         }
         else
@@ -1442,6 +1483,7 @@ public class InventoryManager : MonoBehaviour
             buttonIndex = 2;
             MainPanelShop.SetActive(true);
             buyBtn.SetActive(true);
+            _ShopCartHandler.UpdateItemReferences();
             UpdatePanelStatus(TakeIndex);
         }
 
@@ -1481,7 +1523,7 @@ public class InventoryManager : MonoBehaviour
         headerBtns[activePanleIndex].btnLine.SetActive(true);
         headerBtns[activePanleIndex].btnText.color = HighlightedColor;
     }
-
+  
 
 
     //public void UpdateUserCoins()
@@ -1589,6 +1631,15 @@ public class InventoryManager : MonoBehaviour
                 panelIndex = 30;
                 break;
 
+            case 4:
+            case 5:
+            case 6:
+            case 7:// All Non Functional Items will Call this index
+                IndexofPanel = 7;
+                panelIndex = 31;
+                m_GetIndex = 4;
+                break;
+
             default:
                 IndexofPanel = 8;
                 panelIndex = 27;
@@ -1601,6 +1652,10 @@ public class InventoryManager : MonoBehaviour
             ShopPanel[i].SetActive(false);
         }
         ShopPanel[m_GetIndex].SetActive(true);
+
+        if (buttonIndex == 4)
+            return;
+
         if (CheckAPILoaded)
         {
             if (SubCategoriesList.Count > 0)
@@ -3636,6 +3691,10 @@ public class InventoryManager : MonoBehaviour
         eyeLashesDwonloadedCount = 0;
         eyesDwonloadedCount = 0;
         lipsDwonloadedCount = 0;
+        shopHairDwonloadedCount = 0;
+        shopOuterDwonloadedCount = 0;
+        shopBottomDwonloadedCount = 0;
+        shopShoesDwonloadedCount = 0;
     }
 
     int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)

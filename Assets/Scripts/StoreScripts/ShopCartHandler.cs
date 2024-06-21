@@ -8,6 +8,7 @@ using System.Text;
 using System;
 using DigitalRubyShared;
 using DG.Tweening;
+using System.Linq;
 
 public class ShopCartHandler : MonoBehaviour
 {
@@ -26,12 +27,23 @@ public class ShopCartHandler : MonoBehaviour
     public Transform _ScallingObj;
 
 
-    float currentBalance = 1000;
+    float currentBalance = 0;
+    public List<ClothingParts> _oldItemReferences;
+    AvatarController ac;
 
-    //private void Start()
-    //{
-    //    RegisterNewTouchInput();
-    //}
+    private void Start()
+    {
+        ac = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+    }
+    public void UpdateItemReferences()
+    {
+        _oldItemReferences[0].dressName = ac.wornPant.name;
+        _oldItemReferences[1].dressName = ac.wornShirt.name;
+        _oldItemReferences[2].dressName = ac.wornHair.name;
+        _oldItemReferences[3].dressName = ac.wornShoes.name;
+    }
+
+
     public void EnableCartPanel()
     {
         if (selectedItems.Count == 0)
@@ -47,22 +59,21 @@ public class ShopCartHandler : MonoBehaviour
     {
         for (int i = 0; i < selectedItems.Count; i++)
         {
-           GameObject _cartObj =  Instantiate(cartItemPrefab, parentObj.transform);
-            _cartObj.GetComponent<PurchaseableItemHandler>().DataSetter(selectedItems[i], this);     
+            GameObject _cartObj = Instantiate(cartItemPrefab, parentObj.transform);
+            _cartObj.GetComponent<PurchaseableItemHandler>().DataSetter(selectedItems[i], this);
         }
         cartParentObj.SetActive(true);
         _ScallingObj.DOScaleY(1, 0.2f).SetEase(Ease.Linear);
         UpdateTotalCount_Amount();
     }
-
     public void CloseCartPanel()
     {
-        _ScallingObj.DOScaleY(0, 0.2f).SetEase(Ease.Linear).OnComplete(delegate 
+        _ScallingObj.DOScaleY(0, 0.2f).SetEase(Ease.Linear).OnComplete(delegate
         {
             cartParentObj.SetActive(false);
             foreach (Transform child in parentObj.transform)
             {
-               child.gameObject.SetActive(false);
+                child.gameObject.SetActive(false);
             }
         });
     }
@@ -106,7 +117,7 @@ public class ShopCartHandler : MonoBehaviour
             itemId = itemIds,
             amount = totalPrice
         };
-        
+
         // Manually constructing the itemId array as a JSON string
         string itemIdJsonArray = "[\"" + string.Join("\", \"", data.itemId) + "\"]";
 
@@ -115,7 +126,7 @@ public class ShopCartHandler : MonoBehaviour
 
         // Constructing the final JSON string
         string jsonData = $"{{\"itemId\": \"{escapedItemIdJsonArray}\",\r\n    \"amount\": {data.amount}}}";
-      
+
         using (UnityWebRequest request = new UnityWebRequest(APIUrl, "POST"))
         {
             byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
@@ -164,8 +175,7 @@ public class ShopCartHandler : MonoBehaviour
         }
     }
 
-
-   public void DisablePanels(int index)
+    public void DisablePanels(int index)
     {
         if (index == 1)
         {
@@ -179,6 +189,25 @@ public class ShopCartHandler : MonoBehaviour
         {
             _LowBalancePanel.SetActive(false);
         }
+    }
+    public void RemoveTryonCloth()
+    {
+        // Refactored to reduce repetitive code and improve readability
+        var itemsToCheck = new[] {ac.wornPant, ac.wornShirt, ac.wornHair, ac.wornShoes };
+        for (int i = 0; i < itemsToCheck.Length; i++)
+        {
+            var item = itemsToCheck[i];
+            if (item != null && IsDressChanged(item.name))
+            {
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(0, _oldItemReferences[i].dressName, _oldItemReferences[i].itemtype, SaveCharacterProperties.instance.SaveItemList.gender, ac, Color.clear));
+            }
+        }
+    }
+
+    bool IsDressChanged(string dressName)
+    {
+        // Utilizing LINQ to simplify the check
+        return !_oldItemReferences.Any(item => string.Equals(item.dressName, dressName));
     }
 
 
@@ -226,4 +255,11 @@ public class RequireDataForPurchasing
 {
     public string[] itemId; // Updated to use an array
     public float amount;
+}
+
+[System.Serializable]
+public class ClothingParts
+{
+    public string itemtype;
+    public string dressName;
 }
