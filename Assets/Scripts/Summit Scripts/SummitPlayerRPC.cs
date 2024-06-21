@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
@@ -340,6 +341,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         GiantWheelManager.Instance.EnterwheelCar?.Invoke();
         
     }
+    private List<LODGroup> LOD;
     [PunRPC]
     public void EnterWheelCar()
     {
@@ -350,12 +352,18 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             
           if(GiantWheelManager.Instance.car.isfirstPlayerEmpty)
             {
+
                 var car = GiantWheelManager.Instance.car;
                 car.isfirstPlayerEmpty = false;
                 WheelSeat = 1;
                 car.PlayerSeat.Add(view.Owner, 1);
                 if (view.IsMine)
                 {
+                    LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                    foreach (var item in LOD)
+                    {
+                        item.enabled = false;
+                    }
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
                     transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameObject.GetComponent<CharacterController>().enabled = false;
@@ -372,6 +380,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                  
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
                     GamePlayButtonEvents.inst.OnSwitchCameraClick();
                 }
                 else
@@ -402,6 +411,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 car.PlayerSeat.Add(view.Owner, 2);
                 if (view.IsMine)
                 {
+                    LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                    foreach (var item in LOD)
+                    {
+                        item.enabled = false;
+                    }
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
                     transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameObject.GetComponent<CharacterController>().enabled = false;
@@ -418,6 +432,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
                     GamePlayButtonEvents.inst.OnSwitchCameraClick();
                 }
                 else
@@ -449,6 +464,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 car.PlayerSeat.Add(view.Owner, 3);
                 if (view.IsMine)
                 {
+                    LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                    foreach (var item in LOD)
+                    {
+                        item.enabled = false;
+                    }
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
                     transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameObject.GetComponent<CharacterController>().enabled = false;
@@ -465,6 +485,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
                     GamePlayButtonEvents.inst.OnSwitchCameraClick();
                 }
                 else
@@ -496,6 +517,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 car.PlayerSeat.Add(view.Owner, 4);
                 if (view.IsMine)
                 {
+                    LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                    foreach (var item in LOD)
+                    {
+                        item.enabled = false;
+                    }
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
                     transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameObject.GetComponent<CharacterController>().enabled = false;
@@ -512,6 +538,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
+                    
                     GamePlayButtonEvents.inst.OnSwitchCameraClick();
                 }
                 else
@@ -552,6 +580,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
           
         if (view.IsMine)
             {
+          
+            foreach (var item in LOD)
+            {
+                item.enabled = true;
+            }
             ConstantsHolder.DisableFppRotation = false;
             MutiplayerController.instance.disableSector = false;
              CarNavigationManager.instance.DisableExitCanvas();
