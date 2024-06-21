@@ -1,7 +1,5 @@
-using Photon.Pun;
-using System.Collections;
+using PhysicsCharacterController;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class FinishPoint : MonoBehaviour
@@ -39,6 +37,8 @@ public class FinishPoint : MonoBehaviour
 
     void EnableCollider()
     {
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>().SetBool("Win", true);
         FinishRaceCollider.enabled = false;
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
         triggerCollider.SetActive(true);
