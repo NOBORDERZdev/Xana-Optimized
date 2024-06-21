@@ -55,6 +55,9 @@ public class UIHandler : MonoBehaviour
 
     public void AvatarSelectionBtnClicked()
     {
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
         if (!isAvatarSelectionBtnClicked)
             isAvatarSelectionBtnClicked = true;
         GameManager.Instance.HomeCameraInputHandler(false);
@@ -63,7 +66,10 @@ public class UIHandler : MonoBehaviour
 
     public void SwitchToPostScreen(bool flag)
     {
-       
+
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
         if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
         {
            // SNSNotificationHandler.Instance.ShowNotificationMsg("Need To Login");
