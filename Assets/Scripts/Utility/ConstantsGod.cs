@@ -313,4 +313,13 @@ public class ConstantsGod
     public static string getmeetingroomcount = "/toyotaAichiWorlds/check-meeting-members/";
     public static string wrapobjectApi = "/toyotaAichiWorlds/get-status-of-worldId/";
     #endregion
+
+    #region Quest API's
+    public static string GetAllTaskDataFromCurrentQuest = "/quest/get-current-quest-task-list/";
+    public static string UpdateQuestTaskData = "/quest/edit-quest-task/";
+    public static string UpdateQuestTaskDataPerformance = "/quest/update-user-performance";
+    public static string UpdateComapreQuestTaskDataPerformance = "/quest/get-user-performed-list";
+    public static string ClaimQuestReward = "/quest/claim-quest-reward";
+    public static string ClaimQuestRewardCheque = "/quest/claim-status/";
+    #endregion
 }

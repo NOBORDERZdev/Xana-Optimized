@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using System;
 
 public class UserPostFeature : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class UserPostFeature : MonoBehaviour
     bool _postBubbleFlag = false;
     public delegate void UpdatePostText(string txt);
     public UpdatePostText OnUpdatePostText;
+    public static event Action OnPostButtonPressed;
     public void ActivatePostButtbleHome(bool flag)
     {
         if (_postBubbleFlag) Bubble.parent.gameObject.SetActive(flag);
@@ -59,6 +61,11 @@ public class UserPostFeature : MonoBehaviour
         else
         {
             AssignRandomAnimationIfUserNotPosted(GameManager.Instance.mainCharacter.GetComponent<Actor>().overrideController, GameManager.Instance.mainCharacter.transform.GetComponent<Animator>());
+        }
+
+        if(OnPostButtonPressed!=null)
+        {
+            OnPostButtonPressed.Invoke();
         }
     }
 
