@@ -41,6 +41,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
 
+    public GameObject XANAPartyWaitingText;
     [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
     [SerializeField] TMP_Text XANAPartyCounterText;
     private bool isCounterStarted = false;
@@ -404,6 +405,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         isCounterStarted = true;
         yield return new WaitForSeconds(5); // wait to show that other player spwan and then lobby full
         //yield return new WaitForSeconds(30);
+        XANAPartyWaitingText.SetActive(false);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
