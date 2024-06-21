@@ -69,6 +69,7 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
     }
+    
     public void HomeCameraInputHandler(bool flag)
     {
         HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
