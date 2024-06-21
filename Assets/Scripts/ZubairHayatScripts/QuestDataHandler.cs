@@ -301,6 +301,8 @@ public class QuestDataHandler : MonoBehaviour
             Debug.Log("Update Task Details : ");
         else
             Debug.Log("Error Update Task Details" + www.error);
+
+        www.Dispose();
     }
     private IEnumerator QuestRewardClaimedByUser(int quest_id, int coins)
     {
@@ -320,6 +322,7 @@ public class QuestDataHandler : MonoBehaviour
             Debug.Log("Claimed By user : ");
         else
             Debug.Log("Error in Claiming Reward" + www.error);
+        www.Dispose();
     }
     #endregion
 
