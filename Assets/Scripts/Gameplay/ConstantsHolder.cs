@@ -141,6 +141,7 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
+    public static bool DisableFppRotation = false;
     public static int domeId;
     public string r_EmoteStoragePersistentPath
     {

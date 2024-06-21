@@ -310,7 +310,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void SetPlayer()
     {
-       PhotonNetwork.Destroy(player);
+      
         Destroy(player);
         AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = null;
        StartCoroutine(SpawnPlayerSection());

@@ -43,12 +43,14 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     /// <summary>
     /// True when player is changhing section.
     /// </summary>
-    private bool isShifting;
+    public bool isShifting;
 
     [Space]
     [Header("PhotonSectors")]
     private List<GameObject> playerobjectRoom;
     private string SectorName = "Default" ;
+    public bool disableSector;
+    private bool isWheel;
     #endregion
 
     #region Private Fields
@@ -254,18 +256,24 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
                 roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
             }
             while (roomNames.Contains(roomName));
-
-            PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
+            if (!isWheel) { 
+                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(int.Parse(ConstantsHolder.xanaConstants.userLimit)), new TypedLobby(CurrLobbyName, LobbyType.Default));
+                }
+            else
+            {
+                PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4), new TypedLobby(CurrLobbyName, LobbyType.Default));
+            }
         }
     }
 
-    private  RoomOptions RoomOptionsRequest()
+    private  RoomOptions RoomOptionsRequest(int maxplayer  )
     {
         roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+        roomOptions.MaxPlayers = (byte)(maxplayer);
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
         roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector" };
+
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable {{ "Sector",SectorName }};
         roomOptions.PublishUserId = true;
         roomOptions.CleanupCacheOnLeave = false;
@@ -289,6 +297,8 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         if (!isShifting)
             LFF.LoadFile();
         else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
+      
+
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -329,7 +339,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     {
         Debug.Log("Disconnected");
         playerobjects.Clear();
-
+        ConstantsHolder.DisableFppRotation = false;
     }
 
     public virtual void Disconnect()
@@ -348,13 +358,15 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
 
     #region Sector Management
 
-    public void Ontriggered(string SectorName)
+    public void Ontriggered(string SectorName,bool isWheel = false)
     {
-        if (SectorName == this.SectorName) return;
+        if (SectorName == this.SectorName|| (disableSector && !isWheel)) return;
       
         isShifting = true;
         var player = ReferencesForGamePlay.instance.m_34player;
-      
+        Debug.Log("Triggering...."+ SectorName);
+        this.SectorName = SectorName;
+        this.isWheel = isWheel;
         Destroy(player.GetComponent<PhotonAnimatorView>());
         Destroy(player.GetComponent<PhotonTransformView>());
         Destroy(player.GetComponent<PhotonVoiceView>());
@@ -366,7 +378,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
             Destroy(p.GetComponent<PhotonVoiceView>());
             Destroy(p.GetComponent<PhotonView>());
         }
-        this.SectorName = SectorName;
+       
         PhotonNetwork.LeaveRoom();
         
     }

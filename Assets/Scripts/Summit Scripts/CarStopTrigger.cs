@@ -16,9 +16,11 @@ public class CarStopTrigger : MonoBehaviour
         
         if(other.gameObject.tag == "PhotonLocalPlayer")
         {
+            Debug.LogError("Trigger Entered...1");
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
             if (summitrpc.isInsideCAr)
             {
+                Debug.LogError("Trigger Entered...2");
                 summitrpc.checkforExit();
                 return;
             }
