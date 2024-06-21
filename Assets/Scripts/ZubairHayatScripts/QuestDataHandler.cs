@@ -75,6 +75,9 @@ public class QuestDataHandler : MonoBehaviour
     #region API Calling and UI mentaining 
     private async void ClaimMyQuestReward()
     {
+        if (_quest.data.questData.id == 0)
+            return;
+
         string url = ConstantsGod.API_BASEURL + ConstantsGod.ClaimQuestRewardCheque + _quest.data.questData.id;
         UnityWebRequest response = UnityWebRequest.Get(url);
         response.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
