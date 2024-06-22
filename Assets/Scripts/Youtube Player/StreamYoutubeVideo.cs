@@ -25,7 +25,16 @@ public class StreamYoutubeVideo : MonoBehaviour
             oldUrl = Url;
             StartCoroutine(GetStreamableUrl(Url, isLive));
         }
+        else if(isLive)
+        {
+            PlayLiveVideo();
+        }
+        else if (!isLive)
+        {
+            PlayPrerecordedVideo();
+        }
     }
+
     public IEnumerator GetStreamableUrl(string Url, bool isLive)
     {
         WWWForm form = new WWWForm();
@@ -41,7 +50,7 @@ public class StreamYoutubeVideo : MonoBehaviour
             }
             if (www.isNetworkError || www.isHttpError)
             {
-                Debug.Log(www.error);
+                Debug.Log("SteamError:" + www.error);
             }
             else
             {
@@ -50,26 +59,37 @@ public class StreamYoutubeVideo : MonoBehaviour
                 streamAbleUrl = getYoutubeStreamableVideo.data.downloadableUrl;
                 if (isLive)
                 {
-                    mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
-                    mediaPlayer.Play();
-                    liveVideoPlay.Invoke();
-                    BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
+                    PlayLiveVideo();
                 }
                 else
                 {
-                    videoPlayer.source = VideoSource.Url;
-                    videoPlayer.url = streamAbleUrl;
-                    
-                    if (ConstantsHolder.xanaConstants.isBuilderScene)
-                    {
-                        videoPlayer.Prepare();
-                        videoPlayer.prepareCompleted += VideoPrepared;
-                    }
-                    else
-                        videoPlayer.Play();
+                    PlayPrerecordedVideo();
                 }
             }
         }
+    }
+
+
+    private void PlayLiveVideo()
+    {
+        mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
+        mediaPlayer.Play();
+        liveVideoPlay.Invoke();
+        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
+    }
+
+    private void PlayPrerecordedVideo()
+    {
+        videoPlayer.source = VideoSource.Url;
+        videoPlayer.url = streamAbleUrl;
+
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+        {
+            videoPlayer.Prepare();
+            videoPlayer.prepareCompleted += VideoPrepared;
+        }
+        else
+            videoPlayer.Play();
     }
 
     void VideoPrepared(VideoPlayer vp)
