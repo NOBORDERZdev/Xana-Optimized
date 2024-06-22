@@ -22,7 +22,6 @@ public class StreamYoutubeVideo : MonoBehaviour
     {
         if (oldUrl != Url)
         {
-            oldUrl = Url;
             StartCoroutine(GetStreamableUrl(Url, isLive));
         }
         else if(isLive)
@@ -54,6 +53,7 @@ public class StreamYoutubeVideo : MonoBehaviour
             }
             else
             {
+                oldUrl = Url;
                 string data = www.downloadHandler.text;
                 GetYoutubeStreamableVideo getYoutubeStreamableVideo = JsonConvert.DeserializeObject<GetYoutubeStreamableVideo>(data);
                 streamAbleUrl = getYoutubeStreamableVideo.data.downloadableUrl;
@@ -66,6 +66,7 @@ public class StreamYoutubeVideo : MonoBehaviour
                     PlayPrerecordedVideo();
                 }
             }
+            www.Dispose();
         }
     }
 
