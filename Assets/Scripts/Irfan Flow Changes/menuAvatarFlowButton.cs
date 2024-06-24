@@ -24,6 +24,9 @@ public class menuAvatarFlowButton : MonoBehaviour
  
     void OnClickMenuAvatarBtn()
     {
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
         if (ConstantsHolder.xanaConstants.isFirstPanel)
         {
             InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);

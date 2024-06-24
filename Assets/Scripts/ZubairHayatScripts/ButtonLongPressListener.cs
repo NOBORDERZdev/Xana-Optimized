@@ -28,11 +28,9 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
     private bool isPointerDown = false;
     private bool isLongPressed = false;
     private DateTime pressTime;
-
-
     private Button button;
-
     private WaitForSeconds delay;
+
 
 
     private void Awake()
@@ -47,33 +45,11 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
         pressTime = DateTime.Now;
         StartCoroutine(Timer());
     }
-
-
     public void OnPointerUp(PointerEventData eventData)
     {
         isPointerDown = false;
         isLongPressed = false;
     }
-
-    private IEnumerator Timer()
-    {
-        while (isPointerDown && !isLongPressed)
-        {
-            double elapsedSeconds = (DateTime.Now - pressTime).TotalSeconds;
-
-            if (elapsedSeconds >= holdDuration)
-            {
-                isLongPressed = true;
-                if (button.interactable)
-                    onLongPress?.Invoke();
-
-                yield break;
-            }
-
-            yield return delay;
-        }
-    }
-
     public void DisplayMsg()
     {
         string msg = "";
@@ -98,4 +74,23 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
         SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
     }
 
+
+    private IEnumerator Timer()
+    {
+        while (isPointerDown && !isLongPressed)
+        {
+            double elapsedSeconds = (DateTime.Now - pressTime).TotalSeconds;
+
+            if (elapsedSeconds >= holdDuration)
+            {
+                isLongPressed = true;
+                if (button.interactable)
+                    onLongPress?.Invoke();
+
+                yield break;
+            }
+
+            yield return delay;
+        }
+    }
 }
