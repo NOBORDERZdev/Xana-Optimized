@@ -48,7 +48,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     [Space]
     [Header("PhotonSectors")]
     private List<GameObject> playerobjectRoom;
-    private string SectorName = "Default" ;
+    private string SectorName = "GrassLand" ;
     public bool disableSector;
     private bool isWheel;
     #endregion
@@ -243,6 +243,12 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
                 Debug.LogError(info.PlayerCount + "--" + info.MaxPlayers + "--" + info.Name);
                 if (info.PlayerCount < info.MaxPlayers)
                 {
+                    if (info.CustomProperties["Sector"] != null)
+                    {
+                        var sector = (string)info.CustomProperties["Sector"];
+                        if (sector != SectorName) { continue; }
+                    }
+                    else { continue; }
                     CurrRoomName = info.Name;
                     joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                     return;
@@ -261,6 +267,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
                 }
             else
             {
+                Debug.LogError("Joining room   " + SectorName);
                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
         }
@@ -273,8 +280,9 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
         roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector" };
-
+        Debug.Log("Joining Sector  " + SectorName);
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable {{ "Sector",SectorName }};
+    
         roomOptions.PublishUserId = true;
         roomOptions.CleanupCacheOnLeave = false;
        
@@ -285,7 +293,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     {
         print("OnCreatedRoom called");
         if(PhotonNetwork.IsMasterClient  && SummitEntityManager.instance) {
-            CarNavigationManager.instance.Cars.Clear();
+           
             SummitEntityManager.instance.InstantiateCAR();
         }
     }
@@ -295,11 +303,24 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         Debug.Log("Current Sector ==  " + PhotonNetwork.CurrentRoom.CustomProperties["Sector"]);
         CurrRoomName = PhotonNetwork.CurrentRoom.Name;
         if (!isShifting)
+        {
             LFF.LoadFile();
-        else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
+        }
+        else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false;StartCoroutine(DestroyPlayerDelay());  } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
       
-
+        
     }
+
+    IEnumerator DestroyPlayerDelay()
+    {
+        yield return new WaitForSeconds(2);
+        foreach (var item in playerobjectRoom)
+        {
+            DestroyImmediate(item);
+        }
+    }
+
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         if (newPlayer.NickName == "XANA_XANA")
@@ -366,6 +387,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         var player = ReferencesForGamePlay.instance.m_34player;
         Debug.Log("Triggering...."+ SectorName);
         this.SectorName = SectorName;
+        Debug.Log("Triggered...." + this.SectorName);
         this.isWheel = isWheel;
         Destroy(player.GetComponent<PhotonAnimatorView>());
         Destroy(player.GetComponent<PhotonTransformView>());
@@ -394,6 +416,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
             playerobjectRoom = new List<GameObject>(playerobjects);
             playerobjects.Clear();
             JoinLobby(CurrLobbyName);
+            CarNavigationManager.instance.Cars.Clear();
         }
     }
 

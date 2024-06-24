@@ -36,7 +36,7 @@ public class CarNavigationManager : MonoBehaviour
 
     public void StopCar(GameObject car)
     {
-        if(PhotonNetwork.IsMasterClient)
+       
         StartCoroutine(WaitAtCarStop(car));
 
         
@@ -68,10 +68,10 @@ public class CarNavigationManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         car.GetComponent<SplineFollower>().speed = 0;
-       // car.GetComponent<SplineFollower>().stopcar = true;
+        car.GetComponent<SplineFollower>().stopcar = true;
         yield return new WaitForSeconds(2f);
         car.GetComponent<SplineFollower>().speed = 5;
-        //car.GetComponent<SplineFollower>().stopcar = false;
+        car.GetComponent<SplineFollower>().stopcar = false;
     }
 
     public void EnableExitCanvas()

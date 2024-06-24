@@ -20,6 +20,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     
     private Transform Parent;
     private bool isdriver;
+    private bool StopCar = false;
     private string Group;
 
     public bool isInsideCAr = false;
@@ -33,6 +34,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     private void Awake()
     {
         voiceNetwork = FindObjectOfType<PhotonVoiceNetwork>();
+        isInsideCAr = false;
       //  MutiplayerController.instance.OnEnteredRoom += OnPlayerEnteredRoom;
         PhotonNetwork.AddCallbackTarget(this);
     }
@@ -42,6 +44,143 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     {
         view.RPC("ExitCAr", RpcTarget.All);
 
+    }
+
+    private void FixedUpdate()
+    {
+        
+
+        if(StopCar  && CarNavigationManager.instance)
+        {
+            PhotonView carview;
+            CarNavigationManager.instance.Cars.TryGetValue(carID, out carview);
+            if(carview == null) { return; }
+
+            StopCar = false;
+            var car = carview.gameObject.GetComponent<SplineFollower>();
+           
+            isInsideCAr = true;
+            
+         
+            if (isdriver)
+            {
+
+                car.driverseatempty = false;
+                if (view.IsMine)
+                {
+                    ConstantsHolder.TempDiasableMultiPartPhoton = true;
+                    transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                    transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                    gameObject.GetComponent<CharacterController>().enabled = false;
+                    gameObject.GetComponent<ArrowManager>().enabled = false;
+                    gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                    Parent = transform.parent.transform.parent;
+                    transform.parent.transform.parent = car.transform;
+                    transform.localPosition = Vector3.zero;
+                    transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
+
+                    CarNavigationManager.instance.EnableExitCanvas();
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                    transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                    CarNavigationManager.instance.onExitpress += Exit;
+                    CarNavigationManager.instance.onCancelPress += CancelExit;
+
+                }
+                else
+                {
+                    gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                    gameObject.GetComponent<CharacterController>().enabled = false;
+                    gameObject.GetComponent<ArrowManager>().enabled = false;
+
+
+                    Parent = transform.parent;
+                    GameObject gasme = new GameObject();
+                    gasme.transform.parent = car.transform;
+                    transform.parent = gasme.transform;
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    gasme.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                    gasme.transform.localPosition = car.DriverPosition.transform.localPosition;
+                    gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                }
+                car.PlayerListinCar.Add(view.Owner, 0);
+                //transform.position = car.DriverPos;
+                if (gameObject.name.Contains("XanaAvatar2.0_Female"))
+                {
+                    car.isDriverMale = false;
+                }
+                if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                {
+                    car.showLove();
+                }
+                else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && car.driverseatempty)
+                {
+                    car.showLove();
+                }
+                GetComponent<Animator>().SetTrigger("EnterCar");
+
+            }
+            else
+            {
+                car.pasengerseatemty = false;
+                if (GetComponent<PhotonView>().IsMine)
+                {
+                    ConstantsHolder.TempDiasableMultiPartPhoton = true;
+                    transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                    transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                    gameObject.GetComponent<CharacterController>().enabled = false;
+                    gameObject.GetComponent<ArrowManager>().enabled = false;
+                    gameObject.GetComponent<PhotonTransformView>().enabled = false;
+
+                    Parent = transform.parent.transform.parent;
+                    transform.parent.transform.parent = car.transform;
+                    transform.localPosition = Vector3.zero;
+                    transform.parent.transform.localPosition = car.PacengerPosition.transform.localPosition;
+                    CarNavigationManager.instance.EnableExitCanvas();
+
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                    transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    CarNavigationManager.instance.onExitpress += Exit;
+                    CarNavigationManager.instance.onCancelPress += CancelExit;
+
+                }
+                else
+                {
+                    gameObject.GetComponent<CharacterController>().enabled = false;
+                    gameObject.GetComponent<ArrowManager>().enabled = false;
+                    gameObject.GetComponent<PhotonTransformView>().enabled = false;
+
+
+                    Parent = transform.parent;
+                    GameObject gasme = new GameObject();
+                    gasme.transform.parent = car.transform;
+                    transform.parent = gasme.transform;
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    gasme.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                    gasme.transform.localPosition = car.PacengerPosition.transform.localPosition;
+                    gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                }
+                car.PlayerListinCar.Add(view.Owner, 1);
+                GetComponent<Animator>().SetTrigger("EnterCar");
+                if (gameObject.name.Contains("XanaAvatar2.0_Female"))
+                {
+                    car.isPassengerMale = false;
+                }
+                if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                {
+                    car.showLove();
+                }
+                else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                {
+                    car.showLove();
+                }
+                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
+
+            }
+        }
+        
     }
 
     [PunRPC]
@@ -58,7 +197,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         var car = CarNavigationManager.instance.Cars[carID].gameObject.GetComponent<SplineFollower>();
         GetComponent<Animator>().SetTrigger("ExitCar");
         showExit = false;
-        ConstantsHolder.TempDiasableMultiPartPhoton = false;
+     
         if (isdriver)
         {
 
@@ -66,7 +205,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             if (view.IsMine)
             {
 
-
+                ConstantsHolder.TempDiasableMultiPartPhoton = false;
                 CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.DriverExitPosition.transform.position;
@@ -88,8 +227,9 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
               
             }
+            car.PlayerListinCar.Remove(view.Owner);
             //transform.position = car.DriverPos;
-            car.hidelove();
+           car.hidelove();
 
         }
         else
@@ -98,7 +238,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             if (GetComponent<PhotonView>().IsMine)
             {
 
-
+                ConstantsHolder.TempDiasableMultiPartPhoton = false;    
                 CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.PassengerExitPosition.transform.position;
@@ -120,6 +260,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
                
             }
+            car.PlayerListinCar.Remove(view.Owner);
+
             car.hidelove();
         }
 
@@ -138,8 +280,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     [PunRPC]
     void EnterCAr(int id, bool isDriver)
     {
-
-        WaitforInstance(id, isDriver);
+        carID = id;
+       this.isdriver = isDriver;
+        StopCar = true;
+     //   WaitforInstance(id, isDriver);
 
     }
 
@@ -152,124 +296,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             await new WaitForSeconds(1f);
         }
 
-        var car = CarNavigationManager.instance.Cars[id].gameObject.GetComponent<SplineFollower>();
-        this.isdriver = isDriver;
-        isInsideCAr = true;
-        ConstantsHolder.TempDiasableMultiPartPhoton = true;
-        carID = id;
-        if (isDriver)
-        {
-
-            car.driverseatempty = false;
-            if (view.IsMine)
-            {
-                transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
-                transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
-                gameObject.GetComponent<CharacterController>().enabled = false;
-                gameObject.GetComponent<ArrowManager>().enabled = false;
-                gameObject.GetComponent<PhotonTransformView>().enabled = false;
-                Parent = transform.parent.transform.parent;
-                transform.parent.transform.parent = car.transform;
-                transform.localPosition = Vector3.zero;
-                transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
-
-                CarNavigationManager.instance.EnableExitCanvas();
-                transform.rotation = new Quaternion(0, 0, 0, 0);
-                transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
-
-                CarNavigationManager.instance.onExitpress += Exit;
-                CarNavigationManager.instance.onCancelPress += CancelExit;
-
-            }
-            else
-            {
-                gameObject.GetComponent<PhotonTransformView>().enabled = false;
-                gameObject.GetComponent<CharacterController>().enabled = false;
-                gameObject.GetComponent<ArrowManager>().enabled = false;
-
-
-                Parent = transform.parent;
-                GameObject gasme = new GameObject();
-                gasme.transform.parent = car.transform;
-                transform.parent = gasme.transform;
-                transform.localPosition = Vector3.zero ;
-                transform.localRotation = new Quaternion(0, 0, 0, 0);
-                gasme.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-                gasme.transform.localPosition = car.DriverPosition.transform.localPosition;
-                gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            }
-            //transform.position = car.DriverPos;
-            if (gameObject.name.Contains("XanaAvatar2.0_Female"))
-            {
-                car.isDriverMale = false;
-            }
-            if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
-            {
-                car.showLove();
-            }
-            else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && car.driverseatempty)
-            {
-                car.showLove();
-            }
-            GetComponent<Animator>().SetTrigger("EnterCar");
-
-        }
-        else
-        {
-            car.pasengerseatemty = false;
-            if (GetComponent<PhotonView>().IsMine)
-            {
-                transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
-                transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
-                gameObject.GetComponent<CharacterController>().enabled = false;
-                gameObject.GetComponent<ArrowManager>().enabled = false;
-                gameObject.GetComponent<PhotonTransformView>().enabled = false;
-
-                Parent = transform.parent.transform.parent;
-                transform.parent.transform.parent = car.transform;
-                transform.localPosition = Vector3.zero;
-                transform.parent.transform.localPosition = car.PacengerPosition.transform.localPosition;
-                CarNavigationManager.instance.EnableExitCanvas();
-
-                transform.rotation = new Quaternion(0, 0, 0, 0);
-                transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
-                CarNavigationManager.instance.onExitpress += Exit;
-                CarNavigationManager.instance.onCancelPress += CancelExit;
-
-            }
-            else
-            {
-                gameObject.GetComponent<CharacterController>().enabled = false;
-                gameObject.GetComponent<ArrowManager>().enabled = false;
-                gameObject.GetComponent<PhotonTransformView>().enabled = false;
-
-
-                Parent = transform.parent;
-                GameObject gasme = new GameObject();
-                gasme.transform.parent = car.transform;
-                transform.parent = gasme.transform;
-                transform.localPosition = Vector3.zero;
-                transform.localRotation = new Quaternion(0, 0, 0, 0);
-                gasme.transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-                gasme.transform.localPosition = car.PacengerPosition.transform.localPosition;
-                gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
-            }
-            GetComponent<Animator>().SetTrigger("EnterCar");
-            if (gameObject.name.Contains("XanaAvatar2.0_Female"))
-            {
-                car.isPassengerMale = false;
-            }
-            if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
-            {
-                car.showLove();
-            }
-            else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
-            {
-                car.showLove();
-            }
-            Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
-
-        }
+   
     }
     
 
@@ -312,7 +339,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             Debug.Log("Stuck in loop");
         }
       
-        if(PhotonNetwork.IsMasterClient)
+        if(view.Owner.IsMasterClient &&view.IsMine)
         {
             CallEnterWheelRPC();
         }
@@ -330,6 +357,225 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
         {
+            
+                ConstantsHolder.DisableFppRotation = true;
+                isInsideCAr = true;
+                if (wheelSeat==1)
+                {
+
+                    var car = GiantWheelManager.Instance.car;
+                    car.isfirstPlayerEmpty = false;
+                    WheelSeat = 1;
+                    car.PlayerSeat.Add(view.Owner, 1);
+                    if (view.IsMine)
+                    {
+                        LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                        foreach (var item in LOD)
+                        {
+                            item.enabled = false;
+                        }
+
+                        transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                        transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        Parent = transform.parent.transform.parent;
+                        transform.parent.transform.parent = car.FirstPlayerPos;
+                        transform.localPosition = Vector3.zero;
+                        transform.parent.transform.localPosition = Vector3.zero;
+                        GiantWheelManager.Instance.WheelCar.SetActive(false);
+                        CarNavigationManager.instance.EnableExitCanvas();
+                        transform.rotation = new Quaternion(0, 0, 0, 0);
+                        transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                        CarNavigationManager.instance.onExitpress += Exit;
+                        CarNavigationManager.instance.onCancelPress += CancelExit;
+                        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
+                        GamePlayButtonEvents.inst.OnSwitchCameraClick();
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+
+
+                        Parent = transform.parent;
+                        GameObject gasme = new GameObject();
+                        gasme.transform.parent = car.FirstPlayerPos;
+                        transform.parent = gasme.transform;
+                        transform.localPosition = Vector3.zero;
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
+                        gasme.transform.localScale = Vector3.one;
+                        gasme.transform.localPosition = Vector3.zero;
+                        gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    }
+
+
+                }
+                else
+                         if (wheelSeat ==2)
+                {
+                    var car = GiantWheelManager.Instance.car;
+                    car.issecondPlayerEmpty = false;
+                    WheelSeat = 2;
+                    car.PlayerSeat.Add(view.Owner, 2);
+                    if (view.IsMine)
+                    {
+                        LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                        foreach (var item in LOD)
+                        {
+                            item.enabled = false;
+                        }
+                        transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                        transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        Parent = transform.parent.transform.parent;
+                        transform.parent.transform.parent = car.SecondPlayerPos;
+                        transform.localPosition = Vector3.zero;
+                        transform.parent.transform.localPosition = Vector3.zero;
+
+                        CarNavigationManager.instance.EnableExitCanvas();
+                        transform.rotation = new Quaternion(0, 0, 0, 0);
+                        transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                        CarNavigationManager.instance.onExitpress += Exit;
+                        CarNavigationManager.instance.onCancelPress += CancelExit;
+                        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
+                        GamePlayButtonEvents.inst.OnSwitchCameraClick();
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+
+
+                        Parent = transform.parent;
+                        GameObject gasme = new GameObject();
+                        gasme.transform.parent = car.SecondPlayerPos;
+                        transform.parent = gasme.transform;
+                        transform.localPosition = Vector3.zero;
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
+                        gasme.transform.localScale = Vector3.one;
+                        gasme.transform.localPosition = Vector3.zero;
+                        gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    }
+
+
+                }
+                else
+                         if (wheelSeat == 3)
+                {
+                    var car = GiantWheelManager.Instance.car;
+                    car.isThirdPlayerEmpty = false;
+                    WheelSeat = 3;
+                    car.PlayerSeat.Add(view.Owner, 3);
+                    if (view.IsMine)
+                    {
+                        LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                        foreach (var item in LOD)
+                        {
+                            item.enabled = false;
+                        }
+                        transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                        transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        Parent = transform.parent.transform.parent;
+                        transform.parent.transform.parent = car.ThirdPlayerPos;
+                        transform.localPosition = Vector3.zero;
+                        transform.parent.transform.localPosition = Vector3.zero;
+
+                        CarNavigationManager.instance.EnableExitCanvas();
+                        transform.rotation = new Quaternion(0, 0, 0, 0);
+                        transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                        CarNavigationManager.instance.onExitpress += Exit;
+                        CarNavigationManager.instance.onCancelPress += CancelExit;
+                        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
+                        GamePlayButtonEvents.inst.OnSwitchCameraClick();
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+
+
+                        Parent = transform.parent;
+                        GameObject gasme = new GameObject();
+                        gasme.transform.parent = car.ThirdPlayerPos;
+                        transform.parent = gasme.transform;
+                        transform.localPosition = Vector3.zero;
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
+                        gasme.transform.localScale = Vector3.one;
+                        gasme.transform.localPosition = Vector3.zero;
+                        gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    }
+
+
+                }
+                else
+                         if (wheelSeat==4)
+                {
+                    var car = GiantWheelManager.Instance.car;
+                    car.isfirstPlayerEmpty = false;
+                    WheelSeat = 4;
+                    car.PlayerSeat.Add(view.Owner, 4);
+                    if (view.IsMine)
+                    {
+                        LOD = new List<LODGroup>(FindObjectsOfType<LODGroup>());
+                        foreach (var item in LOD)
+                        {
+                            item.enabled = false;
+                        }
+                        transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
+                        transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        Parent = transform.parent.transform.parent;
+                        transform.parent.transform.parent = car.ForthPlayerPos;
+                        transform.localPosition = Vector3.zero;
+                        transform.parent.transform.localPosition = Vector3.zero;
+
+                        CarNavigationManager.instance.EnableExitCanvas();
+                        transform.rotation = new Quaternion(0, 0, 0, 0);
+                        transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+                        CarNavigationManager.instance.onExitpress += Exit;
+                        CarNavigationManager.instance.onCancelPress += CancelExit;
+                        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
+
+                        GamePlayButtonEvents.inst.OnSwitchCameraClick();
+                    }
+                    else
+                    {
+                        gameObject.GetComponent<PhotonTransformView>().enabled = false;
+                        gameObject.GetComponent<CharacterController>().enabled = false;
+                        gameObject.GetComponent<ArrowManager>().enabled = false;
+
+
+                        Parent = transform.parent;
+                        GameObject gasme = new GameObject();
+                        gasme.transform.parent = car.ForthPlayerPos;
+                        transform.parent = gasme.transform;
+                        transform.localPosition = Vector3.zero;
+                        transform.localRotation = new Quaternion(0, 0, 0, 0);
+                        gasme.transform.localScale = Vector3.one;
+                        gasme.transform.localPosition = Vector3.zero;
+                        gasme.transform.localRotation = new Quaternion(0, 0, 0, 0);
+                    }
+
+
+                }
+                GetComponent<Animator>().SetTrigger("EnterCar");
+            
 
         }
 
@@ -349,7 +595,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
      if(GiantWheelManager.Instance.car != null)
         {
             ConstantsHolder.DisableFppRotation = true;
-            
+            isInsideCAr = true;
           if(GiantWheelManager.Instance.car.isfirstPlayerEmpty)
             {
 
@@ -364,6 +610,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     {
                         item.enabled = false;
                     }
+                    
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
                     transform.parent.gameObject.GetComponent<PlayerController>().enabled = false;
                     gameObject.GetComponent<CharacterController>().enabled = false;
@@ -571,13 +818,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     [PunRPC]
     void ExitWheelCar()
     {
-    
 
-        
-        
-           
-         
-          
+
+
+
         if (view.IsMine)
             {
           
@@ -642,7 +886,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     private void CarStop()
     {
-       if(view.IsMine && PhotonNetwork.IsMasterClient)
+       if(PhotonNetwork.IsMasterClient)
         {
             view.RPC("WheelStoped", RpcTarget.All);
         }

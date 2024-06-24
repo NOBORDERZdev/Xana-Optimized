@@ -1,11 +1,14 @@
 ﻿using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class SplineFollower : MonoBehaviour,IPunObservable {
+public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
+{
 
 
 
@@ -24,6 +27,7 @@ public class SplineFollower : MonoBehaviour,IPunObservable {
     public Vector3 DriverPos = new Vector3(-0.308f    ,0.25f,- .507f);
     [HideInInspector]
     public Vector3 PacengerPosr = new Vector3(0.292f, 0.25f, -0.478f);
+    public Dictionary<Player,int> PlayerListinCar = new Dictionary<Player,int>();
 
     public GameObject DriverPosition,PacengerPosition ,DriverExitPosition,PassengerExitPosition,Love;
     public bool driverseatempty = true;
@@ -40,23 +44,25 @@ public class SplineFollower : MonoBehaviour,IPunObservable {
     public bool stopcar = false;
 
     private bool checkforrigidbody = true;
+    bool NeedToAddReference = true;
+
+    Vector3 newRot;
+    float counter = 1;
+    float time = .5f;
+    Vector3 currentRot;
+    [SerializeField]
+    Transform onewheel, twowheel, threewheel, fourwheel;
     private void Awake()
     {
 
-        MutiplayerController.instance.ADDReference += addReferences;
+      //  MutiplayerController.instance.ADDReference += addReferences;
     }
 
     private void Start()
     {
     }
+    
 
-    private void addReferences()
-    {
-
-        CarNavigationManager.instance.Cars.Add(view.ViewID, view);
-        spline = SplineDone.Instance;
-        maxMoveAmount = spline.GetSplineLength(0.0005f);
-    }
 
     public void Setup(byte Name) {
         spline = SplineDone.Instance;
@@ -86,11 +92,44 @@ public class SplineFollower : MonoBehaviour,IPunObservable {
       transform.position = new Vector3(transform.position.x,.5f,transform.position.z);
     }
 
+    private void Update()
+    {
+
+        if (counter < 1)
+        {
+            if (stopcar)
+            {
+                return;
+            }
+            counter += Time.deltaTime;
+            counter = counter / time;
 
 
-    
+            onewheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
+            twowheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
+            threewheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
+            fourwheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
+        }
+        else
+        {
+            counter = 0;
+            newRot = onewheel.localEulerAngles + new Vector3(90, 0, 0);
+            currentRot = onewheel.localEulerAngles;
+        }
+
+    }
+
+
     private void FixedUpdate() {
-        if(spline == null|| stopcar || !PhotonNetwork.IsMasterClient) { return; }
+
+        if (NeedToAddReference&& CarNavigationManager.instance)
+        {
+            CarNavigationManager.instance.Cars.Add(view.ViewID, view);
+            spline = SplineDone.Instance;
+            maxMoveAmount = spline.GetSplineLength(0.0005f);
+            NeedToAddReference = false;
+        }
+        if (spline == null || !PhotonNetwork.IsMasterClient) { return; }
       
       
         if (checkforrigidbody)
@@ -114,6 +153,9 @@ public class SplineFollower : MonoBehaviour,IPunObservable {
                 transform.forward = forwa; //new Vector3(forwa.x, transform.position.y, forwa.z);
                 break;
         }
+
+
+
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -135,5 +177,35 @@ public class SplineFollower : MonoBehaviour,IPunObservable {
     public void hidelove()
     {
         Love.SetActive(false);
+    }
+
+    public void OnPlayerEnteredRoom(Player newPlayer)
+    {
+        
+    }
+
+    public void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        int pos = -1;
+        PlayerListinCar.TryGetValue(otherPlayer, out pos);   
+        if (pos != -1) { 
+            PlayerListinCar.Remove(otherPlayer);
+            if(pos == 0) { driverseatempty = true; } else { driverseatempty=false; }
+        }
+    }
+
+    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
+    {
+        
+    }
+
+    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+    {
+        
+    }
+
+    public void OnMasterClientSwitched(Player newMasterClient)
+    {
+        
     }
 }

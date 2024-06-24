@@ -8,39 +8,42 @@ public class WheelTrigger : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-
-        string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
-        if (other.gameObject.tag == "PhotonLocalPlayer")
+        if (PhotonNetwork.InRoom)
         {
-            if (other.GetComponent<PhotonView>().IsMine)
+            string name = (string)PhotonNetwork.CurrentRoom.CustomProperties["Sector"];
+            if (other.gameObject.tag == "PhotonLocalPlayer")
             {
-                if (name != "Wheel")
+                if (other.GetComponent<PhotonView>().IsMine)
                 {
-                    ChangeSector();
+                    if (name != "Wheel")
+                    {
+                        ChangeSector();
+                    }
+                    else
+                    {
+                        other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
+                    }
                 }
-                else
+            }
+
+            if (name == "Wheel")
+            {
+                if (other.gameObject.tag == "WheelCar")
                 {
-                    other.GetComponent<SummitPlayerRPC>().CheckForExitWheel();
+                    Debug.Log("WheelCar Triggered ");
+                    GiantWheelManager.Instance.CheckForWheelCar();
+
+
                 }
-            }
-        }
-     
-        if (name == "Wheel")
-        {
-            if (other.gameObject.tag == "WheelCar")
-            {
-                
-                GiantWheelManager.Instance.CheckForWheelCar();
+                if (other.gameObject.tag == "Wheel" && !GiantWheelManager.Instance.CarAdded)
+                {
+
+                    GiantWheelManager.Instance.AddCar();
+
+                }
+
 
             }
-            if (other.gameObject.tag == "Wheel" && !GiantWheelManager.Instance.CarAdded)
-            {
-
-                GiantWheelManager.Instance.AddCar();
-
-            }
-          
-
         }
     }
     async void ChangeSector()

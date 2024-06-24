@@ -43,22 +43,14 @@ public class GiantWheelManager : MonoBehaviour, IInRoomCallbacks
     {
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
 
-            if (name== "Wheel" && stopWheel)
+        if (name == "Wheel" && stopWheel)
         {
-            if (PhotonNetwork.IsMasterClient && !CarAdded)
-            {
-           
-               
-                StartCoroutine(startwheel());
-                onCarStop?.Invoke();
 
-            }
-            else if(PhotonNetwork.IsMasterClient)
-            {
-              
-                StartCoroutine(startwheel());
-                onCarStop?.Invoke();
-            }
+
+            StartCoroutine(startwheel());
+            onCarStop?.Invoke();
+
+
 
         }
 
@@ -126,6 +118,7 @@ public class GiantWheelManager : MonoBehaviour, IInRoomCallbacks
 
     public void StopWheel( SummitPlayerRPC player)
     {
+        stopWheel = true;
        SummitRPCs.Add(player);
 
     }

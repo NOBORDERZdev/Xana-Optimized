@@ -400,7 +400,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
             {
-                base.OnJoinRandomFailed(returnCode,message);
+                base.OnJoinRoomFailed(returnCode,message);
                 return;
             }
             GameplayEntityLoader.instance._uiReferences.LoadMain(true);

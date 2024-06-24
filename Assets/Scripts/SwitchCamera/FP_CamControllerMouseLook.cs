@@ -262,10 +262,10 @@ public class FP_CamControllerMouseLook : MonoBehaviour
             playerBody.Rotate(Vector3.up * (delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime));
         }
         else
-        {
-            transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-            transform.Rotate(Vector3.up * (delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime));
-            //   transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
+        {  yRotation+= delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime;
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+           
+             //  transform.Rotate(new Vector3(xRotation ,1*(delta.x * 10 * PlayerCameraController.instance.lookSpeedd * Time.deltaTime),0f));
         }
     }
 
