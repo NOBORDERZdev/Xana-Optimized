@@ -110,7 +110,7 @@ public class WorldManager : MonoBehaviour
         {
             while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
             (PlayerPrefs.GetString("PlayerName") == "") && PlayerPrefs.GetInt("FirstTime") == 0 &&
-            ConstantsGod.AUTH_TOKEN== "AUTH_TOKEN")
+            ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN" )
                     yield return new WaitForSeconds(0.5f);
         }
         else if(XANAPartyManager.Instance.EnableXANAPartyGuest)

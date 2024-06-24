@@ -91,7 +91,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         instance = this;
         StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
-        StartCoroutine(WorldManager.instance.xanaParty());
+       
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
             SaveCharacterProperties.instance.CreateFileFortheFirstTime();
@@ -122,9 +122,9 @@ public class UserLoginSignupManager : MonoBehaviour
     }
 
      private void Start()
-        {
+     {
              
-        }
+     }
 
 
      IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
@@ -145,6 +145,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     if (myObject1.success)
                     {
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+                        WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
                         print("guest token is "+ ConstantsGod.AUTH_TOKEN );
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
