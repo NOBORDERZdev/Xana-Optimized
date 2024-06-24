@@ -42,6 +42,10 @@ public class FaceCameraUI : MonoBehaviour
                 mainCam = thirdPersonCam;
         }
 
+        if (mainCam == null)
+        {
+            mainCam = GameplayEntityLoader.instance.XanaPartyCamera.GetComponentInChildren<Camera>().transform;
+        }
         if (mainCam.gameObject.activeInHierarchy)
         {
             localTrans.LookAt(2 * localTrans.position - mainCam.position);
