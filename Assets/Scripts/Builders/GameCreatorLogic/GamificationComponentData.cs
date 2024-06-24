@@ -9,6 +9,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GamificationComponentData : MonoBehaviourPunCallbacks
 {
@@ -104,6 +105,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public bool SinglePlayer = false;
     public int RaceFinishCount = 0;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
+    bool isRaceStarted = false;
     private void Awake()
     {
         instance = this;
@@ -121,11 +123,21 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         OrientationChange(false);
         warpComponentList.Clear();
         WarpComponentLocationUpdate += UpdateWarpFunctionData;
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
         //reset ignore layer collision on scene load
         Physics.IgnoreLayerCollision(9, 22, false);
         ZoomControl = true;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if the loaded scene is the one where you want to start the XANA party race
+        // Call StartXANAPartyRace here
+        if ( ConstantsHolder.xanaConstants.isXanaPartyWorld &&  ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
+            StartXANAPartyRace();
+    }
+
+    
 
     public override void OnDisable()
     {
@@ -136,6 +148,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
 
         WarpComponentLocationUpdate -= UpdateWarpFunctionData;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
     }
 
@@ -399,20 +412,20 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
-        if (SinglePlayer)
-        {
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            return;
-        }
+        //if (SinglePlayer)
+        //{
+        //    PhotonNetwork.CurrentRoom.IsVisible = false;
+        //    PhotonNetwork.CurrentRoom.IsOpen = false;
+        //    return;
+        //}
 
         if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
         {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.CurrentRoom.IsVisible = false;
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-            }
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    PhotonNetwork.CurrentRoom.IsVisible = false;
+            //    PhotonNetwork.CurrentRoom.IsOpen = false;
+            //}
             StartCoroutine(WaitForWorldLoadingAllPlayer());
         }
     }
@@ -436,6 +449,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
         print("~~~ all player ready ~~~");
         this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        isRaceStarted= true;
     }
     [PunRPC]
     void StartGameRPC()
