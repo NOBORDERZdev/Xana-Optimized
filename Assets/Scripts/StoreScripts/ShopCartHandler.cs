@@ -31,16 +31,18 @@ public class ShopCartHandler : MonoBehaviour
     public List<ClothingParts> _oldItemReferences;
     AvatarController ac;
 
-    private void Start()
-    {
-        ac = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
-    }
+    
     public void UpdateItemReferences()
     {
-        _oldItemReferences[0].dressName = ac.wornPant.name;
-        _oldItemReferences[1].dressName = ac.wornShirt.name;
-        _oldItemReferences[2].dressName = ac.wornHair.name;
-        _oldItemReferences[3].dressName = ac.wornShoes.name;
+        ac = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
+        if(ac.wornPant)
+            _oldItemReferences[0].dressName = ac.wornPant.name;
+        if (ac.wornShirt)
+            _oldItemReferences[1].dressName = ac.wornShirt.name;
+        if (ac.wornHair)
+            _oldItemReferences[2].dressName = ac.wornHair.name;
+        if (ac.wornShoes)
+            _oldItemReferences[3].dressName = ac.wornShoes.name;
     }
 
 
