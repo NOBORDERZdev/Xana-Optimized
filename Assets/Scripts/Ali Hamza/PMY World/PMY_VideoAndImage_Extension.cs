@@ -58,6 +58,8 @@ namespace PMY
         [Header("For Firebase Enum")]
         public RoomType roomType;
 
+        private StreamYoutubeVideo streamYoutubeVideo;
+
         private void Start()
         {
             if (isAddBtnComponent)
@@ -347,9 +349,12 @@ namespace PMY
                 PMY_Nft_Manager_Extension.Instance.videoRenderObject = liveVideoPlayer;
                 if (liveVideoPlayer)
                     liveVideoPlayer.SetActive(true);
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
-                liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
+
+                if (streamYoutubeVideo != null)
+                    streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
+                //liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().mPlayer.Play();
             }
             else if (_videoType == PMY_VideoTypeRes.prerecorded && preRecordedPlayer)
             {
@@ -367,8 +372,17 @@ namespace PMY
                     }
                 }
 
-                preRecordedPlayer.GetComponent<FetchSteamableURL>().youtubeVideoURL = videoLink;
-                preRecordedPlayer.SetActive(true);
+                 if (streamYoutubeVideo != null)
+                        streamYoutubeVideo.StreamYtVideo(videoLink, false);
+
+                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().videoPlayer = tempVideoPlayer;
+                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.videoPlayer = tempVideoPlayer;
+                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().player.audioPlayer = tempVideoPlayer;
+                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
+                    //preRecordedPlayer.GetComponent<YoutubeSimplified>().Play();
+                    //imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
+                    preRecordedPlayer.SetActive(true);
+                    imgVideo16x9.SetActive(true);
 
                 if (imgVideoFrame16x9)
                 {
@@ -455,8 +469,8 @@ namespace PMY
                 }
             }
 
-            if (PMY_Nft_Manager_Extension.Instance && renderTexture_temp != null)
-                PMY_Nft_Manager_Extension.Instance.NFTLoadedVideos.Add(renderTexture_temp);
+            //if (PMY_Nft_Manager_Extension.Instance && renderTexture_temp != null)
+            //    PMY_Nft_Manager_Extension.Instance.NFTLoadedVideos.Add(renderTexture_temp);
 
             if (isCreateFrame)
                 CreateFrame();   //create frame

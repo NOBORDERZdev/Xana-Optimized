@@ -11,7 +11,6 @@ using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using static GlobalConstants;
 using Paroxe.PdfRenderer;
-using Models;
 
 namespace PMY
 {
@@ -76,7 +75,7 @@ namespace PMY
         public string firebaseEventName;
         public int clickedNftInd;
         public List<Texture> NFTLoadedSprites = new List<Texture>();
-        public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
+        //public List<RenderTexture> NFTLoadedVideos = new List<RenderTexture>();
 
         public GameObject videoRenderObject;
 

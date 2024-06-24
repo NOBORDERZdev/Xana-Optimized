@@ -69,6 +69,27 @@ public class JjWorldChanger : MonoBehaviour
                         else
                             XanaConstants.xanaConstants.pmy_classRoomID_Test = 9;
                     }
+                    else if (WorldID == 3)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 10;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 10;
+                    }
+                    else if (WorldID == 4)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 11;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 11;
+                    }
+                    else if (WorldID == 5)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 12;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 12;
+                    }
                 }
                 if (isEnteringPopup)
                     CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
