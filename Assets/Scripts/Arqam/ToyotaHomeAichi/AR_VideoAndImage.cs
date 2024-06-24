@@ -10,6 +10,8 @@ namespace Toyota
 {
     public class AR_VideoAndImage : MonoBehaviour
     {
+        public enum NFT_Type { TwoD_View, MainScreen }
+        public NFT_Type NFT;
         public bool isAddBtnCompOnScreen = true;
         [Space(5)]
         public int id;
@@ -72,17 +74,17 @@ namespace Toyota
         }
         private void Start()
         {
-                imgVideo16x9.AddComponent<Button>();
-                imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo16x9.AddComponent<Button>();
+            imgVideo16x9.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo9x16.AddComponent<Button>();
-                imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo9x16.AddComponent<Button>();
+            imgVideo9x16.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo1x1.AddComponent<Button>();
-                imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo1x1.AddComponent<Button>();
+            imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
-                imgVideo4x3.AddComponent<Button>();
-                imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
+            imgVideo4x3.AddComponent<Button>();
+            imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
             if (this.GetComponent<StreamYoutubeVideo>() != null)
             {
@@ -187,7 +189,7 @@ namespace Toyota
                             EnableImageVideoFrame(imgVideoFrame9x16);
                         }
                         imgVideo9x16.SetActive(true);
-                      
+
                         enableFrame.Invoke(1);
                         imgVideo9x16.GetComponent<RawImage>().texture = response;
                         imgVideo9x16.GetComponent<VideoPlayer>().enabled = false;
@@ -311,7 +313,7 @@ namespace Toyota
             }
         }
 
-        RenderTexture renderTexture_temp;
+        private RenderTexture renderTexture_temp;
         void SetVideo()
         {
             if (imgVideo16x9)
@@ -325,59 +327,61 @@ namespace Toyota
             if (liveVideoPlayer)
                 liveVideoPlayer.SetActive(false);
 
-            if (_videoType == PMY_VideoTypeRes.islive && liveVideoPlayer)
+            if (NFT.Equals(NFT_Type.MainScreen))
             {
-                nftMAnager.videoRenderObject = liveVideoPlayer;
-                if (liveVideoPlayer)
-                    liveVideoPlayer.SetActive(true);
-
-                if (streamYoutubeVideo != null)
-                    streamYoutubeVideo.StreamYtVideo(videoLink, true);
-                //SoundController.Instance.livePlayerSource = liveVideoPlayer.GetComponent<MediaPlayer>();
-                //SoundSettings.soundManagerSettings.setNewSliderValues();
-            }
-            else if (_videoType == PMY_VideoTypeRes.prerecorded)
-            {
-                RenderTexture renderTexture = new RenderTexture(NFT_Holder_Manager.instance.renderTexture_16x9);
-
-                SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
-                SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
-                SoundSettings.soundManagerSettings.setNewSliderValues();
-
-                nftMAnager.videoRenderObject = imgVideo16x9;
-                renderTexture_temp = renderTexture;
-                imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
-                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
-
-                if (isMultipleScreen)
+                if (_videoType == PMY_VideoTypeRes.islive && liveVideoPlayer)
                 {
-                    for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
+                    nftMAnager.videoRenderObject = liveVideoPlayer;
+                    if (liveVideoPlayer)
+                        liveVideoPlayer.SetActive(true);
+
+                    if (streamYoutubeVideo != null)
+                        streamYoutubeVideo.StreamYtVideo(videoLink, true);
+                }
+                else if (_videoType == PMY_VideoTypeRes.prerecorded)
+                {
+                    RenderTexture renderTexture = new RenderTexture(NFT_Holder_Manager.instance.renderTexture_16x9);
+
+                    SoundController.Instance.videoPlayerSource = imgVideo16x9.GetComponent<AudioSource>();
+                    SoundSettings.soundManagerSettings.videoSource = imgVideo16x9.GetComponent<AudioSource>();
+                    SoundSettings.soundManagerSettings.setNewSliderValues();
+
+                    nftMAnager.videoRenderObject = imgVideo16x9;
+                    renderTexture_temp = renderTexture;
+                    imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+
+                    if (isMultipleScreen)
                     {
-                        imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
-                        imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        for (int i = 0; i < imgVideo16x9.transform.childCount; i++)
+                        {
+                            imgVideo16x9.transform.GetChild(i).GetComponent<RawImage>().texture = renderTexture;
+                            imgVideo16x9.transform.GetChild(i).GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                        }
                     }
-                }
 
-                if (streamYoutubeVideo != null)
-                    streamYoutubeVideo.StreamYtVideo(videoLink, false);
-                imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
-                imgVideo16x9.SetActive(true);
-                if (imgVideoFrame16x9)
-                {
-                    EnableImageVideoFrame(imgVideoFrame16x9);
+                    if (streamYoutubeVideo != null)
+                        streamYoutubeVideo.StreamYtVideo(videoLink, false);
+                    imgVideo16x9.GetComponent<VideoPlayer>().playOnAwake = true;
+                    imgVideo16x9.SetActive(true);
+                    if (imgVideoFrame16x9)
+                    {
+                        EnableImageVideoFrame(imgVideoFrame16x9);
+                    }
+                    if (!isAddBtnCompOnScreen)
+                        imgVideo16x9.GetComponent<Button>().enabled = false;
                 }
-                if (!isAddBtnCompOnScreen)
-                    imgVideo16x9.GetComponent<Button>().enabled = false;
+                else if (_videoType == PMY_VideoTypeRes.aws)
+                {
+                    SetThumbail(imageLink);
+                }
             }
-            else if (_videoType == PMY_VideoTypeRes.aws)
+            else if (NFT.Equals(NFT_Type.TwoD_View))
             {
                 SetThumbail(imageLink);
             }
-
-            if (nftMAnager && renderTexture_temp != null)
-                nftMAnager.NFTLoadedVideos.Add(renderTexture_temp);
-
         }
+
 
         public void OpenWorldInfo()
         {
@@ -385,7 +389,7 @@ namespace Toyota
             if (PlayerController.isJoystickDragging == true)
                 return;
 
-            if (nftMAnager != null && _videoType != PMY_VideoTypeRes.islive)
+            if (nftMAnager != null) //&& _videoType != PMY_VideoTypeRes.islive
             {
                 if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
                 {
@@ -396,7 +400,6 @@ namespace Toyota
                 {
                     nftMAnager.SetInfo(_imgVideoRatio, nftMAnager.worldInfos[id].Title[1], nftMAnager.worldInfos[id].Aurthor[1], nftMAnager.worldInfos[id].Des[1], nftMAnager.worldInfos[id].url, _texture, nftMAnager.worldInfos[id].Type, nftMAnager.worldInfos[id].VideoLink, nftMAnager.worldInfos[id].videoType,
                         nftMAnager.worldInfos[id].pdfURL, nftMAnager.worldInfos[id].quiz_data, id, roomType, roomNumber);
-
                 }
             }
         }
