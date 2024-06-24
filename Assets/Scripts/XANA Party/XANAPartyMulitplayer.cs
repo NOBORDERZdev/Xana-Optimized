@@ -3,6 +3,7 @@ using PhysicsCharacterController;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class XANAPartyMulitplayer : MonoBehaviour
 {
@@ -49,9 +50,17 @@ public class XANAPartyMulitplayer : MonoBehaviour
         _XanaConstants.isBuilderScene = true;
         _XanaConstants.builderMapID = gameId;
         _XanaConstants.isMasterOfGame = PhotonNetwork.IsMasterClient;
-
+        print("!! move to level");
+        
+      
+       // SceneManager.UnloadScene("GamePlayScene");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Photon.Pun.PhotonHandler.levelName = "Builder";
+            PhotonNetwork.LoadLevel("Builder");
+        }
         // Load the main scene
-        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        //GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 
     public IEnumerator MoveToLobby()

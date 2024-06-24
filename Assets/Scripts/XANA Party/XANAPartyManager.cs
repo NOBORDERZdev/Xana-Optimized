@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
@@ -45,6 +46,7 @@ public class XANAPartyManager : MonoBehaviour
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (ShouldFetchXanaPartyGames())
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
             StartCoroutine(FetchXanaPartyGames()); // Fetching XANA PARTY GAMES and Joining XANA PARTY LOBBY
         }
         else

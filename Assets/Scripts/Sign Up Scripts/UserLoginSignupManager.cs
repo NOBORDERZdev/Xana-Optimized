@@ -88,7 +88,10 @@ public class UserLoginSignupManager : MonoBehaviour
 
     private void OnEnable()
     {
+
         instance = this;
+        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        StartCoroutine(WorldManager.instance.xanaParty());
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
             SaveCharacterProperties.instance.CreateFileFortheFirstTime();
@@ -117,11 +120,12 @@ public class UserLoginSignupManager : MonoBehaviour
         verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
     }
+
      private void Start()
         {
-             StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
-             StartCoroutine(WorldManager.instance.xanaParty());
+             
         }
+
 
      IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
@@ -141,6 +145,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     if (myObject1.success)
                     {
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+                        print("guest token is "+ ConstantsGod.AUTH_TOKEN );
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
                             //DynamicEventManager.deepLink?.Invoke("Guest login");
@@ -190,7 +195,7 @@ public class UserLoginSignupManager : MonoBehaviour
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+           ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
             InventoryManager.instance.WalletLoggedinCall();
             WalletAutoLogin();
