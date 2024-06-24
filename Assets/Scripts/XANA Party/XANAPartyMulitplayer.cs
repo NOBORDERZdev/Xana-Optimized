@@ -54,13 +54,15 @@ public class XANAPartyMulitplayer : MonoBehaviour
         
       
        // SceneManager.UnloadScene("GamePlayScene");
-        if (PhotonNetwork.IsMasterClient)
-        {
-            Photon.Pun.PhotonHandler.levelName = "Builder";
-            PhotonNetwork.LoadLevel("Builder");
-        }
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    Photon.Pun.PhotonHandler.levelName = "Builder";
+        //    PhotonNetwork.LoadLevel("Builder");
+        //}
         // Load the main scene
         //GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        Photon.Pun.PhotonHandler.levelName = "Builder";
+        PhotonNetwork.LoadLevel("Builder");
     }
 
     public IEnumerator MoveToLobby()
