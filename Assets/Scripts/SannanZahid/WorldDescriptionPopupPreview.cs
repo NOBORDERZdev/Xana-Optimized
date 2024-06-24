@@ -324,11 +324,11 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
                 temp.GetComponent<TagPrefabInfo>().tagName.text = temp.GetComponent<TagPrefabInfo>().tagName.text.ToUpper();
                 //temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
                 temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
-                if (i == 0)
-                {
-                    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
-                    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
-                }
+                //if (i == 0)
+                //{
+                //    temp.GetComponent<Image>().color = new Color(236,236,236,255);
+                //    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.black;
+                //}
             }
         }
         tagsInstantiated = true;
