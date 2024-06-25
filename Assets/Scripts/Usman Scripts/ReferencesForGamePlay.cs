@@ -385,26 +385,15 @@ public class ReferencesForGamePlay : MonoBehaviour
     
     IEnumerator ShowLobbyCounter()
     {
-        //bool allPalyerReady = false;
-        //while (!allPalyerReady)
-        //{
-        //    yield return new WaitForSeconds(0.5f);
-        //    foreach (Player player in PhotonNetwork.PlayerList)
-        //    {
-        //        print("~~ for each");
-        //        if(player.CustomProperties.TryGetValue("IsReady", out object isReady)){
-                   
-        //          print("~~ for IsReady");
-        //            allPalyerReady =(bool) isReady/*(bool)player.CustomProperties["IsReady"]*/;
-
-        //            if (!allPalyerReady) break;
-        //        }
-        //    }
-        //    allPalyerReady = true;
-        //}
         isCounterStarted = true;
         yield return new WaitForSeconds(10); // wait to show that other player spwan and then lobby full
-        //yield return new WaitForSeconds(30);
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().StartLobbyCounter();
+        
+    }
+
+    
+    public IEnumerator ShowLobbyCounterAndMovePlayer()
+    {
         XANAPartyWaitingText.SetActive(false);
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
@@ -412,11 +401,12 @@ public class ReferencesForGamePlay : MonoBehaviour
             XANAPartyCounterText.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
-         XANAPartyLobbyyCounterPanel.SetActive(false);
+        XANAPartyLobbyyCounterPanel.SetActive(false);
+
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         yield return new WaitForSeconds(2);
-        if (PhotonNetwork.IsMasterClient )
+        if (PhotonNetwork.IsMasterClient)
         {
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
             xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());

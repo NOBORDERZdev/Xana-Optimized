@@ -40,7 +40,10 @@ public class FinishPoint : MonoBehaviour
     void EnableCollider()
     {
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>().SetBool("Win", true);
+        Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
+        penguinAnimator.SetBool("isGrounded", true);
+        penguinAnimator.SetBool("isJump", false);
+        penguinAnimator.SetBool("Win", true);
         FinishRaceCollider.enabled = false;
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
         triggerCollider.SetActive(true);

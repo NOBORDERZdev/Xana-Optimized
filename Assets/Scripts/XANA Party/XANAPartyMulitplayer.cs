@@ -39,6 +39,12 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
     }
 
+    [PunRPC]
+    public void StartLobbyCounter()
+    {
+        StartCoroutine(ReferencesForGamePlay.instance.ShowLobbyCounterAndMovePlayer());
+    }
+
     // RPC to move players to the selected room
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
