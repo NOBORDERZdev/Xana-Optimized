@@ -134,8 +134,11 @@ public class Actor : MonoBehaviour
                     //Debug.LogError("ActionClipTime ----> " + ActionClipTime);
                     
                     yield return new WaitForSeconds(ActionClipTime); 
-                   // Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
+                    //Debug.LogError("ActionClipTimeStart ----> " + ActionClipTime);
                     MoveBehaviour move = _playerMoves.Dequeue();
+
+                    if (ConstantsHolder.xanaConstants.isStoreActive)
+                        break;
                     if (move.behaviour == MoveBehaviour.Behaviour.Action || menuIdleFlag)
                     {
                         StateMoveBehaviour = 2;

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public bool OnceGuestBool;
     public bool OnceLoginBool;
     public bool isTabSwitched = false;
+    public bool isAllSceneLoaded = false;
     [Header("Camera Work")]
     public GameObject faceMorphCam;
     public GameObject headCam;
