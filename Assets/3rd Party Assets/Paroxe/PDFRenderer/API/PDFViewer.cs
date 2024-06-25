@@ -144,6 +144,7 @@ namespace Paroxe.PdfRenderer
         private bool m_ParagraphZoomingEnable = true;
         [SerializeField]
         private float m_ParagraphDetectionThreshold = 12.0f;
+        private PageFittingType _pageFittingType = PageFittingType.WholePage;
 
         public delegate void CancelEventHandler(PDFViewer sender);
         public delegate void CurrentPageChangedEventHandler(PDFViewer sender, int oldPageIndex, int newPageIndex);
@@ -1387,7 +1388,7 @@ namespace Paroxe.PdfRenderer
                     }
                     else
                     {
-	                    holder.Page.GetComponent<PDFViewerPage>().ClearCache();
+                        holder.Page.GetComponent<PDFViewerPage>().ClearCache();
                     }
                 }
             }
@@ -1442,7 +1443,7 @@ namespace Paroxe.PdfRenderer
             }
 
             if (m_FileSource != FileSourceType.DocumentObject)
-	            m_SuppliedDocument = null;
+                m_SuppliedDocument = null;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
 			StartCoroutine(LoadDocument_WebGL(specifiedBuffer));
@@ -1717,7 +1718,7 @@ namespace Paroxe.PdfRenderer
                 SetProgress(www.progress);
                 yield return null;
             }
-            
+
             if (!m_DownloadCanceled && string.IsNullOrEmpty(www.error) && www.isDone)
             {
                 SetProgress(1.0f);
@@ -1866,9 +1867,9 @@ namespace Paroxe.PdfRenderer
 
                 for (int i = 0; i < m_PageCount; ++i)
                 {
-	                GameObject page = i == 0 
-	                    ? m_Internal.PageSample.gameObject 
-	                    : Instantiate(m_Internal.PageSample.gameObject);
+                    GameObject page = i == 0
+                        ? m_Internal.PageSample.gameObject
+                        : Instantiate(m_Internal.PageSample.gameObject);
 
                     page.transform.SetParent(m_Internal.PageSample.transform.parent, false);
                     page.transform.localScale = Vector3.one;
@@ -1876,9 +1877,9 @@ namespace Paroxe.PdfRenderer
 
                     PDFPageTextureHolder textureHolder = new PDFPageTextureHolder
                     {
-	                    PageIndex = i, 
-	                    Page = page, 
-	                    Viewer = this
+                        PageIndex = i,
+                        Page = page,
+                        Viewer = this
                     };
 
                     m_PageTextureHolders[i] = textureHolder;
@@ -1917,7 +1918,7 @@ namespace Paroxe.PdfRenderer
                 if (m_GraphicRaycaster == null)
                     return;
             }
-            
+
             int validTouchCount = 0;
 
             if (Input.touchCount >= 1)
@@ -2053,6 +2054,11 @@ namespace Paroxe.PdfRenderer
                 OnPasswordCancelled(this);
         }
 
+        private void OnEnabled()
+        {
+            NotifyZoomChanged(0f, 0f);
+        }
+
         private void NotifyZoomChanged(float oldZoom, float newZoom)
         {
             if (OnZoomChanged != null)
@@ -2073,10 +2079,14 @@ namespace Paroxe.PdfRenderer
             }
 
             NotifyDisabled();
+
+            _pageFittingType = PageFittingType.WholePage;    // this line Add by AR
         }
 
         protected override void OnEnable()
         {
+            PageFitting = _pageFittingType;   // this line Add by AR
+
             base.OnEnable();
 
             m_DelayedOnEnable = true;
@@ -2142,7 +2152,7 @@ namespace Paroxe.PdfRenderer
         {
             if (m_LastSetLabelPageIndex == null || m_LastSetLabelPageIndex.Value != pageIndex
                 || m_LastSetLabelPageCount == null || m_LastSetLabelPageCount.Value != pageCount)
-			{
+            {
                 m_Internal.PageCountLabel.text = "(" + pageIndex + " of " + pageCount + ")";
 
                 m_LastSetLabelPageIndex = pageIndex;
@@ -2216,7 +2226,6 @@ namespace Paroxe.PdfRenderer
                 m_PreviousPageFitting = m_PageFitting;
                 AdjustZoomToPageFitting(m_PageFitting, m_NormalPageSizes[0]);
                 m_ZoomFactor = m_ZoomToGo;
-
                 ComputePageSizes();
                 ComputePageOffsets();
 
@@ -2320,16 +2329,15 @@ namespace Paroxe.PdfRenderer
 
             if (Math.Abs(m_ZoomFactor - m_ZoomToGo) > 0.001f)
             {
-	            m_ZoomToGo = Mathf.Clamp(m_ZoomToGo, m_MinZoomFactor, m_MaxZoomFactor);
-	            m_ZoomFactor = Mathf.Lerp(m_ZoomFactor, m_ZoomToGo, Time.deltaTime * 15.0f);
-
+                m_ZoomToGo = Mathf.Clamp(m_ZoomToGo, m_MinZoomFactor, m_MaxZoomFactor);
+                m_ZoomFactor = Mathf.Lerp(m_ZoomFactor, m_ZoomToGo, Time.deltaTime * 15.0f);
                 m_UpdateChangeDelay = m_DelayAfterZoomingBeforeUpdate;
             }
             else
             {
-	            m_ZoomFactor = m_ZoomToGo;
+                m_ZoomFactor = m_ZoomToGo;
             }
-
+            
             bool zoomHasChanged = m_PreviousZoom != 0.0f && Math.Abs(m_PreviousZoom - m_ZoomFactor) > float.Epsilon;
 
             if (m_PreviousZoom == 0.0f)
@@ -2446,9 +2454,9 @@ namespace Paroxe.PdfRenderer
 
                         using (PDFPage page = m_Document.GetPage(i))
                         {
-	                        Texture2D newTex = m_Renderer.RenderPageToTexture(page, w, h, this, m_RenderSettings);
+                            Texture2D newTex = m_Renderer.RenderPageToTexture(page, w, h, this, m_RenderSettings);
 
-	                        m_PageTextureHolders[i].Texture = newTex;
+                            m_PageTextureHolders[i].Texture = newTex;
                         }
 #endif
                     }
@@ -2570,7 +2578,7 @@ namespace Paroxe.PdfRenderer
                 m_Internal.Viewport.offsetMin = new Vector2(m_Internal.Viewport.offsetMin.x, 0.0f);
 
                 if (m_ViewportScrollRect.horizontalScrollbar != null)
-				{
+                {
                     m_ViewportScrollRect.horizontalScrollbar = null;
                     m_Internal.HorizontalScrollBar.gameObject.SetActive(false);
                 }
@@ -2580,7 +2588,7 @@ namespace Paroxe.PdfRenderer
                 m_Internal.Viewport.offsetMin = new Vector2(m_Internal.Viewport.offsetMin.x, 20.0f);
 
                 if (m_ViewportScrollRect.horizontalScrollbar != m_HorizontalScrollBar)
-				{
+                {
                     m_ViewportScrollRect.horizontalScrollbar = m_HorizontalScrollBar;
                     m_Internal.HorizontalScrollBar.gameObject.SetActive(true);
                 }
@@ -2591,7 +2599,7 @@ namespace Paroxe.PdfRenderer
                 m_Internal.Viewport.offsetMax = new Vector2(0.0f, m_Internal.Viewport.offsetMax.y);
 
                 if (m_ViewportScrollRect.verticalScrollbar != null)
-				{
+                {
                     m_ViewportScrollRect.verticalScrollbar = null;
                     m_Internal.VerticalScrollBar.gameObject.SetActive(false);
                 }
@@ -2601,7 +2609,7 @@ namespace Paroxe.PdfRenderer
                 m_Internal.Viewport.offsetMax = new Vector2(-20.0f, m_Internal.Viewport.offsetMax.y);
 
                 if (m_ViewportScrollRect.verticalScrollbar != m_VerticalScrollBar)
-				{
+                {
                     m_ViewportScrollRect.verticalScrollbar = m_VerticalScrollBar;
                     m_Internal.VerticalScrollBar.gameObject.SetActive(true);
                 }
@@ -2763,8 +2771,8 @@ namespace Paroxe.PdfRenderer
 
             Vector2 devicePageSize = viewerPageTransform.sizeDelta;
 
-            using (PDFPage page  = m_Document.GetPage(viewerPage.PageIndex))
-			{
+            using (PDFPage page = m_Document.GetPage(viewerPage.PageIndex))
+            {
                 Rect deviceRect = page.ConvertPageRectToDeviceRect(pageRect, devicePageSize);
 
                 float deviceRectCenterPosition = deviceRect.max.y + (deviceRect.min - deviceRect.max).y * 0.5f;
