@@ -157,6 +157,7 @@ public class XANAPartyManager : MonoBehaviour
 
         if (isJoiningLobby)
         {
+            XANAPartyManager.Instance.GameIndex = 0;
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {
