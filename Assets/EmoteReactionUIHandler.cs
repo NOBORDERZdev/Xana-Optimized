@@ -14,6 +14,9 @@ public class EmoteReactionUIHandler : MonoBehaviour
     public static Action<int, int> SetTabSelectedReactionAction;
     public static Action<EmoteReactionItemBtnHandler.ItemType, string, int> SetSeeAllTabSelectedReactionAction;
 
+    public static Action<string> ActivateHeighlightOfPanelBtn;
+
+
     public Transform DisplayDialogScrollView;
     public Transform DisplayContentScrollView;
     public List<Transform> ViewItemsInScrollView = new List<Transform>();
@@ -27,6 +30,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
     private int _selectedTabReaction = 0;
     public Color SelectedColorTab;
     public Color UnSelectedColorTab;
+    public Transform CommingSoonTxt;
 
     public void SetTabSelectedEmote(int selectedTabEmote, int selectedTab)
     {
@@ -77,6 +81,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
         SetTabSelectedEmoteAction += SetTabSelectedEmote;
         SetTabSelectedReactionAction += SetTabSelectedReaction;
         SetSeeAllTabSelectedReactionAction += SetSeeAllTabSelectAction;
+        ActivateHeighlightOfPanelBtn += ActivateHeighlightOfEmoteReactionItem;
     }
     private void OnDisable()
     {
@@ -86,6 +91,8 @@ public class EmoteReactionUIHandler : MonoBehaviour
         SetTabSelectedEmoteAction -= SetTabSelectedEmote;
         SetTabSelectedReactionAction -= SetTabSelectedReaction;
         SetSeeAllTabSelectedReactionAction -= SetSeeAllTabSelectAction;
+        ActivateHeighlightOfPanelBtn -= ActivateHeighlightOfEmoteReactionItem;
+
     }
     private void SetTabOfItem()
     {
@@ -141,6 +148,15 @@ public class EmoteReactionUIHandler : MonoBehaviour
     }
     public void PopulateViewItemsReaction(List<ReactionAnimationList> items, EmoteReactionItemBtnHandler.ItemType _selectedAction)
     {
+        if (items.Count.Equals(0))
+        {
+            CommingSoonTxt.gameObject.SetActive(true);
+            return;
+        }
+        else
+        {
+            CommingSoonTxt.gameObject.SetActive(false);
+        }
 
         SelectedAction = _selectedAction;
         SetTabOfItem();
@@ -188,5 +204,22 @@ public class EmoteReactionUIHandler : MonoBehaviour
         DisplayDialogScrollView.gameObject.SetActive(false);
         TabItemViewEmotes.gameObject.SetActive(false);
         TabItemViewReaction.gameObject.SetActive(false);
+    }
+    public void ActivateHeighlightOfEmoteReactionItem(string actionName)
+    {
+        foreach(Transform item in ViewItemsInScrollView)
+        {
+            if(item.gameObject.activeInHierarchy)
+            {
+                if(item.GetComponent<EmoteReactionItemBtnHandler>().ActionName == actionName)
+                {
+                    item.GetComponent<EmoteReactionItemBtnHandler>().HeighlightObj.gameObject.SetActive(true);
+                }
+                else
+                {
+                    item.GetComponent<EmoteReactionItemBtnHandler>().HeighlightObj.gameObject.SetActive(false);
+                }
+            }
+        }
     }
 }

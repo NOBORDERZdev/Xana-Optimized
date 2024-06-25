@@ -11,7 +11,7 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
     public static Action DisplayActionDuplicateMessage;
     public static Action CloseDisplayDialogScrollView;
     public Transform DuplicateMessage;
-    [SerializeField] public Transform ActionFavouritDialogObj;
+    public Transform ActionFavouritDialogObj;
     public List<Transform> SeeAllEmoteTabBtn = new List<Transform>();
     public List<Transform> SeeAllReactionTabBtn = new List<Transform>();
     public Color SelectSeeAllTab, DeSelectSeeAllab;
@@ -70,7 +70,6 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
             else
             {
                 SeeAllEmoteTabBtn[i].GetComponentInChildren<Text>().color = DeSelectSeeAllab;
-
             }
         }
     }
@@ -85,7 +84,6 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
             else
             {
                 SeeAllReactionTabBtn[i].GetComponentInChildren<Text>().color = DeSelectSeeAllab;
-
             }
         }
     }

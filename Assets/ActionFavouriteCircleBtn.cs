@@ -92,7 +92,12 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
     {
         if(_actionSelected)
         {
-            // Run action on player
+            ActionData dataObj = new ActionData();
+            dataObj.AnimationName = AnimationName;
+            dataObj.ThumbnailURL = ThumbnailURL;
+            dataObj.TypeOfAction = TypeOfAction;
+            Debug.LogError("ApplyAction ---->  " + AnimationName);
+            ActionManager.ActionBtnClick?.Invoke(dataObj);
             Debug.LogError("PlayerActionInteraction ----> Play Action");
         }
         else

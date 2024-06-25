@@ -171,10 +171,8 @@ public class GamePlayUIHandler : MonoBehaviour
 
         EmoteAnimationHandler.Instance.isEmoteActive = false;      // AH working
 
-        if (stopCurrentPlayingAnim)                            // AH working
+        if (ActionManager.IsAnimRunning)                            // AH working
         {
-
-            stopCurrentPlayingAnim = false;
             ActionManager.StopActionAnimation?.Invoke();
 
             // EmoteAnimationHandler.Instance.StopAnimation();

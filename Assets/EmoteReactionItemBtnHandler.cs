@@ -15,6 +15,7 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
     public string ActionGroupType;
     public Image BtnImg;
     public TMP_Text NameTxt;
+    public Transform HeighlightObj;
 
     public void InitializeItem(ItemType _type, int _id, string _actionName, string _actionThumbnail_Ur, string _actionGroupType)
     {
@@ -62,5 +63,6 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
         dataObj.TypeOfAction = TypeOfAction;
         Debug.LogError("ApplyAction ---->  " + ActionName);
         ActionManager.ActionBtnClick?.Invoke(dataObj);
+        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke(ActionName);
     }
 }

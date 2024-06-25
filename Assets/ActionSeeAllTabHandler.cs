@@ -9,6 +9,8 @@ public class ActionSeeAllTabHandler : MonoBehaviour
     public void OpenTabSelected()
     {
         //Debug.LogError("OpenTabSelected Seeall ----> " + _type.ToString());
+        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke("ResetTabSelected");
+
         ActionManager.OpenActionCategoryTab?.Invoke(_type, TabIndex);
         EmoteReactionUIHandler.SetSeeAllTabSelectedReactionAction?.Invoke(_type, transform.name, TabIndex);
     }

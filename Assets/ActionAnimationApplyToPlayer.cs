@@ -9,9 +9,8 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOnEventCallback
+public class ActionAnimationApplyToPlayer : MonoBehaviour
 {
-   
     public RuntimeAnimatorController controller;
     private GameObject[] photonplayerObjects;
 
@@ -38,8 +37,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
                 else
                 {
                     Debug.LogError("Addressable Loadede ---->>>>>   " + playerId);
-
-                   // downloadCompleteCallBack?.Invoke();
                    StartCoroutine( ApplyAnimationToAnimatorSet(loadOp.Result, playerId));
                 }
             }
@@ -64,13 +61,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
                         {
                             animator.SetBool("Stand", true);
                             animator.SetBool("EtcAnimStart", false);
-                            //foreach (var clip in animator.runtimeAnimatorController.animationClips)
-                            //{
-                            //    if (clip.name == "Stand")
-                            //    {
-                            //        yield return new WaitForSeconds(clip.length);
-                            //    }
-                            //}
                         }
                         yield return new WaitForSeconds(0f);
                         var overrideController = new AnimatorOverrideController();
@@ -89,8 +79,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
                         animator.runtimeAnimatorController = overrideController;
 
                         animator.SetBool("IsEmote", true);
-                        // isPreviousBundleLoad = true;
-                        // CheckSelfieOn();
                     }
                 }
             }
@@ -100,48 +88,21 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
     public void StopAnimation()
     {
         GameObject player;
-        //AssetBundle.UnloadAllAssetBundles(false);
-        //Resources.UnloadUnusedAssets();
-
+        if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer != null)
         {
-            if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer != null)
-            {
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
-            }
-
-            player = ReferencesForGamePlay.instance.m_34player;
-            if (player != null)
-            {
-                object[] viewMine = { player.GetComponent<PhotonView>().ViewID };
-                RaiseEventOptions options = new RaiseEventOptions();
-                options.CachingOption = EventCaching.DoNotCache;
-                options.Receivers = ReceiverGroup.All;
-                PhotonNetwork.RaiseEvent(1, viewMine as object, options,
-                    SendOptions.SendReliable);
-            }
-
-            //iscashed = false;
-
-            //PlayerPrefs.SetString(remoteUrlAnimation, "");
-
-            AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().enabled = true;
-            //PlayerPrefsUtility.SetEncryptedString(ConstantsGod.SELECTED_ANIMATION_NAME, "");
-            //LoadEmoteAnimations.animClick = false;
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
         }
-        //isAnimRunning = false;
-        //MyAnimLoader = false;
-        //alreadyRuning = true;
-        //AnimationStopped?.Invoke(remoteUrlAnimationName);
-        //if (player.GetComponent<PhotonView>().IsMine)
-        //{
-        //    if (AnimObject != null)
-        //    {
-        //        AnimObject.transform.GetChild(3).gameObject.SetActive(false);
-        //    }
-        //    StopAllCoroutines();
-        //    isFetchingAnim = false;
-        //    AnimObject = null;
-        //}
+        player = ReferencesForGamePlay.instance.m_34player;
+        if (player != null)
+        {
+            object[] viewMine = { player.GetComponent<PhotonView>().ViewID };
+            RaiseEventOptions options = new RaiseEventOptions();
+            options.CachingOption = EventCaching.DoNotCache;
+            options.Receivers = ReceiverGroup.All;
+            PhotonNetwork.RaiseEvent(1, viewMine as object, options,
+                SendOptions.SendReliable);
+        }
+        AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().enabled = true;
     }
     public void DisableAnimationReaction(int viewId)
     {
@@ -163,10 +124,14 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
             }
         }
     }
-    /////
-    ///
-
-
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
+    }
+    public void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClient_EventReceived;
+    }
     private void NetworkingClient_EventReceived(EventData obj)
     {
         if (obj.Code == 1)
@@ -174,56 +139,5 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour, IInRoomCallbacks, IOn
             object[] minePlayer = (object[])obj.CustomData;
             DisableAnimationReaction((int)minePlayer[0]);
         }
-        //if (obj.Code == 0)
-        //{
-        //    if (firsttimecall == false)
-        //    {
-        //        firsttimecall = true;
-        //        remotePlayerId = (int)obj.CustomData;
-        //    }
-        //}
-
-        //else if (obj.Code == 1)
-        //{
-
-        //    object[] minePlayer = (object[])obj.CustomData;
-        //    DisableAnim((int)minePlayer[0]);
-        //}
-        //else if (obj.Code == 12)
-        //{
-        //    StartCoroutine(waittostart(obj));
-
-        //}
-    }
-    public void OnPlayerEnteredRoom(Player newPlayer)
-    {
-        //if (iscashed)
-        //{
-        //    RaiseEventOptions options = new RaiseEventOptions();
-        //    options.CachingOption = EventCaching.DoNotCache;
-        //    options.TargetActors = new int[] { newPlayer.ActorNumber };
-        //    PhotonNetwork.RaiseEvent(12, cashed_data, options,
-        //        SendOptions.SendReliable);
-        //}
-    }
-    public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
-    {
-    }
-
-    public void OnMasterClientSwitched(Player newMasterClient)
-    {
-    }
-
-    public void OnEvent(EventData photonEvent)
-    {
-
-    }
-
-    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
-    {
-    }
-
-    public void OnPlayerLeftRoom(Player otherPlayer)
-    {
     }
 }

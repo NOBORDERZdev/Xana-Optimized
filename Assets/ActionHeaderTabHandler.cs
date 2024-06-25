@@ -26,5 +26,7 @@ public class ActionHeaderTabHandler : MonoBehaviour
         {
             EmoteReactionUIHandler.SetTabSelectedReactionAction?.Invoke(TabIndex, TabSelectedIndex);
         }
+        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke("ResetTabSelected");
+
     }
 }

@@ -17,6 +17,7 @@ public class ActionManager : MonoBehaviour
     public static Action<bool> OpenActionFavouritPanel;
     public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
     public static Action StopActionAnimation;
+    public static bool IsAnimRunning = default;
 
 
     private void OnEnable()
@@ -67,6 +68,7 @@ public class ActionManager : MonoBehaviour
             if(dataObj.TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
             {
                 this.transform.GetComponent<ActionAnimationApplyToPlayer>().LoadAnimationAccrossInstance(dataObj.AnimationName);
+                IsAnimRunning = true;
             }
             else
             {
@@ -90,6 +92,8 @@ public class ActionManager : MonoBehaviour
     }
     public void StopAnimation()
     {
+        Debug.LogError("----- STOPPPPP Animation ----");
+        IsAnimRunning = false;
         this.transform.GetComponent<ActionAnimationApplyToPlayer>().StopAnimation();
     }
 }

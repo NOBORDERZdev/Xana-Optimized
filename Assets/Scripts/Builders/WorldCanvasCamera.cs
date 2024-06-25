@@ -59,7 +59,7 @@ public class WorldCanvasCamera : MonoBehaviour
         {
             GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
         }
-        if (EmoteAnimationHandler.Instance.isAnimRunning && !state)
+        if (ActionManager.IsAnimRunning && !state)
         {
             //// EmoteAnimationHandler.Instance.StopAnimation();
             // EmoteAnimationHandler.Instance.StopAllCoroutines();

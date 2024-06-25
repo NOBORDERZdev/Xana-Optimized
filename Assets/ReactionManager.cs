@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using static EmoteManager;
 
 public class ReactionManager : MonoBehaviour
 {
@@ -25,24 +24,7 @@ public class ReactionManager : MonoBehaviour
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return request.SendWebRequest();
             ReactionServerData = JsonUtility.FromJson<ReactionAnimationDetails>(request.downloadHandler.text);
-
-            if (!request.isHttpError && !request.isNetworkError)
-            {
-                if (request.error == null)
-                {
-                    if (ReactionServerData.success == true)
-                    {
-
-
-                    }
-                }
-            }
-            else
-            {
-
-            }
             request.Dispose();
-
         }
     }
     public void OpenReactionDialogUITabClick(int index)
@@ -56,10 +38,6 @@ public class ReactionManager : MonoBehaviour
     public void OpenReactionDialogUI()
     {
         List<ReactionAnimationList> items = ReactionServerData.data.reactionList.FindAll(x => x.group == ReactionGroupSelected.ToString());
-
-        Debug.LogError("----- >>> OpenReactionDialogUI " + items.Count);
-        if (items.Count.Equals(0)) { return;  }
-            
         EmoteReactionUIHandler.SetViewItemsReaction?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Reaction);
     }
 }
