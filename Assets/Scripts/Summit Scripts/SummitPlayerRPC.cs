@@ -78,7 +78,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.parent = car.transform;
                     transform.localPosition = Vector3.zero;
                     transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
-
+                    PlayerCameraController.instance.EnableCameraRecenter();
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -132,7 +132,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     gameObject.GetComponent<CharacterController>().enabled = false;
                     gameObject.GetComponent<ArrowManager>().enabled = false;
                     gameObject.GetComponent<PhotonTransformView>().enabled = false;
-
+                    PlayerCameraController.instance.EnableCameraRecenter();
                     Parent = transform.parent.transform.parent;
                     transform.parent.transform.parent = car.transform;
                     transform.localPosition = Vector3.zero;
@@ -209,7 +209,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.DriverExitPosition.transform.position;
-
+                PlayerCameraController.instance.DisableCameraRecenter();
                 transform.parent.gameObject.GetComponent<CharacterController>().enabled = true;
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
@@ -247,7 +247,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
-                
+                PlayerCameraController.instance.DisableCameraRecenter();
 
             }
             else

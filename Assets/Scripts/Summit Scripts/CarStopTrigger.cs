@@ -27,7 +27,7 @@ public class CarStopTrigger : MonoBehaviour
             
 
            Players.Add(other.gameObject);
-            //StopCar = true;
+            StopCar = true;
         }
 
         if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty) )
