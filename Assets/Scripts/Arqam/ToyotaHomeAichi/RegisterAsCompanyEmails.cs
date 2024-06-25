@@ -15,6 +15,14 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     private void Start()
     {
         Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            _thaCompanyId=2;
+        }
+        else
+        {
+            _thaCompanyId=4;
+        }
     }
     private void OnDisable()
     {

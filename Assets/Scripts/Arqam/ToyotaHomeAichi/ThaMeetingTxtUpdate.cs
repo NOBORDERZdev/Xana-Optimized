@@ -10,7 +10,8 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
 
     private MeshRenderer _portalMesh;
     private BoxCollider _boxCollider;
-
+    public int TestnetRoomId=4;
+    public int MainnetRoomId=2;
     // Start is called before the first frame update
     void Awake()
     {
@@ -36,7 +37,14 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     public async void WrapObjectOnOff()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + 4);
+        if(APIBasepointManager.instance.IsXanaLive)
+        {
+            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + MainnetRoomId);
+        }
+        else
+        {
+            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + TestnetRoomId);
+        }
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
@@ -48,9 +56,10 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             }
             else
             {
-                StringBuilder data = new StringBuilder();
-                data.Append(request.downloadHandler.text);
-                WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(data.ToString());
+                //StringBuilder data = new StringBuilder();
+                //data.Append(request.downloadHandler.text);
+                  
+                WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(request.downloadHandler.text);
 
                 Debug.Log("Wrap Object Status is :: " + wrapObjectClass.data);
                 _portalMesh.enabled = wrapObjectClass.data;
@@ -61,8 +70,8 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
 
     public class WrapObjectClass
     {
-        public bool success { get; set; }
-        public bool data { get; set; }
-        public string msg { get; set; }
+        public bool success;
+        public bool data;
+        public string msg;
     }
 }
