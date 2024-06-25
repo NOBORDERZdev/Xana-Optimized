@@ -15,6 +15,14 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     private void Start()
     {
         Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            _thaCompanyId=2;
+        }
+        else
+        {
+            _thaCompanyId=4;
+        }
     }
     private void OnDisable()
     {
@@ -30,7 +38,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     public async void GetEmailData()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaCompanyId + "/" + _thaPageNumber);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaPageNumber + "/" + _thaPageSize);
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
@@ -54,13 +62,11 @@ public class RegisterAsCompanyEmails : MonoBehaviour
             }
         }
     }
-
-    // Call when user logged In
     private void SetEmailData()
     {
         FB_Notification_Initilizer.Instance.InitPushNotification(_toyotaUserEmail);
     }
-
+}
     #region OutputClasses
     public class THAJson
     {
@@ -85,7 +91,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
         public DateTime updatedAt { get; set; }
     }
     #endregion
-}
+
 
 
 
