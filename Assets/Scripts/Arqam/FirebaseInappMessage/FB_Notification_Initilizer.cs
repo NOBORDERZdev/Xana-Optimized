@@ -180,7 +180,6 @@ public class FB_Notification_Initilizer : MonoBehaviour
 
     public virtual void OnTokenReceived(object sender, TokenReceivedEventArgs token)
     {
-        Handheld.Vibrate();
         onReceiveToken?.Invoke(token.Token);
         Debug.Log("Token Generated: " + token.Token);
     }
