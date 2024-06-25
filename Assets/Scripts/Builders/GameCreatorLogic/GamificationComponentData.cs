@@ -133,9 +133,12 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     {
         // Check if the loaded scene is the one where you want to start the XANA party race
         // Call StartXANAPartyRace here
-        print("!!! call from Scene Loaded");
-        if ( ConstantsHolder.xanaConstants.isXanaPartyWorld &&  ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
-            StartXANAPartyRace();
+        if (scene.name == "Builder")
+        {
+            print("!!! call from Scene Loaded");
+            if ( ConstantsHolder.xanaConstants.isXanaPartyWorld &&  ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
+                StartXANAPartyRace();
+        }
     }
 
     
@@ -437,16 +440,24 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
+            print("Photon player count "+ PhotonNetwork.PlayerList.Length);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
+                print("~~~ PLAYER "+player.UserId);
                 if (player.CustomProperties.TryGetValue("IsReady", out object isReady))
                 {
+                    print("in if");
                     allPalyerReady = (bool)isReady/*(bool)player.CustomProperties["IsReady"]*/;
                     print("~~~ PLAYER "+player.UserId + "BOOL IS "+allPalyerReady);
                     if (!allPalyerReady) break;
                 }
+                else
+                {
+                    print("!! call else");
+                    allPalyerReady = false; break;
+                }
             }
-            allPalyerReady = true;
+            //allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
         print("~~~ all player ready ~~~");
