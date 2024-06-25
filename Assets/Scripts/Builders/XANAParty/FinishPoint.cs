@@ -1,3 +1,5 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using PhysicsCharacterController;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +46,9 @@ public class FinishPoint : MonoBehaviour
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
         gamificationTemp.TriggerRaceStatusUpdate();
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
     }
 
     internal void FinishRace()
