@@ -11,6 +11,8 @@ public class XANAPartyMulitplayer : MonoBehaviour
     PhotonView photonView;
 
     private ConstantsHolder _XanaConstants = ConstantsHolder.xanaConstants;
+
+    public int RaceFinishCount = 0;
     private void Start()
     {
         photonView = GetComponent<PhotonView>();

@@ -103,7 +103,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal bool IsGrounded;
 
     public bool SinglePlayer = false;
-    public int RaceFinishCount = 0;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
     bool isRaceStarted = false;
     private void Awake()
@@ -478,15 +477,16 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateRaceStatus(){ 
-        GamificationComponentData.instance.RaceFinishCount++;
+    void UpdateRaceStatus(){
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.RaceFinishCount++;
         int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
-        if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
+        if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
             if (PhotonNetwork.IsMasterClient)
             {
-                var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+                
                 XANAPartyManager.Instance.GameIndex++;
                 if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
                 {
