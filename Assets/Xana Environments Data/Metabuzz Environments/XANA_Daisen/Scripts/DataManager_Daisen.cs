@@ -15,6 +15,10 @@ public class DataManager_Daisen : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
+        if (ConstantsHolder.userId != null)
+        {
+            id = ConstantsHolder.userId;
+        }
         StartCoroutine(CheckPoint());
     }
 

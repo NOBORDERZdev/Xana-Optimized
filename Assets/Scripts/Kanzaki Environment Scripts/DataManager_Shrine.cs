@@ -20,7 +20,10 @@ public class DataManager_Shrine : MonoBehaviour
     void Start() {
         //player = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
         worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
-
+        if (ConstantsHolder.userId != null)
+        {
+            id = ConstantsHolder.userId;
+        }
         StartCoroutine(CheckPoint());
     }
     public void getPlayerData() => StartCoroutine(CommunicateWithDB(id));

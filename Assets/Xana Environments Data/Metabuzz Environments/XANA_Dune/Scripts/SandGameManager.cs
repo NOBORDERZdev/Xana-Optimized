@@ -101,6 +101,10 @@ public class SandGameManager : MonoBehaviour
         {
             local = Localiztion.En;
         }
+        if (ConstantsHolder.userId != null)
+        {
+            id = ConstantsHolder.userId;
+        }
     }
 
     public void EnableSkating()
