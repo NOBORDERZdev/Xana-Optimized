@@ -25,6 +25,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public GameObject mainPlayer;
     public GameObject mainController;
+    private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
     public GameObject PenguinPlayer;
 
@@ -79,6 +80,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         instance = this;
         setLightOnce = false;
+        mainControllerRefHolder = mainController;
     }
 
 
@@ -247,7 +249,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void DestroyYoutubePlayer()
     {
-        Destroy(YoutubeStreamPlayer);
+        if (YoutubeStreamPlayer)
+            Destroy(YoutubeStreamPlayer);
+        mainController = mainControllerRefHolder;
     }
 
     void CharacterLightCulling()
@@ -292,9 +296,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool CheckVoid()
     {
-        if (ConstantsHolder.isPenguin)
-            mainController = player;
-
         if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
         {
             RaycastHit hit;
@@ -493,6 +494,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
             PenguinPlayer = player;
+            mainController = player;
             if (player != null)
             {
                 StartCoroutine(SetXanaPartyControllers(player));
@@ -501,6 +503,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         XanaWorldController.SetActive(true);
         XanaPartyController.SetActive(false);
+        mainController = mainControllerRefHolder;
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
@@ -759,11 +762,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             //Player respawn at spawn point after jump down from world
             mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
-
         }
         else
         {
-            mainController.GetComponent<PlayerController>().gravityVector.y = 0;
+            if (!ConstantsHolder.isPenguin)
+                mainController.GetComponent<PlayerController>().gravityVector.y = 0;
             mainController.transform.localPosition = spawnPoint;
         }
         if (IdolVillaRooms.instance != null)
@@ -792,8 +795,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentLabel = label;
         StartCoroutine(DownloadAssets());
     }
-
-
 
     void SetupEnvirnmentForBuidlerScene()
     {
@@ -850,8 +851,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 StartCoroutine(SpawnPlayerForBuilderScene());
             }
         }
-
-
     }
 
     IEnumerator DownloadAssets()
