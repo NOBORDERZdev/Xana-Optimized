@@ -133,6 +133,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     {
         // Check if the loaded scene is the one where you want to start the XANA party race
         // Call StartXANAPartyRace here
+        print("!!! call from Scene Loaded");
         if ( ConstantsHolder.xanaConstants.isXanaPartyWorld &&  ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
             StartXANAPartyRace();
     }
@@ -418,7 +419,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //    PhotonNetwork.CurrentRoom.IsOpen = false;
         //    return;
         //}
-
+        print("!!!!!!! player count "+ Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + "!!!! ConstantsHolder.XanaPartyMaxPlayers" + ConstantsHolder.XanaPartyMaxPlayers);
         if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
         {
             //if (PhotonNetwork.IsMasterClient)
