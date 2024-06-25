@@ -173,7 +173,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     private void OnChangeText(string text)
     {
-        Debug.LogError("Chat Text:- "+text);
         if (!string.IsNullOrEmpty(text))
         {
             gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.Others, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
@@ -256,7 +255,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.LogError("photon id match"+gameObject.GetComponent<PhotonView>().ViewID +"---"+ id);
             if (gameObject.GetComponent<PhotonView>().ViewID == id)
             {
                 if (chatData.Length <= 20)

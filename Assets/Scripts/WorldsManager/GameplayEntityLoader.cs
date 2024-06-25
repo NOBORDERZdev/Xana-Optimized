@@ -172,7 +172,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void LoadFile()
     {
-        mainPlayer.SetActive(false);
         if (currentEnvironment == null)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -293,6 +292,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     bool CheckVoid()
     {
+        if (ConstantsHolder.isPenguin)
+            mainController = player;
+
         if (mainController.transform.position.y < (updatedSpawnpoint.transform.position.y - fallOffset))
         {
             RaycastHit hit;
@@ -423,7 +425,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
         }
 
-        XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
+        if (ConstantsHolder.isPenguin)
+            XanaWorldDownloader.initialPlayerPos = player.transform.localPosition;
+        else
+            XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
 
