@@ -441,6 +441,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                 if (player.CustomProperties.TryGetValue("IsReady", out object isReady))
                 {
                     allPalyerReady = (bool)isReady/*(bool)player.CustomProperties["IsReady"]*/;
+                    print("~~~ PLAYER "+player.UserId + "BOOL IS "+allPalyerReady);
                     if (!allPalyerReady) break;
                 }
             }
