@@ -456,7 +456,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                     allPalyerReady = false; break;
                 }
             }
-            allPalyerReady = true;
+           // allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
       //  print("~~~ all player ready ~~~");
