@@ -1,3 +1,5 @@
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using PhysicsCharacterController;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,12 +40,18 @@ public class FinishPoint : MonoBehaviour
     void EnableCollider()
     {
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>().SetBool("Win", true);
+        Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
+        penguinAnimator.SetBool("isGrounded", true);
+        penguinAnimator.SetBool("isJump", false);
+        penguinAnimator.SetBool("Win", true);
         FinishRaceCollider.enabled = false;
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
         gamificationTemp.TriggerRaceStatusUpdate();
+        Hashtable _hash = new Hashtable();
+        _hash.Add("IsReady", false);
+        PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
     }
 
     internal void FinishRace()

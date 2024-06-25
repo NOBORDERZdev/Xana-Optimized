@@ -12,7 +12,7 @@ public class MultiplayerComponent : MonoBehaviourPun
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
-        if (GamificationComponentData.instance.withMultiplayer)
+        if (GamificationComponentData.instance != null && GamificationComponentData.instance.withMultiplayer)
         {
             MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))

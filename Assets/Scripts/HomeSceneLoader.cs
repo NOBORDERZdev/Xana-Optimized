@@ -97,6 +97,17 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 else
                     ConstantsHolder.xanaConstants.needToClearMemory = true;
 
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+                    ConstantsHolder.xanaConstants.XanaPartyGameId = 0;
+                    ConstantsHolder.xanaConstants.XanaPartyGameName = "";
+                    ConstantsHolder.xanaConstants.isBuilderScene = false;
+                    ConstantsHolder.xanaConstants.builderMapID = 0;
+                    // Load the main scene
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+                }
                 LeaveRoom();
             }
         }

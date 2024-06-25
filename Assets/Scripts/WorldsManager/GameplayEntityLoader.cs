@@ -78,6 +78,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         instance = this;
         //    LoadFile();
         setLightOnce = false;
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            Invoke(nameof(LoadFile),1f);
+        }
     }
 
 

@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "18";
+        string gameVersion = "20";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -305,8 +305,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
             }
-            if (ConstantsHolder.xanaConstants.isBuilderScene && ConstantsHolder.xanaConstants.isXanaPartyWorld && Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
-                GamificationComponentData.instance.StartXANAPartyRace();
+            //if (ConstantsHolder.xanaConstants.isBuilderScene && ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            //    GamificationComponentData.instance.StartXANAPartyRace();
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
