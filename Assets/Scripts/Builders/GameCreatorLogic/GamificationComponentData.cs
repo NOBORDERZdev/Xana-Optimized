@@ -484,10 +484,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
+            XANAPartyManager.Instance.GameIndex++;
             if (PhotonNetwork.IsMasterClient)
             {
-                
-                XANAPartyManager.Instance.GameIndex++;
                 if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
                 {
                     XANAPartyManager.Instance.GameIndex = 0;
