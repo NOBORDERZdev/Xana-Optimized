@@ -27,15 +27,21 @@ public class CarStopTrigger : MonoBehaviour
             
 
            Players.Add(other.gameObject);
-            StopCar = true;
+            //StopCar = true;
         }
 
         if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty) )
         {
+            
             CarNavigationManager.instance.StopCar(other.gameObject);
             if (PhotonNetwork.IsMasterClient)
-            {
-                StartCoroutine(CarNavigationManager.instance.TPlayer(other.gameObject, Players, this));
+            {foreach (var player in Players)
+                {
+                    if (player != null)
+                    {
+                        StartCoroutine(CarNavigationManager.instance.TPlayer(other.gameObject, player, this));
+                    }
+                }
             }
         }
         

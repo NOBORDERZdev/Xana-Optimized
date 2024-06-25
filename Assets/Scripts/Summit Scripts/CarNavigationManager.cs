@@ -41,22 +41,20 @@ public class CarNavigationManager : MonoBehaviour
 
         
     }
-    public IEnumerator TPlayer(GameObject Car, List<GameObject> Players ,CarStopTrigger triger)
+    public IEnumerator TPlayer(GameObject Car, GameObject Players ,CarStopTrigger triger)
     {
          
             yield return new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
        if(car.driverseatempty)
         {
-            Players[0].GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, true);
-            Players.RemoveAt(0);
+            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, true);
             triger.Pop();
             yield break;
         }
-       if(car.pasengerseatemty && Players.Count>0)
+       if(car.pasengerseatemty )
         {
-            Players[0].GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, false);
-            Players.RemoveAt(0);
+            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, false);
             triger.Pop();
             yield break;
         }
