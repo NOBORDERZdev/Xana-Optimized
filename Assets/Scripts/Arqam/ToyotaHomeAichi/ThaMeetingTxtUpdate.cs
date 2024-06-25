@@ -12,7 +12,6 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     private BoxCollider _boxCollider;
     public int TestnetRoomId=4;
     public int MainnetRoomId=2;
-    // Start is called before the first frame update
     void Awake()
     {
         MeetingRoomText.text = "";

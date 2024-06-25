@@ -7,8 +7,6 @@ using static RegisterAsCompanyEmails;
 
 public class NotificationTokenApiHandler : MonoBehaviour
 {
-    // Update user Token API
-    //https://api-test.xana.net/toyotaAichiWorlds/save-user-token
     private  int _thaRoomId;     // Home cosulting room Id in Toyota World
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
@@ -53,39 +51,8 @@ public class NotificationTokenApiHandler : MonoBehaviour
             Debug.Log("Error: " + request.error);
         else
         {
-            //GetUpdatedToken();
             Debug.Log("Token sent successfully");
-            //Debug.Log("Response: " + request.downloadHandler.text);
         }
         request.Dispose();
     }
-
-
-    //private async void GetUpdatedToken()
-    //{
-    //    StringBuilder ApiURL = new StringBuilder();
-    //    ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaRoomId + "/" + thaPageNumber + "/" + thaPageSize);
-    //    Debug.LogError("API URL is : " + ApiURL.ToString());
-    //    using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
-    //    {
-    //        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-    //        await request.SendWebRequest();
-    //        if (request.isNetworkError || request.isHttpError)
-    //        {
-    //            Debug.LogError("Error is" + request.error);
-    //        }
-    //        else
-    //        {
-    //            StringBuilder data = new StringBuilder();
-    //            data.Append(request.downloadHandler.text);
-    //            THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
-    //            for (int i = 0; i < json.data.rows.Count; i++)
-    //            {
-    //                FB_Notification_Initilizer.Instance.companyEmails.Add(json.data.rows[i].email);
-    //                FB_Notification_Initilizer.Instance.fbTokens.Add(json.data.rows[i].userToken);
-    //            }
-    //        }
-    //        request.Dispose();
-    //    }
-    //}
 }

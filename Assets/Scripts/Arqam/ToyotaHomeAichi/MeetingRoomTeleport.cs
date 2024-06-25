@@ -2,7 +2,6 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using Newtonsoft.Json;
-using static RegisterAsCompanyEmails;
 using System.Text;
 using UnityEngine.Networking;
 
@@ -28,7 +27,6 @@ public class MeetingRoomTeleport : MonoBehaviour
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
         currentRoomId = ConstantsHolder.xanaConstants.MuseumID;
         userId = ConstantsHolder.userId;
-        //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
         if (APIBasepointManager.instance.IsXanaLive)
         {
             _thaRoomId = "2";

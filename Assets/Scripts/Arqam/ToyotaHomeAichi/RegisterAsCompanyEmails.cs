@@ -62,13 +62,11 @@ public class RegisterAsCompanyEmails : MonoBehaviour
             }
         }
     }
-
-    // Call when user logged In
     private void SetEmailData()
     {
         FB_Notification_Initilizer.Instance.InitPushNotification(_toyotaUserEmail);
     }
-
+}
     #region OutputClasses
     public class THAJson
     {
@@ -93,7 +91,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
         public DateTime updatedAt { get; set; }
     }
     #endregion
-}
+
 
 
 
