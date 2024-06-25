@@ -1,6 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
 using System.Collections;
+using Newtonsoft.Json;
+using static RegisterAsCompanyEmails;
+using System.Text;
+using UnityEngine.Networking;
+
 public class MeetingRoomTeleport : MonoBehaviour
 {
     [SerializeField] bool isLocked;
@@ -14,7 +19,9 @@ public class MeetingRoomTeleport : MonoBehaviour
     private GameObject triggerObject;
     private string currentRoomId;
     private string userId;
-
+    private string _thaRoomId;
+    private int _thaPageNumber = 1;
+    private int _thaPageSize = 100;
     private void Start()
     {
         referrencesForDynamicMuseum = ReferencesForGamePlay.instance;
@@ -22,6 +29,14 @@ public class MeetingRoomTeleport : MonoBehaviour
         currentRoomId = ConstantsHolder.xanaConstants.MuseumID;
         userId = ConstantsHolder.userId;
         //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            _thaRoomId = "2";
+        }
+        else
+        {
+            _thaRoomId = "4";
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,6 +67,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             {
                 return;
             }
+            GetUpdatedToken();
             GamePlayUIHandler.inst.EnableJJPortalPopup(this.gameObject, 2);
         }
         else if (currentPortal == PortalType.Exit)
@@ -151,6 +167,42 @@ public class MeetingRoomTeleport : MonoBehaviour
             triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
         }
         NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
+    }
+    private async void GetUpdatedToken()
+    {
+        StringBuilder ApiURL = new StringBuilder();
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaRoomId + "/" + _thaPageNumber + "/" + _thaPageSize);
+        Debug.LogError("API URL is : " + ApiURL.ToString());
+        using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
+        {
+            request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            await request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.LogError("Error is" + request.error);
+            }
+            else
+            {
+                StringBuilder data = new StringBuilder();
+                data.Append(request.downloadHandler.text);
+                THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
+                for (int i = 0; i < json.data.rows.Count; i++)
+                {
+                    if (i < FB_Notification_Initilizer.Instance.companyEmails.Count)
+                    {
+                        FB_Notification_Initilizer.Instance.companyEmails[i] = json.data.rows[i].email;
+                        FB_Notification_Initilizer.Instance.fbTokens[i] = json.data.rows[i].userToken;
+                    }
+                    else
+                    {
+                        FB_Notification_Initilizer.Instance.companyEmails.Add(json.data.rows[i].email);
+                        FB_Notification_Initilizer.Instance.fbTokens.Add(json.data.rows[i].userToken);
+                    }
+
+                }
+            }
+            request.Dispose();
+        }
     }
 }
 
