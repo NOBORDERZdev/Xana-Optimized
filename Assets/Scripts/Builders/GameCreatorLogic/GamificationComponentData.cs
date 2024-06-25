@@ -440,34 +440,34 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
-            print("Photon player count "+ PhotonNetwork.PlayerList.Length);
+           // print("Photon player count "+ PhotonNetwork.PlayerList.Length);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                print("~~~ PLAYER "+player.UserId);
+              //  print("~~~ PLAYER "+player.UserId);
                 if (player.CustomProperties.TryGetValue("IsReady", out object isReady))
                 {
-                    print("in if");
+                  //  print("in if");
                     allPalyerReady = (bool)isReady/*(bool)player.CustomProperties["IsReady"]*/;
-                    print("~~~ PLAYER "+player.UserId + "BOOL IS "+allPalyerReady);
+                   // print("~~~ PLAYER "+player.UserId + "BOOL IS "+allPalyerReady);
                     if (!allPalyerReady) break;
                 }
                 else
                 {
-                    print("!! call else");
+                  //  print("!! call else");
                     allPalyerReady = false; break;
                 }
             }
-            //allPalyerReady = true;
+            allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-        print("~~~ all player ready ~~~");
+      //  print("~~~ all player ready ~~~");
         this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
         isRaceStarted= true;
     }
     [PunRPC]
     void StartGameRPC()
     {
-        print(" RPC call");
+       // print(" RPC call");
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
 
@@ -481,7 +481,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     void UpdateRaceStatus(){ 
         GamificationComponentData.instance.RaceFinishCount++;
         int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
+       // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
         if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
         {
             if (PhotonNetwork.IsMasterClient)
