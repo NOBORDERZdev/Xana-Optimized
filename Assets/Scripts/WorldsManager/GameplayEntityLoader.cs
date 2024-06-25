@@ -14,6 +14,7 @@ using System;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
+using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -25,6 +26,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject YoutubeStreamPlayer;
+    public GameObject PenguinPlayer;
 
     public CinemachineFreeLook PlayerCamera;
     public CinemachineFreeLook playerCameraCharacterRender;
@@ -64,6 +66,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     //Bool for BuilderSpawn point available or not
     bool BuilderSpawnPoint = false;
+
+    [Header("XANA Party")]
+    [SerializeField] GameObject XanaWorldController;
+    [SerializeField] GameObject XanaPartyController;
+    [SerializeField] public CameraManager XanaPartyCamera;
+    [SerializeField] InputReader XanaPartyInput;
+    [SerializeField] PenguinLookPointTracker penguinLook;
+    [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
 
     private void Awake()
     {
@@ -310,7 +320,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
             RaycastHit hit;
-            CheckAgain:
+        CheckAgain:
             // Does the ray intersect any objects excluding the player layer
             if (Physics.Raycast(spawnPoint, -transform.up, out hit, 2000))
             {
@@ -384,7 +394,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         if (!ConstantsHolder.xanaConstants.isCameraMan)
             LoadingHandler.Instance.HideLoading();
-        
+
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
         if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -472,12 +482,25 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar()
     {
-        if(ConstantsHolder.isPenguin)
+        if (ConstantsHolder.isPenguin)
         {
+            PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
+           // player.transform.SetParent(XanaPartyController.transform);
 
+            //PenguinPlayer = player;
+
+
+
+            XanaWorldController.SetActive(false);
+            XanaPartyController.SetActive(true);
+            if (player != null)
+            {
+                StartCoroutine(SetXanaPartyControllers(player));
+            }
             return;
         }
-
+        XanaWorldController.SetActive(true);
+        XanaPartyController.SetActive(false);
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
@@ -516,7 +539,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -635,7 +658,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             LoadingHandler.Instance.HideLoading();
 
         }
-      
+
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.builderMapID.ToString());
 
@@ -850,7 +873,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             while (!handle.IsDone)
                 yield return null;
             addressableSceneName = environmentLabel;
-            
+
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
@@ -885,7 +908,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        CheckAgain:
+    CheckAgain:
         Transform temp = null;
         if (GameObject.FindGameObjectWithTag("SpawnPoint"))
             temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
@@ -947,7 +970,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint.y += BuilderSpawnPoint ? 2 : 1000;
 
         RaycastHit hit;
-        CheckAgain:
+    CheckAgain:
         // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(spawnPoint, -transform.up, out hit, Mathf.Infinity))
         {
@@ -1020,6 +1043,44 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             CharacterLightCulling();
         }
+    }
+
+    //penguin mehtods 
+    IEnumerator SetXanaPartyControllers(GameObject player)
+    {
+        CharacterManager characterManager = player.GetComponent<CharacterManager>();
+        XanaPartyCamera.characterManager = characterManager;
+        characterManager.input = XanaPartyInput;
+        characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
+
+        XanaPartyCamera.thirdPersonCamera.Follow = player.transform;// characterManager.headPoint;
+        XanaPartyCamera.thirdPersonCamera.LookAt = player.transform;// characterManager.headPoint;
+        characterManager.enabled = true;
+        XanaPartyCamera.SetCamera();
+        XanaPartyCamera.SetDebug();
+        XanaPartyCamera.thirdPersonCamera.GetComponent<XANAPartyCameraController>().SetReference(player, characterManager.headPoint.gameObject);
+        yield return new WaitForSeconds(0.1f);
+
+        // Landscape
+        referenceForPenguin.XanaFeaturesLandsacape.SetActive(false);
+        // referenceForPenguin.XanaChatCanvasLandsacape.SetActive(false);
+        //referenceForPenguin.XanaJumpLandsacape.SetActive(false);
+        referenceForPenguin.EmoteFavLandsacape.SetActive(false);
+        //referenceForPenguin.PartyChatCanvasLandsacape.SetActive(true);
+        //referenceForPenguin.PartJumpLandsacape.SetActive(true);
+        // Potrait
+        referenceForPenguin.XanaFeaturesPotraite.SetActive(false);
+        //referenceForPenguin.XanaChatCanvasPotraite.SetActive(false);
+        //referenceForPenguin.XanaJumpPotraite.SetActive(false);
+        referenceForPenguin.EmoteFavPotraite.SetActive(false);
+        //tempRef.EmoteFavPotraite.SetActive(false);
+        //referenceForPenguin.PartyChatCanvasPotraite.SetActive(true);
+        //referenceForPenguin.PartJumpPotraite.SetActive(true);
+        Destroy(referenceForPenguin.XanaJumpPotraite.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+        Destroy(referenceForPenguin.XanaJumpLandsacape.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+
+
+
     }
 
 
