@@ -67,6 +67,7 @@ public class AdditiveScenesLoader : MonoBehaviour
             isAppOpen = true;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.App_Started.ToString());
         }
+        GameManager.Instance.isAllSceneLoaded = true;
         MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
     }
     //IEnumerator AddDelaySNSMessageModule(float delay)

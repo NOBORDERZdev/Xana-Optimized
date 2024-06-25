@@ -66,7 +66,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "13";
+        string gameVersion = "14";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -103,10 +103,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         private void Start()
         {
-            // Seperate the live and test environment
-            string _LobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + ConstantsHolder.xanaConstants.EnviornmentName) : ("Test" + ConstantsHolder.xanaConstants.EnviornmentName);
-            Debug.Log("Lobby Name: " + _LobbyName);
-            Connect(_LobbyName);
+            Connect(ConstantsHolder.xanaConstants.EnviornmentName);
         }
         /// <summary>
         /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
@@ -135,8 +132,9 @@ namespace Photon.Pun.Demo.PunBasics
         /// 
         public void Connect(string lobbyN)
         {
+            CurrLobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + lobbyN) : ("Test" + lobbyN);
+
             working = ScenesList.AddressableScene;
-            CurrLobbyName = lobbyN;
 
             if (!PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("ゲスト") &&
                     !PlayerPrefs.GetString(ConstantsGod.PLAYERNAME).Contains("Guest") && !string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.PLAYERNAME)))
@@ -190,7 +188,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
-            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name + "--" + Time.time);
+            Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name);
             CheckRoomAvailability();
         }
 
@@ -272,10 +270,11 @@ namespace Photon.Pun.Demo.PunBasics
                 }
             if (joinedRoom == false)
             {
+                int x = 1;
                 string roomName;
                 do
                 {
-                    roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
+                    roomName = PhotonNetwork.CurrentLobby.Name +"-Room:"+x.ToString();
                 }
                 while (roomNames.Contains(roomName));
 
@@ -299,7 +298,7 @@ namespace Photon.Pun.Demo.PunBasics
         public RoomOptions RoomOptionsRequest()
         {
             roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
+            roomOptions.MaxPlayers = (byte)ConstantsHolder.userLimit;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
 

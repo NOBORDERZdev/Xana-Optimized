@@ -19,6 +19,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public AIData aiData=new AIData();
 
+    public static string fixedAvatarJson;
 
     //private void OnEnable()
     //{
@@ -114,6 +115,11 @@ public class XANASummitDataContainer : ScriptableObject
         public string world;
         public string experienceType;
         public int builderWorldId;
+        public bool IsPenguin;
+        public bool Ishumanoid;
+        public int AvatarIndex;
+        public string Avatarjson;
+        public int maxPlayer;
     }
     #endregion
 

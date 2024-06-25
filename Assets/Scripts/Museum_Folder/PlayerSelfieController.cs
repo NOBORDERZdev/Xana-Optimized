@@ -52,6 +52,8 @@ public class PlayerSelfieController : MonoBehaviour
     [HideInInspector]
     public bool isReconnecting;
 
+    public static event Action OnSelfieButtonPressed;
+
 
     public void SwitchFromSelfieControl()
     {
@@ -643,6 +645,10 @@ public class PlayerSelfieController : MonoBehaviour
         m_IsSelfieFeatureActive = false;
         StartPanelBlinkAnimation();
         disablecamera = false;
+        if (OnSelfieButtonPressed != null)
+        {
+            OnSelfieButtonPressed.Invoke();
+        }
     }
 
 

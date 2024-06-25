@@ -35,6 +35,10 @@ public class AirinController : MonoBehaviour
     {
         if (!_isAirinActivated)
         {
+            if (_player == null)
+            {
+                _player = ReferencesForGamePlay.instance.m_34player.transform;
+            }
             // Rotate Airin to face the player when clicked
             RotateTowardsPlayer(_player.position, RotateType.Linear, true);
             _isAirinActivated = true;

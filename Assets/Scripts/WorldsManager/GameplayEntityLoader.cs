@@ -14,6 +14,7 @@ using System;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
+using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
@@ -24,7 +25,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public GameObject mainPlayer;
     public GameObject mainController;
+    private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
+    public GameObject PenguinPlayer;
 
     public CinemachineFreeLook PlayerCamera;
     public CinemachineFreeLook playerCameraCharacterRender;
@@ -65,10 +68,19 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     //Bool for BuilderSpawn point available or not
     bool BuilderSpawnPoint = false;
 
+    [Header("XANA Party")]
+    [SerializeField] GameObject XanaWorldController;
+    [SerializeField] GameObject XanaPartyController;
+    [SerializeField] public CameraManager XanaPartyCamera;
+    [SerializeField] InputReader XanaPartyInput;
+    [SerializeField] PenguinLookPointTracker penguinLook;
+    [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
+
     private void Awake()
     {
         instance = this;
         setLightOnce = false;
+        mainControllerRefHolder = mainController;
     }
 
 
@@ -162,7 +174,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void LoadFile()
     {
-        mainPlayer.SetActive(false);
         if (currentEnvironment == null)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -238,7 +249,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void DestroyYoutubePlayer()
     {
-        Destroy(YoutubeStreamPlayer);
+        if (YoutubeStreamPlayer)
+            Destroy(YoutubeStreamPlayer);
+        mainController = mainControllerRefHolder;
     }
 
     void CharacterLightCulling()
@@ -384,7 +397,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         if (!ConstantsHolder.xanaConstants.isCameraMan)
             LoadingHandler.Instance.HideLoading();
-        
+
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
         if (XanaEventDetails.eventDetails.DataIsInitialized)
@@ -413,7 +426,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
         }
 
-        XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
+        if (ConstantsHolder.isPenguin)
+            XanaWorldDownloader.initialPlayerPos = player.transform.localPosition;
+        else
+            XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
 
@@ -472,14 +488,32 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     void InstantiatePlayerAvatar()
     {
+        if (ConstantsHolder.isPenguin)
+        {
+            XanaWorldController.SetActive(false);
+            XanaPartyController.SetActive(true);
+            player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
+            PenguinPlayer = player;
+            mainController = player;
+            if (player != null)
+            {
+                StartCoroutine(SetXanaPartyControllers(player));
+            }
+            return;
+        }
+        XanaWorldController.SetActive(true);
+        XanaPartyController.SetActive(false);
+        mainController = mainControllerRefHolder;
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+            player.transform.parent = mainController.transform;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
         }
         else
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+            player.transform.parent = mainController.transform;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
     }
@@ -629,7 +663,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             LoadingHandler.Instance.HideLoading();
 
         }
-      
+
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.builderMapID.ToString());
 
@@ -728,11 +762,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             //Player respawn at spawn point after jump down from world
             mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
-
         }
         else
         {
-            mainController.GetComponent<PlayerController>().gravityVector.y = 0;
+            if (!ConstantsHolder.isPenguin)
+                mainController.GetComponent<PlayerController>().gravityVector.y = 0;
             mainController.transform.localPosition = spawnPoint;
         }
         if (IdolVillaRooms.instance != null)
@@ -761,8 +795,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentLabel = label;
         StartCoroutine(DownloadAssets());
     }
-
-
 
     void SetupEnvirnmentForBuidlerScene()
     {
@@ -819,8 +851,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 StartCoroutine(SpawnPlayerForBuilderScene());
             }
         }
-
-
     }
 
     IEnumerator DownloadAssets()
@@ -844,7 +874,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             while (!handle.IsDone)
                 yield return null;
             addressableSceneName = environmentLabel;
-            
+
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
@@ -1014,6 +1044,44 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             CharacterLightCulling();
         }
+    }
+
+    //penguin mehtods 
+    IEnumerator SetXanaPartyControllers(GameObject player)
+    {
+        CharacterManager characterManager = player.GetComponent<CharacterManager>();
+        XanaPartyCamera.characterManager = characterManager;
+        characterManager.input = XanaPartyInput;
+        characterManager.characterCamera = XanaPartyCamera.GetComponentInChildren<Camera>().gameObject;
+
+        XanaPartyCamera.thirdPersonCamera.Follow = player.transform;// characterManager.headPoint;
+        XanaPartyCamera.thirdPersonCamera.LookAt = player.transform;// characterManager.headPoint;
+        characterManager.enabled = true;
+        XanaPartyCamera.SetCamera();
+        XanaPartyCamera.SetDebug();
+        XanaPartyCamera.thirdPersonCamera.GetComponent<XANAPartyCameraController>().SetReference(player, characterManager.headPoint.gameObject);
+        yield return new WaitForSeconds(0.1f);
+
+        // Landscape
+        referenceForPenguin.XanaFeaturesLandsacape.SetActive(false);
+        // referenceForPenguin.XanaChatCanvasLandsacape.SetActive(false);
+        //referenceForPenguin.XanaJumpLandsacape.SetActive(false);
+        referenceForPenguin.EmoteFavLandsacape.SetActive(false);
+        //referenceForPenguin.PartyChatCanvasLandsacape.SetActive(true);
+        //referenceForPenguin.PartJumpLandsacape.SetActive(true);
+        // Potrait
+        referenceForPenguin.XanaFeaturesPotraite.SetActive(false);
+        //referenceForPenguin.XanaChatCanvasPotraite.SetActive(false);
+        //referenceForPenguin.XanaJumpPotraite.SetActive(false);
+        referenceForPenguin.EmoteFavPotraite.SetActive(false);
+        //tempRef.EmoteFavPotraite.SetActive(false);
+        //referenceForPenguin.PartyChatCanvasPotraite.SetActive(true);
+        //referenceForPenguin.PartJumpPotraite.SetActive(true);
+        Destroy(referenceForPenguin.XanaJumpPotraite.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+        Destroy(referenceForPenguin.XanaJumpLandsacape.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+
+
+
     }
 
 
