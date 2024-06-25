@@ -10,8 +10,8 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
 
     private MeshRenderer _portalMesh;
     private BoxCollider _boxCollider;
-    public int TestnetRoomId=4;
-    public int MainnetRoomId=2;
+    private int _testnetRoomId = 4;
+    private int _mainnetRoomId = 2;
     void Awake()
     {
         MeetingRoomText.text = "";
@@ -29,20 +29,19 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     {
         MeetingRoomText.text = "";
         MeetingRoomText.text = data;
-        // tmp.color = txtColor;
         MeetingRoomText.alpha = 1f;
     }
 
     public async void WrapObjectOnOff()
     {
         StringBuilder ApiURL = new StringBuilder();
-        if(APIBasepointManager.instance.IsXanaLive)
+        if (APIBasepointManager.instance.IsXanaLive)
         {
-            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + MainnetRoomId);
+            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + _mainnetRoomId);
         }
         else
         {
-            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + TestnetRoomId);
+            ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.wrapobjectApi + _testnetRoomId);
         }
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
@@ -55,11 +54,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             }
             else
             {
-                //StringBuilder data = new StringBuilder();
-                //data.Append(request.downloadHandler.text);
-                  
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(request.downloadHandler.text);
-
                 Debug.Log("Wrap Object Status is :: " + wrapObjectClass.data);
                 _portalMesh.enabled = wrapObjectClass.data;
                 _boxCollider.enabled = wrapObjectClass.data;
