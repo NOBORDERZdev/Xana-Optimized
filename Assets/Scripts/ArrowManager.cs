@@ -61,15 +61,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-
-        //if (ConstantsHolder.xanaConstants.userName == 1)
-        //{
-        //    PhotonUserName.enabled = true;
-        //}
-        //else {
-
-        //    PhotonUserName.enabled = false;
-        //}
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
         try
         {
@@ -86,45 +77,30 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.NickName = ConstantsHolder.userName;
         }
-        
-
+       
         arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
         playerMat = Resources.Load<Material>("Material #25");
-        mainPlayerParent = AvatarSpawnerOnDisconnect.Instance.spawnPoint.transform;
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                this.transform.parent = mainPlayerParent;
                 this.transform.localPosition = new Vector3(0, -0.081f, 0);
                 this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
-                //    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
-                //{
-                //    //StartCoroutine(LoadSpriteEnv(PlayerPrefs.GetString(ConstantsGod.ReactionThumb),reactionUi));
-                //    sendDataReactionUrl(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
-                //}
-
-
-
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
-                //AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
-
-                AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                if(!ConstantsHolder.isPenguin)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
+                    AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                }
             }
         }
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        //GameObject myobj = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
-        //Debug.Log("Arrow manager for is mine " + myobj.GetComponent<PhotonView>().IsMine + "view id object==" + myobj.GetComponent<PhotonView>().ViewID);
-        //myobj.GetComponent<RPCCallforBufferPlayers>().sendData();
-
         try
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
@@ -142,13 +118,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (VoiceView.IsSpeaking)
             {
-                //Debug.Log("Speaker in use true");
                 VoiceImage.gameObject.SetActive(true);
                 IsSpeak = true;
             }
             else
             {
-                // Debug.Log("Speaker in use false");
                 VoiceImage.gameObject.SetActive(false);
                 IsSpeak = false;
             }
@@ -188,41 +162,23 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     private void OnChangeReactionIcon(string url)
     {
-
-        Debug.Log($"sendDataReactionUrl {url}");
-        if ((!string.IsNullOrEmpty(url))
-                  /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
+        if ((!string.IsNullOrEmpty(url)))
         {
-
-            //sendDataReactionUrl(url);
-
             gameObject.GetComponent<PhotonView>().RPC("sendDataReactionUrl", RpcTarget.All, url, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
     }
     private void OnChangeUsernameToggle(int userNameToggleConstant)
     {
-
-
-        //sendDataReactionUrl(url);
-
         gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
-
-
     }
     private void OnChangeText(string text)
     {
-        Debug.Log($"sendDatatext {text}");
-
+        Debug.LogError("Chat Text:- "+text);
         if (!string.IsNullOrEmpty(text))
         {
             gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.Others, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
             text = string.Empty;
         }
-        //if ((!string.IsNullOrEmpty(text))
-        //          /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
-        //{
-        //    sendDataReactionUrl(text);
-        //}
     }
 
     IEnumerator LoadSpriteEnv(string ImageUrl, int id)
@@ -234,8 +190,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (gameObject.GetComponent<PhotonView>().ViewID == id)
             {
-
-                Debug.Log("photon objects reaction====" + ImageUrl);
                 using (WWW www = new WWW(ImageUrl))
                 {
 
@@ -302,6 +256,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            Debug.LogError("photon id match"+gameObject.GetComponent<PhotonView>().ViewID +"---"+ id);
             if (gameObject.GetComponent<PhotonView>().ViewID == id)
             {
                 if (chatData.Length <= 20)
@@ -382,6 +337,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataChatMsg(string chat, int viewId)
     {
+        Debug.LogError("RPC chat :- "+chat+"--"+viewId);
         PlayerPrefs.SetString(ConstantsGod.ReactionThumb, "");
         reactionUi.SetActive(false);
         if (chatco != null)

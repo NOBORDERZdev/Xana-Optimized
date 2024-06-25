@@ -170,8 +170,6 @@ public class ConstantsHolder : MonoBehaviour
 
     public void Awake()
     {
-
-        isPenguin = true;
         if (xanaConstants)
         {
             DestroyImmediate(this.gameObject);
