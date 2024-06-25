@@ -38,7 +38,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
     public async void GetEmailData()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaCompanyId + "/" + _thaPageNumber);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaCompanyId + "/" + _thaPageNumber + "/" + _thaPageSize);
         Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
