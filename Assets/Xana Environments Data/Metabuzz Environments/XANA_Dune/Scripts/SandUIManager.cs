@@ -10,6 +10,8 @@ public class SandUIManager : MonoBehaviour
 {
     [SerializeField] List<Sprite> startInformImagesJp;
     [SerializeField] List<Sprite> sandGameImagesJp;
+    [SerializeField] List<Sprite> finishImagesJp;
+    [SerializeField] List<Sprite> finishImagesEn;
     [SerializeField] List<Sprite> startInformImagesEn;
     [SerializeField] List<Sprite> sandGameImagesEn;
     [SerializeField] List<Sprite> timerImages;
@@ -18,18 +20,20 @@ public class SandUIManager : MonoBehaviour
     [SerializeField] Image result;
     [SerializeField] Image rankingBoard;
     [SerializeField] Image timer;
-    [SerializeField] Image Point;
+    [SerializeField] Image point;
+    [SerializeField] Image timerImg;
 
     [SerializeField] Button nxtBtn;
     [SerializeField] Button camelBtn;
     [SerializeField] Button camel2Btn;
+    [SerializeField] Button resultBtn;
 
     Dictionary<Des, List<Sprite>> desImgs = new Dictionary<Des, List<Sprite>>();
     Dictionary<Des, UnityAction> desCallback = new Dictionary<Des, UnityAction>();
 
     List<Sprite> currentDes;
     int currentIndex = 0;
-
+    bool isFirstFinish = false;
     Des currentKey;
 
     void Start()
@@ -39,16 +43,24 @@ public class SandUIManager : MonoBehaviour
         {
             desImgs.Add(Des.StartInform, startInformImagesJp);
             desImgs.Add(Des.SandInform, sandGameImagesJp);
+            desImgs.Add(Des.FinishInform, finishImagesJp);
         }
         else if (SandGameManager.Instance.local == Localiztion.En)
         {
             desImgs.Add(Des.StartInform, startInformImagesEn);
             desImgs.Add(Des.SandInform, sandGameImagesEn);
+            desImgs.Add(Des.FinishInform, finishImagesEn);
         }
         camelBtn.onClick.AddListener(() => DescriptionStart(Des.SandInform));
         camel2Btn.onClick.AddListener(() => SandGameManager.Instance.ResetPlayerPos());
-
+        resultBtn.onClick.AddListener(() => { ShowFinishInform(); });
         DescriptionStart(Des.StartInform);
+    }
+    public void ShowFinishInform()
+    {
+        if (isFirstFinish) return;
+        DescriptionStart(Des.FinishInform);
+        isFirstFinish = true;
     }
 
     public void AddCallback(Des des, UnityAction callback)
@@ -91,7 +103,7 @@ public class SandUIManager : MonoBehaviour
     {
         timer.gameObject.SetActive(true);
         //joyStick.gameObject.SetActive(true);
-        Point.gameObject.SetActive(false);
+        point.gameObject.SetActive(false);
 
         StartCoroutine(TimeStart());
     }
@@ -122,23 +134,33 @@ public class SandUIManager : MonoBehaviour
 
         timer.gameObject.SetActive(false);
     }
-
-    public void OpenPointUI(){
-        Point.gameObject.SetActive(true);
-    }
-
-    public void SetPointUI(string point){        
-        Point.transform.GetChild(0).GetComponent<Text>().text = point;
-    }
-
-    public void ShowResult(string playRecord,string bestRecord, string rank, string reward)
+    public void TimerOn(bool isOn)
     {
+        timerImg.gameObject.SetActive(isOn);
+    }
+
+    public void SetTimerText(string time)
+    {
+        Text timerText = timerImg.GetComponentInChildren<Text>();
+        timerText.text = time;
+    }
+    public void OpenPointUI(){
+        point.gameObject.SetActive(true);
+    }
+
+    public void SetPointUI(string point){
+        this.point.transform.GetChild(0).GetComponent<Text>().text = point;
+    }
+
+    public void ShowResult(string playRecord, string rank, string reward)
+    {
+        //joyStick.gameObject.SetActive(false);
 
         result.gameObject.SetActive(true);
         result.transform.GetChild(1).GetComponent<Text>().text = playRecord;
-        result.transform.GetChild(2).GetComponent<Text>().text = bestRecord;
-        result.transform.GetChild(3).GetComponent<Text>().text = rank;
-        result.transform.GetChild(4).GetComponent<Text>().text = reward;
+        // result.transform.GetChild(2).GetComponent<Text>().text = bestRecord;
+        result.transform.GetChild(2).GetComponent<Text>().text = rank;
+        result.transform.GetChild(3).GetComponent<Text>().text = reward;
 
         StartCoroutine(ResultTween(500f));
     }

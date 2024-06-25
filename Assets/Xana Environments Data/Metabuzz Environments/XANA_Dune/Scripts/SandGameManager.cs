@@ -5,7 +5,7 @@ using EnumCheck;
 using UnityEngine.Networking;
 using Unity.VisualScripting;
 using Cinemachine;
-using Photon.Pun;
+using UnityEngine.UI;
 
 public class SandGameManager : MonoBehaviour
 {
@@ -16,12 +16,15 @@ public class SandGameManager : MonoBehaviour
 
     [SerializeField] Transform startPoint;
     [SerializeField] Transform resetPoint;
-    [SerializeField] Transform player;
+    private Transform player;
     [SerializeField] Transform mark;
     [SerializeField] Transform board;
 
     [SerializeField] ParticleSystem finishParticle1;
     [SerializeField] ParticleSystem finishParticle2;
+
+    [SerializeField] AudioSource rewardSound;
+    [SerializeField] Button resetBtn;
 
     InputManager input;
 
@@ -52,7 +55,7 @@ public class SandGameManager : MonoBehaviour
     float timer = 0;
     float limitTime = 60;
     float record = 0;
-    
+
     public float Timer
     {
         get
@@ -70,6 +73,17 @@ public class SandGameManager : MonoBehaviour
 
     public Localiztion local = Localiztion.En;
 
+    public static SandGameManager Instance
+    {
+        get
+        {
+            if (null == instance)
+            {
+                return null;
+            }
+            return instance;
+        }
+    }
     private void Awake()
     {
         if (instance == null)
@@ -86,28 +100,6 @@ public class SandGameManager : MonoBehaviour
         else
         {
             local = Localiztion.En;
-        }
-    }
-
-    public static SandGameManager Instance
-    {
-        get
-        {
-            if (null == instance)
-            {
-                return null;
-            }
-            return instance;
-        }
-    }
-
-    IEnumerator Test()
-    {
-        while (true)
-        {
-            //playerCamera.RotateCamera(0, 5);
-
-            yield return new WaitForSeconds(1);
         }
     }
 
@@ -140,12 +132,18 @@ public class SandGameManager : MonoBehaviour
 
         uiMgr.AddCallback(Des.SandInform, () => { StartBoarding(); });
 
+        resetBtn.onClick.AddListener(() => { ResetPlayer(); });
+
+        resetBtn.gameObject.SetActive(false);
+
         StartCoroutine(CheckPoint());
-        StopCoroutine(InitRoutine());  
+        SetRanking();
+        StopCoroutine(InitRoutine());
         //StartCoroutine(Test());
     }
 
-    IEnumerator CheckPoint(){
+    IEnumerator CheckPoint()
+    {
         WWWForm form = new WWWForm();
         form.AddField("command", "getPoint");
         form.AddField("id", id);
@@ -153,6 +151,7 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
         string point = www.downloadHandler.text;
+        if (point == "Register complete") point = "0";
         uiMgr.SetPointUI(point);
 
         www.Dispose();
@@ -170,8 +169,9 @@ public class SandGameManager : MonoBehaviour
         isStart = true;
         Animator34.SetBool("IsStart", true);
         SetPlayerStartPos();
-
+        resetBtn.gameObject.SetActive(true);
         uiMgr.TimerStart();
+        uiMgr.TimerOn(true);
         StartCoroutine(StartBoardingControl());
     }
 
@@ -189,7 +189,7 @@ public class SandGameManager : MonoBehaviour
             }
             _player34InitialPos = ReferencesForGamePlay.instance.m_34player.transform.localPosition;
             ReferencesForGamePlay.instance.m_34player.transform.localPosition = new Vector3(_player34InitialPos.x, 0.014f, _player34InitialPos.z);
-            Rigidbody playerRb =  player.AddComponent<Rigidbody>();
+            Rigidbody playerRb = player.AddComponent<Rigidbody>();
             playerRb.mass = 0.1f;
             playerRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             board.GetComponent<FixedJoint>().connectedBody = playerRb;
@@ -226,6 +226,7 @@ public class SandGameManager : MonoBehaviour
     IEnumerator StartBoardingControl()
     {
         yield return new WaitForSeconds(0.1f);
+        uiMgr.SetTimerText("00.00");
         Rigidbody rb = player.GetComponent<Rigidbody>();
         rb.mass = 0.1f;
         rb.freezeRotation = false;
@@ -235,6 +236,10 @@ public class SandGameManager : MonoBehaviour
         board.gameObject.SetActive(true);
         input.enabled = true;
         input.force = 250;
+
+        input.StopMove();
+        //board.gameObject.SetActive(true);
+
         int i = 0;
         Debug.Log("Boarding ready set");
 
@@ -246,7 +251,7 @@ public class SandGameManager : MonoBehaviour
         }
 
         input.canRotate = true;
-        input.force = 600;
+        input.force = input.startForce;
         Animator34.SetTrigger("BoardOn");
         Debug.Log("Boarding Start");
         crabSpr.OnCrabStart();
@@ -254,6 +259,8 @@ public class SandGameManager : MonoBehaviour
         while (isStart)
         {
             timer += Time.deltaTime;
+            string timerFormat = string.Format("{0:00.00}", timer);
+            uiMgr.SetTimerText(timerFormat);
             yield return null;
         }
     }
@@ -277,12 +284,14 @@ public class SandGameManager : MonoBehaviour
         timer = 0;
         isStart = false;
         crabSpr.OnCrabStop();
-        print(record);
+        //print(record);
         input.canRotate = false;
-
+        rewardSound.Play();
         finishParticle1.Play();
         finishParticle2.Play();
+        uiMgr.TimerOn(false);
 
+        resetBtn.gameObject.SetActive(false);
         StartCoroutine(OnGameOver());
     }
 
@@ -291,126 +300,45 @@ public class SandGameManager : MonoBehaviour
         string recordString = string.Format("{0:00.00}", record);
         string playRecordString = recordString;
 
-        WWWForm form = new WWWForm();
-        form.AddField("command", "getRank");
-        form.AddField("id", id);
-        form.AddField("record", timer.ToString());
+        WWWForm formSave = new WWWForm();
+        formSave.AddField("command", "saveRecord");
+        formSave.AddField("id", id);
+        formSave.AddField("record", recordString);
+        UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
+        wwwSave.SendWebRequest();
+        yield return new WaitUntil(() => wwwSave.isDone);
+        Debug.Log(wwwSave.downloadHandler.text);
 
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
-        yield return www.SendWebRequest();
-        string rank = www.downloadHandler.text;
-        Debug.Log(rank);
+        WWWForm formPersonalRank = new WWWForm();
+        formPersonalRank.AddField("command", "getPersonalRank");
+        formPersonalRank.AddField("id", id);
+        // formPersonalRank.AddField("record", recordString);
 
-        string[] ranks = rank.Split("\n");
-        for (int i = 0; i < ranks.Length; i ++)
-        {
-            string[] _ranks = ranks[i].Split(",");
-
-            string[] _rank = { _ranks[1], _ranks[2], (i + 1).ToString() };
-            rankList.Add(_ranks[0], _rank);
-        }
+        UnityWebRequest wwwPersonalRank = UnityWebRequest.Post(url, formPersonalRank);
+        wwwPersonalRank.SendWebRequest();
+        yield return new WaitUntil(() => wwwPersonalRank.isDone);
+        string personalRank = wwwPersonalRank.downloadHandler.text;
+        Debug.Log(wwwPersonalRank.downloadProgress);
+        Debug.Log(personalRank);
 
         int rankReward = 0;
-        
-        if (float.Parse(rankList[id][1]) > record)
-        {
-
-            int prevRank = int.Parse(rankList[id][2]);
-
-            WWWForm formSave = new WWWForm();
-            formSave.AddField("command", "saveRecord");
-            formSave.AddField("id", id);
-            formSave.AddField("record", recordString);
-
-            UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
-            yield return wwwSave.SendWebRequest();
-
-            UnityWebRequest wwwRank = UnityWebRequest.Post(url, form);
-            yield return wwwRank.SendWebRequest();
-            rank = wwwRank.downloadHandler.text;
-            Debug.Log(rank);
-            ranks = rank.Split("\n");
-            for (int i = 0; i < ranks.Length; i++)
-            {
-                string[] _ranks = ranks[i].Split(",");
-
-                string[] _rank = { _ranks[1], _ranks[2], (i + 1).ToString() };
-                rankList[_ranks[0]] = _rank;
-            }
-
-            int curRank = int.Parse(rankList[id][2]);
-
-            if (curRank < prevRank)
-            {
-                switch (int.Parse(rankList[id][2]))
-                {
-                    case 1:
-                        rankReward = 500;
-                        break;
-                    case 2:
-                        rankReward = 200;
-                        break;
-                    case 3:
-                        rankReward = 100;
-                        break;
-                    case 4:
-                        rankReward = 70;
-                        break;
-                    case 5:
-                        rankReward = 70;
-                        break;
-                    case 6:
-                    case 7:
-                    case 8:
-                        rankReward = 60;
-                        break;
-                    case 9:
-                    case 10:
-                        rankReward = 50;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-
-            wwwRank.Dispose();
-            wwwSave.Dispose();
-        }
-        else if (float.Parse(rankList[id][1]) != 0)
-        {
-            recordString = rankList[id][1];
-
-        }
-        else
-        {
-            WWWForm formSave = new WWWForm();
-            formSave.AddField("command", "saveRecord");
-            formSave.AddField("id", id);
-            formSave.AddField("record", recordString);
-
-            UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
-            yield return wwwSave.SendWebRequest();
-
-            UnityWebRequest wwwRank = UnityWebRequest.Post(url, form);
-            yield return wwwRank.SendWebRequest();
-            rank = wwwRank.downloadHandler.text;
-            Debug.Log(rank);
-            ranks = rank.Split("\n");
-            for (int i = 0; i < ranks.Length; i++)
-            {
-                string[] _ranks = ranks[i].Split(",");
-
-                string[] _rank = { _ranks[1], _ranks[2], (i + 1).ToString() };
-                rankList[_ranks[0]] = _rank;
-            }
-            wwwRank.Dispose();
-            wwwSave.Dispose();
-        }
-
-        int reward = 0;
-
         int playReward = 0;
+
+        switch (int.Parse(personalRank))
+        {
+            case 1:
+                rankReward = 100;
+                break;
+            case 2:
+                rankReward = 70;
+                break;
+            case 3:
+                rankReward = 50;
+                break;
+            default:
+                rankReward = 0;
+                break;
+        }
 
         if (record < 14)
         {
@@ -424,26 +352,62 @@ public class SandGameManager : MonoBehaviour
         {
             playReward = 100;
         }
+        else if (record >= 30)
+        {
+            playReward = 10;
+        }
 
         string rewardString = rankReward != 0 ? $"{playReward}(+{rankReward})" : $"{playReward}";
+        int totalReward = rankReward == 0 ? playReward : playReward + rankReward;
         WWWForm formReward = new WWWForm();
         formReward.AddField("command", "savePoint");
         formReward.AddField("id", id);
-        formReward.AddField("point", rewardString);
+        formReward.AddField("point", totalReward);
 
         UnityWebRequest wwwReward = UnityWebRequest.Post(url, formReward);
-        yield return wwwReward.SendWebRequest();
-        Debug.Log(wwwReward.downloadHandler.text);          
+        wwwReward.SendWebRequest();
+        yield return new WaitUntil(() => wwwReward.isDone);
+        Debug.Log(wwwReward.downloadHandler.text);
         StartCoroutine(CheckPoint());
-
+        if (int.Parse(personalRank) <= 10)
+        {
+            SetRanking();
+        }
+        wwwSave.Dispose();
+        wwwPersonalRank.Dispose();
         wwwReward.Dispose();
-        www.Dispose();
-        
-        uiMgr.SetRankingBoard(rankList);
-        uiMgr.ShowResult(playRecordString, recordString, rankList[id][2] + "nd", rewardString);
-        yield return null;
 
+        uiMgr.ShowResult(playRecordString, personalRank + "nd", rewardString);
+    }
+
+    private void SetRanking()
+    {
+        StartCoroutine(SetRankingData());
+    }
+
+    IEnumerator SetRankingData()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("command", "getRank");
+
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
+        string rank = www.downloadHandler.text;
+        Debug.Log(rank);
+
+        string[] ranks = rank.Split("\n");
+        for (int i = 0; i < ranks.Length; i++)
+        {
+            string[] _ranks = ranks[i].Split(",");
+
+            string[] _rank = { _ranks[1], _ranks[2], (i + 1).ToString() };
+            rankList.Add(_ranks[0], _rank);
+        }
+
+        uiMgr.SetRankingBoard(rankList);
         rankList.Clear();
+
+        www.Dispose();
     }
 
     void SetPlayerStartPos()
@@ -458,7 +422,7 @@ public class SandGameManager : MonoBehaviour
             Debug.Log(offset);
             y -= 360;
         }
-
+        //playerCamera.RotateCamera(-currentRot.eulerAngles.y / 3, (y - offset) / 3);
         SetPlayerPosition(startPoint.position);
     }
 
@@ -467,13 +431,30 @@ public class SandGameManager : MonoBehaviour
         Player.position = pos;
         Player.rotation = Quaternion.Euler(0, 30, 0);
     }
-
-    public void ResetPlayerPos()
+    public void ResetPlayer()
     {
-        StartCoroutine(ResetPlayer());
+        StartCoroutine(OnResetPlayer());
     }
 
-    IEnumerator ResetPlayer()
+    IEnumerator OnResetPlayer()
+    {
+        input.force = 0;
+        input.StopMove();
+        Vector3 currPos = player.position;
+        Vector3 newPos = currPos + new Vector3(0, 1f, 0);
+        Quaternion initRot = Quaternion.Euler(20, 30, 6);
+        player.position = newPos;
+        player.rotation = initRot;
+
+        yield return new WaitForSeconds(1);
+        input.force = input.startForce;
+    }
+    public void ResetPlayerPos()
+    {
+        StartCoroutine(ReturnPlayer());
+    }
+
+    IEnumerator ReturnPlayer()
     {
         SetPlayerPosition(resetPoint.position);
 
@@ -481,7 +462,6 @@ public class SandGameManager : MonoBehaviour
 
         //playerInput.enabled = true;
     }
-
     public void SetBoardOff()
     {
         //Rigidbody rb = player.GetComponent<Rigidbody>();

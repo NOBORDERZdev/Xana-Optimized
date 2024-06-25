@@ -10,9 +10,11 @@ public class InputManager : MonoBehaviour
     //public JoyStick joyStick;
     [Tooltip("Forward force applied to player")]
     public float force = 1250.0f;
+    public float startForce = 600f;
 
     [Tooltip("Rotation speed of the player")]
     public float rotationSpeed = 75.0f;
+    public float rotLimitAngle = 90f;
 
     [Tooltip("Amount of torque applied to 'lift' the player as they turn")]
     public float turnLift = 750.0f;
@@ -84,6 +86,12 @@ public class InputManager : MonoBehaviour
 
             // for mobile device
             direction += horizontal;
+
+            float angleY = rb.rotation.eulerAngles.y > 180f ? rb.rotation.eulerAngles.y - 360 : rb.rotation.eulerAngles.y;
+
+            if (angleY < -rotLimitAngle && direction < 0) direction = 0;
+
+            if (angleY > rotLimitAngle && direction > 0) direction = 0;
         }
 
         return direction;
@@ -134,7 +142,10 @@ public class InputManager : MonoBehaviour
 
     public void OnTouchingCrab()
     {
-        force *= 0.7f;
+
+        if (force <= 150f) force = 150;
+        else force *= 0.7f;
+
         Debug.Log(force);
         if (force < 150f) force = 150;
         //if (isTouchingCrab) return;
@@ -142,7 +153,11 @@ public class InputManager : MonoBehaviour
 
         //StartCoroutine(Stun(3f));
     }
-
+    public void StopMove()
+    {
+        if (rb == null) rb = GetComponent<Rigidbody>();
+        rb.velocity = Vector3.zero;
+    }
     // not use, just test for stun, can erase this function
     IEnumerator Stun(float stunTime)
     {

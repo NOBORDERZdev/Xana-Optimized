@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace EnumCheck
 {
     public enum Localiztion
@@ -13,7 +9,8 @@ namespace EnumCheck
     public enum Des
     {
         StartInform,
-        SandInform
+        SandInform,
+        FinishInform
     }
 }
 

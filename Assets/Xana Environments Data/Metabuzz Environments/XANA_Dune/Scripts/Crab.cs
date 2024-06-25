@@ -13,6 +13,7 @@ public class Crab : MonoBehaviour
 
     IEnumerator OnUpper(float upSpeed)
     {
+        GetComponent<AudioSource>().Play();
         float upSize = transform.localScale.y * 3;
         float curr = 0;
 
