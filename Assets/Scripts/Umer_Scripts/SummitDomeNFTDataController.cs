@@ -84,7 +84,7 @@ public class SummitDomeNFTDataController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-            if (NFTDataFetchScrptRef.dynamicManager)
+            if (NFTDataFetchScrptRef && NFTDataFetchScrptRef.dynamicManager)
             {
                 RoomCount = NFTDataFetchScrptRef.dynamicManager.rooms.Count;
             }
