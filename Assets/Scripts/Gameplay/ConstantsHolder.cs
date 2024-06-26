@@ -123,6 +123,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
     public bool isFromHomeTab = false;
+    public bool isFromTottoriWorld = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;
