@@ -185,7 +185,7 @@ namespace PhysicsCharacterController
         private bool isCrouch = false;
         private bool canJumpNow = true;
 
-        private float PhyJumpTimeout = 0.8f;
+        //private float PhyJumpTimeout = 0.65f;
 
         private Vector2 axisInput;
         private bool jump;
@@ -296,6 +296,7 @@ namespace PhysicsCharacterController
         {
             prevGrounded = isGrounded;
             isGrounded = Physics.CheckSphere(transform.position - new Vector3(0, originalColliderHeight / 2f, 0), groundCheckerThrashold, groundMask);
+            canJumpNow=true;
             if (GamificationComponentData.instance != null)
                 GamificationComponentData.instance.IsGrounded = isGrounded;
         }
@@ -628,7 +629,7 @@ namespace PhysicsCharacterController
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
                 canJumpNow = false;
-                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
+                //new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
             }
             //jumped from wall
             else if (jump && canJumpNow && !isGrounded && isTouchingWall)
@@ -638,7 +639,7 @@ namespace PhysicsCharacterController
 
 
                 canJumpNow = false;
-                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
+                //new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
                 targetAngle = Mathf.Atan2(wallNormal.x, wallNormal.z) * Mathf.Rad2Deg;
 
                 forward = wallNormal;
