@@ -33,6 +33,11 @@ public class SummitAIChatHandler : XanaChatSystem
         GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnExit;
     }
 
+    private void Start()
+    {
+        //Dont remove this start method Intentionally added to hide inhertied start function
+    }
+
     void LoadNPC()
     {
         if (ConstantsHolder.isFromXANASummit)

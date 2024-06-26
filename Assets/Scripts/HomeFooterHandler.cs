@@ -238,7 +238,7 @@ public class HomeFooterHandler : MonoBehaviour
             {
                 gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(true);
                 gameManager.defaultSelection = 0;
-                if (additiveScenesManager != null)
+                if (additiveScenesManager != null && additiveScenesManager.SNSmodule)
                 {
                     additiveScenesManager.SNSmodule.SetActive(false);
                     //additiveScenesManager.SNSMessage.SetActive(false);
@@ -275,6 +275,7 @@ public class HomeFooterHandler : MonoBehaviour
         gameManager.HomeCameraInputHandler(true);
         //GlobalVeriableClass.callingScreen = "";
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
+       QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
     public void OnClickHomeButtonIdleAvatar()
     {
@@ -344,6 +345,7 @@ public class HomeFooterHandler : MonoBehaviour
         }
 
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
+        QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
 
     /*public void OnClickNewWorldButton()
@@ -588,6 +590,7 @@ public class HomeFooterHandler : MonoBehaviour
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickFeedButton);
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
+        QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
 
     public void OnClickAddFriends()
@@ -697,6 +700,7 @@ public class HomeFooterHandler : MonoBehaviour
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickAddFriends);
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
+        QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
 
     void DisableSubScreen()
@@ -817,6 +821,7 @@ public class HomeFooterHandler : MonoBehaviour
             MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
+        QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
     public void InitProfileData()
     {
@@ -872,7 +877,10 @@ public class HomeFooterHandler : MonoBehaviour
     }
     public void ShopButtonClicked()
     {
-        if (additiveScenesManager != null)
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
+        if (additiveScenesManager != null && additiveScenesManager.SNSmodule)
         {
             additiveScenesManager.SNSmodule.SetActive(false);
             // additiveScenesManager.SNSMessage.SetActive(false);

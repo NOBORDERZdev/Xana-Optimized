@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AINPCTrigger : MonoBehaviour
@@ -9,7 +7,7 @@ public class AINPCTrigger : MonoBehaviour
     public int npcID;
     public void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+        if(other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>() && other.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.AINPCActivated?.Invoke(npcID,welcomeMsgs);
         }
@@ -17,7 +15,7 @@ public class AINPCTrigger : MonoBehaviour
 
     public void OnTriggerExit(Collider other)
     {
-        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+        if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>() && other.GetComponent<PhotonView>().IsMine)
         {
             BuilderEventManager.AINPCDeactivated?.Invoke(npcID);
         }
