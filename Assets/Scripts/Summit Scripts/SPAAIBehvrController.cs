@@ -22,11 +22,6 @@ public class SPAAIBehvrController : MonoBehaviour
     private bool isNewlySpwaned = true;
     [SerializeField] int maxNpcBehaviourAction = 2;
 
-    private void Start()
-    {
-        //StartCoroutine(PerformAction());
-    }
-
     public IEnumerator PerformAction()
     {
         if (!isPerformingAction)

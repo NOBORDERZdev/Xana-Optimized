@@ -132,11 +132,6 @@ public class SPAAIEmoteController : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
             }
-            //AssetBundle.UnloadAllAssetBundles(false);
-            //Resources.UnloadUnusedAssets();
-            //int rand;
-            //rand = UnityEngine.Random.Range(0, (EmoteAnimationHandler.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationHandler.Instance.emoteAnim.Count)); // EmoteAnimationHandler.Instance.emoteAnim.Count
-            //Debug.Log("<color=red> rand: " + rand + "</color>");
         }
     }
 
