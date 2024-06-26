@@ -6,7 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MultiplayerComponent : MonoBehaviourPun
 {
-    string RunTimeItemID;
+   public string RunTimeItemID;
     string ItemID;
     ItemData itemData;
     IEnumerator Start()
@@ -82,7 +82,7 @@ public class MultiplayerComponent : MonoBehaviourPun
             xanaItem.itemData = itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
-            if (PhotonNetwork.IsMasterClient || (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle))
+            if ( (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle))
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);

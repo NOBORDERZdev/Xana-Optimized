@@ -105,6 +105,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public bool SinglePlayer = false;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
     bool isRaceStarted = false;
+
+    public GameObject MultiplayerComponente;
+
     private void Awake()
     {
         instance = this;
@@ -395,7 +398,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
         //Debug.LogError(json);
         hash.Add("gamificationMultiplayerComponentDatas", json);
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
     }
 
     public void MasterClientSwitched(Player newMasterClient)

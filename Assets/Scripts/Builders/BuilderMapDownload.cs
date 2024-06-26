@@ -44,6 +44,10 @@ public class BuilderMapDownload : MonoBehaviour
 
     public GameObject XANAPartyLoading;
 
+    [Space]
+    [Header("Dynamic Object Prefab")]
+    public GameObject MultiplayerComponent;
+
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
@@ -273,7 +277,7 @@ public class BuilderMapDownload : MonoBehaviour
                     else
                         GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                    AddressableDownloader.Instance.MemoryManager    .AddToReferenceList(loadOp, key);
                 }
             }
         }
@@ -811,15 +815,14 @@ public class BuilderMapDownload : MonoBehaviour
         if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
         {
             newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
+           
                 GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                var multiplayerObject = Instantiate(MultiplayerComponent, _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                multiplayerComponentData.viewID = 0;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
+            
             return;
         }
 
