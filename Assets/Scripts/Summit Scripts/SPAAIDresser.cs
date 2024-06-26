@@ -15,7 +15,7 @@ public class SPAAIDresser : MonoBehaviour
     private Stitcher stitcher;
 
     //[HideInInspector]
-    public string json;
+    public SavingCharacterDataClass AvatarJson;
 
     public TMPro.TextMeshProUGUI npcName;
 
@@ -28,13 +28,13 @@ public class SPAAIDresser : MonoBehaviour
         Hair_ColorName = "_Color";
         Eye_ColorName = "_Mask_Color";
 
-        Custom_InitializeAvatar(json);
+        Custom_InitializeAvatar(AvatarJson);
     }
 
-    void Custom_InitializeAvatar(string aiAvatarJson)
+    void Custom_InitializeAvatar(SavingCharacterDataClass _avatarClothData)
     {
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-        _CharacterData = _CharacterData.CreateFromJSON(aiAvatarJson);
+        _CharacterData = _avatarClothData;
 
         if (_CharacterData.myItemObj.Count > 0)
         {

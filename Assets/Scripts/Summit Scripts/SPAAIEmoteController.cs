@@ -32,7 +32,6 @@ public class SPAAIEmoteController : MonoBehaviour
 
     public IEnumerator PlayEmote()
     {
-        Debug.Log("============Play Emote Call");
         if (!npcMC.isMoving)
         {
             while (KeepLoopingEmotes)
@@ -106,6 +105,11 @@ public class SPAAIEmoteController : MonoBehaviour
                             }
                             yield return new WaitForSeconds(AnimPlayTimer[i]);
                         }
+                    }
+                    else
+                    {
+                        Debug.LogError("Skipped animation as not found in emotes list: " + AnimPlayList[i]);
+                        continue;
                     }
                     if (i >= AnimPlayList.Count)
                     {
@@ -226,19 +230,21 @@ public class SPAAIEmoteController : MonoBehaviour
     bool SerachForEmoteWithName(string _emoteName)
     {
         int _emoteIndex = EmoteAnimationHandler.Instance.emoteAnim.FindIndex(obj => obj.name == _emoteName);
-        if (_emoteIndex != -1 && 
-            EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Moves"))
+        if (_emoteIndex != -1)
         {
-            emoteName = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].name;
-            CurrDanceAnimName = emoteName;
+            if (EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Moves"))
+            {
+                emoteName = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].name;
+                CurrDanceAnimName = emoteName;
 #if UNITY_ANDROID
-            emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
+                emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
 #elif UNITY_IOS
                     emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].ios_file;
 #elif UNITY_EDITOR
                     emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
 #endif
-            emoteBundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteBundleUrl + ".unity3d");
+                emoteBundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteBundleUrl + ".unity3d");
+            }
             return true;
         }
         else

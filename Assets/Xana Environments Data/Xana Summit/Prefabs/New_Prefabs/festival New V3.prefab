@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503952155967019041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.37, z: 31.37}
+  m_LocalPosition: {x: -0, y: 2.43, z: 17.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16689,6 +16689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8138509368835211543}
   - component: {fileID: 4774323368799774984}
+  - component: {fileID: 9011582713448296226}
   m_Layer: 0
   m_Name: PerformerAvatarHndObj
   m_TagString: Untagged
@@ -16704,7 +16705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7985690232314836913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16729,6 +16730,20 @@ MonoBehaviour:
   - {fileID: 4894719807666117210, guid: 0ab61f970144d8443b71b12c1ce22c71, type: 3}
   SpawnPoint: {fileID: 1465729625715788479}
   CurrentAIPerformerRef: {fileID: 0}
+  CurPlayerObject: {fileID: 0}
+--- !u!135 &9011582713448296226
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7985690232314836913}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 54
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8043797367611985725
 GameObject:
   m_ObjectHideFlags: 0
@@ -16740,6 +16755,7 @@ GameObject:
   - component: {fileID: 5970977000286028691}
   - component: {fileID: 2587638718440895806}
   - component: {fileID: 7172738113155311375}
+  - component: {fileID: 7252334293410142793}
   m_Layer: 0
   m_Name: SM_Stage_Skirt_4
   m_TagString: Untagged
@@ -16812,3 +16828,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7252334293410142793
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8043797367611985725}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1740932771204833318, guid: b12c4ee63865c364f8ab96bcd182f23d, type: 3}
