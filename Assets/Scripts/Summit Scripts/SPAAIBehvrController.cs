@@ -24,7 +24,7 @@ public class SPAAIBehvrController : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(PerformAction());
+        //StartCoroutine(PerformAction());
     }
 
     public IEnumerator PerformAction()

@@ -4,11 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using VLB_Samples;
 
 public class SPAAIEmoteController : MonoBehaviour
 {
     public RuntimeAnimatorController npcController;
-    public float SingleAnimPlayTime = 5f;
     public string CurrDanceAnimName;
     public List<string> AnimPlayList = new List<string>();
     public List<float> AnimPlayTimer = new List<float>();
@@ -17,8 +17,8 @@ public class SPAAIEmoteController : MonoBehaviour
     [SerializeField] SPAAIBehvrController spaAIBhvrController;
     [SerializeField] NpcMovementController npcMC;
     [SerializeField] Animator animationController;
-    private GameObject spawnCharacterObjectRemote;
-    private Coroutine emotCoroutine;
+    GameObject spawnCharacterObjectRemote;
+    Coroutine emotCoroutine;
     string emoteName;
     string emoteBundleUrl;
     string emoteBundlePath;
@@ -34,6 +34,7 @@ public class SPAAIEmoteController : MonoBehaviour
     {
         if (!npcMC.isMoving)
         {
+            int _inValidAnimCount = 0;
             while (KeepLoopingEmotes)
             {
                 for (int i = 0; i < AnimPlayList.Count; i++)
@@ -96,7 +97,7 @@ public class SPAAIEmoteController : MonoBehaviour
                                     }
                                     catch (Exception)
                                     {
-                                        //continue;
+                                        continue;
                                         throw;
                                     }
                                 }
@@ -108,13 +109,14 @@ public class SPAAIEmoteController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogError("Skipped animation as not found in emotes list: " + AnimPlayList[i]);
+                        _inValidAnimCount++;
                         continue;
                     }
-                    if (i >= AnimPlayList.Count)
-                    {
-                        i = 0;
-                    }
+                }
+                if (_inValidAnimCount >= AnimPlayList.Count)
+                {
+                    Debug.LogError("Provided Animation names are incorrect or not found in emotes list");
+                    KeepLoopingEmotes = false;
                 }
             }
             if (!KeepLoopingEmotes)
@@ -125,6 +127,7 @@ public class SPAAIEmoteController : MonoBehaviour
                 if (emotCoroutine != null)
                     StopCoroutine(emotCoroutine);
 
+                CheckIfAnimationListUpdated();
                 animationController.runtimeAnimatorController = npcController;
                 yield return new WaitForSeconds(1f);
                 spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
@@ -133,7 +136,7 @@ public class SPAAIEmoteController : MonoBehaviour
             //Resources.UnloadUnusedAssets();
             //int rand;
             //rand = UnityEngine.Random.Range(0, (EmoteAnimationHandler.Instance.emoteAnim.Count > 10 ? 10 : EmoteAnimationHandler.Instance.emoteAnim.Count)); // EmoteAnimationHandler.Instance.emoteAnim.Count
-                                                                                                                                                             //Debug.Log("<color=red> rand: " + rand + "</color>");
+            //Debug.Log("<color=red> rand: " + rand + "</color>");
         }
     }
 
@@ -145,11 +148,11 @@ public class SPAAIEmoteController : MonoBehaviour
         if (assetBundle == null)
         {
             Debug.Log("Failed to load AssetBundle!");
-                spaAIBhvrController.isPerformingAction = false;
-                if (spaAIBhvrController.ActionCoroutine != null)
-                    StopCoroutine(spaAIBhvrController.ActionCoroutine);
-                spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
-                yield break;
+            spaAIBhvrController.isPerformingAction = false;
+            if (spaAIBhvrController.ActionCoroutine != null)
+                StopCoroutine(spaAIBhvrController.ActionCoroutine);
+            spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+            yield break;
         }
         else
         {
@@ -211,6 +214,17 @@ public class SPAAIEmoteController : MonoBehaviour
         }
     }
 
+    void CheckIfAnimationListUpdated()
+    {
+        for (int i = 0; i < AnimPlayList.Count; i++)
+        {
+            if (SerachForEmoteWithName(AnimPlayList[i]))
+            {
+                KeepLoopingEmotes = true; 
+                break;
+            }
+        }
+    }
 
     void StopAiEmote()
     {
@@ -219,12 +233,12 @@ public class SPAAIEmoteController : MonoBehaviour
         animationController.SetBool("IsEmote", false);
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
-            spaAIBhvrController.isPerformingAction = false;
+        spaAIBhvrController.isPerformingAction = false;
 
-            if (spaAIBhvrController.ActionCoroutine != null)
-                StopCoroutine(spaAIBhvrController.ActionCoroutine);
+        if (spaAIBhvrController.ActionCoroutine != null)
+            StopCoroutine(spaAIBhvrController.ActionCoroutine);
 
-            spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+        spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
     }
 
     bool SerachForEmoteWithName(string _emoteName)
