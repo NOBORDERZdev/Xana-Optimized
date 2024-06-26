@@ -7,9 +7,7 @@ using static RegisterAsCompanyEmails;
 
 public class NotificationTokenApiHandler : MonoBehaviour
 {
-    // Update user Token API
-    //https://api-test.xana.net/toyotaAichiWorlds/save-user-token
-    private const int thaRoomId = 4;     // Home cosulting room Id in Toyota World
+    private int _thaRoomId;
     [SerializeField] int thaPageNumber;
     [SerializeField] int thaPageSize;
 
@@ -17,6 +15,14 @@ public class NotificationTokenApiHandler : MonoBehaviour
     private void Start()
     {
         FB_Notification_Initilizer.Instance.onReceiveToken += SendTokenToWeb;
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            _thaRoomId = 2;
+        }
+        else
+        {
+            _thaRoomId = 4;
+        }
     }
     private void OnDisable()
     {
@@ -33,7 +39,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
         url.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaNotificationApi);
 
         WWWForm form = new WWWForm();
-        form.AddField("worldId", thaRoomId);
+        form.AddField("worldId", _thaRoomId);
         form.AddField("email", FB_Notification_Initilizer.Instance.toyotaUserEmail);
         form.AddField("userToken", token);
 
@@ -55,7 +61,7 @@ public class NotificationTokenApiHandler : MonoBehaviour
     private async void GetUpdatedToken()
     {
         StringBuilder ApiURL = new StringBuilder();
-        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + thaRoomId + "/" + thaPageNumber + "/" + thaPageSize);
+        ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaRoomId + "/" + thaPageNumber + "/" + thaPageSize);
         //Debug.Log("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {

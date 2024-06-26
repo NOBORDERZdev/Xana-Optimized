@@ -58,6 +58,7 @@ public class FB_PushNotificationSender : MonoBehaviour
             {
                 // Debug.Log("Notification sent successfully!");
             }
+            www.Dispose();
         }
     }
 }
