@@ -31,14 +31,13 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject FirstPersonCam;
     public Button RotateBtn;
     public GameObject JoyStick;
-    public int RoomMaxPlayerCount = 0;
     public int PlayerCount = 0;
     public float MonitorDistance;
     //MoveWhileDancing add kamran
     public GameObject landscapeMoveWhileDancingButton;
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
-
+    public QualityManager QualityManager;
     // Start is called before the first frame update
     void Awake()
     {
@@ -96,7 +95,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         instance = this;
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
+            //RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);
             if (PhotonNetwork.CurrentRoom != null)
             {
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
@@ -109,7 +108,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //}
         else
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit);
+            //RoomMaxPlayerCount = ConstantsHolder.xanaConstants.userLimit;
             if (PhotonNetwork.CurrentRoom != null)
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         }
@@ -117,7 +116,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         {
             if (instance.totalCounter != null)
             {
-                totalCounter.text = totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
+                totalCounter.text = totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
       
@@ -319,7 +318,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
+                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
 
                     //if (ConstantsHolder.xanaConstants.isCameraMan)
                     //{
@@ -343,7 +342,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
+                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit + 5;
                 }
                 //else
                 //{

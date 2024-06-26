@@ -49,6 +49,25 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     }
     private void Start()
     {
+        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
+        {
+            this.gameObject.AddComponent<Speaker>();
+        }
+
+        if (ConstantsHolder.isPenguin)
+            return;
+
+        if (ConstantsHolder.isFixedHumanoid)
+        {
+            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[1] = XANASummitDataContainer.fixedAvatarJson as object;
+            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
+
+            CallRpcInvoke();
+
+            return;
+        }
+
         if (this.GetComponent<PhotonView>().IsMine)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
@@ -56,10 +75,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
             Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
             //CallRpcInvoke();
-        }
-        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
-        {
-            this.gameObject.AddComponent<Speaker>();
         }
     }
 
@@ -93,18 +108,17 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 otherPlayer = MutiplayerController.instance.playerobjects[j].GetComponent<AvatarController>();
                 CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
-            
-            //otherPlayer._CharData = _CharacterData;
-            if (IsNFTCharacter)
-            {
-                bodyparts.head.materials[2].SetInt("_Active", 0);
-                bodyparts.body.materials[0].SetInt("_Active", 0);
 
-                //extra blendshape added to character to build muscles on Character
-                bodyparts.head.SetBlendShapeWeight(54, 100);
-                bodyparts.body.SetBlendShapeWeight(0, 100);
+                if (IsNFTCharacter)
+                {
+                    bodyparts.head.materials[2].SetInt("_Active", 0);
+                    bodyparts.body.materials[0].SetInt("_Active", 0);
 
-                bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
+                    //extra blendshape added to character to build muscles on Character
+                    bodyparts.head.SetBlendShapeWeight(54, 100);
+                    bodyparts.body.SetBlendShapeWeight(0, 100);
+
+                    bodyparts.GetComponent<SwitchToBoxerAvatar>().OnNFTEquipShaderUpdate();
 
                 }
 
@@ -112,14 +126,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 {
                     for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                     {
-
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
                             otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
-                            //CharacterHandler.instance.ActivateAvatarByGender(_CharacterData.gender);
-                            //bodyparts.SetAvatarByGender(_CharacterData.gender);
                             
-
                             if (_CharacterData.avatarType == null || _CharacterData.avatarType == "OldAvatar")
                             {
                                 float _rand = UnityEngine.Random.Range(0.1f, 2f);
@@ -177,12 +187,12 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                     otherPlayer.WearDefaultItem("Hair", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                 }
-                if (_CharacterData.charactertypeAi == true) 
+                if (_CharacterData.charactertypeAi == true)
                 {
                     ApplyAIData(_CharacterData, bodyparts);
                 }
                 bodyparts.LoadBlendShapes(_CharacterData, otherPlayer.gameObject); // Load BlendShapes
-                
+
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
                 //{
                 //    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableTexture(_CharacterData.eyeTextureName, otherPlayer.gameObject));
@@ -395,26 +405,26 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 if (itemtype.Contains("Hair"))
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for hair");
-                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
+                        //  print("AddressableDownloader.Instance found for hair");
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), hairColor, true, true));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
                     }
                 }
                 else
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for other objects");
+                        //  print("AddressableDownloader.Instance found for other objects");
                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), Color.clear));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
                     }
                 }
             }
@@ -423,7 +433,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 // If Error occur in Downloading 
                 // Then wear Default
                 applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
-               // print("Exception : " + e);
+                // print("Exception : " + e);
             }
         }
         else
@@ -537,7 +547,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     UnStichItem("Hair");
             }
             else
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(), _CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)

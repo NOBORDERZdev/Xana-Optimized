@@ -37,7 +37,7 @@ public class ConstantsHolder : MonoBehaviour
     public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
-    public string userLimit;
+    public static int userLimit;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
@@ -143,6 +143,9 @@ public class ConstantsHolder : MonoBehaviour
     public static bool TempDiasableMultiPartPhoton = false;
     public static bool DisableFppRotation = false;
     public static int domeId;
+    public static bool isPenguin;
+    public static bool isFixedHumanoid;
+
     public string r_EmoteStoragePersistentPath
     {
         get

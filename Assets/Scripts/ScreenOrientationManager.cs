@@ -109,10 +109,12 @@ public class ScreenOrientationManager : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
 
-        if (ArrowManager.Instance)
+        if (ArrowManager.Instance && ConstantsHolder.isPenguin)
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
             AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
         }
 
         for (int i = 0; i < landscapeObj.Count; i++)
@@ -121,7 +123,7 @@ public class ScreenOrientationManager : MonoBehaviour
             potraitObj[i].SetActive(isPotrait);
         }
 
-       ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
+       
     }
 
     public void ChangeOrientation_editor()

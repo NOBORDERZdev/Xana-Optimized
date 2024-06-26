@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2600889308467150397}
+  - component: {fileID: 1170631735}
   m_Layer: 0
   m_Name: Mall
   m_TagString: Untagged
@@ -23,9 +24,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2600889308467150398}
-  m_LocalRotation: {x: -0.5000014, y: -0.4999987, z: -0.49999842, w: 0.5000016}
+  m_LocalRotation: {x: -0.5, y: -0.5, z: -0.5, w: 0.5}
   m_LocalPosition: {x: -222.60002, y: -21.87891, z: 133.61316}
-  m_LocalScale: {x: 0.9, y: 0.9000004, z: 0.9000004}
+  m_LocalScale: {x: 1, y: 1, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5630356659895758691}
@@ -36,6 +37,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -90}
+--- !u!114 &1170631735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2600889308467150398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: Mall
+  objectPriority: 0
 --- !u!1 &3472537460534733239
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +393,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7187237597358547656}
-  m_Mesh: {fileID: -9146618070568788744, guid: 397b9a6db27e6f44e86d0384e67b8541, type: 3}
+  m_Mesh: {fileID: 2850970356765291603, guid: 397b9a6db27e6f44e86d0384e67b8541, type: 3}
 --- !u!23 &5437297289342739256
 MeshRenderer:
   m_ObjectHideFlags: 0
