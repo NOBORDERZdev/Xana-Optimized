@@ -348,7 +348,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             player.GetComponent<StepsManager>().isplayer = true;
         }
-        GetComponent<PostProcessManager>().SetPostProcessing();
+        //GetComponent<PostProcessManager>().SetPostProcessing();
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
         
@@ -379,7 +379,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = false;
         }
-        StartCoroutine(VoidCalculation());
+     //   StartCoroutine(VoidCalculation());
     
 
         if (ConstantsHolder.xanaConstants.isCameraMan)
@@ -428,9 +428,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
 
         // Firebase Event for Join World
-        Debug.Log("Player Spawn Completed --  Join World");
+       /* Debug.Log("Player Spawn Completed --  Join World");
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);*/
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
