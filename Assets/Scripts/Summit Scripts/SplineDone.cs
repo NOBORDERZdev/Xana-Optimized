@@ -25,7 +25,7 @@ public class SplineDone : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
-        splineLength = GetSplineLength(0.0005f);
+        splineLength = GetSplineLength(0.001f);
         SetupPointList();
     }
 
@@ -119,14 +119,14 @@ public class SplineDone : MonoBehaviour {
         }
         return closestPoint;
     }
-
+    float previoust = 0;
     public Vector3 GetPositionAtUnits(float unitDistance, float stepSize = .0005f) {
         float splineUnitDistance = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
-
+        if (previoust >= 0) { previoust = 0; }
         float incrementAmount = stepSize;
-        for (float t = 0; t < 1f; t += incrementAmount) {
+        for (float t = previoust; t < 1f; t += incrementAmount) {
             splineUnitDistance += Vector3.Distance(lastPosition, GetPositionAt(t));
 
             lastPosition = GetPositionAt(t);
@@ -139,6 +139,7 @@ public class SplineDone : MonoBehaviour {
                 return GetPositionAt(t - (remainingDistance / splineLength));
                 */
                 Vector3 direction = (GetPositionAt(t) - GetPositionAt(t - incrementAmount)).normalized;
+                previoust = t;
                 return GetPositionAt(t) + direction * (unitDistance - splineUnitDistance);
             }
         }
@@ -307,7 +308,7 @@ public class SplineDone : MonoBehaviour {
         }
     }
     public void SetDirty() {
-        splineLength = GetSplineLength(0.0005f);
+        splineLength = GetSplineLength(0.001f);
 
         UpdatePointList();
 

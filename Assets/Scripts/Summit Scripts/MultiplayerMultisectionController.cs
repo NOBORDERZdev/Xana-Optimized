@@ -306,14 +306,14 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         {
             LFF.LoadFile();
         }
-        else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false;StartCoroutine(DestroyPlayerDelay());  } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
+        else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false;DestroyPlayerDelay();  } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
       
         
     }
 
-    IEnumerator DestroyPlayerDelay()
+    async void DestroyPlayerDelay()
     {
-        yield return new WaitForSeconds(2);
+        await  new WaitForSeconds(2);
         foreach (var item in playerobjectRoom)
         {
             DestroyImmediate(item);

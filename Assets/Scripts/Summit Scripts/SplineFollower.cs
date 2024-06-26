@@ -72,8 +72,8 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
                 maxMoveAmount = 1f;
                 break;
             case MovementType.Units:
-                maxMoveAmount = spline.GetSplineLength(0.0005f);
-                Debug.Log("Spline Length " + spline.GetSplineLength(0.0005f));
+                maxMoveAmount = spline.GetSplineLength(0.001f);
+                Debug.Log("Spline Length " + spline.GetSplineLength(0.001f));
                 break;
         }
         // syncdata(moveAmount);
@@ -126,16 +126,16 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
         {
             CarNavigationManager.instance.Cars.Add(view.ViewID, view);
             spline = SplineDone.Instance;
-            maxMoveAmount = spline.GetSplineLength(0.0005f);
+            maxMoveAmount = spline.GetSplineLength(0.001f);
             NeedToAddReference = false;
         }
         if (spline == null || !PhotonNetwork.IsMasterClient) { return; }
       
       
-        if (checkforrigidbody)
+     /*   if (checkforrigidbody)
         {
             if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } checkforrigidbody = false;
-        }
+        }*/
         moveAmount = (moveAmount + (Time.deltaTime * speed)) % maxMoveAmount;
 
         switch (movementType) {
@@ -147,9 +147,9 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
                 transform.forward = new Vector3(forw.x, transform.position.y, forw.z);
                 break;
             case MovementType.Units:
-                var pose = spline.GetPositionAtUnits(moveAmount,.0005f);
+                var pose = spline.GetPositionAtUnits(moveAmount,.001f);
                 transform.position = new Vector3(pose.x, transform.position.y, pose.z);
-                var forwa = spline.GetForwardAtUnits(moveAmount,.0005f);
+                var forwa = spline.GetForwardAtUnits(moveAmount,.001f);
                 transform.forward = forwa; //new Vector3(forwa.x, transform.position.y, forwa.z);
                 break;
         }

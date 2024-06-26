@@ -313,10 +313,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
       
         Destroy(player);
         AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = null;
-       StartCoroutine(SpawnPlayerSection());
+       SpawnPlayerSection();
         
     }
-    public IEnumerator SpawnPlayerSection()  // Created this for summit
+    public async void SpawnPlayerSection()  // Created this for summit
     {
         if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
         {
@@ -423,7 +423,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         /// </summary>
         //ActivateNpcChat();
 
-        yield return null;
+      
     }
 
     public IEnumerator SpawnPlayer()
@@ -605,8 +605,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
-            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);
+            // Instantiate Female Avatar
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
+            for (int i = 0; i < int.Parse(ConstantsHolder.xanaConstants.userLimit); i++)
+            {
+
+                PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);
+            }
         }
     }
 
