@@ -324,7 +324,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public void SetPlayer()
     {
       
-        Destroy(player);
+
         AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = null;
        SpawnPlayerSection();
         

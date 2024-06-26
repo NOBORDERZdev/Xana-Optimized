@@ -10,15 +10,26 @@ public class SectorTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "PhotonLocalPlayer")
-            if(other.GetComponent<PhotonView>().IsMine)
-            SectorManager.Instance.Triggered();
+        if (PhotonNetwork.InRoom)
+        {
+            if (other.gameObject.tag == "PhotonLocalPlayer")
+            {
+                if (other.GetComponent<PhotonView>().IsMine)
+                {
+                    SectorManager.Instance.Triggered();
+                }
+            }
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.gameObject.tag == "PhotonLocalPlayer")
+        if (other.gameObject.tag == "PhotonLocalPlayer")
+        {
             if (other.GetComponent<PhotonView>().IsMine)
+            {
                 SectorManager.Instance.TriggeredExit(gameObject.name);
+            }
+        }
     }
 }
