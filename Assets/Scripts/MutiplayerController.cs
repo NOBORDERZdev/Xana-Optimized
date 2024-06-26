@@ -34,7 +34,7 @@ namespace Photon.Pun.Demo.PunBasics
     public class MutiplayerController : MultiplayerMultisectionController
     {
         // Comment this for parent inherit
-       /* public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
+     /*   public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
         public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
@@ -68,7 +68,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
         string gameVersion = "14";
-        #endregion
+        #endregion*/
 
         #region MonoBehaviour CallBacks
 

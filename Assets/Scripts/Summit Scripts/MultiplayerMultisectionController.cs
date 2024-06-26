@@ -263,7 +263,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
             }
             while (roomNames.Contains(roomName));
             if (!isWheel) { 
-                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(int.Parse(ConstantsHolder.xanaConstants.userLimit)), new TypedLobby(CurrLobbyName, LobbyType.Default));
+                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit), new TypedLobby(CurrLobbyName, LobbyType.Default));
                 }
             else
             {
