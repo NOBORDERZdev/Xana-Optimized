@@ -112,6 +112,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
+        gameplayEntityLoader.addressableSceneName = null;
         WorldItemView.m_EnvName = "Builder";
         ConstantsHolder.xanaConstants.EnviornmentName = "Builder";
         AsyncOperation handle = SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);

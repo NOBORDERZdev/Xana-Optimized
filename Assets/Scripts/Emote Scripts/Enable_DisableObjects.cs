@@ -38,8 +38,10 @@ public class Enable_DisableObjects : MonoBehaviour
 
     private void OnPlayerWalking()
     {
-        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
+        if (ConstantsHolder.isPenguin)
+            return;
 
+        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
         {
             btns.interactable = false;
             ChatInputField.interactable = false;
@@ -54,8 +56,10 @@ public class Enable_DisableObjects : MonoBehaviour
 
     private void OnPlayerIdle()
     {
-        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
+        if (ConstantsHolder.isPenguin)
+            return;
 
+        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
         {
             btns.interactable = true;
             ChatInputField.interactable = true;

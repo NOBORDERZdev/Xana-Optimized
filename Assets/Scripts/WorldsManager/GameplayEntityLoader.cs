@@ -1125,7 +1125,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public void SetAddressableSceneActive()
     {
         string temp = addressableSceneName;
-        if (temp.Contains(" Astroboy x Tottori Metaverse Museum"))
+        if (!string.IsNullOrEmpty(temp) &&temp.Contains(" Astroboy x Tottori Metaverse Museum"))
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }

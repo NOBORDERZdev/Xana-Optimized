@@ -864,6 +864,9 @@ public class PlayerController : MonoBehaviour
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
 
+        if (!ReferencesForGamePlay.instance.m_34player)
+            return;
+
         SpecialItemDoubleJump();
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
