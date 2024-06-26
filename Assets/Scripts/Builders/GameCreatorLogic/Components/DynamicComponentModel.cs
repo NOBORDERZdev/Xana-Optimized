@@ -103,6 +103,7 @@ public class ItemData
     public QuizComponentData quizComponentData;
     public WarpFunctionComponentData warpFunctionComponentData;
     public BlindComponentData blindComponentData;
+    public PhysicsComponentData physicsComponentData;
     #endregion
 
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
@@ -172,6 +173,7 @@ public class ItemData
         this.quizComponentData = new QuizComponentData();
         this.warpFunctionComponentData = new WarpFunctionComponentData();
         this.blindComponentData = new BlindComponentData();
+        this.physicsComponentData = new PhysicsComponentData();
     }
 
     public ItemData(ItemData itemData)
@@ -241,6 +243,7 @@ public class ItemData
         this.quizComponentData = new QuizComponentData(itemData.quizComponentData);
         this.warpFunctionComponentData = new WarpFunctionComponentData(itemData.warpFunctionComponentData);
         this.blindComponentData = new BlindComponentData(itemData.blindComponentData);
+        this.physicsComponentData = new PhysicsComponentData(itemData.physicsComponentData);
     }
 }
 
@@ -709,6 +712,9 @@ namespace Models
     {
         public bool isActive;
         public int forceAmountValue;
+        public bool forceApplyOnAvatar;
+        public bool forceApplyOnFixedDirection;
+        public int fixedForceonYAxisValue;
         public Vector3 forceDirection;
         public int directionNumber;
 
@@ -716,8 +722,11 @@ namespace Models
         {
             isActive = false;
             forceAmountValue = 50;
+            forceApplyOnAvatar = false;
             forceDirection = new Vector3(0f, 0f, -1f);
             directionNumber = 0;
+            forceApplyOnFixedDirection = true;
+            fixedForceonYAxisValue = 0;
         }
 
         public void Reset()
@@ -725,15 +734,74 @@ namespace Models
             Debug.Log("Reset");
             isActive = false;
             forceAmountValue = 50;
+            forceApplyOnAvatar = false;
             forceDirection = new Vector3(0f, 0f, -1f);
             directionNumber = 0;
+            forceApplyOnFixedDirection = true;
+            fixedForceonYAxisValue = 0;
         }
         public AddForceComponentData(AddForceComponentData data)
         {
             isActive = data.isActive;
             forceAmountValue = data.forceAmountValue;
+            forceApplyOnAvatar = data.forceApplyOnAvatar;
             forceDirection = data.forceDirection;
             directionNumber = data.directionNumber;
+            forceApplyOnFixedDirection = data.forceApplyOnFixedDirection;
+            fixedForceonYAxisValue = data.fixedForceonYAxisValue;
+        }
+    }
+
+    [System.Serializable]
+    public class PhysicsComponentData
+    {
+        public bool isActive;
+        public int physicsMassValue;
+        public bool physicsUseGravity;
+        public bool physicsFreezePosX;
+        public bool physicsFreezePosY;
+        public bool physicsFreezePosZ;
+        public bool physicsFreezeRotX;
+        public bool physicsFreezeRotY;
+        public bool physicsFreezeRotZ;
+
+        public PhysicsComponentData()
+        {
+            isActive = false;
+            physicsMassValue = 50;
+            physicsUseGravity = true;
+            physicsFreezePosX = false;
+            physicsFreezePosY = false;
+            physicsFreezePosZ = false;
+            physicsFreezeRotX = false;
+            physicsFreezeRotY = false;
+            physicsFreezeRotZ = false;
+        }
+
+        public void Reset()
+        {
+            Debug.Log("Reset");
+            isActive = false;
+            physicsMassValue = 50;
+            physicsUseGravity = true;
+            physicsFreezePosX = false;
+            physicsFreezePosY = false;
+            physicsFreezePosZ = false;
+            physicsFreezeRotX = false;
+            physicsFreezeRotY = false;
+            physicsFreezeRotZ = false;
+        }
+        public PhysicsComponentData(PhysicsComponentData data)
+        {
+            isActive = data.isActive;
+            physicsMassValue = data.physicsMassValue;
+            physicsUseGravity = data.physicsUseGravity;
+            physicsFreezePosX = data.physicsFreezePosX;
+            physicsFreezePosY = data.physicsFreezePosY;
+            physicsFreezePosZ = data.physicsFreezePosZ;
+            physicsFreezeRotX = data.physicsFreezeRotX;
+            physicsFreezeRotY = data.physicsFreezeRotY;
+            physicsFreezeRotZ = data.physicsFreezeRotZ;
         }
     }
 
