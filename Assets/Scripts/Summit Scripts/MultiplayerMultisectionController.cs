@@ -382,7 +382,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
 
     public void Ontriggered(string SectorName,bool isWheel = false)
     {
-        if (SectorName == this.SectorName|| (disableSector && !isWheel)) return;
+        if (SectorName == this.SectorName|| (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
       
         isShifting = true;
         var player = ReferencesForGamePlay.instance.m_34player;
