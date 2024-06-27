@@ -264,6 +264,13 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(blindComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
+        PhysicsComponentData physicsComponentData = itemData.physicsComponentData;
+        if (physicsComponentData.isActive)
+        {
+            PhysicsComponent itemComponent = gameObject.AddComponent<PhysicsComponent>();
+            itemComponent.Init(physicsComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);
