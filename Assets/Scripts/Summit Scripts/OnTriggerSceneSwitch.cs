@@ -10,9 +10,17 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public TMPro.TextMeshPro textMeshPro;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag=="PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+        if (PhotonNetwork.InRoom)
         {
-            TriggerSceneLoading();
+            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+            {
+                if (ConstantsHolder.MultiSectionPhoton)
+                {
+                   ConstantsHolder.DiasableMultiPartPhoton = true;
+                }
+
+                TriggerSceneLoading();
+            }
         }
     }
 
