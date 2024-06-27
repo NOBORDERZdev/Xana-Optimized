@@ -19,6 +19,7 @@ using Metaverse;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
+using Photon.Voice.PUN;
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -31,10 +32,10 @@ namespace Photon.Pun.Demo.PunBasics
     /// <summary>
     /// Launch manager. Connect, join a random room or create one if none or all full.
     /// </summary>
-    public class MutiplayerController : MultiplayerMultisectionController
+    public class MutiplayerController : MonoBehaviourPunCallbacks
     {
         // Comment this for parent inherit
-     /*   public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
+        public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
         public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
         public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
 
@@ -68,11 +69,24 @@ namespace Photon.Pun.Demo.PunBasics
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
         string gameVersion = "14";
-        #endregion*/
+        #endregion
 
+        #region Multtisection Fields
+        /// <summary>
+        /// True when player is changhing section.
+        /// </summary>
+        public bool isShifting;
+
+        [Space]
+        [Header("PhotonSectors")]
+        private List<GameObject> playerobjectRoom;
+        private string SectorName = "GrassLand";
+        public bool disableSector;
+        private bool isWheel;
+        #endregion
         #region MonoBehaviour CallBacks
 
-       public override void Awake()
+        public  void Awake()
         {
         
             if (instance == null)
@@ -102,7 +116,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 DestroyImmediate(this);
             }
-            base.Awake();
+       
         }
         private void Start()
         {
@@ -133,13 +147,9 @@ namespace Photon.Pun.Demo.PunBasics
         /// - if not yet connected, Connect this application instance to Photon Cloud Network
         /// </summary>
         /// 
-        public override void Connect(string lobbyN)
+        public  void Connect(string lobbyN)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.Connect(lobbyN);
-                return;
-            }
+           
 
 
 
@@ -185,11 +195,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public override void OnConnectedToMaster()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                 base.OnConnectedToMaster();
-                return;
-            }
+          
             connectionState = ServerConnectionStates.ConnectedToServer;
             if (working == ScenesList.MainMenu)
                 return;
@@ -204,11 +210,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinedLobby()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnJoinedLobby();
-                return;
-            }
+        
             Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name+"--"+Time.time);
             CheckRoomAvailability();
         }
@@ -217,11 +219,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnLeftLobby()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnLeftLobby();
-                return;
-            }
+         
             if (working == ScenesList.AddressableScene)
             {
                 working = ScenesList.MainMenu;
@@ -234,11 +232,6 @@ namespace Photon.Pun.Demo.PunBasics
         bool roomListUpdated = false;
         public override void OnRoomListUpdate(List<RoomInfo> roomList)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnRoomListUpdate(roomList);
-                return;
-            }
             availableRoomList = roomList;
             roomListUpdated = true;
         }
@@ -294,8 +287,19 @@ namespace Photon.Pun.Demo.PunBasics
                 foreach (RoomInfo info in availableRoomList)
                 {
                     roomNames.Add(info.Name);
+                   
                     if (info.PlayerCount < info.MaxPlayers)
                     {
+                        if(ConstantsHolder.MultiSectionPhoton)
+                        {
+                            if (info.CustomProperties["Sector"] != null)
+                            {
+                                var sector = (string)info.CustomProperties["Sector"];
+                                if (sector != SectorName) { continue; }
+                            }
+                            else { continue; }
+                        }
+
                         CurrRoomName = info.Name;
                         joinedRoom = PhotonNetwork.JoinRoom(CurrRoomName);
                         return;
@@ -311,7 +315,16 @@ namespace Photon.Pun.Demo.PunBasics
                 }
                 while (roomNames.Contains(roomName));
 
-                PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
+                if (ConstantsHolder.MultiSectionPhoton    &&  !isWheel)
+                {
+                    PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
+                }
+                else
+                {
+                    Debug.LogError("Joining room   " + SectorName);
+                    PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(4, ConstantsHolder.MultiSectionPhoton), new TypedLobby(CurrLobbyName, LobbyType.Default));
+                }
+             //   PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
         }
 
@@ -324,16 +337,23 @@ namespace Photon.Pun.Demo.PunBasics
             }
             while (roomNames.Contains(roomName));
 
-            PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
+            PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(ConstantsHolder.userLimit), new TypedLobby(CurrLobbyName, LobbyType.Default));
         }
 
 
-        public RoomOptions RoomOptionsRequest()
+        public RoomOptions RoomOptionsRequest(int Maxplayer,bool MultiSectionPhoton = false)
         {
             roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = (byte)ConstantsHolder.userLimit;
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
+
+            if (MultiSectionPhoton)
+            {
+                roomOptions.CustomRoomPropertiesForLobby = new string[] { "Sector" };
+                Debug.Log("Joining Sector  " + SectorName);
+                roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "Sector", SectorName } };
+            }
 
             roomOptions.PublishUserId = true;
             roomOptions.CleanupCacheOnLeave = true;
@@ -342,32 +362,22 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnCreatedRoom()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnCreatedRoom();
-                return;
-            }
+         
             print("OnCreatedRoom called");
         }
 
         public override void OnJoinedRoom()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnJoinedRoom();
-                return;
-            }
+           
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
-            LFF.LoadFile();
+            if (!isShifting)
+            {
+                LFF.LoadFile();
+            }
+            else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; DestroyPlayerDelay(); }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                Debug.Log("OnPlayerEnteredRoom");
-                base.OnPlayerEnteredRoom(newPlayer);
-                return;
-            }
             if (newPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
@@ -375,11 +385,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnPlayerLeftRoom(otherPlayer);
-                return;
-            }
+          
             Debug.Log("OnPlayerLeft  ..... " + otherPlayer.NickName);
             if (otherPlayer.NickName == "XANA_XANA")
             {
@@ -396,11 +402,7 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnJoinRoomFailed(returnCode,message);
-                return;
-            }
+          
             GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
@@ -410,21 +412,13 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnDisconnected(cause);
-                return;
-            }
+            
             playerobjects.Clear();
         }
 
-        public override void Disconnect()
+        public  void Disconnect()
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.Disconnect();
-                return;
-            }
+           
             PhotonNetwork.LeaveRoom();
             PhotonNetwork.LeaveLobby();
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, false, true);
@@ -432,26 +426,71 @@ namespace Photon.Pun.Demo.PunBasics
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.OnMasterClientSwitched(newMasterClient);
-                return;
-            }
+          
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.MasterClientSwitched(newMasterClient);
         }
         #endregion
 
 
-        public override void JoinRoomManually(string name)
+        public  void JoinRoomManually(string name)
         {
-            if (ConstantsHolder.MultiSectionPhoton) // Added for summit.
-            {
-                base.JoinRoomManually(name);
-                return;
-            }
+           
             PhotonNetwork.JoinRoom(name);
         }
+        async void DestroyPlayerDelay()
+        {
+            await new WaitForSeconds(2);
+            foreach (var item in playerobjectRoom)
+            {
+                DestroyImmediate(item);
+            }
+        }
 
+
+        #region Sector Management
+
+        public void Ontriggered(string SectorName, bool isWheel = false)
+        {
+            if (SectorName == this.SectorName || (disableSector && !isWheel) || ConstantsHolder.DiasableMultiPartPhoton) return;
+
+            isShifting = true;
+            var player = ReferencesForGamePlay.instance.m_34player;
+            Debug.Log("Triggering...." + SectorName);
+            this.SectorName = SectorName;
+            Debug.Log("Triggered...." + this.SectorName);
+            this.isWheel = isWheel;
+            Destroy(player.GetComponent<PhotonAnimatorView>());
+            Destroy(player.GetComponent<PhotonTransformView>());
+            Destroy(player.GetComponent<PhotonVoiceView>());
+            Destroy(player.GetComponent<PhotonView>());
+            foreach (var p in playerobjects)
+            {
+                Destroy(p.GetComponent<PhotonAnimatorView>());
+                Destroy(p.GetComponent<PhotonTransformView>());
+                Destroy(p.GetComponent<PhotonVoiceView>());
+                Destroy(p.GetComponent<PhotonView>());
+            }
+
+            PhotonNetwork.LeaveRoom();
+
+        }
+
+        public override void OnLeftRoom()
+        {
+            Debug.Log("OnLeftRoom  ..... " + PhotonNetwork.IsConnectedAndReady);
+
+
+            // PhotonNetwork.ConnectUsingSettings();
+            if (isShifting)
+            {
+                playerobjectRoom = new List<GameObject>(playerobjects);
+                playerobjects.Clear();
+                JoinLobby(CurrLobbyName);
+                CarNavigationManager.instance.Cars.Clear();
+            }
+        }
+
+        #endregion
     }
 }
