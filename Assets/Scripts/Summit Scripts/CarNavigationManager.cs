@@ -26,12 +26,12 @@ public class CarNavigationManager : MonoBehaviour
         instance = this;
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
        
        SummitEntityManager.instance.InstantiateCAR();
-        yield return new WaitForSeconds(2f);
-        MutiplayerController.instance.ADDReference?.Invoke();
+      /*  yield return new WaitForSeconds(2f);
+        MutiplayerController.instance.ADDReference?.Invoke();*/
     }
 
     public void StopCar(GameObject car)

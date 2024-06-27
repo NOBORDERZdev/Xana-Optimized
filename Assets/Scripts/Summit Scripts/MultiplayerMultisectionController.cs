@@ -15,7 +15,7 @@ using UnityEngine;
 public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
 {
 
-
+/*
     public ServerConnectionStates connectionState = ServerConnectionStates.NotConnectedToServer;
     public MatchMakingStates matchMakingState = MatchMakingStates.NoState;
     public NetworkStates internetState = NetworkStates.NotConnectedToInternet;
@@ -39,19 +39,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
 
     #endregion
 
-    #region Multtisection Fields
-    /// <summary>
-    /// True when player is changhing section.
-    /// </summary>
-    public bool isShifting;
-
-    [Space]
-    [Header("PhotonSectors")]
-    private List<GameObject> playerobjectRoom;
-    private string SectorName = "GrassLand" ;
-    public bool disableSector;
-    private bool isWheel;
-    #endregion
+  
 
     #region Private Fields
     /// <summary>
@@ -79,13 +67,13 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     #region MonoBehaviour CallBacks
 
 
-   /* protected virtual void Start()
+   *//* protected virtual void Start()
     {
         // Seperate the live and test environment
         string _LobbyName = APIBasepointManager.instance.IsXanaLive ? ("Live" + ConstantsHolder.xanaConstants.EnviornmentName) : ("Test" + ConstantsHolder.xanaConstants.EnviornmentName);
         Debug.Log("Lobby Name: " + _LobbyName);
         Connect(_LobbyName);
-    }*/
+    }*//*
     /// <summary>
     /// MonoBehaviour method called on GameObject by Unity during early initialization phase.
     /// </summary>
@@ -429,7 +417,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     }
 
 
-   
+   */
 }
 
 
