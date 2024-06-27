@@ -14,6 +14,11 @@ public class OnTriggerSceneSwitch : MonoBehaviour
         {
             if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
             {
+                if (ConstantsHolder.MultiSectionPhoton)
+                {
+                   ConstantsHolder.DiasableMultiPartPhoton = true;
+                }
+
                 TriggerSceneLoading();
             }
         }

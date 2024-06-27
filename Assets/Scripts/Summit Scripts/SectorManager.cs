@@ -21,11 +21,15 @@ public class SectorManager : MonoBehaviour
         {
             DestroyImmediate(this);  
         }
-        if(ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
             ConstantsHolder.MultiSectionPhoton = true;
         }
-        else ConstantsHolder.MultiSectionPhoton = false;
+        else {
+            ConstantsHolder.MultiSectionPhoton = false;
+            ConstantsHolder.DiasableMultiPartPhoton = false;
+            ConstantsHolder.TempDiasableMultiPartPhoton = false;
+        }
     }
 
     public void Triggered()

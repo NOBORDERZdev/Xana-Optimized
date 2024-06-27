@@ -360,6 +360,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
     {
         Debug.Log("Disconnected");
         playerobjects.Clear();
+        CarNavigationManager.instance.Cars.Clear();
         ConstantsHolder.DisableFppRotation = false;
     }
 

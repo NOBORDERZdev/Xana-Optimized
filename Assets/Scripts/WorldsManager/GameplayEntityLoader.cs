@@ -428,15 +428,21 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
 
         // Firebase Event for Join World
-       /* Debug.Log("Player Spawn Completed --  Join World");
-        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
-        UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);*/
+        /* Debug.Log("Player Spawn Completed --  Join World");
+         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);*/
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
         //ActivateNpcChat();
 
-      
+        await new WaitForSeconds(1);
+        var controller = GameplayEntityLoader.instance.mainController.GetComponent<PlayerController>();
+        if (controller.isFirstPerson)
+        {
+            controller.DisablePlayerOnFPS();
+        }
+
     }
 
     public IEnumerator SpawnPlayer()
@@ -567,7 +573,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         /// </summary>
         //ActivateNpcChat();
         Debug.Log("this is called..........................");
-        yield return null;
+        yield return new WaitForSeconds(1);
+        var controller = GameplayEntityLoader.instance.mainController.GetComponent<PlayerController>();
+        if(controller.isFirstPerson)
+        {
+           controller.DisablePlayerOnFPS();
+        }
     }
 
     void SetPlayerCameraAngle()

@@ -151,6 +151,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         SceneManager.UnloadSceneAsync(existingSceneName);
 
         multiplayerController.Connect(sceneName);
+        ConstantsHolder.DiasableMultiPartPhoton = false;
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int sceneId)
     {
