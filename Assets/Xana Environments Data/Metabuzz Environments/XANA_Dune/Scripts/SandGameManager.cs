@@ -17,8 +17,8 @@ public class SandGameManager : MonoBehaviour
     [SerializeField] Transform startPoint;
     [SerializeField] Transform resetPoint;
     private Transform player;
-    [SerializeField] Transform mark;
-    [SerializeField] Transform board;
+    private Transform mark;
+    private Transform board;
 
     [SerializeField] ParticleSystem finishParticle1;
     [SerializeField] ParticleSystem finishParticle2;
@@ -116,7 +116,14 @@ public class SandGameManager : MonoBehaviour
     public void DisableSkating()
     {
         SetBoardOff();
+        uiMgr.TimerOn(false);
+
+        isStart = false;
+        timer = 0;
+        uiMgr.SetTimerText("00.00");
+        resetBtn.gameObject.SetActive(false);
         crabSpr.OnCrabStop();
+
     }
 
     IEnumerator InitRoutine()
@@ -267,6 +274,8 @@ public class SandGameManager : MonoBehaviour
             uiMgr.SetTimerText(timerFormat);
             yield return null;
         }
+
+        StopCoroutine(StartBoardingControl());
     }
 
     //[PunRPC]
@@ -294,7 +303,6 @@ public class SandGameManager : MonoBehaviour
         finishParticle1.Play();
         finishParticle2.Play();
         uiMgr.TimerOn(false);
-
         resetBtn.gameObject.SetActive(false);
         StartCoroutine(OnGameOver());
     }
@@ -462,7 +470,7 @@ public class SandGameManager : MonoBehaviour
     {
         SetPlayerPosition(resetPoint.position);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
 
         //playerInput.enabled = true;
     }

@@ -14,10 +14,10 @@ public class InputManager : MonoBehaviour
 
     [Tooltip("Rotation speed of the player")]
     public float rotationSpeed = 75.0f;
-    public float rotLimitAngle = 90f;
+    public float rotLimitAngle = 80f;
 
     [Tooltip("Amount of torque applied to 'lift' the player as they turn")]
-    public float turnLift = 750.0f;
+    public float turnLift = 300.0f;
 
     [Tooltip("Amount to artificially assist the player in staying upright")]
     public float uprightAssist = 1.0f;
