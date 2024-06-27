@@ -24,6 +24,11 @@ public class XLWorldInfo : MonoBehaviour
         imgVideo1x1.AddComponent<Button>();
         imgVideo1x1.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
     }
+    private void OnDisable()
+    {
+        DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+        imgVideo1x1.GetComponent<RawImage>().texture = null;
+    }
 
     // Update is called once per frame
     void Update()
