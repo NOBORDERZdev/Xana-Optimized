@@ -56,6 +56,7 @@ public class SectorManager : MonoBehaviour
 
     public IEnumerator WaitBeforeHandover(string Name)
     {
+        if(ConstantsHolder.DiasableMultiPartPhoton) {   yield break;    }
         while (ConstantsHolder.TempDiasableMultiPartPhoton==true)
         {
             yield return new WaitForSeconds(2);
