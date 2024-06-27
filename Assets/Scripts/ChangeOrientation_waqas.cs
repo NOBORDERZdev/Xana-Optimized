@@ -125,6 +125,15 @@ public class ChangeOrientation_waqas : MonoBehaviour
        ReferrencesForDynamicMuseum.instance.MainPlayerParent.GetComponent<PlayerControllerNew>().restJoyStick();
     }
 
+    public void EnableDefaultData()
+    {
+        for (int i = 0; i < landscapeObj.Count; i++)
+        {
+            landscapeObj[i].SetActive(!isPotrait);
+            potraitObj[i].SetActive(isPotrait);
+        }
+    }
+
     public void ChangeOrientation_editor()
     {
         isPotrait = !isPotrait;

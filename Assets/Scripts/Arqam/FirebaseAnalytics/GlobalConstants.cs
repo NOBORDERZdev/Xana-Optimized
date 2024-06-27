@@ -56,7 +56,9 @@ public class GlobalConstants
         URL_PMYLobby,
         URL_CRoom1,
         URL_CRoom2,
-        URL_Gallery
+        URL_Gallery,
+
+        SE_UU_Mobile_App_PMY
     }
 
     public static void SendFirebaseEvent(string eventName)

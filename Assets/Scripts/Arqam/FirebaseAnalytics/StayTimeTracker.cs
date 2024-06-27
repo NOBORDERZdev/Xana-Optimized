@@ -3,7 +3,6 @@ using System.Collections;
 using static GlobalConstants;
 using System;
 using PMY;
-using static PMY.PMY_VideoAndImage;
 
 public class StayTimeTracker : MonoBehaviour
 {

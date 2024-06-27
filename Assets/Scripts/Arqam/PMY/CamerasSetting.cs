@@ -1,8 +1,6 @@
 using Metaverse;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using static GlobalConstants;
 
 public class CamerasSetting : MonoBehaviour
 {
@@ -22,6 +20,9 @@ public class CamerasSetting : MonoBehaviour
 
     private void SetCamerasSetting()
     {
+        // send Space_Entry_UniqueUsers_Mobile_App
+        SendFirebaseEvent(FirebaseTrigger.SE_UU_Mobile_App_PMY.ToString());
+
         //if (sceneType.Equals(SceneType.Other))
         //{
         //    LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.3f;

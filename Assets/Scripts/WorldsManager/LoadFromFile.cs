@@ -85,6 +85,8 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
     private void Start()
     {
+        ChangeOrientation_waqas._instance.EnableDefaultData();
+
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             StartEventTimer();
