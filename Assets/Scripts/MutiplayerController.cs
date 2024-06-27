@@ -312,6 +312,7 @@ namespace Photon.Pun.Demo.PunBasics
                 do
                 {
                     roomName = PhotonNetwork.CurrentLobby.Name +"-Room:"+x.ToString();
+                    x++;
                 }
                 while (roomNames.Contains(roomName));
 
