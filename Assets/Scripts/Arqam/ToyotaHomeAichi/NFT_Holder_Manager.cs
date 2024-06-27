@@ -73,6 +73,8 @@ public class NFT_Holder_Manager : MonoBehaviour
             Extended_XCS.ChatScrollRect = _chatSystem.ChatScrollRect;
             Extended_XCS.InputFieldChat = _chatSystem.InputFieldChat;
         }
+        // send Space_Entry_UniqueUsers_Mobile_App
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.L_SE_UU_Mobile_App_THA.ToString());
     }
 
     public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
