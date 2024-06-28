@@ -31,7 +31,8 @@ public class CamerasSetting : MonoBehaviour
 
         // For TPC camera
         LoadFromFile.instance.PlayerCamera.m_Lens.FarClipPlane = 630;
-        LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.01f;
+        LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.1f;  //0.01
+ 
         // For selfie camera
         ArrowManager.Instance.slfieVirtualCam.m_Lens.FarClipPlane = 630;
         // For selfie shoot cameras
