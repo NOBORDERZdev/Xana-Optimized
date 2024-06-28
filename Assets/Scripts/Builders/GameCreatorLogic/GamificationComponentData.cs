@@ -422,7 +422,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //    return;
         //}
         print("!!!!!!! player count "+ Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + "!!!! ConstantsHolder.XanaPartyMaxPlayers" + ConstantsHolder.XanaPartyMaxPlayers);
-        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
+        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ReferencesForGamePlay.instance.ActivePlayerInCurrentLevel)//ConstantsHolder.XanaPartyMaxPlayers)
         {
             //if (PhotonNetwork.IsMasterClient)
             //{

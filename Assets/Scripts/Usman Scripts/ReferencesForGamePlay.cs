@@ -47,6 +47,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     [SerializeField] TMP_Text XANAPartyCounterText;
     private bool isCounterStarted = false;
 
+
+    private const string InLevelProperty = "InLevel";
+    public int ActivePlayerInCurrentLevel = 0;
     //[SerializeField] CanvasGroup PartyJump;
 
 
@@ -412,6 +415,47 @@ public class ReferencesForGamePlay : MonoBehaviour
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
             xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
         }
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        // Set custom properties to indicate that the player is in a level
+        Hashtable props = new Hashtable
+        {
+            { InLevelProperty, (levelName+XANAPartyManager.Instance.GameIndex) }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+
+        // Load the new level
+        PhotonNetwork.LoadLevel(levelName);
+    }
+
+    public void CheckActivePlayerInCurrentLevel()
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties.TryGetValue(InLevelProperty, out object isInLevel))
+            {
+                if (isInLevel != null)
+                {
+                    ActivePlayerInCurrentLevel++;
+                }
+            }
+        }
+    }
+
+    public void ResetActivePlayerStatusInCurrentLevel()
+    {
+        Hashtable props = new Hashtable
+        {
+            { InLevelProperty, null }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    public void ReduceActivePlayerCountInCurrentLevel()
+    {
+        ActivePlayerInCurrentLevel--;
     }
 
     public void MakeRoomPrivate()

@@ -298,6 +298,17 @@ namespace Photon.Pun.Demo.PunBasics
         {
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             LFF.LoadFile();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+            }
+        }
+        public override void OnLeftRoom()
+        {
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                ReferencesForGamePlay.instance.ResetActivePlayerStatusInCurrentLevel();
+            }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -320,6 +331,10 @@ namespace Photon.Pun.Demo.PunBasics
                 {
                     playerobjects.RemoveAt(x);
                 }
+            }
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
             }
         }
 
