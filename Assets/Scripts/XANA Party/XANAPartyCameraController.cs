@@ -17,7 +17,7 @@ public class XANAPartyCameraController : MonoBehaviour
     public float lookSpeed;
     public float lookSpeedd;
     [SerializeField]
-    private CinemachineFreeLook cinemachine;
+    public CinemachineFreeLook cinemachine;
     private CinemachineFreeLook.Orbit[] originalOrbits;
 
     public Controls controls;
