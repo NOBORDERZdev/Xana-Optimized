@@ -329,4 +329,10 @@ public class ConstantsGod
     public static string ClaimQuestReward = "/quest/claim-quest-reward";
     public static string ClaimQuestRewardCheque = "/quest/claim-status/";
     #endregion
+    #region Dome reward API's
+    public static string UpdateVisitedDomes = "/domes/domesvisits/";
+    public static string UpdateUserRaffleTickets = "/domes/updatetickets";
+    public static string GetUserRaffleTickets = "/domes/getusertickets";
+    public static string GetUserVisitedDomes = "/domes/getvisitedomes";
+    #endregion
 }

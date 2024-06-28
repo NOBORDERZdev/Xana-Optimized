@@ -28,5 +28,6 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     {
         ConstantsHolder.domeId = domeId;
         BuilderEventManager.LoadNewScene?.Invoke(domeId,transform.GetChild(0).transform.position);
+        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
     }
 }

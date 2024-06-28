@@ -306,7 +306,7 @@ public class MultiplayerMultisectionController : MonoBehaviourPunCallbacks
         {
             LFF.LoadFile();
         }
-        else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false;DestroyPlayerDelay();  } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
+        else { isShifting = false;DestroyPlayerDelay();  } // StartCoroutine(GameplayEntityLoader.instance.SpawnPlayerSection());
       
         
     }
