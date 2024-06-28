@@ -435,7 +435,6 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
         IsLevelPropertyUpdatedOnlevelLoad = false;
         Hashtable props = new Hashtable()
         {
@@ -449,6 +448,7 @@ public class ReferencesForGamePlay : MonoBehaviour
  
     public void CheckActivePlayerInCurrentLevel()
     {
+        XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
         if (GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
         {
             foreach (Player player in PhotonNetwork.PlayerList)

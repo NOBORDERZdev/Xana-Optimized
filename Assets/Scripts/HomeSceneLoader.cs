@@ -108,6 +108,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
 
+                    XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
                     MutiplayerController.instance.working = ScenesList.AddressableScene;
                     PhotonNetwork.LeaveRoom();
                     PhotonNetwork.LeaveLobby();
