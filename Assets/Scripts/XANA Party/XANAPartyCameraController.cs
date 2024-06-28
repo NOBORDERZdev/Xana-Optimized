@@ -14,8 +14,8 @@ public class XANAPartyCameraController : MonoBehaviour
     public enum OrientationType { Landscape, Portrait };
     public OrientationType orientationType;
     [Space(5)]
-    public float lookSpeed;
-    public float lookSpeedd;
+    float _editorLookSpeed = 0.01f;
+    float _touchLookSpeed = 0.8f;
     [SerializeField]
     private CinemachineFreeLook cinemachine;
     private CinemachineFreeLook.Orbit[] originalOrbits;
@@ -93,8 +93,8 @@ public class XANAPartyCameraController : MonoBehaviour
 
     private void Start()
     {
-        lookSpeedd = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
-        lookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+        //_touchLookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
+       // _editorLookSpeed = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY, 0.75f);
         //playerController = AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<CharacterManager>();
         controls.Gameplay.SecondaryTouchContact.started += _ => ZoomStart();
         controls.Gameplay.SecondaryTouchContact.canceled += _ => ZoomEnd();
@@ -111,7 +111,7 @@ public class XANAPartyCameraController : MonoBehaviour
         originalOrbits[1].m_Radius = cinemachine.m_Orbits[1].m_Radius;    // get the radius of middle rig
         if (Application.isEditor)
         {
-            lookSpeed = 0.05f;
+            //lookSpeed = 0.05f;
             zoomScrollVal = originalOrbits[1].m_Radius;
         }
         camRender = ReferencesForGamePlay.instance.randerCamera.gameObject;
@@ -220,8 +220,8 @@ public class XANAPartyCameraController : MonoBehaviour
     {
         //gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
          delta = controls.Gameplay.Look.ReadValue<Vector2>();
-         cinemachine.m_XAxis.Value += delta.x * 400 * lookSpeed * Time.deltaTime;
-         cinemachine.m_YAxis.Value += delta.y * 5 * lookSpeed * Time.deltaTime;
+         cinemachine.m_XAxis.Value += delta.x * 400 * _editorLookSpeed * Time.deltaTime;
+         cinemachine.m_YAxis.Value += delta.y * 5 * _editorLookSpeed * Time.deltaTime;
     }
 
     void Longtouch()
@@ -316,8 +316,8 @@ public class XANAPartyCameraController : MonoBehaviour
     }
     private void MoveCamera(Vector2 delta)
     {
-        cinemachine.m_XAxis.Value += delta.x * 10 * lookSpeedd * Time.deltaTime;
-        cinemachine.m_YAxis.Value += -delta.y * 0.08f * lookSpeedd * Time.deltaTime;
+        cinemachine.m_XAxis.Value += delta.x * 10 * _touchLookSpeed * Time.deltaTime;
+        cinemachine.m_YAxis.Value += -delta.y * 0.08f * _touchLookSpeed * Time.deltaTime;
     }
     void CameraControls_Mobile()
     {

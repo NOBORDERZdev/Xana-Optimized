@@ -61,6 +61,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public HomeSceneLoader _uiReferences;
 
     [Header("XANA Party")]
+    public GameObject PositionResetButton;
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
     [SerializeField] public CameraManager XanaPartyCamera;
@@ -82,6 +83,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         setLightOnce = false;
         if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            PositionResetButton.SetActive(true);
             Invoke(nameof(LoadFile),1f);
         }
     }
@@ -1018,7 +1020,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
        
     }
 
-    void ResetPlayerPosition()
+    public void ResetPlayerPosition()
     {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {

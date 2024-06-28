@@ -171,6 +171,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
+        XANAPartyLoading.SetActive(false);
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
@@ -209,7 +210,6 @@ public class BuilderMapDownload : MonoBehaviour
             yield return StartCoroutine(DownloadAddressableGamificationObject());
             yield return StartCoroutine(GemificationObjectLoadWait(1f));
         }
-        XANAPartyLoading.SetActive(false);
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -277,7 +277,7 @@ public class BuilderMapDownload : MonoBehaviour
                     else
                         GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
 
-                    AddressableDownloader.Instance.MemoryManager    .AddToReferenceList(loadOp, key);
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
                 }
             }
         }
