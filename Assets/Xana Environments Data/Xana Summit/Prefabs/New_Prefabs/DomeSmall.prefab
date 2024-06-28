@@ -94,6 +94,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3786250337657036320}
   - component: {fileID: 3786250337657036321}
+  - component: {fileID: 1962669152}
+  - component: {fileID: 1962669154}
   m_Layer: 0
   m_Name: DomeSmall
   m_TagString: Untagged
@@ -129,7 +131,7 @@ LODGroup:
   serializedVersion: 2
   m_LocalReferencePoint: {x: 0, y: 3.1153264, z: 3.6229916}
   m_Size: 10.633144
-  m_FadeMode: 0
+  m_FadeMode: 1
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
@@ -142,6 +144,33 @@ LODGroup:
     renderers:
     - renderer: {fileID: 956546599827158736}
   m_Enabled: 1
+--- !u!114 &1962669152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: DomeSmall
+  objectPriority: 0
+--- !u!114 &1962669154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593854361052923034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22bd20bb0264cf74eb1d09cefeae6d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  domeId: 102
 --- !u!1 &5005054697580370172
 GameObject:
   m_ObjectHideFlags: 0
