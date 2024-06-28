@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class ReferencesForGamePlay : MonoBehaviour
 {
@@ -363,7 +364,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 }
 
                 if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
-
+                    MakeRoomPrivate();
                     StartCoroutine(ShowLobbyCounter());
                 }
                     
@@ -411,6 +412,13 @@ public class ReferencesForGamePlay : MonoBehaviour
             var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
             xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
         }
+    }
+
+    public void MakeRoomPrivate()
+    {
+        Hashtable customeRoomProperties = new Hashtable();
+        customeRoomProperties["IsVisible"] = false;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(customeRoomProperties);
     }
 }
 

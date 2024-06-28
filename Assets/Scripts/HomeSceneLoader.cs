@@ -107,8 +107,17 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     // Load the main scene
                     Screen.orientation = ScreenOrientation.LandscapeLeft;
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+
+                    MutiplayerController.instance.working = ScenesList.AddressableScene;
+                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.LeaveLobby();
+                    PhotonNetwork.DestroyAll(true);
+                    StartSceneLoading();
                 }
-                LeaveRoom();
+                else
+                {
+                    LeaveRoom();
+                }
             }
         }
     }
@@ -157,6 +166,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public void StartSceneLoading()
     {
+        PhotonHandler.levelName = "Addressable";
         ConstantsHolder.xanaConstants.CurrentSceneName = "Addressable";
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         SceneManager.LoadSceneAsync(mainScene);
