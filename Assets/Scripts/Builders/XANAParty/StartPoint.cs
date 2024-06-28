@@ -36,13 +36,21 @@ public class StartPoint : MonoBehaviour
     {
          print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-        //gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
-        StartCoroutine(nameof(StartGame));
+        if (PhotonNetwork.IsMasterClient)
+        {
+            gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        }
     }
 
     void EnableCollider()
     {
         triggerCollider.SetActive(true);
+    }
+
+    [PunRPC]
+    public void StartGameRPC()
+    {
+        StartCoroutine(nameof(StartGame));
     }
 
    IEnumerator StartGame()

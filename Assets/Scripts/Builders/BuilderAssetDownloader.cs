@@ -438,7 +438,7 @@ public class BuilderAssetDownloader : MonoBehaviour
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+              //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
             
             return;

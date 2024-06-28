@@ -12,6 +12,22 @@ public class RandomNumberComponent : ItemComponent
     private bool isActivated = false;
     string RuntimeItemID = "";
 
+    protected override void Awake()
+    {
+        base.Awake();
+        NetworkSyncManager.instance.OnRandomNumberSet += OnRandomeNumberSet;
+    }
+
+    private void OnRandomeNumberSet(string itemID, int minNumber, int maxNumber, int generatedNumber)
+    {
+       if(itemID==RuntimeItemID)
+        {
+            _minNumber = minNumber;
+            _maxNumber = maxNumber;
+            GeneratedNumber = generatedNumber;
+        }
+    }
+
     void GenerateNumber()
     {
         GeneratedNumber = (int)Random.Range(_minNumber, _maxNumber);
@@ -23,9 +39,24 @@ public class RandomNumberComponent : ItemComponent
 
         isActivated = true;
         RuntimeItemID = GetComponent<XanaItem>().itemData.RuntimeItemID;
-        _minNumber = this.randomNumberComponentData.minNumber;
-        _maxNumber = this.randomNumberComponentData.maxNumber;
-        GenerateNumber();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _minNumber = this.randomNumberComponentData.minNumber;
+            _maxNumber = this.randomNumberComponentData.maxNumber;
+            GenerateNumber();
+            NetworkSyncManager.instance.view.RPC("SetRandomNumberComponent", RpcTarget.AllBufferedViaServer, RuntimeItemID, _minNumber, _maxNumber, GeneratedNumber);
+        }
+        else
+        {
+          var data=  NetworkSyncManager.instance.RandomNumberHist.Find(x=>x.ItemID == RuntimeItemID);
+            if(data != null)
+            {
+                _minNumber = data.MinNumber;    
+                _maxNumber = data.MaxNumber;
+                GeneratedNumber= data.GeneratedNumber;
+            }
+        }
+        
     }
 
     private void OnCollisionEnter(Collision _other)

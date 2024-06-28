@@ -27,6 +27,7 @@ public class TranslateComponent : ItemComponent
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
+        NetworkSyncManager.instance.TranslateComponentpos.Add(RuntimeItemID,transform.position);
         if (!this.translateComponentData.avatarTriggerToggle)
         {
             PlayBehaviour();
@@ -83,7 +84,36 @@ public class TranslateComponent : ItemComponent
         else return true;
     }
 
-    IEnumerator translateModule()
+    private void FixedUpdate()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (activateTranslateComponent)
+            {
+
+                if (CheckDistance())
+                {
+                    this.transform.position = Vector3.MoveTowards(
+                       this.transform.position, translatePositions[counter],
+                       translateComponentData.translateSpeed * Time.deltaTime
+                       );
+                    if (this.translateComponentData.IsFacing)
+                    {
+                        this.transform.LookAt(translatePositions[counter]);
+                        this.transform.Rotate(new Vector3(0, 1, 0), 180f);
+                    }
+                    NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID] = transform.position;
+                }
+                else
+                {
+
+                    transform.position=(Vector3)NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID];
+                }
+            }
+        }
+    }
+
+    /*IEnumerator translateModule()
     {
         while (activateTranslateComponent)
         {
@@ -102,7 +132,7 @@ public class TranslateComponent : ItemComponent
             }
         }
         yield return null;
-    }
+    }*/
     #endregion
 
     #region BehaviourControl
@@ -110,7 +140,7 @@ public class TranslateComponent : ItemComponent
     {
         activateTranslateComponent = true;
         IsAgainTouchable = true;
-        StartCoroutine(translateModule());
+       // StartCoroutine(translateModule());
     }
     private void StopComponent()
     {

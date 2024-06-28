@@ -1,10 +1,9 @@
-using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class MultiplayerComponent : MonoBehaviourPun
+public class MultiplayerComponent : MonoBehaviour
 {
    public string RunTimeItemID;
     string ItemID;
@@ -13,7 +12,7 @@ public class MultiplayerComponent : MonoBehaviourPun
     {
         yield return new WaitForSeconds(5f);
         if (GamificationComponentData.instance != null && GamificationComponentData.instance.withMultiplayer)
-        {
+        {/* 
             MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
             {
@@ -32,7 +31,7 @@ public class MultiplayerComponent : MonoBehaviourPun
                         }
                     }
                 }
-            }
+            }*/
             Rigidbody rb = null;
             gameObject.TryGetComponent(out rb);
             if (rb == null)

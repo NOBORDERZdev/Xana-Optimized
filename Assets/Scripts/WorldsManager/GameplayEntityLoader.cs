@@ -895,7 +895,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 var multiplayerObject = Instantiate(this.MultiplayerComponent, _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                //multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
             }
         }
