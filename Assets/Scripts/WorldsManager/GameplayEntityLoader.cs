@@ -14,6 +14,9 @@ using System;
 using UnityEngine.UI;
 using System.IO;
 using UnityEngine.Rendering.Universal;
+using Photon.Pun.Demo.PunBasics;
+using Photon.Voice.PUN;
+using Metaverse;
 using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
@@ -120,14 +123,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     void OnEnable()
     {
         BuilderEventManager.AfterWorldInstantiated += ResetPlayerAfterInstantiation;
-        GamePlayButtonEvents.OnExitButtonXANASummit += DestroyYoutubePlayer;
+        GamePlayButtonEvents.OnExitButtonXANASummit += ResetOnBackFromSummit;
     }
 
 
     private void OnDisable()
     {
         BuilderEventManager.AfterWorldInstantiated -= ResetPlayerAfterInstantiation;
-        GamePlayButtonEvents.OnExitButtonXANASummit -= DestroyYoutubePlayer;
+        GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnBackFromSummit;
     }
 
 
@@ -247,12 +250,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
-    void DestroyYoutubePlayer()
-    {
-        if (YoutubeStreamPlayer)
-            Destroy(YoutubeStreamPlayer);
-        mainController = mainControllerRefHolder;
-    }
+
 
     void CharacterLightCulling()
     {
@@ -311,6 +309,135 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
         }
         return false;
+    }
+    public void SetSpawnPosition()
+    {
+
+
+    }
+
+    public void SetPlayer()
+    {
+
+
+        AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = null;
+        SpawnPlayerSection();
+
+    }
+    public async void SpawnPlayerSection()  // Created this for summit
+    {
+        if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
+        {
+            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
+        }
+
+        spawnPoint = player.transform.position;
+        Destroy(player);
+        Debug.Log("player shoud be destroyed");
+        InstantiatePlayerAvatar();
+
+        ReferencesForGamePlay.instance.m_34player = player;
+        //  SetAxis();
+        mainPlayer.SetActive(true);
+        if (player.GetComponent<StepsManager>())
+        {
+            player.GetComponent<StepsManager>().isplayer = true;
+        }
+        //GetComponent<PostProcessManager>().SetPostProcessing();
+
+        //change youtube player instantiation code because while env is in loading and youtube started playing video
+
+        if (!ConstantsHolder.xanaConstants.isCameraMan)
+        {
+            LoadingHandler.Instance.HideLoading();
+            LoadingHandler.Instance.UpdateLoadingStatusText("");
+        }
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        {
+            if (!ConstantsHolder.xanaConstants.isCameraMan)
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        }
+        else
+        {
+            if (JjMusuem.Instance)
+                JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
+            else
+            {
+                if (!ConstantsHolder.xanaConstants.isCameraMan)
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+            }
+        }
+        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
+
+        updatedSpawnpoint.transform.localPosition = spawnPoint;
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+        {
+            ConstantsHolder.xanaConstants.isFromXanaLobby = false;
+        }
+        //   StartCoroutine(VoidCalculation());
+
+
+        if (ConstantsHolder.xanaConstants.isCameraMan)
+        {
+            ReferencesForGamePlay.instance.randerCamera.gameObject.SetActive(false);
+            ReferencesForGamePlay.instance.FirstPersonCam.gameObject.SetActive(false);
+            ConstantsHolder.xanaConstants.StopMic();
+            XanaVoiceChat.instance.TurnOffMic();
+            //ReferencesForGamePlay.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
+        }
+        LoadingHandler.Instance.manualRoomController.HideRoomList();
+
+        if (!ConstantsHolder.xanaConstants.isCameraMan)
+            LoadingHandler.Instance.HideLoading();
+
+        // Join Room Activate Chat
+        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        {
+            string worldId = 0.ToString();
+            if (XanaEventDetails.eventDetails.environmentId != 0)
+            {
+                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+            }
+            else
+            {
+                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+            }
+        }
+
+        ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
+        if (ConstantsHolder.xanaConstants.isCameraMan)
+        {
+            if (StreamingCamera.instance)
+            {
+                StreamingCamera.instance.TriggerStreamCam();
+            }
+            else // sterming cam's not found so switching to main menu 
+            {
+                _uiReferences.LoadMain(false);
+            }
+        }
+
+        XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
+        BuilderEventManager.AfterPlayerInstantiated?.Invoke();
+
+
+        // Firebase Event for Join World
+        /* Debug.Log("Player Spawn Completed --  Join World");
+         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
+         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);*/
+        /// <summary>
+        /// Load NPC fake chat system
+        /// </summary>
+        //ActivateNpcChat();
+
+        await new WaitForSeconds(1);
+        var controller = GameplayEntityLoader.instance.mainController.GetComponent<PlayerController>();
+        if (controller.isFirstPerson)
+        {
+            controller.DisablePlayerOnFPS();
+        }
+
     }
 
     public IEnumerator SpawnPlayer()
@@ -436,12 +563,18 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // Firebase Event for Join World
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
+        yield return null;
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
         //ActivateNpcChat();
-
-        yield return null;
+        //Debug.Log("this is called..........................");
+        //yield return new WaitForSeconds(1);
+        //var controller = GameplayEntityLoader.instance.mainController.GetComponent<PlayerController>();
+        //if(controller.isFirstPerson)
+        //{
+        //   controller.DisablePlayerOnFPS();
+        //}
     }
 
     void SetPlayerCameraAngle()
@@ -999,7 +1132,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public void SetAddressableSceneActive()
     {
         string temp = addressableSceneName;
-        if (temp.Contains(" Astroboy x Tottori Metaverse Museum"))
+        if (!string.IsNullOrEmpty(temp) && temp.Contains(" Astroboy x Tottori Metaverse Museum"))
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
@@ -1046,6 +1179,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
+
+    GameObject penguinJump;
+    GameObject penguinJumpPot;
     //penguin mehtods 
     IEnumerator SetXanaPartyControllers(GameObject player)
     {
@@ -1064,24 +1200,42 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         // Landscape
         referenceForPenguin.XanaFeaturesLandsacape.SetActive(false);
-        // referenceForPenguin.XanaChatCanvasLandsacape.SetActive(false);
-        //referenceForPenguin.XanaJumpLandsacape.SetActive(false);
         referenceForPenguin.EmoteFavLandsacape.SetActive(false);
-        //referenceForPenguin.PartyChatCanvasLandsacape.SetActive(true);
-        //referenceForPenguin.PartJumpLandsacape.SetActive(true);
-        // Potrait
+
         referenceForPenguin.XanaFeaturesPotraite.SetActive(false);
-        //referenceForPenguin.XanaChatCanvasPotraite.SetActive(false);
-        //referenceForPenguin.XanaJumpPotraite.SetActive(false);
         referenceForPenguin.EmoteFavPotraite.SetActive(false);
-        //tempRef.EmoteFavPotraite.SetActive(false);
-        //referenceForPenguin.PartyChatCanvasPotraite.SetActive(true);
-        //referenceForPenguin.PartJumpPotraite.SetActive(true);
-        Destroy(referenceForPenguin.XanaJumpPotraite.GetComponent<UnityEngine.EventSystems.EventTrigger>());
-        Destroy(referenceForPenguin.XanaJumpLandsacape.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+
+        penguinJump = Instantiate(referenceForPenguin.XanaJumpLandsacape, referenceForPenguin.XanaJumpLandsacape.transform.parent);
+        penguinJumpPot = Instantiate(referenceForPenguin.XanaJumpPotraite, referenceForPenguin.XanaJumpPotraite.transform.parent);
+
+        Destroy(penguinJump.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+        Destroy(penguinJumpPot.GetComponent<UnityEngine.EventSystems.EventTrigger>());
+
+        referenceForPenguin.XanaJumpPotraite.SetActive(false);
+        referenceForPenguin.XanaJumpLandsacape.SetActive(false);
+    }
+
+    void ResetOnBackFromSummit()
+    {
+        if (YoutubeStreamPlayer)
+            Destroy(YoutubeStreamPlayer);
+        mainController = mainControllerRefHolder;
 
 
+        referenceForPenguin.XanaFeaturesLandsacape.SetActive(true);
+        referenceForPenguin.EmoteFavLandsacape.SetActive(true);
 
+        referenceForPenguin.XanaFeaturesPotraite.SetActive(true);
+        referenceForPenguin.EmoteFavPotraite.SetActive(true);
+
+        referenceForPenguin.XanaJumpPotraite.SetActive(true);
+        referenceForPenguin.XanaJumpLandsacape.SetActive(true);
+
+        Destroy(penguinJump);
+        Destroy(penguinJumpPot);
+
+        ConstantsHolder.isFixedHumanoid = false;
+        ConstantsHolder.isPenguin = false;
     }
 
 
