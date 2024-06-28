@@ -189,6 +189,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             Debug.LogError("On Joined lobby :- " + PhotonNetwork.CurrentLobby.Name+"--"+Time.time);
             CheckRoomAvailability();
+            ReferencesForGamePlay.instance.On_JoinedLobby();
         }
 
         public override void OnLeftLobby()

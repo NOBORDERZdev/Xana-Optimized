@@ -49,7 +49,6 @@ public class ReferencesForGamePlay : MonoBehaviour
 
 
     private const string InLevelProperty = "InLevel";
-    public int ActivePlayerInCurrentLevel = 0;
     //[SerializeField] CanvasGroup PartyJump;
 
 
@@ -402,7 +401,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         XANAPartyLobbyyCounterPanel.SetActive(true);
         for (int i = 5; i >= 1; i--)
         {
-            XANAPartyCounterText.text = i.ToString();
+            XANAPartyCounterText.text = "0" + i.ToString();
             yield return new WaitForSeconds(1);
         }
         XANAPartyLobbyyCounterPanel.SetActive(false);
@@ -420,7 +419,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public void LoadLevel(string levelName)
     {
         // Set custom properties to indicate that the player is in a level
-        Hashtable props = new Hashtable
+        Hashtable props = new Hashtable()
         {
             { InLevelProperty, (levelName+XANAPartyManager.Instance.GameIndex) }
         };
@@ -428,6 +427,16 @@ public class ReferencesForGamePlay : MonoBehaviour
 
         // Load the new level
         PhotonNetwork.LoadLevel(levelName);
+    }
+    public void On_JoinedLobby()
+    {
+        Debug.Log(">>>>>>>>>>> Player Joined Lobby");
+        Hashtable props = new Hashtable
+        {
+            { InLevelProperty, "JoinedLobby" }
+        };
+
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
     public void CheckActivePlayerInCurrentLevel()
@@ -438,7 +447,7 @@ public class ReferencesForGamePlay : MonoBehaviour
             {
                 if (isInLevel != null)
                 {
-                    ActivePlayerInCurrentLevel++;
+                    XANAPartyManager.Instance.ActivePlayerInCurrentLevel++;
                 }
             }
         }
@@ -455,7 +464,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void ReduceActivePlayerCountInCurrentLevel()
     {
-        ActivePlayerInCurrentLevel--;
+        XANAPartyManager.Instance.ActivePlayerInCurrentLevel--;
     }
 
     public void MakeRoomPrivate()

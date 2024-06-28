@@ -513,7 +513,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
-        if (player.GetComponent<StepsManager>())
+        if (player!=null && player.GetComponent<StepsManager>())
         {
             player.GetComponent<StepsManager>().isplayer = true;
         }

@@ -22,6 +22,7 @@ public class XANAPartyManager : MonoBehaviour
     [SerializeField] int debugGameId = 0; // Index of the game to test
     private Random random = new Random();
 
+    public int ActivePlayerInCurrentLevel = 0;
     private void Awake()
     {
         if (Instance == null)
