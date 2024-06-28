@@ -12,6 +12,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
     public GameObject mapBaseObj;
     public Sprite highlightedSprite;
     public List<DomeDataForMap> MapDomes;
+    public List<DomeDataForMap> MapDomes_portrait;
+
     public List<TextMeshProUGUI> vistedCount;
 
     public GameObject ConfirmationPopup;
@@ -57,21 +59,18 @@ public class DomeMinimapDataHolder : MonoBehaviour
         }
         var jsonNode = JSON.Parse(result);
         var domeVisits = jsonNode["domeVisits"];
-        HashSet<int> domeIDs = domeVisits.Children.Select(d => d["domeId"].AsInt).ToHashSet();
+        HashSet<int> _VisitedDomeIDs = domeVisits.Children.Select(d => d["domeId"].AsInt).ToHashSet();
 
-        string visitedText = $"({domeIDs.Count}/{totalDomeCount})";
-        foreach (var _text in vistedCount)
+        string visitedText = $"({_VisitedDomeIDs.Count}/{totalDomeCount})";
+        vistedCount.ForEach(_text => _text.text = $"({_VisitedDomeIDs.Count}/{totalDomeCount})");
+
+        // Combine MapDomes and MapDomes_portrait into one collection for processing
+        var allDomes = MapDomes.Concat(MapDomes_portrait);
+        foreach (var item in allDomes)
         {
-            _text.text = visitedText;
-        }
-        foreach (var item in MapDomes)
-        {
-            if (domeIDs.Contains(item.domeId))
+            if (_VisitedDomeIDs.Contains(item.domeId))
             {
-                if (item.myImage == null)
-                {
-                    item.myImage = item.GetComponent<UnityEngine.UI.Image>();
-                }
+                item.myImage = item.myImage ?? item.GetComponent<UnityEngine.UI.Image>();
                 item.myImage.sprite = highlightedSprite;
             }
         }
