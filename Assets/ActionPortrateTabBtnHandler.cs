@@ -3,28 +3,32 @@ using UnityEngine;
 
 public class ActionPortrateTabBtnHandler : MonoBehaviour
 {
-    [SerializeField] private List<Transform> TabBtnEmote = new List<Transform>();
-    [SerializeField] private List<Transform> TabBtnReaction = new List<Transform>();
+    [SerializeField] private List<Transform> _tabBtnEmote = new List<Transform>();
+    [SerializeField] private List<Transform> _tabBtnReaction = new List<Transform>();
 
     private void Start()
     {
-        TabBtnEmote[0].gameObject.SetActive(true);
-        TabBtnReaction[0].gameObject.SetActive(true);
+        _tabBtnEmote[0].gameObject.SetActive(true);
+        _tabBtnReaction[0].gameObject.SetActive(true);
     }
+
     public void SetSelectedSeeAllBtnEmote(int i)
     {
-        for (int item = 0; item < TabBtnEmote.Count; item++)
+        for (int item = 0; item < _tabBtnEmote.Count; item++)
         {
-            TabBtnEmote[item].gameObject.SetActive(false);
+            _tabBtnEmote[item].gameObject.SetActive(false);
         }
-        TabBtnEmote[i].gameObject.SetActive(true);
+
+        _tabBtnEmote[i].gameObject.SetActive(true);
     }
+
     public void SetSelectedSeeAllBtnReaction(int i)
     {
-        for (int item = 0; item < TabBtnReaction.Count; item++)
+        for (int item = 0; item < _tabBtnReaction.Count; item++)
         {
-            TabBtnReaction[item].gameObject.SetActive(false);
+            _tabBtnReaction[item].gameObject.SetActive(false);
         }
-        TabBtnReaction[i].gameObject.SetActive(true);
+
+        _tabBtnReaction[i].gameObject.SetActive(true);
     }
 }

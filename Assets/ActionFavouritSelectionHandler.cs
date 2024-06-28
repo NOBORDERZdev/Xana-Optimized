@@ -1,54 +1,40 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionFavouritSelectionHandler : MonoBehaviour
 {
-    [SerializeField] ActionManager _actionManager;
-    [SerializeField] Transform _reationBtn;
-    [SerializeField] Transform _emoteBtn;
     public List<Transform> ActionFavouritBtn = new List<Transform>();
+
+    [SerializeField] private ActionManager _actionManager;
+    [SerializeField] private Transform _reationBtn;
+    [SerializeField] private Transform _emoteBtn;
     private int _selectActionFavouritBtnIndex = 0;
 
     private void OnEnable()
     {
         SetSelectionOfFavouriteBtn();
     }
+
     public void OpenReactionDialog()
     {
         SetReactionSelection(false);
         SetEmoteSelection(true);
         _actionManager.OpenReactionDialogUI();
     }
+
     public void OpenEmoteDialog()
     {
         SetReactionSelection(true);
         SetEmoteSelection(false);
         _actionManager.OpenEmoteDialogUI();
     }
-    private void CloseAllActionDialog()
-    {
-        SetReactionSelection(false);
-        SetEmoteSelection(false);
-        _actionManager.OpenEmoteDialogUI();
-    }
-    private void SetReactionSelection(bool flag)
-    {
-        _reationBtn.GetComponent<Image>().enabled = flag;
-        _reationBtn.GetChild(0).GetComponent<Image>().enabled = !flag;
-    }
-    private void SetEmoteSelection(bool flag)
-    {
-        _emoteBtn.GetComponent<Image>().enabled = flag;
-        _emoteBtn.GetChild(0).GetComponent<Image>().enabled = !flag;
-    }
+
     public void SetActionToFavouritSelectedByPlayer(ActionData dataObj)
     {
-        Debug.LogError("SetActionToFavouritSelectedByPlayer ---->  "+dataObj.AnimationName);
         ActionFavouritBtn[_selectActionFavouritBtnIndex].GetComponent<ActionFavouriteDialogBtn>().SetupActionSelected(dataObj);
     }
+
     public void SetActionToFavouritHighlight(int indexOfActionSelected)
     {
         _selectActionFavouritBtnIndex = indexOfActionSelected;
@@ -64,13 +50,15 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
             }
         }
     }
+
     public void ResetActionBtnCall()
     {
-        foreach(Transform item in ActionFavouritBtn)
+        foreach (Transform item in ActionFavouritBtn)
         {
             item.GetComponent<ActionFavouriteDialogBtn>().CancelSelectedAction();
         }
     }
+
     public void SaveActionBtnCall()
     {
         foreach (Transform item in ActionFavouritBtn)
@@ -81,17 +69,38 @@ public class ActionFavouritSelectionHandler : MonoBehaviour
         ActionManager.OpenActionFavouritPanel.Invoke(false);
 
     }
+
     public bool IsValidActionToSave(ActionData dataObj)
     {
-        foreach(Transform item in ActionFavouritBtn)
+        foreach (Transform item in ActionFavouritBtn)
         {
-            if(item.GetComponent<ActionFavouriteDialogBtn>().ValidateSimilarData(dataObj.AnimationName, dataObj.TypeOfAction))
+            if (item.GetComponent<ActionFavouriteDialogBtn>().ValidateSimilarData(dataObj.AnimationName, dataObj.TypeOfAction))
             {
                 return false;
             }
         }
         return true;
     }
+
+    private void CloseAllActionDialog()
+    {
+        SetReactionSelection(false);
+        SetEmoteSelection(false);
+        _actionManager.OpenEmoteDialogUI();
+    }
+
+    private void SetReactionSelection(bool flag)
+    {
+        _reationBtn.GetComponent<Image>().enabled = flag;
+        _reationBtn.GetChild(0).GetComponent<Image>().enabled = !flag;
+    }
+
+    private void SetEmoteSelection(bool flag)
+    {
+        _emoteBtn.GetComponent<Image>().enabled = flag;
+        _emoteBtn.GetChild(0).GetComponent<Image>().enabled = !flag;
+    }
+
     private void SetSelectionOfFavouriteBtn()
     {
         bool flag = false;

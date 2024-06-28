@@ -1,12 +1,5 @@
-using Photon.Pun;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UFE3D;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.tvOS;
 
 public class ActionManager : MonoBehaviour
 {
@@ -18,7 +11,7 @@ public class ActionManager : MonoBehaviour
     public static Action<EmoteReactionItemBtnHandler.ItemType, int> OpenActionCategoryTab;
     public static Action StopActionAnimation;
     public static bool IsAnimRunning = default;
-
+    private bool _actionBtnActive = false;
 
     private void OnEnable()
     {
@@ -27,6 +20,7 @@ public class ActionManager : MonoBehaviour
         OpenActionCategoryTab += SetActionCategoryTab;
         StopActionAnimation += StopAnimation;
     }
+
     private void OnDisable()
     {
         ActionBtnClick -= ProcessAction;
@@ -34,33 +28,46 @@ public class ActionManager : MonoBehaviour
         OpenActionCategoryTab -= SetActionCategoryTab;
         StopActionAnimation -= StopAnimation;
     }
-    public void Start()
+
+    private void Start()
     {
         EmoteManager.GetServerData();
         ReactionManager.GetServerData();
     }
+
     public void OpenEmoteDialogUI()
     {
         EmoteManager.OpenEmoteDialogUI();
     }
+
     public void OpenReactionDialogUI()
     {
         ReactionManager.OpenReactionDialogUI();
     }
+
     public void OpenActionCircleDialog()
     {
-        ActionFavouriteManager.ActivateCircleDialog(true);
+        _actionBtnActive = !_actionBtnActive;
+
+        if (_actionBtnActive)
+        {
+            ActionFavouriteManager.ActivateCircleDialog(true);
+        }
+        else
+        {
+            ActionFavouriteManager.ActivateCircleDialog(false);
+        }
     }
+
     public void OpenActionFavouritSelectionPanel(bool flag)
     {
         ActionFavouriteManager.ActivateActionFavouritDialogObj(flag);
     }
+
     public void ProcessAction(ActionData dataObj)
     {
-        Debug.LogError("----- ProcessAction --- >  " + ActionFavouriteManager.IsInActionSelection);
         if(ActionFavouriteManager.IsInActionSelection)
         {
-            /// Save Action
             ActionFavouriteManager.SetFavouriteAction(dataObj);
         }
         else
@@ -75,10 +82,9 @@ public class ActionManager : MonoBehaviour
                 PlayerPrefs.SetString(ConstantsGod.ReactionThumb, dataObj.ThumbnailURL);
                 ArrowManager.OnInvokeReactionButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
             }
-            Debug.LogError("----- Play Animation ----");
-            /// Run action on player
         }
     }
+
     public void SetActionCategoryTab(EmoteReactionItemBtnHandler.ItemType itemType, int categoryIndex)
     {
         if(itemType == EmoteReactionItemBtnHandler.ItemType.Emote)
@@ -90,13 +96,14 @@ public class ActionManager : MonoBehaviour
             ReactionManager.OpenReactionDialogUITabClick(categoryIndex);
         }
     }
+
     public void StopAnimation()
     {
-        Debug.LogError("----- STOPPPPP Animation ----");
         IsAnimRunning = false;
         this.transform.GetComponent<ActionAnimationApplyToPlayer>().StopAnimation();
     }
 }
+
 [Serializable]
 public class ActionData
 {

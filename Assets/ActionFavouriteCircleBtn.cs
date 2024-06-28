@@ -9,27 +9,15 @@ using UnityEngine.UI;
 public class ActionFavouriteCircleBtn : MonoBehaviour
 {
     public int IndexOfBtn = 0;
-    private bool _actionSelected = false;
-    [SerializeField] private Image _ActionImg;
     public string AnimationName;
     public string ThumbnailURL;
     public EmoteReactionItemBtnHandler.ItemType TypeOfAction;
-    bool _longPress = default;
-    float _timer = 0f, longPressTimer = 2f;
 
-    public void PointerDown()
-    {
-        _longPress = true;
-    }
-    public void PointerUp()
-    {
-        _timer = 0f;
-        _longPress = false;
-    }
-    public void PointerClicked()
-    {
-        PlayerActionInteraction();
-    }
+    [SerializeField] private Image _actionImg;
+    private bool _actionSelected = false;
+    private bool _longPress = default;
+    private float _timer = 0f;
+    private float longPressTimer = 2f;
     private void OnEnable()
     {
         InitializeBtn();
@@ -58,9 +46,22 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
         }
     }
 
+    public void PointerDown()
+    {
+        _longPress = true;
+    }
+    public void PointerUp()
+    {
+        _timer = 0f;
+        _longPress = false;
+    }
+    public void PointerClicked()
+    {
+        PlayerActionInteraction();
+    }
+
     public void InitializeBtn()
     {
-        Debug.LogError("InitializeBtn -----> ");
         if(PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + IndexOfBtn) != "")
         {
             ActionData actionData = JsonUtility.FromJson<ActionData>(PlayerPrefsUtility.GetEncryptedString(ConstantsGod.ANIMATION_DATA + IndexOfBtn));
@@ -74,8 +75,8 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
         {
             AnimationName = default;
             ThumbnailURL = default;
-            _ActionImg.sprite = default;
-            _ActionImg.gameObject.SetActive(false);
+            _actionImg.sprite = default;
+            _actionImg.gameObject.SetActive(false);
             _actionSelected = false;
         }
     }
@@ -96,9 +97,7 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
             dataObj.AnimationName = AnimationName;
             dataObj.ThumbnailURL = ThumbnailURL;
             dataObj.TypeOfAction = TypeOfAction;
-            Debug.LogError("ApplyAction ---->  " + AnimationName);
             ActionManager.ActionBtnClick?.Invoke(dataObj);
-            Debug.LogError("PlayerActionInteraction ----> Play Action");
         }
         else
         {
@@ -113,8 +112,8 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
             {
                 if (success)
                 {
-                    AssetCache.Instance.LoadSpriteIntoImage(_ActionImg, ThumbnailURL, changeAspectRatio: true);
-                    _ActionImg.gameObject.SetActive(true);
+                    AssetCache.Instance.LoadSpriteIntoImage(_actionImg, ThumbnailURL, changeAspectRatio: true);
+                    _actionImg.gameObject.SetActive(true);
                 }
                 else
                 {
@@ -124,5 +123,3 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
         }
     }
 }
-
-

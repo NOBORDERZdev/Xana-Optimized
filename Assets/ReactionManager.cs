@@ -9,10 +9,27 @@ public class ReactionManager : MonoBehaviour
     public enum ReactionGroup { Emote, Gestures, Others }
     public ReactionGroup ReactionGroupSelected = ReactionGroup.Emote;
     public ReactionAnimationDetails ReactionServerData;
+
     public void GetServerData()
     {
         StartCoroutine(GetEmoteServerData());
     }
+
+    public void OpenReactionDialogUITabClick(int index)
+    {
+        if (ReactionGroupSelected == (ReactionGroup)index)
+            return;
+
+        ReactionGroupSelected = (ReactionGroup)index;
+        OpenReactionDialogUI();
+    }
+
+    public void OpenReactionDialogUI()
+    {
+        List<ReactionAnimationList> items = ReactionServerData.data.reactionList.FindAll(x => x.group == ReactionGroupSelected.ToString());
+        EmoteReactionUIHandler.SetViewItemsReaction?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Reaction);
+    }
+
     private IEnumerator GetEmoteServerData()
     {
         yield return new WaitForSeconds(5f);
@@ -26,19 +43,6 @@ public class ReactionManager : MonoBehaviour
             ReactionServerData = JsonUtility.FromJson<ReactionAnimationDetails>(request.downloadHandler.text);
             request.Dispose();
         }
-    }
-    public void OpenReactionDialogUITabClick(int index)
-    {
-        if (ReactionGroupSelected == (ReactionGroup)index)
-            return;
-
-        ReactionGroupSelected = (ReactionGroup)index;
-        OpenReactionDialogUI();
-    }
-    public void OpenReactionDialogUI()
-    {
-        List<ReactionAnimationList> items = ReactionServerData.data.reactionList.FindAll(x => x.group == ReactionGroupSelected.ToString());
-        EmoteReactionUIHandler.SetViewItemsReaction?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Reaction);
     }
 }
 [System.Serializable]

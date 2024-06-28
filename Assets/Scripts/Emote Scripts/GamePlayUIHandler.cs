@@ -158,7 +158,6 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnOpenAnimationPanel()
     {
-        ;
         ref_LoadEmoteAnimations.OpenAnimationSelectionPanel();
         Debug.Log("call hua times 3===" + GamePlayButtonEvents.inst.selectionPanelOpen);
         GamePlayButtonEvents.inst.selectionPanelOpen = true;

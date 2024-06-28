@@ -1,6 +1,4 @@
 using SuperStar.Helpers;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -16,6 +14,11 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
     public Image BtnImg;
     public TMP_Text NameTxt;
     public Transform HeighlightObj;
+
+    private void OnDisable()
+    {
+        ///>--MemoryClean Stoped  AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ActionThumbnail_Url, true);
+    }
 
     public void InitializeItem(ItemType _type, int _id, string _actionName, string _actionThumbnail_Ur, string _actionGroupType)
     {
@@ -33,8 +36,20 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
         {
             NameTxt.text = string.Empty;
         }
+        GetImageFromServer();
     }
-    private void OnEnable()
+
+    public void ApplyAction()
+    {
+        ActionData dataObj = new ActionData();
+        dataObj.AnimationName = ActionName;
+        dataObj.ThumbnailURL = ActionThumbnail_Url;
+        dataObj.TypeOfAction = TypeOfAction;
+        ActionManager.ActionBtnClick?.Invoke(dataObj);
+        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke(ActionName);
+    }
+
+    private void GetImageFromServer()
     {
         if (ActionThumbnail_Url != "")
         {
@@ -50,19 +65,5 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
                 }
             });
         }
-    }
-    private void OnDisable()
-    {
-        ///>--MemoryClean Stoped  AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ActionThumbnail_Url, true);
-    }
-    public void ApplyAction()
-    {
-        ActionData dataObj = new ActionData();
-        dataObj.AnimationName = ActionName;
-        dataObj.ThumbnailURL = ActionThumbnail_Url;
-        dataObj.TypeOfAction = TypeOfAction;
-        Debug.LogError("ApplyAction ---->  " + ActionName);
-        ActionManager.ActionBtnClick?.Invoke(dataObj);
-        EmoteReactionUIHandler.ActivateHeighlightOfPanelBtn?.Invoke(ActionName);
     }
 }

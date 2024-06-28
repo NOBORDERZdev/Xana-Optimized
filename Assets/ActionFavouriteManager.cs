@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ActionFavouriteManager : MonoBehaviour
@@ -13,22 +11,25 @@ public class ActionFavouriteManager : MonoBehaviour
    {
         ActionCircleDialog.gameObject.SetActive(enableFlag);
    }
-    public void ActivateActionFavouritDialogObj(bool enableFlag)
-    {
-        IsInActionSelection = enableFlag;
-        ActionFavouritDialogObj.gameObject.SetActive(enableFlag);
-        if (enableFlag) ActionFavouritSelectionHandler.OpenEmoteDialog();
-    }
-    public void SetFavouriteAction(ActionData dataObj)
-    {
-        if(ActionFavouritSelectionHandler.IsValidActionToSave(dataObj))
-        {
-            /// Save Data
-            ActionFavouritSelectionHandler.SetActionToFavouritSelectedByPlayer(dataObj);
-        }
-        else
-        {
-            EmoteReactionUIHandlerLandscape.DisplayActionDuplicateMessage?.Invoke();
-        }
-    }
+   public void ActivateActionFavouritDialogObj(bool enableFlag)
+   {
+       IsInActionSelection = enableFlag;
+       ActionFavouritDialogObj.gameObject.SetActive(enableFlag);
+
+       if (enableFlag)
+       { 
+          ActionFavouritSelectionHandler.OpenEmoteDialog(); 
+       }
+   }
+   public void SetFavouriteAction(ActionData dataObj)
+   {
+       if(ActionFavouritSelectionHandler.IsValidActionToSave(dataObj))
+       {
+           ActionFavouritSelectionHandler.SetActionToFavouritSelectedByPlayer(dataObj);
+       }
+       else
+       {
+           EmoteReactionUIHandlerLandscape.DisplayActionDuplicateMessage?.Invoke();
+       }
+   }
 }

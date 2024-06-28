@@ -113,9 +113,9 @@ RectTransform:
   m_Father: {fileID: 3148077338756654332}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 95, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077338614656296
@@ -208,6 +208,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ActionHeaderTabHandler, Assembly-CSharp
         m_MethodName: OpenTabSelected
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnEmote
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -413,7 +425,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0.0009765625, y: 0}
-  m_SizeDelta: {x: 520, y: -25.807304}
+  m_SizeDelta: {x: 0, y: -25.807304}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &3148077338665375738
 MonoBehaviour:
@@ -496,7 +508,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0.0009765625, y: 0}
-  m_SizeDelta: {x: 870, y: -25.807304}
+  m_SizeDelta: {x: 0, y: -25.807304}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &3148077338756654334
 MonoBehaviour:
@@ -651,9 +663,9 @@ RectTransform:
   m_Father: {fileID: 3148077338756654332}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 270, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077338841644646
@@ -746,6 +758,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ActionHeaderTabHandler, Assembly-CSharp
         m_MethodName: OpenTabSelected
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnEmote
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1392,7 +1416,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.00091552734}
-  m_SizeDelta: {x: 0, y: 258}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &3148077339100067414
 MonoBehaviour:
@@ -1446,13 +1470,14 @@ GameObject:
   - component: {fileID: 3148077339100411110}
   - component: {fileID: 3148077339100411109}
   - component: {fileID: 3148077339100411106}
+  - component: {fileID: 1217948066}
   m_Layer: 23
   m_Name: NewUI Canvaspotrait
   m_TagString: NewCanvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3148077339100411105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1579,6 +1604,29 @@ MonoBehaviour:
   - {fileID: 3148077340659434813}
   SelectedColorTab: {r: 0, g: 0.56078434, b: 1, a: 1}
   UnSelectedColorTab: {r: 0.5568628, g: 0.5568628, b: 0.5568628, a: 1}
+  CommingSoonTxt: {fileID: 3148077338894720679}
+--- !u!114 &1217948066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3148077339100411108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e7c293658e9d174c862aaf7303d5728, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tabBtnEmote:
+  - {fileID: 3148077339716292286}
+  - {fileID: 3148077339806421346}
+  - {fileID: 3148077338812822950}
+  - {fileID: 3148077338564136730}
+  - {fileID: 3148077340365445736}
+  _tabBtnReaction:
+  - {fileID: 3148077338897296571}
+  - {fileID: 3148077339098042900}
+  - {fileID: 3148077339880293550}
 --- !u!1 &3148077339174813187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1970,7 +2018,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3148077339716292286
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2766,9 +2814,9 @@ RectTransform:
   m_Father: {fileID: 3148077338665375736}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 95, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077339929575853
@@ -2869,6 +2917,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnReaction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3148077339929575826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2937,9 +2997,9 @@ RectTransform:
   m_Father: {fileID: 3148077338756654332}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 795, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077339941010923
@@ -3040,6 +3100,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnEmote
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3148077339941010920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3108,9 +3180,9 @@ RectTransform:
   m_Father: {fileID: 3148077338756654332}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 445, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077339975344987
@@ -3211,6 +3283,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnEmote
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3148077339975344984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3276,7 +3360,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3483,9 +3567,9 @@ RectTransform:
   m_Father: {fileID: 3148077338665375736}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 270, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077340194158967
@@ -3582,6 +3666,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnReaction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -4122,9 +4218,9 @@ RectTransform:
   m_Father: {fileID: 3148077338756654332}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 620, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077340448534301
@@ -4217,6 +4313,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ActionHeaderTabHandler, Assembly-CSharp
         m_MethodName: OpenTabSelected
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnEmote
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4385,6 +4493,7 @@ MonoBehaviour:
   ActionGroupType: 
   BtnImg: {fileID: 0}
   NameTxt: {fileID: 0}
+  HeighlightObj: {fileID: 0}
 --- !u!1 &3148077340532595539
 GameObject:
   m_ObjectHideFlags: 0
@@ -4929,9 +5038,9 @@ RectTransform:
   m_Father: {fileID: 3148077338665375736}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 445, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 150, y: 36.516}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &3148077340659434809
@@ -5024,6 +5133,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: ActionHeaderTabHandler, Assembly-CSharp
         m_MethodName: OpenTabSelected
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1217948066}
+        m_TargetAssemblyTypeName: ActionPortrateTabBtnHandler, Assembly-CSharp
+        m_MethodName: SetSelectedSeeAllBtnReaction
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

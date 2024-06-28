@@ -12,12 +12,64 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class ActionAnimationApplyToPlayer : MonoBehaviour
 {
     public RuntimeAnimatorController controller;
+
     private GameObject[] photonplayerObjects;
+
+    private void OnEnable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
+    }
+    private void OnDisable()
+    {
+        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClient_EventReceived;
+    }
 
     public void LoadAnimationAccrossInstance(string label)//, Action downloadCompleteCallBack
     {
         StartCoroutine(DownloadAddressableActionAnimation(label));//,downloadCompleteCallBack
     }
+
+    public void StopAnimation()
+    {
+        GameObject player;
+        if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer != null)
+        {
+            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
+        }
+        player = ReferencesForGamePlay.instance.m_34player;
+        if (player != null)
+        {
+            object[] viewMine = { player.GetComponent<PhotonView>().ViewID };
+            RaiseEventOptions options = new RaiseEventOptions();
+            options.CachingOption = EventCaching.DoNotCache;
+            options.Receivers = ReceiverGroup.All;
+            PhotonNetwork.RaiseEvent(1, viewMine as object, options,
+                SendOptions.SendReliable);
+        }
+        AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().enabled = true;
+    }
+
+    public void DisableAnimationReaction(int viewId)
+    {
+        photonplayerObjects = null;
+        photonplayerObjects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
+        Animator animatorremote = null;
+
+        for (int i = 0; i < photonplayerObjects.Length; i++)
+        {
+            if (photonplayerObjects[i] != null)
+            {
+                if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                {
+                    animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
+                    animatorremote.runtimeAnimatorController = controller;
+                    animatorremote.SetBool("IsEmote", false);
+
+                }
+            }
+        }
+    }
+
     private IEnumerator DownloadAddressableActionAnimation(string label)//, Action downloadCompleteCallBack
     {
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
@@ -85,53 +137,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
         }
     }
 
-    public void StopAnimation()
-    {
-        GameObject player;
-        if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer != null)
-        {
-            AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.localPosition = new Vector3(0f, -0.081f, 0);
-        }
-        player = ReferencesForGamePlay.instance.m_34player;
-        if (player != null)
-        {
-            object[] viewMine = { player.GetComponent<PhotonView>().ViewID };
-            RaiseEventOptions options = new RaiseEventOptions();
-            options.CachingOption = EventCaching.DoNotCache;
-            options.Receivers = ReceiverGroup.All;
-            PhotonNetwork.RaiseEvent(1, viewMine as object, options,
-                SendOptions.SendReliable);
-        }
-        AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().enabled = true;
-    }
-    public void DisableAnimationReaction(int viewId)
-    {
-        photonplayerObjects = null;
-        photonplayerObjects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
-        Animator animatorremote = null;
-
-        for (int i = 0; i < photonplayerObjects.Length; i++)
-        {
-            if (photonplayerObjects[i] != null)
-            {
-                if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == viewId)
-                {
-                    animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
-                    animatorremote.runtimeAnimatorController = controller;
-                    animatorremote.SetBool("IsEmote", false);
-
-                }
-            }
-        }
-    }
-    private void OnEnable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived += NetworkingClient_EventReceived;
-    }
-    public void OnDisable()
-    {
-        PhotonNetwork.NetworkingClient.EventReceived -= NetworkingClient_EventReceived;
-    }
     private void NetworkingClient_EventReceived(EventData obj)
     {
         if (obj.Code == 1)

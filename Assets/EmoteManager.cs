@@ -1,21 +1,35 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Linq;
-using static ReactionManager;
 
 public class EmoteManager : MonoBehaviour
 {
     public EmoteAnimationResponse EmoteServerData;
     public enum EmoteGroup { Moves, Dance, Reaction, Idle, Walk}
     public EmoteGroup EmoteGroupSelected = EmoteGroup.Moves;
+
     public void GetServerData()
     {
         StartCoroutine(GetEmoteServerData());
     }
+
+    public void OpenEmoteDialogUITabClick(int index)
+    {
+        if (EmoteGroupSelected == (EmoteGroup)index)
+            return;
+
+        EmoteGroupSelected = (EmoteGroup)index;
+        OpenEmoteDialogUI();
+    }
+
+    public void OpenEmoteDialogUI()
+    {
+        List<EmoteAnimationList> items = EmoteServerData.data.animationList.FindAll(x => x.group == EmoteGroupSelected.ToString());
+        EmoteReactionUIHandler.SetViewItemsEmote?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Emote);
+    }
+
     private IEnumerator GetEmoteServerData()
     {
         yield return new WaitForSeconds(5f);
@@ -26,38 +40,8 @@ public class EmoteManager : MonoBehaviour
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             yield return request.SendWebRequest();
             EmoteServerData = JsonUtility.FromJson<EmoteAnimationResponse>(request.downloadHandler.text);
-
-            if (!request.isHttpError && !request.isNetworkError)
-            {
-                if (request.error == null)
-                {
-                    if (EmoteServerData.success == true)
-                    {
-                        Debug.LogError(request.downloadHandler.text.ToString());
-                    }
-                }
-            }
-            else
-            {
-            
-            }
             request.Dispose();
-
         }
-    }
-    public void OpenEmoteDialogUITabClick(int index)
-    {
-        if (EmoteGroupSelected == (EmoteGroup)index)
-            return;
-
-        EmoteGroupSelected = (EmoteGroup)index;
-        OpenEmoteDialogUI();
-    }
-    public void OpenEmoteDialogUI()
-    {
-        Debug.LogError("OpenEmoteDialogUI ---->  " + EmoteGroupSelected.ToString());
-        List<EmoteAnimationList> items = EmoteServerData.data.animationList.FindAll(x => x.group == EmoteGroupSelected.ToString());
-        EmoteReactionUIHandler.SetViewItemsEmote?.Invoke(items, EmoteReactionItemBtnHandler.ItemType.Emote);
     }
 }
 
