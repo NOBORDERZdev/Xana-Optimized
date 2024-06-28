@@ -1233,6 +1233,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         Destroy(penguinJump);
         Destroy(penguinJumpPot);
+
+        ConstantsHolder.isFixedHumanoid = false;
+        ConstantsHolder.isPenguin = false;
     }
 
 
