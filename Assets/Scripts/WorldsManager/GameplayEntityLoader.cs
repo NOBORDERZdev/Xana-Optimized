@@ -513,7 +513,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
-        if (player.GetComponent<StepsManager>())
+        if (player!=null && player.GetComponent<StepsManager>())
         {
             player.GetComponent<StepsManager>().isplayer = true;
         }
@@ -782,6 +782,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
         InstantiatePlayerAvatar();
+        while (player == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
 
         if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
