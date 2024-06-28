@@ -7,7 +7,7 @@ public class UploadPropertyManager : MonoBehaviour
     public List<GameObject> mediaScreens;
     Transform mediaParent;
     List<UploadData> uploadDatas = new List<UploadData>();
-
+    bool isInitialize=false;
     private void OnEnable()
     {
         BuilderEventManager.UploadPropertiesData += UploadPropertiesData;
@@ -34,12 +34,16 @@ public class UploadPropertyManager : MonoBehaviour
 
     void UploadPropertiesInit()
     {
+        if (isInitialize)
+            return;
+
         if (uploadDatas.Count > 0)
         {
             foreach (var data in uploadDatas)
             {
                 AddScreen(data);
             }
+            isInitialize = true;
         }
     }
     private void AddScreen(UploadData data)
