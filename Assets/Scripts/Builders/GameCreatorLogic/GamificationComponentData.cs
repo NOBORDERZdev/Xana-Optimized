@@ -104,7 +104,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public bool SinglePlayer = false;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
-    bool isRaceStarted = false;
+    public bool isRaceStarted = false;
     private void Awake()
     {
         instance = this;

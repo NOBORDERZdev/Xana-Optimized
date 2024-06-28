@@ -49,6 +49,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
 
     private const string InLevelProperty = "InLevel";
+    private bool IsLevelPropertyUpdatedOnlevelLoad = false;
     //[SerializeField] CanvasGroup PartyJump;
 
 
@@ -418,7 +419,8 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
-        // Set custom properties to indicate that the player is in a level
+        XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
+        IsLevelPropertyUpdatedOnlevelLoad = false;
         Hashtable props = new Hashtable()
         {
             { InLevelProperty, (levelName+XANAPartyManager.Instance.GameIndex) }
@@ -428,37 +430,31 @@ public class ReferencesForGamePlay : MonoBehaviour
         // Load the new level
         PhotonNetwork.LoadLevel(levelName);
     }
-    public void On_JoinedLobby()
-    {
-        Debug.Log(">>>>>>>>>>> Player Joined Lobby");
-        Hashtable props = new Hashtable
-        {
-            { InLevelProperty, "JoinedLobby" }
-        };
-
-        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
-    }
-
+ 
     public void CheckActivePlayerInCurrentLevel()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)
+        if (GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
         {
-            if (player.CustomProperties.TryGetValue(InLevelProperty, out object isInLevel))
+            foreach (Player player in PhotonNetwork.PlayerList)
             {
-                if (isInLevel != null)
+                if (player.CustomProperties.TryGetValue(InLevelProperty, out object isInLevel))
                 {
-                    XANAPartyManager.Instance.ActivePlayerInCurrentLevel++;
+                    if (isInLevel != null)
+                    {
+                        XANAPartyManager.Instance.ActivePlayerInCurrentLevel++;
+                    }
                 }
             }
+            IsLevelPropertyUpdatedOnlevelLoad = true;
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !GamificationComponentData.instance.isRaceStarted)
+                GamificationComponentData.instance.StartXANAPartyRace();
         }
     }
 
     public void ResetActivePlayerStatusInCurrentLevel()
     {
-        Hashtable props = new Hashtable
-        {
-            { InLevelProperty, null }
-        };
+        Hashtable props = new Hashtable();
+        props.Add("IsInLevel", false);
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
