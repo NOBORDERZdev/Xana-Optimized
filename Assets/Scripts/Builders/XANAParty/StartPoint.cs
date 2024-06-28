@@ -38,7 +38,7 @@ public class StartPoint : MonoBehaviour
         //triggerCollider.SetActive(false);
         if (PhotonNetwork.IsMasterClient)
         {
-            gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+            NetworkSyncManager.instance.view.RPC(nameof(StartGameRPC), RpcTarget.All);
         }
     }
 
