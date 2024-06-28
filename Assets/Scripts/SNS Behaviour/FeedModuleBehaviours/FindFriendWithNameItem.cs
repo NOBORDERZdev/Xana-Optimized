@@ -65,6 +65,7 @@ public class FindFriendWithNameItem : MonoBehaviour
         {
             AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
             profileImage.sprite = null;
+            DestroyImmediate(profileImage.sprite, true);
             //Resources.UnloadUnusedAssets();//every clear.......
             //Caching.ClearCache();
             SNS_APIManager.Instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......

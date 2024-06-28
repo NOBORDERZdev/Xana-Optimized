@@ -91,6 +91,7 @@ public class ProfileUIHandler : MonoBehaviour
     {
         if (_renderTexCamera != null)
         {
+            DestroyImmediate(_renderTexCamera.GetComponent<Camera>().targetTexture, true);
             _renderTexCamera.GetComponent<Camera>().targetTexture = null;
             _renderTexCamera.gameObject.SetActive(false);
         }
