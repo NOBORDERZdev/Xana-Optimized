@@ -416,9 +416,10 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public void MakeRoomPrivate()
     {
-        Hashtable customeRoomProperties = new Hashtable();
-        customeRoomProperties["IsVisible"] = false;
-        PhotonNetwork.CurrentRoom.SetCustomProperties(customeRoomProperties);
+        PhotonNetwork.CurrentRoom.IsVisible = false;
+        //Hashtable customeRoomProperties = new Hashtable();
+        //customeRoomProperties["IsVisible"] = false;
+        //PhotonNetwork.CurrentRoom.SetCustomProperties(customeRoomProperties);
     }
 }
 
