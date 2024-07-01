@@ -10,9 +10,12 @@ public class RaffleTicketHandler : MonoBehaviour
 {
 
     [Header("*UI References*")]
-    [SerializeField] private TextMeshProUGUI _displayDomeVisitCountText;
-    [SerializeField] private TextMeshProUGUI _displayTicketCountTextLandScape;
-    [SerializeField] private TextMeshProUGUI _displayTicketCountTextPotrait;
+    [SerializeField] private TextMeshProUGUI _displayTicketCountTextSmallLandScape;
+    [SerializeField] private TextMeshProUGUI _displayTicketCountTextLargeLandScape;
+    [SerializeField] private TextMeshProUGUI _displayTicketCountTextSmallPotrait;
+    [SerializeField] private TextMeshProUGUI _displayTicketCountTextLargePotrait;
+    [SerializeField] private TextMeshProUGUI _ticketCountTextLandScape;
+    [SerializeField] private TextMeshProUGUI _ticketCountTextPotrait;
     [SerializeField] private TextMeshProUGUI _giftTicketsPopUpDescriptionTextLandScape;
     [SerializeField] private TextMeshProUGUI _giftTicketsPopUpDescriptionTextPotrait;
     [Header("*GameObject References*")]
@@ -140,8 +143,10 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void UpdateUI()
     {
-        _displayDomeVisitCountText.text = _allVisitedDomeIds.Count.ToString() + "/" + _totalNumberOfDomes.ToString();
-        //  _displayTicketCountTextLandScape.text = _summitDomesVisitedByUser.data.TicketsCount.ToString();
+        _displayTicketCountTextSmallLandScape.text = "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextLargeLandScape.text= "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextSmallPotrait.text= "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextLargePotrait.text= "(" + _totalNumberOfTickets + ")";
     }
     private void TransferDatatoMainDomeList()
     {
@@ -150,15 +155,12 @@ public class RaffleTicketHandler : MonoBehaviour
             _allVisitedDomeIds.Add(item.domeId);
         }
         _totalNumberOfTickets = _summitRaffleTicketsEranedByUser.tickets;
-        //  UpdateUI();
+        UpdateUI();
     }
     private void UpdateTicketsData()
     {
         _earnTicketsInOneCycle = 1;
         _totalNumberOfTickets += _earnTicketsInOneCycle;
-        //  _displayDomeVisitCountText.text = _currentNumberOfDomes.ToString() + "/" + _totalNumberOfDomes.ToString();
-        //  _displayTicketCountTextLandScape.text = _totalNumberOfTickets.ToString();
-        //UpdateUI();
         CheckForAnyRaffleticketGifts(_totalNumberOfTickets);
     }
     private void CheckForAnyRaffleticketGifts(int RaffleTickets)
@@ -168,7 +170,7 @@ public class RaffleTicketHandler : MonoBehaviour
             _earnTicketsInOneCycle += 5;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
             StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle));
-            StartCoroutine(RewardPopUp("Gift 5 extra tickets  your total coin count is a multiple of 5!"));
+            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!"));
         }
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
@@ -178,6 +180,7 @@ public class RaffleTicketHandler : MonoBehaviour
             StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome "));
         }
         _earnTicketsInOneCycle = 0;
+        UpdateUI();
     }
     IEnumerator RewardPopUp(string value)
     {

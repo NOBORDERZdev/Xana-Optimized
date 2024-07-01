@@ -78,6 +78,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] InputReader XanaPartyInput;
     [SerializeField] PenguinLookPointTracker penguinLook;
     [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
+    [SerializeField] RaffleTicketHandler _raffleTickets;
 
     private void Awake()
     {
@@ -1238,5 +1239,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ConstantsHolder.isPenguin = false;
     }
 
-
+    public void AssignRaffleTickets(int domeID)
+    {
+        _raffleTickets.UpdateData(domeID);
+    }
 }
