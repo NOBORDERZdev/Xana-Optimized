@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Models;
 using Photon.Pun;
+using UnityEngine.PlayerLoop;
 
 public class RotatorComponent : ItemComponent
 {
@@ -9,11 +10,14 @@ public class RotatorComponent : ItemComponent
     private bool startComponent;
     private Vector3 currentRotation;
     private string itemID;
+    private float m_Angle;
+
     public void Init(RotatorComponentData rotatorComponentData,string itemid)
     {
         InitRotate(rotatorComponentData);
         itemID = itemid;
         NetworkSyncManager.instance.rotatorComponent.Add(itemid,Vector3.zero);
+        NetworkSyncManager.instance.OnDeserilized += Sync;
     }
 
     public void InitRotate(RotatorComponentData rotatorComponentData)
@@ -22,9 +26,13 @@ public class RotatorComponent : ItemComponent
      
         PlayBehaviour();
     }
+    void Sync()
+    {
+        this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)NetworkSyncManager.instance.rotatorComponent[itemID]));
+    }
 
-   
-    private void FixedUpdate() //Provide better performance than infinite corutine
+
+    private void Update() //Provide better performance than infinite corutine
     {
         if (startComponent)
         {
@@ -43,7 +51,7 @@ public class RotatorComponent : ItemComponent
                 {
                     currentRotation = (Vector3)obj;
                     Debug.LogError("Rotation  " + currentRotation);
-                    gameObject.transform.rotation = Quaternion.Euler (currentRotation);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(this.currentRotation), this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
                 }
                 else { Debug.LogError( "Roatating object count" + NetworkSyncManager.instance.rotatorComponent.Count); }
             }

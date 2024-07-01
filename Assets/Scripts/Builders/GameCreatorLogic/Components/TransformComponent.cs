@@ -21,7 +21,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.rotation = (Quaternion) NetworkSyncManager.instance.TransformComponentrotation[ItemID];
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler((Vector3) NetworkSyncManager.instance.TransformComponentrotation[ItemID]), this.m_Angle * (1.0f / PhotonNetwork.SerializationRate)); ;
                 timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID]  ;
             }
         }
@@ -55,7 +55,15 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         }
 
     }
-    
+
+    private void Start()
+    {
+        NetworkSyncManager.instance.OnDeserilized += Sync;
+    }
+    void Sync()
+    {
+        this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)NetworkSyncManager.instance.TransformComponentrotation[ItemID]));
+    }
     public void increasTime()
     {
         timeSpent++;
@@ -190,6 +198,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
 
     ScalerComponentData scalerComponentData;
     public Ease scalerEaseType;
+    private float m_Angle;
+
     public void InitScale(ScalerComponentData scalerComponentData, string itemid)
     {
         this.scalerComponentData = scalerComponentData;

@@ -691,10 +691,10 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(GemificationObjectLoadWait(1f));
             }
 
-            foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+          /*  foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
             {
                 xanaItem.SetData(xanaItem.itemData);
-            }
+            }*/
 
             GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
             //Set Hierarchy same as builder

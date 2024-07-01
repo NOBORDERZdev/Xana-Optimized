@@ -21,6 +21,8 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
 
     public Action<string,int, int, int> OnRandomNumberSet;
     public List<RandomNumberComponentsData> RandomNumberHist = new List<RandomNumberComponentsData>();
+
+    public Action OnDeserilized;
     private void Awake()
     {
         instance = this;
@@ -28,12 +30,12 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
 
     private void OnEnable()
     {
-        PhotonNetwork.AddCallbackTarget(this);
+       // PhotonNetwork.AddCallbackTarget(this);
     }
 
     private void OnDisable()
     {
-        PhotonNetwork.RemoveCallbackTarget(this);
+       // PhotonNetwork.RemoveCallbackTarget(this);
     }
         
     [PunRPC]
@@ -50,17 +52,19 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
     {
         if (stream.IsWriting)
         {
+            Debug.LogError("Writing");
            stream.SendNext( rotatorComponent);  stream.SendNext(TransformComponentrotation);  stream.SendNext(TransformComponentScale);  stream.SendNext(TransformComponentPos);  stream.SendNext(TransformComponentTime);  stream.SendNext(TranslateComponentpos);
         
-        }else if(!PhotonNetwork.IsMasterClient)
+        }else
         {
-         
+            Debug.LogError("Reading");
             rotatorComponent = (Dictionary<string,object>)stream.ReceiveNext();
             TransformComponentrotation = (Dictionary<string, object>)stream.ReceiveNext();
             TransformComponentScale = (Dictionary<string, object>)stream.ReceiveNext();
             TransformComponentPos = (Dictionary<string, object>)stream.ReceiveNext();
             TransformComponentTime = (Dictionary<string, int>)stream.ReceiveNext();
             TranslateComponentpos = (Dictionary<string, object>)stream.ReceiveNext();
+
             /*    rotatorComponent =  JsonUtility.FromJson < Dictionary<string, Vector3>>((string)stream.ReceiveNext());
                 var dat = (string)stream.ReceiveNext();
                 Debug.LogError("DataReceived" + dat);
@@ -69,7 +73,7 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
                 TransformComponentPos = JsonUtility.FromJson<Dictionary<string, Vector3>>((string)stream.ReceiveNext());
                 TransformComponentTime = JsonUtility.FromJson<Dictionary<string, int>>((string)stream.ReceiveNext());
                 TranslateComponentpos = JsonUtility.FromJson<Dictionary<string, Vector3>>((string)stream.ReceiveNext());*/
-
+            OnDeserilized?.Invoke();
         }
     }
 
