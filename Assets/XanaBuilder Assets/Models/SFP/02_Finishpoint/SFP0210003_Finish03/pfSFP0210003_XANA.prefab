@@ -678,19 +678,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 9116563370259748375, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
   m_PrefabInstance: {fileID: 1747332273623646378}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7085936066431753099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7402597706000127677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe6dbcf92b637f43bcd5bde90e48890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _finishPoint: {fileID: 6023227752918299061}
 --- !u!54 &6814878345164290523
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -707,6 +694,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7085936066431753099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7402597706000127677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe6dbcf92b637f43bcd5bde90e48890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finishPoint: {fileID: 6023227752918299061}
+--- !u!65 &7758083125761427487 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 8328838025020672181, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
+  m_PrefabInstance: {fileID: 1747332273623646378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8597317256495593063 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8029930296653166285, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}
@@ -769,7 +774,7 @@ MonoBehaviour:
   - {fileID: 3052566516501501883}
   - {fileID: 2603603840112749989}
   triggerCollider: {fileID: 2578409834582804464}
-  FinishRaceCollider: {fileID: 0}
+  FinishRaceCollider: {fileID: 7758083125761427487}
 --- !u!4 &8936301448379051229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7222607924531096695, guid: 01158eae3dfd50c429c5a2b8f0ce1cac, type: 3}

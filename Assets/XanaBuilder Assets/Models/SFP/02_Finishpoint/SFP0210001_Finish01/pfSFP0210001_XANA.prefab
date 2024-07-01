@@ -623,6 +623,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8588761169511322195, guid: 2f6768431c63ff840b6e1b0cd989b24b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8588761169511322195, guid: 2f6768431c63ff840b6e1b0cd989b24b, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -641,19 +645,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8922430146482954270, guid: 2f6768431c63ff840b6e1b0cd989b24b, type: 3}
   m_PrefabInstance: {fileID: 7801143799610494036}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2824602827715734703
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1698398044738563146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfe6dbcf92b637f43bcd5bde90e48890, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _finishPoint: {fileID: 5798108647688679000}
 --- !u!54 &480962690880383843
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -670,9 +661,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2824602827715734703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1698398044738563146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfe6dbcf92b637f43bcd5bde90e48890, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _finishPoint: {fileID: 5798108647688679000}
 --- !u!1 &1977733566722891271 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8588761169511322195, guid: 2f6768431c63ff840b6e1b0cd989b24b, type: 3}
+  m_PrefabInstance: {fileID: 7801143799610494036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3521170637719951098 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 6673926719945251502, guid: 2f6768431c63ff840b6e1b0cd989b24b, type: 3}
   m_PrefabInstance: {fileID: 7801143799610494036}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7132911547513451007 stripped
@@ -742,4 +751,4 @@ MonoBehaviour:
   - {fileID: 5349101827226904700}
   - {fileID: 4919880443493421666}
   triggerCollider: {fileID: 1977733566722891271}
-  FinishRaceCollider: {fileID: 0}
+  FinishRaceCollider: {fileID: 3521170637719951098}
