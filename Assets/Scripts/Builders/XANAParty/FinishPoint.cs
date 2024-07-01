@@ -53,6 +53,7 @@ public class FinishPoint : MonoBehaviour
         Hashtable _hash = new Hashtable();
         _hash.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdatePlayerRankAndLP();
     }
 
     internal void FinishRace()

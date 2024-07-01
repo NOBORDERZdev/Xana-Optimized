@@ -21,6 +21,11 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     void DisbleAnimatedController()
     {
+        if (PhotonNetwork.IsMasterClient &&photonView.IsMine )
+        {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().Initialize();
+            return;
+        }
         if (photonView != null && !photonView.IsMine) {
             this.GetComponentInChildren<AnimatedController>().enabled = false;
         }
