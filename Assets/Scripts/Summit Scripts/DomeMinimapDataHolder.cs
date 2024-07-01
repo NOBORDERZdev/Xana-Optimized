@@ -9,21 +9,20 @@ using System.Collections.Generic;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
-    public Sprite highlightedSprite;
+    public Sprite HighlightedSprite;
     public List<DomeDataForMap> MapDomes;
     public List<DomeDataForMap> MapDomes_portrait;
-
-    public List<TextMeshProUGUI> vistedCount;
+    public List<TextMeshProUGUI> VistedCount;
 
     public GameObject ConfirmationPopup;
     public GameObject ConfirmationPopup_Portrait;
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
-    Dictionary<int, Transform> allInitDomes = new Dictionary<int, Transform>();
-
-    Transform playerTransform;
-    int clickedDomeID;
-    int totalDomeCount = 128;
+    
+    private Dictionary<int, Transform> allInitDomes = new Dictionary<int, Transform>();
+    private Transform playerTransform;
+    private int _clickedDomeID;
+    private int _totalDomeCount = 128;
 
 
     private void OnEnable()
@@ -59,8 +58,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
         var domeVisits = jsonNode["domeVisits"];
         HashSet<int> _VisitedDomeIDs = domeVisits.Children.Select(d => d["domeId"].AsInt).ToHashSet();
 
-        string visitedText = $"({_VisitedDomeIDs.Count}/{totalDomeCount})";
-        vistedCount.ForEach(_text => _text.text = $"({_VisitedDomeIDs.Count}/{totalDomeCount})");
+        string visitedText = $"({_VisitedDomeIDs.Count}/{_totalDomeCount})";
+        VistedCount.ForEach(_text => _text.text = $"({_VisitedDomeIDs.Count}/{_totalDomeCount})");
 
         // Combine MapDomes and MapDomes_portrait into one collection for processing
         var allDomes = MapDomes.Concat(MapDomes_portrait);
@@ -68,8 +67,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
         {
             if (_VisitedDomeIDs.Contains(item.domeId))
             {
-                item.myImage = item.myImage ?? item.GetComponent<UnityEngine.UI.Image>();
-                item.myImage.sprite = highlightedSprite;
+                item.MyImage = item.MyImage ?? item.GetComponent<UnityEngine.UI.Image>();
+                item.MyImage.sprite = HighlightedSprite;
             }
         }
     }
@@ -95,7 +94,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
     {
         if(playerTransform == null)
             playerTransform = GameplayEntityLoader.instance.mainController.transform;
-        clickedDomeID = domeId;
+        _clickedDomeID = domeId;
         ConfirmationPanelHandling(true);
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
@@ -123,6 +122,6 @@ public class DomeMinimapDataHolder : MonoBehaviour
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
 
-        TeleportPlayerToSelectedDome(clickedDomeID, playerTransform);
+        TeleportPlayerToSelectedDome(_clickedDomeID, playerTransform);
     }
 }
