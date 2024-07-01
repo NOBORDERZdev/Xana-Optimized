@@ -9,7 +9,6 @@ using System.Collections.Generic;
 
 public class DomeMinimapDataHolder : MonoBehaviour
 {
-    public GameObject mapBaseObj;
     public Sprite highlightedSprite;
     public List<DomeDataForMap> MapDomes;
     public List<DomeDataForMap> MapDomes_portrait;
@@ -34,7 +33,6 @@ public class DomeMinimapDataHolder : MonoBehaviour
         if(ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
         {
             GetVisitedDomeData();
-            mapBaseObj.SetActive(true);
         }
     }
     private void OnDisable()
