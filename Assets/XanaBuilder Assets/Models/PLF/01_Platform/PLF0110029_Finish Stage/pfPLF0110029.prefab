@@ -461,8 +461,8 @@ GameObject:
   - component: {fileID: 1469103671119650539}
   - component: {fileID: 5279075675711707901}
   - component: {fileID: 6650301949430576662}
-  - component: {fileID: 3579640986045571128}
   - component: {fileID: 6637678341275356635}
+  - component: {fileID: 5040978474712368349}
   m_Layer: 9
   m_Name: pfPLF0110029
   m_TagString: Item
@@ -477,7 +477,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2245218883566781521}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -486,7 +486,7 @@ Transform:
   - {fileID: 181808252821918857}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &5279075675711707901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ MonoBehaviour:
   activeBehaviours: []
   activeOnlyIfEnabled: 0
   itemSprite: {fileID: 0}
---- !u!114 &3579640986045571128
+--- !u!114 &6637678341275356635
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -567,7 +567,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2245218883566781521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2a55ed8923d2104d9a821c7d55c885a, type: 3}
+  m_Script: {fileID: 11500000, guid: 32e8c3684e7af40e3844c1780be881b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemBase: {fileID: 5279075675711707901}
+  activeObjects: []
+  activeBehaviours: []
+  activeOnlyIfEnabled: 0
+  outlinable: {fileID: 3952911588898649441}
+--- !u!114 &5040978474712368349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2245218883566781521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07198c73ce6c1ce49b948449a5fe3ed2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   runtimeItemName: 
@@ -594,23 +611,6 @@ MonoBehaviour:
   indentationCount: 0
   isSelected: 0
   shrinkHierarchy: 0
---- !u!114 &6637678341275356635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2245218883566781521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32e8c3684e7af40e3844c1780be881b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _itemBase: {fileID: 5279075675711707901}
-  activeObjects: []
-  activeBehaviours: []
-  activeOnlyIfEnabled: 0
-  outlinable: {fileID: 3952911588898649441}
 --- !u!1 &2766808064709149887
 GameObject:
   m_ObjectHideFlags: 0
@@ -891,6 +891,7 @@ GameObject:
   m_Component:
   - component: {fileID: 181808252821918857}
   - component: {fileID: 8026485414021134070}
+  - component: {fileID: 5198073804443385749}
   m_Layer: 9
   m_Name: Colliders
   m_TagString: Item
@@ -951,6 +952,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 16.492798, y: 0.49622798, z: 6.8210773}
   m_Center: {x: 0.027280807, y: 0.24818456, z: 0.027421951}
+--- !u!114 &5198073804443385749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4973526524408356601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d609f4eb94573924c93128044a651952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FinishRaceItem: {fileID: 5040978474712368349}
 --- !u!1 &5437769004979077743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1043,7 +1057,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5437769004979077743}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fe91dc294731a9428c0941ea7579110, type: 3}
   m_Name: 
@@ -1052,7 +1066,7 @@ MonoBehaviour:
   drawingMode: 1
   outlineLayer: 0
   outlineTargets:
-  - IsVisible: 0
+  - IsVisible: 1
     CutoutMask: 8
     edgeDilateAmount: 5
     frontEdgeDilateAmount: 5
