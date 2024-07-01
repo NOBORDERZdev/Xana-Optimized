@@ -23,6 +23,8 @@ public class patchProfile : MonoBehaviour
     }
     private void OnDisable()
     {
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+            return;
         gameManager.ActorManager.IdlePlayerAvatorForMenu(false);
         gameManager.m_RenderTextureCamera.gameObject.SetActive(false);
     }

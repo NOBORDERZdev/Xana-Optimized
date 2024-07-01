@@ -53,6 +53,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     //Gautam added for changing the position of the name canvas for avatar changer
     internal Canvas nameCanvas;
 
+    public string[] DummyUserNames=new string[] { "David", "James", "John", "Robert", "Michael", "William", "Rubi", "Roso", "Smith", "Rocky" };
+
     private void Awake()
     {
 
@@ -119,6 +121,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                     }
                 }
             }
+        else
+        {
+            PhotonUserName.text= DummyUserNames[UnityEngine.Random.Range(0, DummyUserNames.Length)];
+        }
        //StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
        // Debug.Log("call arrow");
         //GameObject myobj = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");

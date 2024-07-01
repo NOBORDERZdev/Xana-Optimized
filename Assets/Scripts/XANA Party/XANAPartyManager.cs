@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Collections;
@@ -21,6 +22,7 @@ public class XANAPartyManager : MonoBehaviour
     [SerializeField] int debugGameId = 0; // Index of the game to test
     private Random random = new Random();
 
+    public int ActivePlayerInCurrentLevel = 0;
     private void Awake()
     {
         if (Instance == null)
@@ -45,6 +47,7 @@ public class XANAPartyManager : MonoBehaviour
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (ShouldFetchXanaPartyGames())
         {
+            PhotonNetwork.AutomaticallySyncScene = true;
             StartCoroutine(FetchXanaPartyGames()); // Fetching XANA PARTY GAMES and Joining XANA PARTY LOBBY
         }
         else
@@ -151,10 +154,11 @@ public class XANAPartyManager : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        ConstantsHolder.xanaConstants.userLimit = "15"; // update the user limit for xana party
+        ConstantsHolder.xanaConstants.userLimit = ConstantsHolder.XanaPartyMaxPlayers.ToString();//"3"; // update the user limit for xana party
 
         if (isJoiningLobby)
         {
+            XANAPartyManager.Instance.GameIndex = 0;
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {
@@ -173,12 +177,12 @@ public class XANAPartyManager : MonoBehaviour
             if (!ConstantsHolder.xanaConstants.isMasterOfGame) // is not master client
             {
                 print("not master ");
-                yield return new WaitForSeconds(6);
+                yield return new WaitForSeconds(20);
             }
             else
             {
                 print("master entering a GAME!");
-                yield return new WaitForSeconds(3);
+                yield return new WaitForSeconds(2);
             }
         }
         

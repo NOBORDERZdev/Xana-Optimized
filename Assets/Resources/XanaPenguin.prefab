@@ -105,7 +105,7 @@ MonoBehaviour:
   groundCheckerThrashold: 0.04
   slopeCheckerThrashold: 0.06
   stepCheckerThrashold: 0.07
-  maxClimbableSlopeAngle: 53.6
+  maxClimbableSlopeAngle: 70
   maxStepHeight: 0.3
   speedMultiplierOnAngle:
     serializedVersion: 2
@@ -271,6 +271,17 @@ MonoBehaviour:
   ChatShow: {fileID: 7104200976459534907}
   reactionUi: {fileID: 2552360682396586119}
   VoiceView: {fileID: 3746621771120662294}
+  DummyUserNames:
+  - David
+  - James
+  - John
+  - Robert
+  - Michael
+  - William
+  - Rubi
+  - Roso
+  - Smith
+  - Rocky
 --- !u!114 &3746621771120662294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633a1b383fbe15a4c924264c11b9fbdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RaceFinishCount: 0
 --- !u!1 &1927154725311225520
 GameObject:
   m_ObjectHideFlags: 0
@@ -621,7 +633,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2552360682396586119}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
   m_Name: 
@@ -968,7 +980,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7104200976459534907}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
   m_Name: 
@@ -1090,7 +1102,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7275153147158682805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 47e3b18b47849e141bc962f5b697e45e, type: 3}
   m_Name: 
@@ -1394,7 +1406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5719992874701991799
 RectTransform:
   m_ObjectHideFlags: 0

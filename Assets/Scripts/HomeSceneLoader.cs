@@ -97,7 +97,27 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 else
                     ConstantsHolder.xanaConstants.needToClearMemory = true;
 
-                LeaveRoom();
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ConstantsHolder.xanaConstants.isJoinigXanaPartyGame = false;
+                    ConstantsHolder.xanaConstants.XanaPartyGameId = 0;
+                    ConstantsHolder.xanaConstants.XanaPartyGameName = "";
+                    ConstantsHolder.xanaConstants.isBuilderScene = false;
+                    ConstantsHolder.xanaConstants.builderMapID = 0;
+                    // Load the main scene
+                    Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+
+                    MutiplayerController.instance.working = ScenesList.AddressableScene;
+                    PhotonNetwork.LeaveRoom();
+                    PhotonNetwork.LeaveLobby();
+                    PhotonNetwork.DestroyAll(true);
+                    StartSceneLoading();
+                }
+                else
+                {
+                    LeaveRoom();
+                }
             }
         }
     }
@@ -146,6 +166,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public void StartSceneLoading()
     {
+        PhotonHandler.levelName = "Addressable";
         ConstantsHolder.xanaConstants.CurrentSceneName = "Addressable";
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         SceneManager.LoadSceneAsync(mainScene);

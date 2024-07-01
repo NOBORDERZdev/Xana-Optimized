@@ -61,6 +61,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public HomeSceneLoader _uiReferences;
 
     [Header("XANA Party")]
+    public GameObject PositionResetButton;
     [SerializeField] GameObject XanaWorldController;
     [SerializeField] GameObject XanaPartyController;
     [SerializeField] public CameraManager XanaPartyCamera;
@@ -78,6 +79,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         instance = this;
         //    LoadFile();
         setLightOnce = false;
+        if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            PositionResetButton.SetActive(true);
+            Invoke(nameof(LoadFile),1f);
+        }
     }
 
 
@@ -507,7 +513,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         SetAxis();
         mainPlayer.SetActive(true);
         Metaverse.AvatarSpawnerOnDisconnect.Instance.InitCharacter();
-        if (player.GetComponent<StepsManager>())
+        if (player!=null && player.GetComponent<StepsManager>())
         {
             player.GetComponent<StepsManager>().isplayer = true;
         }
@@ -689,6 +695,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //tempRef.EmoteFavPotraite.SetActive(false);
         tempRef.PartyChatCanvasPotraite.SetActive(true);
         tempRef.PartJumpPotraite.SetActive(true);
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+        {
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);
+
+        }
+        else
+        {
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
+        }
     }
 
     void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){
@@ -767,6 +782,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
         InstantiatePlayerAvatar();
+        while (player == null)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
 
         if (ConstantsHolder.xanaConstants.isBuilderScene && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
@@ -1003,7 +1022,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
        
     }
 
-    void ResetPlayerPosition()
+    public void ResetPlayerPosition()
     {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {

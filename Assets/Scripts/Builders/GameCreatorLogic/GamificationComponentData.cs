@@ -9,6 +9,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class GamificationComponentData : MonoBehaviourPunCallbacks
 {
@@ -102,8 +103,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     internal bool IsGrounded;
 
     public bool SinglePlayer = false;
-    public int RaceFinishCount = 0;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
+    public bool isRaceStarted = false;
     private void Awake()
     {
         instance = this;
@@ -121,11 +122,25 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         OrientationChange(false);
         warpComponentList.Clear();
         WarpComponentLocationUpdate += UpdateWarpFunctionData;
-
+        SceneManager.sceneLoaded += OnSceneLoaded;
         //reset ignore layer collision on scene load
         Physics.IgnoreLayerCollision(9, 22, false);
         ZoomControl = true;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Check if the loaded scene is the one where you want to start the XANA party race
+        // Call StartXANAPartyRace here
+        if (scene.name == "Builder")
+        {
+            print("!!! call from Scene Loaded");
+            if ( ConstantsHolder.xanaConstants.isXanaPartyWorld &&  ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isRaceStarted)
+                StartXANAPartyRace();
+        }
+    }
+
+    
 
     public override void OnDisable()
     {
@@ -136,6 +151,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
 
         WarpComponentLocationUpdate -= UpdateWarpFunctionData;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
 
     }
 
@@ -399,20 +415,20 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void StartXANAPartyRace()
     {
-        if (SinglePlayer)
+        //if (SinglePlayer)
+        //{
+        //    PhotonNetwork.CurrentRoom.IsVisible = false;
+        //    PhotonNetwork.CurrentRoom.IsOpen = false;
+        //    return;
+        //}
+        print("!!!!!!! player count "+ Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + "!!!! ConstantsHolder.XanaPartyMaxPlayers" + ConstantsHolder.XanaPartyMaxPlayers);
+        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ConstantsHolder.XanaPartyMaxPlayers)
         {
-            PhotonNetwork.CurrentRoom.IsVisible = false;
-            PhotonNetwork.CurrentRoom.IsOpen = false;
-            return;
-        }
-
-        if (PhotonNetwork.CountOfPlayers == ConstantsHolder.XanaPartyMaxPlayers)
-        {
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.CurrentRoom.IsVisible = false;
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-            }
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    PhotonNetwork.CurrentRoom.IsVisible = false;
+            //    PhotonNetwork.CurrentRoom.IsOpen = false;
+            //}
             StartCoroutine(WaitForWorldLoadingAllPlayer());
         }
     }
@@ -423,24 +439,34 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         while (!allPalyerReady)
         {
             yield return new WaitForSeconds(0.5f);
+           // print("Photon player count "+ PhotonNetwork.PlayerList.Length);
             foreach (Player player in PhotonNetwork.PlayerList)
             {
+              //  print("~~~ PLAYER "+player.UserId);
                 if (player.CustomProperties.TryGetValue("IsReady", out object isReady))
                 {
+                  //  print("in if");
                     allPalyerReady = (bool)isReady/*(bool)player.CustomProperties["IsReady"]*/;
+                   // print("~~~ PLAYER "+player.UserId + "BOOL IS "+allPalyerReady);
                     if (!allPalyerReady) break;
                 }
+                else
+                {
+                  //  print("!! call else");
+                    allPalyerReady = false; break;
+                }
             }
-            allPalyerReady = true;
+           // allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-        print("~~~ all player ready ~~~");
+      //  print("~~~ all player ready ~~~");
         this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+        isRaceStarted= true;
     }
     [PunRPC]
     void StartGameRPC()
     {
-        print(" RPC call");
+       // print(" RPC call");
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
     }
 
@@ -451,16 +477,16 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void UpdateRaceStatus(){ 
-        GamificationComponentData.instance.RaceFinishCount++;
+    void UpdateRaceStatus(){
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.RaceFinishCount++;
         int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
-        if (GamificationComponentData.instance.RaceFinishCount >= currentPlayers)
+       // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
+        if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
+            XANAPartyManager.Instance.GameIndex++;
             if (PhotonNetwork.IsMasterClient)
             {
-                var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-                XANAPartyManager.Instance.GameIndex++;
                 if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
                 {
                     XANAPartyManager.Instance.GameIndex = 0;

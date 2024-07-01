@@ -3,6 +3,7 @@ using PhysicsCharacterController;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class XANAPartyMulitplayer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class XANAPartyMulitplayer : MonoBehaviour
     PhotonView photonView;
 
     private ConstantsHolder _XanaConstants = ConstantsHolder.xanaConstants;
+
+    public int RaceFinishCount = 0;
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -38,6 +41,12 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
     }
 
+    [PunRPC]
+    public void StartLobbyCounter()
+    {
+        StartCoroutine(ReferencesForGamePlay.instance.ShowLobbyCounterAndMovePlayer());
+    }
+
     // RPC to move players to the selected room
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
@@ -49,9 +58,19 @@ public class XANAPartyMulitplayer : MonoBehaviour
         _XanaConstants.isBuilderScene = true;
         _XanaConstants.builderMapID = gameId;
         _XanaConstants.isMasterOfGame = PhotonNetwork.IsMasterClient;
-
+        print("!! move to level");
+        
+      
+       // SceneManager.UnloadScene("GamePlayScene");
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //    Photon.Pun.PhotonHandler.levelName = "Builder";
+        //    PhotonNetwork.LoadLevel("Builder");
+        //}
         // Load the main scene
-        GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        //GameplayEntityLoader.instance._uiReferences.LoadMain(false);
+        Photon.Pun.PhotonHandler.levelName = "Builder";
+        ReferencesForGamePlay.instance.LoadLevel("Builder");
     }
 
     public IEnumerator MoveToLobby()
