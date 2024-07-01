@@ -292,10 +292,12 @@ namespace Photon.Pun.Demo.PunBasics
                     {
                         if(ConstantsHolder.MultiSectionPhoton)
                         {
-                            if (info.CustomProperties["Sector"] != null)
+                            object sector;
+                            if (info.CustomProperties.TryGetValue("Sector",out sector))
                             {
-                                var sector = (string)info.CustomProperties["Sector"];
-                                if (sector != SectorName) { continue; }
+                                
+                                
+                                if (((string)sector) != SectorName) { continue; }
                             }
                             else { continue; }
                         }
