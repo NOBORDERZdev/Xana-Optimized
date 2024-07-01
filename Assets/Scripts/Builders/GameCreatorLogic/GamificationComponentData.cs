@@ -409,14 +409,14 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (!withMultiplayer)
             return;
 
-        if (PhotonNetwork.LocalPlayer == newMasterClient)
+        /*if (PhotonNetwork.LocalPlayer == newMasterClient)
         {
             foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
             {
                 if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
                     xanaItem.SetData(xanaItem.itemData);
             }
-        }
+        }*/
     }
 
     public void StartXANAPartyRace()

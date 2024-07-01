@@ -33,6 +33,8 @@ public class RotatorComponent : ItemComponent
                 currentRotation += new Vector3(0f, rotatorComponentData.speed * Time.deltaTime, 0f);
                 gameObject.transform.rotation = Quaternion.Euler(currentRotation);
                 NetworkSyncManager.instance.rotatorComponent[itemID] = currentRotation;
+                Debug.LogError("Setting data" + (Vector3)NetworkSyncManager.instance.rotatorComponent[itemID]);
+
             }
             else
             {
@@ -40,8 +42,10 @@ public class RotatorComponent : ItemComponent
                 if (NetworkSyncManager.instance.rotatorComponent.TryGetValue(itemID,out obj))
                 {
                     currentRotation = (Vector3)obj;
+                    Debug.LogError("Rotation  " + currentRotation);
                     gameObject.transform.rotation = Quaternion.Euler (currentRotation);
                 }
+                else { Debug.LogError( "Roatating object count" + NetworkSyncManager.instance.rotatorComponent.Count); }
             }
         }
         
