@@ -28,7 +28,7 @@ public class RaffleTicketHandler : MonoBehaviour
     [SerializeField] private List<int> _allVisitedDomeIds = new List<int>();
     [SerializeField] private int _totalNumberOfDomes;
     [SerializeField] private int _totalNumberOfTickets;
-     private int _earnTicketsInOneCycle;
+    private int _earnTicketsInOneCycle;
 
     // Start is called before the first frame update
     void Start()
@@ -144,9 +144,9 @@ public class RaffleTicketHandler : MonoBehaviour
     private void UpdateUI()
     {
         _displayTicketCountTextSmallLandScape.text = "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextLargeLandScape.text= "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextSmallPotrait.text= "(" + _totalNumberOfTickets + ")";
-        _displayTicketCountTextLargePotrait.text= "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextLargeLandScape.text = "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextSmallPotrait.text = "(" + _totalNumberOfTickets + ")";
+        _displayTicketCountTextLargePotrait.text = "(" + _totalNumberOfTickets + ")";
     }
     private void TransferDatatoMainDomeList()
     {
@@ -167,22 +167,22 @@ public class RaffleTicketHandler : MonoBehaviour
     {
         if (RaffleTickets % 5 == 0)
         {
-            _earnTicketsInOneCycle += 5;
+            _earnTicketsInOneCycle += 4;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle-1));
-            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!","05"));
+            StartCoroutine(SaveUpdatedTicketsCount(5));
+            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!", "05"));
         }
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
-            _earnTicketsInOneCycle += 50;
+            _earnTicketsInOneCycle += 49;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle-1));
-            StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome ","50"));
+            StartCoroutine(SaveUpdatedTicketsCount(50));
+            StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome ", "50"));
         }
         _earnTicketsInOneCycle = 0;
         UpdateUI();
     }
-    IEnumerator RewardPopUp(string value,string number)
+    IEnumerator RewardPopUp(string value, string number)
     {
         yield return new WaitForSeconds(5f);
         _giftTicketsPopUpDescriptionTextPotrait.text = value;
