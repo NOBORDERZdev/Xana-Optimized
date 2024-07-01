@@ -21,14 +21,14 @@ public class RaffleTicketHandler : MonoBehaviour
     [Header("*GameObject References*")]
     [SerializeField] private GameObject _giftTicketsPopUpLandScape;
     [SerializeField] private GameObject _giftTicketsPopUpPotrait;
+    [Header("*API Data*")]
     [SerializeField] private Pavilion _summitDomesVisitedByUser;
     [SerializeField] private RaffleTicketsCount _summitRaffleTicketsEranedByUser;
     [Header("*variables*")]
     [SerializeField] private List<int> _allVisitedDomeIds = new List<int>();
-    [SerializeField] private int _currentNumberOfDomes;
     [SerializeField] private int _totalNumberOfDomes;
     [SerializeField] private int _totalNumberOfTickets;
-    [SerializeField] private int _earnTicketsInOneCycle;
+     private int _earnTicketsInOneCycle;
 
     // Start is called before the first frame update
     void Start()
@@ -169,24 +169,25 @@ public class RaffleTicketHandler : MonoBehaviour
         {
             _earnTicketsInOneCycle += 5;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle));
-            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!"));
+            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle-1));
+            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!","05"));
         }
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle));
-            StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome "));
+            StartCoroutine(SaveUpdatedTicketsCount(_earnTicketsInOneCycle-1));
+            StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome ","50"));
         }
         _earnTicketsInOneCycle = 0;
         UpdateUI();
     }
-    IEnumerator RewardPopUp(string value)
+    IEnumerator RewardPopUp(string value,string number)
     {
         yield return new WaitForSeconds(5f);
         _giftTicketsPopUpDescriptionTextPotrait.text = value;
-        _giftTicketsPopUpLandScape.SetActive(true);
+        _ticketCountTextLandScape.text = number;
+        _ticketCountTextPotrait.text = number;
 
         if (ScreenOrientationManager._instance.isPotrait)
             _giftTicketsPopUpPotrait.SetActive(true);
