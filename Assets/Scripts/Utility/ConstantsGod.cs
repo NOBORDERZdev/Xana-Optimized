@@ -311,6 +311,8 @@ public class ConstantsGod
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
     public static string GETALLDOMES = "/domes/getcreatedDomes";
     public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
+    public static string GETVISITDOMES = "/domes/getvisitedomes";
+    public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
