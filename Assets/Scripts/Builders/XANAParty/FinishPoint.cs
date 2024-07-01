@@ -39,6 +39,7 @@ public class FinishPoint : MonoBehaviour
 
     void EnableCollider()
     {
+        GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
         penguinAnimator.SetBool("isGrounded", true);

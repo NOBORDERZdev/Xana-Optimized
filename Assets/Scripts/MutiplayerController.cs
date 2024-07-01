@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "21";
+        string gameVersion = "Ali";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -299,14 +299,19 @@ namespace Photon.Pun.Demo.PunBasics
             CurrRoomName = PhotonNetwork.CurrentRoom.Name;
             LFF.LoadFile();
         }
+        public override void OnLeftRoom()
+        {
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            {
+                ReferencesForGamePlay.instance.ResetActivePlayerStatusInCurrentLevel();
+            }
+        }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
             if (newPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = true;
             }
-            //if (ConstantsHolder.xanaConstants.isBuilderScene && ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-            //    GamificationComponentData.instance.StartXANAPartyRace();
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
@@ -321,6 +326,10 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            {
+                ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
+            }
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -331,6 +340,16 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRandomFailed(short returnCode, string message)
         {
 
+        }
+        public override void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
+        {
+            if (targetPlayer == PhotonNetwork.LocalPlayer)
+            {
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                }
+            }
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
@@ -351,7 +370,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         #endregion
 
-
+        
         public void JoinRoomManually(string name)
         {
             PhotonNetwork.JoinRoom(name);

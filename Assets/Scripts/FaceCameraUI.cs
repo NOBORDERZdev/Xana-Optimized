@@ -42,7 +42,7 @@ public class FaceCameraUI : MonoBehaviour
                 mainCam = thirdPersonCam;
         }
 
-        if (mainCam == null)
+        if (mainCam == null && GameplayEntityLoader.instance!=null)
         {
             mainCam = GameplayEntityLoader.instance.XanaPartyCamera.GetComponentInChildren<Camera>().transform;
         }

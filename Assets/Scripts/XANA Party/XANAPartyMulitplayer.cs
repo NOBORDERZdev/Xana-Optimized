@@ -70,7 +70,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         // Load the main scene
         //GameplayEntityLoader.instance._uiReferences.LoadMain(false);
         Photon.Pun.PhotonHandler.levelName = "Builder";
-        PhotonNetwork.LoadLevel("Builder");
+        ReferencesForGamePlay.instance.LoadLevel("Builder");
     }
 
     public IEnumerator MoveToLobby()

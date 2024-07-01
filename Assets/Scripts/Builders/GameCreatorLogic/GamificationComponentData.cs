@@ -108,6 +108,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public GameObject MultiplayerComponente;
 
+    public bool isRaceStarted = false;
     private void Awake()
     {
         instance = this;
@@ -428,7 +429,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //    return;
         //}
         print("!!!!!!! player count "+ Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + "!!!! ConstantsHolder.XanaPartyMaxPlayers" + ConstantsHolder.XanaPartyMaxPlayers);
-        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == ConstantsHolder.XanaPartyMaxPlayers)
+        if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ConstantsHolder.XanaPartyMaxPlayers)
         {
             //if (PhotonNetwork.IsMasterClient)
             //{
