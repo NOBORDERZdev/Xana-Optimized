@@ -2049,7 +2049,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-
         RaycastHit hitData;
         isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
 
