@@ -7,16 +7,16 @@ public class DomeDataForMap : MonoBehaviour
 {
     public int domeId;
     [HideInInspector]
-    public Image myImage;
+    public Image MyImage;
 
-    Button myBtn;
+    private Button _myBtn;
     [SerializeField]
     private DomeMinimapDataHolder manager;
     void Start()
     {
-        myImage = GetComponent<Image>();
-        myBtn = GetComponent<Button>();
-        myBtn.onClick.AddListener(OnClick);
+        MyImage = GetComponent<Image>();
+        _myBtn = GetComponent<Button>();
+        _myBtn.onClick.AddListener(OnClick);
     }
 
     void OnClick()
