@@ -76,17 +76,20 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     //Equipment otherEquip;
 
+    AvatarController otherPlayer;
     [PunRPC]
     void CheckRpc(object[] Datasend)
     {
-        AvatarController otherPlayer;
         string SendingPlayerID = Datasend[0].ToString();
         OtherPlayerId = Datasend[0].ToString();
         if (Datasend.Length > 2)
             IsNFTCharacter = (bool)Datasend[2];
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
-
+        if (!otherPlayer.GetComponent<PhotonView>().IsMine) 
+        { 
+            otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject, _CharacterData.gender);
+        }
         for (int j = 0; j < MutiplayerController.instance.playerobjects.Count; j++)
         {
             if (MutiplayerController.instance.playerobjects[j] != null && MutiplayerController.instance.playerobjects[j].GetComponent<PhotonView>())
