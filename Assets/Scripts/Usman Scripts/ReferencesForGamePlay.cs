@@ -134,7 +134,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 //else
                 //{
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-               // }
+                //}
             }
         }
         if (instance != null && instance != this/* && !FeedEventPrefab.m_EnvName.Contains("XANA Lobby")*/)
@@ -352,7 +352,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                         //else
                         //{
                             PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                        //}
+                        }
                     }
                     totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
 
