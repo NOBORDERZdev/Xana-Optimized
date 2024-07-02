@@ -16725,12 +16725,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b073d5ec65346a640ac928e9f88b7cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AreaID: 6
+  AvatarID: 0
   AIAvatarPrefabs:
   - {fileID: 5958298307327268428, guid: 9603519ca337723458c79e857f7779a8, type: 3}
   - {fileID: 4894719807666117210, guid: 0ab61f970144d8443b71b12c1ce22c71, type: 3}
   SpawnPoint: {fileID: 1465729625715788479}
   CurrentAIPerformerRef: {fileID: 0}
-  CurPlayerObject: {fileID: 0}
+  AvatarData:
+    Success: 0
+    performerAvatar:
+      id: 0
+      areaId: 0
+      index: 0
+      gender: 
+      clothingJson:
+        id: 
+        name: 
+        thumbnail: 
+        gender: 
+        avatarType: OldAvatar
+        myItemObj: []
+        ai_gender: 
+        hair_color: {r: 0, g: 0, b: 0, a: 0}
+        skin_color: 
+        lip_color: {r: 0, g: 0, b: 0, a: 0}
+        faceItemData: 0
+        lipItemData: 0
+        noseItemData: 0
+        hairItemData: 
+        eyeItemData: 
+        eyeShapeItemData: 0
+        charactertypeAi: 0
+        SavedBones: []
+        SkinId: 0
+        Skin: {r: 0, g: 0, b: 0, a: 0}
+        LipColor: {r: 0, g: 0, b: 0, a: 0}
+        HairColor: {r: 0, g: 0, b: 0, a: 0}
+        EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+        EyeColor: {r: 0, g: 0, b: 0, a: 0}
+        isSkinColorChanged: 0
+        isLipColorChanged: 0
+        HairColorPaletteValue: 0
+        BodyFat: 0
+        FaceValue: 0
+        NoseValue: 0
+        EyeValue: 0
+        EyesColorValue: 0
+        EyesColorPaletteValue: 0
+        EyeBrowValue: 0
+        EyeBrowColorPaletteValue: 0
+        EyeLashesValue: 0
+        MakeupValue: 0
+        LipsValue: 0
+        LipsColorValue: 0
+        LipsColorPaletteValue: 0
+        faceMorphed: 0
+        eyeBrowMorphed: 0
+        eyeMorphed: 0
+        noseMorphed: 0
+        lipMorphed: 0
+        PresetValue: 
+        eyeTextureName: 
+        eyeLashesName: 
+        makeupName: 
+        SssIntensity: 0
+        SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+        eyebrrowTexture: 
+        mustacheTextureName: 
+        faceTattooTextureName: 
+        chestTattooTextureName: 
+        legsTattooTextureName: 
+        armTattooTextureName: 
+        eyeLidTextureName: 
+        FaceBlendsShapes: []
+        stamina: 0
+        speed: 0
+        profile: 
+        defence: 0
+        special_move: 0
+        punch: 0
+        kick: 0
+      animations: []
+      areaName: 
+    msg: 
+  IsAIDataFetched: 0
+  IsPlayerTriggered: 0
 --- !u!135 &9011582713448296226
 SphereCollider:
   m_ObjectHideFlags: 0

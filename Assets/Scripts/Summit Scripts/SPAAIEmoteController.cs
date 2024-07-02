@@ -34,9 +34,9 @@ public class SPAAIEmoteController : MonoBehaviour
     {
         if (!npcMC.isMoving)
         {
-            int _inValidAnimCount = 0;
             while (KeepLoopingEmotes)
             {
+                int _inValidAnimCount = 0;
                 for (int i = 0; i < AnimPlayList.Count; i++)
                 {
                     if (!KeepLoopingEmotes)
@@ -61,7 +61,11 @@ public class SPAAIEmoteController : MonoBehaviour
                                 yield return www;
                                 if (www.error != null)
                                 {
-                                    throw new Exception("WWW download had an error:" + www.error);
+                                    Debug.LogError("Got error in www request to get bundle");
+                                    _inValidAnimCount++;
+                                    www.Dispose();
+                                    continue;
+                                    //throw new Exception("WWW download had an error:" + www.error);
                                 }
                                 else
                                 {
@@ -97,8 +101,9 @@ public class SPAAIEmoteController : MonoBehaviour
                                     }
                                     catch (Exception)
                                     {
+                                        _inValidAnimCount++;
+                                        www.Dispose();
                                         continue;
-                                        throw;
                                     }
                                 }
 
@@ -109,8 +114,75 @@ public class SPAAIEmoteController : MonoBehaviour
                     }
                     else
                     {
-                        _inValidAnimCount++;
-                        continue;
+                        if (!string.IsNullOrEmpty(emoteBundleUrl))
+                        {
+                            using (WWW www = new WWW(emoteBundleUrl))
+                            {
+                                while (!www.isDone)
+                                {
+                                    yield return null;
+                                }
+                                yield return www;
+                                if (www.error != null)
+                                {
+                                    Debug.LogError("Got error in www request to get bundle");
+                                    _inValidAnimCount++;
+                                    www.Dispose();
+                                    continue;
+                                    //throw new Exception("WWW download had an error:" + www.error);
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        AssetBundle assetBundle = www.assetBundle;
+                                        if (assetBundle != null)
+                                        {
+                                            GameObject[] animation = assetBundle.LoadAllAssets<GameObject>();
+                                            var remotego = animation[0];
+
+                                            if (remotego.name.Equals("Animation"))
+                                            {
+                                                spawnCharacterObjectRemote = remotego.transform.gameObject;
+                                                var overrideController = new AnimatorOverrideController();
+                                                overrideController.runtimeAnimatorController = npcController;
+                                                List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                                                foreach (var clip in overrideController.animationClips)
+                                                {
+                                                    if (clip.name == "emaotedefault")
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, spawnCharacterObjectRemote.transform.GetComponent<Animation>().clip));
+                                                    else
+                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                                                }
+                                                overrideController.ApplyOverrides(keyValuePairs);
+                                                animationController.runtimeAnimatorController = overrideController;
+                                                animationController.SetBool("IsEmote", true);
+                                                //Invoke(nameof(StopAiEmote), /*UnityEngine.Random.Range(minAnimTime, maxAnimTime)*/SingleAnimPlayTime);
+                                            }
+                                            if (!AnimPlayList[i].Contains(","))
+                                            {
+                                                SaveAssetBundle(www.bytes, emoteName);
+                                            }
+                                            assetBundle.Unload(false);
+                                        }
+                                    }
+                                    catch (Exception)
+                                    {
+                                        _inValidAnimCount++;
+                                        www.Dispose();
+                                        continue;
+                                    }
+                                }
+
+                                www.Dispose();
+                            }
+                            yield return new WaitForSeconds(AnimPlayTimer[i]);
+                        }
+                        else
+                        {
+                            _inValidAnimCount++;
+                            continue;
+                        }
                     }
                 }
                 if (_inValidAnimCount >= AnimPlayList.Count)
@@ -143,10 +215,10 @@ public class SPAAIEmoteController : MonoBehaviour
         if (assetBundle == null)
         {
             Debug.Log("Failed to load AssetBundle!");
-            spaAIBhvrController.isPerformingAction = false;
-            if (spaAIBhvrController.ActionCoroutine != null)
-                StopCoroutine(spaAIBhvrController.ActionCoroutine);
-            spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+            //spaAIBhvrController.isPerformingAction = false;
+            //if (spaAIBhvrController.ActionCoroutine != null)
+            //    StopCoroutine(spaAIBhvrController.ActionCoroutine);
+            //spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
             yield break;
         }
         else
@@ -172,10 +244,10 @@ public class SPAAIEmoteController : MonoBehaviour
                             keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
                         else
                             keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
-                        overrideController.ApplyOverrides(keyValuePairs);
-                        animationController.runtimeAnimatorController = overrideController;
-                        animationController.SetBool("IsEmote", true);
                     }
+                    overrideController.ApplyOverrides(keyValuePairs);
+                    animationController.runtimeAnimatorController = overrideController;
+                    animationController.SetBool("IsEmote", true);
                 }
                 else
                 {
@@ -215,7 +287,7 @@ public class SPAAIEmoteController : MonoBehaviour
         {
             if (SerachForEmoteWithName(AnimPlayList[i]))
             {
-                KeepLoopingEmotes = true; 
+                KeepLoopingEmotes = true;
                 break;
             }
         }
@@ -255,9 +327,23 @@ public class SPAAIEmoteController : MonoBehaviour
                 emoteBundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteBundleUrl + ".unity3d");
             }
             return true;
+        } 
+        else if (!string.IsNullOrEmpty(_emoteName) && _emoteName.Contains(","))
+        {
+            string[] splitStrings = new string[2];
+                splitStrings = _emoteName.Split(',');
+#if UNITY_ANDROID
+                emoteBundleUrl = splitStrings[0];
+#elif UNITY_IOS
+                                            emoteBundleUrl = splitStrings[1];
+#elif UNITY_EDITOR
+                                            emoteBundleUrl = splitStrings[0];
+#endif
+            return false;
         }
         else
         {
+            emoteBundleUrl = "";
             return false;
         }
     }

@@ -9,17 +9,20 @@ using UnityEngine;
 using UnityEngine.Networking;
 using VTabs.Libs;
 using static CharacterHandler;
+using static InventoryManager;
 using static System.Net.WebRequestMethods;
 
 public class SPAAIHandler : MonoBehaviour
 {
+    public int AreaID = 0;
+    public int AvatarID = 0;
     public GameObject[] AIAvatarPrefabs;
     public Transform SpawnPoint;
     public GameObject CurrentAIPerformerRef;
     public PerformerAvatarData AvatarData;
     public bool IsAIDataFetched = false;
     public bool IsPlayerTriggered = false;
-    string finalAPIURL = "https://run.mocky.io/v3/55ddc8dd-3daf-421a-b62d-0974d1ae612a";
+    string prfrmrAvtrAPIURL = "/domes/getDomePerfomerAvatarsInfoByAreaIdIndex/";
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,10 @@ public class SPAAIHandler : MonoBehaviour
                 {
                     SpawnAIPerformer();
                 }
+                else if (!IsAIDataFetched && IsPlayerTriggered)
+                {
+                    CallPrfrmrAvtrAPI();
+                }
                 IsPlayerTriggered = true;
             }
         }
@@ -44,17 +51,29 @@ public class SPAAIHandler : MonoBehaviour
 
     void CallPrfrmrAvtrAPI()
     {
-        StartCoroutine(GetDataFromAPI(finalAPIURL, (isSucess, response) =>
+        string _finalAPIURL = ConstantsGod.API_BASEURL + prfrmrAvtrAPIURL + AreaID + "/" + AvatarID;
+        StartCoroutine(GetDataFromAPI(_finalAPIURL, (isSucess, response) =>
         {
             if (isSucess)
             {
                 AvatarData = new PerformerAvatarData();
                 AvatarData = JsonUtility.FromJson<PerformerAvatarData>(response);
-                if (IsPlayerTriggered)
+                if (!string.IsNullOrEmpty(AvatarData.performerAvatar.gender))
                 {
-                    SpawnAIPerformer();
+                    if (IsPlayerTriggered)
+                    {
+                        SpawnAIPerformer();
+                    }
+                    IsAIDataFetched = true;
                 }
-                IsAIDataFetched = true;
+                else
+                {
+                    Debug.LogError($"No data found agaist specified avatar id{AvatarID} and area id{AreaID}");
+                }
+            }
+            else
+            {
+                Debug.LogError($"No data found agaist specified avatar id{AvatarID} and area id{AreaID}/Encountered possible network error");
             }
         }));
     }
@@ -63,7 +82,7 @@ public class SPAAIHandler : MonoBehaviour
     {
         using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
         {
-            //www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             www.SendWebRequest();
             while (!www.isDone)
                 yield return null;
@@ -87,7 +106,7 @@ public class SPAAIHandler : MonoBehaviour
         }
         else
         {
-            if (AvatarData.data.Gender == "Female")
+            if (AvatarData.performerAvatar.gender == "Female")
             {
                 GenderBasedPrefabSlect(0);
             }
@@ -106,15 +125,15 @@ public class SPAAIHandler : MonoBehaviour
 
     void AssignFtchDataToAIAvtr()
     {
-        CurrentAIPerformerRef.GetComponent<SPAAIDresser>().AvatarJson = AvatarData.data.json;
+        CurrentAIPerformerRef.GetComponent<SPAAIDresser>().AvatarJson = AvatarData.performerAvatar.clothingJson;
         SPAAIEmoteController _spawnAIEmoteControllerRef = CurrentAIPerformerRef.GetComponent<SPAAIEmoteController>();
         _spawnAIEmoteControllerRef.AnimPlayList.Clear();
         _spawnAIEmoteControllerRef.AnimPlayList.TrimExcess();
         _spawnAIEmoteControllerRef.AnimPlayTimer.Clear();
         _spawnAIEmoteControllerRef.AnimPlayTimer.TrimExcess();
-        foreach (AnimationData animData in AvatarData.data.animations)
+        foreach (AnimationData animData in AvatarData.performerAvatar.animations)
         {
-            _spawnAIEmoteControllerRef.AnimPlayList.Add(animData.animationName);
+            _spawnAIEmoteControllerRef.AnimPlayList.Add(animData.name);
             _spawnAIEmoteControllerRef.AnimPlayTimer.Add(animData.playTime);
         }
         StartCoroutine(CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().PerformAction());
@@ -124,20 +143,26 @@ public class SPAAIHandler : MonoBehaviour
     public class PerformerAvatarData
     {
         public bool Success;
-        public PerformerAvatarDetails data;
+        public PerformerAvatarDetails performerAvatar;
         public string msg;
     }
     [System.Serializable]
     public class PerformerAvatarDetails
     {
-        public string Gender;
-        public SavingCharacterDataClass json;
+        public int id;
+        public int areaId;
+        public int index;
+        public string gender;
+        public SavingCharacterDataClass clothingJson;
         public AnimationData[] animations;
+        public string areaName;
+        public DateTime createdAt;
+        public DateTime updatedAt;
     }
     [System.Serializable]
     public class AnimationData
     {
-        public string animationName;
+        public string name;
         public float playTime;
     }
 }
