@@ -18,6 +18,7 @@ public class EmoteReactionItemBtnHandler : MonoBehaviour
     private void OnDisable()
     {
         ///>--MemoryClean Stoped  AssetCache.Instance.RemoveFromMemoryDelayCoroutine(ActionThumbnail_Url, true);
+        HeighlightObj.gameObject.SetActive(false);
     }
 
     public void InitializeItem(ItemType _type, int _id, string _actionName, string _actionThumbnail_Ur, string _actionGroupType)

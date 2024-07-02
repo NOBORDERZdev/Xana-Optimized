@@ -29,7 +29,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
     private int _selectedTabEmote = 0;
     private int _selectedTabReaction = 0;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         SetViewItemsEmote += PopulateViewItemsEmotes;
         SetViewItemsReaction += PopulateViewItemsReaction;
@@ -39,7 +39,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
         SetSeeAllTabSelectedReactionAction += SetSeeAllTabSelectAction;
         ActivateHeighlightOfPanelBtn += ActivateHeighlightOfEmoteReactionItem;
     }
-    private void OnDisable()
+    protected virtual void OnDestroy()
     {
         SetViewItemsEmote -= PopulateViewItemsEmotes;
         SetViewItemsReaction -= PopulateViewItemsReaction;
@@ -96,6 +96,10 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
     public void PopulateViewItemsEmotes(List<EmoteAnimationList> items, EmoteReactionItemBtnHandler.ItemType _selectedAction)
     {
+        if(!this.gameObject.activeInHierarchy)
+        {
+            return;
+        }
 
         SelectedAction = _selectedAction;
         SetTabOfItem();

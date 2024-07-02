@@ -16,14 +16,16 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
     public List<Transform> SeeAllReactionTabBtn = new List<Transform>();
     public List<Transform> ActionFavouritCircleBtn = new List<Transform>();
 
-    private void OnEnable()
+    protected override void Awake()
     {
+        base.Awake();
         DisplayActionDuplicateMessage += DuplicateActionMessage;
         CloseDisplayDialogScrollView += CloseActionDisplayDialogScroll;
     }
 
-    private void OnDisable()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         DisplayActionDuplicateMessage -= DuplicateActionMessage;
         CloseDisplayDialogScrollView -= CloseActionDisplayDialogScroll;
     }

@@ -12,7 +12,7 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
     public string AnimationName;
     public string ThumbnailURL;
     public EmoteReactionItemBtnHandler.ItemType TypeOfAction;
-
+    public Transform HeighlightObj;
     [SerializeField] private Image _actionImg;
     private bool _actionSelected = false;
     private bool _longPress = default;
@@ -97,6 +97,7 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
             dataObj.AnimationName = AnimationName;
             dataObj.ThumbnailURL = ThumbnailURL;
             dataObj.TypeOfAction = TypeOfAction;
+            ActionCircleBtnHighlightHandler.ActivateHighlightsByIndex?.Invoke(IndexOfBtn);
             ActionManager.ActionBtnClick?.Invoke(dataObj);
         }
         else
@@ -121,5 +122,9 @@ public class ActionFavouriteCircleBtn : MonoBehaviour
                 }
             });
         }
+    }
+    public void ActivateHeighlight(bool flag)
+    {
+        HeighlightObj.gameObject.SetActive(flag);
     }
 }

@@ -12,6 +12,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class ActionAnimationApplyToPlayer : MonoBehaviour
 {
     public RuntimeAnimatorController controller;
+    public static bool AnimationPlaying = false;
 
     private GameObject[] photonplayerObjects;
 
@@ -47,6 +48,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 SendOptions.SendReliable);
         }
         AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().enabled = true;
+        AnimationPlaying = false;
     }
 
     public void DisableAnimationReaction(int viewId)
@@ -72,6 +74,7 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
     private IEnumerator DownloadAddressableActionAnimation(string label)//, Action downloadCompleteCallBack
     {
+        Debug.LogError("Label ----> " + label);
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
             int playerId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID;
@@ -88,7 +91,8 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Addressable Loadede ---->>>>>   " + playerId);
+                    Debug.LogError("Label ----> " + label+"  --- Addressable Loadede ---->>>>>   " + playerId);
+                    AnimationPlaying = true;
                    StartCoroutine( ApplyAnimationToAnimatorSet(loadOp.Result, playerId));
                 }
             }
