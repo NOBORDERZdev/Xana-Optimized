@@ -61,6 +61,14 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         {
             this.gameObject.AddComponent<Speaker>();
         }
+        if (MutiplayerController.instance)
+        {
+            for (int j = 0; j < MutiplayerController.instance.playerobjects.Count; j++)
+            {
+                MutiplayerController.instance.playerobjects[j].GetComponent<AvatarController>().SetAvatarClothDefault(MutiplayerController.instance.playerobjects[j].gameObject, MutiplayerController.instance.playerobjects[j].GetComponent<CharacterBodyParts>().AvatarGender.ToString());
+            }
+        }
+
     }
 
     void CallRpcInvoke()
