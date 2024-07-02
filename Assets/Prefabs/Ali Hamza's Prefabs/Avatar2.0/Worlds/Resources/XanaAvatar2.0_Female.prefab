@@ -4044,6 +4044,7 @@ GameObject:
   - component: {fileID: 8787714129647578255}
   - component: {fileID: 6246501003241866856}
   - component: {fileID: 3896840288255319210}
+  - component: {fileID: 7960267596015189877}
   m_Layer: 22
   m_Name: XanaAvatar2.0_Female
   m_TagString: PhotonLocalPlayer
@@ -4575,6 +4576,12 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: canDoubleJump
+  - Type: 9
+    SynchronizeType: 0
+    Name: EnterCar
+  - Type: 9
+    SynchronizeType: 0
+    Name: ExitCar
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -5154,6 +5161,21 @@ MonoBehaviour:
   wantToConnectWith: {fileID: 1768679090729043863}
   freeSelfIntroduction: {fileID: 3300365503949753560}
   QRImage: {fileID: 3892553879361696309}
+--- !u!114 &7960267596015189877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290326269450676071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c15b9104d70e447a684c46415cb8de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: {fileID: 2531018362930106320}
+  isInsideCAr: 0
+  isInsideWheel: 0
 --- !u!1 &3356888367223522174
 GameObject:
   m_ObjectHideFlags: 0

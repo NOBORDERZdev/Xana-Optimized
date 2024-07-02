@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863459
 Transform:
@@ -110,7 +110,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863473
 Transform:
@@ -156,7 +156,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863475
 Transform:
@@ -202,7 +202,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863477
 Transform:
@@ -247,7 +247,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863479
 Transform:
@@ -294,7 +294,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863481
 Transform:
@@ -371,14 +371,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8180284455702863483}
-  - component: {fileID: 8180284455688030931}
   - component: {fileID: 8180284455697899827}
+  - component: {fileID: 6792183816801391630}
+  - component: {fileID: 650297379267082189}
   m_Layer: 0
   m_Name: Palm_Mobile_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863483
 Transform:
@@ -387,7 +388,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8180284455703151195}
-  m_LocalRotation: {x: -0, y: -0.35097003, z: -0, w: 0.9363867}
+  m_LocalRotation: {x: 0, y: -0.35096735, z: 0, w: 0.9363877}
   m_LocalPosition: {x: -12.775875, y: -5.171549, z: 32.582222}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
@@ -403,37 +404,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -41.093, z: 0}
---- !u!205 &8180284455688030931
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8180284455703151195}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 3.2380757, z: 0}
-  m_Size: 9.160764
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 1
-  m_LODs:
-  - screenRelativeHeight: 0.5
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8180284455705156755}
-  - screenRelativeHeight: 0.25
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8180284455705156753}
-  - screenRelativeHeight: 0.125
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8180284455705156759}
-  - screenRelativeHeight: 0.01
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8180284455681645331}
-  m_Enabled: 1
 --- !u!54 &8180284455697899827
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -450,6 +420,47 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6792183816801391630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180284455703151195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98b7876dcc985b45a908b7027a1211d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downloadKey: Palm_Mobile_1
+  objectPriority: 0
+--- !u!205 &650297379267082189
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8180284455703151195}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 2.0216186, y: 3.237297, z: -0.5898981}
+  m_Size: 6.675235
+  m_FadeMode: 1
+  m_AnimateCrossFading: 0
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.774126
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8180284455705156755}
+  - screenRelativeHeight: 0.38416743
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8180284455705156753}
+  - screenRelativeHeight: 0.12919448
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 8180284455705156759}
+  m_Enabled: 1
 --- !u!1 &8180284455703151197
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +478,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863485
 Transform:
@@ -563,7 +574,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &8180284455702863487
 Transform:

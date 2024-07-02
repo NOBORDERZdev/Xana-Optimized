@@ -1112,6 +1112,7 @@ MonoBehaviour:
   - BreakingDown Arena
   - XANA Lobby
   - D_Infinity_Labo
+  - XANA Summit
 --- !u!114 &79798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4708,6 +4709,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1867119592}
     - target: {fileID: 7548329927862181462, guid: ed0c69aefc702d64495f414a17d80d9c, type: 3}
+      propertyPath: potraitHiddenBtnObjects.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 7548329927862181462, guid: ed0c69aefc702d64495f414a17d80d9c, type: 3}
       propertyPath: potraitHiddenBtnObjects.Array.data[0]
       value: 
       objectReference: {fileID: 1211160633}
@@ -4755,6 +4760,10 @@ PrefabInstance:
       propertyPath: potraitHiddenBtnObjects.Array.data[11]
       value: 
       objectReference: {fileID: 898797611}
+    - target: {fileID: 7548329927862181462, guid: ed0c69aefc702d64495f414a17d80d9c, type: 3}
+      propertyPath: potraitHiddenBtnObjects.Array.data[12]
+      value: 
+      objectReference: {fileID: 2051332379}
     - target: {fileID: 7548329927862181462, guid: ed0c69aefc702d64495f414a17d80d9c, type: 3}
       propertyPath: potraitdissableBtnObjects.Array.data[0]
       value: 
@@ -9793,6 +9802,8 @@ MonoBehaviour:
   LFF: {fileID: 79798788}
   singlePlayerInstance: 0
   isConnecting: 0
+  isShifting: 0
+  disableSector: 0
 --- !u!4 &860513762
 Transform:
   m_ObjectHideFlags: 0
@@ -11678,6 +11689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -11788,6 +11800,30 @@ PrefabInstance:
     - target: {fileID: 458700347183801168, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
       propertyPath: m_Name
       value: Space X Video Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 458700347644129652, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1339195405}
+    - target: {fileID: 458700347644129652, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadPlanetScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 458700347868543113, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1339195405}
+    - target: {fileID: 458700347868543113, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadPlanetScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 458700347964539824, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1339195405}
+    - target: {fileID: 458700347964539824, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadPlanetScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f36cdde9e672f08428913cf855f67de8, type: 3}
@@ -13038,7 +13074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: -44.85, y: 0}
   m_SizeDelta: {x: 111.81122, y: 47.8563}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1226592882
@@ -14629,6 +14665,17 @@ PrefabInstance:
       objectReference: {fileID: 1060322869}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+--- !u!114 &1339195405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+  m_PrefabInstance: {fileID: 1339195404}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea13459ee9a2f04ab244e5c04ec94f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1355702924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18166,7 +18213,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: -44.85, y: 0}
   m_SizeDelta: {x: 111.81122, y: 47.8563}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1752314746
@@ -21865,6 +21912,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042702862}
   m_CullTransparentMesh: 0
+--- !u!1 &2051332379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5449022696779770404, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+  m_PrefabInstance: {fileID: 429271888}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2056703392
 GameObject:
   m_ObjectHideFlags: 0
@@ -24430,7 +24482,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641495, y: -0.0008924867, z: 0.000009499795, w: 0.999943}
+  m_LocalRotation: {x: 0.0106414985, y: -0.00089248695, z: 0.000009499802, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -43977,7 +44029,7 @@ PrefabInstance:
       objectReference: {fileID: 1808683680640967397}
     - target: {fileID: 6907531792610345431, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 30.000214
+      value: 30.000183
       objectReference: {fileID: 0}
     - target: {fileID: 6922268560118772997, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: actionImgPotrait
