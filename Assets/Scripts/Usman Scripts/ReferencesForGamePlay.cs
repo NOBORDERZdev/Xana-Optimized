@@ -392,7 +392,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                 //    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount;
                 //}
-            }
+            
         }
         catch (Exception e)
         {
