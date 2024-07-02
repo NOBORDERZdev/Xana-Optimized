@@ -512,8 +512,6 @@ GameObject:
   - component: {fileID: 464787391}
   - component: {fileID: 464787394}
   - component: {fileID: 464787393}
-  - component: {fileID: 464787396}
-  - component: {fileID: 464787395}
   m_Layer: 0
   m_Name: GamificationComponentData
   m_TagString: Untagged
@@ -588,7 +586,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 268435969
   SinglePlayer: 0
-  MultiplayerComponente: {fileID: 1836379662250711913, guid: e14adbb0e5b944b35b64fa3130d6483b, type: 3}
+  isRaceStarted: 0
 --- !u!4 &464787392
 Transform:
   m_ObjectHideFlags: 0
@@ -616,15 +614,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 0
+  ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 2
+  Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 464787396}
-  - {fileID: 464787395}
+  ObservedComponents: []
   sceneViewId: 100
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -641,35 +637,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ForceRaceStart: 0
---- !u!114 &464787395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464787390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
---- !u!114 &464787396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 464787390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 573ff14b7716f8b49a0f961d98c5abfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  view: {fileID: 464787393}
 --- !u!1 &504947475
 GameObject:
   m_ObjectHideFlags: 0
@@ -2363,7 +2330,6 @@ MonoBehaviour:
   meshCombiner: {fileID: 242320998}
   reflectionProbe: {fileID: 504947476}
   XANAPartyLoading: {fileID: 166592956}
-  MultiplayerComponent: {fileID: 1836379662250711913, guid: e14adbb0e5b944b35b64fa3130d6483b, type: 3}
 --- !u!4 &1585563406
 Transform:
   m_ObjectHideFlags: 0
@@ -3032,7 +2998,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.45
