@@ -9,7 +9,7 @@ using UnityEngine.PlayerLoop;
 public class TransformComponent : ItemComponent, IInRoomCallbacks
 {
     public bool rotateObject, ScaleObject, TransObject;
-    float timeSpent;
+    float timeSpent =0;
     string ItemID;
     private void FixedUpdate()
     {
@@ -67,7 +67,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void increasTime()
     {
         timeSpent++;
-        timeSpent %= (rotateComponentData.timeToAnimate*2); 
+
+        timeSpent %= toFroComponentData != null ? (toFroComponentData.timeToAnimate * 2) : rotateComponentData != null ? (rotateComponentData.timeToAnimate * 2) : (scalerComponentData.timeToAnimate * 2);//(rotateComponentData.timeToAnimate*2); 
     }
     Ease AnimationCurveValueConvertor(int index)
     {
@@ -175,11 +176,11 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     }
     private void MoveFromAtoB()//Better than loop call Functions
     {
-        transform.DOMove(toFroComponentData.maxValue, toFroComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromBtoA) ;
+        transform.DOMove(toFroComponentData.maxValue, toFroComponentData.timeToAnimate - (timeSpent % toFroComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromBtoA) ;
     }
     private void MoveFromBtoA()
     {
-        transform.DOMove(toFroComponentData.defaultValue, toFroComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate     )).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromAtoB);
+        transform.DOMove(toFroComponentData.defaultValue, toFroComponentData.timeToAnimate - (timeSpent % toFroComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromAtoB);
     }
    
 
@@ -231,10 +232,10 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
 
     private void ScaleFormAtoB()
     {
-        transform.DOScale(scalerComponentData.maxScaleValue, scalerComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormBtoA);
+        transform.DOScale(scalerComponentData.maxScaleValue, scalerComponentData.timeToAnimate - (timeSpent % scalerComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormBtoA);
     } private void ScaleFormBtoA()
     {
-        transform.DOScale(scalerComponentData.defaultScaleValue, scalerComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormAtoB);
+        transform.DOScale(scalerComponentData.defaultScaleValue, scalerComponentData.timeToAnimate - (timeSpent % scalerComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormAtoB);
     }    
 
 
