@@ -8,7 +8,7 @@ public class SpaceXHandler : MonoBehaviour
     public GameObject planetOptions;
     public VideoPlayer videoPlayer;
     public string[] planetNames;
-
+    private bool waitForRestart;
     //public AudioSource launchCountingAudioSource;
     //public AudioClip countingAudioClip;
     public TMPro.TextMeshProUGUI launchCounter;
@@ -28,6 +28,8 @@ public class SpaceXHandler : MonoBehaviour
 
     async void StartVideoPlayer(VideoClip videoClip,Vector3 _returnPlayerPos)
     {
+        if (waitForRestart)
+            return;
         await ShowCounter();
         returnPlayerPos = _returnPlayerPos;
         videoPlayer.gameObject.SetActive(true);
@@ -44,6 +46,7 @@ public class SpaceXHandler : MonoBehaviour
         //launchCountingAudioSource.volume = 1;
         //launchCountingAudioSource.Play();
         //await Task.Delay(4000);
+        waitForRestart = true;
         int x = 10;
         launchCounter.gameObject.SetActive(true);
         while (x> 0)
@@ -82,6 +85,7 @@ public class SpaceXHandler : MonoBehaviour
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();
+        waitForRestart = false;
        // SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
     }
 
