@@ -39,6 +39,7 @@ public class FinishPoint : MonoBehaviour
 
     void EnableCollider()
     {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdatePlayerRankAndLP();
         GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
@@ -53,7 +54,6 @@ public class FinishPoint : MonoBehaviour
         Hashtable _hash = new Hashtable();
         _hash.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdatePlayerRankAndLP();
     }
 
     internal void FinishRace()

@@ -485,7 +485,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
             XANAPartyManager.Instance.GameIndex++;
-            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
+            Invoke(nameof(ShowLeaderBoard),5);
             if (PhotonNetwork.IsMasterClient)
             {
                 if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
@@ -501,6 +501,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
                 }
             }
         }
+    }
+
+    void ShowLeaderBoard(){ 
+       XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
     }
 
     [PunRPC]
