@@ -118,8 +118,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         this.rotateComponentData = rotateComponentData;
        // StartCoroutine(rotateModule());
        ItemID = itemid;
-        NetworkSyncManager.instance.TransformComponentrotation.Add(itemid, transform.rotation);
-        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
+        NetworkSyncManager.instance.TransformComponentrotation.TryAdd(itemid, transform.rotation);
+        NetworkSyncManager.instance.TransformComponentTime.TryAdd(itemid, timeSpent);
         if (PhotonNetwork.IsMasterClient)
         {
 
@@ -160,8 +160,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void InitToFro(ToFroComponentData toFroComponentData, string itemid)
     {
         this.toFroComponentData = toFroComponentData;
-        NetworkSyncManager.instance.TransformComponentPos.Add(itemid, transform.position);
-        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
+        NetworkSyncManager.instance.TransformComponentPos.TryAdd(itemid, transform.position);
+        NetworkSyncManager.instance.TransformComponentTime.TryAdd(itemid, timeSpent);
         if (PhotonNetwork.IsMasterClient)
         {
             MoveFromAtoB();
@@ -206,8 +206,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void InitScale(ScalerComponentData scalerComponentData, string itemid)
     {
         this.scalerComponentData = scalerComponentData;
-        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
-        NetworkSyncManager.instance.TransformComponentScale.Add(itemid, transform.localScale);
+        NetworkSyncManager.instance.TransformComponentTime.TryAdd(itemid, timeSpent);
+        NetworkSyncManager.instance.TransformComponentScale.TryAdd(itemid, transform.localScale);
         // StartCoroutine(ScalingObject());
         if (PhotonNetwork.IsMasterClient)
         {

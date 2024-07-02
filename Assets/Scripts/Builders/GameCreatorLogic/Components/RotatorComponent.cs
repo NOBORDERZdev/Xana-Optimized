@@ -16,7 +16,7 @@ public class RotatorComponent : ItemComponent
     {
         InitRotate(rotatorComponentData);
         itemID = itemid;
-        NetworkSyncManager.instance.rotatorComponent.Add(itemid,Vector3.zero);
+        NetworkSyncManager.instance.rotatorComponent.TryAdd(itemid,Vector3.zero);
         NetworkSyncManager.instance.OnDeserilized += Sync;
     }
 
