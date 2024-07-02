@@ -57,8 +57,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        if (GetComponent<PhotonView>().IsMine) {
 
-        Instance = this;
+            Instance = this;
+            if (XanaChatSystem.instance.UserName.Length > 12)
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            }
+            else
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            }
+        }
 
     }
     void Start()
@@ -73,14 +83,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         //    PhotonUserName.enabled = false;
         //}
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
-        if (XanaChatSystem.instance.UserName.Length > 12)
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
-        }
-        else
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
-        }
+       
 
         arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
@@ -123,7 +126,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
         else
         {
-            PhotonUserName.text= DummyUserNames[UnityEngine.Random.Range(0, DummyUserNames.Length)];
+            PhotonUserName.text = GetComponent<PhotonView>().Owner.NickName;//DummyUserNames[UnityEngine.Random.Range(0, DummyUserNames.Length)];
         }
        //StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
        // Debug.Log("call arrow");

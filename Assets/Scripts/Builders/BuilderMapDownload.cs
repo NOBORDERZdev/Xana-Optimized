@@ -287,6 +287,7 @@ public class BuilderMapDownload : MonoBehaviour
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
         GamificationComponentData.instance.xanaItems.Clear();
+        GamificationComponentData.instance.MultiplayerComponentstoSet.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
@@ -691,10 +692,15 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(GemificationObjectLoadWait(1f));
             }
 
-          /*  foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
+
+            while(GamificationComponentData.instance.MultiplayerComponentstoSet.Count!= GamificationComponentData.instance.MultiplayerComponentData.Count)
+            {
+                yield return new WaitForSeconds(5f);
+            }
+            foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
             {
                 xanaItem.SetData(xanaItem.itemData);
-            }*/
+            }
 
             GamificationComponentData.WarpComponentLocationUpdate?.Invoke();
             //Set Hierarchy same as builder

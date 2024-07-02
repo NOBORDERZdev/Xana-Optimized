@@ -15,13 +15,13 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
     public Dictionary<string, object> TransformComponentrotation = new Dictionary<string, object>();
     public Dictionary<string, object> TransformComponentScale = new Dictionary<string, object>();
     public Dictionary<string, object> TransformComponentPos = new Dictionary<string, object>();
-    public Dictionary<string, int> TransformComponentTime = new Dictionary<string, int>();
+    public Dictionary<string, float> TransformComponentTime = new Dictionary<string, float>();
     public Dictionary<string, object> TranslateComponentpos = new Dictionary<string, object>();
     
 
     public Action<string,int, int, int> OnRandomNumberSet;
     public List<RandomNumberComponentsData> RandomNumberHist = new List<RandomNumberComponentsData>();
-
+    public Action startGame;
     public Action OnDeserilized;
     private void Awake()
     {
@@ -45,24 +45,30 @@ public class NetworkSyncManager : MonoBehaviour, IPunObservable
         RandomNumberHist.Add(new RandomNumberComponentsData() { GeneratedNumber = generatedNumber , ItemID = itemID,MinNumber = minNumber,MaxNumber = maxnumber });
     }
 
-
+    [PunRPC]
+    public void StartGameMainRPC()
+    {
+      
+            startGame?.Invoke();
+        
+    }
 
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
         {
-            Debug.LogError("Writing");
+          //  Debug.LogError("Writing");
            stream.SendNext( rotatorComponent);  stream.SendNext(TransformComponentrotation);  stream.SendNext(TransformComponentScale);  stream.SendNext(TransformComponentPos);  stream.SendNext(TransformComponentTime);  stream.SendNext(TranslateComponentpos);
         
         }else
         {
-            Debug.LogError("Reading");
+         //   Debug.LogError("Reading");
             rotatorComponent = (Dictionary<string,object>)stream.ReceiveNext();
             TransformComponentrotation = (Dictionary<string, object>)stream.ReceiveNext();
             TransformComponentScale = (Dictionary<string, object>)stream.ReceiveNext();
             TransformComponentPos = (Dictionary<string, object>)stream.ReceiveNext();
-            TransformComponentTime = (Dictionary<string, int>)stream.ReceiveNext();
+            TransformComponentTime = (Dictionary<string, float>)stream.ReceiveNext();
             TranslateComponentpos = (Dictionary<string, object>)stream.ReceiveNext();
 
             /*    rotatorComponent =  JsonUtility.FromJson < Dictionary<string, Vector3>>((string)stream.ReceiveNext());

@@ -107,6 +107,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     
     public GameObject MultiplayerComponente;
 
+    int MxaxMultiplayerComponent = 0;
+    public List<XanaItem> MultiplayerComponentstoSet = new List<XanaItem>();
+
     public bool isRaceStarted = false;
     private void Awake()
     {

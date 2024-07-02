@@ -84,12 +84,17 @@ public class MultiplayerComponent : MonoBehaviour
             xanaItem.itemData = itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
-          //  if  (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle)
+            if  (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle)
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
             if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.xanaItems.Add(xanaItem);
+
+            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem)){
+                GamificationComponentData.instance.MultiplayerComponentstoSet.Add(xanaItem);
+            }
+
         }
     }
 }

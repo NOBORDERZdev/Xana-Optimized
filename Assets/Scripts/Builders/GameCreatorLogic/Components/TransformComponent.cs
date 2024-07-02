@@ -9,7 +9,7 @@ using UnityEngine.PlayerLoop;
 public class TransformComponent : ItemComponent, IInRoomCallbacks
 {
     public bool rotateObject, ScaleObject, TransObject;
-    int timeSpent;
+    float timeSpent;
     string ItemID;
     private void FixedUpdate()
     {
@@ -67,7 +67,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void increasTime()
     {
         timeSpent++;
-        timeSpent %= 10; 
+        timeSpent %= (rotateComponentData.timeToAnimate*2); 
     }
     Ease AnimationCurveValueConvertor(int index)
     {
@@ -119,6 +119,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
        // StartCoroutine(rotateModule());
        ItemID = itemid;
         NetworkSyncManager.instance.TransformComponentrotation.Add(itemid, transform.rotation);
+        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
         if (PhotonNetwork.IsMasterClient)
         {
 
@@ -141,12 +142,12 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     private void RotateFromAtoB()
     {
       
-        transform.DORotate(rotateComponentData.maxValue, rotateComponentData.timeToAnimate - (timeSpent%5)).SetEase(AnimationCurveValueConvertor(rotateComponentData.animationCurveIndex)).OnComplete(RotateFromBtoA);
+        transform.DORotate(rotateComponentData.maxValue, rotateComponentData.timeToAnimate - (timeSpent% rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(rotateComponentData.animationCurveIndex)).OnComplete(RotateFromBtoA);
         
     }
     private void RotateFromBtoA()
     {
-        transform.DORotate(rotateComponentData.defaultValue, rotateComponentData.timeToAnimate - (timeSpent % 5)).SetEase(AnimationCurveValueConvertor(rotateComponentData.animationCurveIndex)).OnComplete(RotateFromAtoB);
+        transform.DORotate(rotateComponentData.defaultValue, rotateComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(rotateComponentData.animationCurveIndex)).OnComplete(RotateFromAtoB);
     }
 
 
@@ -159,24 +160,26 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void InitToFro(ToFroComponentData toFroComponentData, string itemid)
     {
         this.toFroComponentData = toFroComponentData;
+        NetworkSyncManager.instance.TransformComponentPos.Add(itemid, transform.position);
+        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
         if (PhotonNetwork.IsMasterClient)
         {
             MoveFromAtoB();
             InvokeRepeating(nameof(increasTime), 1, 99999);
         }
         ItemID = itemid;
-        NetworkSyncManager.instance.TransformComponentPos.Add(itemid, transform.position);
+       
         TransObject = true;
         
      //   StartCoroutine(toFroModule());
     }
     private void MoveFromAtoB()//Better than loop call Functions
     {
-        transform.DOMove(toFroComponentData.maxValue, toFroComponentData.timeToAnimate - (timeSpent % 5)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromBtoA) ;
+        transform.DOMove(toFroComponentData.maxValue, toFroComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromBtoA) ;
     }
     private void MoveFromBtoA()
     {
-        transform.DOMove(toFroComponentData.defaultValue, toFroComponentData.timeToAnimate - (timeSpent % 5)).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromAtoB);
+        transform.DOMove(toFroComponentData.defaultValue, toFroComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate     )).SetEase(AnimationCurveValueConvertor(toFroComponentData.animationCurveIndex)).OnComplete(MoveFromAtoB);
     }
    
 
@@ -203,6 +206,8 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public void InitScale(ScalerComponentData scalerComponentData, string itemid)
     {
         this.scalerComponentData = scalerComponentData;
+        NetworkSyncManager.instance.TransformComponentTime.Add(itemid, timeSpent);
+        NetworkSyncManager.instance.TransformComponentScale.Add(itemid, transform.localScale);
         // StartCoroutine(ScalingObject());
         if (PhotonNetwork.IsMasterClient)
         {
@@ -210,7 +215,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             InvokeRepeating(nameof(increasTime), 1, 99999);
         }
         ItemID = itemid;
-        NetworkSyncManager.instance.TransformComponentScale.Add(itemid, transform.localScale);
+    
         ScaleObject = true;
     }
 
@@ -226,10 +231,10 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
 
     private void ScaleFormAtoB()
     {
-        transform.DOScale(scalerComponentData.maxScaleValue, scalerComponentData.timeToAnimate - (timeSpent % 5)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormBtoA);
+        transform.DOScale(scalerComponentData.maxScaleValue, scalerComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormBtoA);
     } private void ScaleFormBtoA()
     {
-        transform.DOScale(scalerComponentData.defaultScaleValue, scalerComponentData.timeToAnimate - (timeSpent % 5)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormAtoB);
+        transform.DOScale(scalerComponentData.defaultScaleValue, scalerComponentData.timeToAnimate - (timeSpent % rotateComponentData.timeToAnimate)).SetEase(AnimationCurveValueConvertor(scalerComponentData.animationCurveIndex)).OnComplete(ScaleFormAtoB);
     }    
 
 
