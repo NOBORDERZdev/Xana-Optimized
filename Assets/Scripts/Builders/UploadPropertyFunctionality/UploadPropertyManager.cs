@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class UploadPropertyManager : MonoBehaviour
 {
-    public GameObject upLoadPlayerPrefab;
-    public List<GameObject> mediaScreens;
-    Transform mediaParent;
-    List<UploadData> uploadDatas = new List<UploadData>();
-    bool isInitialize=false;
+    public GameObject UploadPlayerPrefab;
+    public List<GameObject> MediaScreens;
+    Transform _mediaParent;
+    List<UploadData> _uploadDatas = new List<UploadData>();
+    bool _isInitialize = false;
+
     private void OnEnable()
     {
         BuilderEventManager.UploadPropertiesData += UploadPropertiesData;
         BuilderEventManager.UploadPropertiesInit += UploadPropertiesInit;
     }
+
     private void OnDisable()
     {
         BuilderEventManager.UploadPropertiesData -= UploadPropertiesData;
@@ -21,34 +23,34 @@ public class UploadPropertyManager : MonoBehaviour
 
     void Start()
     {
-        mediaParent = this.transform;
+        _mediaParent = this.transform;
     }
 
     private void UploadPropertiesData(UploadProperties uploadProperties)
     {
         if (uploadProperties == null) return;
 
-        uploadDatas = uploadProperties.uploadData;
+        _uploadDatas = uploadProperties.uploadData;
 
     }
 
     void UploadPropertiesInit()
     {
-        if (isInitialize)
+        if (_isInitialize)
             return;
 
-        if (uploadDatas.Count > 0)
+        if (_uploadDatas.Count > 0)
         {
-            foreach (var data in uploadDatas)
+            foreach (var data in _uploadDatas)
             {
                 AddScreen(data);
             }
-            isInitialize = true;
+            _isInitialize = true;
         }
     }
     private void AddScreen(UploadData data)
     {
-        var instantiatedPrefab = Instantiate(upLoadPlayerPrefab, data.position, data.rotation, mediaParent);
+        var instantiatedPrefab = Instantiate(UploadPlayerPrefab, data.position, data.rotation, _mediaParent);
         instantiatedPrefab.transform.localScale = Vector3.one * data.scale;
 
         if (data.position.z == 0)
@@ -63,6 +65,6 @@ public class UploadPropertyManager : MonoBehaviour
         // mediaPlayer.index = data.index;
         mediaPlayer.addFrame = data.addFrame;
         mediaPlayer.isRepeat = data.isRepeat;
-        mediaScreens.Add(instantiatedPrefab);
+        MediaScreens.Add(instantiatedPrefab);
     }
 }

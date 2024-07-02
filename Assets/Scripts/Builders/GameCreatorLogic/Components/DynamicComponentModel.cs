@@ -755,53 +755,53 @@ namespace Models
     [System.Serializable]
     public class PhysicsComponentData
     {
-        public bool isActive;
-        public int physicsMassValue;
-        public bool physicsUseGravity;
-        public bool physicsFreezePosX;
-        public bool physicsFreezePosY;
-        public bool physicsFreezePosZ;
-        public bool physicsFreezeRotX;
-        public bool physicsFreezeRotY;
-        public bool physicsFreezeRotZ;
+        public bool PhysicsComponentIsActive;
+        public int PhysicsComponentMassValue;
+        public bool PhysicsComponentUseGravity;
+        public bool PhysicsComponentFreezePosX;
+        public bool PhysicsComponentFreezePosY;
+        public bool PhysicsComponentFreezePosZ;
+        public bool PhysicsComponentFreezeRotX;
+        public bool PhysicsComponentFreezeRotY;
+        public bool PhysicsComponentFreezeRotZ;
 
         public PhysicsComponentData()
         {
-            isActive = false;
-            physicsMassValue = 50;
-            physicsUseGravity = true;
-            physicsFreezePosX = false;
-            physicsFreezePosY = false;
-            physicsFreezePosZ = false;
-            physicsFreezeRotX = false;
-            physicsFreezeRotY = false;
-            physicsFreezeRotZ = false;
+            PhysicsComponentIsActive = false;
+            PhysicsComponentMassValue = 50;
+            PhysicsComponentUseGravity = true;
+            PhysicsComponentFreezePosX = false;
+            PhysicsComponentFreezePosY = false;
+            PhysicsComponentFreezePosZ = false;
+            PhysicsComponentFreezeRotX = false;
+            PhysicsComponentFreezeRotY = false;
+            PhysicsComponentFreezeRotZ = false;
         }
 
         public void Reset()
         {
             Debug.Log("Reset");
-            isActive = false;
-            physicsMassValue = 50;
-            physicsUseGravity = true;
-            physicsFreezePosX = false;
-            physicsFreezePosY = false;
-            physicsFreezePosZ = false;
-            physicsFreezeRotX = false;
-            physicsFreezeRotY = false;
-            physicsFreezeRotZ = false;
+            PhysicsComponentIsActive = false;
+            PhysicsComponentMassValue = 50;
+            PhysicsComponentUseGravity = true;
+            PhysicsComponentFreezePosX = false;
+            PhysicsComponentFreezePosY = false;
+            PhysicsComponentFreezePosZ = false;
+            PhysicsComponentFreezeRotX = false;
+            PhysicsComponentFreezeRotY = false;
+            PhysicsComponentFreezeRotZ = false;
         }
         public PhysicsComponentData(PhysicsComponentData data)
         {
-            isActive = data.isActive;
-            physicsMassValue = data.physicsMassValue;
-            physicsUseGravity = data.physicsUseGravity;
-            physicsFreezePosX = data.physicsFreezePosX;
-            physicsFreezePosY = data.physicsFreezePosY;
-            physicsFreezePosZ = data.physicsFreezePosZ;
-            physicsFreezeRotX = data.physicsFreezeRotX;
-            physicsFreezeRotY = data.physicsFreezeRotY;
-            physicsFreezeRotZ = data.physicsFreezeRotZ;
+            PhysicsComponentIsActive = data.PhysicsComponentIsActive;
+            PhysicsComponentMassValue = data.PhysicsComponentMassValue;
+            PhysicsComponentUseGravity = data.PhysicsComponentUseGravity;
+            PhysicsComponentFreezePosX = data.PhysicsComponentFreezePosX;
+            PhysicsComponentFreezePosY = data.PhysicsComponentFreezePosY;
+            PhysicsComponentFreezePosZ = data.PhysicsComponentFreezePosZ;
+            PhysicsComponentFreezeRotX = data.PhysicsComponentFreezeRotX;
+            PhysicsComponentFreezeRotY = data.PhysicsComponentFreezeRotY;
+            PhysicsComponentFreezeRotZ = data.PhysicsComponentFreezeRotZ;
         }
     }
 

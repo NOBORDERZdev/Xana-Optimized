@@ -265,7 +265,7 @@ public class XanaItem : MonoBehaviour
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
         PhysicsComponentData physicsComponentData = itemData.physicsComponentData;
-        if (physicsComponentData.isActive)
+        if (physicsComponentData.PhysicsComponentIsActive)
         {
             PhysicsComponent itemComponent = gameObject.AddComponent<PhysicsComponent>();
             itemComponent.Init(physicsComponentData);

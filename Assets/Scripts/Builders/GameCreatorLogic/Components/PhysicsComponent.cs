@@ -1,50 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using System;
-using System.IO;
 using Models;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PhysicsComponent : ItemComponent
 {
-    PhysicsComponentData physicsComponentData;
-    Rigidbody rigidBody;
+    PhysicsComponentData _physicsComponentData;
+    Rigidbody _assetRigidBody;
 
-    private void Awake()
+    new void Awake()
     {
-        rigidBody = GetComponent<Rigidbody>();
+        _assetRigidBody = GetComponent<Rigidbody>();
     }
 
     private void Start()
     {
-        rigidBody.isKinematic = false;
-        rigidBody.useGravity = true;
-        rigidBody.mass = physicsComponentData.physicsMassValue;
-        rigidBody.useGravity = physicsComponentData.physicsUseGravity;
+        _assetRigidBody.isKinematic = false;
+        _assetRigidBody.useGravity = true;
+        _assetRigidBody.mass = _physicsComponentData.PhysicsComponentMassValue;
+        _assetRigidBody.useGravity = _physicsComponentData.PhysicsComponentUseGravity;
 
         // Freeze position
-        if (physicsComponentData.physicsFreezePosX)
-            rigidBody.constraints |= RigidbodyConstraints.FreezePositionX;
-        if (physicsComponentData.physicsFreezePosY)
-            rigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
-        if (physicsComponentData.physicsFreezePosZ)
-            rigidBody.constraints |= RigidbodyConstraints.FreezePositionZ;
+        if (_physicsComponentData.PhysicsComponentFreezePosX)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezePositionX;
+        if (_physicsComponentData.PhysicsComponentFreezePosY)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezePositionY;
+        if (_physicsComponentData.PhysicsComponentFreezePosZ)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezePositionZ;
 
         // Freeze rotation
-        if (physicsComponentData.physicsFreezeRotX)
-            rigidBody.constraints |= RigidbodyConstraints.FreezeRotationX;
-        if (physicsComponentData.physicsFreezeRotY)
-            rigidBody.constraints |= RigidbodyConstraints.FreezeRotationY;
-        if (physicsComponentData.physicsFreezeRotZ)
-            rigidBody.constraints |= RigidbodyConstraints.FreezeRotationZ;
+        if (_physicsComponentData.PhysicsComponentFreezeRotX)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezeRotationX;
+        if (_physicsComponentData.PhysicsComponentFreezeRotY)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezeRotationY;
+        if (_physicsComponentData.PhysicsComponentFreezeRotZ)
+            _assetRigidBody.constraints |= RigidbodyConstraints.FreezeRotationZ;
 
     }
 
     public void Init(PhysicsComponentData physicsComponentData)
     {
-        this.physicsComponentData = physicsComponentData;
+        this._physicsComponentData = physicsComponentData;
     }
 
 
