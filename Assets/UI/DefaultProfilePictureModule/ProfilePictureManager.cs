@@ -98,65 +98,65 @@ public class ProfilePictureManager : MonoBehaviour
                 //Debug.LogError("Waiting for token");
                 yield return new WaitForSeconds(1f);
             }
-            AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
+            //AWSHandler.Instance.PostObjectMethodAvatar(fileData,"-"+ firstChar + "-DefaultUserProfile", UploadProfile);
             
-            Debug.Log("Changing  Imageing Now");
-            profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
-            if (MyProfileDataManager.Instance)
-                MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
+            //Debug.Log("Changing  Imageing Now");
+            //profileImage.sprite = CreateSpriteFromTexture(NativeGallery.LoadImageAtPath(savePath));
+            //if (MyProfileDataManager.Instance)
+            //    MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;
         }
         createProfileObject.SetActive(false);
     }
-    public UploadFileRoot uploadFileRoot=new UploadFileRoot();
-    public void UploadProfile(UploadFileRoot uploadFile)
-    {
-        uploadFileRoot=uploadFile;
-        StartCoroutine(UpdateUserAvatar());
-    }
+    //public UploadFileRoot uploadFileRoot=new UploadFileRoot();
+    //public void UploadProfile(UploadFileRoot uploadFile)
+    //{
+    //    uploadFileRoot=uploadFile;
+    //    StartCoroutine(UpdateUserAvatar());
+    //}
 
-    public IEnumerator UpdateUserAvatar()
-    {
-        yield return new WaitForSeconds(2f);
-        //SNS_APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
-        WWWForm form = new WWWForm();
+    //public IEnumerator UpdateUserAvatar()
+    //{
+    //    yield return new WaitForSeconds(2f);
+    //    //SNS_APIManager.Instance.RequestUpdateUserAvatar(uploadFileRoot.cdn_link, "EditProfileAvatar");
+    //    WWWForm form = new WWWForm();
 
-        form.AddField("avatar", uploadFileRoot.cdn_link);
+    //    //form.AddField("avatar", uploadFileRoot.cdn_link);
 
-        using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
-        {
-            string tempToken = ConstantsHolder.xanaToken;
+    //    using (UnityWebRequest www = UnityWebRequest.Post((ConstantsGod.API_BASEURL + ConstantsGod.r_url_UpdateUserAvatar), form))
+    //    {
+    //        string tempToken = ConstantsHolder.xanaToken;
 
-            if (string.IsNullOrEmpty(tempToken))
-                tempToken = ConstantsGod.AUTH_TOKEN;
+    //        if (string.IsNullOrEmpty(tempToken))
+    //            tempToken = ConstantsGod.AUTH_TOKEN;
 
-            www.SetRequestHeader("Authorization", tempToken);
+    //        www.SetRequestHeader("Authorization", tempToken);
 
-            www.SendWebRequest();
-            while(!www.isDone)
-            {
-                yield return null;
-            }
+    //        www.SendWebRequest();
+    //        while(!www.isDone)
+    //        {
+    //            yield return null;
+    //        }
 
-            if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.Log(www.error);
-            }
-            else
-            {
-                Debug.Log("Uploading complete!");
-                string data = www.downloadHandler.text;
-                ChangeProfileAfterUploading();
-                //Debug.Log("UpdateUserAvatar data:" + data);
-            }
-        }
+    //        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+    //        {
+    //            Debug.Log(www.error);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Uploading complete!");
+    //            string data = www.downloadHandler.text;
+    //            ChangeProfileAfterUploading();
+    //            //Debug.Log("UpdateUserAvatar data:" + data);
+    //        }
+    //    }
 
-    }
+    //}
 
 
     void ChangeProfileAfterUploading()
     {
         //MyProfileDataManager.Instance.profileImage.sprite = profileImage.sprite;    
-        MyProfileDataManager.Instance.UpdateProfilePic();
+        //MyProfileDataManager.Instance.UpdateProfilePic();
     }
     Sprite CreateSpriteFromTexture(Texture2D texture)
     {

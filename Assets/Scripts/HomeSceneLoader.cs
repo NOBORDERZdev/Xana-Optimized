@@ -75,7 +75,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 {
                     ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
                     ConstantsHolder.xanaConstants.orientationchanged = false;
-                    ConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
+                    //ConstantsHolder.xanaConstants.mussuemEntry = JJMussuemEntry.Null;
                 }
                 if (GameManager.currentLanguage == "ja")
                 {

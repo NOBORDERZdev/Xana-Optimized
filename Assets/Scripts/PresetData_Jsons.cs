@@ -89,7 +89,7 @@ public class PresetData_Jsons : MonoBehaviour
         }
         GameManager.Instance.characterBodyParts.DefaultTexture(false);
 
-        if (!IsStartUp_Canvas && !UserPassManager.Instance.CheckSpecificItem(PresetNameinServer))
+        if (!IsStartUp_Canvas && true)
         {
             Debug.Log("Please Upgrade to Premium account");
             return;
@@ -187,7 +187,7 @@ public class PresetData_Jsons : MonoBehaviour
                     UserLoginSignupManager.instance.OpenUserNamePanel();
                     if (UGCManager.isSelfieTaken) 
                     {
-                        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
                         AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
                     }
                 }
@@ -195,7 +195,7 @@ public class PresetData_Jsons : MonoBehaviour
                 {
                     GameManager.Instance.UiManager.isAvatarSelectionBtnClicked = false;
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
-                    GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+                   //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
                 }
                 if (UGCManager.isSelfieTaken)
                 {

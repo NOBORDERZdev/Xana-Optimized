@@ -74,34 +74,34 @@ public class ReferencesForGamePlay : MonoBehaviour
                 go.SetActive(false);
             }
         }
-        if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
-        {
-            if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
-            {
-                if (ConstantsHolder.xanaConstants.minimap == 1)
-                {
-                    minimap.SetActive(true);
-                }
-                minimapSettingsBtn.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false);
-                minimapSettingsBtn.SetActive(false);
-            }
-        }
-        else
-        {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
-            {
-                minimap.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false); // Disable Minimap Bydefault
-            }
-            minimapSettingsBtn.SetActive(true);
-        }
+        //if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
+        //{
+        //    if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
+        //    {
+        //        if (ConstantsHolder.xanaConstants.minimap == 1)
+        //        {
+        //            minimap.SetActive(true);
+        //        }
+        //        minimapSettingsBtn.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        minimap.SetActive(false);
+        //        minimapSettingsBtn.SetActive(false);
+        //    }
+        //}
+        //else
+        //{
+        //    if (ConstantsHolder.xanaConstants.minimap == 1)
+        //    {
+        //        minimap.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        minimap.SetActive(false); // Disable Minimap Bydefault
+        //    }
+        //    minimapSettingsBtn.SetActive(true);
+        //}
         playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
     }
 
@@ -109,21 +109,21 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
-        if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
-        {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
-            if (PhotonNetwork.CurrentRoom != null)
-            {
-                PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
-            }
-        }
+        //if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
+        //{
+        //    RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
+        //    if (PhotonNetwork.CurrentRoom != null)
+        //    {
+        //        PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
+        //    }
+        //}
         //else if (FeedEventPrefab.m_EnvName.Contains("XANA Lobby"))
         //{
         //    //PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         //    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
         //}
-        else
-        {
+        //else
+        //{
             RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit);
             if (PhotonNetwork.CurrentRoom != null)
             {
@@ -136,7 +136,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                 //}
             }
-        }
+        //}
         if (instance != null && instance != this/* && !FeedEventPrefab.m_EnvName.Contains("XANA Lobby")*/)
         {
             if (instance.totalCounter != null)
@@ -174,9 +174,9 @@ public class ReferencesForGamePlay : MonoBehaviour
             StartCoroutine(counterCoroutine);
         }
 
-        if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
+        if (/*WorldItemView.m_EnvName.Contains("AfterParty") ||*/ ConstantsHolder.xanaConstants.IsMuseum)
         {
-            if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
+            if (/*WorldItemView.m_EnvName.Contains("J&J WORLD_5")*/ false)
             {
                 if (ConstantsHolder.xanaConstants.minimap == 1)
                     ReferencesForGamePlay.instance.minimap.SetActive(true);
@@ -375,12 +375,12 @@ public class ReferencesForGamePlay : MonoBehaviour
                     //}
                     // print("!!! PlayerCount"+ PlayerCount);
                 }
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-                {
-                    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
+                //if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+                //{
+                //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
+                //    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
                    
-                }
+                //}
 
                 if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     MakeRoomPrivate();

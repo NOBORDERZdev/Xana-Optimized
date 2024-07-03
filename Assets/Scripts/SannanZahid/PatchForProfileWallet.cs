@@ -16,7 +16,7 @@ public class PatchForProfileWallet : MonoBehaviour
         if (gameManager.UiManager != null)//rik
         {
             // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
+           // gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
         }
     }
 

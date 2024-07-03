@@ -522,7 +522,7 @@ public class FeedEventPrefab : MonoBehaviour
     public void OnClickPrefab()
     {
         //m_EnvDownloadLink = m_FileLink;
-        ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
+        //ScrollController.transform.parent.GetComponent<ScrollActivity>().enabled = false;
         m_EnvName = m_EnvironmentName;
         m_CreaName = creatorName;
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
@@ -616,8 +616,8 @@ public class FeedEventPrefab : MonoBehaviour
             if (!worldTags[i].IsNullOrEmpty())
             {
                 GameObject temp = Instantiate(tagsPrefab, tagsParent);
-                temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
-                temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().tagName.text = worldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = worldTags[i];
                 //temp.GetComponent<TagPrefabInfo>().descriptionPanel = descriptionPanelParent;
             }
         }

@@ -618,7 +618,7 @@ public class PlayerSelfieController : MonoBehaviour
     public void TakeScreenShoot()
     {
         //ConstantsHolder.xanaConstants.SelfiMovement = false;
-        if (!UserPassManager.Instance.CheckSpecificItem("Selfie Button"))
+        if (false)
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 

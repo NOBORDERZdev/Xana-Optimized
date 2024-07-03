@@ -6,10 +6,10 @@ public class PatchForAvatar : MonoBehaviour
 {
     private void OnEnable()
     {
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+        //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
     }
     private void OnDisable()
     {
-        GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
+        //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
     }
 }

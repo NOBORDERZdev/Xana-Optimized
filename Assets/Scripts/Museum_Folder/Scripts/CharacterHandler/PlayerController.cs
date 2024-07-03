@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "LiveStream")
         {
             Gamemanager._InstanceGM.m_youtubeAudio.volume = 1f;
-            Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 1;
+            //Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 1;
             //Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
 
             //SoundController.Instance.MusicSource.volume = 0;

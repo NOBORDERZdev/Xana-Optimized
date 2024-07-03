@@ -44,12 +44,12 @@ public class FilterBG : MonoBehaviour
         //profile.GetSetting<ColorGrading>().colorFilter.Override(new Color32(r,g,b,a));
         // LiveVideoRoomManager.Instance.mainVolume.profile = profile;
 
-        if (LiveVideoRoomManager.Instance.filterMainVolume.profile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out var color))
-        {
-            color.colorFilter.overrideState = true;
-            color.colorFilter.showAlpha = true;
-            color.colorFilter.value = new Color32(r, g, b, a);
-        }
+        //if (LiveVideoRoomManager.Instance.filterMainVolume.profile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out var color))
+        //{
+        //    color.colorFilter.overrideState = true;
+        //    color.colorFilter.showAlpha = true;
+        //    color.colorFilter.value = new Color32(r, g, b, a);
+        //}
     }
 
 
@@ -94,15 +94,15 @@ public class FilterBG : MonoBehaviour
                     categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = bean.data.filter[i].name;
                     categoryObject.transform.GetChild(2).GetComponent<TextMeshProUGUI>().color = new Color32(115, 115, 115, 255);
 
-                    BackGroundItem LBC = categoryObject.GetComponent<BackGroundItem>();
+                    //BackGroundItem LBC = categoryObject.GetComponent<BackGroundItem>();
 
-                    if (LBC == null)
-                    {
-                        LBC = categoryObject.AddComponent<BackGroundItem>();
-                    }
-                    LBC.Initializ(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G)
-                        , byte.Parse(bean.data.filter[i].color.B), byte.Parse(bean.data.filter[i].color.A), this,
-                        contentCategoryPanel.gameObject);
+                    //if (LBC == null)
+                    //{
+                    //    LBC = categoryObject.AddComponent<BackGroundItem>();
+                    //}
+                    //LBC.Initializ(byte.Parse(bean.data.filter[i].color.R), byte.Parse(bean.data.filter[i].color.G)
+                    //    , byte.Parse(bean.data.filter[i].color.B), byte.Parse(bean.data.filter[i].color.A), this,
+                    //    contentCategoryPanel.gameObject);
 
                 }
             }

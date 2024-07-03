@@ -108,7 +108,7 @@ public class Swipe_menu : MonoBehaviour
             //UserRegisterationManager.instance.LogoImage2.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             //UserRegisterationManager.instance.LogoImage3.GetComponent<Image>().sprite = SelectedOBJ.transform.GetChild(0).GetComponent<Image>().sprite;
             SelectedOBJ.GetComponent<PresetData_Jsons>().ChangecharacterFromPresetPanel();
-            GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+            //GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
         }
     }

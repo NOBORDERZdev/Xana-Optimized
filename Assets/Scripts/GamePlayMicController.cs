@@ -13,7 +13,7 @@ public class GamePlayMicController : MonoBehaviour
     public GameObject otherButtonPotrait;
     void Start()
     {
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+        if (/*WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena")*/ false)
         {
             if (ConstantsHolder.xanaConstants.mic == 1)
             {

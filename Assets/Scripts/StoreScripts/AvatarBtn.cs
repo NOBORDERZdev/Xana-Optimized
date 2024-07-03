@@ -339,7 +339,7 @@ public class AvatarBtn : MonoBehaviour
         }
 
 
-        if ((!UserPassManager.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeBrowPoints")) && CurrentString != "")
+        if (/*(!UserPassManager.Instance.CheckSpecificItem(CurrentString) && (CurrentString != "Makeup" && CurrentString != "EyeBrowPoints")) && CurrentString != ""*/ false)
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             //print("Please Upgrade to Premium account");

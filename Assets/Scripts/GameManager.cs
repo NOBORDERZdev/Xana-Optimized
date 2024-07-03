@@ -47,14 +47,14 @@ public class GameManager : MonoBehaviour
 
     //Script references
     public AvatarPathSystemManager avatarPathSystemManager;
-    public ActorManager ActorManager;
+    //public ActorManager ActorManager;
     public MoodManager moodManager;
-    public UserAnimationPostFeature userAnimationPostFeature;
+    //public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
     public AdditiveScenesLoader additiveScenesManager;
-    public HomeCameraController HomeCamera;
+    //public HomeCameraController HomeCamera;
     public UIHandler UiManager;
-    public HomeFooterHandler bottomTabManagerInstance;
+    //public HomeFooterHandler bottomTabManagerInstance;
     public WorldManager SpaceWorldManagerRef;
     internal string selectedPresetData="";
     private void Awake()
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     
     public void HomeCameraInputHandler(bool flag)
     {
-        HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
+        //HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
     }
     public string GetStringFolderPath()
     {

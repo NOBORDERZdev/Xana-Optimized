@@ -15,8 +15,8 @@ public class patchProfile : MonoBehaviour
         {
             if (gameManager.UiManager != null)//rik
             {
-                // GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
+                //// GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                //gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().SetProfileButton();
                 
             }
         }
@@ -25,7 +25,7 @@ public class patchProfile : MonoBehaviour
     {
         if (XANAPartyManager.Instance.EnableXANAPartyGuest)
             return;
-        gameManager.ActorManager.IdlePlayerAvatorForMenu(false);
+        //gameManager.ActorManager.IdlePlayerAvatorForMenu(false);
         gameManager.m_RenderTextureCamera.gameObject.SetActive(false);
     }
 }

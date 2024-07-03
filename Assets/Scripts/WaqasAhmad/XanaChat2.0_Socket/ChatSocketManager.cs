@@ -150,8 +150,8 @@ public class ChatSocketManager : MonoBehaviour
     {
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         if (XanaEventDetails.eventDetails.DataIsInitialized)
         {
             eventId = XanaEventDetails.eventDetails.id;
@@ -203,20 +203,20 @@ public class ChatSocketManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             StartCoroutine(SubmitGuestUserNameWithJson());
     }
-    void OnError(CustomError args)
-    {
-        Debug.LogError("Socket Error: " + args.message);
-        isConnected = false;
-    }
-    void Onresult(CustomError args)
-    {
-        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-    }
-    void OnSocketDisconnect(CustomError args)
-    {
-        Debug.Log("Socket Disconnected: " + args.message);
-        isConnected = false;
-    }
+    //void OnError(CustomError args)
+    //{
+    //    Debug.LogError("Socket Error: " + args.message);
+    //    isConnected = false;
+    //}
+    //void Onresult(CustomError args)
+    //{
+    //    //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+    //}
+    //void OnSocketDisconnect(CustomError args)
+    //{
+    //    Debug.Log("Socket Disconnected: " + args.message);
+    //    isConnected = false;
+    //}
 
     void OnApplicationPause(bool pauseStatus)
     {

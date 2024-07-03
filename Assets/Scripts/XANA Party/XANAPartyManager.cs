@@ -189,7 +189,7 @@ public class XANAPartyManager : MonoBehaviour
 
         HideLoadingScreens();
         ConstantsHolder.xanaConstants.EnviornmentName = ConstantsHolder.xanaConstants.XanaPartyGameName;
-        WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.XanaPartyGameName;
+        //WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.XanaPartyGameName;
         WorldManager.instance.PlayWorld();
     }
 

@@ -68,7 +68,7 @@ public class UGCUIManager : MonoBehaviour
     public KeyInfo currentKeyInfo;
     //public string addresskey;
     //public string isApplied;
-    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+  //  public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
     private void Awake()
     {
         if (instance == null)
@@ -357,7 +357,7 @@ public class UGCUIManager : MonoBehaviour
         {
             SceneManager.LoadScene("Home");
         }
-        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
+      //  OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
     public void CancelVideoSreen()
     {

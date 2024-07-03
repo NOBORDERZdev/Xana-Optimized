@@ -109,7 +109,7 @@ public class LoadPlayerAvatar : ServerSideUserDataHandler
 
     public void OpenAvatarPanel()
     {
-        if (!UserPassManager.Instance.CheckSpecificItem("MyAvatar"))
+        if (/*!UserPassManager.Instance.CheckSpecificItem("MyAvatar")*/ false)
         {
             print("Please Upgrade to Premium account");
             return;

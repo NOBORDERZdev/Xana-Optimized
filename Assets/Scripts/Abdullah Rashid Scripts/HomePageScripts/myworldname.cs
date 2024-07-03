@@ -10,6 +10,6 @@ public class myworldname : MonoBehaviour
    
    public void Start()
     {
-        WorldTextTMP.text = WorldItemView.m_EnvName.ToUpper();
+        //WorldTextTMP.text = WorldItemView.m_EnvName.ToUpper();
     }
 }

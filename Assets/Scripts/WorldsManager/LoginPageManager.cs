@@ -21,7 +21,7 @@ public class LoginPageManager : MonoBehaviour
 
     public Sprite creatorPic;
     public GameObject profileIcon, taphold_profile, t_Scroll_discription;
-    public ScrollActivity scrollActivity;
+    //public ScrollActivity scrollActivity;
     GameManager gameManager;
 
     private void Awake()
@@ -30,9 +30,9 @@ public class LoginPageManager : MonoBehaviour
     }
     public void SetPanelToBottom()
     {
-        if (scrollActivity.gameObject.activeInHierarchy)
+        if (/*scrollActivity.gameObject.activeInHierarchy*/ true)
         {
-            scrollActivity.BottomToTop();
+            //scrollActivity.BottomToTop();
            // m_WorldPlayPanel.transform.SetParent(WorldManager.instance.DescriptionParentPanel.transform);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
             m_WorldPlayPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
@@ -44,81 +44,81 @@ public class LoginPageManager : MonoBehaviour
     }
     public void CheckWorld()
     {
-        gameManager.UiManager.HomePage.SetActive(true);
-        this.GetComponent<FeedEventPrefab>().m_FadeImage = this.GetComponent<FeedEventPrefab>().worldIcon;
-        this.GetComponent<FeedEventPrefab>().UpdateWorldPanel();
-        if (!gameObject.GetComponent<PointerDown>().tapAndHolded)
-        {
-            string EnvironmentName = this.GetComponent<FeedEventPrefab>().m_EnvironmentName;
-            bool isBuilderScene = this.GetComponent<FeedEventPrefab>().isBuilderScene;
+        //gameManager.UiManager.HomePage.SetActive(true);
+        //this.GetComponent<FeedEventPrefab>().m_FadeImage = this.GetComponent<FeedEventPrefab>().worldIcon;
+        //this.GetComponent<FeedEventPrefab>().UpdateWorldPanel();
+        //if (!gameObject.GetComponent<PointerDown>().tapAndHolded)
+        //{
+        //    string EnvironmentName = this.GetComponent<FeedEventPrefab>().m_EnvironmentName;
+        //    bool isBuilderScene = this.GetComponent<FeedEventPrefab>().isBuilderScene;
             
-            if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
-            {
-                print("Clicked on DJ event");
-                EnvironmentName = "DJ Event";
-                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
-                {
-                    if (EnvironmentName != "DJ Event")
-                    {
-                        //UserPassManager.Instance.PremiumUserUI.SetActive(true);
-                    }
-                    else
-                    {
-                        UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
-                    }
-                    return;
-                }
-            }
-            else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
-            {
-                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
-                {
-                    //UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
-                    return;
-                }
-            }
+        //    if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
+        //    {
+        //        print("Clicked on DJ event");
+        //        EnvironmentName = "DJ Event";
+        //        if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
+        //        {
+        //            if (EnvironmentName != "DJ Event")
+        //            {
+        //                //UserPassManager.Instance.PremiumUserUI.SetActive(true);
+        //            }
+        //            else
+        //            {
+        //                UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
+        //            }
+        //            return;
+        //        }
+        //    }
+        //    else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
+        //    {
+        //        if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
+        //        {
+        //            //UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
+        //            return;
+        //        }
+        //    }
            
-            else if (!isBuilderScene)
-            {
-                if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
-                {
-                    //if (EnvironmentName != "DJ Event")
-                    //{
-                    //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
-                    //}
-                    //else
-                    //{
-                    //    UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
-                    //}
-                    return;
-                }
-            }
-            m_WorldPlayPanel.SetActive(true);
-            m_WorldPlayPanel.transform.SetParent(gameManager.UiManager.HomePage.transform);
-            m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
-            GetComponent<PointerDown>().tapAndHolded = false;
-            m_MuseumIsClicked = false;
-        }
-        else
-        {
-            m_TapAndHoldPanel.SetActive(true);
-            m_TapAndHoldPanel.GetComponent<OnPanel>().rectInterpolate = true;
-            m_TapAndHoldPanel.transform.SetParent(gameManager.UiManager.HomePage.transform);
-            m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
-            m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
-            m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = gameManager.UiManager.HomePage.GetComponent<RectTransform>().sizeDelta;
-            m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = gameManager.UiManager.HomePage.GetComponent<RectTransform>().anchoredPosition;
-            m_TapAndHoldPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
-            tapholdloadre();
-            this.GetComponent<PointerDown>().tapAndHolded = false;
-            GetComponent<PointerDown>().timer = 0;
-        }
-        gameManager.UiManager.ShowFooter(false);//rik
+        //    else if (!isBuilderScene)
+        //    {
+        //        if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
+        //        {
+        //            //if (EnvironmentName != "DJ Event")
+        //            //{
+        //            //    //UserPassManager.Instance.PremiumUserUI.SetActive(true);
+        //            //}
+        //            //else
+        //            //{
+        //            //    UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
+        //            //}
+        //            return;
+        //        }
+        //    }
+        //    m_WorldPlayPanel.SetActive(true);
+        //    m_WorldPlayPanel.transform.SetParent(gameManager.UiManager.HomePage.transform);
+        //    m_WorldPlayPanel.GetComponent<OnPanel>().rectInterpolate = true;
+        //    GetComponent<PointerDown>().tapAndHolded = false;
+        //    m_MuseumIsClicked = false;
+        //}
+        //else
+        //{
+        //    m_TapAndHoldPanel.SetActive(true);
+        //    m_TapAndHoldPanel.GetComponent<OnPanel>().rectInterpolate = true;
+        //    m_TapAndHoldPanel.transform.SetParent(gameManager.UiManager.HomePage.transform);
+        //    m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMin = new Vector2(0, 0);
+        //    m_TapAndHoldPanel.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+        //    m_TapAndHoldPanel.GetComponent<RectTransform>().sizeDelta = gameManager.UiManager.HomePage.GetComponent<RectTransform>().sizeDelta;
+        //    m_TapAndHoldPanel.GetComponent<RectTransform>().anchoredPosition = gameManager.UiManager.HomePage.GetComponent<RectTransform>().anchoredPosition;
+        //    m_TapAndHoldPanel.GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        //    tapholdloadre();
+        //    this.GetComponent<PointerDown>().tapAndHolded = false;
+        //    GetComponent<PointerDown>().timer = 0;
+        //}
+        //gameManager.UiManager.ShowFooter(false);//rik
 
-        gameManager.WorldBool = true;
-        m_WorldIsClicked = true;
-        m_isSignUpPassed = true;
-        //------------------------
+        //gameManager.WorldBool = true;
+        //m_WorldIsClicked = true;
+        //m_isSignUpPassed = true;
+        ////------------------------
     }
 
     void ScrollTopSetter()

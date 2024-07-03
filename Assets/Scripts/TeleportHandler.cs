@@ -115,8 +115,8 @@ public class TeleportHandler : MonoBehaviour
             Gamemanager._InstanceGM.env_Subparts[1].SetActive(false);
             Gamemanager._InstanceGM.minimapParent.SetActive(true);
 
-            Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
-            Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
+           // Gamemanager._InstanceGM.mediaPlayer.AudioVolume = 0;
+          //  Gamemanager._InstanceGM.mediaPlayer.AudioMuted = false;
 
             //SoundController.Instance.MusicSource.volume = 0.2f;
             SoundController.Instance.MusicSource.mute = false;

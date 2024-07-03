@@ -38,7 +38,7 @@ public class PostProcessManager : MonoBehaviour
         }
         else
         {
-            if (CheckPostProcessEnable())
+            if (false)
             {
                 firstPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
                 thirdPersonCam.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -91,15 +91,15 @@ public class PostProcessManager : MonoBehaviour
     }
 
 
-    public bool CheckPostProcessEnable()
-    {
-        if (m_SceneNames.Contains(WorldItemView.m_EnvName))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    //public bool CheckPostProcessEnable()
+    //{
+    //    if (m_SceneNames.Contains(WorldItemView.m_EnvName))
+    //    {
+    //        return true;
+    //    }
+    //    else
+    //    {
+    //        return false;
+    //    }
+    //}
 }

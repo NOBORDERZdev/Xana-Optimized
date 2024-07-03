@@ -14,7 +14,7 @@ public class AdditiveScenesLoader : MonoBehaviour
     public GameObject SNSmodule;
     [HideInInspector]
     public GameObject SNSMessage;
-    public HomeFooterHandler homeBottomTab;
+    //public HomeFooterHandler homeBottomTab;
     
 
     public static bool isAppOpen = false;

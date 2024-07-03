@@ -598,9 +598,9 @@ public class ItemDetail : MonoBehaviour
                 }
         }
 
-        if (!UserPassManager.Instance.CheckSpecificItem(CurrentString))
+        if (/*!UserPassManager.Instance.CheckSpecificItem(CurrentString)*/ false)
         {
-            UserPassManager.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             //print("Please Upgrade to Premium account");
             return;
@@ -949,9 +949,9 @@ public class ItemDetail : MonoBehaviour
 
         //Debug.Log("Current String is: " + CurrentString);
 
-        if (!UserPassManager.Instance.CheckSpecificItem(CurrentString))
+        if (/*!UserPassManager.Instance.CheckSpecificItem(CurrentString)*/ false)
         {
-            UserPassManager.Instance.PremiumUserUI.SetActive(true);
+            //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             //print("Please Upgrade to Premium account");
             return;

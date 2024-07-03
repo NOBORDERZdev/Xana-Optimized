@@ -36,7 +36,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
     public List<string> CategorytagNames = new List<string>();
     WorldItemDetail _event;
 
-    public SpaceScrollInitializer spaceCategoryScroller;
+    //public SpaceScrollInitializer spaceCategoryScroller;
     private void OnEnable()
     {
         WorldManager.LoadHomeScreenWorlds += StartLoading;
@@ -52,10 +52,10 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     void StartLoading()
     {
-        spaceCategoryScroller.masterScroller.ScrollPosition = 0f;
+        //spaceCategoryScroller.masterScroller.ScrollPosition = 0f;
         if (!GameManager.Instance.isTabSwitched)
         {
-            spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(true);
+            //spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(true);
             GameManager.Instance.isTabSwitched = true;
             WorldManager.instance.changeFollowState = false;
             FeatureSpaceLoading();
@@ -247,7 +247,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
-                spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
+                //spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
             }
         }));
     }
@@ -273,7 +273,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
             //Setting tags data as category on pagination call
             _event = new WorldItemDetail();
-            spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
+            //spaceCategoryScroller.AddRowToScroller(_event, 0, "No Title", tagAsCategoryData, CategorytagNames, true);
             totalTagsInstCount = 0;
         }
     }
@@ -316,7 +316,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
-                spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
+                //spaceCategoryScroller.paginationLoaderRef.ShowApiLoader(false);
                 //CategoryParentVisibility(index, false);
                 //FlexibleRect.OnAdjustSize?.Invoke(false);
                 //if (apiHitCountC1 < 5)
@@ -467,7 +467,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             tagAsCategoryData.Add(new TagsCategoryData());
             CategorytagNames.Add(_categTitle);
         }
-        spaceCategoryScroller.initializeCategoryRow = true;
+        //spaceCategoryScroller.initializeCategoryRow = true;
 
         for (int i = 0; i < _WorldInfo.data.rows.Count; i++)
         {
@@ -564,7 +564,7 @@ public class WorldSpacesHomeScreen : MonoBehaviour
             }
             else
             {
-                spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
+                //spaceCategoryScroller.AddRowToScroller(_event, _WorldInfo.data.rows.Count, _categTitle);
             }
             //spaceContent.transform.GetChild(i).gameObject.SetActive(true);
             //spaceContent.transform.GetChild(i).GetComponent<WorldItemView>().InitItem(_event);
@@ -703,8 +703,8 @@ public class WorldSpacesHomeScreen : MonoBehaviour
 
     public void OnLogoutClearSpaceData()
     {
-        spaceCategoryScroller.masterScroller.ClearAll();
-        spaceCategoryScroller._data.Clear();
+        //spaceCategoryScroller.masterScroller.ClearAll();
+        //spaceCategoryScroller._data.Clear();
         _tagsTraversedCount = 0;
         totalTagsInstCount = 0;
         mostVisitedTagList.Clear();

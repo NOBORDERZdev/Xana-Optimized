@@ -49,7 +49,7 @@ public class UserAnalyticsHandler : MonoBehaviour
 
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
 
         Manager.Socket.On<string>("player_count", UserData);
         Manager.Socket.On<string>("PlayerSocketId", PlayerSocketID);
@@ -366,14 +366,14 @@ public class UserAnalyticsHandler : MonoBehaviour
         }
         StartCoroutine(SetSession(true));
     }
-    void OnError(CustomError args)
-    {
-        //Debug.Log(string.Format("Error: {0}", args.ToString()));
-    }
-    void Onresult(CustomError args)
-    {
-        //Debug.Log(string.Format("Error: {0}", args.ToString()));
-    }
+    //void OnError(CustomError args)
+    //{
+    //    //Debug.Log(string.Format("Error: {0}", args.ToString()));
+    //}
+    //void Onresult(CustomError args)
+    //{
+    //    //Debug.Log(string.Format("Error: {0}", args.ToString()));
+    //}
 
 
     void OnUserJoinedFunction(bool isJoined)

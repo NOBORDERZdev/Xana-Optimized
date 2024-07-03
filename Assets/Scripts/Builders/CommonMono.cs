@@ -2328,8 +2328,8 @@ public class RestAPI
         {
             WWW req = new WWW(url, form);
             yield return req;
-            var response = JSON.Parse(req.text);
-            savedStrings[keyToAccess] = response[keyInResponse].ToString().Replace("\"", string.Empty);
+            //var response = JSON.Parse(req.text);
+            //savedStrings[keyToAccess] = response[keyInResponse].ToString().Replace("\"", string.Empty);
         }
     }
     public static string GetSavedStringValue(string _keyToAccess)

@@ -261,8 +261,8 @@ public class XanaChatSystem : MonoBehaviour
 
 
         print("Bad word !!" + removeBadWords);
-
-        if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
+         
+        if (/*!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option")*/ false)
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
