@@ -14,6 +14,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField]
+    private GameObject copiedTextPanel;
     public PersonalData Data;
     public enum PersonalData
     {
@@ -52,26 +54,30 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
     }
     public void DisplayMsg()
     {
-        string msg = "";
+        //string msg = "";
         TextEditor textEditor = new TextEditor();
-        switch (Data)
-        {
-            case PersonalData.Email:
-                msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
-                break;
-            case PersonalData.phoneNumber:
-                msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
-                break;
-            case PersonalData.WalletAddress:
-                msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
-                break;
-        }
+        //switch (Data)
+        //{
+        //    case PersonalData.Email:
+        //        msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
+        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
+        //        break;
+        //    case PersonalData.phoneNumber:
+        //        msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
+        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
+        //        break;
+        //    case PersonalData.WalletAddress:
+        //        msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
+        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
+        //        break;
+        //}
         textEditor.SelectAll();
         textEditor.Copy();
-        SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
+#if UNITY_IOS
+        copiedTextPanel.SetActive(true);
+        Invoke("DisableToast",0.5f);
+#endif
+        //SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
     }
 
 
@@ -92,5 +98,9 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
 
             yield return delay;
         }
+    }
+    private void DisableToast() 
+    {
+        copiedTextPanel.SetActive(false);
     }
 }
