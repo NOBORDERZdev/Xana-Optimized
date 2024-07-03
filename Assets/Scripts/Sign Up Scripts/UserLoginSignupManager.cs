@@ -100,8 +100,8 @@ public class UserLoginSignupManager : MonoBehaviour
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        if (ref_EyesBlinking == null)
-            ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
+        //if (ref_EyesBlinking == null)
+        //    ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
 
         if (ref_EyesBlinking)
         {

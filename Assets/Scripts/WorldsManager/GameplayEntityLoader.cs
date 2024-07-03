@@ -102,10 +102,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private void Start()
     {
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            StartEventTimer();
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    StartEventTimer();
+        //}
         Input.multiTouchEnabled = true;
         for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
         {
@@ -590,20 +590,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
-        // Join Room Activate Chat
-        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            string worldId = 0.ToString();
-            if (XanaEventDetails.eventDetails.environmentId != 0)
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
-            }
-            else
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
-            }
-        }
+        //// Join Room Activate Chat
+        //////Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    string worldId = 0.ToString();
+        //    if (XanaEventDetails.eventDetails.environmentId != 0)
+        //    {
+        //        ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+        //    }
+        //    else
+        //    {
+        //        ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+        //    }
+        //}
 
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         if (ConstantsHolder.xanaConstants.isCameraMan)
@@ -1140,7 +1140,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
         if (tempSpawnPoint)
         {
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (false)
             {
                 StartCoroutine(SpawnPlayer());
             }
@@ -1209,6 +1209,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private void DownloadCompleted()
     {
         isEnvLoaded = true;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         StartCoroutine(spwanPlayerWithWait());
     }
 

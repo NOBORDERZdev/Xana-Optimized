@@ -53,7 +53,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (false)
             {
                 if (checkEventStartTime())
                 {
@@ -124,7 +124,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 //    }
                 //}
                 //Debug.Log("call hua kya he");
-                if (XanaEventDetails.eventDetails.DataIsInitialized)
+                if (false)
                 {
                     if (checkEventStartTime())
                     {
@@ -194,7 +194,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 //    }
                 //}
                 //Debug.Log("call hua kya he");
-                if (XanaEventDetails.eventDetails.DataIsInitialized)
+                if (false)
                 {
                     if (checkEventStartTime())
                     {
@@ -265,7 +265,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (false)
             {
                 if (checkEventStartTime())
                 {
@@ -335,7 +335,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             //    }
             //}
             //Debug.Log("call hua kya he");
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (false)
             {
                 if (checkEventStartTime())
                 {

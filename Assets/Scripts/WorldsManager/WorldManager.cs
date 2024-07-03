@@ -79,7 +79,7 @@ public class WorldManager : MonoBehaviour
         else
             Destroy(this);
 
-
+         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
         if (!System.IO.Directory.Exists(Application.persistentDataPath + "/MainMenuData"))
         {
             System.IO.Directory.CreateDirectory(Application.persistentDataPath + "/MainMenuData");

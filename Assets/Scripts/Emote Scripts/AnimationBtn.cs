@@ -29,10 +29,10 @@ public class AnimationBtn : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted += OnAnimationPlay;
         if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped += OnAnimationStoped;
 
-        if (EmoteAnimationHandler.Instance.clearAnimation == null)
-        {
-            EmoteAnimationHandler.Instance.clearAnimation += ClearAnimations;
-        }
+        //if (EmoteAnimationHandler.Instance.clearAnimation == null)
+        //{
+        //    EmoteAnimationHandler.Instance.clearAnimation += ClearAnimations;
+        //}
 
     }
 
@@ -44,7 +44,7 @@ public class AnimationBtn : MonoBehaviour
 
         if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStarted -= OnAnimationPlay;
         if (GamePlayButtonEvents.inst != null) EmoteAnimationHandler.AnimationStopped -= OnAnimationStoped;
-        EmoteAnimationHandler.Instance.clearAnimation -= ClearAnimations;
+       // EmoteAnimationHandler.Instance.clearAnimation -= ClearAnimations;
     }
 
     private void AllAnimsPanelUpdate(bool value)

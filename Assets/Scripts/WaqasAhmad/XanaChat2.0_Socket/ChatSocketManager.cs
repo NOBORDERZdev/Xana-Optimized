@@ -152,10 +152,10 @@ public class ChatSocketManager : MonoBehaviour
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
         //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
         //Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            eventId = XanaEventDetails.eventDetails.id;
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    eventId = XanaEventDetails.eventDetails.id;
+        //}
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
         StartCoroutine(FetchOldMessages());
@@ -272,10 +272,10 @@ public class ChatSocketManager : MonoBehaviour
         string event_Id = "1";
 
         // Checking For Event
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            event_Id = XanaEventDetails.eventDetails.id.ToString();
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    event_Id = XanaEventDetails.eventDetails.id.ToString();
+        //}
         eventId = int.Parse(event_Id);
 
         if (!npcId.IsNullOrEmpty())

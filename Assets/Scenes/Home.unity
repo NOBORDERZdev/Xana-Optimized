@@ -1145,19 +1145,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 574624687860392164, guid: 389d95c6e3f15984ba740ac06bfc43d1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 389d95c6e3f15984ba740ac06bfc43d1, type: 3}
---- !u!114 &115577939 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 574624687860392164, guid: 389d95c6e3f15984ba740ac06bfc43d1, type: 3}
-  m_PrefabInstance: {fileID: 115577938}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05fcf10da5e53d74f942c88c05ab4b92, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &128241079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11360,8 +11350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb374cc1354e37040bcc643d6dea6c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  address: 
-  socketId: 
 --- !u!4 &1264385120
 Transform:
   m_ObjectHideFlags: 0
@@ -14359,7 +14347,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1549620712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15553,69 +15541,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2403d61d50881774ab05978ea23d3478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allButtonIcon:
-  - {fileID: 797993473}
-  - {fileID: 1727595201}
-  - {fileID: 1840786060}
-  - {fileID: 1497500748}
-  - {fileID: 136990877}
-  - {fileID: 0}
-  allButtonUnSelected:
-  - {fileID: 21300000, guid: 8319648307ecfed4c9319cbc2b057174, type: 3}
-  - {fileID: 21300000, guid: 1f3dbaa7dba995c4787e3a73ce2a549f, type: 3}
-  - {fileID: 21300000, guid: 9d24708fb8582034c891d77699ad3f01, type: 3}
-  - {fileID: 21300000, guid: 0efc7af0d788fb6499d9bf5391f97e60, type: 3}
-  - {fileID: 21300000, guid: 27ad3f08266bb6045ad5e9636b636b97, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  allButtonSelected:
-  - {fileID: 21300000, guid: c96613932ff509142bb46e3add06e52a, type: 3}
-  - {fileID: 21300000, guid: 57183cb40924c544482ca92356c8fbf0, type: 3}
-  - {fileID: 21300000, guid: 5719b674414758247a1a790b55966c64, type: 3}
-  - {fileID: 21300000, guid: b04bbcd1d43e8b54b9be5b73ab6260e6, type: 3}
-  - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  AllTitleText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sellectedColor:
-    r: 0
-    g: 0.56078434
-    b: 1
-    a: 1
-  unSellectedColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 1
-  intractableFalseColor:
-    r: 0.7647059
-    g: 0.7647059
-    b: 0.7647059
-    a: 1
-  DisableButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  ActiveButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  WaitToLoadAvatarData: 0
-  canvasGroup: {fileID: 1654741760}
-  postingBtn: {fileID: 0}
-  PostButton: {fileID: 0}
-  chatMessageUnReadCountObj: {fileID: 1341452831}
-  chatMessageUnReadCountText: {fileID: 360765117}
-  additiveScenesManager: {fileID: 0}
-  gameManager: {fileID: 0}
-  socketController: {fileID: 0}
-  notLoadedAgain: 0
 --- !u!225 &1654741760
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -16862,7 +16787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8644395317802553252, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21.000015
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8644395317802553252, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -19799,69 +19724,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2403d61d50881774ab05978ea23d3478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allButtonIcon:
-  - {fileID: 1137964661}
-  - {fileID: 1326432972}
-  - {fileID: 849587407}
-  - {fileID: 1199138084}
-  - {fileID: 1236014679}
-  - {fileID: 0}
-  allButtonUnSelected:
-  - {fileID: 21300000, guid: 8319648307ecfed4c9319cbc2b057174, type: 3}
-  - {fileID: 21300000, guid: 1f3dbaa7dba995c4787e3a73ce2a549f, type: 3}
-  - {fileID: 21300000, guid: 9d24708fb8582034c891d77699ad3f01, type: 3}
-  - {fileID: 21300000, guid: 0efc7af0d788fb6499d9bf5391f97e60, type: 3}
-  - {fileID: 21300000, guid: 27ad3f08266bb6045ad5e9636b636b97, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  allButtonSelected:
-  - {fileID: 21300000, guid: c96613932ff509142bb46e3add06e52a, type: 3}
-  - {fileID: 21300000, guid: 57183cb40924c544482ca92356c8fbf0, type: 3}
-  - {fileID: 21300000, guid: 5719b674414758247a1a790b55966c64, type: 3}
-  - {fileID: 21300000, guid: b04bbcd1d43e8b54b9be5b73ab6260e6, type: 3}
-  - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  AllTitleText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sellectedColor:
-    r: 0
-    g: 0.56078434
-    b: 1
-    a: 1
-  unSellectedColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 1
-  intractableFalseColor:
-    r: 0.7647059
-    g: 0.7647059
-    b: 0.7647059
-    a: 1
-  DisableButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  ActiveButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  WaitToLoadAvatarData: 0
-  canvasGroup: {fileID: 2051747839}
-  postingBtn: {fileID: 0}
-  PostButton: {fileID: 0}
-  chatMessageUnReadCountObj: {fileID: 1033625937}
-  chatMessageUnReadCountText: {fileID: 346837808}
-  additiveScenesManager: {fileID: 0}
-  gameManager: {fileID: 0}
-  socketController: {fileID: 0}
-  notLoadedAgain: 0
 --- !u!225 &2051747839
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -20860,69 +20722,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2403d61d50881774ab05978ea23d3478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allButtonIcon:
-  - {fileID: 1609781800}
-  - {fileID: 177497956}
-  - {fileID: 720698384}
-  - {fileID: 1703282321}
-  - {fileID: 106779189}
-  - {fileID: 0}
-  allButtonUnSelected:
-  - {fileID: 21300000, guid: 8319648307ecfed4c9319cbc2b057174, type: 3}
-  - {fileID: 21300000, guid: 1f3dbaa7dba995c4787e3a73ce2a549f, type: 3}
-  - {fileID: 21300000, guid: 9d24708fb8582034c891d77699ad3f01, type: 3}
-  - {fileID: 21300000, guid: 0efc7af0d788fb6499d9bf5391f97e60, type: 3}
-  - {fileID: 21300000, guid: 27ad3f08266bb6045ad5e9636b636b97, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  allButtonSelected:
-  - {fileID: 21300000, guid: c96613932ff509142bb46e3add06e52a, type: 3}
-  - {fileID: 21300000, guid: 57183cb40924c544482ca92356c8fbf0, type: 3}
-  - {fileID: 21300000, guid: 5719b674414758247a1a790b55966c64, type: 3}
-  - {fileID: 21300000, guid: b04bbcd1d43e8b54b9be5b73ab6260e6, type: 3}
-  - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  AllTitleText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sellectedColor:
-    r: 0
-    g: 0.56078434
-    b: 1
-    a: 1
-  unSellectedColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 1
-  intractableFalseColor:
-    r: 0.7647059
-    g: 0.7647059
-    b: 0.7647059
-    a: 1
-  DisableButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  ActiveButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  WaitToLoadAvatarData: 0
-  canvasGroup: {fileID: 2123470891}
-  postingBtn: {fileID: 0}
-  PostButton: {fileID: 0}
-  chatMessageUnReadCountObj: {fileID: 414214556}
-  chatMessageUnReadCountText: {fileID: 1955619320}
-  additiveScenesManager: {fileID: 0}
-  gameManager: {fileID: 0}
-  socketController: {fileID: 0}
-  notLoadedAgain: 0
 --- !u!225 &2123470891
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21144,69 +20943,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2403d61d50881774ab05978ea23d3478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allButtonIcon:
-  - {fileID: 2102842853}
-  - {fileID: 1475973367}
-  - {fileID: 1277045683}
-  - {fileID: 756081336}
-  - {fileID: 2127199556}
-  - {fileID: 0}
-  allButtonUnSelected:
-  - {fileID: 21300000, guid: 8319648307ecfed4c9319cbc2b057174, type: 3}
-  - {fileID: 21300000, guid: 1f3dbaa7dba995c4787e3a73ce2a549f, type: 3}
-  - {fileID: 21300000, guid: 9d24708fb8582034c891d77699ad3f01, type: 3}
-  - {fileID: 21300000, guid: 0efc7af0d788fb6499d9bf5391f97e60, type: 3}
-  - {fileID: 21300000, guid: 27ad3f08266bb6045ad5e9636b636b97, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  allButtonSelected:
-  - {fileID: 21300000, guid: c96613932ff509142bb46e3add06e52a, type: 3}
-  - {fileID: 21300000, guid: 57183cb40924c544482ca92356c8fbf0, type: 3}
-  - {fileID: 21300000, guid: 5719b674414758247a1a790b55966c64, type: 3}
-  - {fileID: 21300000, guid: b04bbcd1d43e8b54b9be5b73ab6260e6, type: 3}
-  - {fileID: 21300000, guid: 20d407288d1762d4f8a68cb31f7392a2, type: 3}
-  - {fileID: 21300000, guid: 92698d068402e5b4aa79e23fbebd4730, type: 3}
-  AllTitleText:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  sellectedColor:
-    r: 0
-    g: 0.56078434
-    b: 1
-    a: 1
-  unSellectedColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 1
-  intractableFalseColor:
-    r: 0.7647059
-    g: 0.7647059
-    b: 0.7647059
-    a: 1
-  DisableButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  ActiveButtonColor:
-    r: 0
-    g: 0
-    b: 0
-    a: 0
-  WaitToLoadAvatarData: 0
-  canvasGroup: {fileID: 2132913894}
-  postingBtn: {fileID: 0}
-  PostButton: {fileID: 0}
-  chatMessageUnReadCountObj: {fileID: 1565411577}
-  chatMessageUnReadCountText: {fileID: 1891834831}
-  additiveScenesManager: {fileID: 0}
-  gameManager: {fileID: 0}
-  socketController: {fileID: 0}
-  notLoadedAgain: 0
 --- !u!225 &2132913894
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -24630,6 +24366,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5733907664898954188}
     m_Modifications:
+    - target: {fileID: 5116012620832420112, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957875775585424746, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: postingBtn
       value: 
@@ -24720,6 +24460,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8957875775585425047, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957875776355661019, guid: 2298fa061a03ae44eb725edda5486b36, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -25942,7 +25686,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!225 &5733907664898954192
 CanvasGroup:
@@ -25952,7 +25696,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5733907664898954176}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -27360,7 +27104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 64211638169632173, guid: 85e493498674a8443badd13925ab5e36, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
       propertyPath: uiHandlerRef
@@ -27393,7 +27137,7 @@ PrefabInstance:
     - target: {fileID: 64211639564321973, guid: 85e493498674a8443badd13925ab5e36, type: 3}
       propertyPath: searchWorldControllerRef
       value: 
-      objectReference: {fileID: 115577939}
+      objectReference: {fileID: 0}
     - target: {fileID: 6347080590877859252, guid: 85e493498674a8443badd13925ab5e36, type: 3}
       propertyPath: category1
       value: 

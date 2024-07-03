@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 8322226048980141524}
   - component: {fileID: 6647519497024165762}
   - component: {fileID: 577130344}
-  - component: {fileID: 3746621771120662294}
   - component: {fileID: 1051670859796342715}
   - component: {fileID: 8401296710618727355}
   - component: {fileID: 7316756595186861038}
@@ -270,7 +269,7 @@ MonoBehaviour:
   IsSpeak: 0
   ChatShow: {fileID: 7104200976459534907}
   reactionUi: {fileID: 2552360682396586119}
-  VoiceView: {fileID: 3746621771120662294}
+  VoiceView: {fileID: 0}
   DummyUserNames:
   - David
   - James
@@ -282,25 +281,6 @@ MonoBehaviour:
   - Roso
   - Smith
   - Rocky
---- !u!114 &3746621771120662294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1927154725259993610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  logLevel: 3
-  ignoreGlobalLogLevel: 0
-  recorderInUse: {fileID: 0}
-  speakerInUse: {fileID: 7056889640374159725}
-  AutoCreateRecorderIfNotFound: 0
-  UsePrimaryRecorder: 1
-  SetupDebugSpeaker: 0
 --- !u!114 &1051670859796342715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,7 +1632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5769673917309665618
 RectTransform:
   m_ObjectHideFlags: 0

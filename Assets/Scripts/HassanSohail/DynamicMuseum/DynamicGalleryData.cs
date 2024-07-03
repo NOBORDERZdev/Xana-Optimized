@@ -329,7 +329,7 @@ public class DynamicGalleryData : MonoBehaviour
 
                         CreateFrame(detail.ratio);
 
-                        if (XanaEventDetails.eventDetails.DataIsInitialized)
+                        if (false)
                         {
                             if (detail.ratio == "1:1" ) // is sqaure 
                             {
