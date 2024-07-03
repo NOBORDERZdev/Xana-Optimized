@@ -399,16 +399,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -527,7 +517,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -754,6 +747,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 20
@@ -1636,16 +1630,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -1764,7 +1748,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -2030,9 +2017,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956640283018}
   imgVideo4x3: {fileID: 826426956528125489}
   liveVideoPlayer: {fileID: 826426957082442773}
-  preRecordedPlayer: {fileID: 826426956270554432}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -2116,9 +2103,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956481783254}
   imgVideo4x3: {fileID: 826426956096746629}
   liveVideoPlayer: {fileID: 826426956755314979}
-  preRecordedPlayer: {fileID: 826426957581124357}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -2301,9 +2288,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956795777185}
   imgVideo4x3: {fileID: 826426955615779446}
   liveVideoPlayer: {fileID: 826426956430593772}
-  preRecordedPlayer: {fileID: 826426957374799451}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -2502,9 +2489,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955910776574}
   imgVideo4x3: {fileID: 826426957705255855}
   liveVideoPlayer: {fileID: 826426957359827468}
-  preRecordedPlayer: {fileID: 826426955829728284}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -2700,9 +2687,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957299958895}
   imgVideo4x3: {fileID: 826426956256923142}
   liveVideoPlayer: {fileID: 826426957313414835}
-  preRecordedPlayer: {fileID: 826426956704920545}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -3014,16 +3001,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -3142,7 +3119,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -3399,6 +3379,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -3847,16 +3828,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -3975,7 +3946,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -4309,6 +4283,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -4640,16 +4615,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -4768,7 +4733,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -5096,16 +5064,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -5224,7 +5182,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -5568,9 +5529,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955656700696}
   imgVideo4x3: {fileID: 826426956685683938}
   liveVideoPlayer: {fileID: 826426957067263197}
-  preRecordedPlayer: {fileID: 826426957133963071}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -6150,16 +6111,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -6278,7 +6229,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -6503,6 +6457,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -6614,9 +6569,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956753950500}
   imgVideo4x3: {fileID: 826426957069853279}
   liveVideoPlayer: {fileID: 826426956954851831}
-  preRecordedPlayer: {fileID: 826426957077769523}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -6710,16 +6665,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -6838,7 +6783,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -8040,16 +7988,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -8168,7 +8106,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -8595,16 +8536,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -8723,7 +8654,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -8958,9 +8892,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957469188818}
   imgVideo4x3: {fileID: 826426956245099576}
   liveVideoPlayer: {fileID: 826426956061897243}
-  preRecordedPlayer: {fileID: 826426956378182989}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -9927,6 +9861,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -10131,16 +10066,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -10259,7 +10184,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -10620,9 +10548,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956812559434}
   imgVideo4x3: {fileID: 826426955631559463}
   liveVideoPlayer: {fileID: 826426956388553418}
-  preRecordedPlayer: {fileID: 826426956821401777}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -11504,9 +11432,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956637290972}
   imgVideo4x3: {fileID: 826426957424330532}
   liveVideoPlayer: {fileID: 826426956685447858}
-  preRecordedPlayer: {fileID: 826426957002783355}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -12037,9 +11965,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956177431425}
   imgVideo4x3: {fileID: 826426957162722179}
   liveVideoPlayer: {fileID: 826426957512604258}
-  preRecordedPlayer: {fileID: 826426956600288823}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -12288,16 +12216,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -12416,7 +12334,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -15507,6 +15428,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -16778,16 +16700,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -16906,7 +16818,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -18177,6 +18092,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -18799,6 +18715,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -18910,9 +18827,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957669799133}
   imgVideo4x3: {fileID: 826426956712709124}
   liveVideoPlayer: {fileID: 826426957587374253}
-  preRecordedPlayer: {fileID: 826426957317970557}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -19006,16 +18923,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -19134,7 +19041,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -21233,16 +21143,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -21361,7 +21261,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -21752,9 +21655,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956536022582}
   imgVideo4x3: {fileID: 826426956016003736}
   liveVideoPlayer: {fileID: 826426955630229635}
-  preRecordedPlayer: {fileID: 826426957078643219}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -22756,6 +22659,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -23000,9 +22904,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955850196784}
   imgVideo4x3: {fileID: 826426956364392859}
   liveVideoPlayer: {fileID: 826426955583585774}
-  preRecordedPlayer: {fileID: 826426956691674651}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -23512,6 +23416,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -23842,6 +23747,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -23953,9 +23859,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956256359896}
   imgVideo4x3: {fileID: 826426957443529929}
   liveVideoPlayer: {fileID: 826426957320139807}
-  preRecordedPlayer: {fileID: 826426956009328458}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -24165,16 +24071,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -24293,7 +24189,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -24760,16 +24659,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -24888,7 +24777,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -25163,9 +25055,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956893782415}
   imgVideo4x3: {fileID: 826426956470977694}
   liveVideoPlayer: {fileID: 826426955630017937}
-  preRecordedPlayer: {fileID: 826426956091827463}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -25527,16 +25419,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -25655,7 +25537,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -26256,16 +26141,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -26384,7 +26259,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -26979,16 +26857,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -27107,7 +26975,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -27364,6 +27235,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -27475,9 +27347,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956414178619}
   imgVideo4x3: {fileID: 826426955799877519}
   liveVideoPlayer: {fileID: 826426957004692509}
-  preRecordedPlayer: {fileID: 826426956524618588}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -28861,13 +28733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 919342d273e42d44ab4f6058e8067b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAddressableScene: 1
-  AnimHighlight: {fileID: 0}
-  popupPenal: {fileID: 0}
-  spawnCharacterObject: {fileID: 0}
-  spawnCharacterObjectRemote: {fileID: 0}
   EventEndedPanel: {fileID: 0}
-  mainScene: 
 --- !u!1 &826426956162230283
 GameObject:
   m_ObjectHideFlags: 0
@@ -29444,9 +29310,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957600089817}
   imgVideo4x3: {fileID: 826426956559298115}
   liveVideoPlayer: {fileID: 826426955718399945}
-  preRecordedPlayer: {fileID: 826426956368590268}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -29916,6 +29782,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -30978,9 +30845,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956293983190}
   imgVideo4x3: {fileID: 826426957302403262}
   liveVideoPlayer: {fileID: 826426957477788878}
-  preRecordedPlayer: {fileID: 826426957696845487}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -31520,16 +31387,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -31648,7 +31505,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -32643,16 +32503,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -32771,7 +32621,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -33219,9 +33072,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957639255792}
   imgVideo4x3: {fileID: 826426957330073518}
   liveVideoPlayer: {fileID: 826426956916163206}
-  preRecordedPlayer: {fileID: 826426955873512814}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -33350,6 +33203,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -34953,9 +34807,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957229162121}
   imgVideo4x3: {fileID: 826426957677655343}
   liveVideoPlayer: {fileID: 826426957480370143}
-  preRecordedPlayer: {fileID: 826426956021313335}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -35726,6 +35580,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -36357,9 +36212,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957498745557}
   imgVideo4x3: {fileID: 826426956384346944}
   liveVideoPlayer: {fileID: 826426956086000404}
-  preRecordedPlayer: {fileID: 826426956128569628}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -37006,16 +36861,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -37134,7 +36979,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -38163,9 +38011,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956638417023}
   imgVideo4x3: {fileID: 826426956358864520}
   liveVideoPlayer: {fileID: 826426957069728369}
-  preRecordedPlayer: {fileID: 826426956770663875}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -38451,16 +38299,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -38579,7 +38417,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -39309,9 +39150,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955708843098}
   imgVideo4x3: {fileID: 826426955612757430}
   liveVideoPlayer: {fileID: 826426957658286361}
-  preRecordedPlayer: {fileID: 826426956934232911}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -39699,16 +39540,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -39827,7 +39658,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -40192,7 +40026,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -40266,6 +40100,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -40688,16 +40523,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -40816,7 +40641,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -41144,16 +40972,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -41272,7 +41090,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -43353,9 +43174,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957380332884}
   imgVideo4x3: {fileID: 826426957644866558}
   liveVideoPlayer: {fileID: 826426956568698855}
-  preRecordedPlayer: {fileID: 826426956457253986}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -43661,9 +43482,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955839449922}
   imgVideo4x3: {fileID: 826426957489172479}
   liveVideoPlayer: {fileID: 826426957553532875}
-  preRecordedPlayer: {fileID: 826426957663424825}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -43793,16 +43614,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -43921,7 +43732,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -45687,16 +45501,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -45815,7 +45619,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -46809,9 +46616,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957421940955}
   imgVideo4x3: {fileID: 826426956974257922}
   liveVideoPlayer: {fileID: 826426956739432516}
-  preRecordedPlayer: {fileID: 826426956035732000}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -46988,16 +46795,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -47116,7 +46913,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -49854,9 +49654,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957506745248}
   imgVideo4x3: {fileID: 826426956117571440}
   liveVideoPlayer: {fileID: 826426955991720080}
-  preRecordedPlayer: {fileID: 826426956545846616}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -50339,16 +50139,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -50467,7 +50257,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -51015,16 +50808,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -51143,7 +50926,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -51519,9 +51305,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956203760964}
   imgVideo4x3: {fileID: 826426956613773351}
   liveVideoPlayer: {fileID: 826426957265867182}
-  preRecordedPlayer: {fileID: 826426957546140627}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -51908,16 +51694,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -52036,7 +51812,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -53820,16 +53599,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -53948,7 +53717,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -54292,9 +54064,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957215956902}
   imgVideo4x3: {fileID: 826426955849074087}
   liveVideoPlayer: {fileID: 826426957433175748}
-  preRecordedPlayer: {fileID: 826426957702131828}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -54417,6 +54189,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -54842,16 +54615,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -54970,7 +54733,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -56755,16 +56521,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -56883,7 +56639,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -57549,16 +57308,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -57677,7 +57426,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -57922,16 +57674,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -58050,7 +57792,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -58317,9 +58062,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956290343082}
   imgVideo4x3: {fileID: 826426956377854209}
   liveVideoPlayer: {fileID: 826426956823948819}
-  preRecordedPlayer: {fileID: 826426957223256885}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -58624,9 +58369,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956091091188}
   imgVideo4x3: {fileID: 826426957266711014}
   liveVideoPlayer: {fileID: 826426956065181816}
-  preRecordedPlayer: {fileID: 826426957507109796}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -59708,6 +59453,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -60321,6 +60067,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -60508,9 +60255,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957074972256}
   imgVideo4x3: {fileID: 826426955624200398}
   liveVideoPlayer: {fileID: 826426956096604726}
-  preRecordedPlayer: {fileID: 826426957043601219}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -61793,9 +61540,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956718103720}
   imgVideo4x3: {fileID: 826426956329780762}
   liveVideoPlayer: {fileID: 826426955624296928}
-  preRecordedPlayer: {fileID: 826426957022536926}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -62360,16 +62107,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -62488,7 +62225,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -62884,9 +62624,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956078436870}
   imgVideo4x3: {fileID: 826426957530337291}
   liveVideoPlayer: {fileID: 826426956264045920}
-  preRecordedPlayer: {fileID: 826426957668755309}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -63527,9 +63267,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955712144851}
   imgVideo4x3: {fileID: 826426956646844332}
   liveVideoPlayer: {fileID: 826426956604083618}
-  preRecordedPlayer: {fileID: 826426955784188497}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -63903,16 +63643,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -64031,7 +63761,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -65418,9 +65151,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957419064271}
   imgVideo4x3: {fileID: 826426957568001242}
   liveVideoPlayer: {fileID: 826426957164058864}
-  preRecordedPlayer: {fileID: 826426956972856121}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -66419,16 +66152,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -66547,7 +66270,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -67481,6 +67207,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -68667,16 +68394,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -68795,7 +68512,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -69123,16 +68843,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -69251,7 +68961,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -69714,16 +69427,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -69842,7 +69545,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -70598,16 +70304,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -70726,7 +70422,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -71050,6 +70749,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -73148,6 +72848,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 2
@@ -73274,9 +72975,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957673616274}
   imgVideo4x3: {fileID: 826426956427824929}
   liveVideoPlayer: {fileID: 826426956435992075}
-  preRecordedPlayer: {fileID: 826426957161272514}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -74116,16 +73817,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -74244,7 +73935,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -74489,16 +74183,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -74617,7 +74301,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -75092,6 +74779,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -75975,16 +75663,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -76103,7 +75781,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -76650,16 +76331,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -76778,7 +76449,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -77497,9 +77171,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955761057568}
   imgVideo4x3: {fileID: 826426957652112571}
   liveVideoPlayer: {fileID: 826426955587639041}
-  preRecordedPlayer: {fileID: 826426957595194481}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -78997,16 +78671,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -79125,7 +78789,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -80873,6 +80540,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -81344,16 +81012,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -81472,7 +81130,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -82107,16 +81768,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -82235,7 +81886,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -83203,16 +82857,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -83331,7 +82975,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -83740,16 +83387,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -83868,7 +83505,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -85254,9 +84894,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426957723876677}
   imgVideo4x3: {fileID: 826426957204479515}
   liveVideoPlayer: {fileID: 826426957663836561}
-  preRecordedPlayer: {fileID: 826426956588376905}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -86375,9 +86015,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956988447172}
   imgVideo4x3: {fileID: 826426957698669044}
   liveVideoPlayer: {fileID: 826426955673341936}
-  preRecordedPlayer: {fileID: 826426956690528575}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -86821,16 +86461,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -86949,7 +86579,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -88846,16 +88479,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -88974,7 +88597,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -89467,16 +89093,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -89595,7 +89211,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -91020,16 +90639,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -91148,7 +90757,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -91569,9 +91181,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956627587727}
   imgVideo4x3: {fileID: 826426957155070128}
   liveVideoPlayer: {fileID: 826426956365317856}
-  preRecordedPlayer: {fileID: 826426956487544869}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -92432,9 +92044,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956546097909}
   imgVideo4x3: {fileID: 826426957486573063}
   liveVideoPlayer: {fileID: 826426955637648441}
-  preRecordedPlayer: {fileID: 826426956790989964}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -92611,16 +92223,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -92739,7 +92341,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -93192,9 +92797,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955773653543}
   imgVideo4x3: {fileID: 826426956276394864}
   liveVideoPlayer: {fileID: 826426956234496498}
-  preRecordedPlayer: {fileID: 826426956350495861}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -94295,6 +93900,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -94740,16 +94346,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -94868,7 +94464,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -95238,9 +94837,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426955708524768}
   imgVideo4x3: {fileID: 826426955893450818}
   liveVideoPlayer: {fileID: 826426955889861680}
-  preRecordedPlayer: {fileID: 826426956779083867}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -95878,6 +95477,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -97074,9 +96674,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 826426956902518604}
   imgVideo4x3: {fileID: 826426956489377879}
   liveVideoPlayer: {fileID: 826426955687886805}
-  preRecordedPlayer: {fileID: 826426957692747883}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -97253,16 +96853,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -97381,7 +96971,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -97820,16 +97413,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -97948,7 +97531,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -98173,6 +97759,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -98853,6 +98440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldName: JJ MUSEUM
+  forXanaDefaultAnalytics: 0
 --- !u!1 &826426957692747883
 GameObject:
   m_ObjectHideFlags: 0
@@ -101173,7 +100761,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum23
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009891152239171 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101279,7 +100867,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum05
-  cam_XValue: -85
+  Cam_XValue: -50
 --- !u!4 &933009891155995878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101381,7 +100969,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum24
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009891179906974 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101483,7 +101071,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum21
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009891177202953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101585,7 +101173,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009891182876940 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101687,7 +101275,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009891116799805 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101789,7 +101377,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009891030522966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101895,7 +101483,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum11
-  cam_XValue: 12
+  Cam_XValue: -50
 --- !u!4 &933009890988787363 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -101997,7 +101585,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009891001845077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102209,7 +101797,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum10
-  cam_XValue: -155
+  Cam_XValue: -50
 --- !u!4 &933009890904223676 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102315,7 +101903,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum05
-  cam_XValue: 95
+  Cam_XValue: -50
 --- !u!4 &933009890826659983 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102417,7 +102005,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum14
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890822954259 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102519,7 +102107,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 12
+  Cam_XValue: -50
 --- !u!4 &933009890799155166 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102625,7 +102213,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum02
-  cam_XValue: -10
+  Cam_XValue: -50
 --- !u!4 &933009890772324198 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102727,7 +102315,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -50
+  Cam_XValue: -50
 --- !u!4 &933009890709916560 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102829,7 +102417,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 85
+  Cam_XValue: -50
 --- !u!4 &933009890702270002 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -102931,7 +102519,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 45
+  Cam_XValue: -50
 --- !u!4 &933009890667906552 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103033,7 +102621,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890631047754 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103139,7 +102727,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum04
-  cam_XValue: 125
+  Cam_XValue: -50
 --- !u!4 &933009890631870001 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103245,7 +102833,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum11
-  cam_XValue: -168
+  Cam_XValue: -50
 --- !u!4 &933009890607888307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103351,7 +102939,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum12
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890562675714 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103453,7 +103041,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 25
+  Cam_XValue: -50
 --- !u!4 &933009890550978904 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103559,7 +103147,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum08
-  cam_XValue: 85
+  Cam_XValue: -50
 --- !u!4 &933009890575424619 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103661,7 +103249,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum22
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890565777776 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103763,7 +103351,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -85
+  Cam_XValue: -50
 --- !u!4 &933009890531290797 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103865,7 +103453,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum22
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890535876772 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -103967,7 +103555,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum20
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890492550337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104069,7 +103657,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum18
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890505036334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104171,7 +103759,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890427429097 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104273,7 +103861,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890394932157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104449,7 +104037,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum10
-  cam_XValue: 25
+  Cam_XValue: -50
 --- !u!4 &933009890387260640 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104555,7 +104143,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum04
-  cam_XValue: -50
+  Cam_XValue: -50
 --- !u!4 &933009890401174497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104813,7 +104401,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum02
-  cam_XValue: 170
+  Cam_XValue: -50
 --- !u!4 &933009890349480052 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -104915,7 +104503,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -10
+  Cam_XValue: -50
 --- !u!4 &933009890322733453 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105017,7 +104605,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890328790877 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105123,7 +104711,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum01
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890314722687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105225,7 +104813,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum23
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890290188674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105327,7 +104915,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum21
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890256650237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105429,7 +105017,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum14
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890189215122 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105531,7 +105119,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum17
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890202172817 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105633,7 +105221,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum17
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890164417870 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105735,7 +105323,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum24
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890115483102 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105841,7 +105429,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum03
-  cam_XValue: 155
+  Cam_XValue: -50
 --- !u!4 &933009890133489606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -105947,7 +105535,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum13
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890080875391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106049,7 +105637,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum20
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890103633690 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106151,7 +105739,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum18
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890059283070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106253,7 +105841,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum15
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009890061185316 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106355,7 +105943,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009890012581211 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106457,7 +106045,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum16
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009890035991984 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106637,7 +106225,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889923041197 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106739,7 +106327,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum19
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009889908858725 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106845,7 +106433,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum07
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009889850870684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -106947,7 +106535,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum15
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009889823624004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107049,7 +106637,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum19
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009889792416033 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107151,7 +106739,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009889676455201 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107257,7 +106845,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum09
-  cam_XValue: 45
+  Cam_XValue: -50
 --- !u!4 &933009889618392137 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107363,7 +106951,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum03
-  cam_XValue: -25
+  Cam_XValue: -50
 --- !u!4 &933009889634626762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107465,7 +107053,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889578130670 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107571,7 +107159,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum08
-  cam_XValue: -95
+  Cam_XValue: -50
 --- !u!4 &933009889576570189 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107673,7 +107261,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009889575273644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107779,7 +107367,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum01
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009889537875876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107881,7 +107469,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889483438489 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -107983,7 +107571,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889491507349 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108089,7 +107677,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum09
-  cam_XValue: -135
+  Cam_XValue: -50
 --- !u!4 &933009889472578657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108273,7 +107861,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum07
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009889377595358 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108379,7 +107967,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum13
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889403961745 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108485,7 +108073,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum06
-  cam_XValue: -90
+  Cam_XValue: -50
 --- !u!4 &933009889352092505 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108591,7 +108179,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum06
-  cam_XValue: 90
+  Cam_XValue: -50
 --- !u!4 &933009889335498953 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108697,7 +108285,7 @@ MonoBehaviour:
   currentPortal: 2
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum12
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889205226963 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108799,7 +108387,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: 0
+  Cam_XValue: -50
 --- !u!4 &933009889178314600 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -108901,7 +108489,7 @@ MonoBehaviour:
   currentPortal: 3
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: 
-  cam_XValue: -25
+  Cam_XValue: -50
 --- !u!4 &933009889149821966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
@@ -109003,7 +108591,7 @@ MonoBehaviour:
   currentPortal: 1
   ref_JJMuseumInfoManager: {fileID: 0}
   scriptObjectName: JJ_Museum16
-  cam_XValue: 180
+  Cam_XValue: -50
 --- !u!4 &933009889064133103 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 93e8661cf09ea154c826c7fe096e101f, type: 3}
