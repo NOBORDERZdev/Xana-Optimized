@@ -105,14 +105,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             StartEventTimer();
         }
         Input.multiTouchEnabled = true;
-        for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
+        if (PlayerSelfieController.Instance)
         {
-            if (PlayerSelfieController.Instance.OnFeatures[i] != null)
+            for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
             {
-                if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                if (PlayerSelfieController.Instance.OnFeatures[i] != null)
                 {
-                    leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
-                    break;
+                    if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                    {
+                        leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
+                        break;
+                    }
                 }
             }
         }
@@ -207,7 +210,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentCameraRender.gameObject.SetActive(true);
         //environmentCameraRender.transform.GetChild(0).gameObject.SetActive(true);
 
-        PlayerSelfieController.Instance.DisableSelfieFromStart();
+        if(PlayerSelfieController.Instance)
+            PlayerSelfieController.Instance.DisableSelfieFromStart();
 
 
 

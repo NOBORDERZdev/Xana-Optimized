@@ -318,7 +318,9 @@ public class SoundSettings : MonoBehaviour
         PlayerPrefs.SetFloat(ConstantsGod.CAMERA_SENSITIVITY, sensitivity);
         cameraSensitivitySliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
         cameraSensitivitySlider.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
-  
+
+        if (PlayerCameraController.instance)
+        {
             if (cameraSensitivitySliderPotrait.value >= sensitivity)
             {
                 PlayerCameraController.instance.lookSpeed = sensitivity;
@@ -329,7 +331,7 @@ public class SoundSettings : MonoBehaviour
                 PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
                 PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
             }
-        
+        }
        
         
     }
