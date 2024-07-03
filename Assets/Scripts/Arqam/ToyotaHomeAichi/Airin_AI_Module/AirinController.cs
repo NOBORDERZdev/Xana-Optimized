@@ -51,6 +51,7 @@ public class AirinController : MonoBehaviour
     private void DeactivateAirin()
     {
         _isAirinActivated = false;
+        _animator.Rebind();
         AirinDeActivate.Invoke();
         ConstantsHolder.xanaConstants.IsShowChatToAll = true;
         if (_distanceCor != null)

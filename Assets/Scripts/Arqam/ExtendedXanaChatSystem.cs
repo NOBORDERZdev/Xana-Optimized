@@ -50,6 +50,17 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         }
     }
 
+    public void ClearAirinTypingMsg()
+    {
+        string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        if (lines.Length > 0)
+        {
+            lines[0] = "";
+            this.CurrentChannelText.text = string.Join("", lines);
+            this.PotriatCurrentChannelText.text = string.Join("", lines);
+        }
+    }
+
     private void OnEnterSend()
     {
         string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
