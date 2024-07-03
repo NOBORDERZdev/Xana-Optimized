@@ -7,16 +7,5 @@ public class SummitEventTrigger : MonoBehaviour
     void Start()
     {
         BuilderEventManager.LoadSummitScene?.Invoke();
-        
-
-        //added to resolve pink sky issue
-        try
-        {
-            RenderSettings.skybox.shader = Shader.Find("Skybox/Cubemap");
-        }
-        catch(Exception e)
-        {
-
-        }
     }
 }
