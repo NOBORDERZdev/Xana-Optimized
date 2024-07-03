@@ -24,9 +24,9 @@ public class AdditiveScenesLoader : MonoBehaviour
         if(!ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;
-            StartCoroutine(AddDelayStore(sceneDelay / 3));
+            //StartCoroutine(AddDelayStore(sceneDelay / 3));
             StartCoroutine(AddDelay(sceneDelay));
-            StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
+           // StartCoroutine(AddDelaySNSFeedModule(sceneDelay));
            // StartCoroutine(AddDelaySNSMessageModule(sceneDelay));
         }
     }

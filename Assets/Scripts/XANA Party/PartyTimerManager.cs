@@ -22,11 +22,9 @@ public class PartyTimerManager : MonoBehaviour
     {
         if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
-            ReferencesForGamePlay.instance.XANAPartyMatchingTimer.SetActive(false);
             return;
         }
-        ReferencesForGamePlay.instance.XANAPartyMatchingTimer.SetActive(true);
-        ReferencesForGamePlay.instance.XANAPartyMatchingTimer.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "60";
+        ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players to join..." + "60s";
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
             if (startTime <= -1)
@@ -48,10 +46,8 @@ public class PartyTimerManager : MonoBehaviour
                 currentTime = 0;
                 isTimerRunning = false;
                 ReferencesForGamePlay.instance.isMatchingTimerFinished = true;
-                ReferencesForGamePlay.instance.XANAPartyMatchingTimer.SetActive(false);
-                // Handle timer end here
             }
-            ReferencesForGamePlay.instance.XANAPartyMatchingTimer.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = currentTime.ToString("F0");
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players to join..." + currentTime.ToString("F0") + "s";
         }
     }
 
@@ -62,7 +58,10 @@ public class PartyTimerManager : MonoBehaviour
     }
     IEnumerator StartTimerDelay(double masterStartTime)
     {
-        yield return new WaitForSeconds(1);
+        while (GameplayEntityLoader.instance == null || GameplayEntityLoader.instance.PenguinPlayer == null)
+        {
+            yield return new WaitForSeconds(0.5f);
+        }
         PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
         if (!ref_PartyTimerManager.isTimerRunning)
         {

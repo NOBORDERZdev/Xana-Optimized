@@ -43,7 +43,6 @@ public class ReferencesForGamePlay : MonoBehaviour
     public int moveWhileDanceCheck;
 
     public GameObject XANAPartyWaitingText;
-    public GameObject XANAPartyMatchingTimer;
     [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
     [SerializeField] TMP_Text XANAPartyCounterText;
     private bool isCounterStarted = false;
