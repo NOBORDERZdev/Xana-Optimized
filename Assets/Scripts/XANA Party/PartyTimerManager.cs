@@ -7,8 +7,16 @@ using UnityEngine;
 public class PartyTimerManager : MonoBehaviour
 {
     public float timerDuration = 60f;
-    private double startTime;
+    private double startTime = -1;
     public bool isTimerRunning = false;
+
+    private void Awake()
+    {
+        if (!GetComponent<PhotonView>().IsMine)
+        {
+            GetComponent<PartyTimerManager>().enabled = false;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +29,10 @@ public class PartyTimerManager : MonoBehaviour
         ReferencesForGamePlay.instance.XANAPartyMatchingTimer.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "60";
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
-            startTime = PhotonNetwork.Time;
+            if (startTime <= -1)
+            {
+                startTime = PhotonNetwork.Time;
+            }
             GetComponent<PhotonView>().RPC(nameof(StartTimer), RpcTarget.AllBuffered, startTime);
         }
     }
@@ -41,14 +52,25 @@ public class PartyTimerManager : MonoBehaviour
                 // Handle timer end here
             }
             ReferencesForGamePlay.instance.XANAPartyMatchingTimer.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = currentTime.ToString("F0");
-            // Update your UI or other game elements with currentTime
         }
     }
 
     [PunRPC]
     void StartTimer(double masterStartTime)
     {
-        startTime = masterStartTime;
-        isTimerRunning = true;
+        StartCoroutine(StartTimerDelay(masterStartTime));
+    }
+    IEnumerator StartTimerDelay(double masterStartTime)
+    {
+        yield return new WaitForSeconds(1);
+        PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
+        if (!ref_PartyTimerManager.isTimerRunning)
+        {
+            if (ref_PartyTimerManager.startTime <= -1)
+            {
+                ref_PartyTimerManager.startTime = masterStartTime;
+            }
+            ref_PartyTimerManager.isTimerRunning = true;
+        }
     }
 }
