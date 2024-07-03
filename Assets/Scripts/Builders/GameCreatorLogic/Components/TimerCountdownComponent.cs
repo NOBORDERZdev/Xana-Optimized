@@ -27,11 +27,14 @@ public class TimerCountdownComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(defaultValue, true);
+       
+            BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(defaultValue, true);
+        
     }
     private void StopComponent()
     {
-        BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(0, false);
+            BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(0, false);
+      
     }
 
     public override void StopBehaviour()

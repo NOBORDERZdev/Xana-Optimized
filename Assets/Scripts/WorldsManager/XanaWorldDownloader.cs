@@ -308,7 +308,7 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             string downloadKey = downloadFailed[0].ItemID;
             string dicKey = downloadFailed[0].DcitionaryKey;
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);                                         
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)

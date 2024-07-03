@@ -109,7 +109,7 @@ public class ItemData
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
     {
         this.ItemID = itemID;
-        this.RuntimeItemID = itemID + "_" + Guid.NewGuid().ToString();
+        this.RuntimeItemID  = itemID + "_" + Guid.NewGuid().ToString();
         this.ParentID = "";
         this.ItemType = itemType;
         this.isKinematic = true;
@@ -179,7 +179,7 @@ public class ItemData
     public ItemData(ItemData itemData)
     {
         this.ItemID = itemData.ItemID;
-        this.RuntimeItemID = itemData.ItemID + "_" + Guid.NewGuid().ToString();
+        this.RuntimeItemID = itemData.RuntimeItemID;  //"_" + Guid.NewGuid().ToString();
         this.ParentID = itemData.ParentID;
         this.ItemType = itemData.ItemType;
         this.ItemName = itemData.ItemName;
