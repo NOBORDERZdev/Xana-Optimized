@@ -103,7 +103,7 @@ public class ConstantsHolder : MonoBehaviour
     // For Firebase
     public bool isFirebaseInit = false;
 
-    public JJMussuemEntry mussuemEntry = JJMussuemEntry.Null;
+    //public JJMussuemEntry mussuemEntry = JJMussuemEntry.Null;
     public string JjWorldTeleportSceneName;
     public string NFTBoxerJson = "/BoxerNFTData.json";
 
@@ -157,7 +157,7 @@ public class ConstantsHolder : MonoBehaviour
     public int XanaPartyGameId;
     public string XanaPartyGameName;
     public bool isMasterOfGame = false;
-    public static int XanaPartyMaxPlayers = 8;
+    public static int XanaPartyMaxPlayers = 1;
     #endregion
 
     public string r_EmoteReactionPersistentPath

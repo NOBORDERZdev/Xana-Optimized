@@ -4470,7 +4470,6 @@ MonoBehaviour:
   playerSocketID: 
   customWorldId: 0
   isFirebaseInit: 0
-  mussuemEntry: 0
   JjWorldTeleportSceneName: 
   NFTBoxerJson: /BoxerNFTData.json
   r_isSNSComingSoonActive: 1
@@ -11361,6 +11360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb374cc1354e37040bcc643d6dea6c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  address: 
   socketId: 
 --- !u!4 &1264385120
 Transform:
@@ -15581,17 +15581,41 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
-  unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
-  intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
-  DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
+  sellectedColor:
+    r: 0
+    g: 0.56078434
+    b: 1
+    a: 1
+  unSellectedColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
+  intractableFalseColor:
+    r: 0.7647059
+    g: 0.7647059
+    b: 0.7647059
+    a: 1
+  DisableButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  ActiveButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 1654741760}
   postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1341452831}
   chatMessageUnReadCountText: {fileID: 360765117}
+  additiveScenesManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  socketController: {fileID: 0}
+  notLoadedAgain: 0
 --- !u!225 &1654741760
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -16838,7 +16862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8644395317802553252, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 21
+      value: 21.000015
       objectReference: {fileID: 0}
     - target: {fileID: 8644395317802553252, guid: f1979d5431eb6564b81f5c9cf29f9779, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -19803,17 +19827,41 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
-  unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
-  intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
-  DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
+  sellectedColor:
+    r: 0
+    g: 0.56078434
+    b: 1
+    a: 1
+  unSellectedColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
+  intractableFalseColor:
+    r: 0.7647059
+    g: 0.7647059
+    b: 0.7647059
+    a: 1
+  DisableButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  ActiveButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2051747839}
   postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1033625937}
   chatMessageUnReadCountText: {fileID: 346837808}
+  additiveScenesManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  socketController: {fileID: 0}
+  notLoadedAgain: 0
 --- !u!225 &2051747839
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -20840,17 +20888,41 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
-  unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
-  intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
-  DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
+  sellectedColor:
+    r: 0
+    g: 0.56078434
+    b: 1
+    a: 1
+  unSellectedColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
+  intractableFalseColor:
+    r: 0.7647059
+    g: 0.7647059
+    b: 0.7647059
+    a: 1
+  DisableButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  ActiveButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2123470891}
   postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 414214556}
   chatMessageUnReadCountText: {fileID: 1955619320}
+  additiveScenesManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  socketController: {fileID: 0}
+  notLoadedAgain: 0
 --- !u!225 &2123470891
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -21100,17 +21172,41 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  sellectedColor: {r: 0, g: 0.56078434, b: 1, a: 1}
-  unSellectedColor: {r: 0, g: 0, b: 0, a: 1}
-  intractableFalseColor: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
-  DisableButtonColor: {r: 0, g: 0, b: 0, a: 0}
-  ActiveButtonColor: {r: 0, g: 0, b: 0, a: 0}
+  sellectedColor:
+    r: 0
+    g: 0.56078434
+    b: 1
+    a: 1
+  unSellectedColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 1
+  intractableFalseColor:
+    r: 0.7647059
+    g: 0.7647059
+    b: 0.7647059
+    a: 1
+  DisableButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
+  ActiveButtonColor:
+    r: 0
+    g: 0
+    b: 0
+    a: 0
   WaitToLoadAvatarData: 0
   canvasGroup: {fileID: 2132913894}
   postingBtn: {fileID: 0}
   PostButton: {fileID: 0}
   chatMessageUnReadCountObj: {fileID: 1565411577}
   chatMessageUnReadCountText: {fileID: 1891834831}
+  additiveScenesManager: {fileID: 0}
+  gameManager: {fileID: 0}
+  socketController: {fileID: 0}
+  notLoadedAgain: 0
 --- !u!225 &2132913894
 CanvasGroup:
   m_ObjectHideFlags: 0
