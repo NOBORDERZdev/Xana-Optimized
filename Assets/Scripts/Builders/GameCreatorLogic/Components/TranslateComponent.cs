@@ -27,6 +27,7 @@ public class TranslateComponent : ItemComponent
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
+        NetworkSyncManager.instance.TranslateComponentpos.Add(RuntimeItemID,transform.position);
         if (!this.translateComponentData.avatarTriggerToggle)
         {
             PlayBehaviour();
@@ -48,7 +49,7 @@ public class TranslateComponent : ItemComponent
 
     private bool CheckDistance()
     {
-        if ((Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
+        if (translatePositions.Count>0&&  (Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
         {
             //counter = (counter == 0) ? 1 : 0;
             if (moveForward == true && counter < translatePositions.Count - 1)
@@ -83,6 +84,38 @@ public class TranslateComponent : ItemComponent
         else return true;
     }
 
+    private void FixedUpdate()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (activateTranslateComponent)
+            {
+                /*
+                                if (CheckDistance())
+                                {
+                                    this.transform.position = Vector3.MoveTowards(
+                                       this.transform.position, translatePositions[counter],
+                                       translateComponentData.translateSpeed * Time.deltaTime
+                                       );
+                                    if (this.translateComponentData.IsFacing)
+                                    {
+                                        this.transform.LookAt(translatePositions[counter]);
+                                        this.transform.Rotate(new Vector3(0, 1, 0), 180f);
+                                    }*/
+
+                //                }
+                NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID] = transform.position;
+            }
+        }
+        else
+        {
+
+            transform.position = (Vector3)NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID];
+        }
+            
+        
+    }
+
     IEnumerator translateModule()
     {
         while (activateTranslateComponent)
@@ -110,6 +143,7 @@ public class TranslateComponent : ItemComponent
     {
         activateTranslateComponent = true;
         IsAgainTouchable = true;
+       if (PhotonNetwork.IsMasterClient) 
         StartCoroutine(translateModule());
     }
     private void StopComponent()

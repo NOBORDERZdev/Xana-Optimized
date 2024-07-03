@@ -19,6 +19,7 @@ public class StartPoint : MonoBehaviour
         }
         BuilderEventManager.XANAPartyRaceStart += DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer += EnableCollider;
+        NetworkSyncManager.instance.startGame += StartG;
     }
 
     private void OnDisable()
@@ -30,20 +31,31 @@ public class StartPoint : MonoBehaviour
         }
         BuilderEventManager.XANAPartyRaceStart -= DisableCollider;
         BuilderEventManager.XANAPartyWiatingForPlayer -= EnableCollider;
+        NetworkSyncManager.instance.startGame -= StartG;
     }
 
     void DisableCollider()
     {
          print("DisableCollider Call");
         //triggerCollider.SetActive(false);
-        //gameObject.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
-        StartCoroutine(nameof(StartGame));
+         if (PhotonNetwork.IsMasterClient)
+          {
+              NetworkSyncManager.instance.view.RPC("StartGameMainRPC", RpcTarget.All);
+          }
+        //StartCoroutine(StartGame());
+    }
+
+    private void StartG()
+    {
+        StartCoroutine(StartGame());
     }
 
     void EnableCollider()
     {
         triggerCollider.SetActive(true);
     }
+
+    
 
    IEnumerator StartGame()
     {
