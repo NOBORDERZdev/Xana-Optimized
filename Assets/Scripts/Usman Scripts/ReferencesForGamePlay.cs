@@ -127,14 +127,14 @@ public class ReferencesForGamePlay : MonoBehaviour
             RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit);
             if (PhotonNetwork.CurrentRoom != null)
             {
-                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-                {
-                    PlayerCount = XANAPartyManager.Instance.ActivePlayerInCurrentLevel;
-                }
-                else
-                {
+                //if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                //{
+                //    PlayerCount = XANAPartyManager.Instance.ActivePlayerInCurrentLevel;
+                //}
+                //else
+                //{
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                }
+                //}
             }
         }
         if (instance != null && instance != this/* && !FeedEventPrefab.m_EnvName.Contains("XANA Lobby")*/)
@@ -345,14 +345,14 @@ public class ReferencesForGamePlay : MonoBehaviour
                     }
                     else
                     {
-                        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
-                        {
-                            PlayerCount = XANAPartyManager.Instance.ActivePlayerInCurrentLevel;
-                        }
-                        else
-                        {
+                        //if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                        //{
+                        //    PlayerCount = XANAPartyManager.Instance.ActivePlayerInCurrentLevel;
+                        //}
+                        //else
+                        //{
                             PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
-                        }
+                       // }
                     }
                     totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
 
