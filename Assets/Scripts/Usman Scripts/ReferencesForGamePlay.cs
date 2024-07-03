@@ -38,7 +38,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject landscapeMoveWhileDancingButton;
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
-
+    public QualityManager QualityManager;
     // Start is called before the first frame update
     void Awake()
     {

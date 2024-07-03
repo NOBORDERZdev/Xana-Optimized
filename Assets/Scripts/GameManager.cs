@@ -6,9 +6,13 @@ using System.IO;
 using System.Linq;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using UnityEngine.Rendering.Universal;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    [SerializeField]
+    private UniversalRenderPipelineAsset _homeScreenURPAsset;
     [Header("Character")]
     public GameObject mainCharacter;
     public AvatarController avatarController;
@@ -148,6 +152,12 @@ public class GameManager : MonoBehaviour
        // Application.targetFrameRate = 60;
         OnceGuestBool = false;
         OnceLoginBool = false;
+        if (QualitySettings.GetQualityLevel() != 4)
+        {
+            //PlayerPrefs.SetInt("QualitySettings", index);
+            QualitySettings.SetQualityLevel(4);
+            QualitySettings.renderPipeline = _homeScreenURPAsset;
+        }
     }
     IEnumerator WaitForInstancefromWorld()
     {

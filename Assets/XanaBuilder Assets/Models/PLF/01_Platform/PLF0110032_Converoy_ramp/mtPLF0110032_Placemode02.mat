@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mtPLF0110032_Placemode02
-  m_Shader: {fileID: -6465566751694194690, guid: 3b1db1004fa10344e82364e17b2caa30,
+  m_Name: mtPLF0110032_PlaceMode02
+  m_Shader: {fileID: -6465566751694194690, guid: b02bcd017ba0f11439736a955a3a0c81,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -82,6 +82,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 2800000, guid: abe31a23fd6cdab4c830d28e05c57c62, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -118,6 +122,7 @@ Material:
     - _QueueOffset: 0
     - _RampSpeed: 0.5
     - _ReceiveShadows: 1
+    - _Run: 0.5
     - _Smoothness: 0.4472136
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
@@ -131,4 +136,5 @@ Material:
     - _Color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+    - _Tilling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
