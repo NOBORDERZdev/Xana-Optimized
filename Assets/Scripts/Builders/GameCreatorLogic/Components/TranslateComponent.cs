@@ -49,7 +49,7 @@ public class TranslateComponent : ItemComponent
 
     private bool CheckDistance()
     {
-        if ((Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
+        if (translatePositions.Count>0&&  (Vector3.Distance(this.transform.position, translatePositions[counter])) < nextRadius)
         {
             //counter = (counter == 0) ? 1 : 0;
             if (moveForward == true && counter < translatePositions.Count - 1)
@@ -90,30 +90,33 @@ public class TranslateComponent : ItemComponent
         {
             if (activateTranslateComponent)
             {
+                /*
+                                if (CheckDistance())
+                                {
+                                    this.transform.position = Vector3.MoveTowards(
+                                       this.transform.position, translatePositions[counter],
+                                       translateComponentData.translateSpeed * Time.deltaTime
+                                       );
+                                    if (this.translateComponentData.IsFacing)
+                                    {
+                                        this.transform.LookAt(translatePositions[counter]);
+                                        this.transform.Rotate(new Vector3(0, 1, 0), 180f);
+                                    }*/
 
-                if (CheckDistance())
-                {
-                    this.transform.position = Vector3.MoveTowards(
-                       this.transform.position, translatePositions[counter],
-                       translateComponentData.translateSpeed * Time.deltaTime
-                       );
-                    if (this.translateComponentData.IsFacing)
-                    {
-                        this.transform.LookAt(translatePositions[counter]);
-                        this.transform.Rotate(new Vector3(0, 1, 0), 180f);
-                    }
-                    NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID] = transform.position;
-                }
-                else
-                {
-
-                    transform.position=(Vector3)NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID];
-                }
+                //                }
+                NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID] = transform.position;
             }
         }
+        else
+        {
+
+            transform.position = (Vector3)NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID];
+        }
+            
+        
     }
 
-    /*IEnumerator translateModule()
+    IEnumerator translateModule()
     {
         while (activateTranslateComponent)
         {
@@ -132,7 +135,7 @@ public class TranslateComponent : ItemComponent
             }
         }
         yield return null;
-    }*/
+    }
     #endregion
 
     #region BehaviourControl
@@ -140,7 +143,8 @@ public class TranslateComponent : ItemComponent
     {
         activateTranslateComponent = true;
         IsAgainTouchable = true;
-       // StartCoroutine(translateModule());
+       if (PhotonNetwork.IsMasterClient) 
+        StartCoroutine(translateModule());
     }
     private void StopComponent()
     {

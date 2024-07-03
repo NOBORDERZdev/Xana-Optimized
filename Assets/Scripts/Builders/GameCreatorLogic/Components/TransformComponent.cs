@@ -11,7 +11,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public bool rotateObject, ScaleObject, TransObject;
     float timeSpent =0;
     string ItemID;
-    private void FixedUpdate()
+    private void Update()
     {
         if(rotateObject)
         {
@@ -21,7 +21,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler((Vector3) NetworkSyncManager.instance.TransformComponentrotation[ItemID]), this.m_Angle * (1.0f / PhotonNetwork.SerializationRate)); ;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation,(Quaternion) NetworkSyncManager.instance.TransformComponentrotation[ItemID], this.m_Angle * (1.0f / PhotonNetwork.SerializationRate)); ;
                 timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID]  ;
             }
         }
@@ -48,7 +48,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.position = (Vector3)NetworkSyncManager.instance.TransformComponentPos[ItemID];
+                transform.position = Vector3.MoveTowards(transform.position, (Vector3)NetworkSyncManager.instance.TransformComponentPos[ItemID], this.m_Distance * (1.0f / PhotonNetwork.SerializationRate)); ;
                 timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID];
             }
 
@@ -61,8 +61,10 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         NetworkSyncManager.instance.OnDeserilized += Sync;
     }
     void Sync()
-    {
-        this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)NetworkSyncManager.instance.TransformComponentrotation[ItemID]));
+    { if(rotateObject)
+            this.m_Angle = Quaternion.Angle(transform.rotation,(Quaternion) NetworkSyncManager.instance.TransformComponentrotation[ItemID]);
+      if(TransObject)
+            this.m_Distance = Vector3.Distance(transform.position, (Vector3)NetworkSyncManager.instance.TransformComponentPos[ItemID]);
     }
     public void increasTime()
     {
@@ -125,8 +127,9 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         {
 
             RotateFromAtoB();
-            InvokeRepeating(nameof(increasTime), 1, 99999);
+        //    InvokeRepeating(nameof(increasTime), 1, 99999);
         }
+        rotateObject = true;
     }
 
    /* IEnumerator rotateModule()
@@ -166,7 +169,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             MoveFromAtoB();
-            InvokeRepeating(nameof(increasTime), 1, 99999);
+           // InvokeRepeating(nameof(increasTime), 1, 99999);
         }
         ItemID = itemid;
        
@@ -203,6 +206,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     ScalerComponentData scalerComponentData;
     public Ease scalerEaseType;
     private float m_Angle;
+    private float m_Distance;
 
     public void InitScale(ScalerComponentData scalerComponentData, string itemid)
     {
@@ -213,7 +217,7 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             ScaleFormAtoB();
-            InvokeRepeating(nameof(increasTime), 1, 99999);
+          //  InvokeRepeating(nameof(increasTime), 1, 99999);
         }
         ItemID = itemid;
     
