@@ -27,6 +27,8 @@ public class BuilderAssetDownloader : MonoBehaviour
     public Transform assetParent;
     public TMPro.TextMeshProUGUI assetDownloadingText;
     public TMPro.TextMeshProUGUI assetDownloadingTextPotrait;
+
+
     //public TMPro.TextMeshProUGUI sortingText;
     public MeshCombiner meshCombiner;
     public static MeshCombiner meshCombinerRef;
@@ -429,15 +431,15 @@ public class BuilderAssetDownloader : MonoBehaviour
         if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
         {
             newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
+           
                 GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
+                multiplayerObject.GetComponent<MultiplayerComponent>().RunTimeItemID = _itemData.RuntimeItemID;
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+              //  multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
+            
             return;
         }
 

@@ -39,7 +39,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
-
+    public GameObject MultiplayerComponent;
     private GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
@@ -73,6 +73,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     //Bool for BuilderSpawn point available or not
     bool BuilderSpawnPoint = false;
+
+
 
     private void Awake()
     {
@@ -892,14 +894,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
-        if (PhotonNetwork.IsMasterClient && GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
+        if ( GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
         {
             foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
             {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                var multiplayerObject = Instantiate(this.MultiplayerComponent, _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                //multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
             }
         }

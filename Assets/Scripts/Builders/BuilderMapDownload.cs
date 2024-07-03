@@ -44,6 +44,10 @@ public class BuilderMapDownload : MonoBehaviour
 
     public GameObject XANAPartyLoading;
 
+    [Space]
+    [Header("Dynamic Object Prefab")]
+    public GameObject MultiplayerComponent;
+
     #region PRIVATE_VAR
     private ServerData serverData;
     internal LevelData levelData;
@@ -283,6 +287,7 @@ public class BuilderMapDownload : MonoBehaviour
     public IEnumerator DownloadAssetsData(Action CallBack)
     {
         GamificationComponentData.instance.xanaItems.Clear();
+        GamificationComponentData.instance.MultiplayerComponentstoSet.Clear();
         int count = levelData.otherItems.Count;
         progressPlusValue = 0.6f / count;
         LoadingHandler.Instance.UpdateLoadingStatusText("Downloading Assets...");
@@ -687,6 +692,11 @@ public class BuilderMapDownload : MonoBehaviour
                 yield return StartCoroutine(GemificationObjectLoadWait(1f));
             }
 
+
+            while(GamificationComponentData.instance.MultiplayerComponentstoSet.Count!= GamificationComponentData.instance.MultiplayerComponentData.Count)
+            {
+                yield return new WaitForSeconds(5f);
+            }
             foreach (XanaItem xanaItem in GamificationComponentData.instance.xanaItems)
             {
                 xanaItem.SetData(xanaItem.itemData);
@@ -811,15 +821,14 @@ public class BuilderMapDownload : MonoBehaviour
         if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
         {
             newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
+           
                 GamificationComponentData.instance.MultiplayerComponentData.Add(_itemData);
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
+                var multiplayerObject = Instantiate(MultiplayerComponent, _itemData.Position, _itemData.Rotation);
                 MultiplayerComponentData multiplayerComponentData = new();
                 multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+                multiplayerComponentData.viewID = 0;
                 GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
+            
             return;
         }
 

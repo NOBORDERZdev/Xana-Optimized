@@ -12,7 +12,7 @@ public class AddForceComponent : ItemComponent
     CharacterController _characterControllerNew;
 
     string _runtimeItemID = "";
-
+    bool ApplyForce = false;
     //Checks if the force be applied or not
     bool _isActivated = false;
 
@@ -90,16 +90,24 @@ public class AddForceComponent : ItemComponent
         //wait so the applied force takes effect
         yield return new WaitForFixedUpdate();
         yield return new WaitForFixedUpdate();
-
-        while ((!_addForceComponentData.forceApplyOnAvatar && _rigidBody.velocity.magnitude > 0.0001f) || (_addForceComponentData.forceApplyOnAvatar && (GamificationComponentData.instance.PlayerRigidBody.velocity.sqrMagnitude > _playerEndVelocity || !GamificationComponentData.instance.IsGrounded)))
+        ApplyForce = true;
+        
+    }
+    private void FixedUpdate()//better preformance
+    {
+        if (ApplyForce)
         {
-            yield return new WaitForFixedUpdate();
-        }
-        _rigidBody.isKinematic = true;
-        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
-        {
-            GamificationComponentData.instance.PlayerRigidBody.isKinematic = true;
-            _characterControllerNew.enabled = true;
+            while ((!_addForceComponentData.forceApplyOnAvatar && _rigidBody.velocity.magnitude > 0.0001f) || (_addForceComponentData.forceApplyOnAvatar && (GamificationComponentData.instance.PlayerRigidBody.velocity.sqrMagnitude > _playerEndVelocity || !GamificationComponentData.instance.IsGrounded)))
+            {
+                return;
+            }
+            _rigidBody.isKinematic = true;
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                GamificationComponentData.instance.PlayerRigidBody.isKinematic = true;
+                _characterControllerNew.enabled = true;
+            }
+            ApplyForce = false;
         }
     }
 
