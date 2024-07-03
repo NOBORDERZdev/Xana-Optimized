@@ -35,6 +35,10 @@ public class AirinController : MonoBehaviour
     {
         if (!_isAirinActivated)
         {
+            if(_player == null)
+            {    // assign player again after disconnect
+                _player = ReferencesForGamePlay.instance.m_34player.transform; 
+            }
             // Rotate Airin to face the player when clicked
             RotateTowardsPlayer(_player.position, RotateType.Linear, true);
             _isAirinActivated = true;
@@ -65,7 +69,11 @@ public class AirinController : MonoBehaviour
     {
         while (_isAirinActivated)
         {
-
+            if (_player == null)
+            {
+                DeactivateAirin(); 
+                yield break;
+            }
             Vector3 direction = _player.position - transform.position;
             if (direction.magnitude > _maxDistance)
             {
@@ -74,7 +82,10 @@ public class AirinController : MonoBehaviour
             }
             direction.y = 0;
             yield return new WaitForSeconds(0.2f);
-            RotateTowardsPlayer(_player.position, RotateType.Linear, false);
+            if (_player != null)
+            {
+                RotateTowardsPlayer(_player.position, RotateType.Linear, false);
+            }
         }
     }
     private void RotateTowardsPlayer(Vector3 targetPos, RotateType rotateType, bool isGreeting)
