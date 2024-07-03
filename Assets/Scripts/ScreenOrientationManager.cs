@@ -122,6 +122,7 @@ public class ScreenOrientationManager : MonoBehaviour
         }
 
        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
+        GamePlayUIHandler.inst.OnChangehighlightedFPSbutton(ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().isFirstPerson);
     }
 
     public void ChangeOrientation_editor()

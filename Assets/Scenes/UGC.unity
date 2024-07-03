@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 2800000, guid: 53ddca067f2468c469bdfda77d23e8e9, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.8995792, g: 0.5751204, b: 0.59635997, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1154,6 +1153,9 @@ MonoBehaviour:
   videoBtn: {fileID: 4675554740817247955}
   photoBtn: {fileID: 4675554740817247954}
   bgDefaultBtn: {fileID: 3494932704335813407}
+  currentKeyInfo:
+    isBackgroundApplied: 
+    backgroundInfo: 
 --- !u!114 &1500612081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1328,6 +1330,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1530,6 +1533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -1546,6 +1550,7 @@ MonoBehaviour:
   m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
 --- !u!1 &1823534138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 671658734116773414, guid: 3f13c32dba4875c4ab32abeb5f93a0ec, type: 3}
@@ -1576,6 +1581,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1500612080}
+    - target: {fileID: 671658733046370974, guid: 3f13c32dba4875c4ab32abeb5f93a0ec, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: BackToRecordScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 671658733506415732, guid: 3f13c32dba4875c4ab32abeb5f93a0ec, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
