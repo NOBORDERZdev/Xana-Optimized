@@ -468,10 +468,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //}
         }
 
-        mainPlayer.transform.position = new Vector3(0, 0, 0);
+        
         if (ConstantsHolder.xanaConstants.isBackFromWorld)
         {
+            mainPlayer.transform.position = new Vector3(0, 0, 0);
             mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        }
+        else
+        {
+            mainPlayer.transform.position = spawnPoint + new Vector3(0, 50f, 0);
         }
 
         InstantiatePlayerAvatar();
