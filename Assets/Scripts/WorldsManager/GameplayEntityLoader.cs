@@ -476,7 +476,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
-            mainPlayer.transform.position = spawnPoint + new Vector3(500, 500f, 500);
+            mainPlayer.transform.position = new Vector3(0, 0, 0);
+            mainController.transform.position = spawnPoint + new Vector3(0, 50f, 0);
         }
 
         InstantiatePlayerAvatar();
