@@ -467,8 +467,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
             //}
         }
+
         mainPlayer.transform.position = new Vector3(0, 0, 0);
-        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        if (ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        }
 
         InstantiatePlayerAvatar();
 
@@ -593,19 +597,22 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //ActivateNpcChat();
     }
 
+    public void SetPlayerPos()
+    {
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+    }
+
     void InstantiatePlayerAvatar()
     {
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
-
         }
         else
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
-
         }
     }
 
@@ -653,8 +660,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
             spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
         }
-        if (ConstantsHolder.xanaConstants.isBackFromWorld)
-            SetPlayerPos();
+
+        mainPlayer.transform.position = new Vector3(0, 0, 0);
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
         InstantiatePlayerAvatar();
 
@@ -784,12 +792,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
 
         //ActivateNpcChat();
-    }
-
-    public void SetPlayerPos()
-    {
-        mainPlayer.transform.position = new Vector3(0, 0, 0);
-        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
     }
 
     public IEnumerator setPlayerCamAngle(float xValue, float yValue)
