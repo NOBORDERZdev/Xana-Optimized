@@ -139,6 +139,8 @@ public class UserLoginSignupManager : MonoBehaviour
             StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
             {
                 //write if you want something on sucessfull login
+                // After Success Login Get the Coins Values
+                GetUserCoinsAfterLogin();
             }));
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
@@ -148,6 +150,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ConstantsHolder.isWalletLogin = true;
             InventoryManager.instance.WalletLoggedinCall();
             WalletAutoLogin();
+            GetUserCoinsAfterLogin();
         }
         else
         {
@@ -155,6 +158,10 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
+    void GetUserCoinsAfterLogin()
+    {
+        InventoryManager.instance.UpdateUserXeny();
+    }
 
     #region SignUp Functions 
 
@@ -471,7 +478,8 @@ public class UserLoginSignupManager : MonoBehaviour
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
-       
+
+        GetUserCoinsAfterLogin();
     }
 
     public void CheckForValidationAndSignUp(bool resendOtp = false)

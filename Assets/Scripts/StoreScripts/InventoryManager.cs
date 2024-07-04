@@ -1477,7 +1477,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            print("Shop Btn Clicked");
+            print("Shop Btn Clicked " + TakeIndex);
             // Shop
             _shopOpened = true;
             buttonIndex = 2;
@@ -2750,7 +2750,7 @@ public class InventoryManager : MonoBehaviour
 
     public void SubmitUserDetailAPI()
     {
-        UpdateUserXeny();
+        //UpdateUserXeny();
         //string localAPI = "";
         //if (!APIBasepointManager.instance.IsXanaLive)
         //{
@@ -3591,14 +3591,14 @@ public class InventoryManager : MonoBehaviour
 
         if (_shopOpened)
         {
-            if (_ShopItemCountForTesting == 0 && loopStart != dataListOfItems.Count)
+            if (dataListOfItems.Count == 0 || (_ShopItemCountForTesting == 0 && loopStart != dataListOfItems.Count))
             {
                 parentObj.transform.parent.GetChild(1).gameObject.SetActive(true);
-                Debug.LogError("No Item Available in Shop");
+                Debug.Log("No Item Available in Shop");
             }
             else
             {
-                Debug.LogError("Item Available in Shop");
+                Debug.Log("Item Available in Shop");
                 parentObj.transform.parent.GetChild(1).gameObject.SetActive(false);
             }
         }
