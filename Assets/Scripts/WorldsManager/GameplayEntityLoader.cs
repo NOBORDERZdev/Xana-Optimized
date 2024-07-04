@@ -468,19 +468,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //}
         }
 
-        
-        if (ConstantsHolder.xanaConstants.isBackFromWorld)
-        {
-            mainPlayer.transform.position = new Vector3(0, 0, 0);
-            mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        }
-        else
-        {
-            mainPlayer.transform.position = new Vector3(0, 0, 0);
-            mainController.transform.position = new Vector3(500, 500f, 500);
-        }
 
-        InstantiatePlayerAvatar();
+        mainPlayer.transform.position = new Vector3(0, 0, 0);
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+
+        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        InstantiatePlayerAvatar(newPos);
 
         ReferencesForGamePlay.instance.m_34player = player;
         SetAxis();
@@ -605,21 +598,21 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     public void SetPlayerPos()
     {
-        player.GetComponent<ArrowManager>().characterBody.SetActive(true);
+        //player.GetComponent<ArrowManager>().characterBody.SetActive(true);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
     }
 
-    void InstantiatePlayerAvatar()
+    void InstantiatePlayerAvatar(Vector3 pos)
     {
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
-            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", pos, Quaternion.identity, 0);    // Instantiate Male Avatar
             player.GetComponent<ArrowManager>().characterBody.SetActive(false);
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Male");        // Set Default Cloth to avoid naked avatar
         }
         else
         {
-            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
+            player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", pos, Quaternion.identity, 0);  // Instantiate Female Avatar
             player.GetComponent<ArrowManager>().characterBody.SetActive(false);
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
@@ -673,7 +666,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
-        InstantiatePlayerAvatar();
+        InstantiatePlayerAvatar(spawnPoint);
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
