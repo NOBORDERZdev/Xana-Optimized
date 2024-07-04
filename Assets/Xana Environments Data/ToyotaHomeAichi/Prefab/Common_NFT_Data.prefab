@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088401971007}
-  - component: {fileID: 669441088401971006}
+  - component: {fileID: 6971598062031054378}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -190,7 +190,7 @@ Transform:
   m_Father: {fileID: 669441090195528208}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088401971006
+--- !u!114 &6971598062031054378
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -199,19 +199,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088401971004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090509449259}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088776835392}
   videoPlayer: {fileID: 669441090195528236}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088403120640
 GameObject:
   m_ObjectHideFlags: 0
@@ -2668,11 +2665,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088514341870}
   - component: {fileID: 669441088514341844}
-  - component: {fileID: 669441088514341845}
   - component: {fileID: 669441088514341842}
   - component: {fileID: 669441088514341843}
   - component: {fileID: 669441088514341840}
   - component: {fileID: 669441088514341841}
+  - component: {fileID: 270275276352378070}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -2893,25 +2890,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088514341845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088514341871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088514341844}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088514341842
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3056,6 +3034,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &270275276352378070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088514341871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088514341844}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088521423123
 GameObject:
   m_ObjectHideFlags: 0
@@ -4604,11 +4601,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088585096813}
   - component: {fileID: 669441088585096787}
-  - component: {fileID: 669441088585096784}
   - component: {fileID: 669441088585096785}
   - component: {fileID: 669441088585096814}
   - component: {fileID: 669441088585096815}
   - component: {fileID: 669441088585096812}
+  - component: {fileID: 6724081992204700094}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -4829,25 +4826,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088585096784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088585096810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088585096787}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088585096785
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4992,6 +4970,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &6724081992204700094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088585096810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088585096787}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088588410230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5538,7 +5535,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088600873967}
-  - component: {fileID: 669441088600873966}
+  - component: {fileID: 3937916252493295762}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -5563,7 +5560,7 @@ Transform:
   m_Father: {fileID: 669441090468958494}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088600873966
+--- !u!114 &3937916252493295762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5572,19 +5569,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088600873964}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089180536493}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088943285603}
   videoPlayer: {fileID: 669441090468958465}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088603501712
 GameObject:
   m_ObjectHideFlags: 0
@@ -9248,7 +9242,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -9352,11 +9346,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088776835418}
   - component: {fileID: 669441088776835392}
-  - component: {fileID: 669441088776835393}
   - component: {fileID: 669441088776835422}
   - component: {fileID: 669441088776835423}
   - component: {fileID: 669441088776835420}
   - component: {fileID: 669441088776835421}
+  - component: {fileID: 730332900324863194}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -9577,25 +9571,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088776835393
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088776835419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088776835392}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088776835422
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9740,6 +9715,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &730332900324863194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088776835419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088776835392}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088779857291
 GameObject:
   m_ObjectHideFlags: 0
@@ -9981,7 +9975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088791800906}
-  - component: {fileID: 669441088791800909}
+  - component: {fileID: 6289829599151589621}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -10006,7 +10000,7 @@ Transform:
   m_Father: {fileID: 669441089620203634}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088791800909
+--- !u!114 &6289829599151589621
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10015,19 +10009,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088791800907}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090503599213}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441090118363337}
   videoPlayer: {fileID: 669441089620203637}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088794577486
 GameObject:
   m_ObjectHideFlags: 0
@@ -11470,7 +11461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441088861858544}
-  - component: {fileID: 669441088861858547}
+  - component: {fileID: 4742280425850506428}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -11495,7 +11486,7 @@ Transform:
   m_Father: {fileID: 669441088917572248}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441088861858547
+--- !u!114 &4742280425850506428
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11504,19 +11495,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441088861858545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088647003992}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088776835392}
   videoPlayer: {fileID: 669441090195528236}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088863737000
 GameObject:
   m_ObjectHideFlags: 0
@@ -12706,11 +12694,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088942637840}
   - component: {fileID: 669441088942637846}
-  - component: {fileID: 669441088942637847}
   - component: {fileID: 669441088942637844}
   - component: {fileID: 669441088942637845}
   - component: {fileID: 669441088942637842}
   - component: {fileID: 669441088942637843}
+  - component: {fileID: 7484201410136904696}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -12931,25 +12919,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088942637847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088942637841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088942637846}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088942637844
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13094,6 +13063,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 0
+--- !u!114 &7484201410136904696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088942637841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088942637846}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088943285626
 GameObject:
   m_ObjectHideFlags: 0
@@ -13104,11 +13092,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088943285629}
   - component: {fileID: 669441088943285603}
-  - component: {fileID: 669441088943285600}
   - component: {fileID: 669441088943285601}
   - component: {fileID: 669441088943285630}
   - component: {fileID: 669441088943285631}
   - component: {fileID: 669441088943285628}
+  - component: {fileID: 5350612635153865714}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -13329,25 +13317,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088943285600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088943285626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088943285603}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088943285601
 AudioSource:
   m_ObjectHideFlags: 0
@@ -13492,6 +13461,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &5350612635153865714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088943285626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088943285603}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088948130781
 GameObject:
   m_ObjectHideFlags: 0
@@ -14084,11 +14072,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441088972888253}
   - component: {fileID: 669441088972888227}
-  - component: {fileID: 669441088972888224}
   - component: {fileID: 669441088972888225}
   - component: {fileID: 669441088972888254}
   - component: {fileID: 669441088972888255}
   - component: {fileID: 669441088972888252}
+  - component: {fileID: 4145983674181633440}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -14309,25 +14297,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441088972888224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441088972888250}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441088972888227}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441088972888225
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14472,6 +14441,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &4145983674181633440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441088972888250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088972888227}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441088974380221
 GameObject:
   m_ObjectHideFlags: 0
@@ -15191,11 +15179,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089006650363}
   - component: {fileID: 669441089006650337}
-  - component: {fileID: 669441089006650366}
   - component: {fileID: 669441089006650367}
   - component: {fileID: 669441089006650364}
   - component: {fileID: 669441089006650365}
   - component: {fileID: 669441089006650362}
+  - component: {fileID: 8270685953749430500}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -15416,25 +15404,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089006650366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089006650360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089006650337}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089006650367
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15579,6 +15548,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &8270685953749430500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089006650360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089006650337}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089011541434
 GameObject:
   m_ObjectHideFlags: 0
@@ -16649,7 +16637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089061893728}
-  - component: {fileID: 669441089061893731}
+  - component: {fileID: 2726646008036187798}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -16674,7 +16662,7 @@ Transform:
   m_Father: {fileID: 669441088934124857}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089061893731
+--- !u!114 &2726646008036187798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16683,19 +16671,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089061893729}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089981549938}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088942637846}
   videoPlayer: {fileID: 669441088934124856}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089071737103
 GameObject:
   m_ObjectHideFlags: 0
@@ -16706,11 +16691,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089071737102}
   - component: {fileID: 669441089071737204}
-  - component: {fileID: 669441089071737205}
   - component: {fileID: 669441089071737202}
   - component: {fileID: 669441089071737203}
   - component: {fileID: 669441089071737200}
   - component: {fileID: 669441089071737201}
+  - component: {fileID: 5156360260175193740}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -16931,25 +16916,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089071737205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089071737103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089071737204}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089071737202
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17094,6 +17060,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &5156360260175193740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089071737103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089071737204}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089079202130
 GameObject:
   m_ObjectHideFlags: 0
@@ -17345,11 +17330,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089083408375}
   - component: {fileID: 669441089083408381}
-  - component: {fileID: 669441089083408378}
   - component: {fileID: 669441089083408379}
   - component: {fileID: 669441089083408376}
   - component: {fileID: 669441089083408377}
   - component: {fileID: 669441089083408374}
+  - component: {fileID: 2878372047612384872}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -17570,25 +17555,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089083408378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089083408372}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089083408381}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089083408379
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17733,6 +17699,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &2878372047612384872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089083408372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089083408381}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089085676744
 GameObject:
   m_ObjectHideFlags: 0
@@ -20326,7 +20311,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00012207031}
+  m_AnchoredPosition: {x: 0, y: 0.00061035156}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &669441089183939598
@@ -20583,7 +20568,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089195420527}
-  - component: {fileID: 669441089195420526}
+  - component: {fileID: 2684277050412224477}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -20608,7 +20593,7 @@ Transform:
   m_Father: {fileID: 669441089954164399}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089195420526
+--- !u!114 &2684277050412224477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20617,19 +20602,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089195420524}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089021137801}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089222038856}
   videoPlayer: {fileID: 669441089954164398}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089199115077
 GameObject:
   m_ObjectHideFlags: 0
@@ -20952,11 +20934,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089222038850}
   - component: {fileID: 669441089222038856}
-  - component: {fileID: 669441089222038857}
   - component: {fileID: 669441089222038854}
   - component: {fileID: 669441089222038855}
   - component: {fileID: 669441089222038852}
   - component: {fileID: 669441089222038853}
+  - component: {fileID: 6171829252063547993}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -21177,25 +21159,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089222038857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089222038851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089222038856}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089222038854
 AudioSource:
   m_ObjectHideFlags: 0
@@ -21340,6 +21303,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &6171829252063547993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089222038851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089222038856}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089228781401
 GameObject:
   m_ObjectHideFlags: 0
@@ -23666,7 +23648,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089343291307}
-  - component: {fileID: 669441089343291306}
+  - component: {fileID: 4172742155717531017}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -23691,7 +23673,7 @@ Transform:
   m_Father: {fileID: 669441090351160380}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089343291306
+--- !u!114 &4172742155717531017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -23700,19 +23682,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089343291304}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089618809749}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089788892290}
   videoPlayer: {fileID: 669441090351160383}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089368039933
 GameObject:
   m_ObjectHideFlags: 0
@@ -26106,7 +26085,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089441161120}
-  - component: {fileID: 669441089441161123}
+  - component: {fileID: 5944455150533297825}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -26131,7 +26110,7 @@ Transform:
   m_Father: {fileID: 669441088492315046}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089441161123
+--- !u!114 &5944455150533297825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26140,19 +26119,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089441161121}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090431963329}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089758056775}
   videoPlayer: {fileID: 669441088492315049}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089446315192
 GameObject:
   m_ObjectHideFlags: 0
@@ -27705,7 +27681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089512327771}
-  - component: {fileID: 669441089512327770}
+  - component: {fileID: 4529274249966964713}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -27730,7 +27706,7 @@ Transform:
   m_Father: {fileID: 669441089791414449}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089512327770
+--- !u!114 &4529274249966964713
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27739,19 +27715,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089512327768}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088794577842}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088585096787}
   videoPlayer: {fileID: 669441089791414448}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089512626621
 GameObject:
   m_ObjectHideFlags: 0
@@ -27842,7 +27815,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089519647783}
-  - component: {fileID: 669441089519647782}
+  - component: {fileID: 6851167804558435947}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -27867,7 +27840,7 @@ Transform:
   m_Father: {fileID: 669441089135672906}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089519647782
+--- !u!114 &6851167804558435947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27876,19 +27849,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089519647780}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088597502804}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089522927061
 GameObject:
   m_ObjectHideFlags: 0
@@ -28285,7 +28255,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -30017,7 +29987,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -31954,7 +31924,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -32441,11 +32411,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089758056769}
   - component: {fileID: 669441089758056775}
-  - component: {fileID: 669441089758056772}
   - component: {fileID: 669441089758056773}
   - component: {fileID: 669441089758056770}
   - component: {fileID: 669441089758056771}
   - component: {fileID: 669441089758056768}
+  - component: {fileID: 8972959750797019328}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -32666,25 +32636,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089758056772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089758056798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089758056775}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089758056773
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32829,6 +32780,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &8972959750797019328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089758056798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089758056775}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089763804322
 GameObject:
   m_ObjectHideFlags: 0
@@ -33091,11 +33061,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089788892316}
   - component: {fileID: 669441089788892290}
-  - component: {fileID: 669441089788892291}
   - component: {fileID: 669441089788892288}
   - component: {fileID: 669441089788892289}
   - component: {fileID: 669441089788892318}
   - component: {fileID: 669441089788892319}
+  - component: {fileID: 3093145123157401703}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -33316,25 +33286,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089788892291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089788892317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089788892290}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089788892288
 AudioSource:
   m_ObjectHideFlags: 0
@@ -33479,6 +33430,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &3093145123157401703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089788892317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089788892290}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089790685498
 GameObject:
   m_ObjectHideFlags: 0
@@ -33910,7 +33880,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34149,7 +34119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089814172717}
-  - component: {fileID: 669441089814172716}
+  - component: {fileID: 8477832739935748116}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -34174,7 +34144,7 @@ Transform:
   m_Father: {fileID: 669441089983012453}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089814172716
+--- !u!114 &8477832739935748116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -34183,19 +34153,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089814172714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441089092455653}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089936241606}
   videoPlayer: {fileID: 669441089983012452}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089815676557
 GameObject:
   m_ObjectHideFlags: 0
@@ -34747,7 +34714,7 @@ MonoBehaviour:
   m_text: Author Name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 233941157482760815, guid: 7e227ca196be3c145b4525eb511deb93, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -34807,7 +34774,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 2.4732666, y: 1.5279427, z: 6.9483643, w: 3.695515}
+  m_margin: {x: -319.763, y: 1.5279427, z: 6.9483643, w: 3.695515}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 1
@@ -35694,7 +35661,7 @@ MonoBehaviour:
   m_text: "\u7802\u306E\u7F8E\u8853\u9928"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 1043263178539073334, guid: 01719f749a4a25e409d8f20016b0effc, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -35770,11 +35737,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089880662918}
   - component: {fileID: 669441089880662924}
-  - component: {fileID: 669441089880662925}
   - component: {fileID: 669441089880662922}
   - component: {fileID: 669441089880662923}
   - component: {fileID: 669441089880662920}
   - component: {fileID: 669441089880662921}
+  - component: {fileID: 8639198559042845477}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -35995,25 +35962,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089880662925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089880662919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089880662924}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089880662922
 AudioSource:
   m_ObjectHideFlags: 0
@@ -36158,6 +36106,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &8639198559042845477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089880662919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089880662924}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089886872496
 GameObject:
   m_ObjectHideFlags: 0
@@ -36193,7 +36160,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.5625, y: 0}
   m_SizeDelta: {x: 18.875, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -36244,7 +36211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441089888441138}
-  - component: {fileID: 669441089888441141}
+  - component: {fileID: 2448178764991510825}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -36269,7 +36236,7 @@ Transform:
   m_Father: {fileID: 669441089861841855}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441089888441141
+--- !u!114 &2448178764991510825
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36278,19 +36245,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441089888441139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090027322647}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089083408381}
   videoPlayer: {fileID: 669441089861841854}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089889167105
 GameObject:
   m_ObjectHideFlags: 0
@@ -37793,11 +37757,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441089936241600}
   - component: {fileID: 669441089936241606}
-  - component: {fileID: 669441089936241607}
   - component: {fileID: 669441089936241604}
   - component: {fileID: 669441089936241605}
   - component: {fileID: 669441089936241602}
   - component: {fileID: 669441089936241603}
+  - component: {fileID: 803281423944212130}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -38018,25 +37982,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441089936241607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441089936241601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441089936241606}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441089936241604
 AudioSource:
   m_ObjectHideFlags: 0
@@ -38181,6 +38126,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &803281423944212130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441089936241601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089936241606}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441089939817266
 GameObject:
   m_ObjectHideFlags: 0
@@ -39216,7 +39180,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -41763,7 +41727,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090082209453}
-  - component: {fileID: 669441090082209452}
+  - component: {fileID: 3147373607671108371}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -41788,7 +41752,7 @@ Transform:
   m_Father: {fileID: 669441089933788806}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090082209452
+--- !u!114 &3147373607671108371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41797,19 +41761,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090082209450}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088886424028}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089071737204}
   videoPlayer: {fileID: 669441089933788809}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090102486739
 GameObject:
   m_ObjectHideFlags: 0
@@ -42263,11 +42224,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441090118363331}
   - component: {fileID: 669441090118363337}
-  - component: {fileID: 669441090118363334}
   - component: {fileID: 669441090118363335}
   - component: {fileID: 669441090118363332}
   - component: {fileID: 669441090118363333}
   - component: {fileID: 669441090118363330}
+  - component: {fileID: 6919302042790068841}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -42488,25 +42449,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441090118363334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441090118363328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441090118363337}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441090118363335
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42651,6 +42593,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &6919302042790068841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090118363328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441090118363337}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090121180808
 GameObject:
   m_ObjectHideFlags: 0
@@ -43131,7 +43092,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090169741111}
-  - component: {fileID: 669441090169741110}
+  - component: {fileID: 2251794673472236132}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -43156,7 +43117,7 @@ Transform:
   m_Father: {fileID: 669441089462963917}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090169741110
+--- !u!114 &2251794673472236132
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43165,19 +43126,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090169741108}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441090302402118}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090170535034
 GameObject:
   m_ObjectHideFlags: 0
@@ -43188,11 +43146,11 @@ GameObject:
   m_Component:
   - component: {fileID: 669441090170535037}
   - component: {fileID: 669441090170535011}
-  - component: {fileID: 669441090170535008}
   - component: {fileID: 669441090170535009}
   - component: {fileID: 669441090170535038}
   - component: {fileID: 669441090170535039}
   - component: {fileID: 669441090170535036}
+  - component: {fileID: 9205115752037693937}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -43413,25 +43371,6 @@ MonoBehaviour:
     useTextureMips: 0
   m_VideoPath: 
   m_VideoLocation: 2
---- !u!114 &669441090170535008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 669441090170535034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  envType: 0
-  _livestreamUrl: 
-  mPlayer: {fileID: 669441090170535011}
-  rotateScreen: 1
-  rotateScreenValue: {x: 0, y: 0, z: 0}
-  videoPlayerParent: {fileID: 0}
-  nftMAnager: {fileID: 0}
 --- !u!82 &669441090170535009
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43576,6 +43515,25 @@ MonoBehaviour:
   _areaWidth: 1
   _areaHeight: 1
   _showAreaInEditor: 1
+--- !u!114 &9205115752037693937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669441090170535034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441090170535011}
+  videoPlayer: {fileID: 0}
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090174477786
 GameObject:
   m_ObjectHideFlags: 0
@@ -43665,7 +43623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090178979431}
-  - component: {fileID: 669441090178979430}
+  - component: {fileID: 4815047491420735643}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -43690,7 +43648,7 @@ Transform:
   m_Father: {fileID: 669441090074065285}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090178979430
+--- !u!114 &4815047491420735643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -43699,19 +43657,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090178979428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088675306461}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441089880662924}
   videoPlayer: {fileID: 669441090074065284}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090186412303
 GameObject:
   m_ObjectHideFlags: 0
@@ -45673,7 +45628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 669441090280671326}
-  - component: {fileID: 669441090280671297}
+  - component: {fileID: 3280101716399862326}
   m_Layer: 0
   m_Name: YoutubeSimplified 2d
   m_TagString: Untagged
@@ -45698,7 +45653,7 @@ Transform:
   m_Father: {fileID: 669441090419844286}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &669441090280671297
+--- !u!114 &3280101716399862326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45707,19 +45662,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 669441090280671327}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87fc08d9533c69d4b94db5f4b9e2605b, type: 3}
+  m_Script: {fileID: 11500000, guid: 2653bb4e539c89642abae0f2a6d9c488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 669441088571620210}
-  mPlayer: {fileID: 0}
-  url: 
-  autoPlay: 1
-  fullscreen: 0
+  streamAbleUrl: 
+  mediaPlayer: {fileID: 669441088514341844}
   videoPlayer: {fileID: 669441090419844282}
-  x: 0
-  y: 0
-  z: 0
-  isEnableBtn: 1
+  liveVideoPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  id: 
 --- !u!1 &669441090284322601
 GameObject:
   m_ObjectHideFlags: 0
@@ -48147,7 +48099,7 @@ MonoBehaviour:
   m_text: "\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066\u7802\u50CF\u306E\u5C55\u793A\u3092\u884C\u3046\u4E16\u754C\u521D\u306E\u7802\u50CF\u5C55\u793A\u7F8E\u8853\u9928\u3002\u300C\u7802\u3067\u4E16\u754C\u65C5\u884C\u300D\u3092\u57FA\u672C\u30B3\u30F3\u30BB\u30D7\u30C8\u306B\u63B2\u3052\u3001\u6BCE\u5E74\u30C6\u30FC\u30DE\u3092\u5909\u3048\u3066"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -3532572196907256228, guid: f2a9fee30b98b524a80dba8fd8d1a55c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -53023,7 +52975,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984769952214371200}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -53224,6 +53176,11 @@ MonoBehaviour:
   PotraiteObj: {fileID: 669441088872153123}
   renderTexture_16x9: {fileID: 8400000, guid: cf8db7ef58bd3ce4f928564026c9d056, type: 2}
   renderTexture_9x16: {fileID: 8400000, guid: 607e7a72a0692fc44a57a4ee5f17d846, type: 2}
-  renderTexture_1x1: {fileID: 8400000, guid: ea9b6b6e56e3f55428deb9951788cc14, type: 2}
-  renderTexture_4x3: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
+  renderTexture_1x1: {fileID: 8400000, guid: bcde8ad14ab8abd4fa640af7b4e9528f, type: 2}
+  renderTexture_4x3: {fileID: 0}
   currentRoom: {fileID: 0}
+  meetingTxtUpdate: {fileID: 0}
+  pushNotification: {fileID: 0}
+  meetingStatus: {fileID: 0}
+  voiceManager: {fileID: 0}
+  Extended_XCS: {fileID: 0}

@@ -675,7 +675,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
-            playerRB.mass = 70;
+            playerRB.mass = 60;
             playerRB.isKinematic = true;
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;

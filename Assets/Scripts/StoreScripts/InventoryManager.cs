@@ -234,6 +234,7 @@ public class InventoryManager : MonoBehaviour
         {
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
+
     }
 
     public void SetDefaultValues() // This is called When comming back from Worlds
@@ -286,6 +287,8 @@ public class InventoryManager : MonoBehaviour
         // Update Character Reference On Gender Change
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
+
+        ResetDownloadCount();
     }
     public void skipAvatarSelection()
     {
@@ -626,6 +629,15 @@ public class InventoryManager : MonoBehaviour
             AllCategoriesData[i].subItems.Clear();
         }
 
+        ResetDownloadCount();
+        
+        if (LoadingHandler.Instance)
+            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
+
+    }
+
+    void ResetDownloadCount()
+    {
         headsDownlaodedCount = 0;
         faceDownlaodedCount = 0;
         innerDownlaodedCount = 0;
@@ -645,11 +657,7 @@ public class InventoryManager : MonoBehaviour
         eyeLashesDwonloadedCount = 0;
         eyesDwonloadedCount = 0;
         lipsDwonloadedCount = 0;
-        if (LoadingHandler.Instance)
-            LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
-
     }
-
     void ClearingLists(int index)
     {
         //AssetBundle.UnloadAllAssetBundles(false);
@@ -756,6 +764,7 @@ public class InventoryManager : MonoBehaviour
         public int pageSize;
         public string order;
         public string sort;
+        public int gender;
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -783,6 +792,11 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             myObj.order = _order;
             myObj.sort = sortingType;
+
+            if(CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
+                myObj.gender = 0;
+            else
+                myObj.gender = 1;
             return myObj;
         }
     }
@@ -2562,10 +2576,52 @@ public class InventoryManager : MonoBehaviour
 
 
     //  UserDetails Starts here ************************************************************************
-    private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
-    private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+    //private string TestNetXenyTokenAPI = "https://backend.xanalia.com/sale-nft/get-xeny-tokens-by-user";
+    //private string MainNetXenyTokenAPI = ""; // Mainnet Api here
+
+
+
+    public void UpdateUserXeny()
+    {
+        StartCoroutine(RequestUserXenyDataRoutine());
+    }
+
+    private IEnumerator RequestUserXenyDataRoutine()
+    {
+        XenyRequestedData xenyRequestData = new()
+        {
+            userAddress = PlayerPrefs.GetString("publicID")     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+        };
+        string jsonData = JsonConvert.SerializeObject(xenyRequestData);
+        // Convert the JSON data to a byte array
+        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+        UnityWebRequest request = UnityWebRequest.Post(ConstantsGod.GetUserXenyCoinsApi, "POST");
+        request.uploadHandler = new UploadHandlerRaw(postData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SendWebRequest();
+
+        while (!request.isDone)
+        {
+            yield return new WaitForSecondsRealtime(Time.deltaTime);
+        }
+
+        if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
+        {
+            Debug.Log("<color=red> Get XENY Api Error: " + request.error + "</color>");
+        }
+        else
+        {
+            TotalGameCoins.text = request.downloadHandler.text;
+        }
+        request.Dispose();
+        StopCoroutine(RequestUserXenyDataRoutine());
+
+    }
+
     public void SubmitUserDetailAPI()
     {
+        UpdateUserXeny();
         //string localAPI = "";
         //if (!APIBasepointManager.instance.IsXanaLive)
         //{
@@ -2578,46 +2634,47 @@ public class InventoryManager : MonoBehaviour
         //}
         //StartCoroutine(XenyTokenUserAddrerss(localAPI));
     }
-    private RequestedData requestData;
 
-    IEnumerator XenyTokenUserAddrerss(string url)
-    {
+    //private XenyRequestedData xenyRequestData;
+    //IEnumerator XenyTokenUserAddrerss(string url)
+    //{
 
-        requestData = new RequestedData();
-        requestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
-        string jsonData = JsonConvert.SerializeObject(requestData);
-        // Convert the JSON data to a byte array
-        byte[] postData = Encoding.UTF8.GetBytes(jsonData);
-        UnityWebRequest request = UnityWebRequest.Post(url, "POST");
-        request.uploadHandler = new UploadHandlerRaw(postData);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-        request.SendWebRequest();
-        while (!request.isDone)
-        {
-            yield return null;
-        }
-        //Debug.Log("hamara data v" + request.downloadHandler.text);
+    //    xenyRequestData = new XenyRequestedData();
+    //    xenyRequestData.userAddress = PlayerPrefs.GetString("publicID");     //For Testing Xent coins address= "0xA4eFBae8755fE223eB4288B278BEb410F8c6e27E";
+    //    Debug.Log("User Address is = " + xenyRequestData.userAddress);
+    //    string jsonData = JsonConvert.SerializeObject(xenyRequestData);
+    //    // Convert the JSON data to a byte array
+    //    byte[] postData = Encoding.UTF8.GetBytes(jsonData);
+    //    UnityWebRequest request = UnityWebRequest.Post(url, "POST");
+    //    request.uploadHandler = new UploadHandlerRaw(postData);
+    //    request.downloadHandler = new DownloadHandlerBuffer();
+    //    request.SetRequestHeader("Content-Type", "application/json");
+    //    request.SendWebRequest();
+    //    while (!request.isDone)
+    //    {
+    //        yield return null;
+    //    }
+    //    //Debug.Log("hamara data v" + request.downloadHandler.text);
 
-        if (!request.isHttpError && !request.isNetworkError)
-        {
-            if (request.error == null)
-            {
-                JObject json = JObject.Parse(request.downloadHandler.text);
-                string token = json["userXenyTokens"].ToString();
-                TotalGameCoins.text = token;
-                print("xeny coins are = " + token);
-            }
-        }
-        else
-        {
-            if (request.isNetworkError)
-            {
-                print("Error Occured " + request.error.ToUpper());
-            }
-        }
-        request.Dispose();
-    }
+    //    if (!request.isHttpError && !request.isNetworkError)
+    //    {
+    //        if (request.error == null)
+    //        {
+    //            JObject json = JObject.Parse(request.downloadHandler.text);
+    //            string token = json["userXenyTokens"].ToString();
+    //            TotalGameCoins.text = token;
+    //            print("xeny coins are = " + token);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (request.isNetworkError)
+    //        {
+    //            print("Error Occured " + request.error.ToUpper());
+    //        }
+    //    }
+    //    request.Dispose();
+    //}
     // Submit GetUser Details        
     //IEnumerator HitGetUserDetails(string url, string Jsondata)
     //{
@@ -4266,7 +4323,8 @@ public class InventoryManager : MonoBehaviour
                 {
                     if (ConstantsHolder.xanaConstants.shoes != "")
                     {
-                        if (GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
+                        GameObject currentShoes = GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes;
+                        if (currentShoes &&   GameManager.Instance.mainCharacter.GetComponent<AvatarController>().wornShoes.name == "MDshoes")
                         {
                             for (int i = 0; i < AllCategoriesData[7].parentObj.transform.childCount; i++)
                             {
@@ -4792,7 +4850,7 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
 }
-public class RequestedData
+public class XenyRequestedData
 {
     public string userAddress;
 }

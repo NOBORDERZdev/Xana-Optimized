@@ -9,6 +9,8 @@ public class CheckOnlineFriend : MonoBehaviour
     public int friendId;
     public SavingCharacterDataClass json;
     [HideInInspector]
+    public string randomPresetGender;
+    [HideInInspector]  
     public int randomPreset;
     [SerializeField]
     GameObject offlineFriendName, onlineFriendName;
@@ -177,7 +179,7 @@ public class CheckOnlineFriend : MonoBehaviour
         }
         else
         {
-            ProfileUIHandler.instance.SetUserAvatarDefaultClothingForHomeScreen(randomPreset);
+            ProfileUIHandler.instance.SetUserAvatarRandomClothingForProfile(randomPreset, randomPresetGender);
         }
     }
 }
