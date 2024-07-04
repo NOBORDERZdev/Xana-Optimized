@@ -6,6 +6,15 @@ public class ExtendedXanaChatSystem : XanaChatSystem
 {
     public Action<string> AirinQuestion;
 
+    private void OnEnable()
+    {
+        ChatSocketManager.onJoinRoom += UserJoinRoomAfterDisconnect;
+    }
+    private void OnDisable()
+    {
+        ChatSocketManager.onJoinRoom -= UserJoinRoomAfterDisconnect;
+    }
+
     public void SendMessage(string msgData)
     {
         OnEnterSend();
@@ -55,9 +64,11 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
         if (lines.Length > 0)
         {
-            lines[0] = "";
-            this.CurrentChannelText.text = string.Join("", lines);
-            this.PotriatCurrentChannelText.text = string.Join("", lines);
+            if (lines[0].Contains("typing...")) {
+                lines[0] = "";
+                this.CurrentChannelText.text = string.Join("", lines);
+                this.PotriatCurrentChannelText.text = string.Join("", lines);
+            }
         }
     }
 
@@ -78,5 +89,14 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         this.InputFieldChat.text = "";
         removeBadWords = "";
     }
+
+    private void UserJoinRoomAfterDisconnect(string _worldId)
+    {
+        if (IsShowChatWindow())
+        {
+            XanaChatSystem.instance.OpenCloseChatDialog();
+        }
+    }
+
 
 }
