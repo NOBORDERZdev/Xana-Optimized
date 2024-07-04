@@ -109,7 +109,6 @@ public class SummitAIChatHandler : XanaChatSystem
     void ClearInputField()
     {
         InputFieldChat.text = "";
-        InputFieldChat.Select();
     }
 
     void OpenChatBox()
