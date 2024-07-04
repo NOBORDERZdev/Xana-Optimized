@@ -64,9 +64,11 @@ public class ExtendedXanaChatSystem : XanaChatSystem
         string[] lines = CurrentChannelText.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
         if (lines.Length > 0)
         {
-            lines[0] = "";
-            this.CurrentChannelText.text = string.Join("", lines);
-            this.PotriatCurrentChannelText.text = string.Join("", lines);
+            if (lines[0].Contains("typing...")) {
+                lines[0] = "";
+                this.CurrentChannelText.text = string.Join("", lines);
+                this.PotriatCurrentChannelText.text = string.Join("", lines);
+            }
         }
     }
 
