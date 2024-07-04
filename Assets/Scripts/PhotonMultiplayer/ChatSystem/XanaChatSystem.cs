@@ -14,7 +14,7 @@ using Photon.Realtime;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
-using SimpleJSON;
+//using SimpleJSON;
 using Crosstales.BWF;
 
 #endif
