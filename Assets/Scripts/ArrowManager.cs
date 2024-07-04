@@ -533,6 +533,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (gameObject.GetComponent<PhotonView>().ViewID == ViewID)
             FindObjectOfType<VoiceManager>().SetVoiceGroup(newGroup);
     }
+
+    public void WearCloth(string clothType)
+    {
+        this.GetComponent<PhotonView>().RPC("WearClothRemot", RpcTarget.All, clothType);
+    }
+    [PunRPC]
+    public void WearClothRemot(string clothType) //, int ViewID
+    {
+        // if (gameObject.GetComponent<PhotonView>().ViewID == ViewID)
+        this.GetComponent<AvatarController>().SetAvatarClothDefault(this.gameObject, clothType);
+    }
+
     #endregion
 
 }
