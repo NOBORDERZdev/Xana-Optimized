@@ -92,10 +92,10 @@ public class UserLoginSignupManager : MonoBehaviour
         instance = this;
         StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
        
-        if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
-        {
-            SaveCharacterProperties.instance.CreateFileFortheFirstTime();
-        }
+        //if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
+        //{
+        //    SaveCharacterProperties.instance.CreateFileFortheFirstTime();
+        //}
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
@@ -914,7 +914,7 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetString("PlayerName", userUsername);
             ConstantsHolder.userName = userUsername;
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
+          //  GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
             OpenUIPanel(16);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));

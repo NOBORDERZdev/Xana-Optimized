@@ -118,13 +118,17 @@ public class WorldManager : MonoBehaviour
             if((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
             (PlayerPrefs.GetString("PlayerName") == ""))
             {
-                GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+                if (GameManager.Instance.UiManager.portraitSplashScreen != null)
+                {
+                     GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+                }
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
                 UserLoginSignupManager.instance.OpenUserNamePanel();
             }
             else
             {
                 Screen.orientation = ScreenOrientation.LandscapeLeft;
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));;
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
                 XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
                  yield return null;
             }
