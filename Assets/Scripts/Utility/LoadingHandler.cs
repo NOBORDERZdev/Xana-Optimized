@@ -331,11 +331,7 @@ public class LoadingHandler : MonoBehaviour
         //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
         //}
-
-        loadingPanel.SetActive(false);
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
-
+        StartCoroutine(ApplyDelay());
 
         if (ReferencesForGamePlay.instance != null)
             ReferencesForGamePlay.instance.workingCanvas.SetActive(true);
@@ -345,6 +341,27 @@ public class LoadingHandler : MonoBehaviour
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
+    }
+
+    private IEnumerator ApplyDelay()
+    {
+        if (ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            HideLoadingManually();
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+            HideLoadingManually();
+        }
+    }
+
+    private void HideLoadingManually()
+    {
+        LoadingHandler.Instance.UpdateLoadingStatusText("");
+        loadingPanel.SetActive(false);
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
     }
 
 
