@@ -65,41 +65,128 @@ public class SPAAIEmoteController : MonoBehaviour
                                     _inValidAnimCount++;
                                     www.Dispose();
                                     continue;
-                                    //throw new Exception("WWW download had an error:" + www.error);
                                 }
                                 else
                                 {
-                                    try
+                                    AssetBundle assetBundle = www.assetBundle;
+                                    if (assetBundle != null)
                                     {
-                                        AssetBundle assetBundle = www.assetBundle;
-                                        if (assetBundle != null)
+                                        AssetBundleRequest newRequest = assetBundle.LoadAllAssetsAsync<GameObject>();
+                                        while (!newRequest.isDone)
                                         {
-                                            GameObject[] animation = assetBundle.LoadAllAssets<GameObject>();
-                                            var remotego = animation[0];
-
-                                            if (remotego.name.Equals("Animation"))
+                                            yield return null;
+                                        }
+                                        if (newRequest.isDone)
+                                        {
+                                            var animation = newRequest.allAssets;
+                                            foreach (var anim in animation)
                                             {
-                                                spawnCharacterObjectRemote = remotego.transform.gameObject;
-                                                var overrideController = new AnimatorOverrideController();
-                                                overrideController.runtimeAnimatorController = npcController;
-                                                List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-                                                foreach (var clip in overrideController.animationClips)
+                                                GameObject go = (GameObject)anim;
+                                                if (go.name.Equals("Animation") || go.name.Equals("animation"))
                                                 {
-                                                    if (clip.name == "emaotedefault")
-                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, spawnCharacterObjectRemote.transform.GetComponent<Animation>().clip));
-                                                    else
-                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                                                    if (animationController.GetBool("EtcAnimStart"))   // Added by Ali Hamza
+                                                    {
+                                                        animationController.SetBool("Stand", true);
+                                                        animationController.SetBool("EtcAnimStart", false);
+                                                        foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                                                        {
+                                                            if (clip.name == "Stand")
+                                                            {
+                                                                yield return new WaitForSeconds(clip.length);
+                                                            }
+                                                        }
+                                                    }
+                                                    //PlayerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
+                                                    //PlayerAvatar.GetComponent<Animator>().Play("Animation");
+
+                                                    var overrideController = new AnimatorOverrideController();
+                                                    overrideController.runtimeAnimatorController = npcController;
+
+                                                    List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                                                    foreach (var clip in overrideController.animationClips)
+                                                    {
+                                                        if (clip.name == "emaotedefault")
+                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
+                                                        else
+                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                        overrideController.ApplyOverrides(keyValuePairs);
+
+                                                        animationController.runtimeAnimatorController = overrideController;
+
+                                                        animationController.SetBool("IsEmote", true);
+                                                    }
                                                 }
-                                                overrideController.ApplyOverrides(keyValuePairs);
-                                                animationController.runtimeAnimatorController = overrideController;
-                                                animationController.SetBool("IsEmote", true);
-                                                //Invoke(nameof(StopAiEmote), /*UnityEngine.Random.Range(minAnimTime, maxAnimTime)*/SingleAnimPlayTime);
+                                                else
+                                                {
+                                                    if (animationController != null)    //Added by Ali Hamza
+                                                    {
+                                                        animationController.SetBool("Stand", true);
+                                                        animationController.SetBool("EtcAnimStart", false);
+
+                                                        if (CheckSpecificAnimationPlaying("Sit") /*&& animationController.GetComponent<RpcManager>().DifferentAnimClicked*/)
+                                                        {
+                                                            //animationController.GetComponent<RpcManager>().DifferentAnimClicked = false;
+                                                            foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                                                            {
+                                                                if (clip.name == "Stand")
+                                                                {
+                                                                    yield return new WaitForSeconds(clip.length);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if (CheckSpecificAnimationPlaying("Sit"))
+                                                        {
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (animationController != null)
+                                                        animationController.SetBool("Stand", false);
+
+                                                    animationController.SetBool("EtcAnimStart", true);
+
+                                                    var overrideController = new AnimatorOverrideController();
+                                                    overrideController.runtimeAnimatorController = npcController;
+
+                                                    List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                                                    foreach (var clip in overrideController.animationClips)
+                                                    {
+                                                        if (animationController.GetBool("EtcAnimStart"))
+                                                        {
+                                                            if (clip.name == "crouchDefault" || clip.name == "standDefault")
+                                                            {
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
+                                                                //currentEtcAnimName = go.name;
+                                                            }
+                                                            else
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                            overrideController.ApplyOverrides(keyValuePairs);
+
+                                                            animationController.runtimeAnimatorController = overrideController;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            if (clip.name == "Sit")
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().GetClip("Stand")));
+                                                            else
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                            overrideController.ApplyOverrides(keyValuePairs);
+
+                                                            animationController.runtimeAnimatorController = overrideController;
+                                                        }
+                                                        animationController.SetBool("IsEmote", false);
+                                                    }
+                                                }
                                             }
                                             SaveAssetBundle(www.bytes, emoteName);
                                             assetBundle.Unload(false);
                                         }
                                     }
-                                    catch (Exception)
+                                    else
                                     {
                                         _inValidAnimCount++;
                                         www.Dispose();
@@ -129,35 +216,122 @@ public class SPAAIEmoteController : MonoBehaviour
                                     _inValidAnimCount++;
                                     www.Dispose();
                                     continue;
-                                    //throw new Exception("WWW download had an error:" + www.error);
                                 }
                                 else
                                 {
-                                    try
+                                    AssetBundle assetBundle = www.assetBundle;
+                                    if (assetBundle != null)
                                     {
-                                        AssetBundle assetBundle = www.assetBundle;
-                                        if (assetBundle != null)
+                                        AssetBundleRequest newRequest = assetBundle.LoadAllAssetsAsync<GameObject>();
+                                        while (!newRequest.isDone)
                                         {
-                                            GameObject[] animation = assetBundle.LoadAllAssets<GameObject>();
-                                            var remotego = animation[0];
-
-                                            if (remotego.name.Equals("Animation"))
+                                            yield return null;
+                                        }
+                                        if (newRequest.isDone)
+                                        {
+                                            var animation = newRequest.allAssets;
+                                            foreach (var anim in animation)
                                             {
-                                                spawnCharacterObjectRemote = remotego.transform.gameObject;
-                                                var overrideController = new AnimatorOverrideController();
-                                                overrideController.runtimeAnimatorController = npcController;
-                                                List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-                                                foreach (var clip in overrideController.animationClips)
+                                                GameObject go = (GameObject)anim;
+                                                if (go.name.Equals("Animation") || go.name.Equals("animation"))
                                                 {
-                                                    if (clip.name == "emaotedefault")
-                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, spawnCharacterObjectRemote.transform.GetComponent<Animation>().clip));
-                                                    else
-                                                        keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                                                    if (animationController.GetBool("EtcAnimStart"))   // Added by Ali Hamza
+                                                    {
+                                                        animationController.SetBool("Stand", true);
+                                                        animationController.SetBool("EtcAnimStart", false);
+                                                        foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                                                        {
+                                                            if (clip.name == "Stand")
+                                                            {
+                                                                yield return new WaitForSeconds(clip.length);
+                                                            }
+                                                        }
+                                                    }
+                                                    //PlayerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
+                                                    //PlayerAvatar.GetComponent<Animator>().Play("Animation");
+
+                                                    var overrideController = new AnimatorOverrideController();
+                                                    overrideController.runtimeAnimatorController = npcController;
+
+                                                    List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                                                    foreach (var clip in overrideController.animationClips)
+                                                    {
+                                                        if (clip.name == "emaotedefault")
+                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
+                                                        else
+                                                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                        overrideController.ApplyOverrides(keyValuePairs);
+
+                                                        animationController.runtimeAnimatorController = overrideController;
+
+                                                        animationController.SetBool("IsEmote", true);
+                                                    }
                                                 }
-                                                overrideController.ApplyOverrides(keyValuePairs);
-                                                animationController.runtimeAnimatorController = overrideController;
-                                                animationController.SetBool("IsEmote", true);
-                                                //Invoke(nameof(StopAiEmote), /*UnityEngine.Random.Range(minAnimTime, maxAnimTime)*/SingleAnimPlayTime);
+                                                else
+                                                {
+                                                    if (animationController != null)    //Added by Ali Hamza
+                                                    {
+                                                        animationController.SetBool("Stand", true);
+                                                        animationController.SetBool("EtcAnimStart", false);
+
+                                                        if (CheckSpecificAnimationPlaying("Sit") /*&& animationController.GetComponent<RpcManager>().DifferentAnimClicked*/)
+                                                        {
+                                                            //animationController.GetComponent<RpcManager>().DifferentAnimClicked = false;
+                                                            foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                                                            {
+                                                                if (clip.name == "Stand")
+                                                                {
+                                                                    yield return new WaitForSeconds(clip.length);
+                                                                }
+                                                            }
+                                                        }
+                                                        else if (CheckSpecificAnimationPlaying("Sit"))
+                                                        {
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (animationController != null)
+                                                        animationController.SetBool("Stand", false);
+
+                                                    animationController.SetBool("EtcAnimStart", true);
+
+                                                    var overrideController = new AnimatorOverrideController();
+                                                    overrideController.runtimeAnimatorController = npcController;
+
+                                                    List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                                                    foreach (var clip in overrideController.animationClips)
+                                                    {
+                                                        if (animationController.GetBool("EtcAnimStart"))
+                                                        {
+                                                            if (clip.name == "crouchDefault" || clip.name == "standDefault")
+                                                            {
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
+                                                                //currentEtcAnimName = go.name;
+                                                            }
+                                                            else
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                            overrideController.ApplyOverrides(keyValuePairs);
+
+                                                            animationController.runtimeAnimatorController = overrideController;
+
+                                                        }
+                                                        else
+                                                        {
+                                                            if (clip.name == "Sit")
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().GetClip("Stand")));
+                                                            else
+                                                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                                            overrideController.ApplyOverrides(keyValuePairs);
+
+                                                            animationController.runtimeAnimatorController = overrideController;
+                                                        }
+                                                        animationController.SetBool("IsEmote", false);
+                                                    }
+                                                }
                                             }
                                             if (!AnimPlayList[i].Contains(","))
                                             {
@@ -166,7 +340,7 @@ public class SPAAIEmoteController : MonoBehaviour
                                             assetBundle.Unload(false);
                                         }
                                     }
-                                    catch (Exception)
+                                    else
                                     {
                                         _inValidAnimCount++;
                                         www.Dispose();
@@ -228,31 +402,111 @@ public class SPAAIEmoteController : MonoBehaviour
             {
                 yield return null;
             }
-
-            var animation = newRequest.allAssets;
-            foreach (var anim in animation)
+            if (newRequest.isDone)
             {
-                GameObject go = (GameObject)anim;
-                if (go.name.Equals("Animation") || go.name.Equals("animation"))
+                var animation = newRequest.allAssets;
+                foreach (var anim in animation)
                 {
-                    var overrideController = new AnimatorOverrideController();
-                    overrideController.runtimeAnimatorController = npcController;
-                    List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
-                    foreach (var clip in overrideController.animationClips)
+                    GameObject go = (GameObject)anim;
+                    if (go.name.Equals("Animation") || go.name.Equals("animation"))
                     {
-                        if (clip.name == "emaotedefault")
-                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
-                        else
-                            keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+                        if (animationController.GetBool("EtcAnimStart"))   // Added by Ali Hamza
+                        {
+                            animationController.SetBool("Stand", true);
+                            animationController.SetBool("EtcAnimStart", false);
+                            foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                            {
+                                if (clip.name == "Stand")
+                                {
+                                    yield return new WaitForSeconds(clip.length);
+                                }
+                            }
+                        }
+                        //PlayerAvatar.GetComponent<Animator>().runtimeAnimatorController = go.GetComponent<Animator>().runtimeAnimatorController;
+                        //PlayerAvatar.GetComponent<Animator>().Play("Animation");
+
+                        var overrideController = new AnimatorOverrideController();
+                        overrideController.runtimeAnimatorController = npcController;
+
+                        List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                        foreach (var clip in overrideController.animationClips)
+                        {
+                            if (clip.name == "emaotedefault")
+                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().clip));
+                            else
+                                keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                            overrideController.ApplyOverrides(keyValuePairs);
+
+                            animationController.runtimeAnimatorController = overrideController;
+
+                            animationController.SetBool("IsEmote", true);
+                        }
                     }
-                    overrideController.ApplyOverrides(keyValuePairs);
-                    animationController.runtimeAnimatorController = overrideController;
-                    animationController.SetBool("IsEmote", true);
-                }
-                else
-                {
-                    var overrideController = new AnimatorOverrideController();
-                    overrideController.runtimeAnimatorController = npcController;
+                    else
+                    {
+                        if (animationController != null)    //Added by Ali Hamza
+                        {
+                            animationController.SetBool("Stand", true);
+                            animationController.SetBool("EtcAnimStart", false);
+
+                            if (CheckSpecificAnimationPlaying("Sit") /*&& animationController.GetComponent<RpcManager>().DifferentAnimClicked*/)
+                            {
+                                //animationController.GetComponent<RpcManager>().DifferentAnimClicked = false;
+                                foreach (var clip in animationController.runtimeAnimatorController.animationClips)
+                                {
+                                    if (clip.name == "Stand")
+                                    {
+                                        yield return new WaitForSeconds(clip.length);
+                                    }
+                                }
+                            }
+                            else if (CheckSpecificAnimationPlaying("Sit"))
+                            {
+                                break;
+                            }
+                        }
+
+                        if (animationController != null)
+                            animationController.SetBool("Stand", false);
+
+                        animationController.SetBool("EtcAnimStart", true);
+
+                        var overrideController = new AnimatorOverrideController();
+                        overrideController.runtimeAnimatorController = npcController;
+
+                        List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();
+                        foreach (var clip in overrideController.animationClips)
+                        {
+                            if (animationController.GetBool("EtcAnimStart"))
+                            {
+                                if (clip.name == "crouchDefault" || clip.name == "standDefault")
+                                {
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetChild(0).GetComponent<Animation>().clip));
+                                    //currentEtcAnimName = go.name;
+                                }
+                                else
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                overrideController.ApplyOverrides(keyValuePairs);
+
+                                animationController.runtimeAnimatorController = overrideController;
+
+                            }
+                            else
+                            {
+                                if (clip.name == "Sit")
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, go.transform.GetComponent<Animation>().GetClip("Stand")));
+                                else
+                                    keyValuePairs.Add(new KeyValuePair<AnimationClip, AnimationClip>(clip, clip));
+
+                                overrideController.ApplyOverrides(keyValuePairs);
+
+                                animationController.runtimeAnimatorController = overrideController;
+                            }
+                            animationController.SetBool("IsEmote", false);
+                        }
+                    }
                 }
             }
             //Invoke(nameof(StopAiEmote), /*UnityEngine.Random.Range(minAnimTime, maxAnimTime)*/SingleAnimPlayTime);
@@ -260,6 +514,11 @@ public class SPAAIEmoteController : MonoBehaviour
                 assetBundle.Unload(false);
         }
         emotCoroutine = null;
+    }
+
+    bool CheckSpecificAnimationPlaying(string stateName)       //Added by Ali Hamza
+    {
+        return animationController.GetCurrentAnimatorStateInfo(0).IsName(stateName);
     }
 
     void SaveAssetBundle(byte[] data, string name)
@@ -313,7 +572,9 @@ public class SPAAIEmoteController : MonoBehaviour
         int _emoteIndex = EmoteAnimationHandler.Instance.emoteAnim.FindIndex(obj => obj.name == _emoteName);
         if (_emoteIndex != -1)
         {
-            if (EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Moves"))
+            if (EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Dance") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Moves") ||
+                EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Idle") || EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Etc") ||
+                EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].group.Contains("Walk"))
             {
                 emoteName = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].name;
                 CurrDanceAnimName = emoteName;
@@ -325,15 +586,20 @@ public class SPAAIEmoteController : MonoBehaviour
                     emoteBundleUrl = EmoteAnimationHandler.Instance.emoteAnim[_emoteIndex].android_file;
 #endif
                 emoteBundlePath = Path.Combine(ConstantsHolder.xanaConstants.r_EmoteStoragePersistentPath, emoteBundleUrl + ".unity3d");
+                return true;
             }
-            return true;
-        } 
+            else
+            {
+                emoteBundleUrl = "";
+                return false;
+            }
+        }
         else if (!string.IsNullOrEmpty(_emoteName) && _emoteName.Contains(","))
         {
             string[] splitStrings = new string[2];
-                splitStrings = _emoteName.Split(',');
+            splitStrings = _emoteName.Split(',');
 #if UNITY_ANDROID
-                emoteBundleUrl = splitStrings[0];
+            emoteBundleUrl = splitStrings[0];
 #elif UNITY_IOS
                                             emoteBundleUrl = splitStrings[1];
 #elif UNITY_EDITOR
