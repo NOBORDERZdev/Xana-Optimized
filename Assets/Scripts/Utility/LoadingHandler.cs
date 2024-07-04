@@ -352,6 +352,7 @@ public class LoadingHandler : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(2f);
+            GameplayEntityLoader.instance.SetPlayerPos();
             HideLoadingManually();
         }
     }
