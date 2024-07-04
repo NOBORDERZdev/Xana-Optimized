@@ -27,7 +27,7 @@ public class TranslateComponent : ItemComponent
         moveBackward = false;
         activateTranslateComponent = true;
         counter = 0;
-        NetworkSyncManager.instance.TranslateComponentpos.Add(RuntimeItemID,transform.position);
+        NetworkSyncManager.instance.TranslateComponentpos.TryAdd(RuntimeItemID,transform.position);
         if (!this.translateComponentData.avatarTriggerToggle)
         {
             PlayBehaviour();
@@ -109,8 +109,11 @@ public class TranslateComponent : ItemComponent
         }
         else
         {
-
-            transform.position = (Vector3)NetworkSyncManager.instance.TranslateComponentpos[RuntimeItemID];
+            object obj;
+            if (NetworkSyncManager.instance.TranslateComponentpos.TryGetValue(RuntimeItemID, out obj))
+            {
+                transform.position = (Vector3)obj;
+            }
         }
             
         
