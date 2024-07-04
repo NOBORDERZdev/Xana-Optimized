@@ -46,6 +46,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
     [SerializeField] TMP_Text XANAPartyCounterText;
     private bool isCounterStarted = false;
+    public bool isMatchingTimerFinished = false;
 
 
     private const string InLevelProperty = "InLevel";
@@ -382,9 +383,12 @@ public class ReferencesForGamePlay : MonoBehaviour
                    
                 //}
 
-                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                if (((PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     MakeRoomPrivate();
-                    StartCoroutine(ShowLobbyCounter());
+                    if(isMatchingTimerFinished)
+                        StartCoroutine(ShowLobbyCounter(0f));
+                    else
+                        StartCoroutine(ShowLobbyCounter(10f));
                 }
                     
                 //else
@@ -403,7 +407,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         goto CheckAgain;
     }
     
-    IEnumerator ShowLobbyCounter()
+    IEnumerator ShowLobbyCounter(float waitTime)
     {
         isCounterStarted = true;
         yield return new WaitForSeconds(10); // wait to show that other player spwan and then lobby full

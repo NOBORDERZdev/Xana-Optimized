@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 7316756595186861038}
   - component: {fileID: 5472458572550020429}
   - component: {fileID: 7396627776070002438}
+  - component: {fileID: 6827054931154011104}
   m_Layer: 8
   m_Name: XanaPenguin
   m_TagString: PhotonLocalPlayer
@@ -465,6 +466,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RaceFinishCount: 0
+--- !u!114 &6827054931154011104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927154725259993610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e4e139f8d858a47a724e8433acf4b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerDuration: 60
+  isTimerRunning: 0
 --- !u!1 &1927154725311225520
 GameObject:
   m_ObjectHideFlags: 0
