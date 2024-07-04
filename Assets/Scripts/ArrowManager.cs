@@ -15,7 +15,6 @@ using Photon.Voice.PUN;
 
 public class ArrowManager : MonoBehaviourPunCallbacks
 {
-    public GameObject characterBody;
     // Start is called before the first frame update
     GameObject arrow;
     Material clientMat;
