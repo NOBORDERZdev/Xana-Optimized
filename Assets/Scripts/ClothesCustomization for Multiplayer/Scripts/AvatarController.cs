@@ -567,7 +567,7 @@ public class AvatarController : MonoBehaviour
                             characterBodyParts.TextureForGlove(null);
                         }
                     }
-                    if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
+                    if (_CharacterData.charactertypeAi == true /*&& !UGCManager.isSelfieTaken*/)
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
@@ -780,7 +780,7 @@ public class AvatarController : MonoBehaviour
                             }
                         }
                     }
-                    if (_CharacterData.charactertypeAi == true && !UGCManager.isSelfieTaken)
+                    if (_CharacterData.charactertypeAi == true /*&& !UGCManager.isSelfieTaken*/)
                     {
                         ApplyAIData(_CharacterData,this.gameObject);
                     }

@@ -137,16 +137,16 @@ public class PresetData_Jsons : MonoBehaviour
             _CharacterData.PresetValue = gameObject.name;
             SaveCharacterProperties.instance.SaveItemList.gender = _CharacterData.gender;
             ConstantsHolder.xanaConstants.bodyNumber = 0;
-            if (UGCManager.isSelfieTaken)
-            {
-                SaveUGCDataOnJson(_CharacterData);
-            }
-            else
-            {
-                _CharacterData.charactertypeAi = false;
-                InventoryManager.instance.itemData.CharactertypeAi = false;
-                UGCManager.isSelfieTaken = false;
-            }
+            //if (UGCManager.isSelfieTaken)
+            //{
+            //    SaveUGCDataOnJson(_CharacterData);
+            //}
+            //else
+            //{
+            //    _CharacterData.charactertypeAi = false;
+            //    InventoryManager.instance.itemData.CharactertypeAi = false;
+            //    UGCManager.isSelfieTaken = false;
+            //}
 
             // Set the position, rotation of the character 
             {
@@ -185,11 +185,11 @@ public class PresetData_Jsons : MonoBehaviour
                 if (!GameManager.Instance.UiManager.isAvatarSelectionBtnClicked)
                 {
                     UserLoginSignupManager.instance.OpenUserNamePanel();
-                    if (UGCManager.isSelfieTaken) 
-                    {
-                       // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
-                        AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
-                    }
+                    //if (UGCManager.isSelfieTaken) 
+                    //{
+                    //   // GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(true);
+                    //    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
+                    //}
                 }
                 else
                 {
@@ -197,22 +197,22 @@ public class PresetData_Jsons : MonoBehaviour
                     GameManager.Instance.m_RenderTextureCamera.gameObject.SetActive(false);
                    //GameManager.Instance.ActorManager.IdlePlayerAvatorForMenu(false);
                 }
-                if (UGCManager.isSelfieTaken)
-                {
-                    //UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(true);
-                }
-                else
-                {
-                    //UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(false);
-                    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(true);
-                    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(false);
-                }
+                //if (UGCManager.isSelfieTaken)
+                //{
+                //    //UserRegisterationManager.instance.renderImage.gameObject.SetActive(true);
+                //    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(false);
+                //    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(true);
+                //    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(false);
+                //    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(true);
+                //}
+                //else
+                //{
+                //    //UserRegisterationManager.instance.renderImage.gameObject.SetActive(false);
+                //    UserLoginSignupManager.instance.SelectedPresetImage.gameObject.SetActive(true);
+                //    UserLoginSignupManager.instance.AiPresetImage.gameObject.SetActive(false);
+                //    UserLoginSignupManager.instance.SelectPresetImageforEditProfil.gameObject.SetActive(true);
+                //    UserLoginSignupManager.instance.AiPresetImageforEditProfil.gameObject.SetActive(false);
+                //}
             }
             else
             {
@@ -243,15 +243,15 @@ public class PresetData_Jsons : MonoBehaviour
                 SavePresetOnServer(_CharacterData);
             }
 
-            if (UGCManager.isSelfieTaken)
-            {
-                InventoryManager.instance.ApplyUGCValueOnCharacter(_CharacterData.gender);
-                UGCManager.isSelfieTaken = false;
-            }
-            else
-            {
-                InventoryManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
-            }
+            //if (UGCManager.isSelfieTaken)
+            //{
+            //    InventoryManager.instance.ApplyUGCValueOnCharacter(_CharacterData.gender);
+            //    UGCManager.isSelfieTaken = false;
+            //}
+            //else
+            //{
+            //    InventoryManager.instance.ApplyDefaultValueOnCharacter(_CharacterData.gender);
+            //}
            
             if (!presetAlreadySaved)
             {

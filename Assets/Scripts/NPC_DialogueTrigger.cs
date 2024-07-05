@@ -190,7 +190,7 @@ public class NPC_DialogueTrigger : MonoBehaviour
 
     void Test()
     {
-        Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerController>().enabled = true;
+        //Gamemanager._InstanceGM.mainPlayer.GetComponent<PlayerController>().enabled = true;
     }
 }
 

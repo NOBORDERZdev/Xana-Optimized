@@ -116,9 +116,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 //}
 
                 if(!ConstantsHolder.xanaConstants.isXanaPartyWorld){ 
-                       AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
+                     //  AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
                      //AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
-                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
+                  //  AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
 
                     AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
                     }
@@ -136,7 +136,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if(!ConstantsHolder.xanaConstants.isXanaPartyWorld) { 
             try
             {
-                AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
+               // AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
             }
             catch (Exception e)
             {

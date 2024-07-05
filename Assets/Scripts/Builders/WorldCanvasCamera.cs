@@ -55,15 +55,15 @@ public class WorldCanvasCamera : MonoBehaviour
             FavBtnPortrait.onClick.Invoke();
         }
 
-        if (!state && (AnimationPanel.activeInHierarchy || AnimationPanelPortrait.activeInHierarchy))
-        {
-            GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
-        }
-        if (EmoteAnimationHandler.Instance.isAnimRunning && !state)
-        {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
-        }
+        //if (!state && (AnimationPanel.activeInHierarchy || AnimationPanelPortrait.activeInHierarchy))
+        //{
+        //    GamePlayButtonEvents.inst.CloseEmoteSelectionPanel();
+        //}
+        //if (EmoteAnimationHandler.Instance.isAnimRunning && !state)
+        //{
+        //    EmoteAnimationHandler.Instance.StopAnimation();
+        //    EmoteAnimationHandler.Instance.StopAllCoroutines();
+        //}
     }
 
 }

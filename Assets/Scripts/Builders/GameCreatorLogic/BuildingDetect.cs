@@ -128,8 +128,8 @@ public class BuildingDetect : MonoBehaviour
 
         playerHead = GamificationComponentData.instance.charcterBodyParts.head;
 
-        playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
-        playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
+        //playerFreeCamConsole = GamificationComponentData.instance.ikMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+        //playerFreeCamConsoleOther = GamificationComponentData.instance.ikMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
         defaultHeadMaterials = new Material[playerHead.sharedMesh.subMeshCount];
         for (int i = 0; i < playerHead.materials.Length; i++)
@@ -163,10 +163,10 @@ public class BuildingDetect : MonoBehaviour
 
     internal void DefaultSpeedStore()
     {
-        _playerControllerNew = GamificationComponentData.instance.playerControllerNew;
-        defaultJumpHeight = _playerControllerNew.JumpVelocity;
-        defaultSprintSpeed = _playerControllerNew.sprintSpeed;
-        defaultMoveSpeed = _playerControllerNew.movementSpeed;
+        //_playerControllerNew = GamificationComponentData.instance.playerControllerNew;
+        //defaultJumpHeight = _playerControllerNew.JumpVelocity;
+        //defaultSprintSpeed = _playerControllerNew.sprintSpeed;
+        //defaultMoveSpeed = _playerControllerNew.movementSpeed;
     }
 
     private void OnEnable()
@@ -199,16 +199,16 @@ public class BuildingDetect : MonoBehaviour
     float powerUpCurTime;
     IEnumerator playerPowerUp()
     {
-        _playerControllerNew.jumpHeight = powerProviderHeight;
-        _playerControllerNew.sprintSpeed = powerProviderSpeed;
-        powerUpCurTime = 0;
-        while (powerUpCurTime < powerUpTime)
-        {
-            yield return new WaitForSeconds(1f);
-            powerUpCurTime++;
-        }
-        _playerControllerNew.jumpHeight = defaultJumpHeight;
-        _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+        //_playerControllerNew.jumpHeight = powerProviderHeight;
+        //_playerControllerNew.sprintSpeed = powerProviderSpeed;
+        //powerUpCurTime = 0;
+        //while (powerUpCurTime < powerUpTime)
+        //{
+        //    yield return new WaitForSeconds(1f);
+        //    powerUpCurTime++;
+        //}
+        //_playerControllerNew.jumpHeight = defaultJumpHeight;
+        //_playerControllerNew.sprintSpeed = defaultSprintSpeed;
         yield return null;
     }
     #endregion
@@ -255,11 +255,11 @@ public class BuildingDetect : MonoBehaviour
         AppearanceChange.transform.localEulerAngles = Vector3.zero;
         gangsterCharacter.GetComponentInChildren<Animator>().enabled = true;
         gangsterCharacter.GetComponentInChildren<Animator>().runtimeAnimatorController = GamificationComponentData.instance.idleAnimation;
-        CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
-        if (cc != null)
-        {
-            cc.playerControler = GamificationComponentData.instance.playerControllerNew;
-        }
+     //   CharacterControls cc = gangsterCharacter.GetComponentInChildren<CharacterControls>();
+        //if (cc != null)
+        //{
+        //  //  cc.playerControler = GamificationComponentData.instance.playerControllerNew;
+        //}
         if (avatarIndex == 2)
         {
             GameObject cloneObject = Instantiate(curObject);
@@ -282,18 +282,18 @@ public class BuildingDetect : MonoBehaviour
 
 
         //hide meshdata off character for FPS
-        if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
-        {
-            Transform[] transforms = gangsterCharacter.gameObject.GetComponentsInChildren<Transform>();
+        //if (GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        //{
+        //    Transform[] transforms = gangsterCharacter.gameObject.GetComponentsInChildren<Transform>();
 
-            foreach (Transform childTransform in transforms)
-            {
-                if (childTransform.gameObject.GetComponent<Renderer>())
-                {
-                    childTransform.gameObject.GetComponent<Renderer>().enabled = false;
-                }
-            }
-        }
+        //    foreach (Transform childTransform in transforms)
+        //    {
+        //        if (childTransform.gameObject.GetComponent<Renderer>())
+        //        {
+        //            childTransform.gameObject.GetComponent<Renderer>().enabled = false;
+        //        }
+        //    }
+        //}
         avatarChangeCoroutine = StartCoroutine(PlayerAvatarChange());
 
         GamificationComponentData.instance.isAvatarChanger = true;
@@ -312,8 +312,8 @@ public class BuildingDetect : MonoBehaviour
             cullingMode = this.GetComponent<Animator>().cullingMode;
         }
 
-        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
-            gangsterCharacter.SetActive(true);
+        //if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        //    gangsterCharacter.SetActive(true);
         yield return new WaitForSecondsRealtime(0.1f);
         this.GetComponent<Animator>().avatar = gangsterCharacter.GetComponentInChildren<Animator>().avatar;
         this.GetComponent<Animator>().cullingMode = gangsterCharacter.GetComponentInChildren<Animator>().cullingMode;
@@ -347,7 +347,7 @@ public class BuildingDetect : MonoBehaviour
                 Destroy(gangsterCharacter);
                 Delayed.Function(() =>
                 {
-                    _playerControllerNew.sprintSpeed = defaultSprintSpeed;
+                    //_playerControllerNew.sprintSpeed = defaultSprintSpeed;
                 }, 0.5f);
             }
             BuilderEventManager.OnAvatarChangeComponentTriggerEnter?.Invoke(0);
@@ -362,28 +362,28 @@ public class BuildingDetect : MonoBehaviour
         else if (gangsterCharacter != null)
             gangsterCharacter.SetActive(true);
 
-        if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
-        {
-            if (playerHair)
-                playerHair.enabled = state;
-            if (playerBody)
-                playerBody.enabled = state;
-            if (playerHead)
-                playerHead.enabled = state;
-            if (playerPants)
-                playerPants.enabled = state;
-            if (playerShirt)
-                playerShirt.enabled = state;
-            if (playerShoes)
-                playerShoes.enabled = state;
-            if (playerEyebrow != null)
-            {
-                foreach (var eyeBrow in playerEyebrow)
-                {
-                    eyeBrow.enabled = state;
-                }
-            }
-        }
+        //if (!GamificationComponentData.instance.playerControllerNew.isFirstPerson)
+        //{
+        //    if (playerHair)
+        //        playerHair.enabled = state;
+        //    if (playerBody)
+        //        playerBody.enabled = state;
+        //    if (playerHead)
+        //        playerHead.enabled = state;
+        //    if (playerPants)
+        //        playerPants.enabled = state;
+        //    if (playerShirt)
+        //        playerShirt.enabled = state;
+        //    if (playerShoes)
+        //        playerShoes.enabled = state;
+        //    if (playerEyebrow != null)
+        //    {
+        //        foreach (var eyeBrow in playerEyebrow)
+        //        {
+        //            eyeBrow.enabled = state;
+        //        }
+        //    }
+        //}
     }
     #endregion
 
@@ -391,7 +391,7 @@ public class BuildingDetect : MonoBehaviour
 
     IEnumerator SIpowerUpCoroutine;
     GameObject _specialEffects;
-    PlayerController _playerControllerNew;
+    //PlayerController _playerControllerNew;
     public static bool canRunCo = false;
     //public TextMeshProUGUI _remainingText;
     float _timer;
@@ -441,13 +441,13 @@ public class BuildingDetect : MonoBehaviour
         //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect(true);
         powerUpCurTime = 0;
-        _playerControllerNew.specialItem = true;
+        //_playerControllerNew.specialItem = true;
 
         while (canRunCo && !_timer.Equals(0))//&&powerUpCurTime < powerUpTime)
         {
             _timer -= Time.deltaTime;
             _timer = Mathf.Clamp(_timer, 0, Mathf.Infinity);
-            _playerControllerNew.movementSpeed = powerProviderSpeed;
+            //_playerControllerNew.movementSpeed = powerProviderSpeed;
             yield return null;
         }
         StopSpecialItemComponent();
@@ -484,8 +484,8 @@ public class BuildingDetect : MonoBehaviour
             ApplySuperMarioEffect(false);
             _specialEffects = null;
         }
-        _playerControllerNew.specialItem = false;
-        _playerControllerNew.movementSpeed = defaultMoveSpeed;
+        //_playerControllerNew.specialItem = false;
+        //_playerControllerNew.movementSpeed = defaultMoveSpeed;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(defaultJumpHeight, defaultSprintSpeed);
     }
     #endregion
@@ -557,8 +557,8 @@ public class BuildingDetect : MonoBehaviour
         StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
-        cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
-        if (cameraAnimator == null) cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
+        //cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();
+        //if (cameraAnimator == null) cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.AddComponent<Animator>();
         cameraAnimator.runtimeAnimatorController = cameraEffect;
         StartCoroutine(WaitForEffect());
     }

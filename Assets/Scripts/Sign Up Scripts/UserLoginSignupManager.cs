@@ -13,7 +13,6 @@ using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-using SuperStar.Helpers;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -1962,72 +1961,72 @@ public class UserLoginSignupManager : MonoBehaviour
         SetProfileAvatarTempFilename = "";
         //setGroupFromCamera = false;
 
-        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
-        {
-            if (path != null)
-            {
-                if (PickImageOptionScreen.activeSelf)//false meadia option screen.
-                {
-                    PickImageOptionScreen.SetActive(false);
+        //NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        //{
+        //    if (path != null)
+        //    {
+        //        if (PickImageOptionScreen.activeSelf)//false meadia option screen.
+        //        {
+        //            PickImageOptionScreen.SetActive(false);
                   
-                }
+        //        }
 
-                // Create Texture from selected image
-                Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize, false);
-                if (texture == null)
-                {
-                    Debug.Log("Couldn't load texture from " + path);
-                    return;
-                }
+        //        // Create Texture from selected image
+        //        Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize, false);
+        //        if (texture == null)
+        //        {
+        //            Debug.Log("Couldn't load texture from " + path);
+        //            return;
+        //        }
 
-                //setGroupTempAvatarTexture = texture;
+        //        //setGroupTempAvatarTexture = texture;
 
-                Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
+        //        Debug.Log("OnPickGroupAvatarFromGellery path: " + path);
 
-                //string[] pathArry = path.Split('/');
+        //        //string[] pathArry = path.Split('/');
 
-                //string fileName = pathArry[pathArry.Length - 1];
-                string fileName = Path.GetFileName(path);
-                Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
+        //        //string fileName = pathArry[pathArry.Length - 1];
+        //        string fileName = Path.GetFileName(path);
+        //        Debug.Log("OnPickGroupAvatarFromGellery FileName: " + fileName);
 
-                string[] fileNameArray = fileName.Split('.');
-                string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
-                fileName = fileNameArray[0] + str + fileNameArray[1];
+        //        string[] fileNameArray = fileName.Split('.');
+        //        string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
+        //        fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                SetProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
-                SetProfileAvatarTempFilename = fileName;
+        //        SetProfileAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
+        //        SetProfileAvatarTempFilename = fileName;
 
-                CropProfilePic(texture, SetProfileAvatarTempPath);
+        //        CropProfilePic(texture, SetProfileAvatarTempPath);
 
-            }
-        });
+        //    }
+        //});
 
-        if (permission != NativeGallery.Permission.Granted)
-        {
-            using (var unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-            using (AndroidJavaObject currentActivityObject = unityClass.GetStatic<AndroidJavaObject>("currentActivity"))
-            {
-                string packageName = currentActivityObject.Call<string>("getPackageName");
+        //if (permission != NativeGallery.Permission.Granted)
+        //{
+        //    using (var unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+        //    using (AndroidJavaObject currentActivityObject = unityClass.GetStatic<AndroidJavaObject>("currentActivity"))
+        //    {
+        //        string packageName = currentActivityObject.Call<string>("getPackageName");
 
-                using (var uriClass = new AndroidJavaClass("android.net.Uri"))
-                using (AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromParts", "package", packageName, null))
-                using (var intentObject = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS", uriObject))
-                {
-                    intentObject.Call<AndroidJavaObject>("addCategory", "android.intent.category.DEFAULT");
-                    intentObject.Call<AndroidJavaObject>("setFlags", 0x10000000);
-                    currentActivityObject.Call("startActivity", intentObject);
-                }
-            }
-        }
-        Debug.Log("Permission result: " + permission);
+        //        using (var uriClass = new AndroidJavaClass("android.net.Uri"))
+        //        using (AndroidJavaObject uriObject = uriClass.CallStatic<AndroidJavaObject>("fromParts", "package", packageName, null))
+        //        using (var intentObject = new AndroidJavaObject("android.content.Intent", "android.settings.APPLICATION_DETAILS_SETTINGS", uriObject))
+        //        {
+        //            intentObject.Call<AndroidJavaObject>("addCategory", "android.intent.category.DEFAULT");
+        //            intentObject.Call<AndroidJavaObject>("setFlags", 0x10000000);
+        //            currentActivityObject.Call("startActivity", intentObject);
+        //        }
+        //    }
+        //}
+        //Debug.Log("Permission result: " + permission);
 #endif
     }
 
     public void CropProfilePic(Texture2D LoadedTexture, string path)
     {
         // If image cropper is already open, do nothing
-        if (ImageCropper.Instance.IsOpen)
-            return;
+        //if (ImageCropper.Instance.IsOpen)
+        //    return;
 
         StartCoroutine(_setImageProfilePicCropper(LoadedTexture, path));
 
@@ -2043,54 +2042,54 @@ public class UserLoginSignupManager : MonoBehaviour
 
         float minAspectRatio = 1, maxAspectRatio = 1;
 
-        ImageCropper.Instance.Show(screenshot, (bool result, Texture originalImage, Texture2D croppedImage) =>
-        {
-            // If screenshot was cropped successfully
-            if (result)
-            {
-                Sprite s = Sprite.Create(croppedImage, new Rect(0, 0, croppedImage.width, croppedImage.height), new Vector2(0, 0), 1);
-                EditProfileImage.sprite = s;
+        //ImageCropper.Instance.Show(screenshot, (bool result, Texture originalImage, Texture2D croppedImage) =>
+        //{
+        //    // If screenshot was cropped successfully
+        //    if (result)
+        //    {
+        //        Sprite s = Sprite.Create(croppedImage, new Rect(0, 0, croppedImage.width, croppedImage.height), new Vector2(0, 0), 1);
+        //        EditProfileImage.sprite = s;
 
-                try
-                {
-                    byte[] bytes = croppedImage.EncodeToPNG();
-                    File.WriteAllBytes(path, bytes);
-                    Debug.Log("File SAVE");
-                }
-                catch (Exception e)
-                {
-                    Debug.Log(e);
-                }
-            }
-            else
-            {
-                //Debug.Log("--------Image not cropped");
-                SetProfileAvatarTempPath = "";
-                //croppedImageHolder.enabled = false;
-                //croppedImageSize.enabled = false;
-            }
-            // Destroy the screenshot as we no longer need it in this case
-            Destroy(screenshot);
-            Resources.UnloadUnusedAssets();
-            Caching.ClearCache();
+        //        try
+        //        {
+        //            byte[] bytes = croppedImage.EncodeToPNG();
+        //            File.WriteAllBytes(path, bytes);
+        //            Debug.Log("File SAVE");
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Debug.Log(e);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        //Debug.Log("--------Image not cropped");
+        //        SetProfileAvatarTempPath = "";
+        //        //croppedImageHolder.enabled = false;
+        //        //croppedImageSize.enabled = false;
+        //    }
+        //    // Destroy the screenshot as we no longer need it in this case
+        //    Destroy(screenshot);
+        //    Resources.UnloadUnusedAssets();
+        //    Caching.ClearCache();
            
         
-        },
-        settings: new ImageCropper.Settings()
-        {
-            ovalSelection = ovalSelection,
-            autoZoomEnabled = autoZoom,
-            imageBackground = Color.clear, // transparent background
-            selectionMinAspectRatio = minAspectRatio,
-            selectionMaxAspectRatio = maxAspectRatio,
-            markTextureNonReadable = false
-        },
-        croppedImageResizePolicy: (ref int width, ref int height) =>
-        {
-            // uncomment lines below to save cropped image at half resolution
+        //},
+        //settings: new ImageCropper.Settings()
+        //{
+        //    ovalSelection = ovalSelection,
+        //    autoZoomEnabled = autoZoom,
+        //    imageBackground = Color.clear, // transparent background
+        //    selectionMinAspectRatio = minAspectRatio,
+        //    selectionMaxAspectRatio = maxAspectRatio,
+        //    markTextureNonReadable = false
+        //},
+        //croppedImageResizePolicy: (ref int width, ref int height) =>
+        //{
+        //    // uncomment lines below to save cropped image at half resolution
             //width /= 2;
             //height /= 2;
-        });
+        //});
     }
 
    public IEnumerator EditProfilePic()

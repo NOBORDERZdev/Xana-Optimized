@@ -229,7 +229,7 @@ public class XANAPartyCameraController : MonoBehaviour
 
        // gyroCheck = CanvusHandler.canvusHandlerInstance.isGyro;
         delta = Vector2.zero;
-        if (/*!gyroCheck && */PlayerSelfieController.Instance.disablecamera && Input.touchCount > 0
+        if (/*!gyroCheck && *//*PlayerSelfieController.Instance.disablecamera && */Input.touchCount > 0
            /* && !playerController.sprint*/)
         {
             if (!isJoystickPressed)

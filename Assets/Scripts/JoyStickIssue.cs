@@ -15,19 +15,19 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
 
         RectTransformUtility.ScreenPointToLocalPointInRectangle(transform.parent.GetComponentInParent<RectTransform>(), eventData.position, eventData.pressEventCamera, out m_PointerDownPos);
 
-        PlayerController.isJoystickDragging = true;
-        PlayerCameraController.instance.isJoystickPressed = true;
+        //PlayerController.isJoystickDragging = true;
+        //PlayerCameraController.instance.isJoystickPressed = true;
 
-        if (PlayerCameraController.instance._allowSyncedControl)
-            PlayerCameraController.instance.isRotatingScreen = true;
-        else if (!PlayerCameraController.instance._allowSyncedControl)
-        {
-            if (Input.touchCount > 1)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
-                    PlayerCameraController.instance.isRotatingScreen = true;
-            }
-        }
+        //if (PlayerCameraController.instance._allowSyncedControl)
+        //    PlayerCameraController.instance.isRotatingScreen = true;
+        //else if (!PlayerCameraController.instance._allowSyncedControl)
+        //{
+        //    if (Input.touchCount > 1)
+        //    {
+        //        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(1).fingerId))
+        //            PlayerCameraController.instance.isRotatingScreen = true;
+        //    }
+        //}
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -43,7 +43,7 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
 
         var newPos = new Vector2(delta.x / movementRange, delta.y / movementRange);
         SendValueToControl(newPos);
-        PlayerController.isJoystickDragging = true;
+        //PlayerController.isJoystickDragging = true;
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -51,9 +51,9 @@ public class JoyStickIssue : OnScreenControl, IPointerDownHandler, IPointerUpHan
         ((RectTransform)transform).anchoredPosition = m_StartPos;
         SendValueToControl(Vector2.zero);
 
-        PlayerController.isJoystickDragging = false;
-        PlayerCameraController.instance.isJoystickPressed = false;
-        PlayerCameraController.instance.isRotatingScreen = false;
+        //PlayerController.isJoystickDragging = false;
+        //PlayerCameraController.instance.isJoystickPressed = false;
+        //PlayerCameraController.instance.isRotatingScreen = false;
     }
     public void ResetJoyStick()
     {

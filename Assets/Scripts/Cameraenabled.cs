@@ -8,6 +8,6 @@ public class Cameraenabled : MonoBehaviour
    
     public void pressedenablecamera() {
 
-        PlayerCameraController.instance.AllowControl();
+        //PlayerCameraController.instance.AllowControl();
     }
 }

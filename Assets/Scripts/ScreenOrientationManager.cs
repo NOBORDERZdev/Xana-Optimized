@@ -143,7 +143,7 @@ public class ScreenOrientationManager : MonoBehaviour
             potraitObj[i].SetActive(isPotrait);
         }
 
-       ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
+       //ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
     }
 
     public void ChangeOrientation_editor()

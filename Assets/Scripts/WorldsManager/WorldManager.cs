@@ -8,7 +8,7 @@ using UnityEditor;
 using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using SuperStar.Helpers;
+//using SuperStar.Helpers;
 
 public class WorldManager : MonoBehaviour
 {

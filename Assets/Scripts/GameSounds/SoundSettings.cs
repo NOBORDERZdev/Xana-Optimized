@@ -319,19 +319,19 @@ public class SoundSettings : MonoBehaviour
         cameraSensitivitySliderPotrait.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
         cameraSensitivitySlider.value = PlayerPrefs.GetFloat(ConstantsGod.CAMERA_SENSITIVITY);
 
-        if (PlayerCameraController.instance)
-        {
-            if (cameraSensitivitySliderPotrait.value >= sensitivity)
-            {
-                PlayerCameraController.instance.lookSpeed = sensitivity;
-                PlayerCameraController.instance.lookSpeedd = sensitivity;
-            }
-            else
-            {
-                PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
-                PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
-            }
-        }
+        //if (PlayerCameraController.instance)
+        //{
+        //    if (cameraSensitivitySliderPotrait.value >= sensitivity)
+        //    {
+        //        PlayerCameraController.instance.lookSpeed = sensitivity;
+        //        PlayerCameraController.instance.lookSpeedd = sensitivity;
+        //    }
+        //    else
+        //    {
+        //        PlayerCameraController.instance.lookSpeed = cameraSensitivitySliderPotrait.value;
+        //        PlayerCameraController.instance.lookSpeedd = cameraSensitivitySliderPotrait.value;
+        //    }
+        //}
        
         
     }

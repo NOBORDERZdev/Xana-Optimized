@@ -167,13 +167,13 @@ public class XanaItem : MonoBehaviour
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
-        HelpButtonComponentData helpButtonComponentData = itemData.helpButtonComponentData;
-        if (helpButtonComponentData.IsActive)
-        {
-            HelpButtonComponent itemComponent = gameObject.AddComponent<HelpButtonComponent>();
-            itemComponent.Init(helpButtonComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //HelpButtonComponentData helpButtonComponentData = itemData.helpButtonComponentData;
+        //if (helpButtonComponentData.IsActive)
+        //{
+        //    HelpButtonComponent itemComponent = gameObject.AddComponent<HelpButtonComponent>();
+        //    itemComponent.Init(helpButtonComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
         DisplayMessageComponentData displayMessageComponentData = itemData.displayMessageComponentData;
         if (displayMessageComponentData.IsActive)
         {
@@ -188,24 +188,24 @@ public class XanaItem : MonoBehaviour
             itemComponent.Init(quizComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
-        DoorKeyComponentData doorKeyComponentData = itemData.doorKeyComponentData;
-        if (doorKeyComponentData.IsActive)
-        {
-            DoorKeyComponent itemComponent = gameObject.AddComponent<DoorKeyComponent>();
-            itemComponent.Init(doorKeyComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //DoorKeyComponentData doorKeyComponentData = itemData.doorKeyComponentData;
+        //if (doorKeyComponentData.IsActive)
+        //{
+        //    DoorKeyComponent itemComponent = gameObject.AddComponent<DoorKeyComponent>();
+        //    itemComponent.Init(doorKeyComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
 
-        WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
-        if (warpFunctionComponentData.IsActive)
-        {
-            if (warpFunctionComponentData.isWarpPortalStart || warpFunctionComponentData.isWarpPortalEnd)
-            {
-                WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
-                itemComponent.Init(warpFunctionComponentData);
-                BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-            }
-        }
+        //WarpFunctionComponentData warpFunctionComponentData = itemData.warpFunctionComponentData;
+        //if (warpFunctionComponentData.IsActive)
+        //{
+        //    if (warpFunctionComponentData.isWarpPortalStart || warpFunctionComponentData.isWarpPortalEnd)
+        //    {
+        //        WarpFunctionComponent itemComponent = gameObject.AddComponent<WarpFunctionComponent>();
+        //        itemComponent.Init(warpFunctionComponentData);
+        //        BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //    }
+        //}
 
         SpecialItemComponentData specialItemComponentData = itemData.speicalItemComponentData;
         if (specialItemComponentData.IsActive)
@@ -215,29 +215,29 @@ public class XanaItem : MonoBehaviour
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
-        BlindfoldedDisplayComponentData blindfoldedDisplayComponentData = itemData.blindfoldedDisplayComponentData;
-        if (blindfoldedDisplayComponentData.IsActive)
-        {
-            BlindfoldedDisplayComponent itemComponent = gameObject.AddComponent<BlindfoldedDisplayComponent>();
-            itemComponent.Init(blindfoldedDisplayComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //BlindfoldedDisplayComponentData blindfoldedDisplayComponentData = itemData.blindfoldedDisplayComponentData;
+        //if (blindfoldedDisplayComponentData.IsActive)
+        //{
+        //    BlindfoldedDisplayComponent itemComponent = gameObject.AddComponent<BlindfoldedDisplayComponent>();
+        //    itemComponent.Init(blindfoldedDisplayComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
 
         NinjaComponentData ninjaComponentData = itemData.ninjaComponentData;
-        if (ninjaComponentData.IsActive)
-        {
-            NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
-            itemComponent.Init(ninjaComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //if (ninjaComponentData.IsActive)
+        //{
+        //    NinjaComponent itemComponent = gameObject.AddComponent<NinjaComponent>();
+        //    itemComponent.Init(ninjaComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
 
-        ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
-        if (throwThingsComponentData.IsActive)
-        {
-            ThrowThingsComponent itemComponent = gameObject.AddComponent<ThrowThingsComponent>();
-            itemComponent.Init(throwThingsComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //ThrowThingsComponentData throwThingsComponentData = itemData.throwThingsComponentData;
+        //if (throwThingsComponentData.IsActive)
+        //{
+        //    ThrowThingsComponent itemComponent = gameObject.AddComponent<ThrowThingsComponent>();
+        //    itemComponent.Init(throwThingsComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
 
         AudioComponentData audioComponentData = itemData.audioComponentData;
         if (audioComponentData.IsActive)
@@ -264,13 +264,13 @@ public class XanaItem : MonoBehaviour
             itemComponent.InitAvatarChanger(avatarChangerComponentData);
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
-        BlindComponentData blindComponentData = itemData.blindComponentData;
-        if (blindComponentData.IsActive)
-        {
-            BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
-            itemComponent.Init(blindComponentData);
-            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
-        }
+        //BlindComponentData blindComponentData = itemData.blindComponentData;
+        //if (blindComponentData.IsActive)
+        //{
+        //    BlindComponent itemComponent = gameObject.AddComponent<BlindComponent>();
+        //    itemComponent.Init(blindComponentData);
+        //    BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        //}
 
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);

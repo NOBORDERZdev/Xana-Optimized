@@ -69,7 +69,7 @@ public class ChracterPosition : MonoBehaviour
 
     IEnumerator DelayInEnterRoom()
     {
-        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+        //ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
         yield return StartCoroutine(LoadingHandler.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
@@ -112,7 +112,7 @@ public class ChracterPosition : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         ReferencesForGamePlay.instance.MainPlayerParent.transform.position = tempSpawn;
         yield return StartCoroutine(LoadingHandler.Instance.FadeOut());
-        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+     //   ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);
     }
@@ -120,7 +120,7 @@ public class ChracterPosition : MonoBehaviour
 
     IEnumerator DelayForOutSide()
     {
-        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+       // ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
         yield return StartCoroutine(LoadingHandler.Instance.FadeIn());
         Object_to_open.SetActive(true);
         currSpwanPos = Object_to_open.name;
@@ -151,7 +151,7 @@ public class ChracterPosition : MonoBehaviour
         ReferencesForGamePlay.instance.MainPlayerParent.transform.position = spawnPos;
         GameplayEntityLoader.instance.SetAxis();
         yield return StartCoroutine(LoadingHandler.Instance.FadeOut());
-        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+        //ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
         isAlreadyRunning = true;
         Object_to_close.SetActive(false);
     }

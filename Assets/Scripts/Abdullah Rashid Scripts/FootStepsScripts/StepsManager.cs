@@ -27,46 +27,46 @@ public class StepsManager : MonoBehaviour
             Ray ray = new Ray(gameObject.transform.position, Vector3.down);
             if (Physics.Raycast(ray, out RaycastHit footRay, distance))
             {
-                float actualSpeed = ReferencesForGamePlay.instance.playerControllerNew.animationBlendValue;
+                //float actualSpeed = ReferencesForGamePlay.instance.playerControllerNew.animationBlendValue;
 
-                if (GetMovementState(targetWalkSpeed) == GetMovementState(actualSpeed))
-                {
-                    if (StepAudio && ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
-                    {
-                        //Debug.LogError(footRay.collider.name+" ==> "+ footRay.collider.tag);
-                        switch (footRay.collider.tag)
-                        {
+                //if (GetMovementState(targetWalkSpeed) == GetMovementState(actualSpeed))
+                //{
+                //    if (StepAudio && ReferencesForGamePlay.instance.playerControllerNew._IsGrounded)
+                //    {
+                //        //Debug.LogError(footRay.collider.name+" ==> "+ footRay.collider.tag);
+                //        switch (footRay.collider.tag)
+                //        {
 
-                            case "Footsteps/sand":
-                                StepAudio.PlayOneShot(sandclips[UnityEngine.Random.Range(0, sandclips.Length - 1)]);
-                                break;
-                            case "Footsteps/stone":
-                                StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
-                                break;
-                            case "Footsteps/water":
-                                StepAudio.PlayOneShot(waterClips[UnityEngine.Random.Range(0, waterClips.Length - 1)]);
-                                break;
-                            case "Footsteps/metal":
-                                StepAudio.PlayOneShot(metalClips[UnityEngine.Random.Range(0, metalClips.Length - 1)]);
-                                break;
-                            case "Footsteps/snow":
-                                StepAudio.PlayOneShot(snowClips[UnityEngine.Random.Range(0, snowClips.Length - 1)]);
-                                break;
-                            case "Footsteps/wet":
-                                StepAudio.PlayOneShot(wetClips[UnityEngine.Random.Range(0, wetClips.Length - 1)]);
-                                break;
-                            case "Footsteps/floor":
-                                StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
-                                break;
-                            case "Footsteps/grass":
-                                StepAudio.PlayOneShot(grassClips[UnityEngine.Random.Range(0, grassClips.Length - 1)]);
-                                break;
-                            default:
-                                StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
-                                break;
-                        }
-                    }
-                }
+                //            case "Footsteps/sand":
+                //                StepAudio.PlayOneShot(sandclips[UnityEngine.Random.Range(0, sandclips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/stone":
+                //                StepAudio.PlayOneShot(stoneClips[UnityEngine.Random.Range(0, stoneClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/water":
+                //                StepAudio.PlayOneShot(waterClips[UnityEngine.Random.Range(0, waterClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/metal":
+                //                StepAudio.PlayOneShot(metalClips[UnityEngine.Random.Range(0, metalClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/snow":
+                //                StepAudio.PlayOneShot(snowClips[UnityEngine.Random.Range(0, snowClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/wet":
+                //                StepAudio.PlayOneShot(wetClips[UnityEngine.Random.Range(0, wetClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/floor":
+                //                StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                //                break;
+                //            case "Footsteps/grass":
+                //                StepAudio.PlayOneShot(grassClips[UnityEngine.Random.Range(0, grassClips.Length - 1)]);
+                //                break;
+                //            default:
+                //                StepAudio.PlayOneShot(floorClips[UnityEngine.Random.Range(0, floorClips.Length - 1)]);
+                //                break;
+                //        }
+                //    }
+                //}
 
             }
 

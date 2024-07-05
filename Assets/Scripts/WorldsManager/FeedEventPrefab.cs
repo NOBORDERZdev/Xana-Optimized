@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Newtonsoft.Json;
-using SuperStar.Helpers;
+//using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
 public class FeedEventPrefab : MonoBehaviour
@@ -255,23 +255,23 @@ public class FeedEventPrefab : MonoBehaviour
         LoadFileAgain:
             if (isOnScreen && isNotLoaded)
             {
-                if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
-                {
-                    if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
-                    {
-                        isNotLoaded = false;
-                        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f,0.5f));
-                        AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
-                    }
-                }
-                if (!string.IsNullOrEmpty(userAvatarURL) && userProfile.gameObject.activeInHierarchy)
-                {
-                    if (AssetCache.Instance.HasFile(userAvatarURL))
-                    {
-                        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
-                        AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
-                    }
-                }
+                //if (!string.IsNullOrEmpty(m_ThumbnailDownloadURL))
+                //{
+                //    if (AssetCache.Instance.HasFile(m_ThumbnailDownloadURL))
+                //    {
+                //        isNotLoaded = false;
+                //        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f,0.5f));
+                //        AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
+                //    }
+                //}
+                //if (!string.IsNullOrEmpty(userAvatarURL) && userProfile.gameObject.activeInHierarchy)
+                //{
+                //    if (AssetCache.Instance.HasFile(userAvatarURL))
+                //    {
+                //        yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
+                //        AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
+                //    }
+                //}
             }
             else if (!isOnScreen && worldIcon.sprite && !isNotLoaded)
             {
@@ -279,7 +279,7 @@ public class FeedEventPrefab : MonoBehaviour
                 isReleaseFromMemoryOrNot = true;
                 isNotLoaded = true;
                 yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.5f));
-                AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
+                //AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
                 worldIcon.sprite = null;
                 worldIcon.sprite = dummyThumbnail;
                // WorldManager.instance.ResourcesUnloadAssetFile();//UnloadUnusedAssets file call every 15 items.......
@@ -301,14 +301,14 @@ public class FeedEventPrefab : MonoBehaviour
     public IEnumerator DownloadAndLoadFeed()
     {
         yield return new WaitForSeconds(UnityEngine.Random.Range(0.1f, 0.6f)); 
-        AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
-        {
-            if (success)
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
-                isImageSuccessDownloadAndSave = true;
-            }
-        });
+        //AssetCache.Instance.EnqueueOneResAndWait(m_ThumbnailDownloadURL, m_ThumbnailDownloadURL, (success) =>
+        //{
+        //    if (success)
+        //    {
+        //        AssetCache.Instance.LoadSpriteIntoImage(worldIcon, m_ThumbnailDownloadURL, changeAspectRatio: true);
+        //        isImageSuccessDownloadAndSave = true;
+        //    }
+        //});
     }
     IEnumerator UpdateUserProfile()
     {
@@ -316,28 +316,28 @@ public class FeedEventPrefab : MonoBehaviour
 
         if (!string.IsNullOrEmpty(userAvatarURL))
         {
-            if (AssetCache.Instance.HasFile(userAvatarURL))
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(userAvatarURL, userAvatarURL, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
-                        //isImageSuccessDownloadAndSave = true;
-                    }
-                });
-            }
+            //if (AssetCache.Instance.HasFile(userAvatarURL))
+            //{
+            //    AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
+            //}
+            //else
+            //{
+            //    AssetCache.Instance.EnqueueOneResAndWait(userAvatarURL, userAvatarURL, (success) =>
+            //    {
+            //        if (success)
+            //        {
+            //            AssetCache.Instance.LoadSpriteIntoImage(userProfile, userAvatarURL, changeAspectRatio: true);
+            //            //isImageSuccessDownloadAndSave = true;
+            //        }
+            //    });
+            //}
         }
 
     }
     private void OnDisable()
     {
 
-        AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
+        //AssetCache.Instance.RemoveFromMemory(m_ThumbnailDownloadURL, true);
         //if (!string.IsNullOrEmpty(userAvatarURL))
         //{
         //    AssetCache.Instance.RemoveFromMemory(userAvatarURL, true);

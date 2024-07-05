@@ -1,6 +1,5 @@
 using DG.Tweening;
 using Photon.Voice.Unity.Demos;
-using SuperStar.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -279,25 +278,25 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         yield return null;
         if (!string.IsNullOrEmpty(downloadURL))
         {
-            if (AssetCache.Instance.HasFile(downloadURL))
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
-                PreviewLogo.gameObject.SetActive(false);
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(downloadURL, downloadURL, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
-                        if (imageHolder.Equals(WorldIconImg))
-                        {
-                            PreviewLogo.gameObject.SetActive(false);
-                        }
-                    }
-                });
-            }
+            //if (AssetCache.Instance.HasFile(downloadURL))
+            //{
+            //    AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+            //    PreviewLogo.gameObject.SetActive(false);
+            //}
+            //else
+            //{
+            //    AssetCache.Instance.EnqueueOneResAndWait(downloadURL, downloadURL, (success) =>
+            //    {
+            //        if (success)
+            //        {
+            //            AssetCache.Instance.LoadSpriteIntoImage(imageHolder, downloadURL, changeAspectRatio: true);
+            //            if (imageHolder.Equals(WorldIconImg))
+            //            {
+            //                PreviewLogo.gameObject.SetActive(false);
+            //            }
+            //        }
+            //    });
+            //}
 
         }
     }

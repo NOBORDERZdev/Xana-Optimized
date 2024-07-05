@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Threading.Tasks;
 using UnityEngine.Video;
-using SuperStar.Helpers;
 using UnityEngine.SocialPlatforms.Impl;
 
 public class DisplayImage : MonoBehaviour
@@ -85,26 +84,26 @@ public class DisplayImage : MonoBehaviour
             Destroy(videoPlayer);
             // return null;
         }
-        else
-        {
-            if (AssetCache.Instance.HasFile(url))
-            {
-                await Task.Delay(Random.Range(100, 500));
-                AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
-                ResizeImage();
-            }
-            else
-            {
-                AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
-                        ResizeImage();
-                    }
-                });
-            }
-        }
+        //else
+        //{
+        //    if (AssetCache.Instance.HasFile(url))
+        //    {
+        //        await Task.Delay(Random.Range(100, 500));
+        //        AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
+        //        ResizeImage();
+        //    }
+        //    else
+        //    {
+        //        AssetCache.Instance.EnqueueOneResAndWait(url, url, (success) =>
+        //        {
+        //            if (success)
+        //            {
+        //                AssetCache.Instance.LoadSpriteIntoImage(imageComponent, url, changeAspectRatio: false);
+        //                ResizeImage();
+        //            }
+        //        });
+        //    }
+        
         return null;
     }
 

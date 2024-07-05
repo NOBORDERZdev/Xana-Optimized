@@ -37,7 +37,7 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
             yield return new WaitForSeconds(0.5f);
             AvatarController ac = playerObj.GetComponent<AvatarController>();
             CharacterBodyParts charcterBodyParts = playerObj.GetComponent<CharacterBodyParts>();
-            IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
+            //IKMuseum iKMuseum = playerObj.GetComponent<IKMuseum>();
             if (ac.wornHair)
                 playerHair = ac.wornHair.GetComponent<SkinnedMeshRenderer>();
             if (ac.wornPant)
@@ -58,8 +58,8 @@ public class BlindFoldedDisplayFootPrintAvatarSyncing : MonoBehaviourPun
             }
             playerBody = charcterBodyParts.body;
             playerHead = charcterBodyParts.head;
-            playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
-            playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
+            //playerFreeCamConsole = iKMuseum.ConsoleObj.GetComponent<MeshRenderer>();
+            //playerFreeCamConsoleOther = iKMuseum.m_ConsoleObjOther.GetComponent<MeshRenderer>();
 
             this.transform.SetParent(playerShoes.transform);
             this.transform.localPosition = Vector3.up * 0.0207f;

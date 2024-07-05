@@ -15,13 +15,13 @@ public class AskForJoining : MonoBehaviour
     // Start is called before the first frame update
 
     AsyncOperation asyncLoading;
-    private PlayerCameraController[] _cameraLooks;
+    //private PlayerCameraController[] _cameraLooks;
 
 
 
     private void Awake()
     {
-        _cameraLooks = FindObjectsOfType<PlayerCameraController>();
+        //_cameraLooks = FindObjectsOfType<PlayerCameraController>();
 
     }
 
@@ -64,7 +64,7 @@ public class AskForJoining : MonoBehaviour
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
             LoadMain();
-            TurnCameras(true);
+            //TurnCameras(true);
             try
             {
                 ChracterPosition.currSpwanPos = "";
@@ -105,23 +105,23 @@ public class AskForJoining : MonoBehaviour
             MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
             AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
-            TurnCameras(true);
+            //TurnCameras(true);
             Destroy(this.gameObject);
 
         }
     }
 
 
-    private void TurnCameras(bool active)
-    {
-        if (active)
-        {
-            PlayerCameraController.instance.AllowControl();
-        }
-        else
-        {
-            PlayerCameraController.instance.DisAllowControl();
-        }
-    }
+    //private void TurnCameras(bool active)
+    //{
+    //    if (active)
+    //    {
+    //        PlayerCameraController.instance.AllowControl();
+    //    }
+    //    else
+    //    {
+    //        PlayerCameraController.instance.DisAllowControl();
+    //    }
+    //}
 }
 

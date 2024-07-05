@@ -1,4 +1,3 @@
-using SoftMasking.Extensions;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -155,7 +155,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     //Help Button Component
     public GameObject HelpButtonParentUI;
-    public HelpButtonComponentResizer helpButtonComponentResizer;
+    //public HelpButtonComponentResizer helpButtonComponentResizer;
     public TextMeshProUGUI HelpButtonTitleText;
     public TextMeshProUGUI HelpText;
     public ScrollRect helpButtonScroll;
@@ -487,8 +487,8 @@ public class GamificationComponentUIManager : MonoBehaviour
     public void EnableHelpButtonUI(string helpButtonTitle, string HelpTexts, GameObject obj)
     {
         DisableAllComponentUIObject(Constants.ItemComponentType.HelpButtonComponent);
-        helpButtonComponentResizer.target = obj.transform;
-        helpButtonComponentResizer.isAlwaysOn = false;
+        //helpButtonComponentResizer.target = obj.transform;
+        //helpButtonComponentResizer.isAlwaysOn = false;
         HelpButtonTitleText.text = helpButtonTitle;
         HelpText.text = "";
         //if (HelpTexts.Length == 0)
@@ -499,20 +499,20 @@ public class GamificationComponentUIManager : MonoBehaviour
         //{
         //    HelpText.text = HelpTexts + "\n";
         //}
-        helpButtonComponentResizer.titleText.text = HelpButtonTitleText.text;
-        if (defaultFont)
-        {
-            HelpButtonTitleText.font = defaultFont;
-            helpButtonComponentResizer.titleText.font = defaultFont;
-        }
-        //helpButtonComponentResizer.contentText.text = HelpText.text;
-        helpButtonComponentResizer.msg = HelpTexts.Length == 0 ? "Define Rules here !" : HelpTexts + "\n";
-        HelpButtonParentUI.SetActive(true);
-        helpButtonComponentResizer.Init();
+        //helpButtonComponentResizer.titleText.text = HelpButtonTitleText.text;
+        //if (defaultFont)
+        //{
+        //    HelpButtonTitleText.font = defaultFont;
+        //    helpButtonComponentResizer.titleText.font = defaultFont;
+        //}
+        ////helpButtonComponentResizer.contentText.text = HelpText.text;
+        //helpButtonComponentResizer.msg = HelpTexts.Length == 0 ? "Define Rules here !" : HelpTexts + "\n";
+        //HelpButtonParentUI.SetActive(true);
+        //helpButtonComponentResizer.Init();
     }
     public void DisableHelpButtonUI()
     {
-        helpButtonComponentResizer.target = null;
+        //helpButtonComponentResizer.target = null;
         HelpButtonParentUI.SetActive(false);
         HelpText.text = "";
     }

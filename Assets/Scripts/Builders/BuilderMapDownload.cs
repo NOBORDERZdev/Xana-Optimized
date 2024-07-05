@@ -608,8 +608,8 @@ public class BuilderMapDownload : MonoBehaviour
             SetLensFlareData(null, 1, 1);
         GamificationComponentData.instance.isSkyLoaded = true;
         directionalLight.gameObject.SetActive(true);
-        if(TimeStats.playerCanvas)
-        RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
+        //if(TimeStats.playerCanvas)
+        //RenderSettings.ambientLight = TimeStats.playerCanvas.oldAmbientColorBlind;
         DynamicGI.UpdateEnvironment();
     }
 
@@ -734,13 +734,13 @@ public class BuilderMapDownload : MonoBehaviour
         CapsuleCollider capsuleCollider_34 = GamificationComponentData.instance.buildingDetect.GetComponent<CapsuleCollider>();
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
-        CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up * 0.498f;
-        mainPlayerCharacterController.height = 1f;
-        mainPlayerCharacterController.radius = 0.15f;
-        mainPlayerCharacterController.stepOffset = 1f;
-        CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
-        mainPlayerCollider.center = Vector3.up * 0.5f;
+      //  CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
+        //mainPlayerCharacterController.center = Vector3.up * 0.498f;
+        //mainPlayerCharacterController.height = 1f;
+        //mainPlayerCharacterController.radius = 0.15f;
+        //mainPlayerCharacterController.stepOffset = 1f;
+       // CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
+        //mainPlayerCollider.center = Vector3.up * 0.5f;
 
         //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
         capsuleCollider_34.height = 1.5f;

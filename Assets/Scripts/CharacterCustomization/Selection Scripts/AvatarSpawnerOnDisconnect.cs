@@ -79,20 +79,20 @@ namespace Metaverse
 
         private void OffSelfie()
         {
-            if(PlayerSelfieController.Instance)
-                PlayerSelfieController.Instance.SwitchFromSelfieControl();
+            //if(PlayerSelfieController.Instance)
+            //    PlayerSelfieController.Instance.SwitchFromSelfieControl();
         }
 
         private void TurnCameras(bool active)
         {
-            if (active)
-            {
-                PlayerCameraController.instance.AllowControl();
-            }
-            else
-            {
-                PlayerCameraController.instance.DisAllowControl();
-            }
+            //if (active)
+            //{
+            //    PlayerCameraController.instance.AllowControl();
+            //}
+            //else
+            //{
+            //    PlayerCameraController.instance.DisAllowControl();
+            //}
         }
 
         RoomOptions roomOptions;

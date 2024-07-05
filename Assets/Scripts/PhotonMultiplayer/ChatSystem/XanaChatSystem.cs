@@ -15,7 +15,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 //using SimpleJSON;
-using Crosstales.BWF;
+//using Crosstales.BWF;
 
 #endif
 
@@ -257,17 +257,17 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
-       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+       //string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
 
 
-        print("Bad word !!" + removeBadWords);
+       // print("Bad word !!" + removeBadWords);
          
         if (/*!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option")*/ false)
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             this.InputFieldChat.text = "";
-            removeBadWords = "";
+           // removeBadWords = "";
             return;
         }
         else
@@ -275,16 +275,16 @@ public class XanaChatSystem : MonoBehaviour
             print("Horayyy you have Access");
         }
 
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
+     //   PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
+       // ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
       //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
-        removeBadWords = "";
+     //   removeBadWords = "";
     }
 
     public void OnClickSend()

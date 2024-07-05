@@ -1,4 +1,4 @@
-﻿using SuperStar.Helpers;
+﻿//using SuperStar.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -435,27 +435,27 @@ public class ItemDetail : MonoBehaviour
         {
             if (!completedCoroutine)
             {
-                AssetCache.Instance.EnqueueOneResAndWait(iconLink, iconLink, (success) =>
-                {
-                    if (success)
-                    {
-                        AssetCache.Instance.LoadSpriteIntoImage(_iconImg, iconLink, changeAspectRatio: true);
-                        // CheckAndSetResolutionOfImage(imgFeed.sprite);
-                        //  isImageSuccessDownloadAndSave = true;
-                        if (_iconImg != null)
-                        {
-                            // While Downloading User change the tab destroing objects make its null
-                            _iconImg.gameObject.SetActive(true);
-                            loadingSpriteImage.SetActive(false);
-                        }
-                        completedCoroutine = true;
-                        enableUpdate = false;
-                    }
-                    else
-                    {
-                        ////Debug.LogError("Download Failed");
-                    }
-                });
+                //AssetCache.Instance.EnqueueOneResAndWait(iconLink, iconLink, (success) =>
+                //{
+                //    if (success)
+                //    {
+                //        AssetCache.Instance.LoadSpriteIntoImage(_iconImg, iconLink, changeAspectRatio: true);
+                //        // CheckAndSetResolutionOfImage(imgFeed.sprite);
+                //        //  isImageSuccessDownloadAndSave = true;
+                //        if (_iconImg != null)
+                //        {
+                //            // While Downloading User change the tab destroing objects make its null
+                //            _iconImg.gameObject.SetActive(true);
+                //            loadingSpriteImage.SetActive(false);
+                //        }
+                //        completedCoroutine = true;
+                //        enableUpdate = false;
+                //    }
+                //    else
+                //    {
+                //        ////Debug.LogError("Download Failed");
+                //    }
+                //});
 
 
                 //runningCoroutine = StartCoroutine(addsprite(_iconImg, iconLink));

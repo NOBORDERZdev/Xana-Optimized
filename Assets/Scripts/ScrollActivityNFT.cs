@@ -1,5 +1,4 @@
 using DG.Tweening;
-using SuperStar.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,19 +52,19 @@ public class ScrollActivityNFT : MonoBehaviour
     private void OnEnable()
     {
         // canUi.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;  
-        AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
-       {
-           if (success)
-           {
-               AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
-               // CheckAndSetResolutionOfImage(imgFeed.sprite);
-               //  isImageSuccessDownloadAndSave = true;
-           }
-           else
-           {
-               Debug.Log("Download Failed");
-           }
-       });
+       // AssetCache.Instance.EnqueueOneResAndWait(NFTURL, NFTURL, (success) =>
+       //{
+       //    if (success)
+       //    {
+       //        AssetCache.Instance.LoadSpriteIntoImage(NFTImage, NFTURL, changeAspectRatio: true);
+       //        // CheckAndSetResolutionOfImage(imgFeed.sprite);
+       //        //  isImageSuccessDownloadAndSave = true;
+       //    }
+       //    else
+       //    {
+       //        Debug.Log("Download Failed");
+       //    }
+       //});
         ScrollController.movementType = ScrollRect.MovementType.Elastic;
         lastindex = 1;
 

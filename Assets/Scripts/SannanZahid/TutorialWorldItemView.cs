@@ -1,7 +1,6 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
-using SuperStar.Helpers;
 using System.Collections;
 
 public class TutorialWorldItemView : MonoBehaviour
@@ -24,20 +23,20 @@ public class TutorialWorldItemView : MonoBehaviour
     public IEnumerator DownloadAndLoadFeed()
     {
         yield return null;
-        if (AssetCache.Instance.HasFile(ThumbnailDownloadURL))
-        {
-            AssetCache.Instance.LoadSpriteIntoImage(worldIcon, ThumbnailDownloadURL, changeAspectRatio: true);
-        }
-        else
-        {
-            AssetCache.Instance.EnqueueOneResAndWait(ThumbnailDownloadURL, ThumbnailDownloadURL, (success) =>
-            {
-                if (success)
-                {
-                    AssetCache.Instance.LoadSpriteIntoImage(worldIcon, ThumbnailDownloadURL, changeAspectRatio: true);
-                }
-            });
-        }
+        //if (AssetCache.Instance.HasFile(ThumbnailDownloadURL))
+        //{
+        //    AssetCache.Instance.LoadSpriteIntoImage(worldIcon, ThumbnailDownloadURL, changeAspectRatio: true);
+        //}
+        //else
+        //{
+        //    AssetCache.Instance.EnqueueOneResAndWait(ThumbnailDownloadURL, ThumbnailDownloadURL, (success) =>
+        //    {
+        //        if (success)
+        //        {
+        //            AssetCache.Instance.LoadSpriteIntoImage(worldIcon, ThumbnailDownloadURL, changeAspectRatio: true);
+        //        }
+        //    });
+        //}
 
     }
     public IEnumerator InitializeEnvironmentName()

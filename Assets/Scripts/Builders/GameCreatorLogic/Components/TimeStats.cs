@@ -13,7 +13,7 @@ public class TimeStats : MonoBehaviour
     public static Action _intensityChangerStop;
     public static Action<bool, Light[], float[], float, float, GameObject, int> _blindComponentStart;
     public static Action _blindComponentStop;
-    internal static PlayerCanvas playerCanvas;
+    //internal static PlayerCanvas playerCanvas;
     private float m_TotalTime;
     public bool IsElapsedTimeActive;
     public bool IsSituationChangerActive;
@@ -283,7 +283,7 @@ public class TimeStats : MonoBehaviour
         previousSkyID = SituationChangerSkyboxScript.instance.builderMapDownload.levelData.skyProperties.skyId;
         if (_Status)
         {
-            TimeStats.playerCanvas.ToggleBlindLight(true, _Radius);
+            //TimeStats.playerCanvas.ToggleBlindLight(true, _Radius);
             SituationChangerSkyboxScript.instance.ChangeSkyBox(_skyBoxID);
             return;
         }
@@ -296,7 +296,7 @@ public class TimeStats : MonoBehaviour
                     blindlights[i].intensity = blindIntensity[i];
             }
         }
-        TimeStats.playerCanvas.ToggleBlindLight(false, 300);
+        //TimeStats.playerCanvas.ToggleBlindLight(false, 300);
         SituationChangerSkyboxScript.instance.ChangeSkyBox(previousSkyID);
     }
 }

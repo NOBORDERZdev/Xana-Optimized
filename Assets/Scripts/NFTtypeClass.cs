@@ -1,4 +1,3 @@
-using SuperStar.Helpers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -122,15 +121,15 @@ public class NFTtypeClass : MonoBehaviour
     {
         /*Debug.LogError("When downloading Index is here " + _indexNumber);
         Debug.LogError("NFT Object Name: " + gameObject.name);*/
-        AssetCache.Instance.EnqueueOneResAndWait(_OwnedNFTDataObj.NFTsURL[_indexNumber], _OwnedNFTDataObj.NFTsURL[_indexNumber], (success) =>
-        {
-            if (success)
-            {
-                AssetCache.Instance.LoadSpriteIntoImage(OnclickNFT.image, _OwnedNFTDataObj.NFTsURL[_indexNumber], changeAspectRatio: true);
-                //tt AssetCache.Instance.LoadTexture2DIntoRawImage(imgFeedRaw, FeedData.thumbnail, changeAspectRatio: true);
-                isImageSuccessDownloadAndSave = true;
-            }
-        });
+        //AssetCache.Instance.EnqueueOneResAndWait(_OwnedNFTDataObj.NFTsURL[_indexNumber], _OwnedNFTDataObj.NFTsURL[_indexNumber], (success) =>
+        //{
+        //    if (success)
+        //    {
+        //        AssetCache.Instance.LoadSpriteIntoImage(OnclickNFT.image, _OwnedNFTDataObj.NFTsURL[_indexNumber], changeAspectRatio: true);
+        //        //tt AssetCache.Instance.LoadTexture2DIntoRawImage(imgFeedRaw, FeedData.thumbnail, changeAspectRatio: true);
+        //        isImageSuccessDownloadAndSave = true;
+        //    }
+        //});
     }
 
     private bool IsNFTCollectionBreakingDown;

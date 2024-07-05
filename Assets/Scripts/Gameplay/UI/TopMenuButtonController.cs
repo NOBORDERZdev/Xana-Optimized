@@ -84,11 +84,11 @@ public class TopMenuButtonController : MonoBehaviour
     void OnSettingClick()
     {
         SetPress(0);
-        if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
-        {
-            ReferencesForGamePlay.instance.playerControllerNew.gyroButton.SetActive(true);
-            ReferencesForGamePlay.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
-        }
+        //if (ReferencesForGamePlay.instance.playerControllerNew.isFirstPerson)
+        //{
+        //    ReferencesForGamePlay.instance.playerControllerNew.gyroButton.SetActive(true);
+        //    ReferencesForGamePlay.instance.playerControllerNew.gyroButton_Portait.SetActive(true);
+        //}
     }
     void OnInviteClick()
     {

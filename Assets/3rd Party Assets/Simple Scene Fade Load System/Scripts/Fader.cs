@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using SuperStar.Helpers;
 using System;
 
 public class Fader : MonoBehaviour

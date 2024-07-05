@@ -7,7 +7,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using SuperStar.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using DG.DemiLib;
@@ -545,7 +544,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsAvatarHairs" + ParentOfBtnsAvatarHairs.childCount);
             for (int i = AllCategoriesData[8].parentObj.transform.childCount - 1; i >= 1; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[8].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+              //  AssetCache.Instance.RemoveFromMemory(AllCategoriesData[8].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[8].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }
@@ -556,7 +555,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsAvatarEyeBrows" + ParentOfBtnsAvatarEyeBrows.childCount);
             for (int i = AllCategoriesData[10].parentObj.transform.childCount - 1; i >= 2; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[10].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+              //  AssetCache.Instance.RemoveFromMemory(AllCategoriesData[10].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[10].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }
@@ -567,7 +566,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsAvatarEyeLashes" + ParentOfBtnsAvatarEyeLashes.childCount);
             for (int i = AllCategoriesData[11].parentObj.transform.childCount - 1; i >= 0; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+              //  AssetCache.Instance.RemoveFromMemory(AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[11].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }
@@ -596,7 +595,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsForBottom" + ParentOfBtnsForBottom.childCount);
             for (int i = AllCategoriesData[5].parentObj.transform.childCount - 1; i >= 0; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[5].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+                //AssetCache.Instance.RemoveFromMemory(AllCategoriesData[5].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[5].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }
@@ -606,7 +605,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsForShoes" + ParentOfBtnsForShoes.childCount);
             for (int i = AllCategoriesData[7].parentObj.transform.childCount - 1; i >= 0; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[7].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+              //  AssetCache.Instance.RemoveFromMemory(AllCategoriesData[7].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[7].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }
@@ -616,7 +615,7 @@ public class InventoryManager : MonoBehaviour
             //print("~~~~~~~ ParentOfBtnsForOuter" + ParentOfBtnsForOuter.childCount);
             for (int i = AllCategoriesData[3].parentObj.transform.childCount - 1; i >= 0; i--)
             {
-                AssetCache.Instance.RemoveFromMemory(AllCategoriesData[3].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
+              //  AssetCache.Instance.RemoveFromMemory(AllCategoriesData[3].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().iconLink, true);
                 Destroy(AllCategoriesData[3].parentObj.transform.GetChild(i).gameObject);
                 //Resources.UnloadUnusedAssets();
             }

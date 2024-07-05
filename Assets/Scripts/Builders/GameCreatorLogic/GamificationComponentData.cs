@@ -25,10 +25,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public Shader superMarioShader2;
     public Shader skinShader;
     public Shader cloathShader;
-    internal PlayerController playerControllerNew;
+    //internal PlayerController playerControllerNew;
     internal AvatarController avatarController;
     internal CharacterBodyParts charcterBodyParts;
-    internal IKMuseum ikMuseum;
+    //internal IKMuseum ikMuseum;
     public Texture defaultSkyTex;
 
     public Vector3 spawnPointPosition;
@@ -53,7 +53,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     internal IComponentBehaviour activeComponent;
 
-    internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
+   // internal List<WarpFunctionComponent> warpComponentList = new List<WarpFunctionComponent>();
 
     public static Action WarpComponentLocationUpdate;
 
@@ -89,7 +89,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     //Name canvas
     internal Canvas nameCanvas;
-    public PlayerCanvas playerCanvas;
+    //public PlayerCanvas playerCanvas;
     internal bool isBuilderWorldPlayerSetup;
     public RuntimeAnimatorController idleAnimation;
     internal bool ZoomControl;
@@ -126,8 +126,8 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         BuilderEventManager.RPCcallwhenPlayerJoin += GetRPC;
 
         OrientationChange(false);
-        warpComponentList.Clear();
-        WarpComponentLocationUpdate += UpdateWarpFunctionData;
+        //warpComponentList.Clear();
+        //WarpComponentLocationUpdate += UpdateWarpFunctionData;
         SceneManager.sceneLoaded += OnSceneLoaded;
         //reset ignore layer collision on scene load
         Physics.IgnoreLayerCollision(9, 22, false);
@@ -156,7 +156,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         BuilderEventManager.UIToggle -= UICanvasToggle;
         BuilderEventManager.RPCcallwhenPlayerJoin -= GetRPC;
 
-        WarpComponentLocationUpdate -= UpdateWarpFunctionData;
+        //WarpComponentLocationUpdate -= UpdateWarpFunctionData;
         SceneManager.sceneLoaded -= OnSceneLoaded;
 
     }
@@ -169,7 +169,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     IEnumerator Respawn()
     {
         yield return new WaitForSeconds(0.2f);
-        playerControllerNew.transform.position = spawnPointPosition;
+        //playerControllerNew.transform.position = spawnPointPosition;
         yield return new WaitForSeconds(0.3f);
         Physics.IgnoreLayerCollision(9, 22, false);
 
@@ -234,48 +234,48 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     #endregion
 
     #region WarpComponent location update
-    void UpdateWarpFunctionData()
-    {
-        foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
-        {
-            foreach (WarpFunctionComponent warpFunctionComponent2 in warpComponentList)
-            {
-                if (warpFunctionComponent1 == warpFunctionComponent2)
-                    continue;
+    //void UpdateWarpFunctionData()
+    //{
+    //    foreach (WarpFunctionComponent warpFunctionComponent1 in warpComponentList)
+    //    {
+    //        foreach (WarpFunctionComponent warpFunctionComponent2 in warpComponentList)
+    //        {
+    //            if (warpFunctionComponent1 == warpFunctionComponent2)
+    //                continue;
 
-                WarpFunctionComponentData data1 = warpFunctionComponent1.warpFunctionComponentData;
-                WarpFunctionComponentData data2 = warpFunctionComponent2.warpFunctionComponentData;
+    //            WarpFunctionComponentData data1 = warpFunctionComponent1.warpFunctionComponentData;
+    //            WarpFunctionComponentData data2 = warpFunctionComponent2.warpFunctionComponentData;
 
-                if (data1.isWarpPortalStart)
-                {
-                    string startKey = data1.warpPortalStartKeyValue;
+    //            if (data1.isWarpPortalStart)
+    //            {
+    //                string startKey = data1.warpPortalStartKeyValue;
 
-                    if (startKey == data2.warpPortalEndKeyValue && startKey != "")
-                    {
-                        Vector3 endPoint = warpFunctionComponent2.transform.position;
-                        endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
-                        UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
-                        Vector3 startPoint = warpFunctionComponent1.transform.position;
-                        startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
-                        UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
-                    }
-                }
-                else
-                {
-                    string endKey = data1.warpPortalEndKeyValue;
-                    if (endKey == data2.warpPortalStartKeyValue && endKey != "")
-                    {
-                        Vector3 endPoint = warpFunctionComponent1.transform.position;
-                        endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
-                        UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
-                        Vector3 startPoint = warpFunctionComponent2.transform.position;
-                        startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
-                        UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
-                    }
-                }
-            }
-        }
-    }
+    //                if (startKey == data2.warpPortalEndKeyValue && startKey != "")
+    //                {
+    //                    Vector3 endPoint = warpFunctionComponent2.transform.position;
+    //                    endPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+    //                    UpdateEndPortalLocations(data1.warpPortalDataEndPoint, startKey, endPoint);
+    //                    Vector3 startPoint = warpFunctionComponent1.transform.position;
+    //                    startPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+    //                    UpdateStartPortalLocations(data2.warpPortalDataStartPoint, startKey, startPoint);
+    //                }
+    //            }
+    //            else
+    //            {
+    //                string endKey = data1.warpPortalEndKeyValue;
+    //                if (endKey == data2.warpPortalStartKeyValue && endKey != "")
+    //                {
+    //                    Vector3 endPoint = warpFunctionComponent1.transform.position;
+    //                    endPoint.y += warpFunctionComponent1.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+    //                    UpdateEndPortalLocations(data2.warpPortalDataEndPoint, endKey, endPoint);
+    //                    Vector3 startPoint = warpFunctionComponent2.transform.position;
+    //                    startPoint.y += warpFunctionComponent2.GetComponent<XanaItem>().m_renderer.bounds.size.y + 2;
+    //                    UpdateStartPortalLocations(data1.warpPortalDataStartPoint, endKey, startPoint);
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 
     void UpdateStartPortalLocations(List<PortalSystemStartPoint> endPoints, string key, Vector3 location)
     {

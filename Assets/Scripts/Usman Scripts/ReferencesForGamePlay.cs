@@ -25,7 +25,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject offBtnUsername;
 
     public GameObject m_34player;
-    public PlayerController playerControllerNew;
+    //public PlayerController playerControllerNew;
     public GameObject minimap;
     public GameObject minimapSettingsBtn;
     public TMPro.TextMeshProUGUI totalCounter; // Counter to show total connected peoples.
@@ -103,7 +103,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //    }
         //    minimapSettingsBtn.SetActive(true);
         //}
-        playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
+        //playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
     }
 
     IEnumerator counterCoroutine;

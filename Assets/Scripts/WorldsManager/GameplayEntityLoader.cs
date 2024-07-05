@@ -107,20 +107,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //    StartEventTimer();
         //}
         Input.multiTouchEnabled = true;
-        if (PlayerSelfieController.Instance)
-        {
-            for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
-            {
-                if (PlayerSelfieController.Instance.OnFeatures[i] != null)
-                {
-                    if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
-                    {
-                        leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
-                        break;
-                    }
-                }
-            }
-        }
+        //if (PlayerSelfieController.Instance)
+        //{
+        //    for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
+        //    {
+        //        if (PlayerSelfieController.Instance.OnFeatures[i] != null)
+        //        {
+        //            if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+        //            {
+        //                leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         GameObject _updatedSpawnPoint = new GameObject();
         updatedSpawnpoint = _updatedSpawnPoint.transform;
@@ -212,8 +212,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentCameraRender.gameObject.SetActive(true);
         //environmentCameraRender.transform.GetChild(0).gameObject.SetActive(true);
 
-        if(PlayerSelfieController.Instance)
-            PlayerSelfieController.Instance.DisableSelfieFromStart();
+        //if(PlayerSelfieController.Instance)
+        //    PlayerSelfieController.Instance.DisableSelfieFromStart();
 
 
 
@@ -801,24 +801,24 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;
             GamificationComponentData.instance.PlayerRigidBody = playerRB;
-            player.AddComponent<KeyValues>();
+            //player.AddComponent<KeyValues>();
             GamificationComponentData.instance.spawnPointPosition = mainController.transform.position;
             GamificationComponentData.instance.buildingDetect = player.AddComponent<BuildingDetect>();
             //player.GetComponent<CapsuleCollider>().isTrigger = false;
             //player.GetComponent<CapsuleCollider>().enabled = false;
-            TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
-            GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerController>();
+          //  TimeStats.playerCanvas = Instantiate(GamificationComponentData.instance.playerCanvas);
+           // GamificationComponentData.instance.playerControllerNew = mainPlayer.GetComponentInChildren<PlayerController>();
             player.AddComponent<EnvironmentChecker>();
             if (GamificationComponentData.instance.raycast == null)
                 GamificationComponentData.instance.raycast = new GameObject("Raycasst");
-            GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
+           // GamificationComponentData.instance.raycast.transform.SetParent(GamificationComponentData.instance.playerControllerNew.transform);
             GamificationComponentData.instance.raycast.transform.localPosition = Vector3.up * 1.683f;
             GamificationComponentData.instance.raycast.transform.localScale = Vector3.one * 0.37f;
             if (GamificationComponentData.instance.worldCameraEnable)
                 BuilderEventManager.EnableWorldCanvasCamera?.Invoke();
             GamificationComponentData.instance.avatarController = player.GetComponent<AvatarController>();
             GamificationComponentData.instance.charcterBodyParts = player.GetComponent<CharacterBodyParts>();
-            GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
+           // GamificationComponentData.instance.ikMuseum = player.GetComponent<IKMuseum>();
 
             //Post Process enable for Builder Scene
             firstPersonCamera.GetComponent<UniversalAdditionalCameraData>().renderPostProcessing = true;
@@ -840,7 +840,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             //Rejoin world after internet connection stable
             if (GamificationComponentData.instance.isBuilderWorldPlayerSetup)
             {
-                ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
+               // ReferencesForGamePlay.instance.playerControllerNew.StopBuilderComponent();
                 SituationChangerSkyboxScript.instance.builderMapDownload.PlayerSetup();
                 SituationChangerSkyboxScript.instance.builderMapDownload.UpdateScene();
                 BuilderEventManager.ChangeCameraHeight?.Invoke(false);
@@ -1047,7 +1047,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
-            mainController.GetComponent<PlayerController>().gravityVector.y = 0;
+            //mainController.GetComponent<PlayerController>().gravityVector.y = 0;
             mainController.transform.localPosition = spawnPoint;
         }
         if (IdolVillaRooms.instance != null)

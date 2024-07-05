@@ -33,7 +33,7 @@ public class GamePlayButtonEvents : MonoBehaviour
     public event Action<bool> AllAnimsPanelUpdate;
     public event Action StopEmoteAnimation;
     public event Action<bool> UpdateHelpObject;
-    public event Action<AnimationData> OnAnimationSelected;
+    //public event Action<AnimationData> OnAnimationSelected;
     public event Action<int> AnimationDataUpdated;
     public event Action<bool> SelfieBtnUpdate;
     public event Action<bool> SelfiePanleUpdateObjects;
@@ -119,10 +119,10 @@ public class GamePlayButtonEvents : MonoBehaviour
         selectedActionIndex = index;
     }
 
-    internal void OnAnimationSelect(AnimationData animData)
-    {
-        OnAnimationSelected?.Invoke(animData);
-    }
+    //internal void OnAnimationSelect(AnimationData animData)
+    //{
+    //    OnAnimationSelected?.Invoke(animData);
+    //}
 
     internal void AnimationDataUdpated(int index)
     {

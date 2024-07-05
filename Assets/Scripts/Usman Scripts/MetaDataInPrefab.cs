@@ -40,7 +40,7 @@ public class MetaDataInPrefab : MonoBehaviour
 
     //private bool canOpenPicture = true;
 
-    public PlayerController playerControllerNew;
+    //public PlayerController playerControllerNew;
     /// <summary>
     /// variables for gif 
     /// </summary>
@@ -56,7 +56,7 @@ public class MetaDataInPrefab : MonoBehaviour
     private void Start()
     {
         mat = (Material)Resources.Load("FramMaterial");
-        playerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
+        //playerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
         if (playerCamera == null)
         {
             playerCamera = ReferencesForGamePlay.instance.randerCamera;
@@ -207,7 +207,7 @@ public class MetaDataInPrefab : MonoBehaviour
 #endif
                         spriteObject.transform.Rotate(new Vector3(0, 0, 0));
 
-                        NFTFromServer.RemoveOne();
+                        //NFTFromServer.RemoveOne();
                         this.gameObject.AddComponent<UnityEngine.BoxCollider>().center = new Vector3(0, .75f, 0);
                         this.gameObject.GetComponent<UnityEngine.BoxCollider>().size = new Vector3(2f, 1.65f, 0.5f);
                         isVideo = true;
@@ -347,7 +347,7 @@ public class MetaDataInPrefab : MonoBehaviour
                         {
                             spriteObject.transform.localScale = new Vector3(1.8f / (thunbNailImage.texture.height / 100f), 1.8f / (thunbNailImage.texture.height / 100f), 1);
                         }
-                        NFTFromServer.RemoveOne();
+                        //NFTFromServer.RemoveOne();
                         this.gameObject.AddComponent<UnityEngine.BoxCollider>().center = new Vector3(0, .75f, 0);
                         this.gameObject.GetComponent<UnityEngine.BoxCollider>().size = new Vector3(2f, 1.65f, 0.5f);
                         isVideo = false;
@@ -480,7 +480,7 @@ public class MetaDataInPrefab : MonoBehaviour
                         {
                             spriteObject.transform.localScale = new Vector3(1.8f / (thunbNailImage.texture.height / 100f), 1.8f / (thunbNailImage.texture.height / 100f), 1);
                         }
-                        NFTFromServer.RemoveOne();
+                        //NFTFromServer.RemoveOne();
                         this.gameObject.AddComponent<UnityEngine.BoxCollider>().center = new Vector3(0, .75f, 0);
                         this.gameObject.GetComponent<UnityEngine.BoxCollider>().size = new Vector3(2f, 1.65f, 0.5f);
                         isVideo = false;
@@ -652,36 +652,36 @@ public class MetaDataInPrefab : MonoBehaviour
             if (Input.touchCount == 1)
             {
 #endif
-        if (playerControllerNew.isFirstPerson)
-            playerCamera = playerControllerNew.firstPersonCameraObj.GetComponent<Camera>();
-        else
-            playerCamera = ReferencesForGamePlay.instance.randerCamera;
-        if (PlayerCameraController.IsPointerOverUIObject()) return;
+        //if (playerControllerNew.isFirstPerson)
+        //    playerCamera = playerControllerNew.firstPersonCameraObj.GetComponent<Camera>();
+        //else
+        //    playerCamera = ReferencesForGamePlay.instance.randerCamera;
+        //if (PlayerCameraController.IsPointerOverUIObject()) return;
 
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        //Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, rayDistance))
-        {
-            if (hit.collider.gameObject.name == this.gameObject.name)
-            {
-                if (isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
-                {
-                    print("showing video");
-                    videoPlayer.Play();
-                    ShowNFTDetails.instance.ShowVideo(this);
-                    if (ReferencesForGamePlay.instance.playerControllerNew)
-                        ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
-                }
-                else if (!isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
-                {
-                    print(PlayerSelfieController.Instance.m_IsSelfieFeatureActive);
-                    ShowNFTDetails.instance.ShowImage(this);
-                    if (ReferencesForGamePlay.instance.playerControllerNew)
-                        ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
-                    isVisible = true;
-                }
-            }
-        }
+        //if (Physics.Raycast(ray, out hit, rayDistance))
+        //{
+        //    if (hit.collider.gameObject.name == this.gameObject.name)
+        //    {
+        //        if (isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
+        //        {
+        //            print("showing video");
+        //            videoPlayer.Play();
+        //            ShowNFTDetails.instance.ShowVideo(this);
+        //            if (ReferencesForGamePlay.instance.playerControllerNew)
+        //                ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
+        //        }
+        //        else if (!isVideo && !PlayerSelfieController.Instance.t_nftMuseums && !ShowNFTDetails.instance.displayPanel.activeInHierarchy && !TopMenuButtonController.Instance.Settings_pressed)
+        //        {
+        //            print(PlayerSelfieController.Instance.m_IsSelfieFeatureActive);
+        //            ShowNFTDetails.instance.ShowImage(this);
+        //            if (ReferencesForGamePlay.instance.playerControllerNew)
+        //                ReferencesForGamePlay.instance.playerControllerNew.restJoyStick();
+        //            isVisible = true;
+        //        }
+        //    }
+        //}
 
 #if !UNITY_EDITOR
 
@@ -744,8 +744,8 @@ public class MetaDataInPrefab : MonoBehaviour
                 Sprite currFrame = Sprite.Create(mFrames[mCurFrame], new Rect(0f, 0f, mFrames[mCurFrame].width, mFrames[mCurFrame].height), new Vector2(.5f, 0f));
                 spriteObject.GetComponent<SpriteRenderer>().sprite = currFrame;
 
-                if (isVisible)
-                    ShowNFTDetails.instance.UpdateGif(currFrame);
+                //if (isVisible)
+                //    ShowNFTDetails.instance.UpdateGif(currFrame);
             }
         }
 
