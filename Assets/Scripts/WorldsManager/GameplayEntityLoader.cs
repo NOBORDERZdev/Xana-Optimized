@@ -664,7 +664,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
         Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
 
-        InstantiatePlayerAvatar(spawnPoint);
+        InstantiatePlayerAvatar(newPos);
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
