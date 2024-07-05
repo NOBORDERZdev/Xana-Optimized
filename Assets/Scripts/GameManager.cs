@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
+        QuestDataHandler.Instance.CheckForTaskCDomplete();
+
     }
     
     public void HomeCameraInputHandler(bool flag)
