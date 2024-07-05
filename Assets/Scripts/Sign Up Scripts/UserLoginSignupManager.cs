@@ -867,30 +867,30 @@ public class UserLoginSignupManager : MonoBehaviour
             return;
         }
        
-        else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
-        {
-            UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
-            return;
-        }
-        else if (userUsername.All(char.IsDigit))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
+        //else if (displayrname.StartsWith(" ") || userUsername.StartsWith(" "))
+        //{
+        //    UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
+        //    return;
+        //}
+        //else if (userUsername.All(char.IsDigit))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
+        //}
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
             keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
             UserDisplayNameErrors(keytoLocalize);
             return;
         }
-        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
+        //else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
 
-        }
+        //}
         else if (displayrname.EndsWith(" "))
         {
             displayrname = displayrname.TrimEnd(' ');
