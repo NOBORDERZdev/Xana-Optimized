@@ -82,7 +82,12 @@ public class JJVideoAndImage : MonoBehaviour
         }
 
     }
-
+    private void OnDisable()
+    {
+        JJEraseDownloadedData();
+        Debug.Log("JJ Data Cleared");
+        Resources.UnloadUnusedAssets();
+    }
 
     public void InitData(string imageurl, string videourl, JjRatio imgvideores, DataType dataType,VideoTypeRes videoType)
     {
@@ -491,5 +496,39 @@ public class JJVideoAndImage : MonoBehaviour
 
             }
         }
+    }
+    private void JJEraseDownloadedData() {
+        if (imgVideo16x9.GetComponent<RawImage>().texture != null)
+        {
+            DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture, true);
+            imgVideo16x9.GetComponent<RawImage>().texture = null;
+            imgVideo16x9.SetActive(false);
+        }
+        else if (imgVideo9x16.GetComponent<RawImage>().texture != null)
+        {
+            DestroyImmediate(imgVideo9x16.GetComponent<RawImage>().texture, true);
+            imgVideo9x16.GetComponent<RawImage>().texture = null;
+            imgVideo9x16.SetActive(false);
+        }
+        else if (imgVideo1x1.GetComponent<RawImage>().texture != null)
+        {
+
+            DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+            imgVideo1x1.GetComponent<RawImage>().texture = null;
+            imgVideo1x1.SetActive(false);
+        }
+        else if (imgVideo4x3.GetComponent<RawImage>().texture != null)
+        {
+            DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
+            imgVideo4x3.GetComponent<RawImage>().texture = null;
+            imgVideo4x3.SetActive(false);
+        }
+              
+        if (this.GetComponent<StreamYoutubeVideo>() != null)
+        {
+            streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+        }
+
+
     }
 }
