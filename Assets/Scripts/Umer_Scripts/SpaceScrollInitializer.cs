@@ -54,7 +54,7 @@ public class SpaceScrollInitializer : MonoBehaviour, IEnhancedScrollerDelegate
         allWorldManageRef = GetComponent<AllWorldManage>();
         // set the application frame rate.
         // this improves smoothness on some devices
-        //Application.targetFrameRate = 60;
+            Application.targetFrameRate = 60;
 
         // tell the scroller that this script will be its delegate
         masterScroller.Delegate = this;
