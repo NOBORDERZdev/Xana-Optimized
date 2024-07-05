@@ -348,8 +348,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
 
             case "en":
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
@@ -378,8 +378,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);

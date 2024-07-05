@@ -398,8 +398,8 @@ public class XanaWorldDownloader : MonoBehaviour
         {
 
             case "en":
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
@@ -425,8 +425,8 @@ public class XanaWorldDownloader : MonoBehaviour
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);

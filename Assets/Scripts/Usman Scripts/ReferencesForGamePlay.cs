@@ -43,13 +43,17 @@ public class ReferencesForGamePlay : MonoBehaviour
     public int moveWhileDanceCheck;
 
     public GameObject XANAPartyWaitingText;
-    [SerializeField] GameObject XANAPartyLobbyyCounterPanel;
-    [SerializeField] TMP_Text XANAPartyCounterText;
-    private bool isCounterStarted = false;
+    public GameObject XANAPartyCounterPanel;
+    public TMP_Text XANAPartyCounterText;
+    public bool isCounterStarted = false;
+    public bool isMatchingTimerFinished = false;
 
 
     private const string InLevelProperty = "InLevel";
     private bool IsLevelPropertyUpdatedOnlevelLoad = false;
+    public bool isCounterTimerRunning = false;
+    public float counterTimerDuration = 60f;
+    private double counterStartTime = -1;
     //[SerializeField] CanvasGroup PartyJump;
 
 
@@ -382,9 +386,12 @@ public class ReferencesForGamePlay : MonoBehaviour
                    
                 }
 
-                if (PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers/*RoomMaxPlayerCount*/ && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
+                if (((PlayerCount ==  ConstantsHolder.XanaPartyMaxPlayers && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame) || isMatchingTimerFinished) && !isCounterStarted){  // to check if the room count is full then move all the player randomly form the list of XANA Party Rooms
                     MakeRoomPrivate();
-                    StartCoroutine(ShowLobbyCounter());
+                    if (isMatchingTimerFinished)
+                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(0f));
+                    else
+                        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(10f));
                 }
                     
                 //else
@@ -403,25 +410,29 @@ public class ReferencesForGamePlay : MonoBehaviour
         goto CheckAgain;
     }
     
-    IEnumerator ShowLobbyCounter()
+    //IEnumerator ShowLobbyCounter(float waitTime)
+    //{
+    //    isCounterStarted = true;
+    //    yield return new WaitForSeconds(10); // wait to show that other player spwan and then lobby full
+    //    GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>()StartLobbyCounter), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
+    //    GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().StartLobbyCounter();
+    //}
+
+    private void Update()
     {
-        isCounterStarted = true;
-        yield return new WaitForSeconds(10); // wait to show that other player spwan and then lobby full
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().StartLobbyCounter();
         
     }
 
-    
     public IEnumerator ShowLobbyCounterAndMovePlayer()
     {
         XANAPartyWaitingText.SetActive(false);
-        XANAPartyLobbyyCounterPanel.SetActive(true);
-        for (int i = 5; i >= 1; i--)
+        XANAPartyCounterPanel.SetActive(true);
+        for (int i = 3; i >= 1; i--)
         {
-            XANAPartyCounterText.text = "0" + i.ToString();
+            XANAPartyCounterText.text = i.ToString();
             yield return new WaitForSeconds(1);
         }
-        XANAPartyLobbyyCounterPanel.SetActive(false);
+        XANAPartyCounterPanel.SetActive(false);
 
         Screen.orientation = ScreenOrientation.LandscapeLeft;
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));

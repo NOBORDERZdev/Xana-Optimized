@@ -41,6 +41,16 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(MovePlayersToRoom), RpcTarget.AllBuffered, gameData.Id, gameData.WorldName);
     }
 
+    public IEnumerator ShowLobbyCounter(float waitTime)
+    {
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            ReferencesForGamePlay.instance.isCounterStarted = true;
+            yield return new WaitForSeconds(waitTime); // wait to show that other player spwan and then lobby full
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC(nameof(StartLobbyCounter), RpcTarget.AllBuffered);
+        }
+    }
+
     [PunRPC]
     public void StartLobbyCounter()
     {
