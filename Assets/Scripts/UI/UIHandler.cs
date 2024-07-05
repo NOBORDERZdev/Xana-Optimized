@@ -38,7 +38,7 @@ public class UIHandler : MonoBehaviour
     public bool isAvatarSelectionBtnClicked = false;
     [SerializeField] Color postButtonColor;
 
-    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+   // public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     private void Awake()
     {
@@ -88,19 +88,19 @@ public class UIHandler : MonoBehaviour
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);
-            GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
-            GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
-            GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
-            GameManager.Instance.userAnimationPostFeature.postButtonText.color = postButtonColor;
+            //GameManager.Instance.ActorManager.IdlePlayerAvatorForPostMenu(flag);
+            //GameManager.Instance.userAnimationPostFeature.GetComponent<UserPostFeature>().ActivatePostButtbleHome(!flag);
+            //GameManager.Instance.userAnimationPostFeature.postButton.interactable = false;
+            //GameManager.Instance.userAnimationPostFeature.postButtonText.color = postButtonColor;
         }
 
-        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Post);
+        //OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Post);
     }
     public void ResetPlayerToLastPostPosted()
     {
-        GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
-        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
-        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
+        //GameManager.Instance.userAnimationPostFeature.transform.GetComponent<UserPostFeature>().SetLastPostToPlayer();
+        //GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        //OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
     public void AvaterButtonCustomPushed()
     {

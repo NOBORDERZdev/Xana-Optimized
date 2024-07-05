@@ -338,6 +338,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
 
         isSpawnDownloaded = true;
+         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+
     }
 
     void DisplayDownloadedAssetText()

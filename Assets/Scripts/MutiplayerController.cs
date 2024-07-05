@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "AliG";
+        string gameVersion = "1";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -145,11 +145,11 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 PhotonNetwork.NickName = "Guest";
             }
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
-            {
-                string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
-                CurrLobbyName = deepLinkLobbyName;
-            }
+            //if (XanaEventDetails.eventDetails.DataIsInitialized)
+            //{
+            //    string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
+            //    CurrLobbyName = deepLinkLobbyName;
+            //}
             if (PhotonNetwork.IsConnected)
             {
                 JoinLobby(CurrLobbyName);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using SimpleJSON;
+//using SimpleJSON;
 using UnityEngine.UI;
 using System.Text.RegularExpressions;
 using System.Linq;
@@ -2328,8 +2328,8 @@ public class RestAPI
         {
             WWW req = new WWW(url, form);
             yield return req;
-            var response = JSON.Parse(req.text);
-            savedStrings[keyToAccess] = response[keyInResponse].ToString().Replace("\"", string.Empty);
+            //var response = JSON.Parse(req.text);
+            //savedStrings[keyToAccess] = response[keyInResponse].ToString().Replace("\"", string.Empty);
         }
     }
     public static string GetSavedStringValue(string _keyToAccess)

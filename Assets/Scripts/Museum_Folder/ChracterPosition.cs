@@ -47,12 +47,12 @@ public class ChracterPosition : MonoBehaviour
                 {
                     ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.PortalSound);
                 }
-                if (!UserPassManager.Instance.CheckSpecificItem("idol_Villa", false))
-                {
-                    UserPassManager.Instance.vipPassUI.SetActive(true);
-                    PlayerCameraController.instance.DisAllowControl();
-                    return;
-                }
+                //if (!UserPassManager.Instance.CheckSpecificItem("idol_Villa", false))
+                //{
+                //    UserPassManager.Instance.vipPassUI.SetActive(true);
+                //    PlayerCameraController.instance.DisAllowControl();
+                //    return;
+                //}
                 isAlreadyRunning = false;
                 if (NewPos.name.Contains("OutSide"))
                 {

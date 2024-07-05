@@ -10,6 +10,6 @@ public class mycreatorname : MonoBehaviour
 
     public void Start()
     {
-        creatorTextTMP.text = WorldItemView.m_CreaName.ToUpper();
+       // creatorTextTMP.text = WorldItemView.m_CreaName.ToUpper();
     }
 }

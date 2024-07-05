@@ -117,10 +117,10 @@ public class GamePlayUIHandler : MonoBehaviour
     {
         JJPortalPopup.SetActive(false);
         ref_PlayerControllerNew.m_IsMovementActive = true;
-        if (currentPortalObject.GetComponent<PlayerPortal>())
-            currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
-        else if (currentPortalObject.GetComponent<JjWorldChanger>())
-            currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
+        //if (currentPortalObject.GetComponent<PlayerPortal>())
+        //    currentPortalObject.GetComponent<PlayerPortal>().RedirectToWorld();
+        //else if (currentPortalObject.GetComponent<JjWorldChanger>())
+        //    currentPortalObject.GetComponent<JjWorldChanger>().RedirectToWorld();
     }
 
     public void ClosePortalPopup()
@@ -131,7 +131,7 @@ public class GamePlayUIHandler : MonoBehaviour
 
     public void OnSwitchCameraClick()
     {
-        if (!UserPassManager.Instance.CheckSpecificItem("fp_camera"))
+        if (false)
         {
             print("Please Upgrade to Premium account");
             return;
@@ -207,7 +207,7 @@ public class GamePlayUIHandler : MonoBehaviour
             if (ScreenOrientationManager._instance.joystickInitPosY == 0)
                 ScreenOrientationManager._instance.joystickInitPosY = portraitJoystick.transform.localPosition.y;
         }
-        if (!UserPassManager.Instance.CheckSpecificItem("env_actions"))
+        if (/*!UserPassManager.Instance.CheckSpecificItem("env_actions")*/ false)
         {
             print("Please Upgrade to Premium account");
             return;

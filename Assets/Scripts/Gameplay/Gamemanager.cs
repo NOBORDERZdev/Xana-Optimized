@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem.UI;
-using RenderHeads.Media.AVProVideo;
+//using RenderHeads.Media.AVProVideo;
 using UnityEngine.Video;
 
 public class Gamemanager : MonoBehaviour
@@ -38,7 +38,7 @@ public class Gamemanager : MonoBehaviour
     public GameObject videoPlayer, staticLogoScreen;
     public bool _IsVideoYouTube;
 
-    public YoutubePlayerLivestream playerLivestream;
+    //public YoutubePlayerLivestream playerLivestream;
 
     public AudioSource m_youtubeAudio;
 
@@ -51,7 +51,7 @@ public class Gamemanager : MonoBehaviour
     public bool _isNPCMoving;
     public int count = 0;
 
-    public MediaPlayer mediaPlayer;
+    //public MediaPlayer mediaPlayer;
     public VideoPlayer ytVideoPlayer;
 
 
@@ -93,11 +93,11 @@ public class Gamemanager : MonoBehaviour
     {
       //  InvokeRepeating("test", 5f,10f);
 
-        if (mediaPlayer == null)
-        {
+        //if (mediaPlayer == null)
+        //{
 
-            Debug.Log("MediaPlayer is Null");
-        }
+        //    Debug.Log("MediaPlayer is Null");
+        //}
     }
 
 
@@ -129,7 +129,7 @@ public class Gamemanager : MonoBehaviour
     public void youtubecheck()
     {
         link = YTStreamAPI.instance.response.data[5].streamLink;
-        playerLivestream.gameObject.SetActive(true);
+        //playerLivestream.gameObject.SetActive(true);
 
         if (link == null || link == "")
         {
@@ -138,7 +138,7 @@ public class Gamemanager : MonoBehaviour
         }
         else
         {
-            playerLivestream.GetLivestreamUrl(link);
+            //playerLivestream.GetLivestreamUrl(link);
 
             _IsVideoYouTube = true;
 
@@ -163,7 +163,7 @@ public class Gamemanager : MonoBehaviour
 
     public void UnMute(bool test)
     {
-        mediaPlayer.AudioMuted = test;
+        //mediaPlayer.AudioMuted = test;
      
     }
 

@@ -37,19 +37,19 @@ public class JJMuseumInfoManager : MonoBehaviour
             {
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
-                JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
-                for(int i=0; i < JjInfoManager.Instance.worldInfos.Count; i++)
-                {
-                    JjInfoManager.Instance.worldInfos[i].Title = new string[0];
-                    JjInfoManager.Instance.worldInfos[i].Aurthor = new string[0];
-                    JjInfoManager.Instance.worldInfos[i].Des = new string[0];
-                    JjInfoManager.Instance.worldInfos[i].url = null;
-                    JjInfoManager.Instance.worldInfos[i].WorldImage = null;
-                    JjInfoManager.Instance.worldInfos[i].VideoLink = null;
-                    JjInfoManager.Instance.worldInfos[i].isAWSVideo = false;
-                    JjInfoManager.Instance.worldInfos[i].isLiveVideo = false;
-                }
-                StartCoroutine(JjInfoManager.Instance.InitData(json, NftPlaceholder));
+                //JjJson json = JsonConvert.DeserializeObject<JjJson>(data.ToString());
+                //for(int i=0; i < JjInfoManager.Instance.worldInfos.Count; i++)
+                //{
+                //    JjInfoManager.Instance.worldInfos[i].Title = new string[0];
+                //    JjInfoManager.Instance.worldInfos[i].Aurthor = new string[0];
+                //    JjInfoManager.Instance.worldInfos[i].Des = new string[0];
+                //    JjInfoManager.Instance.worldInfos[i].url = null;
+                //    JjInfoManager.Instance.worldInfos[i].WorldImage = null;
+                //    JjInfoManager.Instance.worldInfos[i].VideoLink = null;
+                //    JjInfoManager.Instance.worldInfos[i].isAWSVideo = false;
+                //    JjInfoManager.Instance.worldInfos[i].isLiveVideo = false;
+                //}
+                //StartCoroutine(JjInfoManager.Instance.InitData(json, NftPlaceholder));
             }
         }
     }

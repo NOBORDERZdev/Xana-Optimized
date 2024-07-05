@@ -7,7 +7,7 @@ using Metaverse;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using PhysicsCharacterController;
-using UFE3D;
+//using UFE3D;
 
 public class XANAPartyCameraController : MonoBehaviour
 {

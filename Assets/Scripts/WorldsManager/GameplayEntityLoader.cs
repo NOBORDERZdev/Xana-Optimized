@@ -102,19 +102,22 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private void Start()
     {
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            StartEventTimer();
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    StartEventTimer();
+        //}
         Input.multiTouchEnabled = true;
-        for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
+        if (PlayerSelfieController.Instance)
         {
-            if (PlayerSelfieController.Instance.OnFeatures[i] != null)
+            for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
             {
-                if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                if (PlayerSelfieController.Instance.OnFeatures[i] != null)
                 {
-                    leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
-                    break;
+                    if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                    {
+                        leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
+                        break;
+                    }
                 }
             }
         }
@@ -209,131 +212,132 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentCameraRender.gameObject.SetActive(true);
         //environmentCameraRender.transform.GetChild(0).gameObject.SetActive(true);
 
-        PlayerSelfieController.Instance.DisableSelfieFromStart();
+        if(PlayerSelfieController.Instance)
+            PlayerSelfieController.Instance.DisableSelfieFromStart();
 
 
 
     }
 
-    void InstantiateYoutubePlayer()
-    {
-        if (YoutubeStreamPlayer == null)
-        {
-            //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
-            if (WorldItemView.m_EnvName.Contains("DJ Event"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
+    //void InstantiateYoutubePlayer()
+    //{
+    //    if (YoutubeStreamPlayer == null)
+    //    {
+    //        //Debug.Log("DJ Beach====" + WorldItemView.m_EnvName);
+    //        if (WorldItemView.m_EnvName.Contains("DJ Event"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("DJEventData/YoutubeVideoPlayer") as GameObject);
 
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
 
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
+    //            //#else
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
 
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-            if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //        if (WorldItemView.m_EnvName.Contains("XANA Festival Stage") && !WorldItemView.m_EnvName.Contains("Dubai"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("XANAFestivalStageData/YoutubeVideoPlayer1") as GameObject);
 
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#else
-                //  YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-
-            if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-                YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-            if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-            {
-                YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
-
-                //#if UNITY_ANDROID || UNITY_EDITOR
-                //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-
-                //#else
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
-                //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
-                //#endif
-
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
-                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
-                //YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
-                //YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#else
+    //            //  YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
 
 
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+
+    //        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("MyBeach/XanaFestivalPlayer") as GameObject);
+
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+
+    //            //#else
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
+
+    //            YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //        if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+    //        {
+    //            YoutubeStreamPlayer = Instantiate(Resources.Load("XanaLobby/XanaLobbyPlayer") as GameObject);
+
+    //            //#if UNITY_ANDROID || UNITY_EDITOR
+    //            //                //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //                //YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+
+    //            //#else
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-0.44f, 0.82f, 14.7f);
+    //            //            YoutubeStreamPlayer.transform.localScale = new Vector3(0.46f, 0.43f, 0.375f);
+    //            //#endif
+
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(0f, 0f, 10f);
+    //            //YoutubeStreamPlayer.transform.localScale = new Vector3(1f, 1f, 1f);
+    //            //YoutubeStreamPlayer.transform.localPosition = new Vector3(-65.8f, 24.45f, -83.45f);
+    //            //YoutubeStreamPlayer.transform.localScale = new Vector3(-0.54f, 0.53f, 0.53f);
+    //            //YoutubeStreamPlayer.transform.localRotation = Quaternion.Euler(0f, -90f, 0f);
 
 
-                YoutubeStreamPlayer.SetActive(false);
-                if (YoutubeStreamPlayer)
-                {
-                    YoutubeStreamPlayer.SetActive(true);
-                }
-            }
-        }
-    }
-    void CharacterLightCulling()
-    {
-        if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !ConstantsHolder.xanaConstants.isBuilderScene)
-        {
-            //riken
-            Light[] directionalLightList = FindObjectsOfType<Light>();
-            for (int i = 0; i < directionalLightList.Length; i++)
-            {
-                if (directionalLightList[i].type == LightType.Directional && directionalLightList[i].gameObject.tag != "CharacterLight")
-                {
-                    directionalLightList[i].cullingMask = layerMask;
-                }
-            }
-        }
 
-        //.......
-    }
+
+    //            YoutubeStreamPlayer.SetActive(false);
+    //            if (YoutubeStreamPlayer)
+    //            {
+    //                YoutubeStreamPlayer.SetActive(true);
+    //            }
+    //        }
+    //    }
+    //}
+    //void CharacterLightCulling()
+    //{
+    //    if ((!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament")) && !ConstantsHolder.xanaConstants.isBuilderScene)
+    //    {
+    //        //riken
+    //        Light[] directionalLightList = FindObjectsOfType<Light>();
+    //        for (int i = 0; i < directionalLightList.Length; i++)
+    //        {
+    //            if (directionalLightList[i].type == LightType.Directional && directionalLightList[i].gameObject.tag != "CharacterLight")
+    //            {
+    //                directionalLightList[i].cullingMask = layerMask;
+    //            }
+    //        }
+    //    }
+
+    //    //.......
+    //}
 
     private void LoadLightSettings(string mEnvName)
     {
@@ -411,33 +415,33 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         yield return new WaitForSeconds(.2f);
         if (!(SceneManager.GetActiveScene().name.Contains("Museum")))
         {
-            if (WorldItemView.m_EnvName.Contains("AfterParty"))
-            {
-                if (ConstantsHolder.xanaConstants.setIdolVillaPosition)
-                {
-                    spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                    ConstantsHolder.xanaConstants.setIdolVillaPosition = false;
-                }
-                else
-                {
-                    for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
-                    {
-                        if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
-                        {
-                            spawnPoint = IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().spawnPos;
-                            break;
-                        }
-                        else
-                        {
-                            spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-                        }
-                    }
-                }
-            }
-            else
-            {
+            //if (WorldItemView.m_EnvName.Contains("AfterParty"))
+            //{
+            //    if (ConstantsHolder.xanaConstants.setIdolVillaPosition)
+            //    {
+            //        spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            //        ConstantsHolder.xanaConstants.setIdolVillaPosition = false;
+            //    }
+            //    else
+            //    {
+            //        for (int i = 0; i < IdolVillaRooms.instance.villaRooms.Length; i++)
+            //        {
+            //            if (IdolVillaRooms.instance.villaRooms[i].name == ChracterPosition.currSpwanPos)
+            //            {
+            //                spawnPoint = IdolVillaRooms.instance.villaRooms[i].gameObject.GetComponent<ChracterPosition>().spawnPos;
+            //                break;
+            //            }
+            //            else
+            //            {
+            //                spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
+            //            }
+            //        }
+            //    }
+            //}
+            //else
+            //{
                 spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y + 2, spawnPoint.z);
-            }
+            //}
             RaycastHit hit;
         CheckAgain:
             // Does the ray intersect any objects excluding the player layer
@@ -457,50 +461,50 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
                 spawnPoint = new Vector3(spawnPoint.x, hit.point.y, spawnPoint.z);
             }
-            if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            }
-            else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
-            {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
-                //Invoke(nameof(SetKotoAngle), 0.5f);
-                if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
-                {
-                    StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
-                }
-                else
-                {
-                    StartCoroutine(setPlayerCamAngle(0, 0.75f));
+            //if (WorldItemView.m_EnvName.Contains("XANALIA NFTART AWARD 2021"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 230f, 0f);
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("Koto") || WorldItemView.m_EnvName.Contains("Tottori") || WorldItemView.m_EnvName.Contains("DEEMO") || WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            //{
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0);
+            //    //Invoke(nameof(SetKotoAngle), 0.5f);
+            //    if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
+            //    {
+            //        StartCoroutine(setPlayerCamAngle(-0.830f, 0.5572f));
+            //    }
+            //    else
+            //    {
+            //        StartCoroutine(setPlayerCamAngle(0, 0.75f));
 
-                }
-            }
-            else if (WorldItemView.m_EnvName.Contains("Genesis"))
-            {
-                // No Need TO Rotate Player
-                StartCoroutine(setPlayerCamAngle(0, 0.75f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
-            {
-                StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
-            }
-            else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
-            {
-                StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            }
-            if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
-            {
-                PlayerCamera.m_Lens.NearClipPlane = 0.05f;
-            }
-            if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
-            {              // added by AR for ToyotaHome world
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                StartCoroutine(setPlayerCamAngle(0f, 00.5f));
-            }
+            //    }
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("Genesis"))
+            //{
+            //    // No Need TO Rotate Player
+            //    StartCoroutine(setPlayerCamAngle(0, 0.75f));
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("ZONE X Musuem") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            //{
+            //    StartCoroutine(setPlayerCamAngle(-30.0f, 0.5f));
+            //}
+            //else if (WorldItemView.m_EnvName.Contains("ZONE-X"))
+            //{
+            //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+            //}
+            //if (WorldItemView.m_EnvName.Contains("JJ MUSEUM") || WorldItemView.m_EnvName.Contains("FIVE ELEMENTS"))
+            //{
+            //    PlayerCamera.m_Lens.NearClipPlane = 0.05f;
+            //}
+            //if (WorldItemView.m_EnvName.Contains("D_Infinity_Labo"))     // D +  Infinity Labo
+            //{              // added by AR for ToyotaHome world
+            //    mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+            //}
             //else
             //{
             //    StartCoroutine(setPlayerCamAngle(0f, 00.5f));
@@ -524,31 +528,31 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // LoadingHandler.Instance.UpdateLoadingSlider(0.98f, true);
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
-        InstantiateYoutubePlayer();
+        //InstantiateYoutubePlayer();
 
         SetAddressableSceneActive();
-        CharacterLightCulling();
+        //CharacterLightCulling();
         if (!ConstantsHolder.xanaConstants.isCameraMan)
         {
             LoadingHandler.Instance.HideLoading();
             // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
-        {
-            if (!ConstantsHolder.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-        }
-        else
-        {
-            if (JjMusuem.Instance)
-                JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
-            else
-            {
-                if (!ConstantsHolder.xanaConstants.isCameraMan)
-                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-            }
-        }
+        //if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        //{
+        //    if (!ConstantsHolder.xanaConstants.isCameraMan)
+        //        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        //}
+        //else
+        //{
+        //    if (JjMusuem.Instance)
+        //        JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
+        //    else
+        //    {
+        //        if (!ConstantsHolder.xanaConstants.isCameraMan)
+        //            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        //    }
+        //}
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
@@ -590,20 +594,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //Debug.Log("<color=green> Analytics -- Joined </color>");
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
 
-        // Join Room Activate Chat
-        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            string worldId = 0.ToString();
-            if (XanaEventDetails.eventDetails.environmentId != 0)
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
-            }
-            else
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
-            }
-        }
+        //// Join Room Activate Chat
+        //////Debug.Log("<color=blue> XanaChat -- Joined </color>");
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    string worldId = 0.ToString();
+        //    if (XanaEventDetails.eventDetails.environmentId != 0)
+        //    {
+        //        ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
+        //    }
+        //    else
+        //    {
+        //        ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
+        //    }
+        //}
 
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
         if (ConstantsHolder.xanaConstants.isCameraMan)
@@ -847,10 +851,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
              BuilderEventManager.ApplySkyoxSettings?.Invoke();
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
-        {
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-        }
+        //if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        //{
+        //    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        //}
         ReferencesForGamePlay.instance.m_34player = player;
         SetAxis();
         mainPlayer.SetActive(true);
@@ -883,15 +887,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
-        {
-            if (!ConstantsHolder.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-        }
-        else
-        {
-            JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
-        }
+        //if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        //{
+        //    if (!ConstantsHolder.xanaConstants.isCameraMan)
+        //        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
+        //}
+        //else
+        //{
+        //    JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
+        //}
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         if ( GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
@@ -1140,7 +1144,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
         if (tempSpawnPoint)
         {
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (false)
             {
                 StartCoroutine(SpawnPlayer());
             }
@@ -1209,6 +1213,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private void DownloadCompleted()
     {
         isEnvLoaded = true;
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         StartCoroutine(spwanPlayerWithWait());
     }
 
@@ -1348,7 +1353,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     {
         // Forcfully resetting lights because on 
 
-        if (GetComponent<PostProcessManager>().CheckPostProcessEnable())
+        if (true)
         {
             Light[] sceneLight;
             sceneLight = GameObject.FindObjectsOfType<Light>();
@@ -1374,7 +1379,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         else
         {
-            CharacterLightCulling();
+            //CharacterLightCulling();
         }
     }
 

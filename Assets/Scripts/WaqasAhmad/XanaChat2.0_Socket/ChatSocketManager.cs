@@ -150,12 +150,12 @@ public class ChatSocketManager : MonoBehaviour
     {
         Manager = new SocketManager(new Uri((address)));
         Manager.Socket.On<ConnectResponse>(SocketIOEventTypes.Connect, OnConnected);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
-        Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            eventId = XanaEventDetails.eventDetails.id;
-        }
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnError);
+        //Manager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    eventId = XanaEventDetails.eventDetails.id;
+        //}
         // Custom Method
         Manager.Socket.On<ChatUserData>("message", ReceiveMsgs);
         StartCoroutine(FetchOldMessages());
@@ -203,20 +203,20 @@ public class ChatSocketManager : MonoBehaviour
         if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
             StartCoroutine(SubmitGuestUserNameWithJson());
     }
-    void OnError(CustomError args)
-    {
-        Debug.LogError("Socket Error: " + args.message);
-        isConnected = false;
-    }
-    void Onresult(CustomError args)
-    {
-        //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
-    }
-    void OnSocketDisconnect(CustomError args)
-    {
-        Debug.Log("Socket Disconnected: " + args.message);
-        isConnected = false;
-    }
+    //void OnError(CustomError args)
+    //{
+    //    Debug.LogError("Socket Error: " + args.message);
+    //    isConnected = false;
+    //}
+    //void Onresult(CustomError args)
+    //{
+    //    //Debug.Log("<color=red>" + string.Format("Error: {0}", args.ToString()) + "</color>");
+    //}
+    //void OnSocketDisconnect(CustomError args)
+    //{
+    //    Debug.Log("Socket Disconnected: " + args.message);
+    //    isConnected = false;
+    //}
 
     void OnApplicationPause(bool pauseStatus)
     {
@@ -272,10 +272,10 @@ public class ChatSocketManager : MonoBehaviour
         string event_Id = "1";
 
         // Checking For Event
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            event_Id = XanaEventDetails.eventDetails.id.ToString();
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    event_Id = XanaEventDetails.eventDetails.id.ToString();
+        //}
         eventId = int.Parse(event_Id);
 
         if (!npcId.IsNullOrEmpty())

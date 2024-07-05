@@ -77,7 +77,7 @@ public class MultiplayerComponent : MonoBehaviour
                 }
             }
 
-            Debug.LogError("Set Data" + itemData.ItemID + "   " + itemData.RuntimeItemID);
+          
 
             transform.SetParent(BMD.builderAssetsParent);
             XanaItem xanaItem = gameObject.AddComponent<XanaItem>();

@@ -44,7 +44,7 @@ public class UGCManager : MonoBehaviour
         texture = null;
         InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
         InventoryManager.instance.itemData.CharactertypeAi = false;
-        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+     //   GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
     public void OnClickSelfieButton()
     {
@@ -198,7 +198,7 @@ public class UGCManager : MonoBehaviour
                 //    warningText.text = www.error;
                 //}
                 InventoryManager.instance.loaderPanel.SetActive(false);
-                GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+              //  GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
             }
             else
             {
@@ -211,7 +211,7 @@ public class UGCManager : MonoBehaviour
                     else { warningText.text = response.description_Jap; }
                     warningPanel.SetActive(true);
                     InventoryManager.instance.loaderPanel.SetActive(false);
-                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                  //  GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
                     //SNSNotificationHandler.Instance.ShowNotificationMsg(response.description);
                 }
                 else
@@ -234,7 +234,7 @@ public class UGCManager : MonoBehaviour
                     //    AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
                     //}
                     //Swipe_menu.instance.OnClickNext();
-                    GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+                   // GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
 
                     // release memory after result successfull
                     //Destroy(selfieSprite);

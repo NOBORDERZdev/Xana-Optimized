@@ -523,17 +523,17 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                teleportFeader.gameObject.activeInHierarchy)
-            {
-                JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-            }
-            else
-            {
-                loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-            }
+            //if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+            //    teleportFeader.gameObject.activeInHierarchy)
+            //{
+            //    JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+            //    JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+            //}
+            //else
+            //{
+            //    loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+            //    loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+            //}
 
 
             if (GameplayEntityLoader.instance && !loadMainScene)
@@ -557,21 +557,21 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy)
-                {
-                    JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                    JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                   // yield return new WaitForSeconds(1f);
-                    //HideLoading(ScreenOrientation.Portrait);
-                }
-                else
-                {
-                    loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
-                    loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                    //yield return new WaitForSeconds(1f);
-                    //HideLoading(ScreenOrientation.Portrait);
-                }
+                //if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
+                //    teleportFeader.gameObject.activeInHierarchy)
+                //{
+                //    JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                //    JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                //   // yield return new WaitForSeconds(1f);
+                //    //HideLoading(ScreenOrientation.Portrait);
+                //}
+                //else
+                //{
+                //    loadingSlider.DOFillAmount((currentValue / 100), 0.15f);
+                //    loadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
+                //    //yield return new WaitForSeconds(1f);
+                //    //HideLoading(ScreenOrientation.Portrait);
+                //}
             }
             yield return null;
         }

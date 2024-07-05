@@ -25,24 +25,24 @@ public class GamePlayFeatureHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            selfieBtn.SetActive(XanaEventDetails.eventDetails.selfie);
-            EmojiesBtn.SetActive(XanaEventDetails.eventDetails.emotes);
-            ReactionBtn.SetActive(XanaEventDetails.eventDetails.emotes);
-            favouriteBtn.SetActive(XanaEventDetails.eventDetails.emotes);
-            textChatBtn.SetActive(XanaEventDetails.eventDetails.messages);
-            textChatBtn2.SetActive(XanaEventDetails.eventDetails.messages);
-            voiceChatOnBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
-            voiceChatOffBtn1.enabled = XanaEventDetails.eventDetails.voiceChat;
-            voiceChatOffBtn2.enabled = XanaEventDetails.eventDetails.voiceChat;
-            voiceChatSettingBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
-            if (!XanaEventDetails.eventDetails.voiceChat)
-            {
-                ConstantsHolder.xanaConstants.mic = 1;
-                ConstantsHolder.xanaConstants.StopMic();
-            }
-        }
+        //if (XanaEventDetails.eventDetails.DataIsInitialized)
+        //{
+        //    selfieBtn.SetActive(XanaEventDetails.eventDetails.selfie);
+        //    EmojiesBtn.SetActive(XanaEventDetails.eventDetails.emotes);
+        //    ReactionBtn.SetActive(XanaEventDetails.eventDetails.emotes);
+        //    favouriteBtn.SetActive(XanaEventDetails.eventDetails.emotes);
+        //    textChatBtn.SetActive(XanaEventDetails.eventDetails.messages);
+        //    textChatBtn2.SetActive(XanaEventDetails.eventDetails.messages);
+        //    voiceChatOnBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
+        //    voiceChatOffBtn1.enabled = XanaEventDetails.eventDetails.voiceChat;
+        //    voiceChatOffBtn2.enabled = XanaEventDetails.eventDetails.voiceChat;
+        //    voiceChatSettingBtn.SetActive(XanaEventDetails.eventDetails.voiceChat);
+        //    if (!XanaEventDetails.eventDetails.voiceChat)
+        //    {
+        //        ConstantsHolder.xanaConstants.mic = 1;
+        //        ConstantsHolder.xanaConstants.StopMic();
+        //    }
+        //}
     }
 
     #endregion

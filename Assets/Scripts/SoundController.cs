@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Video;
 using DG.Tweening;
-using RenderHeads.Media.AVProVideo;
+//using RenderHeads.Media.AVProVideo;
 
 public class SoundController : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class SoundController : MonoBehaviour
     public AudioSource EffectsSource;
     public AudioSource MusicSource;
     public AudioSource videoPlayerSource;
-    public MediaPlayer livePlayerSource;
+    //public MediaPlayer livePlayerSource;
     public AudioSource npcDialogueSource;
 
     public AudioMixer gameSounds;

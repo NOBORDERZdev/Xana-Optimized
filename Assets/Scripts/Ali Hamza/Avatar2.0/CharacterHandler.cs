@@ -70,7 +70,7 @@ public class CharacterHandler : MonoBehaviour
             if (!ConstantsHolder.xanaConstants.isStoreActive)
             {
                 GameManager.Instance.m_CharacterAnimator.SetBool("Action", true);
-                GameManager.Instance.ActorManager.Init();
+                //GameManager.Instance.ActorManager.Init();
             }
             else
             {

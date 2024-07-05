@@ -92,8 +92,8 @@ public class TopMenuButtonController : MonoBehaviour
     }
     void OnInviteClick()
     {
-        if (SNSNotificationHandler.Instance != null)
-            SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");
+        //if (SNSNotificationHandler.Instance != null)
+        //    SNSNotificationHandler.Instance.ShowNotificationMsg("This features is coming soon");
     }
     public void CloseAllScreens()
     {

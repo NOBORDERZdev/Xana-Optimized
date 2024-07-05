@@ -17,13 +17,13 @@ public class LoadEmoteAnimations : MonoBehaviour
     void Awake()
     {
         instance = this;
-        EmoteAnimationHandler.Instance.AnimHighlight = highlightAnim;
-        EmoteAnimationHandler.Instance.popupPenal = animationPanel;
+        //EmoteAnimationHandler.Instance.AnimHighlight = highlightAnim;
+        //EmoteAnimationHandler.Instance.popupPenal = animationPanel;
     }
 
     private void Start()
     {
-        StartCoroutine(EmoteAnimationHandler.Instance.getAllAnimations());
+        //StartCoroutine(EmoteAnimationHandler.Instance.getAllAnimations());
     }
 
     public void OnEnable()

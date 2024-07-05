@@ -76,7 +76,7 @@ public class ScrollActivityNFT : MonoBehaviour
     public async void EquipBtnClicked()
     {
 
-        if (!UserPassManager.Instance.CheckSpecificItem("EquipButton"))
+        if (false)
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
 

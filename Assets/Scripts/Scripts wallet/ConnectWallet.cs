@@ -885,22 +885,22 @@ public class ConnectWallet : MonoBehaviour
                     {
                         case "alpha-pass":
                             {
-                                UserPassManager.Instance.GetGroupDetails("Access Pass");
+                               // UserPassManager.Instance.GetGroupDetails("Access Pass");
                                 break;
                             }
                         case "premium":
                             {
-                                UserPassManager.Instance.GetGroupDetails("Extra NFT");
+                             //   UserPassManager.Instance.GetGroupDetails("Extra NFT");
                                 break;
                             }
                         case "dj-event":
                             {
-                                UserPassManager.Instance.GetGroupDetails("djevent");
+                              //  UserPassManager.Instance.GetGroupDetails("djevent");
                                 break;
                             }
                         case "free":
                             {
-                                UserPassManager.Instance.GetGroupDetails("freeuser");
+                              //  UserPassManager.Instance.GetGroupDetails("freeuser");
 
                                 break;
                             }
@@ -1172,7 +1172,7 @@ public class ConnectWallet : MonoBehaviour
                     PlayerPrefs.SetString("PlayerName", localUsername);
                     if (GameManager.Instance.UiManager != null)//rik  
                     {
-                        GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                     //   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                     }
                 }
             }

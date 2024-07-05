@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Text;
 using TMPro;
 using UnityEngine;
-using static UserPostFeature;
+//using static UserPostFeature;
 
 public class LookAtCamera : MonoBehaviour
 {
@@ -12,8 +12,8 @@ public class LookAtCamera : MonoBehaviour
     Transform _cameraTransform;
     [SerializeField]
     TMPro.TMP_Text _postText;
-    [SerializeField]
-    UserPostFeature _postHandler;
+    //[SerializeField]
+    //UserPostFeature _postHandler;
     [SerializeField]
     public Transform _playerTransform;
     [SerializeField]
@@ -31,7 +31,7 @@ public class LookAtCamera : MonoBehaviour
             transform.position = LastDisablePosition;
 
         SnapToPosition = false;
-        _postHandler.OnUpdatePostText += UpdateText;
+        //_postHandler.OnUpdatePostText += UpdateText;
         BoxerNFTEventManager.OnNFTequip += (nft) => _playerTransform = boxerplayerTransform.transform;
         BoxerNFTEventManager.OnNFTUnequip += () => _playerTransform = newplayerTransform.transform;
     }
@@ -39,7 +39,7 @@ public class LookAtCamera : MonoBehaviour
     {
         LastDisablePosition = transform.position;
         SnapToPosition = true;
-        _postHandler.OnUpdatePostText -= UpdateText;
+        //_postHandler.OnUpdatePostText -= UpdateText;
         BoxerNFTEventManager.OnNFTequip -= (nft) => boxerplayerTransform = boxerplayerTransform.transform;
         BoxerNFTEventManager.OnNFTUnequip -= () => _playerTransform = newplayerTransform.transform;
 
@@ -50,7 +50,7 @@ public class LookAtCamera : MonoBehaviour
     }
     public void GetLatestPost()
     {
-        _postHandler.GetLatestPost(_postText);
+        //_postHandler.GetLatestPost(_postText);
     }
     void Update()
     {
@@ -61,7 +61,7 @@ public class LookAtCamera : MonoBehaviour
         if (txt != "")
         {
             _postText.text = txt;
-            _postHandler.InsertNewlines(_postText);
+            //_postHandler.InsertNewlines(_postText);
         }
     }
 }

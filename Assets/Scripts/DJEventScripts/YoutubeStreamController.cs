@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using WebSocketSharp;
 using UnityEngine.Video;
-using RenderHeads.Media.AVProVideo;
-using LightShaft.Scripts;
+//using RenderHeads.Media.AVProVideo;
+//using LightShaft.Scripts;
 
 public class YoutubeStreamController : MonoBehaviour
 {
@@ -22,7 +22,7 @@ public class YoutubeStreamController : MonoBehaviour
     private string PrevURL;
     private bool IsOldURL = true;
     public static Action playPrercordedVideo;
-    public StreamYoutubeVideo streamYoutubeVideo;
+    //public StreamYoutubeVideo streamYoutubeVideo;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -69,17 +69,17 @@ public class YoutubeStreamController : MonoBehaviour
                 SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             //}
             
-            SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
+            //SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
             SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
 
     private void Start()
     {
-        if (this.GetComponent<StreamYoutubeVideo>() != null)
-        {
-            streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
-        }
+        //if (this.GetComponent<StreamYoutubeVideo>() != null)
+        //{
+        //    streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+        //}
         //if (videoPlayerAudioSource)
         //    videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         //if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
@@ -151,11 +151,11 @@ public class YoutubeStreamController : MonoBehaviour
             //player.OnInternetDisconnect();
             NormalPlayer.Stop();
         }
-        else if (APIHandler.Data.isPlaying && APIHandler.Data.IsLive && !LiveStreamPlayer.GetComponent<MediaPlayer>().Info.HasVideo())
-        {
-            PrevURL = APIHandler.Data.URL;
-            SetUpStream();
-        }
+        //else if (APIHandler.Data.isPlaying && APIHandler.Data.IsLive && !LiveStreamPlayer.GetComponent<MediaPlayer>().Info.HasVideo())
+        //{
+        //    PrevURL = APIHandler.Data.URL;
+        //    SetUpStream();
+        //}
         else if (APIHandler.Data.isPlaying && APIHandler.Data.IsLive && !LiveStreamPlayer.activeInHierarchy)
         {
             SetUpStream();
@@ -189,11 +189,11 @@ public class YoutubeStreamController : MonoBehaviour
             //{
             //    player.GetLivestreamUrl(APIHandler.Data.URL);
             //}
-            streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
-            if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
-            {
-                NormalPlayer.gameObject.SetActive(false);
-            }
+            //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+            //if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+            //{
+            //    NormalPlayer.gameObject.SetActive(false);
+            //}
 
         }
         else
@@ -210,7 +210,7 @@ public class YoutubeStreamController : MonoBehaviour
             {
                 //NormalPlayer.url = APIHandler.Data.URL;
                 //NormalPlayer.Play();
-                streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+                //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
             }
             else if (APIHandler.Data.isPlaying == false)
             {

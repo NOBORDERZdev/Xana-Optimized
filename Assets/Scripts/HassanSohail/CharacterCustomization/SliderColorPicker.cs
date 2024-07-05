@@ -27,9 +27,9 @@ public class SliderColorPicker : MonoBehaviour
     // Invoked when the value of the slider changes.
     public void ValueChangeCheck()
     {
-        if (!UserPassManager.Instance.CheckSpecificItem(""))
+        if (/*!UserPassManager.Instance.CheckSpecificItem("")*/ false)
         {
-            UserPassManager.Instance.PremiumUserUI.SetActive(true);
+           // UserPassManager.Instance.PremiumUserUI.SetActive(true);
             print("Please Upgrade to Premium account");
             return;
         }

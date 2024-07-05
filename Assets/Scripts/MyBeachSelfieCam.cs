@@ -21,7 +21,7 @@ public class MyBeachSelfieCam : MonoBehaviour
         SelfieCapturePP();
     }
     public void SelfieCapturePP() {
-        if (CheckPostProcessEnable())
+        if (false)
         {
             Selfie.GetComponent<Camera>().GetUniversalAdditionalCameraData().renderPostProcessing = true;
             SelfieCapture.GetUniversalAdditionalCameraData().renderPostProcessing = true;
@@ -31,15 +31,15 @@ public class MyBeachSelfieCam : MonoBehaviour
     }
 
 
-    bool CheckPostProcessEnable()
-    {
-        if (m_SceneNames.Contains(WorldItemView.m_EnvName))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+    //bool CheckPostProcessEnable()
+    //{
+    //    //if (m_SceneNames.Contains(WorldItemView.m_EnvName))
+    //    //{
+    //    //    return true;
+    //    //}
+    //    //else
+    //    //{
+    //    //    return false;
+    //    //}
+    //}
 }

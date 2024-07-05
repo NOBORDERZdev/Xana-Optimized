@@ -170,7 +170,7 @@ public class InventoryManager : MonoBehaviour
     CharacterBodyParts characterBodyParts;
     public Sprite defaultPngForSkinIcon;
     AvatarController _avatarController;
-    public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+    //public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     private void Awake()
     {
@@ -1378,7 +1378,7 @@ public class InventoryManager : MonoBehaviour
         else
             OnClickHomeButton();
 
-        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
+        //OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }
 
     public void OnClickHomeButton()
@@ -4805,7 +4805,7 @@ public class InventoryManager : MonoBehaviour
     public void BackToMain()
     {
         GameManager.Instance.HomeCameraInputHandler(true);
-        GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
+        //GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
 }
 public class RequestedData

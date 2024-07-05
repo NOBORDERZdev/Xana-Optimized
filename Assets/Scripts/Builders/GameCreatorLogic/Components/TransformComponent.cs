@@ -11,9 +11,29 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     public bool rotateObject, ScaleObject, TransObject;
     float timeSpent =0;
     string ItemID;
+    float elapsed = 0f;
+
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
+
     private void Update()
     {
-        if(rotateObject)
+        elapsed += Time.deltaTime;
+        if (elapsed >= 1f)
+        {
+            elapsed = elapsed % 1f;
+            timeSpent++;
+            timeSpent %= toFroComponentData != null ? (toFroComponentData.timeToAnimate * 2) : rotateComponentData != null ? (rotateComponentData.timeToAnimate * 2) : (scalerComponentData.timeToAnimate * 2);//(rotateComponentData.timeToAnimate*2); 
+        }
+
+        object component;
+        if (rotateObject)
         {
             if (PhotonNetwork.IsMasterClient) {
                  NetworkSyncManager.instance.TransformComponentrotation[ItemID] =   transform.rotation ;
@@ -21,8 +41,14 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation,(Quaternion) NetworkSyncManager.instance.TransformComponentrotation[ItemID], this.m_Angle * (1.0f / PhotonNetwork.SerializationRate)); ;
-                timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID]  ;
+                if (NetworkSyncManager.instance.TransformComponentrotation.TryGetValue(ItemID, out component))
+                {
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, (Quaternion)NetworkSyncManager.instance.TransformComponentrotation[ItemID], this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
+                }
+                if (NetworkSyncManager.instance.TransformComponentTime.TryGetValue(ItemID, out var obj))
+                {
+                    timeSpent = obj;
+                }
             }
         }
         if (ScaleObject)
@@ -34,8 +60,14 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.localScale = (Vector3)NetworkSyncManager.instance.TransformComponentScale[ItemID];
-                timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID];
+                if (NetworkSyncManager.instance.TransformComponentScale.TryGetValue(ItemID, out component))
+                {
+                    transform.localScale = (Vector3)component;
+                }
+                if (NetworkSyncManager.instance.TransformComponentTime.TryGetValue(ItemID, out var obj))
+                {
+                    timeSpent = obj;
+                }
             }
 
         }
@@ -48,8 +80,14 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, (Vector3)NetworkSyncManager.instance.TransformComponentPos[ItemID], this.m_Distance * (1.0f / PhotonNetwork.SerializationRate)); ;
-                timeSpent = NetworkSyncManager.instance.TransformComponentTime[ItemID];
+                if (NetworkSyncManager.instance.TransformComponentPos.TryGetValue(ItemID, out component))
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, (Vector3)component, this.m_Distance * (1.0f / PhotonNetwork.SerializationRate)); ;
+                }
+                if (NetworkSyncManager.instance.TransformComponentTime.TryGetValue(ItemID, out var obj))
+                {
+                    timeSpent = obj;
+                }
             }
 
         }
@@ -61,10 +99,24 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
         NetworkSyncManager.instance.OnDeserilized += Sync;
     }
     void Sync()
-    { if(rotateObject)
-            this.m_Angle = Quaternion.Angle(transform.rotation,(Quaternion) NetworkSyncManager.instance.TransformComponentrotation[ItemID]);
-      if(TransObject)
-            this.m_Distance = Vector3.Distance(transform.position, (Vector3)NetworkSyncManager.instance.TransformComponentPos[ItemID]);
+    {
+        object component;
+
+
+        if (rotateObject)
+        {
+            if (NetworkSyncManager.instance.TransformComponentrotation.TryGetValue(ItemID, out component))
+            {
+                this.m_Angle = Quaternion.Angle(transform.rotation, (Quaternion)component);
+            }
+        }
+        if (TransObject)
+        {
+            if (NetworkSyncManager.instance.TransformComponentPos.TryGetValue(ItemID, out component))
+            {
+                this.m_Distance = Vector3.Distance(transform.position, (Vector3)component);
+            }
+        }
     }
     public void increasTime()
     {
@@ -325,7 +377,40 @@ public class TransformComponent : ItemComponent, IInRoomCallbacks
     {
        if(newMasterClient==PhotonNetwork.LocalPlayer)
         {
+            if (rotateObject)
+            {
+                if(timeSpent > rotateComponentData.timeToAnimate)
+                {
+                    RotateFromBtoA();
+                }
+                else
+                {
+                    RotateFromAtoB();
+                }
+            }
+            if(TransObject)
+            {
+                if (timeSpent > toFroComponentData.timeToAnimate)
+                {
+                    MoveFromBtoA();
+                }
+                else
+                {
+                    MoveFromAtoB();
+                }
 
+            }
+            if (ScaleObject)
+            {
+                if (timeSpent > scalerComponentData.timeToAnimate)
+                {
+                    ScaleFormBtoA();
+                }
+                else
+                {
+                    ScaleFormAtoB();
+                }
+            }
 
         }
     }

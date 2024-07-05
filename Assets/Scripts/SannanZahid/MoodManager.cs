@@ -66,13 +66,13 @@ public class MoodManager : MonoBehaviour
     {
        // Debug.LogError("DownloadAddressableTexture === " + "Assets/Animations/Mood Animations/" + animkey);
 
-        int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
-        if(NoOfAnimations == 1)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle", overrideController, _anim));
-        else
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle", overrideController, _anim));
-       if(!walkFlag)
-            StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk", overrideController, _anim));
+       // int NoOfAnimations = GameManager.Instance.ActorManager.GetNumberofIdleAnimations(animkey);
+       // if(NoOfAnimations == 1)
+       //     StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle" , "Idle", overrideController, _anim));
+       // else
+       //     StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Idle " + UnityEngine.Random.Range(1, 3), "Idle", overrideController, _anim));
+       //if(!walkFlag)
+       //     StartCoroutine(DownloadAddressableAnimationToAnimator(animkey + " Walk", "Walk", overrideController, _anim));
     }
     public IEnumerator DownloadAddressableAnimationToAnimator(string key, string NodeAnimToReplace, AnimatorOverrideController overrideController, Animator _anim)
     {
@@ -135,7 +135,7 @@ public class MoodManager : MonoBehaviour
 
                 if (nodeAnimToReplace == "Idle")
                 {
-                    anim.transform.GetComponent<Actor>().ActionClipTime = newClip.length;
+                    //anim.transform.GetComponent<Actor>().ActionClipTime = newClip.length;
                 }
 
                 StartCoroutine(ResetMenuActionBool(anim));

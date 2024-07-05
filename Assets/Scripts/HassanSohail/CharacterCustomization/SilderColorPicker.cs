@@ -71,9 +71,9 @@ public class SilderColorPicker : MonoBehaviour
     public void ValueChangeCheck()
     {
 
-        if (!UserPassManager.Instance.CheckSpecificItem(sliderCategory.ToString()))
+        if (false)
         {
-            UserPassManager.Instance.PremiumUserUI.SetActive(true);
+           // UserPassManager.Instance.PremiumUserUI.SetActive(true);
 
             print("Please Upgrade to Premium account");
             return;

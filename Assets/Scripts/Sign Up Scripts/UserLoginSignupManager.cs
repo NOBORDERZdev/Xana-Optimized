@@ -92,16 +92,16 @@ public class UserLoginSignupManager : MonoBehaviour
         instance = this;
         StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
        
-        if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
-        {
-            SaveCharacterProperties.instance.CreateFileFortheFirstTime();
-        }
+        //if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
+        //{
+        //    SaveCharacterProperties.instance.CreateFileFortheFirstTime();
+        //}
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
-        if (ref_EyesBlinking == null)
-            ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
+        //if (ref_EyesBlinking == null)
+        //    ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
 
         if (ref_EyesBlinking)
         {
@@ -153,16 +153,16 @@ public class UserLoginSignupManager : MonoBehaviour
                         }
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                           // UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
                         {
                             if (PlayerPrefs.GetInt("WalletLogin") != 1)
                             {
-                                UserPassManager.Instance.GetGroupDetails("guest");
+                              //  UserPassManager.Instance.GetGroupDetails("guest");
                             }
                         }
-                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                      //  UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
 
@@ -333,14 +333,14 @@ public class UserLoginSignupManager : MonoBehaviour
         GetUserClothData();
         GetOwnedNFTsFromAPI();
         
-        UserPassManager.Instance.GetGroupDetails("freeuser");
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+      //  UserPassManager.Instance.GetGroupDetails("freeuser");
+      //  UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(WaitForDeepLink());
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (GameManager.Instance.UiManager != null)//rik
         {
-            GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+           // GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
+           // GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -370,32 +370,32 @@ public class UserLoginSignupManager : MonoBehaviour
                 {
                     case "alpha-pass":
                         {
-                            UserPassManager.Instance.GetGroupDetails("Access Pass");
+                            //UserPassManager.Instance.GetGroupDetails("Access Pass");
                             break;
                         }
                     case "premium":
                         {
-                            UserPassManager.Instance.GetGroupDetails("Extra NFT");
+                         //   UserPassManager.Instance.GetGroupDetails("Extra NFT");
                             break;
                         }
                     case "dj-event":
                         {
-                            UserPassManager.Instance.GetGroupDetails("djevent");
+                          //  UserPassManager.Instance.GetGroupDetails("djevent");
                             break;
                         }
                     case "free":
                         {
-                            UserPassManager.Instance.GetGroupDetails("freeuser");
+                         //   UserPassManager.Instance.GetGroupDetails("freeuser");
                             break;
                         }
                     case "vip-pass":
                         {
-                            UserPassManager.Instance.GetGroupDetails("vip-pass");
+                          //  UserPassManager.Instance.GetGroupDetails("vip-pass");
                             break;
                         }
                     case "astroboy":
                         {
-                            UserPassManager.Instance.GetGroupDetails("astroboy");
+                         //   UserPassManager.Instance.GetGroupDetails("astroboy");
                             break;
                         }
                 }
@@ -404,9 +404,9 @@ public class UserLoginSignupManager : MonoBehaviour
         else
         {
             //print("you have no Premium Access ");
-            UserPassManager.Instance.GetGroupDetails("freeuser");
+         //   UserPassManager.Instance.GetGroupDetails("freeuser");
         }
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+       // UserPassManager.Instance.GetGroupDetailsForComingSoon();
         yield return null;
     }
 
@@ -506,14 +506,14 @@ public class UserLoginSignupManager : MonoBehaviour
         SubmitSetDeviceToken();
         GetUserClothData();
         GetOwnedNFTsFromAPI();
-        UserPassManager.Instance.GetGroupDetails("freeuser");
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+       // UserPassManager.Instance.GetGroupDetails("freeuser");
+       // UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
         if (GameManager.Instance.UiManager != null)//rik
         {
-            GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+          //  GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
+//GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
         if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
         {
@@ -914,7 +914,7 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetString("PlayerName", userUsername);
             ConstantsHolder.userName = userUsername;
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
+          //  GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
             OpenUIPanel(16);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
@@ -946,7 +946,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 
                 Debug.Log("Email Signup");
                 GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
-                UserPassManager.Instance.GetGroupDetails("freeuser");
+                //UserPassManager.Instance.GetGroupDetails("freeuser");
             }));
         }
      
@@ -1017,7 +1017,7 @@ public class UserLoginSignupManager : MonoBehaviour
                     else
                         CallBack(false);
                 }));
-                GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
+              //  GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             }
         }
         else
@@ -1176,8 +1176,8 @@ public class UserLoginSignupManager : MonoBehaviour
                 PlayerPrefs.SetString("LoggedInMail", myObject1.data.user.email);
                 PlayerPrefs.Save();
 
-                UserPassManager.Instance.GetGroupDetails("freeuser");
-                UserPassManager.Instance.GetGroupDetailsForComingSoon();
+            //    UserPassManager.Instance.GetGroupDetails("freeuser");
+            //    UserPassManager.Instance.GetGroupDetailsForComingSoon();
 
                 GetOwnedNFTsFromAPI();
                 SubmitSetDeviceToken();
@@ -1628,11 +1628,11 @@ public class UserLoginSignupManager : MonoBehaviour
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
-        if (FeedUIController.Instance.SNSSettingController != null)
-        {
-            FeedUIController.Instance.SNSSettingController.LogoutSuccess();
-        }
+      //  UserPassManager.Instance.testing = false;
+        //if (FeedUIController.Instance.SNSSettingController != null)
+        //{
+        //    FeedUIController.Instance.SNSSettingController.LogoutSuccess();
+        //}
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (InventoryManager.instance.MultipleSave)
         {
@@ -2116,7 +2116,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ProfilePicNextButton.interactable = false;
             ProfilePicScreenLoader.SetActive(true);
             yield return new WaitForSeconds(0.5f);
-            AWSHandler.Instance.PostAvatarObject(SetProfileAvatarTempPath, SetProfileAvatarTempFilename, "SignupProfilePicUpload");//upload avatar image on AWS.
+            //AWSHandler.Instance.PostAvatarObject(SetProfileAvatarTempPath, SetProfileAvatarTempFilename, "SignupProfilePicUpload");//upload avatar image on AWS.
         }
     }
     

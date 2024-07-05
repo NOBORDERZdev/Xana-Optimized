@@ -123,13 +123,13 @@ public class GalleryImageDetails : MonoBehaviour
                 UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, true, false, false);
             }
 
-            if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
-            {
-                DataType myType = DataType.Image;
-                if (m_IsVideo)
-                    myType = DataType.Video;
-                JjInfoManager.Instance.SendCallAnalytics(myType, "---");
-            }
+            //if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("JJ MUSEUM"))
+            //{
+            //    DataType myType = DataType.Image;
+            //    if (m_IsVideo)
+            //        myType = DataType.Video;
+            //    JjInfoManager.Instance.SendCallAnalytics(myType, "---");
+            //}
 
         }
     }

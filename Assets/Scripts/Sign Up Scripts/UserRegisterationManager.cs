@@ -180,7 +180,7 @@ public class UserRegisterationManager : MonoBehaviour
     public int btnClickedNo = 0;
     public void ShowCommingsoonPopup()
     {
-        SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
+        //SNSNotificationHandler.Instance.ShowNotificationMsg("Coming soon");
     }
 
     #region WelcomeScreen
@@ -449,8 +449,8 @@ public class UserRegisterationManager : MonoBehaviour
         PlayerPrefs.Save();
         if (GameManager.Instance.UiManager != null)//rik
         {
-            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
+            //GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+            //GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
         }
     }
     IEnumerator WaitForDeepLink()
@@ -570,32 +570,32 @@ public class UserRegisterationManager : MonoBehaviour
                 {
                     case "alpha-pass":
                         {
-                            UserPassManager.Instance.GetGroupDetails("Access Pass");
+                          //  UserPassManager.Instance.GetGroupDetails("Access Pass");
                             break;
                         }
                     case "premium":
                         {
-                            UserPassManager.Instance.GetGroupDetails("Extra NFT");
+                         //   UserPassManager.Instance.GetGroupDetails("Extra NFT");
                             break;
                         }
                     case "dj-event":
                         {
-                            UserPassManager.Instance.GetGroupDetails("djevent");
+                        //    UserPassManager.Instance.GetGroupDetails("djevent");
                             break;
                         }
                     case "free":
                         {
-                            UserPassManager.Instance.GetGroupDetails("freeuser");
+                        //    UserPassManager.Instance.GetGroupDetails("freeuser");
                             break;
                         }
                     case "vip-pass":
                         {
-                            UserPassManager.Instance.GetGroupDetails("vip-pass");
+                     //       UserPassManager.Instance.GetGroupDetails("vip-pass");
                             break;
                         }
                     case "astroboy":
                         {
-                            UserPassManager.Instance.GetGroupDetails("astroboy");
+                       //     UserPassManager.Instance.GetGroupDetails("astroboy");
                             break;
                         }
                 }
@@ -604,9 +604,9 @@ public class UserRegisterationManager : MonoBehaviour
         else
         {
             //print("you have no Premium Access ");
-            UserPassManager.Instance.GetGroupDetails("freeuser");
+         //   UserPassManager.Instance.GetGroupDetails("freeuser");
         }
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+      //  UserPassManager.Instance.GetGroupDetailsForComingSoon();
     }
 
     #region Sign Up Animations
@@ -1131,10 +1131,10 @@ public class UserRegisterationManager : MonoBehaviour
     }
     IEnumerator WaitAndLogout()
     {
-        if (FeedUIController.Instance.SNSSettingController != null)
-        {
-            FeedUIController.Instance.SNSSettingController.LogoutSuccess();
-        }
+        //if (FeedUIController.Instance.SNSSettingController != null)
+        //{
+        //    FeedUIController.Instance.SNSSettingController.LogoutSuccess();
+        //}
         yield return null;
     }
     public IEnumerator HitLogOutAPI(string url, string Jsondata, Action<bool> CallBack)
@@ -1257,7 +1257,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+      //  UserPassManager.Instance.testing = false;
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
@@ -2654,7 +2654,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.Save();
                     LoggedIn = true;
                     StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, JsonOfName, NameofUser));
-                    GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    //GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
                 }
             }
         }
@@ -3370,16 +3370,16 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                            //UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
                         {
                             if (PlayerPrefs.GetInt("WalletLogin") != 1)
                             {
-                                UserPassManager.Instance.GetGroupDetails("guest");
+                              //  UserPassManager.Instance.GetGroupDetails("guest");
                             }
                         }
-                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                      //  UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
 
@@ -3434,11 +3434,11 @@ public class UserRegisterationManager : MonoBehaviour
 
                     if (myObject1.data.isAdmin)
                     {
-                        UserPassManager.Instance.testing = true;
+                      //  UserPassManager.Instance.testing = true;
                     }
                     else
                     {
-                        UserPassManager.Instance.testing = false;
+                     //   UserPassManager.Instance.testing = false;
                     }
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
@@ -3469,11 +3469,11 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
                         {
-                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                       //     UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
                         }
                         else
                         {
-                            UserPassManager.Instance.GetGroupDetails("freeuser");
+                      //      UserPassManager.Instance.GetGroupDetails("freeuser");
                         }
                     }
 
@@ -3483,7 +3483,7 @@ public class UserRegisterationManager : MonoBehaviour
                     PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
 
                     GetOwnedNFTsFromAPI();
-                    UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                  //  UserPassManager.Instance.GetGroupDetailsForComingSoon();
                     SubmitSetDeviceToken();
                     LoggedInAsGuest = false;
                     getdatafromserver();
@@ -3527,12 +3527,12 @@ public class UserRegisterationManager : MonoBehaviour
                         }
                         if (GameManager.Instance.UiManager != null)//rik
                         {
-                            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
+                         //   GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
                         }
                     }
 
 
-                    GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().SpawnFriends();
+                  //  GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().SpawnFriends();
 
                 }
             }
@@ -3709,32 +3709,32 @@ public class UserRegisterationManager : MonoBehaviour
                         {
                             case "alpha-pass":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("Access Pass");
+                                   // UserPassManager.Instance.GetGroupDetails("Access Pass");
                                     break;
                                 }
                             case "premium":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("Extra NFT");
+                                   // UserPassManager.Instance.GetGroupDetails("Extra NFT");
                                     break;
                                 }
                             case "dj-event":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("djevent");
+                                  //  UserPassManager.Instance.GetGroupDetails("djevent");
                                     break;
                                 }
                             case "free":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("freeuser");
+                                   // UserPassManager.Instance.GetGroupDetails("freeuser");
                                     break;
                                 }
                             case "vip-pass":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("vip-pass");
+                                  //  UserPassManager.Instance.GetGroupDetails("vip-pass");
                                     break;
                                 }
                             case "astroboy":
                                 {
-                                    UserPassManager.Instance.GetGroupDetails("astroboy");
+                                  //  UserPassManager.Instance.GetGroupDetails("astroboy");
                                     break;
                                 }
                         }
@@ -3799,8 +3799,8 @@ public class UserRegisterationManager : MonoBehaviour
         StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         if (GameManager.Instance.UiManager != null)//rik
         {
-            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
+          //  GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+          //  GameManager.Instance.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().GetComponent<HomeFooterHandler>().CheckLoginOrNotForFooterButton();
         }
     }
 

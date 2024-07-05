@@ -33,7 +33,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public static bool m_MuseumIsClicked = false;
     public static bool m_isSignUpPassed = false;
     public GameObject m_WorldPlayPanel;
-    public ScrollActivity scrollActivity;
+    //public ScrollActivity scrollActivity;
     public Transform AvatarIcon;
     public Sprite NoAvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
@@ -130,7 +130,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         //}
         JoinEventBtn.onClick.RemoveAllListeners();
 
-        scrollActivity.enabled = false;
+        //scrollActivity.enabled = false;
         //ScrollControllerRef.verticalNormalizedPosition = 1f;
         WorldNameTxt.GetComponent<TextLocalization>().LocalizeTextText(worldName);
         WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(worldDescription);
@@ -222,48 +222,48 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
 
     public void SetPanelToBottom()
     {
-        if (scrollActivity.gameObject.activeInHierarchy)
-        {
-            scrollActivity.BottomToTop();
-            CheckWorld();
-        }
+        //if (scrollActivity.gameObject.activeInHierarchy)
+        //{
+        //    scrollActivity.BottomToTop();
+        //    CheckWorld();
+        //}
     }
 
     public void CheckWorld()
     {
-        //  GameManager.Instance.UiManager.HomePage.SetActive(true);
-        //FadeImg.sprite = WorldIconImg.sprite;
-        //UpdateWorldPanel();
-        string EnvironmentName = WorldNameTxt.text;
-        if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
-        {
-            EnvironmentName = "DJ Event";
-            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
-            {
-                if (EnvironmentName == "DJ Event")
-                {
-                    UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
-                }
-                return;
-            }
-        }
-        else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
-        {
-            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
-            {
-                return;
-            }
-        }
-        else if (!_isBuilderScene)
-        {
-            if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
-            {
-                return;
-            }
-        }
-        GameManager.Instance.UiManager.ShowFooter(false);
-        m_MuseumIsClicked = false;
-        GameManager.Instance.WorldBool = true;
+        ////  GameManager.Instance.UiManager.HomePage.SetActive(true);
+        ////FadeImg.sprite = WorldIconImg.sprite;
+        ////UpdateWorldPanel();
+        //string EnvironmentName = WorldNameTxt.text;
+        //if (EnvironmentName == "TACHIBANA SHINNNOSUKE METAVERSE MEETUP" || EnvironmentName == "DJ Event")
+        //{
+        //    EnvironmentName = "DJ Event";
+        //    if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, false))
+        //    {
+        //        if (EnvironmentName == "DJ Event")
+        //        {
+        //            UserPassManager.Instance.PremiumUserUIDJEvent.SetActive(true);
+        //        }
+        //        return;
+        //    }
+        //}
+        //else if (EnvironmentName == " Astroboy x Tottori Metaverse Museum")
+        //{
+        //    if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName, true))
+        //    {
+        //        return;
+        //    }
+        //}
+        //else if (!_isBuilderScene)
+        //{
+        //    if (!UserPassManager.Instance.CheckSpecificItem(EnvironmentName))
+        //    {
+        //        return;
+        //    }
+        //}
+        //GameManager.Instance.UiManager.ShowFooter(false);
+        //m_MuseumIsClicked = false;
+        //GameManager.Instance.WorldBool = true;
     }
 
     public void UpdateWorldPanel()
@@ -320,15 +320,15 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             if (!m_WorldTags[i].IsNullOrEmpty())
             {
                 GameObject temp = Instantiate(tagsPrefab, tagsParent);
-                temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
-                temp.GetComponent<TagPrefabInfo>().tagName.text = temp.GetComponent<TagPrefabInfo>().tagName.text.ToUpper();
-                //temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
-                temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
-                if (i == 0)
-                {
-                    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
-                    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
-                }
+                //temp.GetComponent<TagPrefabInfo>().tagName.text = m_WorldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().tagName.text = temp.GetComponent<TagPrefabInfo>().tagName.text.ToUpper();
+                ////temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
+                //temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
+                //if (i == 0)
+                //{
+                //    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
+                //    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
+                //}
             }
         }
         tagsInstantiated = true;
@@ -353,7 +353,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     //Both below functions are called from inspector on world fav buttons
     public void FavoriteWorldBtnClicked()
     {
-        if (!UserPassManager.Instance.CheckSpecificItem("Favorite Worlds"))
+        if (false)
         {
             print("Please Upgrade to Premium account");
             return;
@@ -375,7 +375,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
                 followingWorld.SetActive(false);
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
-                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
+                    //thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = true;
                 //Reloading following space
                 WorldManager.instance.changeFollowState = true;
                 WorldManager.ReloadFollowingSpace?.Invoke();
@@ -403,7 +403,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
                 followWorldLoader.SetActive(false);
                 if (thumbnailPrefabRef)
                 {
-                    thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
+                    //thumbnailPrefabRef.GetComponent<WorldItemView>().isFavourite = false;
 
                 }
                 //Reloading following space

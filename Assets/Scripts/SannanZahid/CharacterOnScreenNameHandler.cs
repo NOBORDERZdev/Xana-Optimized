@@ -79,9 +79,9 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
             }
             else
             {
-                GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
-                UpdateNameText(tempMyProfileDataRoot.data.name);
-                UpdatePlayerNameRef(tempMyProfileDataRoot.data.name);
+                //GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
+              //  UpdateNameText(tempMyProfileDataRoot.data.name);
+//UpdatePlayerNameRef(tempMyProfileDataRoot.data.name);
             }
         }
     }
