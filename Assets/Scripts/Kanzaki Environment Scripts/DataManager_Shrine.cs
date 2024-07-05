@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -10,6 +9,7 @@ public class DataManager_Shrine : MonoBehaviour
 
     // API configs
     [SerializeField] private string id;
+    [SerializeField] private string userName = "";
     [SerializeField] private string url;
 
     // UI Configs
@@ -23,11 +23,26 @@ public class DataManager_Shrine : MonoBehaviour
         if (ConstantsHolder.userId != null)
         {
             id = ConstantsHolder.userId;
+            userName = ConstantsHolder.uniqueUserName;
         }
         StartCoroutine(CheckPoint());
+        StartCoroutine(InitPlayerDB(id, userName));
     }
     public void getPlayerData() => StartCoroutine(CommunicateWithDB(id));
 
+    public IEnumerator InitPlayerDB(string id, string userName)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("command", "initData");
+        form.AddField("id", id);
+        form.AddField("userName", userName);
+
+        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        yield return www.SendWebRequest();
+        Debug.Log("initData" + www.downloadHandler.text);
+        uIController_Shine.SetPointUI(www.downloadHandler.text);
+        www.Dispose();
+    }
     public IEnumerator CommunicateWithDB(string id) {
         WWWForm form = new WWWForm();
         form.AddField("command", "checkPoint");
@@ -53,7 +68,10 @@ public class DataManager_Shrine : MonoBehaviour
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
+
         string point = www.downloadHandler.text;
+        Debug.Log("getPoint" + point);
+
         uIController_Shine.SetPointUI(point);
 
         www.Dispose();

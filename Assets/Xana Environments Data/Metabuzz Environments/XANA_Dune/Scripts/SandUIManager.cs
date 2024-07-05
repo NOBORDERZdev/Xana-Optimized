@@ -191,7 +191,7 @@ public class SandUIManager : MonoBehaviour
         {
             Transform rank = rankingBoard.transform.GetChild(int.Parse(item.Value[2]) - 1);
 
-            rank.GetChild(0).GetComponent<Text>().text = item.Key;
+            rank.GetChild(0).GetComponent<Text>().text = item.Value[0];
             rank.GetChild(1).GetComponent<Text>().text = item.Value[1];
         }
 

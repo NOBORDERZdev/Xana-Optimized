@@ -19,6 +19,7 @@ public class ConstantsHolder : MonoBehaviour
     public static string xanaToken;
     public static string userId;
     public static string userName;
+    public static string uniqueUserName;
 
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;

@@ -9,53 +9,43 @@ using UnityEngine.UI;
 
 public class SandGameManager : MonoBehaviour
 {
+    public Localiztion local = Localiztion.En;
+
     private static SandGameManager instance = null;
 
-    [SerializeField] CrabSpawner crabSpr;
-    [SerializeField] SandUIManager uiMgr;
+    [SerializeField] private CrabSpawner crabSpr;
+    [SerializeField] private SandUIManager uiMgr;
 
-    [SerializeField] Transform startPoint;
-    [SerializeField] Transform resetPoint;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform resetPoint;
     private Transform player;
     private Transform mark;
     private Transform board;
 
-    [SerializeField] ParticleSystem finishParticle1;
-    [SerializeField] ParticleSystem finishParticle2;
+    [SerializeField] private ParticleSystem finishParticle1;
+    [SerializeField] private ParticleSystem finishParticle2;
 
-    [SerializeField] AudioSource rewardSound;
-    [SerializeField] Button resetBtn;
+    [SerializeField] private AudioSource rewardSound;
+    [SerializeField] private Button resetBtn;
 
-    InputManager input;
+    private InputManager input;
 
-    Animator Animator34
+    private Vector3 _player34InitialPos;
+    private bool _isSkatingControllerOn = false;
+    private string url = "https://7cjaa2ckmj.execute-api.ap-northeast-1.amazonaws.com/default/Lambda-XANA";
+    private Dictionary<string, string[]> rankList = new Dictionary<string, string[]>();
+    private const int startTime = 3;
+    private bool isStart = false;
+    private float timer = 0;
+    private float record = 0;
+    private string id = "88";
+    private Animator Animator34
     {
         get
         {
             return ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
         }
     }
-    private Vector3 _player34InitialPos;
-    private bool _isSkatingControllerOn = false;
-
-
-    private string url = "https://7cjaa2ckmj.execute-api.ap-northeast-1.amazonaws.com/default/Lambda-XANA";
-
-    Dictionary<string, string[]> rankList = new Dictionary<string, string[]>();
-    public Transform Player
-    {
-        get
-        {
-            return player;
-        }
-    }
-
-    const int startTime = 3;
-    bool isStart = false;
-    float timer = 0;
-    float limitTime = 60;
-    float record = 0;
-
     public float Timer
     {
         get
@@ -68,11 +58,13 @@ public class SandGameManager : MonoBehaviour
             timer = value;
         }
     }
-
-    public string id = "88";
-
-    public Localiztion local = Localiztion.En;
-
+    public Transform Player
+    {
+        get
+        {
+            return player;
+        }
+    }
     public static SandGameManager Instance
     {
         get
@@ -84,6 +76,7 @@ public class SandGameManager : MonoBehaviour
             return instance;
         }
     }
+
     private void Awake()
     {
         if (instance == null)
@@ -128,8 +121,6 @@ public class SandGameManager : MonoBehaviour
 
     IEnumerator InitRoutine()
     {
-        //playerInput = player.GetComponent<vThirdPersonInput>();
-        //playerCamera = Camera.main.GetComponent<vThirdPersonCamera>();
         yield return new WaitUntil(() => ReferencesForGamePlay.instance.m_34player);
 
         yield return new WaitUntil(() => ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedSkateBoard);
@@ -150,7 +141,6 @@ public class SandGameManager : MonoBehaviour
         StartCoroutine(CheckPoint());
         SetRanking();
         StopCoroutine(InitRoutine());
-        //StartCoroutine(Test());
     }
 
     IEnumerator CheckPoint()
@@ -158,6 +148,7 @@ public class SandGameManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("command", "getPoint");
         form.AddField("id", id);
+        //form.AddField("userName", userName);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -204,14 +195,12 @@ public class SandGameManager : MonoBehaviour
             playerRb.mass = 0.1f;
             playerRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             board.GetComponent<FixedJoint>().connectedBody = playerRb;
-            //player.AddComponent<XanaDuneControllerHandler>();
             player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
-            //StartCoroutine(GameplayEntityLoader.instance.setPlayerCamAngle(-88f, 1f));
-            GameplayEntityLoader.instance.PlayerCamera.m_XAxis.Value = -88f;
-            GameplayEntityLoader.instance.PlayerCamera.m_YAxis.Value = 1f;
-            PlayerCameraController.instance.lockRotation = true;
-            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
-            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
+            //GameplayEntityLoader.instance.PlayerCamera.m_XAxis.Value = -88f;
+            //GameplayEntityLoader.instance.PlayerCamera.m_YAxis.Value = 1f;
+            //PlayerCameraController.instance.lockRotation = true;
+            //PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
+            //PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
 
         }
         else
@@ -319,36 +308,41 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
         wwwSave.SendWebRequest();
         yield return new WaitUntil(() => wwwSave.isDone);
-        Debug.Log(wwwSave.downloadHandler.text);
+        Debug.Log("Sohaib API Response saveRecord : " + wwwSave.downloadHandler.text);
 
         WWWForm formPersonalRank = new WWWForm();
         formPersonalRank.AddField("command", "getPersonalRank");
         formPersonalRank.AddField("id", id);
-        // formPersonalRank.AddField("record", recordString);
 
         UnityWebRequest wwwPersonalRank = UnityWebRequest.Post(url, formPersonalRank);
         wwwPersonalRank.SendWebRequest();
         yield return new WaitUntil(() => wwwPersonalRank.isDone);
+
         string personalRank = wwwPersonalRank.downloadHandler.text;
-        Debug.Log(wwwPersonalRank.downloadProgress);
         Debug.Log(personalRank);
+
+        string unit = "";
 
         int rankReward = 0;
         int playReward = 0;
 
-        switch (int.Parse(personalRank))
+        switch ((int)(float.Parse(personalRank)))
         {
             case 1:
                 rankReward = 100;
+                unit = "st";
                 break;
             case 2:
                 rankReward = 70;
+                unit = "nd";
                 break;
             case 3:
                 rankReward = 50;
+                unit = "rd";
                 break;
             default:
                 rankReward = 0;
+                unit = "th";
                 break;
         }
 
@@ -389,7 +383,8 @@ public class SandGameManager : MonoBehaviour
         wwwPersonalRank.Dispose();
         wwwReward.Dispose();
 
-        uiMgr.ShowResult(playRecordString, personalRank + "nd", rewardString);
+
+        uiMgr.ShowResult(playRecordString, personalRank + unit, rewardString);
     }
 
     private void SetRanking()
@@ -412,7 +407,7 @@ public class SandGameManager : MonoBehaviour
         {
             string[] _ranks = ranks[i].Split(",");
 
-            string[] _rank = { _ranks[1], _ranks[2], (i + 1).ToString() };
+            string[] _rank = { _ranks[1], _ranks[3], (i + 1).ToString() };
             rankList.Add(_ranks[0], _rank);
         }
 
@@ -434,7 +429,6 @@ public class SandGameManager : MonoBehaviour
             Debug.Log(offset);
             y -= 360;
         }
-        //playerCamera.RotateCamera(-currentRot.eulerAngles.y / 3, (y - offset) / 3);
         SetPlayerPosition(startPoint.position);
     }
 
@@ -476,10 +470,6 @@ public class SandGameManager : MonoBehaviour
     }
     public void SetBoardOff()
     {
-        //Rigidbody rb = player.GetComponent<Rigidbody>();
-        //rb.mass = 50f;
-        //rb.freezeRotation = true;
-
         board.gameObject.SetActive(false);
         Animator34.SetBool("IsStart", false);
         _isSkatingControllerOn = false;
