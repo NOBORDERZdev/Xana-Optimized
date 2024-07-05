@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-       // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 60;
         OnceGuestBool = false;
         OnceLoginBool = false;
     }
