@@ -24,7 +24,7 @@ public class PartyTimerManager : MonoBehaviour
         {
             return;
         }
-        ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players to join..." + "60s";
+        ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
             if (startTime <= -1)
@@ -47,7 +47,7 @@ public class PartyTimerManager : MonoBehaviour
                 isTimerRunning = false;
                 ReferencesForGamePlay.instance.isMatchingTimerFinished = true;
             }
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players to join..." + currentTime.ToString("F0") + "s";
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + currentTime.ToString("F0") + "s";
         }
     }
 

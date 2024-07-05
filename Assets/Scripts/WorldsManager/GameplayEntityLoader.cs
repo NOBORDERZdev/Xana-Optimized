@@ -39,7 +39,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
-    public GameObject MultiplayerComponent;
     private GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
@@ -897,17 +896,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //}
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
-        if ( GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
-        {
-            foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
-            {
-                var multiplayerObject = Instantiate(this.MultiplayerComponent, _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                //multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
-        }
+        //if ( GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
+        //{
+        //    foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
+        //    {
+        //        var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
+        //        MultiplayerComponentData multiplayerComponentData = new();
+        //        multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+        //        //multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+        //        GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+        //    }
+        //}
 
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);

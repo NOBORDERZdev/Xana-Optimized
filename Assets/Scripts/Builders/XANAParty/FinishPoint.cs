@@ -46,7 +46,7 @@ public class FinishPoint : MonoBehaviour
         penguinAnimator.SetBool("isJump", false);
         penguinAnimator.SetBool("Win", true);
         FinishRaceCollider.enabled = false;
-        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("You won the race", 3, true);
+        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
         gamificationTemp.TriggerRaceStatusUpdate();
