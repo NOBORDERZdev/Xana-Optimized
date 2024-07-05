@@ -14,7 +14,7 @@ public class XANAPartyCameraController : MonoBehaviour
     public enum OrientationType { Landscape, Portrait };
     public OrientationType orientationType;
     [Space(5)]
-    float _editorLookSpeed = 0.01f;
+    float _editorLookSpeed = 0.05f;
     float _touchLookSpeed = 0.8f;
     [SerializeField]
     private CinemachineFreeLook cinemachine;
