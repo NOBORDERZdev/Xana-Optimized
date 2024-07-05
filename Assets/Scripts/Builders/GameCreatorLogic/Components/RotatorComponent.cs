@@ -26,8 +26,12 @@ public class RotatorComponent : ItemComponent
         PlayBehaviour();
     }
     void Sync()
-    {
-        this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)NetworkSyncManager.instance.rotatorComponent[itemID]));
+    { object component;
+        if (NetworkSyncManager.instance.rotatorComponent.TryGetValue(itemID,out component))
+        {
+            this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)component));
+        }
+       
     }
 
 
@@ -52,7 +56,7 @@ public class RotatorComponent : ItemComponent
                //     Debug.LogError("Rotation  " + currentRotation);
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(this.currentRotation), this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
                 }
-                else { Debug.LogError( "Roatating object count" + NetworkSyncManager.instance.rotatorComponent.Count); }
+               
             }
         }
         
