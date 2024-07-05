@@ -87,8 +87,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                this.transform.localPosition = new Vector3(0, -0.081f, 0);
-                this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
                 PhotonUserName.text = PhotonNetwork.NickName;
 
