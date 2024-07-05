@@ -79,7 +79,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     //Scripts References 
     [Header("Scripts References")]
-    public Web3Web2Handler _web3APIforWeb2;
+    //public Web3Web2Handler _web3APIforWeb2;
     public ConnectWallet connectingWalletRef;
     public userRoleScript userRoleScriptScriptableObj;
     public static UserLoginSignupManager instance;
@@ -97,7 +97,7 @@ public class UserLoginSignupManager : MonoBehaviour
         //    SaveCharacterProperties.instance.CreateFileFortheFirstTime();
         //}
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
-        Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
+        //Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
         CheckForAutoLogin();
         //if (ref_EyesBlinking == null)
@@ -118,7 +118,7 @@ public class UserLoginSignupManager : MonoBehaviour
     private void OnDisable()
     {
         verficationPlaceHolder.OnValueChanged.RemoveListener(delegate { ValueChangeCheck(); });
-        Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
+        //Web3Web2Handler.AllDataFetchedfromServer -= Web3EventForNFTData;
     }
 
      private void Start()
@@ -316,11 +316,7 @@ public class UserLoginSignupManager : MonoBehaviour
     //wallet login functions 
     public void WalletAutoLogin()
     {
-        if (!ConstantsHolder.loggedIn)
-        {
-            //Debug.Log("Firebase: Wallet Login Event");
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
-        }
+        
 
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
@@ -449,51 +445,47 @@ public class UserLoginSignupManager : MonoBehaviour
 
     private async void Web3EventForNFTData(string _userType)
     {
-        if (_userType == "Web2")
-        {
-            if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
-            {
-                await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
-                Debug.Log("<color=red> BoxerNFT: Wear NFT Funtionality Disabled </color>");
-                {
-                    //if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
-                    //{
-                    //    if (PlayerPrefs.HasKey("Equiped"))
-                    //    {
-                    //        ConstantsHolder.xanaConstants.isNFTEquiped = true;
-                    //        BoxerNFTEventManager.OnNFTequip?.Invoke(false);
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    PlayerPrefs.DeleteKey("Equiped");
-                    //    PlayerPrefs.DeleteKey("nftID");
-                    //    ConstantsHolder.xanaConstants.isNFTEquiped = false;
-                    //    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    //    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-                    //}
-                }
-            }
-            else
-            {
-                LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-            }
-        }
-        else
-        {
-            ////Debug.Log("not Logged in");
-        }
+        //if (_userType == "Web2")
+        //{
+        //    if (_web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.count > 0)
+        //    {
+        //        await _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+        //        Debug.Log("<color=red> BoxerNFT: Wear NFT Funtionality Disabled </color>");
+        //        {
+        //            //if (_web3APIforWeb2._OwnedNFTDataObj._NFTIDs.Contains(PlayerPrefs.GetInt("nftID")))
+        //            //{
+        //            //    if (PlayerPrefs.HasKey("Equiped"))
+        //            //    {
+        //            //        ConstantsHolder.xanaConstants.isNFTEquiped = true;
+        //            //        BoxerNFTEventManager.OnNFTequip?.Invoke(false);
+        //            //    }
+        //            //}
+        //            //else
+        //            //{
+        //            //    PlayerPrefs.DeleteKey("Equiped");
+        //            //    PlayerPrefs.DeleteKey("nftID");
+        //            //    ConstantsHolder.xanaConstants.isNFTEquiped = false;
+        //            //    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+        //            //    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        //            //}
+        //        }
+        //    }
+        //    else
+        //    {
+        //        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        //    }
+        //}
+        //else
+        //{
+        //    ////Debug.Log("not Logged in");
+        //}
     }
 
 
     public void LoginWithWallet()
     {
         Debug.Log("Login With Wallet");
-        if (!ConstantsHolder.loggedIn)
-        {
-            //Debug.Log("Firebase: Wallet Login Event");
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
-        }
+      
 
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
@@ -872,25 +864,25 @@ public class UserLoginSignupManager : MonoBehaviour
             UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
-        else if (userUsername.All(char.IsDigit))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
+        //else if (userUsername.All(char.IsDigit))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
+        //}
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
             keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
             UserDisplayNameErrors(keytoLocalize);
             return;
         }
-        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
+        //else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
 
-        }
+        //}
         else if (displayrname.EndsWith(" "))
         {
             displayrname = displayrname.TrimEnd(' ');
@@ -930,7 +922,6 @@ public class UserLoginSignupManager : MonoBehaviour
                    
                     Debug.Log("Wallet Signup");
                    
-                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
                    
                 }));
            
@@ -945,7 +936,6 @@ public class UserLoginSignupManager : MonoBehaviour
                 NameScreenNextButton.interactable = true;
                 
                 Debug.Log("Email Signup");
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
                 //UserPassManager.Instance.GetGroupDetails("freeuser");
             }));
         }
@@ -964,8 +954,8 @@ public class UserLoginSignupManager : MonoBehaviour
   }
     IEnumerator RegisterUserWithNewTechnique(string url, string Jsondata, string JsonOfName, String NameofUser, Action<bool> CallBack)
     {
-        _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        _web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
+        //_web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        //_web3APIforWeb2._OwnedNFTDataObj.FillAllListAsyncWaiting();
         var request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = Encoding.UTF8.GetBytes(Jsondata);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -1147,11 +1137,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             if (myObject1.success)
             {
-                if(!ConstantsHolder.loggedIn)
-                {
-                    Debug.Log("Email Login");
-                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Email_Success.ToString());
-                }
+               
 
                 ConstantsHolder.xanaliaToken = myObject1.data.xanaliaToken;
                 ConstantsHolder.xanaToken = myObject1.data.token;
@@ -1248,7 +1234,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void GetOwnedNFTsFromAPI()
     {
-        _web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
+        //_web3APIforWeb2.GetWeb2UserData(PlayerPrefs.GetString("publicID"));
     }
 
     public void SubmitSetDeviceToken()
@@ -1621,7 +1607,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.DeleteAll();//Delete All PlayerPrefs After Logout Success.......
         PlayerPrefs.SetString("TermsConditionAgreement", "Agree");
         PlayerPrefs.SetInt("ShowLiveUserCounter", simultaneousConnectionsValue);
-        Web3AuthCustom.Instance.logout();
+        //Web3AuthCustom.Instance.logout();
         if (LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy) { 
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         }
@@ -1644,10 +1630,10 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
         UserLoginSignupManager.instance.ShowWelcomeScreen();
-        if (_web3APIforWeb2._OwnedNFTDataObj != null)
-        {
-            _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
-        }
+        //if (_web3APIforWeb2._OwnedNFTDataObj != null)
+        //{
+        //    _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
+        //}
 
         yield return null;
     }

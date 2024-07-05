@@ -2,8 +2,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using Firebase.DynamicLinks;
-using Firebase.Crashlytics;
 using Photon.Pun.Demo.PunBasics;
 using UnityEditor;
 
@@ -28,30 +26,7 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
     }
     private void Start()
     {
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task => {
-            var dependencyStatus = task.Result;
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
-            {
-                Firebase.FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
-                Crashlytics.ReportUncaughtExceptionsAsFatal = true;
-                Firebase.FirebaseApp.LogLevel = Firebase.LogLevel.Debug;
-                ConstantsHolder.xanaConstants.isFirebaseInit = true;
-                string validateURL = Application.absoluteURL;
-                if (PlayerPrefs.GetInt("PlayerDeepLinkOpened") == 0 && validateURL != "")
-                {
-                   if(validateURL.Contains("ENV"))
-                   {
-                        OpenEnvironmentDeeplink(Application.absoluteURL);
-                   }
-                }
-
-            }
-            else
-            {
-                UnityEngine.Debug.Log(System.String.Format(
-                  "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-            }
-        });
+       
     }
     public void OpenEnvironmentDeeplink(string deeplinkUrl)
     {

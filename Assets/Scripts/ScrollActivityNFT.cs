@@ -90,17 +90,17 @@ public class ScrollActivityNFT : MonoBehaviour
         if (subButtonTextToCheck == "Equip")
         {
             EquipUIText.text= "Equiping...";
-            Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
-            bool _IsInOwnerShip = await task;
-            if (!_IsInOwnerShip)
-            {
-                NftDataScript.Instance.NftTransferedPanel.SetActive(true);
-                return;
-            }
-            else
-            {
-                print("NFT is in your OwnerShip Enjoy");
-            }
+            //Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((_NFTID).ToString());
+            ////bool _IsInOwnerShip = await task;
+            //if (!_IsInOwnerShip)
+            //{
+            //    NftDataScript.Instance.NftTransferedPanel.SetActive(true);
+            //    return;
+            //}
+            //else
+            //{
+            //    print("NFT is in your OwnerShip Enjoy");
+            //}
             PlayerPrefs.SetInt("nftID", _NFTID);
             PlayerPrefs.SetInt("Equiped", _NFTID);
             PlayerPrefs.Save();

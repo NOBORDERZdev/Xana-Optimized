@@ -118,10 +118,10 @@ public class WorldManager : MonoBehaviour
             if((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
             (PlayerPrefs.GetString("PlayerName") == ""))
             {
-                if (GameManager.Instance.UiManager.portraitSplashScreen != null)
-                {
-                     GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
-                }
+                //if (GameManager.Instance.UiManager.portraitSplashScreen != null)
+                //{
+                //     GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+                //}
                 LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
                 UserLoginSignupManager.instance.OpenUserNamePanel();
             }
@@ -794,34 +794,34 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
-                bool _IsInOwnerShip = await task;
-                if (!_IsInOwnerShip)
-                {
-                    PlayerPrefs.DeleteKey("Equiped");
-                    PlayerPrefs.DeleteKey("nftID");
-                    ConstantsHolder.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
-                    return;
-                }
-                else
-                {
-                    List<List> fighterNFTlist = UserLoginSignupManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
-                    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
-                    if (list != null)
-                    {
-                        HaveFighterNFT = true;
-                    }
-                    else
-                    {
-                        HaveFighterNFT = false;
-                    }
-                    //if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
-                    //{
-                    //    Debug.Log("Breaking down Arena World");
-                    //    fightingModulePopUp.SetActive(true);
-                    //    return;
+                //Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                //bool _IsInOwnerShip = await task;
+                //if (!_IsInOwnerShip)
+                //{
+                //    PlayerPrefs.DeleteKey("Equiped");
+                //    PlayerPrefs.DeleteKey("nftID");
+                //    ConstantsHolder.xanaConstants.isNFTEquiped = false;
+                //    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                //    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
+                //    return;
+                //}
+                //else
+                //{
+                //    List<List> fighterNFTlist = UserLoginSignupManager.instance._web3APIforWeb2._OwnedNFTDataObj.NFTlistdata.list.FindAll(o => o.collection.name.StartsWith("XANA x BreakingDown"));
+                //    List list = fighterNFTlist.Find(o => o.nftId.Equals(PlayerPrefs.GetInt("Equiped")));
+                //    if (list != null)
+                //    {
+                //        HaveFighterNFT = true;
+                //    }
+                //    else
+                //    {
+                //        HaveFighterNFT = false;
+                //    }
+                //    //if (WorldItemView.m_EnvName == "BreakingDown Arena" && !isCheckFightingModulePopUp && HaveFighterNFT)
+                //    //{
+                //    //    Debug.Log("Breaking down Arena World");
+                //    //    fightingModulePopUp.SetActive(true);
+                //    //    return;
                     //}
                 }
             }
@@ -846,9 +846,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }
         //if (WorldItemView.m_EnvName == "ZONE-X")
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
-    }
-
+    
     public async void JoinBuilderWorld()
     {
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
@@ -875,21 +873,21 @@ public class WorldManager : MonoBehaviour
         {
             if (PlayerPrefs.HasKey("Equiped"))
             {
-                Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
-                bool _IsInOwnerShip = await task;
-                if (!_IsInOwnerShip)
-                {
-                    PlayerPrefs.DeleteKey("Equiped");
-                    PlayerPrefs.DeleteKey("nftID");
-                    ConstantsHolder.xanaConstants.isNFTEquiped = false;
-                    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
-                    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
-                    return;
-                }
-                else
-                {
-                    print("NFT is in your OwnerShip Enjoy");
-                }
+                //Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
+                //bool _IsInOwnerShip = await task;
+                //if (!_IsInOwnerShip)
+                //{
+                //    PlayerPrefs.DeleteKey("Equiped");
+                //    PlayerPrefs.DeleteKey("nftID");
+                //    ConstantsHolder.xanaConstants.isNFTEquiped = false;
+                //    BoxerNFTEventManager.OnNFTUnequip?.Invoke();
+                //    NftDataScript.Instance.NftWorldEquipPanel.SetActive(true);
+                //    return;
+                //}
+                //else
+                //{
+                //    print("NFT is in your OwnerShip Enjoy");
+                //}
                 //if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
                 //{
                 //    if (!ConstantsHolder.xanaConstants.IsDeemoNFT)

@@ -628,7 +628,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         // Firebase Event for Join World
         Debug.Log("Player Spawn Completed --  Join World");
-        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
 
         /// <summary>
         /// Load NPC fake chat system
@@ -933,7 +932,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.builderMapID.ToString());
 
         Debug.Log("Player Spawn Completed --  Join World");
-        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
         yield return new WaitForSeconds(5f);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {

@@ -42,12 +42,12 @@ public class UIHandler : MonoBehaviour
 
     private void Awake()
     {
-        Canvas.GetComponent<CanvasGroup>().alpha = 0;
-        Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-        Canvas.GetComponent<CanvasGroup>().interactable = false;
-        _footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
-        _footerCan.GetComponent<CanvasGroup>().interactable = false;
-        _footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //Canvas.GetComponent<CanvasGroup>().alpha = 0;
+        //Canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
+        //Canvas.GetComponent<CanvasGroup>().interactable = false;
+        //_footerCan.GetComponent<CanvasGroup>().alpha = 0.0f;
+        //_footerCan.GetComponent<CanvasGroup>().interactable = false;
+        //_footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
 
