@@ -7,7 +7,6 @@ using System.Reflection;
 using UFE3D;
 using UnityEngine;
 using UnityEngine.Networking;
-using VTabs.Libs;
 using static CharacterHandler;
 using static InventoryManager;
 using static System.Net.WebRequestMethods;
