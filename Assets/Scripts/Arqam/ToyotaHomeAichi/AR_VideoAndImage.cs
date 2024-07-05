@@ -72,6 +72,14 @@ namespace Toyota
             imgVideo1x1.gameObject.SetActive(false);
             imgVideo4x3.gameObject.SetActive(false);
         }
+        private void OnDisable()
+        {
+            EraseDownloadedData();
+            Debug.Log("Data Cleared");
+            Resources.UnloadUnusedAssets();
+            
+           
+        }
         private void Start()
         {
             imgVideo16x9.AddComponent<Button>();
@@ -410,26 +418,30 @@ namespace Toyota
             if (imgVideo16x9.GetComponent<RawImage>().texture != null)
             {
                 DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture, true);
+                imgVideo16x9.GetComponent<RawImage>().texture = null;
                 imgVideo16x9.SetActive(false);
             }
             else if (imgVideo9x16.GetComponent<RawImage>().texture != null)
             {
                 DestroyImmediate(imgVideo9x16.GetComponent<RawImage>().texture, true);
+                imgVideo9x16.GetComponent<RawImage>().texture = null;
                 imgVideo9x16.SetActive(false);
             }
             else if (imgVideo1x1.GetComponent<RawImage>().texture != null)
             {
 
                 DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
+                imgVideo1x1.GetComponent<RawImage>().texture = null;
                 imgVideo1x1.SetActive(false);
             }
             else if (imgVideo4x3.GetComponent<RawImage>().texture != null)
             {
                 DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
+               imgVideo4x3.GetComponent<RawImage>().texture = null;
                 imgVideo4x3.SetActive(false);
             }
             if (liveVideoPlayer.activeSelf)
-                liveVideoPlayer.SetActive(false);
+               liveVideoPlayer.SetActive(false);
             disableFrame.Invoke();
         }
 
