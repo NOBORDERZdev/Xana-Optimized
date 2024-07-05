@@ -99,6 +99,13 @@ public class DynamicGalleryData : MonoBehaviour
         Resources.UnloadUnusedAssets();
         Caching.ClearCache();
     }
+    private void OnDisable()
+    {
+        DestroyImmediate(spriteObject.GetComponent<RawImage>().texture, true);
+        spriteObject.GetComponent<RawImage>().texture = null;
+        Resources.UnloadUnusedAssets();
+        Caching.ClearCache();
+    }
     public void StartNow()
     {
         frame = this.transform.GetChild(0).gameObject;

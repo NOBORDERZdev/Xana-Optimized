@@ -181,6 +181,8 @@ public class GalleryImageManager : MonoBehaviour
     {
         m_VideoPlayer.errorReceived -= M_VideoPlayerOnerrorReceived;
         m_VideoPlayer.prepareCompleted -= M_VideoPlayerOnprepareCompleted;
+        DestroyImmediate(m_Picture.GetComponent<Image>(), true);
+        Debug.Log("Image Data Cleared:"+ m_Picture.name); 
     }
 
     private void M_VideoPlayerOnprepareCompleted(VideoPlayer source)
