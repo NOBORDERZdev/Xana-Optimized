@@ -104,6 +104,7 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFrndMutalFrndContainer;
     [SerializeField] public GameObject AddFrndNoMutalFrnd;
     [SerializeField] public GameObject BestFriendFull;
+    public GameObject ConfirmUnfollowPanel;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFrndNoSearchFound;
