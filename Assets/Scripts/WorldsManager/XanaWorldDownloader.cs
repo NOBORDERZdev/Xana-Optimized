@@ -499,6 +499,9 @@ public class XanaWorldDownloader : MonoBehaviour
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
         AssignDomeId(newObj, _itemData);
+
+       
+
     }
 
     private static void InstantiateAsset(GameObject ObjectFromPool, ObjectsInfo _itemData, bool alreadyInstantiated)
@@ -535,6 +538,23 @@ public class XanaWorldDownloader : MonoBehaviour
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
+
+        #region DomeMiniMap
+
+        // Cache the reference to xanaConstants for repeated use
+        var xanaConstants = ConstantsHolder.xanaConstants;
+
+        // Use StringComparison.Ordinal for case-sensitive comparison as it's faster for non-linguistic data
+        if (xanaConstants.EnviornmentName.Equals("XANA Summit", StringComparison.Ordinal))
+        {
+            // Assuming newObj.transform doesn't change, consider caching GetComponentInChildren result if possible
+            var sceneSwitchComponent = DomeObject.transform.GetComponentInChildren<OnTriggerSceneSwitch>();
+            if (sceneSwitchComponent != null)
+            {
+                DomeMinimapDataHolder.OnInitDome?.Invoke(sceneSwitchComponent);
+            }
+        }
+        #endregion
     }
 
     IEnumerator CheckForUnloading()
