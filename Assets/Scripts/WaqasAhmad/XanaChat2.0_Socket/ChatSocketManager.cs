@@ -164,7 +164,7 @@ public class ChatSocketManager : MonoBehaviour
 
     IEnumerator RetryConnection()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         while (!isConnected && currentRetry < maxRetries)
         {
             Debug.Log($"Attempting to connect, try {currentRetry + 1}/{maxRetries}...");
