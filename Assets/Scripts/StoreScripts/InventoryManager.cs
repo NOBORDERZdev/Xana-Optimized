@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour
     [HideInInspector]
     public GetAllInfo JsonDataObj;
 
-    bool _shopOpened = false;
+    public bool ShopOpened = false;
 
     // APIS
     public string GetAllCategoriesAPI;
@@ -843,7 +843,7 @@ public class InventoryManager : MonoBehaviour
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 100, "asc", "name",!_shopOpened)); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 100, "asc", "name",!ShopOpened)); // API Update New Parameter added for sorting
             
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
@@ -1458,7 +1458,7 @@ public class InventoryManager : MonoBehaviour
     {
         panelIndex = TakeIndex;
         DisableAllItems();
-        _shopOpened = false;
+        ShopOpened = false;
         if (TakeIndex == 0)
         {
             // CLoth
@@ -1470,7 +1470,9 @@ public class InventoryManager : MonoBehaviour
         else if(TakeIndex == 1)
         {
             // Avatar
-            buttonIndex = 0;
+            //buttonIndex = 0; // Hair Section 
+            buttonIndex = 1; // Update to Face Section 
+
             MainPanelAvatar.SetActive(true);
             _ShopCartHandler.RemoveTryonCloth();
             UpdatePanelStatus(0);
@@ -1479,7 +1481,7 @@ public class InventoryManager : MonoBehaviour
         {
             print("Shop Btn Clicked " + TakeIndex);
             // Shop
-            _shopOpened = true;
+            ShopOpened = true;
             buttonIndex = 2;
             MainPanelShop.SetActive(true);
             buyBtn.SetActive(true);
@@ -1503,6 +1505,15 @@ public class InventoryManager : MonoBehaviour
 
         DisableColorPanels();
     }
+
+    void DisableBtnsWhenShopOpen(bool btnStatus)
+    {
+        myAvatarButton.interactable = btnStatus;
+        SaveStoreBtn.GetComponent<Button>().interactable = btnStatus;
+        UndoBtn.GetComponent<Button>().interactable = btnStatus;
+        RedoBtn.GetComponent<Button>().interactable = btnStatus;
+    }
+
     void DisableAllItems()
     {
         // Close Panels
@@ -1522,6 +1533,11 @@ public class InventoryManager : MonoBehaviour
         headerBtns[activePanleIndex].btn.GetComponent<SubBottons>().ClickBtnFtn(buttonIndex);
         headerBtns[activePanleIndex].btnLine.SetActive(true);
         headerBtns[activePanleIndex].btnText.color = HighlightedColor;
+
+        if(activePanleIndex == 2)
+            DisableBtnsWhenShopOpen(false);
+        else
+            DisableBtnsWhenShopOpen(true);
     }
   
 
@@ -1579,7 +1595,7 @@ public class InventoryManager : MonoBehaviour
         }
         AvatarPanel[m_GetIndex].SetActive(true);
         //CheckColorProperty(m_GetIndex);    // Temperarlily Disble Color Panel
-        if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeBrowPoints*/|| m_GetIndex == 9) //its a preset do nothing
+        if (m_GetIndex <= 10 ) //its a preset do nothing
         {
             // When Preset click than update the panel index
             PreviousSelectionCount = IndexofPanel;
@@ -3565,8 +3581,9 @@ public class InventoryManager : MonoBehaviour
     bool _switchTab = false;
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
-        int _ShopItemCountForTesting = 0;
+        int _ShopItemCount = 0;
         int loopStart = GetDownloadedNumber(TempEnumVar);
+       
         for (int i = loopStart; i < dataListOfItems.Count; i++)
         {
             if (_switchTab)
@@ -3575,12 +3592,12 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                if(_shopOpened && !dataListOfItems[i].isPurchased && !dataListOfItems[i].userPurchased)
+                if(ShopOpened && !dataListOfItems[i].isPurchased && !dataListOfItems[i].userPurchased)
                 {
-                    _ShopItemCountForTesting++;
+                    _ShopItemCount++;
                     InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
                 }
-                else if(!_shopOpened && (dataListOfItems[i].isPurchased || dataListOfItems[i].userPurchased))
+                else if(!ShopOpened && (dataListOfItems[i].isPurchased || dataListOfItems[i].userPurchased))
                 {
                     InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
                 }
@@ -3589,9 +3606,9 @@ public class InventoryManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        if (_shopOpened)
+        if (ShopOpened)
         {
-            if (dataListOfItems.Count == 0 || (_ShopItemCountForTesting == 0 && loopStart != dataListOfItems.Count))
+            if (dataListOfItems.Count == 0 || (_ShopItemCount == 0 && loopStart!= 0 && loopStart < dataListOfItems.Count && loopStart != dataListOfItems.Count))
             {
                 parentObj.transform.parent.GetChild(1).gameObject.SetActive(true);
                 Debug.Log("No Item Available in Shop");
@@ -3622,7 +3639,12 @@ public class InventoryManager : MonoBehaviour
         abc.isPurchased = useDefaultValue ? "true" : dataListOfItems[objId].isPurchased.ToString();
         abc.userPurchased = useDefaultValue ? "false" : dataListOfItems[objId].userPurchased.ToString();
         abc.name = useDefaultValue ? objName : dataListOfItems[objId].name.ToString();
-        abc.price = useDefaultValue ? "0" : dataListOfItems[objId].price;
+        
+        if (float.Parse(dataListOfItems[objId].price) < 1) // If the new asset has no price set, assign a value of 1.
+            abc.price = "1.00";
+        else
+            abc.price = useDefaultValue ? "1" : dataListOfItems[objId].price;
+
         abc.categoryId = useDefaultValue ? "0" : dataListOfItems[objId].categoryId.ToString();
         abc.subCategory = useDefaultValue ? "0" : dataListOfItems[objId].subCategoryId.ToString();
         abc.MyIndex = objId;
@@ -3630,7 +3652,7 @@ public class InventoryManager : MonoBehaviour
 
         UpdateCategoryDownloadedInt(TempEnumVar);
         L_ItemBtnObj.SetActive(true);
-        if (_shopOpened)
+        if (ShopOpened)
         {
             abc.PriceTxt.gameObject.SetActive(true);
             abc._coinImg.gameObject.SetActive(true);
@@ -3670,6 +3692,7 @@ public class InventoryManager : MonoBehaviour
         }
 
     }
+    
     void ResetDownloadCount()
     {
         headsDownlaodedCount = 0;

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using SimpleJSON;
 using UnityEngine.Networking;
+using Newtonsoft.Json.Linq;
 using System.Text;
 using System;
 using DigitalRubyShared;
@@ -145,6 +146,13 @@ public class ShopCartHandler : MonoBehaviour
                 string json = request.downloadHandler.text;
                 var _ParsingJson = JSON.Parse(json);
                 bool _Success = _ParsingJson["success"].AsBool;
+
+                // Temporary storage reference for the purchased products.
+                foreach (JSONNode item in _ParsingJson["data"].AsArray)
+                {
+                    GameManager.Instance.PurchasedItemIds.Add(item["item_id"]);
+                }
+
                 if (_Success)
                 {
                     ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully = true;

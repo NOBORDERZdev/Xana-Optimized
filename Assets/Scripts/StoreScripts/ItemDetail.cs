@@ -80,6 +80,9 @@ public class ItemDetail : MonoBehaviour
             StartRun();
 
         Invoke("Delay", 0.1f);    // AR changes
+        
+        // Check Item is Purchased Or Not
+        ItemPurchased_DisableMe();
     }
     private void OnDisable()
     {
@@ -90,14 +93,22 @@ public class ItemDetail : MonoBehaviour
             StopCoroutine(runningCoroutine);
         }
 
+        if (GetComponent<Image>())
+            GetComponent<Image>().enabled = false;
+
+
         //AssetCache.Instance.RemoveFromMemory(iconLink, true);       // AR changes
         //Destroy(this.gameObject);                                   // AR changes
-
-
         //this.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
     }
 
-
+    void ItemPurchased_DisableMe()
+    {
+        if (GameManager.Instance.PurchasedItemIds.Contains(id))
+        {
+            gameObject.SetActive(false);
+        }
+    }
     public void CheckDeemoNft()
     {
         if (!ConstantsHolder.xanaConstants.IsDeemoNFT)

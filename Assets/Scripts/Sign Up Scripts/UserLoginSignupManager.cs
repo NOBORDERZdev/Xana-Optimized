@@ -1595,6 +1595,7 @@ public class UserLoginSignupManager : MonoBehaviour
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
         }
 
+        GameManager.Instance.ClearPurchaseListData();
         yield return null;
     }
 
