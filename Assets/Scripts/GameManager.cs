@@ -76,6 +76,8 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
+        QuestDataHandler.Instance.CheckForTaskCDomplete();
+
 
         PurchasedItemIds = new List<string>();
     }
