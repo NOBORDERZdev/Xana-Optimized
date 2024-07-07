@@ -52,6 +52,7 @@ public class ShopCartHandler : MonoBehaviour
         if (selectedItems.Count == 0)
         {
             Debug.Log("No items selected");
+            SNSNotificationHandler.Instance.ShowNotificationMsg("No Item is Selected");
             return;
         }
 
