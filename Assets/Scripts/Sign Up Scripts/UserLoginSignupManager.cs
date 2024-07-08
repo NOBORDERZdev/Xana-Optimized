@@ -1540,6 +1540,7 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         _isUserClothDataFetched = false;
         Debug.Log("Logout Successfully");
+        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
         logoutAction?.Invoke();
         PlayerPrefs.SetInt("IsLoggedIn", 0);
         PlayerPrefs.SetInt("WalletLogin", 0);

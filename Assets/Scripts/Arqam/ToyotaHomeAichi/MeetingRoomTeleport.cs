@@ -27,6 +27,7 @@ public class MeetingRoomTeleport : MonoBehaviour
         ref_PlayerControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>();
         currentRoomId = ConstantsHolder.xanaConstants.MuseumID;
         userId = ConstantsHolder.userId;
+        //GameplayEntityLoader.instance.HomeBtn.onClick.AddListener(LeaveMeetingOnExit);
         if (APIBasepointManager.instance.IsXanaLive)
         {
             _thaRoomId = "2";
@@ -183,7 +184,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             {
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
-                THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
+                RegisterAsCompanyEmails.THAEmailDataResponse json = JsonConvert.DeserializeObject<RegisterAsCompanyEmails.THAEmailDataResponse>(data.ToString());
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
                     if (i < FB_Notification_Initilizer.Instance.companyEmails.Count)
