@@ -31,6 +31,9 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     public SavingCharacterDataClass _userAvatarData;
     public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
+    public static event Action OnFollowButtonPressed;
+
+    public static List<int> checkDublicateEntries = new List<int>();
     private void Awake()
     {
         defaultSP = profileImage.sprite;
@@ -291,7 +294,6 @@ public class FindFriendWithNameItem : MonoBehaviour
             singleUserProfileData.userProfile.bio = searchUserRow.userProfile.bio;
         }
         OtherPlayerProfileData.Instance.RequestGetUserDetails(singleUserProfileData,true);
-        print("Enter here ");
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.FriendsProfile);
     }
 
@@ -350,8 +352,28 @@ public class FindFriendWithNameItem : MonoBehaviour
                 //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
+
+                if (OnFollowButtonPressed != null)
+                {
+
+                    if (checkDublicateEntries.Count == 0)
+                    {
+                        checkDublicateEntries.Add(searchUserRow.id);
+                        OnFollowButtonPressed.Invoke();
+
+                    }
+                    else
+                    {
+                        if(!checkDublicateEntries.Contains(searchUserRow.id))
+                        {
+                            OnFollowButtonPressed.Invoke();
+                            checkDublicateEntries.Add(searchUserRow.id);
+                        }
+                    }
+                }
             }
         }
+
     }
 
     public void RequestFollowAUser(string user_Id)

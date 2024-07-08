@@ -239,12 +239,12 @@ public class BuildingDetect : MonoBehaviour
         gangsterCharacter = new GameObject("AvatarChange");
         gangsterCharacter.transform.SetParent(this.transform);
         gangsterCharacter.transform.localPosition = Vector3.zero;
-        gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+        gangsterCharacter.transform.localEulerAngles = curObject.transform.eulerAngles;
         //gangsterCharacter.SetActive(false);
 
         Vector3 pos = gangsterCharacter.transform.position;
         pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;
-        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, Quaternion.identity);
+        AppearanceChange = PhotonNetwork.Instantiate(GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex], pos, curObject.transform.localRotation);
 
         var hash = new ExitGames.Client.Photon.Hashtable();
         hash.Add("avatarChanger", (avatarIndex + 1) + "," + curObject.GetComponent<XanaItem>().itemData.RuntimeItemID + "," + this.GetComponent<PhotonView>().ViewID);

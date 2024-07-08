@@ -43,7 +43,7 @@ public class SNSNotificationHandler : MonoBehaviour
     Coroutine waitToCloseNotificationCo;
     IEnumerator NotificationPanelClose()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         notificationPanelOnb.DOAnchorPosY(250, 0.2f).SetEase(Ease.Linear).OnComplete(() =>
         notificationPanelOnb.gameObject.SetActive(false)
         ); 
