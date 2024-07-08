@@ -107,8 +107,8 @@ public class SummitUserDetailPopup : MonoBehaviour
     {
         UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
         string emailId = PlayerPrefs.GetString("LoggedInMail");
-        Debug.LogError("get data for" + PlayerPrefs.GetString("LoggedInMail"));
-        Debug.LogError("get data for token :- " + ConstantsHolder.xanaToken);
+       // Debug.LogError("get data for" + PlayerPrefs.GetString("LoggedInMail"));
+        //Debug.LogError("get data for token :- " + ConstantsHolder.xanaToken);
         if (string.IsNullOrEmpty(emailId))
             return null;
         unityWebRequest.SetRequestHeader("Authorization", ConstantsHolder.xanaToken);

@@ -98,7 +98,7 @@ public class UserLoginSignupManager : MonoBehaviour
         verficationPlaceHolder.OnValueChanged.AddListener(delegate { ValueChangeCheck(); });
         Web3Web2Handler.AllDataFetchedfromServer += Web3EventForNFTData;
 
-       // CheckForAutoLogin();
+        CheckForAutoLogin();
         if (ref_EyesBlinking == null)
             ref_EyesBlinking = GameManager.Instance.mainCharacter.GetComponent<EyesBlinking>();
 
@@ -143,11 +143,11 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            InventoryManager.instance.WalletLoggedinCall();
-            WalletAutoLogin();
+            //ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+            //ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+            //ConstantsHolder.isWalletLogin = true;
+            //InventoryManager.instance.WalletLoggedinCall();
+            //WalletAutoLogin();
         }
         else
         {
