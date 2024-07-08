@@ -10,6 +10,10 @@ public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
 
+    public bool pushToTalk;
+    public bool voiceChatRange;
+    public bool openLandingSceneDirectly;
+
     //Login Info
     public static bool isAdmin;
     public static bool isGuestLogin;
