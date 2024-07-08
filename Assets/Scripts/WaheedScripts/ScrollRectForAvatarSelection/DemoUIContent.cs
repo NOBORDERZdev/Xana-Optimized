@@ -15,7 +15,7 @@ public class DemoUIContent : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
 
         //_itemCount = rect.avatarData.Count;
 

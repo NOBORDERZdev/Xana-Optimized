@@ -895,6 +895,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
+                SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
                      var item= _CharacterData.myItemObj[i];

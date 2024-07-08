@@ -17,11 +17,11 @@ public class RegisterAsCompanyEmails : MonoBehaviour
         Web3AuthCustom.Instance.onLoginAction += UserLoggedIn;
         if (APIBasepointManager.instance.IsXanaLive)
         {
-            _thaCompanyId=2;
+            _thaCompanyId = 2;
         }
         else
         {
-            _thaCompanyId=4;
+            _thaCompanyId = 4;
         }
     }
     private void OnDisable()
@@ -62,11 +62,13 @@ public class RegisterAsCompanyEmails : MonoBehaviour
             }
         }
     }
+
+    // Call when user logged In
     private void SetEmailData()
     {
         FB_Notification_Initilizer.Instance.InitPushNotification(_toyotaUserEmail);
     }
-}
+
     #region OutputClasses
     public class THAJson
     {
@@ -91,7 +93,7 @@ public class RegisterAsCompanyEmails : MonoBehaviour
         public DateTime updatedAt { get; set; }
     }
     #endregion
-
+}
 
 
 
