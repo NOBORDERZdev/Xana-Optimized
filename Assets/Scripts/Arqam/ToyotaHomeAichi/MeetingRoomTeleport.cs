@@ -2,7 +2,6 @@ using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using Newtonsoft.Json;
-using static RegisterAsCompanyEmails;
 using System.Text;
 using UnityEngine.Networking;
 
@@ -185,7 +184,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             {
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
-                THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
+                RegisterAsCompanyEmails.THAEmailDataResponse json = JsonConvert.DeserializeObject<RegisterAsCompanyEmails.THAEmailDataResponse>(data.ToString());
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
                     if (i < FB_Notification_Initilizer.Instance.companyEmails.Count)
