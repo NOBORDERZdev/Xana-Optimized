@@ -24,6 +24,7 @@ public class TermsConditionsManager : MonoBehaviour
     }
     private void Start()
     {
+        Application.targetFrameRate = 30;
         gameManager = GameManager.Instance;
         if (ConstantsHolder.xanaConstants.screenType == ConstantsHolder.ScreenType.TabScreen)
             TabBG.SetActive(true);
