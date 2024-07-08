@@ -742,7 +742,7 @@ public class InventoryManager : MonoBehaviour
     /// <New APIS>
     IEnumerator WaitForAPICallCompleted(int m_GetIndex)
     {
-        CheckAPILoaded = true;
+        //CheckAPILoaded = true;
 
         print("wait Until : " + CheckAPILoaded);
         yield return new WaitUntil(() => CheckAPILoaded == true);
@@ -1574,6 +1574,10 @@ public class InventoryManager : MonoBehaviour
             if (SubCategoriesList.Count > 0)
             {
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex].id, false);
+            }
+            else
+            {
+                GetAllSubCategories();
             }
         }
         else
