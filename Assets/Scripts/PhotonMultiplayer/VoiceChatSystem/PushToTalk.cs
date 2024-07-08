@@ -27,12 +27,10 @@ public class PushToTalk : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public void OnPointerDownC(BaseEventData pointerEventData)
     {
-        Debug.LogError("mic turn on");
         XanaVoiceChat.instance.PushToTalk(true);
     }
     public void OnPointerUpC(BaseEventData pointerEventData)
     {
-        Debug.LogError("mic turn off");
         XanaVoiceChat.instance.PushToTalk(false);
     }
 }
