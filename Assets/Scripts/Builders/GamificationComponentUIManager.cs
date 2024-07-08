@@ -176,30 +176,30 @@ public class GamificationComponentUIManager : MonoBehaviour
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
 
-        //if (!isStory)
-        //{
-        //    if (StoryNarrationCoroutine != null)
-        //        StopCoroutine(StoryNarrationCoroutine);
-        //    isAgainCollided = true;
-        //    //StartCoroutine(WaitDelayStatement());
-        //    narrationTextUI.text = narrationText;
-        //    narrationScroll.enabled = false;
-        //    sliderNarrationUI.SetActive(false);
-        //    isStoryWritten = false;
-        //    Invoke(nameof(NarrationUILinesCount), 0.1f);
-        //}
-        //else
-        //{
-        storyCharCount = 0;
-        narrationTextUI.text = "";
-        if (StoryNarrationCoroutine == null)
-            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+        if (!isStory)
+        {
+            if (StoryNarrationCoroutine != null)
+                StopCoroutine(StoryNarrationCoroutine);
+            isAgainCollided = true;
+            //StartCoroutine(WaitDelayStatement());
+            narrationTextUI.text = narrationText;
+            narrationScroll.enabled = false;
+            sliderNarrationUI.SetActive(false);
+            isStoryWritten = false;
+            Invoke(nameof(NarrationUILinesCount), 0.1f);
+        }
         else
         {
-            StopCoroutine(StoryNarrationCoroutine);
-            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            storyCharCount = 0;
+            narrationTextUI.text = "";
+            if (StoryNarrationCoroutine == null)
+                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            else
+            {
+                StopCoroutine(StoryNarrationCoroutine);
+                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            }
         }
-        //}
 
     }
 
@@ -1179,23 +1179,23 @@ public class GamificationComponentUIManager : MonoBehaviour
             hyperLinkPopupTitleText.font = defaultFont;
             hyperlinkBrowseURLbtn.GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
         }
-        hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
         string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
 
-        isHyperlinkWritten = true;
+        hyperLinkPopupText.text = msg;
+        isHyperlinkWritten = false;
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
-        hyperLinkCharCount = 0;
-        hyperLinkPopupText.text = "";
-        if (HyperLinkCoroutine == null)
-            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
-        else
-        {
-            StopCoroutine(HyperLinkCoroutine);
-            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
-        }
+        //hyperLinkCharCount = 0;
+        //hyperLinkPopupText.text = "";
+        //if (HyperLinkCoroutine == null)
+        //    HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
+        //else
+        //{
+        //    StopCoroutine(HyperLinkCoroutine);
+        //    HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
+        //}
     }
 
     IEnumerator HyperLinkPopupCO(string msg)
