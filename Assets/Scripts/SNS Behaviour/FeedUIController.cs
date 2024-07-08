@@ -186,11 +186,7 @@ public class FeedUIController : MonoBehaviour
 
     public void SetAddFriendScreen(bool flag){
         AddFriendPanel.SetActive(flag);    
-        HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);

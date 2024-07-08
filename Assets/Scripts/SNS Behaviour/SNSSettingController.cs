@@ -170,7 +170,7 @@ public class SNSSettingController : MonoBehaviour
         {
             SimultaneousConnectionButton();
         }
-        GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
+        //GameManager.Instance.FriendsHomeManager.GetComponent<FriendHomeManager>().RemoveAllFriends();
         PlayerPrefs.SetInt("shownWelcome", 0);
         PlayerPrefs.SetString("UserNameAndPassword", "");
         GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
