@@ -311,6 +311,8 @@ public class ConstantsGod
     public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
     public static string GETALLDOMES = "/domes/getcreatedDomes";
     public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
+    public static string GETVISITDOMES = "/domes/getvisitedomes";
+    public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
     public static string GETUSERDETAIL = "/users/get-custom-intro";
     #endregion
     #region Toyota Email Api's
@@ -329,5 +331,11 @@ public class ConstantsGod
     public static string UpdateComapreQuestTaskDataPerformance = "/quest/get-user-performed-list";
     public static string ClaimQuestReward = "/quest/claim-quest-reward";
     public static string ClaimQuestRewardCheque = "/quest/claim-status/";
+    #endregion
+    #region Dome reward API's
+    public static string UpdateVisitedDomes = "/domes/domesvisits/";
+    public static string UpdateUserRaffleTickets = "/domes/updatetickets";
+    public static string GetUserRaffleTickets = "/domes/getusertickets";
+    public static string GetUserVisitedDomes = "/domes/getvisitedomes";
     #endregion
 }
