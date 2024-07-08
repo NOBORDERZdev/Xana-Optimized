@@ -3244,7 +3244,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &2999203947300560658
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3261,8 +3261,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &7697161651219652191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3594,7 +3593,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1b7085a31cec84e8c8c96d54ff1604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterBody: {fileID: 8456776999881212437}
   isBear: 0
   PhotonUserName: {fileID: 6686811161256284973}
   VoiceImage: {fileID: 2742726839227554249}
@@ -8533,7 +8531,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 180
@@ -8958,10 +8955,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 22
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1052969676160240803, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
       propertyPath: m_Layer
       value: 22
@@ -9222,11 +9215,6 @@ SkinnedMeshRenderer:
 --- !u!4 &7744152474089174612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7861831855079945968, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
-  m_PrefabInstance: {fileID: 8763415751287652164}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8456776999881212437 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 09c874ef82b328640a2df874ade297e5, type: 3}
   m_PrefabInstance: {fileID: 8763415751287652164}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &9085820162320193711 stripped

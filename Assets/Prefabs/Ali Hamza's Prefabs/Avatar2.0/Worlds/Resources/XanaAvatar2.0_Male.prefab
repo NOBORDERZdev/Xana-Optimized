@@ -5443,7 +5443,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &6365620064579044139
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5460,8 +5460,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6365620064579044150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5789,7 +5788,6 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_366
       ObjectType: Feet
-  AvatarGender: 0
   pelvisBoneNewCharacter: {fileID: 2072187989912639022}
 --- !u!114 &1279257289774219683
 MonoBehaviour:
@@ -5803,7 +5801,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1b7085a31cec84e8c8c96d54ff1604, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterBody: {fileID: 7652723438928954286}
   isBear: 0
   PhotonUserName: {fileID: 6573434894284421773}
   VoiceImage: {fileID: 2150786043869181889}
@@ -6503,7 +6500,7 @@ MonoBehaviour:
   blendHolder: {fileID: 8378100162615653196}
   AllEyeBlendShapes: []
   blinkingRate: 20
-  AreEyesClosed: 0
+  isEyeClose: 0
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
@@ -8139,7 +8136,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 180
@@ -8972,10 +8968,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 22
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1052969676160240803, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
       propertyPath: m_Layer
       value: 22
@@ -9217,11 +9209,6 @@ Transform:
 --- !u!137 &7466473432388231812 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -9120712023179273093, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
-  m_PrefabInstance: {fileID: 7418139670085091071}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7652723438928954286 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f82fea8f6eb9d7b4582300af2a4f9f9e, type: 3}
   m_PrefabInstance: {fileID: 7418139670085091071}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &8067619274684845218 stripped
