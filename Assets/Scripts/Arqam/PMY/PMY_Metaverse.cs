@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,13 +33,15 @@ public class PMY_Metaverse : MonoBehaviour
         //if (XanaConstants.xanaConstants.isBackFromPMY)      // when user back from PMY
         //{
         //XanaConstants.xanaConstants.isBackFromPMY = false;
+        UnityEngine.Debug.LogError("LoggIn" + IsLoggedIn());
         if (IsLoggedIn())
-            {
-                StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
-                StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
-            }
-            else
-                UserRegisterationManager.instance.welcomeScreen.SetActive(true);
+        {
+            UserRegisterationManager.instance.deleteAccScreen.SetActive(true);
+            //StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            StoreManager.instance._CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+        }
+        else
+            UserRegisterationManager.instance.welcomeScreen.SetActive(true);
         //}
         //else
         // PlayPMYManually();  // call when user launch the app except very first time
@@ -67,9 +70,13 @@ public class PMY_Metaverse : MonoBehaviour
     private bool IsLoggedIn()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        {
             return false;
+        }
         else
+        {
             return true;
+        }
     }
 
 }
