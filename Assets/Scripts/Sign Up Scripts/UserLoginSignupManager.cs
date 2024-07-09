@@ -494,13 +494,16 @@ public class UserLoginSignupManager : MonoBehaviour
             //Debug.Log("Firebase: Wallet Login Event");
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
         }
-
+       
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
         PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
+        UserLoginSignupManager.instance.OpenUserNamePanel();
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         PlayerPrefs.Save();
+        
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();

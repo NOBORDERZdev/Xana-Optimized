@@ -119,7 +119,7 @@ public class WorldManager : MonoBehaviour
             (PlayerPrefs.GetString("PlayerName") == ""))
             {
                 GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
-                UserLoginSignupManager.instance.OpenUserNamePanel();
+              
             }
             else
             {
