@@ -11,6 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Realtime;
+using Crosstales.BWF;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;
 using TMPro;
@@ -258,6 +259,12 @@ public class XanaChatSystem : MonoBehaviour
     }
     public void OnEnterSend()
     {
+        string removeBadWords = "";
+        if (!string.IsNullOrEmpty(InputFieldChat.text))
+        {
+            removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        }
+
         if (!PremiumUsersDetails.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
             //PremiumUsersDetails.Instance.PremiumUserUI.SetActive(true);
@@ -269,14 +276,15 @@ public class XanaChatSystem : MonoBehaviour
             print("Horayyy you have Access");
         }
 
-        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, this.InputFieldChat.text);
+        PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
         Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
-
-        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, this.InputFieldChat.text, CallBy.User, "");
+        Debug.LogError("MuseumId: " + XanaConstants.xanaConstants.MuseumID);
+        XanaChatSocket.onSendMsg?.Invoke(XanaConstants.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-        npcAlert?.Invoke(this.InputFieldChat.text);  // call npc's to start chat
+        npcAlert?.Invoke(removeBadWords);  // call npc's to start chat
 
+        removeBadWords = "";
         this.InputFieldChat.text = "";
     }
 
