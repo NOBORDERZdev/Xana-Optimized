@@ -314,9 +314,10 @@ public class SNS_APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        feedUIController.ShowLoader(false);
+                        //feedUIController.ShowLoader(false);
                         otherPlayerProfileData.OnFollowerIncreaseOrDecrease(true);//Inscrease follower count.......
                         feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
+                        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = true;
                         break;
                     case "Feed":
                         if (feedUIController != null)
@@ -372,10 +373,12 @@ public class SNS_APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        feedUIController.ShowLoader(false);
+                        //feedUIController.ShowLoader(false);
                         otherPlayerProfileData.OnFollowerIncreaseOrDecrease(false);//Descrease follower count.......
-
                         feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = true;
+                        if (feedUIController.ConfirmUnfollowPanel.activeInHierarchy)
+                            feedUIController.ConfirmUnfollowPanel.SetActive(false);
                         break;
                     case "Feed":
                         if (feedUIController != null)

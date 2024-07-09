@@ -104,7 +104,6 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] public GameObject AddFrndMutalFrndContainer;
     [SerializeField] public GameObject AddFrndNoMutalFrnd;
     [SerializeField] public GameObject BestFriendFull;
-    public GameObject ConfirmUnfollowPanel;
     [SerializeField] GameObject AddFriendSerachBar;
     [SerializeField] GameObject AddFriendFollowing;
     [SerializeField] public GameObject AddFrndNoSearchFound;
@@ -118,6 +117,13 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
     public SNSSettingController SNSSettingController;
+
+    [Space]
+    [Header("Confirm To Unfollow")]
+    public GameObject ConfirmUnfollowPanel;
+    public Button UnfollowButton;
+    public string LastClickedUserId;
+
     private void Awake()
     {
         if (Instance == null)

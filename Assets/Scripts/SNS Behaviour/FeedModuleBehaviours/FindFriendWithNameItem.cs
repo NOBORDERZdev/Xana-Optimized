@@ -340,10 +340,14 @@ public class FindFriendWithNameItem : MonoBehaviour
             if (searchUserRow.am_i_following)
             {
                Debug.Log("UnFollow User call:" + searchUserRow.id);
-                FollowUnfollowBtnRef.interactable = false;
+                //FollowUnfollowBtnRef.interactable = false;
                 //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //unfollow
-                RequestUnFollowAUser(searchUserRow.id.ToString());
+                //RequestUnFollowAUser(searchUserRow.id.ToString());
+                FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
+                FeedUIController.Instance.LastClickedUserId = searchUserRow.id.ToString();
+                //userID = searchUserRow.id.ToString();
+                FeedUIController.Instance.UnfollowButton.onClick.AddListener(UnFollowAUser);
             }
             else
             {
@@ -432,11 +436,20 @@ public class FindFriendWithNameItem : MonoBehaviour
             }
         }
     }
-
-    public void RequestUnFollowAUser(string user_Id)
+    public void UnFollowAUser()
     {
-        StartCoroutine(IERequestUnFollowAUser(user_Id));
+        if(FeedUIController.Instance.LastClickedUserId == searchUserRow.id.ToString())
+            StartCoroutine(IERequestUnFollowAUser(searchUserRow.id.ToString()));
     }
+    public void FollowingTabUnfollowAUser()
+    {
+        if (FeedUIController.Instance.LastClickedUserId == GetComponent<FollowingItemController>().followingRawData.userId.ToString())
+            StartCoroutine(IERequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString()));
+    }
+    //public void RequestUnFollowAUser(string user_Id)
+    //{
+    //    StartCoroutine(IERequestUnFollowAUser(user_Id));
+    //}
 
     public IEnumerator IERequestUnFollowAUser(string user_Id)
     {
@@ -487,6 +500,8 @@ public class FindFriendWithNameItem : MonoBehaviour
                     FollowFollowingSetUp(false);
                 }
                 FollowUnfollowBtnRef.interactable = true;
+                if (FeedUIController.Instance.ConfirmUnfollowPanel.activeInHierarchy)
+                    FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(false);
             }
         }
     }
@@ -520,10 +535,13 @@ public class FindFriendWithNameItem : MonoBehaviour
     {
         if (GetComponent<FollowingItemController>())
         {
-            FollowUnfollowBtnRef.interactable = false;
+            //FollowUnfollowBtnRef.interactable = false;
             //FeedUIController.Instance.ShowLoader(true);
-            RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
+            //RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
             //FeedUIController.Instance.OnClickAddFriendFollowing();
+            FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
+            FeedUIController.Instance.LastClickedUserId = GetComponent<FollowingItemController>().followingRawData.userId.ToString();
+            FeedUIController.Instance.UnfollowButton.onClick.AddListener(FollowingTabUnfollowAUser);
         }
     }
 
