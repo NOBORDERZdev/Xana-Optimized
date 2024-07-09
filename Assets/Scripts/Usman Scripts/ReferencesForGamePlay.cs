@@ -24,6 +24,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject m_34player;
     public PlayerController playerControllerNew;
     public GameObject minimap;
+    public GameObject minimap_summit;
+    public GameObject fullscreen_map_summit;
+
     public GameObject minimapSettingsBtn;
     public TMPro.TextMeshProUGUI totalCounter; // Counter to show total connected peoples.
     public GameObject ReferenceObject;
@@ -48,6 +51,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             {
                 m_34player = instance.m_34player;
             }
+            if (instance.playerControllerNew != null)
+                playerControllerNew = instance.playerControllerNew;
         }
 
         instance = this;
@@ -58,33 +63,37 @@ public class ReferencesForGamePlay : MonoBehaviour
                 go.SetActive(false);
             }
         }
-        if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
-        {
-            if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
-            {
-                if (ConstantsHolder.xanaConstants.minimap == 1)
-                {
-                    minimap.SetActive(true);
-                }
-                minimapSettingsBtn.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false);
-                minimapSettingsBtn.SetActive(false);
-            }
-        }
-        else
-        {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
-            {
-                minimap.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false); // Disable Minimap Bydefault
-            }
-            minimapSettingsBtn.SetActive(true);
+        { // This Patch code also written in onEnable, Running twice 
+            //if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
+            //{
+            //    if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
+            //    {
+            //        if (ConstantsHolder.xanaConstants.minimap == 1)
+            //        {
+            //            minimap.SetActive(true);
+            //        }
+            //        minimapSettingsBtn.SetActive(true);
+            //    }
+            //    else
+            //    {
+            //        minimap.SetActive(false);
+            //        minimapSettingsBtn.SetActive(false);
+            //    }
+            //}
+            //else
+            //{
+            //    if (ConstantsHolder.xanaConstants.minimap == 1)
+            //    {
+            //        minimap.SetActive(true);
+            //        SumitMapStatus(true);
+            //    }
+            //    else
+            //    {
+            //        minimap.SetActive(false); // Disable Minimap Bydefault
+            //        SumitMapStatus(false);
+            //    }
+            //    minimapSettingsBtn.SetActive(true);
+            //}
         }
         playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
     }
@@ -125,15 +134,11 @@ public class ReferencesForGamePlay : MonoBehaviour
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
-
-
         if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null)
         {
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
-
-
         if (counterCoroutine == null)
         {
             counterCoroutine = SetPlayerCounter();
@@ -150,18 +155,24 @@ public class ReferencesForGamePlay : MonoBehaviour
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
             {
                 if (ConstantsHolder.xanaConstants.minimap == 1)
-                    ReferencesForGamePlay.instance.minimap.SetActive(true);
+                    minimap.SetActive(true);
                 else
-                    ReferencesForGamePlay.instance.minimap.SetActive(false);
+                    minimap.SetActive(false);
             }
             return;
         }
         else
         {
             if (ConstantsHolder.xanaConstants.minimap == 1)
-                ReferencesForGamePlay.instance.minimap.SetActive(true);
+            {
+                minimap.SetActive(true);
+                SumitMapStatus(true);
+            }
             else
-                ReferencesForGamePlay.instance.minimap.SetActive(false);
+            {
+                minimap.SetActive(false);
+                SumitMapStatus(false);
+            }
         }
         moveWhileDanceCheck = PlayerPrefs.GetInt("dancebutton"); //add kamran
         if (moveWhileDanceCheck == 0)
@@ -359,7 +370,24 @@ public class ReferencesForGamePlay : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
+    public void SumitMapStatus(bool _status)
+    {
+        if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+        {
+            minimap_summit.SetActive(true);
+            if (!ScreenOrientationManager._instance.isPotrait)
+                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
+        }
+        else
+        {
+            minimap_summit.SetActive(false);
+        }
+    }
 
+    public void FullScreenMapStatus (bool _enable)
+    {
+        fullscreen_map_summit.SetActive(_enable);
+    }
 }
 
 
