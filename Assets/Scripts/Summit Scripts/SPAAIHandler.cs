@@ -132,8 +132,11 @@ public class SPAAIHandler : MonoBehaviour
 
     void GenderBasedPrefabSlect(int _index)
     {
-        CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
-        AssignFtchDataToAIAvtr();
+        if (!CurrentAIPerformerRef)
+        {
+            CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
+            AssignFtchDataToAIAvtr();
+        }
     }
 
     void AssignFtchDataToAIAvtr()
