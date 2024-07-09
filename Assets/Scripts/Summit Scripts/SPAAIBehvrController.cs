@@ -22,6 +22,20 @@ public class SPAAIBehvrController : MonoBehaviour
     private bool isNewlySpwaned = true;
     [SerializeField] int maxNpcBehaviourAction = 2;
 
+    public SPAAIHandler spaAIHandlerRef;
+
+    private void OnEnable()
+    {
+        if (spaAIHandlerRef)
+        {
+            if (spaAIHandlerRef.IsAIDataFetched & spaAIHandlerRef.IsPlayerTriggered)
+            {
+                isPerformingAction = false;
+                StartCoroutine(PerformAction());
+            }
+        }
+    }
+
     public IEnumerator PerformAction()
     {
         if (!isPerformingAction)
