@@ -3288,6 +3288,7 @@ GameObject:
   - component: {fileID: 8956350072917573056}
   - component: {fileID: 6818700536982276404}
   - component: {fileID: 6033855660889279126}
+  - component: {fileID: 6809337486567809550}
   m_Layer: 22
   m_Name: SummitPerformerMaleAINPC
   m_TagString: Player
@@ -3401,6 +3402,7 @@ MonoBehaviour:
   OldnpcEmotes: {fileID: 0}
   isPerformingAction: 0
   maxNpcBehaviourAction: 2
+  spaAIHandlerRef: {fileID: 0}
 --- !u!114 &8956350072917573056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3414,6 +3416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 3351980150167224710}
+  CurNPCCloths: []
   DefaultSkinColor: {r: 0, g: 0, b: 0, a: 0}
   DefaultHairColor: {r: 0, g: 0, b: 0, a: 0}
   AvatarJson:
@@ -3532,6 +3535,19 @@ MonoBehaviour:
   spaAIBhvrController: {fileID: 2747604089038655958}
   walkRotateSpeed: 10
   isMoving: 0
+--- !u!135 &6809337486567809550
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4894719807666117210}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5057465048753448123
 GameObject:
   m_ObjectHideFlags: 0
