@@ -53,7 +53,9 @@ public class InputManager : MonoBehaviour
         controls.Gameplay.Enable();
         controls.Gameplay.Move.performed += OnMovePerformed;
         controls.Gameplay.Move.canceled += OnMovePerformed;
-    }
+        force = 1250.0f;
+        startForce = 600f;
+}
     private void OnDisable()
     {
         controls.Gameplay.Move.performed -= OnMovePerformed;

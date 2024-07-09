@@ -98,6 +98,7 @@ public class SandGameManager : MonoBehaviour
         {
             id = ConstantsHolder.userId;
         }
+        Debug.LogError("User ID: " + id);
     }
 
     public void EnableSkating()
@@ -153,6 +154,8 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
         string point = www.downloadHandler.text;
+        if (point == "There is no player Data") point = "0";
+        Debug.LogError("Sohaib API Response getPoint : " + point);
         if (point == "Register complete") point = "0";
         uiMgr.SetPointUI(point);
 
@@ -196,11 +199,12 @@ public class SandGameManager : MonoBehaviour
             playerRb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             board.GetComponent<FixedJoint>().connectedBody = playerRb;
             player.GetComponent<XanaDuneControllerHandler>().EnableSkating();
-            //GameplayEntityLoader.instance.PlayerCamera.m_XAxis.Value = -88f;
-            //GameplayEntityLoader.instance.PlayerCamera.m_YAxis.Value = 1f;
-            //PlayerCameraController.instance.lockRotation = true;
-            //PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
-            //PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
+            GameplayEntityLoader.instance.PlayerCamera.m_XAxis.Value = -88f;
+            GameplayEntityLoader.instance.PlayerCamera.m_YAxis.Value = 1f;
+            PlayerCameraController.instance.lockRotation = true;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 2.33f;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.57f;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineCollider>().m_CollideAgainst &= ~(1 << LayerMask.NameToLayer("NoPostProcessing"));
 
         }
         else
@@ -219,6 +223,7 @@ public class SandGameManager : MonoBehaviour
             PlayerCameraController.instance.lockRotation = false;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Radius = 1.75f;
             PlayerCameraController.instance.gameObject.GetComponent<CinemachineFreeLook>().m_Orbits[0].m_Height = 2.47f;
+            PlayerCameraController.instance.gameObject.GetComponent<CinemachineCollider>().m_CollideAgainst |= (1 << LayerMask.NameToLayer("NoPostProcessing"));
 
         }
     }
@@ -308,7 +313,7 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
         wwwSave.SendWebRequest();
         yield return new WaitUntil(() => wwwSave.isDone);
-        Debug.Log("Sohaib API Response saveRecord : " + wwwSave.downloadHandler.text);
+        Debug.LogError("Sohaib API Response saveRecord : " + wwwSave.downloadHandler.text);
 
         WWWForm formPersonalRank = new WWWForm();
         formPersonalRank.AddField("command", "getPersonalRank");
@@ -319,14 +324,24 @@ public class SandGameManager : MonoBehaviour
         yield return new WaitUntil(() => wwwPersonalRank.isDone);
 
         string personalRank = wwwPersonalRank.downloadHandler.text;
-        Debug.Log(personalRank);
+        Debug.LogError("personalRank : " + personalRank);
 
         string unit = "";
 
         int rankReward = 0;
         int playReward = 0;
+        float personalRankFloat = 0;
 
-        switch ((int)(float.Parse(personalRank)))
+        if (float.TryParse(personalRank,out float result))
+        {
+            personalRankFloat = result;
+        }
+        else
+        {
+            Debug.LogError("Error in parsing personal rank : " + personalRank);
+        }
+
+        switch ((int)personalRankFloat)
         {
             case 1:
                 rankReward = 100;
@@ -373,9 +388,9 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest wwwReward = UnityWebRequest.Post(url, formReward);
         wwwReward.SendWebRequest();
         yield return new WaitUntil(() => wwwReward.isDone);
-        Debug.Log(wwwReward.downloadHandler.text);
+        Debug.LogError(wwwReward.downloadHandler.text);
         StartCoroutine(CheckPoint());
-        if (int.Parse(personalRank) <= 10)
+        if ((int)personalRankFloat <= 10)
         {
             SetRanking();
         }
@@ -400,7 +415,7 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
         string rank = www.downloadHandler.text;
-        Debug.Log(rank);
+        Debug.LogError(rank);
 
         string[] ranks = rank.Split("\n");
         for (int i = 0; i < ranks.Length; i++)
@@ -437,13 +452,18 @@ public class SandGameManager : MonoBehaviour
         Player.position = pos;
         Player.rotation = Quaternion.Euler(0, 30, 0);
     }
+    private bool toResetWithDelay = true;
     public void ResetPlayer()
     {
-        StartCoroutine(OnResetPlayer());
+        if (toResetWithDelay)
+        {
+            StartCoroutine(OnResetPlayer());
+        }
     }
 
     IEnumerator OnResetPlayer()
     {
+        toResetWithDelay = false;
         input.force = 0;
         input.StopMove();
         Vector3 currPos = player.position;
@@ -454,6 +474,9 @@ public class SandGameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1);
         input.force = input.startForce;
+
+        yield return new WaitForSeconds(4);
+        toResetWithDelay = true;
     }
     public void ResetPlayerPos()
     {

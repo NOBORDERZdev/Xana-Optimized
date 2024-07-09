@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class XanaDuneControllerHandler : MonoBehaviour
 {
-    public Transform Player34;
+    //public Transform Player34;
 
     [SerializeField]
     private GameObject _skateBoardPrefab;

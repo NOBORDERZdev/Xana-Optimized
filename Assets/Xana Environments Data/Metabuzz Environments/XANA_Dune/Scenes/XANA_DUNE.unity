@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1804708400}
-  m_IndirectSpecularColor: {r: 0.75290763, g: 0.8950362, b: 0.9484584, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1017,6 +1016,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -3188,14 +3188,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915308779}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -0.0034905854, w: 0.9999939}
   m_LocalPosition: {x: 8.65, y: -0.09, z: 34.768}
   m_LocalScale: {x: 63.8653, y: 0.1848019, z: 6.8923}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1085362818}
   m_RootOrder: 19
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.4}
 --- !u!65 &915308781
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10784,6 +10784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d349168049b39e45aec63bc5ff16200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  local: 1
   crabSpr: {fileID: 828551297}
   uiMgr: {fileID: 1859551283}
   startPoint: {fileID: 13861213}
@@ -10792,8 +10793,6 @@ MonoBehaviour:
   finishParticle2: {fileID: 2027120323}
   rewardSound: {fileID: 2103964410}
   resetBtn: {fileID: 736752728}
-  id: 220
-  local: 1
 --- !u!4 &1213427244
 Transform:
   m_ObjectHideFlags: 0
@@ -12392,6 +12391,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -18024,7 +18024,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3227621570615402952, guid: 84f33bfbf0f903d47bde88d2a5505864, type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.22
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3497780356310075716, guid: 84f33bfbf0f903d47bde88d2a5505864, type: 3}
       propertyPath: m_RootOrder

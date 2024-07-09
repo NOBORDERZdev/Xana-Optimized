@@ -257,7 +257,7 @@ public class UIController_Shine : MonoBehaviour
             worshipNum = 0;
             worshipInfoUI.gameObject.SetActive(false);
             worshipInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[1];
-            DataManager_Shrine.GetComponent<DataManager_Shrine>().getPlayerData();
+            DataManager_Shrine.GetComponent<DataManager_Shrine>().GetPlayerData();
         }
         else if (worshipNum == worshipInfos.Count - 1)
         {

@@ -31,6 +31,7 @@ public class DataManager_Daisen : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
         string point = www.downloadHandler.text;
+        if (point == "There is no player Data") point = "0";
         uiController.SetPointUI(point);
 
         www.Dispose();

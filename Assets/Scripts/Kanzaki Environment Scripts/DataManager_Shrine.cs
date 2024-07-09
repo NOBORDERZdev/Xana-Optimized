@@ -9,7 +9,7 @@ public class DataManager_Shrine : MonoBehaviour
 
     // API configs
     [SerializeField] private string id;
-    [SerializeField] private string userName = "";
+    [SerializeField] private string userName = "--";
     [SerializeField] private string url;
 
     // UI Configs
@@ -18,20 +18,32 @@ public class DataManager_Shrine : MonoBehaviour
     [SerializeField] private GameObject coinParticle;
 
     void Start() {
-        //player = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
+
         worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
         if (ConstantsHolder.userId != null)
         {
             id = ConstantsHolder.userId;
-            userName = ConstantsHolder.uniqueUserName;
+            StartCoroutine(CheckPoint());
+
         }
-        StartCoroutine(CheckPoint());
-        StartCoroutine(InitPlayerDB(id, userName));
+        if (ConstantsHolder.uniqueUserName != null)
+        {
+            userName = ConstantsHolder.uniqueUserName;
+            StartCoroutine(InitPlayerDB(id, userName));
+        }
+        else
+        {
+            StartCoroutine(IERequestGetUserDetails());
+        }
+
     }
-    public void getPlayerData() => StartCoroutine(CommunicateWithDB(id));
+
+    public void GetPlayerData() => StartCoroutine(CommunicateWithDB(id));
 
     public IEnumerator InitPlayerDB(string id, string userName)
     {
+        Debug.LogError("User ID: " + id);
+        Debug.LogError("uniqueUserName: " + userName);
         WWWForm form = new WWWForm();
         form.AddField("command", "initData");
         form.AddField("id", id);
@@ -39,8 +51,10 @@ public class DataManager_Shrine : MonoBehaviour
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
-        Debug.Log("initData" + www.downloadHandler.text);
-        uIController_Shine.SetPointUI(www.downloadHandler.text);
+        Debug.LogError("initData" + www.downloadHandler.text);
+        string point = www.downloadHandler.text;
+        if (point == "There is no player Data") point = "0";
+        uIController_Shine.SetPointUI(point);
         www.Dispose();
     }
     public IEnumerator CommunicateWithDB(string id) {
@@ -70,7 +84,9 @@ public class DataManager_Shrine : MonoBehaviour
         yield return www.SendWebRequest();
 
         string point = www.downloadHandler.text;
-        Debug.Log("getPoint" + point);
+        if (point == "There is no player Data") point = "0";
+
+        Debug.LogError("getPoint" + point);
 
         uIController_Shine.SetPointUI(point);
 
@@ -79,5 +95,31 @@ public class DataManager_Shrine : MonoBehaviour
 
     public void closeWorshipFailUI() {
         worshipFailUI.SetActive(false);
+    }
+    public IEnumerator IERequestGetUserDetails()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SendWebRequest();
+            while (!www.isDone)
+            {
+                yield return null;
+            }
+            if (www.isNetworkError || www.isHttpError)
+            {
+                StartCoroutine(IERequestGetUserDetails());
+            }
+            else
+            {
+                GetUserDetailRoot tempMyProfileDataRoot = JsonUtility.FromJson<GetUserDetailRoot>(www.downloadHandler.text.ToString());
+                ConstantsHolder.uniqueUserName = tempMyProfileDataRoot.data.userProfile.username;
+                ConstantsHolder.userId = tempMyProfileDataRoot.data.id.ToString();
+                id = ConstantsHolder.userId;
+                userName = ConstantsHolder.uniqueUserName;
+
+                StartCoroutine(InitPlayerDB(id, userName));
+            }
+        }
     }
 }
