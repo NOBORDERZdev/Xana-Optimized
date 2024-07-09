@@ -53,6 +53,10 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private IEnumerator Start()
     {
+        while (ConstantsHolder.userId == null)
+            yield return new WaitForSeconds(0.5f);
+
+        _myUserId = int.Parse(ConstantsHolder.userId);
 
         if (SocketUrl != null)
         {
@@ -61,11 +65,6 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         }
-
-        while (ConstantsHolder.userId == null)
-            yield return new WaitForSeconds(0.5f);
-
-        _myUserId = int.Parse(ConstantsHolder.userId);
         //Debug.LogError("Daily Reward User Id : " + _myUserId);
     }
 
@@ -95,11 +94,13 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void DailyRewardResponse(string resp)
     {
-        //Debug.LogError("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("Daily Reward Daily Reward Response : " + resp);
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
 
         if (data.userId == _myUserId)
         {
+            Debug.Log("Daily Reward Daily Reward Response Id matched : " + resp);
+
             _rewardedAmountText.text = data.coin.ToString();
             if (SceneManager.GetActiveScene().name == "Home")
             {
