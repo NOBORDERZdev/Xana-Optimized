@@ -2,27 +2,64 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Linq;
 using UnityEngine;
-
-public class PenpenzLpManager : MonoBehaviour
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+public class PenpenzLpManager : MonoBehaviourPunCallbacks
 {
     // Initializes room properties for rank management
-    public void Initialize()
+    //public void Initialize()
+    //{
+    //    if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("lastRank"))
+    //    {
+    //        var initialProps = new ExitGames.Client.Photon.Hashtable
+    //        {
+    //            { "lastRank", 0 } // Start with 0 so the first player gets rank 1
+    //        };
+    //        PhotonNetwork.CurrentRoom.SetCustomProperties(initialProps);
+    //    }
+    //}
+
+    
+    
+
+    //public void UpdateLastRank()
+    //{
+    //    // Get the current lastRank
+    //    int lastRank = (int)PhotonNetwork.CurrentRoom.CustomProperties["lastRank"];
+
+    //    // Increment the lastRank
+    //    int newRank = lastRank + 1;
+
+    //    //Update the room property
+    //    Hashtable customProperties = new Hashtable
+    //    {
+    //        { "lastRank", newRank }
+    //    };
+    //    PhotonNetwork.CurrentRoom.SetCustomProperties(customProperties);
+    //}
+
+    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
-        if (!PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("lastRank"))
+        if (propertiesThatChanged.ContainsKey("lastRank"))
         {
-            var initialProps = new ExitGames.Client.Photon.Hashtable
-            {
-                { "lastRank", 0 } // Start with 0 so the first player gets rank 1
-            };
-            PhotonNetwork.CurrentRoom.SetCustomProperties(initialProps);
+            // Handle the updated property
+            int updatedLastRank = (int)propertiesThatChanged["lastRank"];
+            Debug.Log("Updated lastRank: " + updatedLastRank);
         }
     }
 
+
+
+
+
+
+
+
     // Assigns the next rank to the local player and updates room properties
-    private int AssignNextRank()
+    public int AssignNextRank()
     {
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("lastRank", out object lastRankObj))
         {
+            Debug.Log("Assigning next rank to player..." + (int)lastRankObj);
             int lastRank = (int)lastRankObj;
             int newRank = lastRank + 1;
 
@@ -41,6 +78,18 @@ public class PenpenzLpManager : MonoBehaviour
             return 0; // Consider how to handle this error case in your game logic
         }
     }
+
+    //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
+    //{
+    //    if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("lastRank", out object lastRankObj))
+    //    {
+    //        Debug.Log(">Room properties updated: lastRank = " + lastRankObj);
+    //    }
+    //    if(propertiesThatChanged.ContainsKey("lastRank"))
+    //    {
+    //        Debug.Log("Room properties updated: lastRank = " + propertiesThatChanged["lastRank"]);
+    //    }
+    //}
 
     // Updates the player's rank and LP based on the newly assigned rank
     public void UpdatePlayerRankAndLP()

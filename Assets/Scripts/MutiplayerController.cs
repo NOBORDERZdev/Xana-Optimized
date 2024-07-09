@@ -280,6 +280,11 @@ namespace Photon.Pun.Demo.PunBasics
         public RoomOptions RoomOptionsRequest()
         {
             roomOptions = new RoomOptions();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable { { "lastRank", 0 } };
+                roomOptions.CustomRoomPropertiesForLobby = new string[] { "lastRank" };
+            }
             roomOptions.MaxPlayers = (byte)(int.Parse(ConstantsHolder.xanaConstants.userLimit));
             roomOptions.IsOpen = true;
             roomOptions.IsVisible = true;
