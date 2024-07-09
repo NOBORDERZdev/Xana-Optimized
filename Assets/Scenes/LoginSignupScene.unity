@@ -2355,6 +2355,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terms & Condition Panel
       objectReference: {fileID: 0}
+    - target: {fileID: 6426210753342032470, guid: 134974957af29f24780cfcb58b5acc5a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6426210753342032471, guid: 134974957af29f24780cfcb58b5acc5a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3994,105 +3998,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1479205145}
     m_Modifications:
-    - target: {fileID: 1549787447, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 736828110869619065, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: blackScreen
-      value: 
-      objectReference: {fileID: 1938487462}
-    - target: {fileID: 2029616351840787193, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 004436e495e9d6b479093051de62dfa0, type: 3}
-    - target: {fileID: 5288105763010136718, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 219101427}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 3381984247756147449}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickLoginSelection
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UserLoginSignupManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105763010136720, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757278, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 219101427}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnClickSignUpSelection
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UserLoginSignupManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764144757280, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764306880259, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764306880261, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764306880261, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 5288105764421432347, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
       propertyPath: m_Name
       value: LoginWelcome-Screen
-      objectReference: {fileID: 0}
-    - target: {fileID: 5288105764421432347, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5288105764421432348, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
       propertyPath: m_Pivot.x
@@ -4177,18 +4093,6 @@ PrefabInstance:
     - target: {fileID: 5288105764421432348, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6233787523288944472, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6522417432424588791, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7616449869687135307, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 789c168595771434ea038efc99fc1d2d, type: 3}
