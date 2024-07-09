@@ -34,6 +34,8 @@ public class UserRegisterationManager : MonoBehaviour
     public GameObject OTPPanal;
     public GameObject PasswordPanal;
     public GameObject usernamePanal;
+    public GameObject deleteAccScreen;
+    public GameObject deleteAccConformationPopup;
     public GameObject LoginPanal;
     public GameObject SignUpPanal;
     public GameObject SignUpPanalwithPhone;
@@ -1737,6 +1739,9 @@ public class UserRegisterationManager : MonoBehaviour
         XanaConstants.xanaConstants.isCameraMan = false;
         XanaConstants.xanaConstants.IsDeemoNFT = false;
         StoreManager.instance.CheckWhenUserLogin();
+
+        deleteAccScreen.SetActive(false);
+        welcomeScreen.SetActive(true);
     }
 
 
@@ -1818,6 +1823,24 @@ public class UserRegisterationManager : MonoBehaviour
         else
             CallBack(false);
 
+    }
+
+    public void OpenDeleteAccPopup()
+    {
+        deleteAccConformationPopup.SetActive(true);
+    }
+
+    public void DeleteAccount()
+    {
+        DeleteAccount(() =>
+        {
+            deleteAccConformationPopup.SetActive(false);
+        });
+    }
+
+    public void OpenAvatarScreen()
+    {
+        StoreManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
     public void DeleteAccount(Action callback)
