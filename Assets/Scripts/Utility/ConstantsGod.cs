@@ -313,6 +313,7 @@ public class ConstantsGod
     public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
     public static string GETVISITDOMES = "/domes/getvisitedomes";
     public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
+    public static string GETUSERDETAIL = "/users/get-custom-intro";
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";

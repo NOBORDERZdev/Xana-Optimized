@@ -229,6 +229,7 @@ public class Web3AuthCustom : MonoBehaviour
         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         userInfo = response.userInfo;
         privateKey = response.privKey;
+        PlayerPrefs.SetString("LoggedInMail", response.userInfo.email);
         onLoginAction?.Invoke(userInfo.email);
         publicAdress = EthECKey.GetPublicAddress(privateKey);
         GetSignature();
