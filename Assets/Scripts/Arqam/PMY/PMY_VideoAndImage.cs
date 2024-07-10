@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using Unity.VisualScripting;
+using System;
 
 namespace PMY
 {
@@ -78,7 +80,18 @@ namespace PMY
             imgVideo4x3.GetComponent<Button>().onClick.AddListener(() => OpenWorldInfo());
 
             if (PMY_Nft_Manager.Instance.PMY_RoomIdFromXanaConstant)
-                StartCoroutine(UpdateRoomType()); 
+                StartCoroutine(UpdateRoomType());
+        }
+        private void OnDisable()
+        {
+            try
+            {
+                DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log("<color=red>" + ex.Message + "</color>");
+            }
         }
 
         IEnumerator UpdateRoomType()
