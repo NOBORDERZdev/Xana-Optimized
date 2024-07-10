@@ -528,7 +528,6 @@ public class FeedEventPrefab : MonoBehaviour
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        MutiplayerController.sceneName = m_EnvName;
         ScrollController.verticalNormalizedPosition = 1f;
         //m_WorldDescriptionParser = m_WorldDescription;
         if (userProfile.sprite == null)
@@ -551,11 +550,11 @@ public class FeedEventPrefab : MonoBehaviour
         m_WorldDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(m_WorldDescription);
         if (m_EnvironmentName == "Xana Festival")
         {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.userLimit = (Convert.ToInt32(userLimit));
         }
         else
         {
-            ConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         //tempWorldName = m_WorldName.text.ToString();
         ConstantsHolder.xanaConstants.MuseumID = idOfObject;

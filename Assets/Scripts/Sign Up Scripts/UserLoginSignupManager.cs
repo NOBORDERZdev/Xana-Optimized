@@ -143,11 +143,11 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            InventoryManager.instance.WalletLoggedinCall();
-            WalletAutoLogin();
+            //ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+            //ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+            //ConstantsHolder.isWalletLogin = true;
+            //InventoryManager.instance.WalletLoggedinCall();
+            //WalletAutoLogin();
         }
         else
         {
@@ -278,6 +278,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
+        Debug.LogError("here ");
         if (!_isUserClothDataFetched)
         {
             GetUserClothData();
@@ -456,22 +457,28 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
-        if (!_isUserClothDataFetched)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
-            GetUserClothData();
-            _isUserClothDataFetched = true;
+            MainSceneEventHandler.OpenLandingScene?.Invoke();
         }
-        GetOwnedNFTsFromAPI();
-        UserPassManager.Instance.GetGroupDetails("freeuser");
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
-        if (GameManager.Instance.UiManager != null)//rik
+        else
         {
-            GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+            if (!_isUserClothDataFetched)
+            {
+                GetUserClothData();
+                _isUserClothDataFetched = true;
+            }
+            GetOwnedNFTsFromAPI();
+            UserPassManager.Instance.GetGroupDetails("freeuser");
+            UserPassManager.Instance.GetGroupDetailsForComingSoon();
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+            CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
+            if (GameManager.Instance.UiManager != null)//rik
+            {
+                GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+            }
         }
-       
     }
 
     public void CheckForValidationAndSignUp(bool resendOtp = false)
@@ -1117,17 +1124,22 @@ public class UserLoginSignupManager : MonoBehaviour
                 UserPassManager.Instance.GetGroupDetails("freeuser");
                 UserPassManager.Instance.GetGroupDetailsForComingSoon();
 
-                GetOwnedNFTsFromAPI();
                 SubmitSetDeviceToken();
-                GetUserClothData();
-                CheckCameraMan(myObject1.data.user.email);
-                OpenUIPanel(21);
+                if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                {
+                    MainSceneEventHandler.OpenLandingScene?.Invoke();
+                }
+                else
+                {
+                    GetOwnedNFTsFromAPI();
+                    GetUserClothData();
+                    CheckCameraMan(myObject1.data.user.email);
+                    OpenUIPanel(21);
 
-                //DynamicEventManager.deepLink?.Invoke("Login user here");
-                MainSceneEventHandler.OnSucessFullLogin?.Invoke();
+                    //DynamicEventManager.deepLink?.Invoke("Login user here");
+                    MainSceneEventHandler.OnSucessFullLogin?.Invoke();
 
-                
-
+                }
                 CallBack(true);
             }
         }

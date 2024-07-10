@@ -11,6 +11,14 @@ public class SpeakerRefrence : MonoBehaviour
    
     public AudioSource RangeVolSpeaker;
 
+    private void OnEnable()
+    {
+        if(ConstantsHolder.xanaConstants.EnviornmentName=="RooftopParty")
+        {
+            RangeVolSpeaker.maxDistance = 3;
+        }
+    }
+
     //public void MyspeakerSync2D()                  //Added by Ali Hamza
     //{
     //    GetComponent<PhotonView>().RPC(nameof(SyncSpeaker2D), RpcTarget.AllBuffered, GetComponent<PhotonView>().ViewID);

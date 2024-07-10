@@ -29,27 +29,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
     public static Dictionary<object, object> allPlayerIdData = new Dictionary<object, object>();
     object[] _mydatatosend = new object[3];
     private bool IsNFTCharacter;
-
-    private void Awake()
-    {
-        if (this.GetComponent<PhotonView>().IsMine)
-        {
-            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
-            _mydatatosend[1] = GetJsonFolderData() as object;
-            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
-            //Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
-            CallRpcInvoke();
-        }
-    }
-
-    private void Start()
-    {
-        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
-        {
-            this.gameObject.AddComponent<Speaker>();
-        }
-    }
-
     public string GetJsonFolderData()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)  // loged from account)
@@ -66,6 +45,36 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         else
         {
             return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
+        }
+    }
+    private void Start()
+    {
+        if (!this.GetComponent<PhotonView>().IsMine && !this.gameObject.GetComponent<Speaker>())
+        {
+            this.gameObject.AddComponent<Speaker>();
+        }
+
+        if (ConstantsHolder.isPenguin)
+            return;
+
+        if (ConstantsHolder.isFixedHumanoid)
+        {
+            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[1] = XANASummitDataContainer.fixedAvatarJson as object;
+            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
+
+            CallRpcInvoke();
+
+            return;
+        }
+
+        if (this.GetComponent<PhotonView>().IsMine)
+        {
+            _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
+            _mydatatosend[1] = GetJsonFolderData() as object;
+            _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
+            Invoke(nameof(CallRpcInvoke), /*1.2f*/0f);
+            //CallRpcInvoke();
         }
     }
 
@@ -403,26 +412,26 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             {
                 if (itemtype.Contains("Hair"))
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for hair");
-                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(),hairColor ,true,true));
+                        //  print("AddressableDownloader.Instance found for hair");
+                        AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), hairColor, true, true));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 1");
                     }
                 }
                 else
                 {
-                    if (AddressableDownloader.Instance !=null)
+                    if (AddressableDownloader.Instance != null)
                     {
-                      //  print("AddressableDownloader.Instance found for other objects");
+                        //  print("AddressableDownloader.Instance found for other objects");
                         AddressableDownloader.Instance.StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, itemName, itemtype, _gender, applyOn.GetComponent<AvatarController>(), Color.clear));
                     }
                     else
                     {
-                      //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
+                        //  print("~!~!~!~!~ AddressableDownloader.Instance is NULL 2");
                     }
                 }
             }
@@ -431,7 +440,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 // If Error occur in Downloading 
                 // Then wear Default
                 applyOn.GetComponent<AvatarController>().WearDefaultItem(itemtype, applyOn, _gender);
-               // print("Exception : " + e);
+                // print("Exception : " + e);
             }
         }
         else
@@ -545,7 +554,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     UnStichItem("Hair");
             }
             else
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(),_CharacterData.hair_color, true, true));
+                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(-1, _CharacterData.hairItemData, "Hair", _CharacterData.gender != null ? _CharacterData.gender : "Male", applyon.GetComponent<AvatarController>(), _CharacterData.hair_color, true, true));
         }
     }
     public void UnStichItem(string type)

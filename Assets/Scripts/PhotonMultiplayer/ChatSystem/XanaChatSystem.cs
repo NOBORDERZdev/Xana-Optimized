@@ -98,6 +98,9 @@ public class XanaChatSystem : MonoBehaviour
 
     public void Start()
     {
+
+        InputFieldChat.onSubmit.AddListener(OnEnterSend);
+
         //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
 
@@ -284,15 +287,19 @@ public class XanaChatSystem : MonoBehaviour
         }
 
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
-        Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
         ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
+        //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
         removeBadWords = "";
+    }
+
+    public void OnEnterSend(string s)
+    {
+        OnEnterSend();
     }
 
     public void OnClickSend()
@@ -929,4 +936,6 @@ public class XanaChatSystem : MonoBehaviour
     //}
 
     #endregion
+
+   
 }

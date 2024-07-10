@@ -864,6 +864,9 @@ public class PlayerController : MonoBehaviour
         if (isFirstPerson /*|| animator.GetBool("standJump")*/)
             return;
 
+        if (!ReferencesForGamePlay.instance.m_34player)
+            return;
+
         SpecialItemDoubleJump();
 
         if (!controllerCamera.activeInHierarchy && (horizontal != 0 || vertical != 0))
@@ -2045,7 +2048,6 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-
 
         RaycastHit hitData;
         isOnMovingPlatform = Physics.Raycast(transform.position + rayOffset, -transform.up, out hitData, rayDistance, GamificationComponentData.instance.platformLayers);
