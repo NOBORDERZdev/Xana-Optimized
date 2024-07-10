@@ -326,7 +326,7 @@ public class EmoteFilterManager : MonoBehaviour
         {
             animObject.transform.GetChild(3).gameObject.SetActive(false);
         }
-        if (EmoteAnimationHandler.Instance.AnimObject == null || EmoteAnimationHandler.Instance.currentAnimationTab == "Sit & lying")
+        if (EmoteAnimationHandler.Instance.AnimObject == null /*|| EmoteAnimationHandler.Instance.currentAnimationTab == "Sit & lying"*/)
         {
             emoteAnimationHighlightButton.SetActive(false);
             if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.AllAnimationsPanelUpdate(false);
