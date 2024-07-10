@@ -115,16 +115,20 @@ public class WorldManager : MonoBehaviour
         }
         else if(XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
-            if((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            if ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
             (PlayerPrefs.GetString("PlayerName") == ""))
             {
-                GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+                //GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
                 UserLoginSignupManager.instance.OpenUserNamePanel();
+            }
+            else if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            {
+                UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
             }
             else
             {
-                Screen.orientation = ScreenOrientation.LandscapeLeft;
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));;
                 XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
                  yield return null;
             }

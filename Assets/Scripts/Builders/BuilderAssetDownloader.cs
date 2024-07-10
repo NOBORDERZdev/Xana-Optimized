@@ -49,6 +49,8 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ItemData> builderDataDictionary = new Dictionary<string, ItemData>();
 
+    private long totalDownloadSize = 0;
+    private bool isDownloadSizeCalculated = false;
     private void OnEnable()
     {
         assetParentStatic = assetParent;
@@ -180,6 +182,14 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
+        if (!isDownloadSizeCalculated)
+        {
+            StartCoroutine(CalculateAssetsDownloadSize());
+        }
+        while (!isDownloadSizeCalculated)
+        {
+            await Task.Yield();
+        }
         StartCoroutine(DownloadAssetsFromSortedList());
         StartCoroutine(CheckLongIntervalSorting());
         StartCoroutine(CheckShortIntervalSorting());
@@ -198,13 +208,43 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderEventManager.UploadPropertiesInit?.Invoke();
     }
 
+    IEnumerator CalculateAssetsDownloadSize()
+    {
+        isDownloadSizeCalculated = true;
+
+        // Calculate the total download size
+        for (int i = 0; i < downloadDataQueue.Count; i++)
+        {
+            string downloadKey = prefabPrefix + downloadDataQueue[i].ItemID + prefabSuffix;
+
+            // Get the download size for the addressable asset
+            var sizeHandle = Addressables.GetDownloadSizeAsync(downloadKey);
+            yield return sizeHandle;
+
+            if (sizeHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                totalDownloadSize += sizeHandle.Result; // Size in bytes
+            }
+            else
+            {
+                Debug.LogError($"Failed to get download size for {downloadKey}");
+            }
+        }
+
+        Debug.Log($"Total download size: {totalDownloadSize / (1024.0 * 1024.0)} MB");
+
+    }
+
     IEnumerator DownloadAssetsFromSortedList()
     {
+        long totalBuilderPostLoadingAssets = 0;
         while (downloadDataQueue.Count > 0 && !stopDownloading)
         {
             downloadIsGoingOn = true;
             string downloadKey = prefabPrefix + downloadDataQueue[0].ItemID + prefabSuffix;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
+
+
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -235,8 +275,9 @@ public class BuilderAssetDownloader : MonoBehaviour
                 downloadFailed.Add(downloadDataQueue[0]);
                 downloadDataQueue.RemoveAt(0);
             }
-
             downloadIsGoingOn = false;
+
+
         }
 
         if (downloadDataQueue.Count <= 0)
@@ -291,6 +332,9 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadStartFinishPoints[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadStartFinishPoints[i].DcitionaryKey;
+
+
+
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
@@ -312,14 +356,19 @@ public class BuilderAssetDownloader : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
+
         for (int i = 0; i < BuilderData.preLoadspawnPoint.Count; i++)
         {
             string downloadKey = prefabPrefix + BuilderData.preLoadspawnPoint[i].ItemID + prefabSuffix;
             string dicKey = BuilderData.preLoadspawnPoint[i].DcitionaryKey;
+
+
+
             //AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
+
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
             while (!_async.IsDone)
             {
@@ -348,8 +397,8 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
 
             case "en":
-                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
-                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
@@ -363,8 +412,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 }
                 break;
             case "ja":
-                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
-                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "読み込み完了.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
@@ -378,8 +427,8 @@ public class BuilderAssetDownloader : MonoBehaviour
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
-                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + (downloadedTillNow + spawnPointCount) + "/" + (totalAssetCount + spawnPointCount);
