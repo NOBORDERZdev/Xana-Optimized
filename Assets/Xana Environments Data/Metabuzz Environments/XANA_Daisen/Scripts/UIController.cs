@@ -192,6 +192,8 @@ public class UIController : MonoBehaviour
         if (interactBtn.name.Contains("_Teleport"))
         {
             //player.GetComponent<vThirdPersonInput>().enabled = false;
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+
             Player.transform.position = teleportPoints[interactBtn.name].position;
             Player.transform.rotation = teleportPoints[interactBtn.name].rotation;
             teleportationUI.gameObject.SetActive(true);
@@ -208,6 +210,8 @@ public class UIController : MonoBehaviour
     {
         telescopeUI.gameObject.SetActive(false);
         skyImageUI.gameObject.SetActive(true);
+        GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = false;
+
         renderSkyImage(skyNum);
     }
     private void renderSkyImage(int index)
@@ -242,6 +246,8 @@ public class UIController : MonoBehaviour
         if (interactBtn.name == "Close")
         {
             skyImageUI.gameObject.SetActive(false);
+            GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = true;
+
             skyNum = 0;
         }
         else
@@ -260,11 +266,14 @@ public class UIController : MonoBehaviour
     private void closeTeleportation()
     {
         teleportationUI.gameObject.SetActive(false);
+
         Button[] imageButtons = teleportationUI.GetChild(1).GetComponentsInChildren<Button>();
         for (int i = 0; i < imageButtons.Length; i++)
         {
             imageButtons[i].GetComponent<RawImage>().texture = null;
         }
+        GamePlayUIHandler.inst.ref_PlayerControllerNew.m_IsMovementActive = true;
+
         //player.GetComponent<vThirdPersonInput>().enabled = true;
     }
 
