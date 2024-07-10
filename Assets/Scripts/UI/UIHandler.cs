@@ -51,16 +51,16 @@ public class UIHandler : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
 
-        if(PlayerPrefs.GetString("PlayerName") == "")
-        {
-            Screen.orientation = ScreenOrientation.Portrait;
-            portraitSplashScreen.SetActive(true);
-        }
-        else
-        {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-            portraitSplashScreen.SetActive(false);
-        }
+        //if(PlayerPrefs.GetString("PlayerName") == "")
+        //{
+        //    Screen.orientation = ScreenOrientation.Portrait;
+        //    portraitSplashScreen.SetActive(true);
+        //}
+        //else
+        //{
+        //    Screen.orientation = ScreenOrientation.LandscapeLeft;
+        //    portraitSplashScreen.SetActive(false);
+        //}
     }
     bool a =false;
 
@@ -124,10 +124,10 @@ public class UIHandler : MonoBehaviour
             {
                 IsSplashActive = false;
                 StartCoroutine(IsSplashEnable(false, 3f));
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
-                {
-                    Screen.orientation = ScreenOrientation.Portrait;
-                }
+                //if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                //{
+                //    Screen.orientation = ScreenOrientation.Portrait;
+                //}
             }
          }
         else
