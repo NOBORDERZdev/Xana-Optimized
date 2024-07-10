@@ -27,21 +27,30 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
     private void OnEnable()
     {
-        allInitDomes.Clear();
         OnInitDome += UpdateDomeList;
-        if(ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
-        {
-            GetVisitedDomeData();
-        }
+        SummitSceneReloaded();
     }
     private void OnDisable()
     {
         OnInitDome -= UpdateDomeList;
     }
+
+    public void SummitSceneReloaded()
+    {
+        allInitDomes.Clear();
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+        {
+            GetVisitedDomeData();
+        }
+    }
     void UpdateDomeList(OnTriggerSceneSwitch domeObj)
     {
         if (!allInitDomes.ContainsKey(domeObj.domeId))
             allInitDomes.Add(domeObj.domeId, domeObj.transform);
+        else
+        {
+            allInitDomes[domeObj.domeId]= domeObj.transform;
+        }
     }
     public async Task GetVisitedDomeData()
     {

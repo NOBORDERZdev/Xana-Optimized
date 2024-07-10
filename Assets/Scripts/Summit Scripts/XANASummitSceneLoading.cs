@@ -14,6 +14,9 @@ public class XANASummitSceneLoading : MonoBehaviour
     public GameplayEntityLoader gameplayEntityLoader;
 
     public XANASummitDataContainer dataContainer;
+    
+    [SerializeField]
+    private DomeMinimapDataHolder _domeMiniMap;
 
     private int previousUserLimit;
     private void OnEnable()
@@ -37,6 +40,21 @@ public class XANASummitSceneLoading : MonoBehaviour
         dataContainer.GetAllDomesData();
     }
 
+
+    void SummitMiniMapStatusOnSceneChange(bool makeActive)
+    {
+        if (makeActive && ConstantsHolder.xanaConstants.minimap == 1)
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
+        }
+        else
+        {
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+        }
+    }
+
     void LoadingNewScene(int domeId, Vector3 playerPos)
     {
         XANASummitDataContainer.DomeGeneralData domeGeneralData = new XANASummitDataContainer.DomeGeneralData();
@@ -45,6 +63,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
+        SummitMiniMapStatusOnSceneChange(false);
         StartCoroutine(LoadingHandler.Instance.FadeIn());
 
         GetPlayerPosition(playerPos);
@@ -83,6 +102,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(SceneName))
             return;
 
+        SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = SceneName;
@@ -128,6 +148,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
+
+
         StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
@@ -152,6 +174,11 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.Connect(sceneName);
         ConstantsHolder.DiasableMultiPartPhoton = false;
+
+        // Map Working
+        _domeMiniMap.SummitSceneReloaded();
+        SummitMiniMapStatusOnSceneChange(true);
+        //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int sceneId)
     {
