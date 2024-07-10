@@ -689,6 +689,7 @@ public class BuilderMapDownload : MonoBehaviour
         //call for Execute all rpcs of this room
         BuilderEventManager.RPCcallwhenPlayerJoin?.Invoke();
         BuilderEventManager.BGMStart?.Invoke();
+        BuilderEventManager.UploadPropertiesInit?.Invoke();
         reflectionProbe.enabled = true;
         if (levelData.skyProperties.skyId != -1)
         {
