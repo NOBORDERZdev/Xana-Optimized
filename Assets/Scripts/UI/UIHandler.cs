@@ -51,16 +51,27 @@ public class UIHandler : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
 
-        if(PlayerPrefs.GetString("PlayerName") == "")
-        {
-            Screen.orientation = ScreenOrientation.Portrait;
-            portraitSplashScreen.SetActive(true);
-        }
-        else
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             portraitSplashScreen.SetActive(false);
+
         }
+        else {
+            Screen.orientation = ScreenOrientation.Portrait;
+            portraitSplashScreen.SetActive(true);
+
+        }
+        //if(PlayerPrefs.GetString("PlayerName") == "")
+        //{
+        //    Screen.orientation = ScreenOrientation.Portrait;
+        //    portraitSplashScreen.SetActive(true);
+        //}
+        //else
+        //{
+        //    Screen.orientation = ScreenOrientation.LandscapeLeft;
+        //    portraitSplashScreen.SetActive(false);
+        //}
     }
     bool a =false;
 
@@ -118,22 +129,30 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
+
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
             {
-                IsSplashActive = false;
-                StartCoroutine(IsSplashEnable(false, 3f));
-                if (Screen.orientation == ScreenOrientation.LandscapeRight || Screen.orientation == ScreenOrientation.LandscapeLeft)
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
                 {
+                    IsSplashActive = false;
+                    StartCoroutine(IsSplashEnable(false, 3f));
+                    if (Screen.orientation == ScreenOrientation.Portrait)
+                    {
+                        Screen.orientation = ScreenOrientation.LandscapeLeft;
+                    }
+                }
+                else {
                     Screen.orientation = ScreenOrientation.Portrait;
+
                 }
             }
          }
         else
         {
             StartCoroutine(IsSplashEnable(false, 0f));
-            //StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
+           // StartCoroutine(LoadingHandler.Instance.ShowLoadingForCharacterUpdation(5));
         }
     }
     public IEnumerator IsSplashEnable(bool _state, float _time)
