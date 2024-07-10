@@ -465,6 +465,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             SetPlayerCameraAngle();
         }
         mainPlayer.transform.position = new Vector3(0, 0, 0);
+        if (mainController == null)
+            mainController = mainControllerRefHolder;
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
         InstantiatePlayerAvatar();
