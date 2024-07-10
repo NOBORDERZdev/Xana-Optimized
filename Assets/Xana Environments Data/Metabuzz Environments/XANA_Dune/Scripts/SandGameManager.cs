@@ -98,7 +98,7 @@ public class SandGameManager : MonoBehaviour
         {
             id = ConstantsHolder.userId;
         }
-        Debug.LogError("User ID: " + id);
+        Debug.Log("User ID: " + id);
     }
 
     public void EnableSkating()
@@ -155,7 +155,7 @@ public class SandGameManager : MonoBehaviour
         yield return www.SendWebRequest();
         string point = www.downloadHandler.text;
         if (point == "There is no player Data") point = "0";
-        Debug.LogError("Sohaib API Response getPoint : " + point);
+        Debug.Log("Sohaib API Response getPoint : " + point);
         if (point == "Register complete") point = "0";
         uiMgr.SetPointUI(point);
 
@@ -313,7 +313,7 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest wwwSave = UnityWebRequest.Post(url, formSave);
         wwwSave.SendWebRequest();
         yield return new WaitUntil(() => wwwSave.isDone);
-        Debug.LogError("Sohaib API Response saveRecord : " + wwwSave.downloadHandler.text);
+        Debug.Log("Sohaib API Response saveRecord : " + wwwSave.downloadHandler.text);
 
         WWWForm formPersonalRank = new WWWForm();
         formPersonalRank.AddField("command", "getPersonalRank");
@@ -324,9 +324,9 @@ public class SandGameManager : MonoBehaviour
         yield return new WaitUntil(() => wwwPersonalRank.isDone);
 
         string personalRank = wwwPersonalRank.downloadHandler.text;
-        Debug.LogError("personalRank : " + personalRank);
+        Debug.Log("personalRank : " + personalRank);
 
-        string unit = "";
+        string unit = "";   
 
         int rankReward = 0;
         int playReward = 0;
@@ -388,7 +388,7 @@ public class SandGameManager : MonoBehaviour
         UnityWebRequest wwwReward = UnityWebRequest.Post(url, formReward);
         wwwReward.SendWebRequest();
         yield return new WaitUntil(() => wwwReward.isDone);
-        Debug.LogError(wwwReward.downloadHandler.text);
+        Debug.Log("Sohaib API Response savePoint : " + wwwReward.downloadHandler.text);
         StartCoroutine(CheckPoint());
         if ((int)personalRankFloat <= 10)
         {
@@ -412,24 +412,32 @@ public class SandGameManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("command", "getRank");
 
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        using UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
-        string rank = www.downloadHandler.text;
-        Debug.LogError(rank);
-
-        string[] ranks = rank.Split("\n");
-        for (int i = 0; i < ranks.Length; i++)
+        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
-            string[] _ranks = ranks[i].Split(",");
+            StartCoroutine(SetRankingData());
+            Debug.LogError("ConnectionError getRank");
 
-            string[] _rank = { _ranks[1], _ranks[3], (i + 1).ToString() };
-            rankList.Add(_ranks[0], _rank);
         }
+        else
+        {
+            string rank = www.downloadHandler.text;
+            Debug.Log(rank);
 
-        uiMgr.SetRankingBoard(rankList);
-        rankList.Clear();
+            string[] ranks = rank.Split("\n");
+            for (int i = 0; i < ranks.Length; i++)
+            {
+                string[] _ranks = ranks[i].Split(",");
 
-        www.Dispose();
+                string[] _rank = { _ranks[1], _ranks[3], (i + 1).ToString() };
+                rankList.Add(_ranks[0], _rank);
+            }
+
+            uiMgr.SetRankingBoard(rankList);
+            rankList.Clear();
+        }
+        //www.Dispose();
     }
 
     void SetPlayerStartPos()

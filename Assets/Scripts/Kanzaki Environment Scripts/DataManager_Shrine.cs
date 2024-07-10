@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DataManager_Shrine : MonoBehaviour
 {
-    private GameObject player;
+    //private GameObject player;
 
     // API configs
     [SerializeField] private string id;
@@ -23,11 +23,12 @@ public class DataManager_Shrine : MonoBehaviour
         if (ConstantsHolder.userId != null)
         {
             id = ConstantsHolder.userId;
-            StartCoroutine(CheckPoint());
+            //StartCoroutine(CheckPoint());
 
         }
-        if (ConstantsHolder.uniqueUserName != null)
+        if (ConstantsHolder.userId != null && ConstantsHolder.uniqueUserName != null)
         {
+            id = ConstantsHolder.userId;
             userName = ConstantsHolder.uniqueUserName;
             StartCoroutine(InitPlayerDB(id, userName));
         }
@@ -42,25 +43,36 @@ public class DataManager_Shrine : MonoBehaviour
 
     public IEnumerator InitPlayerDB(string id, string userName)
     {
-        Debug.LogError("User ID: " + id);
-        Debug.LogError("uniqueUserName: " + userName);
+        Debug.Log("User ID: " + id);
+        Debug.Log("uniqueUserName: " + userName);
         WWWForm form = new WWWForm();
         form.AddField("command", "initData");
         form.AddField("id", id);
         form.AddField("userName", userName);
 
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        using UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
-        Debug.LogError("initData" + www.downloadHandler.text);
-        string point = www.downloadHandler.text;
-        if (point == "There is no player Data") point = "0";
-        uIController_Shine.SetPointUI(point);
-        www.Dispose();
+        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+        {
+            StartCoroutine(InitPlayerDB(id, userName));
+            Debug.LogError("Network Error initData" + www.downloadHandler.text);
+
+        }
+        else
+        {
+            Debug.LogError("initData" + www.downloadHandler.text);
+            string point = www.downloadHandler.text;
+            if (point == "There is no player Data") point = "0";
+            uIController_Shine.SetPointUI(point);
+            //www.Dispose();
+        }
     }
     public IEnumerator CommunicateWithDB(string id) {
+
         WWWForm form = new WWWForm();
         form.AddField("command", "checkPoint");
         form.AddField("id", id);
+        Debug.LogError("User ID checkPoint: " + id);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -75,22 +87,29 @@ public class DataManager_Shrine : MonoBehaviour
         StartCoroutine(CheckPoint());        
     }
 
-    IEnumerator CheckPoint(){
+    IEnumerator CheckPoint() {
         WWWForm form = new WWWForm();
         form.AddField("command", "getPoint");
         form.AddField("id", id);
+        Debug.Log("User ID CheckPoint getPoint: " + id);
 
-        UnityWebRequest www = UnityWebRequest.Post(url, form);
+        using UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
+        if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
+        {
+            StartCoroutine(CheckPoint());
+            Debug.LogError("ConnectionError getPoint");
+        }
+        else
+        {
+            string point = www.downloadHandler.text;
+            if (point == "There is no player Data") point = "0";
 
-        string point = www.downloadHandler.text;
-        if (point == "There is no player Data") point = "0";
+            Debug.Log("getPoint" + point);
 
-        Debug.LogError("getPoint" + point);
-
-        uIController_Shine.SetPointUI(point);
-
-        www.Dispose();
+            uIController_Shine.SetPointUI(point);
+            //www.Dispose();
+        }
     }
 
     public void closeWorshipFailUI() {
