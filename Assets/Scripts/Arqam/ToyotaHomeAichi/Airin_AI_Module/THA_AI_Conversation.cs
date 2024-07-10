@@ -76,7 +76,10 @@ public class THA_AI_Conversation : MonoBehaviour
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SendWebRequest();
         while (!request.isDone)
+        {
             yield return null;
+        }
+
         if (request.result == UnityWebRequest.Result.Success)
         {
             _airinFeedback = JsonUtility.FromJson<AirinFeedback>(request.downloadHandler.text);
@@ -87,6 +90,8 @@ public class THA_AI_Conversation : MonoBehaviour
         }
         else
         {
+            NFT_Holder_Manager.instance.Extended_XCS.ClearAirinTypingMsg();
+            _animator.SetBool("isChating", false);
             Debug.LogError(request.error);
         }
         request.Dispose();
