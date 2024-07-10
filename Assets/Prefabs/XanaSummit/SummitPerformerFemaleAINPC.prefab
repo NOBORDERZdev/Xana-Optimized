@@ -1505,7 +1505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6971839685688149152
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3964,6 +3964,7 @@ GameObject:
   - component: {fileID: 7637144392912200914}
   - component: {fileID: 2850472222777319684}
   - component: {fileID: 6161366529465134880}
+  - component: {fileID: 5013116688619638068}
   m_Layer: 22
   m_Name: SummitPerformerFemaleAINPC
   m_TagString: Player
@@ -4035,9 +4036,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!195 &363187588729219715
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -4077,6 +4078,7 @@ MonoBehaviour:
   OldnpcEmotes: {fileID: 0}
   isPerformingAction: 0
   maxNpcBehaviourAction: 2
+  spaAIHandlerRef: {fileID: 0}
 --- !u!114 &7637144392912200914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4090,9 +4092,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _body: {fileID: 3985419913151994502}
+  CurNPCCloths: []
   DefaultSkinColor: {r: 0, g: 0, b: 0, a: 0}
   DefaultHairColor: {r: 0, g: 0, b: 0, a: 0}
-  json: '{"id":"86948","name":"Test","thumbnail":"https://cdn.xana.net/xanaprod/Defaults/1680176897662_file.png","gender":"Female","avatarType":"NewAvatar","myItemObj":[{"Slug":"","ItemType":"Legs","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1277,"ItemName":"Girl_Pant_V008","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Chest","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1295,"ItemName":"Girl_Shirt_V008","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Hair","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1231,"ItemName":"Girl_H_022","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}},{"Slug":"","ItemType":"Feet","ItemPrefab":{"m_FileID":0,"m_PathID":0},"ItemID":1085,"ItemName":"Shoes_478","ItemDescription":"","ItemLinkAndroid":"","ItemLinkIOS":"","SubCategoryname":"","Stackable":false,"ItemIcon":{"m_FileID":0,"m_PathID":0}}]}'
+  AvatarJson:
+    id: 
+    name: 
+    thumbnail: 
+    gender: 
+    avatarType: OldAvatar
+    myItemObj: []
+    ai_gender: 
+    hair_color: {r: 0, g: 0, b: 0, a: 0}
+    skin_color: 
+    lip_color: {r: 0, g: 0, b: 0, a: 0}
+    faceItemData: 0
+    lipItemData: 0
+    noseItemData: 0
+    hairItemData: 
+    eyeItemData: 
+    eyeShapeItemData: 0
+    charactertypeAi: 0
+    SavedBones: []
+    SkinId: 0
+    Skin: {r: 0, g: 0, b: 0, a: 0}
+    LipColor: {r: 0, g: 0, b: 0, a: 0}
+    HairColor: {r: 0, g: 0, b: 0, a: 0}
+    EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+    EyeColor: {r: 0, g: 0, b: 0, a: 0}
+    isSkinColorChanged: 0
+    isLipColorChanged: 0
+    HairColorPaletteValue: 0
+    BodyFat: 0
+    FaceValue: 0
+    NoseValue: 0
+    EyeValue: 0
+    EyesColorValue: 0
+    EyesColorPaletteValue: 0
+    EyeBrowValue: 0
+    EyeBrowColorPaletteValue: 0
+    EyeLashesValue: 0
+    MakeupValue: 0
+    LipsValue: 0
+    LipsColorValue: 0
+    LipsColorPaletteValue: 0
+    faceMorphed: 0
+    eyeBrowMorphed: 0
+    eyeMorphed: 0
+    noseMorphed: 0
+    lipMorphed: 0
+    PresetValue: 
+    eyeTextureName: 
+    eyeLashesName: 
+    makeupName: 
+    SssIntensity: 0
+    SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+    eyebrrowTexture: 
+    mustacheTextureName: 
+    faceTattooTextureName: 
+    chestTattooTextureName: 
+    legsTattooTextureName: 
+    armTattooTextureName: 
+    eyeLidTextureName: 
+    FaceBlendsShapes: []
+    stamina: 0
+    speed: 0
+    profile: 
+    defence: 0
+    special_move: 0
+    punch: 0
+    kick: 0
   npcName: {fileID: 2582222438695674374}
 --- !u!114 &2850472222777319684
 MonoBehaviour:
@@ -4107,7 +4176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   npcController: {fileID: 9100000, guid: 09abe94bb91f4224ab0e08b1fca6e083, type: 2}
-  SingleAnimPlayTime: 10
   CurrDanceAnimName: 
   AnimPlayList:
   - Breakdance1
@@ -4143,6 +4211,19 @@ MonoBehaviour:
   spaAIBhvrController: {fileID: 6695394099681832824}
   walkRotateSpeed: 10
   isMoving: 0
+--- !u!135 &5013116688619638068
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5958298307327268428}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5996163411014420918
 GameObject:
   m_ObjectHideFlags: 0
@@ -4848,7 +4929,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3296459340308331357
 RectTransform:
   m_ObjectHideFlags: 0
