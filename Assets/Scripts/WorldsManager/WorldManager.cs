@@ -74,6 +74,7 @@ public class WorldManager : MonoBehaviour
     }
     private void Awake()
     {
+        ConstantsHolder.xanaConstants.isCameraMan = true;
         if (instance == null)
             instance = this;
         else
