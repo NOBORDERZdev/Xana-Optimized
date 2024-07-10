@@ -16,6 +16,7 @@ public class SNS_APIManager : MonoBehaviour
 {
     public static SNS_APIManager Instance;
 
+    private bool isCoroutineRunning=false;
     [Header("Loagin Token Reference")]
     public string userAuthorizeToken;
     public int userId;
@@ -278,14 +279,15 @@ public class SNS_APIManager : MonoBehaviour
         }
     }
 
-
     //this api is used to follow user.......
     public void RequestFollowAUser(string user_Id, string callingFrom)
     {
-        StartCoroutine(IERequestFollowAUser(user_Id, callingFrom));
+        if(!isCoroutineRunning)
+            StartCoroutine(IERequestFollowAUser(user_Id, callingFrom));
     }
     public IEnumerator IERequestFollowAUser(string user_Id, string callingFrom)
     {
+        isCoroutineRunning = true;
         WWWForm form = new WWWForm();
         form.AddField("userId", user_Id);
 
@@ -333,6 +335,7 @@ public class SNS_APIManager : MonoBehaviour
                         break;
                 }
             }
+            isCoroutineRunning = false;
         }
     }
 

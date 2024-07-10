@@ -345,8 +345,7 @@ public class FindFriendWithNameItem : MonoBehaviour
                 //unfollow
                 //RequestUnFollowAUser(searchUserRow.id.ToString());
                 FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
-                FeedUIController.Instance.LastClickedUserId = searchUserRow.id.ToString();
-                //userID = searchUserRow.id.ToString();
+                FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
                 FeedUIController.Instance.UnfollowButton.onClick.AddListener(UnFollowAUser);
             }
             else
@@ -438,13 +437,11 @@ public class FindFriendWithNameItem : MonoBehaviour
     }
     public void UnFollowAUser()
     {
-        if(FeedUIController.Instance.LastClickedUserId == searchUserRow.id.ToString())
-            StartCoroutine(IERequestUnFollowAUser(searchUserRow.id.ToString()));
+        StartCoroutine(IERequestUnFollowAUser(searchUserRow.id.ToString()));
     }
     public void FollowingTabUnfollowAUser()
     {
-        if (FeedUIController.Instance.LastClickedUserId == GetComponent<FollowingItemController>().followingRawData.userId.ToString())
-            StartCoroutine(IERequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString()));
+        StartCoroutine(IERequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString()));
     }
     //public void RequestUnFollowAUser(string user_Id)
     //{
@@ -540,7 +537,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             //RequestUnFollowAUser(GetComponent<FollowingItemController>().followingRawData.userId.ToString());
             //FeedUIController.Instance.OnClickAddFriendFollowing();
             FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
-            FeedUIController.Instance.LastClickedUserId = GetComponent<FollowingItemController>().followingRawData.userId.ToString();
+            FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
             FeedUIController.Instance.UnfollowButton.onClick.AddListener(FollowingTabUnfollowAUser);
         }
     }

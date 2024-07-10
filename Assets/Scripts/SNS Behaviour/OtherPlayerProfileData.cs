@@ -689,7 +689,7 @@ public class OtherPlayerProfileData : MonoBehaviour
         {
             //unfollow.......
             FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
-            FeedUIController.Instance.LastClickedUserId = singleUserProfileData.id.ToString();
+            FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
             FeedUIController.Instance.UnfollowButton.onClick.AddListener(UnFollowAUser);
         }
         else
@@ -703,13 +703,10 @@ public class OtherPlayerProfileData : MonoBehaviour
     }
     public void UnFollowAUser()
     {
-        if (FeedUIController.Instance.LastClickedUserId == singleUserProfileData.id.ToString())
-        {
-            //feedUIController.ShowLoader(true);
-            //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = false;
-            SNS_APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
-        }
+        //feedUIController.ShowLoader(true);
+        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = false;
+        SNS_APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+        //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
     }
 
     #region Get User Details API Integrate........

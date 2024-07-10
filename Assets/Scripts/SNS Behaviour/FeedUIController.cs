@@ -122,7 +122,6 @@ public class FeedUIController : MonoBehaviour
     [Header("Confirm To Unfollow")]
     public GameObject ConfirmUnfollowPanel;
     public Button UnfollowButton;
-    public string LastClickedUserId;
 
     private void Awake()
     {
