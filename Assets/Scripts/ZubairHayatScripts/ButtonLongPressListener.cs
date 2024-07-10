@@ -56,21 +56,21 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
     {
         //string msg = "";
         TextEditor textEditor = new TextEditor();
-        //switch (Data)
-        //{
-        //    case PersonalData.Email:
-        //        msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
-        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
-        //        break;
-        //    case PersonalData.phoneNumber:
-        //        msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
-        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
-        //        break;
-        //    case PersonalData.WalletAddress:
-        //        msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
-        //        textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
-        //        break;
-        //}
+        switch (Data)
+        {
+            case PersonalData.Email:
+                //msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
+                break;
+            case PersonalData.phoneNumber:
+                //msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
+                break;
+            case PersonalData.WalletAddress:
+                //msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
+                break;
+        }
         textEditor.SelectAll();
         textEditor.Copy();
 #if UNITY_IOS
