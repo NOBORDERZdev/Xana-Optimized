@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 85
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5646982794162487216
 MonoBehaviour:
@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 101
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1489484480332076562
 MonoBehaviour:
@@ -1363,7 +1363,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 28
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6652375679031459680
 MonoBehaviour:
@@ -1696,7 +1696,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 40
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4996601809885742334
 MonoBehaviour:
@@ -1909,7 +1909,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 5
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1319855101047963562
 MonoBehaviour:
@@ -2277,7 +2277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 96
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3208582958706659715
 MonoBehaviour:
@@ -2411,6 +2411,7 @@ GameObject:
   - component: {fileID: 7611200597343381007}
   - component: {fileID: 2130871217932690559}
   - component: {fileID: 6657741524657901049}
+  - component: {fileID: 7545183354779449293}
   m_Layer: 23
   m_Name: HeadingText
   m_TagString: Untagged
@@ -2466,7 +2467,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Raffle Tickets
+  m_text: Raffle Ticket
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2493,7 +2494,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.15
+  m_fontSize: 13
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2535,6 +2536,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7545183354779449293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284292909017775373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 6657741524657901049}
 --- !u!1 &285168468191029025
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,7 +3448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 128
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3855629734170600036
 MonoBehaviour:
@@ -3720,7 +3736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 65
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7331012807348021233
 MonoBehaviour:
@@ -5644,7 +5660,7 @@ RectTransform:
   - {fileID: 5744185233751533415}
   - {fileID: 5058840031776376642}
   m_Father: {fileID: 2772780197713134005}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5876,7 +5892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 33
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3759285938734082204
 MonoBehaviour:
@@ -6457,7 +6473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 89
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5614305550550991988
 MonoBehaviour:
@@ -7306,7 +7322,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2772780197713134005}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -8471,7 +8487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 58
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5915445272671584424
 MonoBehaviour:
@@ -8624,6 +8640,7 @@ GameObject:
   - component: {fileID: 2006745129032427919}
   - component: {fileID: 6522213076063338214}
   - component: {fileID: 6665523810650164697}
+  - component: {fileID: 6658540273075592208}
   m_Layer: 23
   m_Name: HeadingText
   m_TagString: Untagged
@@ -8679,7 +8696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Visited Area '
+  m_text: Visited Area
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8748,6 +8765,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6658540273075592208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 867941459964342221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 6665523810650164697}
 --- !u!1 &875282111284613397
 GameObject:
   m_ObjectHideFlags: 0
@@ -9067,7 +9099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 15
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7336702293127157992
 MonoBehaviour:
@@ -9446,7 +9478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 37
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2377270719483042844
 MonoBehaviour:
@@ -9734,7 +9766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 25
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3836066323857764896
 MonoBehaviour:
@@ -10119,7 +10151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 59
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2486346827132392166
 MonoBehaviour:
@@ -10469,7 +10501,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 99
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3243674350005249907
 MonoBehaviour:
@@ -10891,7 +10923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 57
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6678923145855323894
 MonoBehaviour:
@@ -11231,7 +11263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 78
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5541575811781638637
 MonoBehaviour:
@@ -11462,7 +11494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 50
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4420764107546178239
 MonoBehaviour:
@@ -11599,7 +11631,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 83
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &609345995939328981
 MonoBehaviour:
@@ -11832,7 +11864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 90
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6434064737447436568
 MonoBehaviour:
@@ -12048,7 +12080,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5058840031776376642
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12071,8 +12103,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 455}
-  m_SizeDelta: {x: 0, y: -910}
+  m_AnchoredPosition: {x: 0, y: 500}
+  m_SizeDelta: {x: 0, y: -1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &639818933920958655
 CanvasRenderer:
@@ -12991,7 +13023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 116
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8435404691681730054
 MonoBehaviour:
@@ -13128,7 +13160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 109
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2137247637173082356
 MonoBehaviour:
@@ -13494,7 +13526,7 @@ RectTransform:
   m_Children:
   - {fileID: 6380876679255442452}
   m_Father: {fileID: 2772780197713134005}
-  m_RootOrder: 10
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14223,7 +14255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 72
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &489391901341246032
 MonoBehaviour:
@@ -14360,7 +14392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 18
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7281884759698688226
 MonoBehaviour:
@@ -14795,7 +14827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 36
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3652647945264382125
 MonoBehaviour:
@@ -15646,6 +15678,7 @@ GameObject:
   - component: {fileID: 4345722056806772433}
   - component: {fileID: 49681525965339645}
   - component: {fileID: 8017211988884687436}
+  - component: {fileID: 7841283328074763651}
   m_Layer: 23
   m_Name: HeadingText
   m_TagString: Untagged
@@ -15701,7 +15734,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Raffle Tickets
+  m_text: Raffle Ticket
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -15770,6 +15803,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7841283328074763651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848507134913141215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 8017211988884687436}
 --- !u!1 &1854144619916351649
 GameObject:
   m_ObjectHideFlags: 0
@@ -15937,7 +15985,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 2
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6138905557966433900
 MonoBehaviour:
@@ -16074,7 +16122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 63
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6567028066049956705
 MonoBehaviour:
@@ -17012,7 +17060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 67
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3548472970189806544
 MonoBehaviour:
@@ -18207,7 +18255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 35
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5749086480415234983
 MonoBehaviour:
@@ -19046,7 +19094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 76
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2855369563540612920
 MonoBehaviour:
@@ -19572,7 +19620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 44
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1589422541067321822
 MonoBehaviour:
@@ -20052,7 +20100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 17
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1538118370358902935
 MonoBehaviour:
@@ -23223,7 +23271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 88
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8269456551182816468
 MonoBehaviour:
@@ -23787,7 +23835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 22
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5620590449601191880
 MonoBehaviour:
@@ -24002,7 +24050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 79
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1884026520648677088
 MonoBehaviour:
@@ -24139,7 +24187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 119
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4577144904456262778
 MonoBehaviour:
@@ -24276,7 +24324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 114
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7355698705301790460
 MonoBehaviour:
@@ -24944,7 +24992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 117
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7712734697887833119
 MonoBehaviour:
@@ -25081,7 +25129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 12
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8190464020838766582
 MonoBehaviour:
@@ -26098,7 +26146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 26
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5318142279219911056
 MonoBehaviour:
@@ -27245,7 +27293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 125
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8233266927286872400
 MonoBehaviour:
@@ -27810,7 +27858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 92
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3328852262334391061
 MonoBehaviour:
@@ -28104,7 +28152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 49
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6075937681751332441
 MonoBehaviour:
@@ -29003,7 +29051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 56
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7345824167094798495
 MonoBehaviour:
@@ -30338,7 +30386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 4
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4985628397150478061
 MonoBehaviour:
@@ -30475,7 +30523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 102
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4421760390655357001
 MonoBehaviour:
@@ -30763,7 +30811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 66
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1606959526509840258
 MonoBehaviour:
@@ -31256,7 +31304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 105
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6828657484522491543
 MonoBehaviour:
@@ -31393,7 +31441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 62
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7536082875299914296
 MonoBehaviour:
@@ -32182,7 +32230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 84
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3667342368709801001
 MonoBehaviour:
@@ -32486,7 +32534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 39
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7045422786449564186
 MonoBehaviour:
@@ -32781,7 +32829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 54
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7510055149287249580
 MonoBehaviour:
@@ -33149,7 +33197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 8
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6991081436909104472
 MonoBehaviour:
@@ -33977,7 +34025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 108
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3819903868794162230
 MonoBehaviour:
@@ -34498,7 +34546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 115
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2546663169842672504
 MonoBehaviour:
@@ -34635,7 +34683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 100
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2638425349914401875
 MonoBehaviour:
@@ -35985,7 +36033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 52
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4919163049993433530
 MonoBehaviour:
@@ -36199,7 +36247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 10
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1495520255291687171
 MonoBehaviour:
@@ -36336,7 +36384,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 32
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3955224586856995200
 MonoBehaviour:
@@ -36684,7 +36732,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 61
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3568012658419541761
 MonoBehaviour:
@@ -36972,7 +37020,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 77
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1014636413162321266
 MonoBehaviour:
@@ -37755,7 +37803,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 20
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3435317152621877767
 MonoBehaviour:
@@ -38672,9 +38720,9 @@ RectTransform:
   - {fileID: 7565303751008440387}
   - {fileID: 5377329308328758077}
   - {fileID: 4657711957076027893}
+  - {fileID: 7273116646760523822}
   - {fileID: 1227892655801582945}
   - {fileID: 2481158026038932492}
-  - {fileID: 7273116646760523822}
   - {fileID: 7830576884838317942}
   - {fileID: 1198029191356432945}
   - {fileID: 1070080906446793199}
@@ -38892,7 +38940,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 19
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6797035683577866204
 MonoBehaviour:
@@ -39767,7 +39815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 51
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2844706431718638387
 MonoBehaviour:
@@ -40131,7 +40179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 71
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &9100530918372472034
 MonoBehaviour:
@@ -41020,7 +41068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 73
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8706935594578110325
 MonoBehaviour:
@@ -41157,7 +41205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 75
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8482172729301331180
 MonoBehaviour:
@@ -41540,7 +41588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 112
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1235308008942161102
 MonoBehaviour:
@@ -41952,7 +42000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 31
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2539111084270179432
 MonoBehaviour:
@@ -42089,7 +42137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 48
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6990680000328882859
 MonoBehaviour:
@@ -42383,7 +42431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 46
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6643683167487964790
 MonoBehaviour:
@@ -42520,7 +42568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 29
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1227315862907171951
 MonoBehaviour:
@@ -43061,7 +43109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 1
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8596819406526052495
 MonoBehaviour:
@@ -43198,7 +43246,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 113
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5183454622917870075
 MonoBehaviour:
@@ -43487,7 +43535,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 42
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7706887117257343840
 MonoBehaviour:
@@ -43951,7 +43999,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 16
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8283630157617651308
 MonoBehaviour:
@@ -44945,7 +44993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 3
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1293889218385434060
 MonoBehaviour:
@@ -45082,7 +45130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 55
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1722133327015508665
 MonoBehaviour:
@@ -45467,7 +45515,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 68
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &839039423480583574
 MonoBehaviour:
@@ -57431,7 +57479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 13
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8092832717282050909
 MonoBehaviour:
@@ -57867,7 +57915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 74
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1254002179544546085
 MonoBehaviour:
@@ -58004,7 +58052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 69
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8707451003269150267
 MonoBehaviour:
@@ -60051,7 +60099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 47
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2481773585960593772
 MonoBehaviour:
@@ -60574,7 +60622,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 27
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6686589897092243932
 MonoBehaviour:
@@ -60904,7 +60952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 127
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3603921565455611543
 MonoBehaviour:
@@ -61041,7 +61089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 121
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2228792767005225192
 MonoBehaviour:
@@ -61254,7 +61302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 30
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1221249231451121888
 MonoBehaviour:
@@ -61311,6 +61359,7 @@ GameObject:
   - component: {fileID: 645664966940245789}
   - component: {fileID: 4690467205492315229}
   - component: {fileID: 6577573274054323112}
+  - component: {fileID: 6228279170488410909}
   m_Layer: 23
   m_Name: HeadingText
   m_TagString: Untagged
@@ -61366,7 +61415,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Visited Area '
+  m_text: Visited Area
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -61435,6 +61484,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6228279170488410909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037239567899695572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 6577573274054323112}
 --- !u!1 &6071406161370827513
 GameObject:
   m_ObjectHideFlags: 0
@@ -61998,7 +62062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 23
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6087168541257609749
 MonoBehaviour:
@@ -63914,7 +63978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 103
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6890322462878135817
 MonoBehaviour:
@@ -64429,7 +64493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 98
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6411715264028812193
 MonoBehaviour:
@@ -65189,7 +65253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 87
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3752351955239707477
 MonoBehaviour:
@@ -65666,7 +65730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 110
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3044783271664100023
 MonoBehaviour:
@@ -66159,7 +66223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 41
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4886232499323673502
 MonoBehaviour:
@@ -66477,7 +66541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 94
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8771342407874409599
 MonoBehaviour:
@@ -66924,7 +66988,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 38
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6701573607989442280
 MonoBehaviour:
@@ -70206,7 +70270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 104
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &102238829108495126
 MonoBehaviour:
@@ -70726,7 +70790,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 93
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3821279835249945512
 MonoBehaviour:
@@ -71937,7 +72001,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 122
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5412581130115897048
 MonoBehaviour:
@@ -72150,7 +72214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 97
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8896955689285189621
 MonoBehaviour:
@@ -72287,7 +72351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 95
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3043802398752848691
 MonoBehaviour:
@@ -72793,7 +72857,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 81
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2636437418005317309
 MonoBehaviour:
@@ -73158,7 +73222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 80
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1468916916338421944
 MonoBehaviour:
@@ -73371,7 +73435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 124
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3853863491536073109
 MonoBehaviour:
@@ -73773,7 +73837,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 21
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &1274101732821135389
 MonoBehaviour:
@@ -73988,7 +74052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 123
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5407993272765803362
 MonoBehaviour:
@@ -75540,7 +75604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 43
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &9044780350928902606
 MonoBehaviour:
@@ -77518,9 +77582,9 @@ RectTransform:
   m_Father: {fileID: 5058840031776376642}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -50}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 63, y: 0}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3898305688972943817
@@ -78480,7 +78544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 107
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2121547944517072068
 MonoBehaviour:
@@ -78617,7 +78681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 111
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8912350830104204468
 MonoBehaviour:
@@ -79302,7 +79366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 14
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4525844169799755706
 MonoBehaviour:
@@ -79678,7 +79742,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 9
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5305501165048455366
 MonoBehaviour:
@@ -80704,7 +80768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 86
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4634820385249564242
 MonoBehaviour:
@@ -80918,7 +80982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 7
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3526311500891588389
 MonoBehaviour:
@@ -81055,7 +81119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 70
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &378535649650354241
 MonoBehaviour:
@@ -81515,7 +81579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 91
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7581926598738915465
 MonoBehaviour:
@@ -81779,7 +81843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 53
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &5286459469500772462
 MonoBehaviour:
@@ -81916,7 +81980,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 106
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4275170392572272213
 MonoBehaviour:
@@ -82119,7 +82183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 6
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &2346982947189119108
 MonoBehaviour:
@@ -82753,7 +82817,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 64
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6143939805575820875
 MonoBehaviour:
@@ -82972,7 +83036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 118
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4992485978775933365
 MonoBehaviour:
@@ -83279,7 +83343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 60
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7531008562545745405
 MonoBehaviour:
@@ -83765,7 +83829,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 11
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &7198137203370384036
 MonoBehaviour:
@@ -84402,7 +84466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 34
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &8575396375848953356
 MonoBehaviour:
@@ -84766,7 +84830,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 120
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3688935831579133120
 MonoBehaviour:
@@ -85007,7 +85071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 126
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6110997836477786601
 MonoBehaviour:
@@ -86123,7 +86187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 45
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &6107226271384922796
 MonoBehaviour:
@@ -86492,7 +86556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 82
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &3075331861859676478
 MonoBehaviour:
@@ -86858,7 +86922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   domeId: 24
-  myImage: {fileID: 0}
+  MyImage: {fileID: 0}
   manager: {fileID: 0}
 --- !u!114 &4979183490742464728
 MonoBehaviour:

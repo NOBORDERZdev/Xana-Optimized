@@ -25,7 +25,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
-
+    public bool IsJoinSummitWorld = false;
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject mainControllerRefHolder;

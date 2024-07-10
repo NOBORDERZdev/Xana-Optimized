@@ -8,6 +8,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     public static Vector3 playerPos;
     public static Quaternion playerRot;
     public static Vector3 playerScale;
+    public static Action<bool> OnJoinSubItem; // Car, GiantWheel, Planets
 
     public MutiplayerController multiplayerController;
 
@@ -25,6 +26,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.LoadSummitScene += LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
+        OnJoinSubItem += SummitMiniMapStatusOnSceneChange;
     }
 
     private void OnDisable()
@@ -33,6 +35,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.LoadSummitScene -= LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
+        OnJoinSubItem -= SummitMiniMapStatusOnSceneChange;
     }
 
     void LoadDomesData()
@@ -43,6 +46,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void SummitMiniMapStatusOnSceneChange(bool makeActive)
     {
+        GameplayEntityLoader.instance.IsJoinSummitWorld = !makeActive;
+
         if (makeActive && ConstantsHolder.xanaConstants.minimap == 1)
         {
             ReferencesForGamePlay.instance.minimap.SetActive(true);
