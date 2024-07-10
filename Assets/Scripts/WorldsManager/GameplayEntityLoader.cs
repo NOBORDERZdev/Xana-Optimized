@@ -335,7 +335,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint = player.transform.position;
         Destroy(player);
         Debug.Log("player shoud be destroyed");
-        InstantiatePlayerAvatar();
+        InstantiatePlayerAvatar(spawnPoint);
 
         ReferencesForGamePlay.instance.m_34player = player;
         //  SetAxis();
