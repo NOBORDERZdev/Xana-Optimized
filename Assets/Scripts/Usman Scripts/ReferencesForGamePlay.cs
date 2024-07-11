@@ -24,8 +24,8 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject m_34player;
     public PlayerController playerControllerNew;
     public GameObject minimap;
-    public GameObject minimap_summit;
-    public GameObject fullscreen_map_summit;
+    public GameObject MinimapSummit;
+    public GameObject FullscreenMapSummit;
 
     public GameObject minimapSettingsBtn;
     public TMPro.TextMeshProUGUI totalCounter; // Counter to show total connected peoples.
@@ -374,19 +374,23 @@ public class ReferencesForGamePlay : MonoBehaviour
     {
         if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
         {
-            minimap_summit.SetActive(true);
+            MinimapSummit.SetActive(true);
+
+            minimap.transform.parent.GetComponent<RawImage>().enabled = true;
+            minimap.transform.parent.GetComponent<Mask>().enabled = true;
+
             if (!ScreenOrientationManager._instance.isPotrait)
                 minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
         }
         else
         {
-            minimap_summit.SetActive(false);
+            MinimapSummit.SetActive(false);
         }
     }
 
     public void FullScreenMapStatus (bool _enable)
     {
-        fullscreen_map_summit.SetActive(_enable);
+        FullscreenMapSummit.SetActive(_enable);
     }
 }
 
