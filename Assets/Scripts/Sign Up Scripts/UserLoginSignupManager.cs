@@ -143,11 +143,10 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            //ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            //ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            //ConstantsHolder.isWalletLogin = true;
-            //InventoryManager.instance.WalletLoggedinCall();
-            //WalletAutoLogin();
+            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+            ConstantsHolder.isWalletLogin = true;
+            WalletAutoLogin();
         }
         else
         {
@@ -278,22 +277,29 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
-        Debug.LogError("here ");
-        if (!_isUserClothDataFetched)
-        {
-            GetUserClothData();
-            _isUserClothDataFetched = true;
-        }
-        GetOwnedNFTsFromAPI();
         
-        UserPassManager.Instance.GetGroupDetails("freeuser");
-        UserPassManager.Instance.GetGroupDetailsForComingSoon();
-        StartCoroutine(WaitForDeepLink());
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
-        if (GameManager.Instance.UiManager != null)//rik
+        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
-            GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
-            GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+            MainSceneEventHandler.OpenLandingScene?.Invoke();
+        }
+        else
+        {
+            if (!_isUserClothDataFetched)
+            {
+                GetUserClothData();
+                _isUserClothDataFetched = true;
+            }
+            GetOwnedNFTsFromAPI();
+            InventoryManager.instance.WalletLoggedinCall();
+            UserPassManager.Instance.GetGroupDetails("freeuser");
+            UserPassManager.Instance.GetGroupDetailsForComingSoon();
+            StartCoroutine(WaitForDeepLink());
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+            if (GameManager.Instance.UiManager != null)//rik
+            {
+                GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
+            }
         }
     }
     IEnumerator WaitForDeepLink()
