@@ -29,7 +29,7 @@ public class ActionFavouriteManager : MonoBehaviour
        }
        else
        {
-           EmoteReactionUIHandlerLandscape.DisplayActionDuplicateMessage?.Invoke();
+           EmoteReactionUIHandlerLandscape.DisplayActionDuplicateMessage?.Invoke(dataObj.TypeOfAction);
        }
    }
 }

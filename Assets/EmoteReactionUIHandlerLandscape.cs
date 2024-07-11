@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,7 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
 {
     public Transform EmotesSeeAllHolder;
     public Transform ReactionSeeAllHolder;
-    public static Action DisplayActionDuplicateMessage;
+    public static Action<EmoteReactionItemBtnHandler.ItemType> DisplayActionDuplicateMessage;
     public static Action CloseDisplayDialogScrollView;
     public Transform DuplicateMessage;
     public Transform ActionFavouritDialogObj;
@@ -30,9 +31,9 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
         CloseDisplayDialogScrollView -= CloseActionDisplayDialogScroll;
     }
 
-    public void DuplicateActionMessage()
+    public void DuplicateActionMessage(EmoteReactionItemBtnHandler.ItemType type)
     {
-        StartCoroutine(ActivateDuplicateActionMessage());
+        StartCoroutine(ActivateDuplicateActionMessage(type));
     }
 
     public void ShowAllBtnClick()
@@ -89,8 +90,16 @@ public class EmoteReactionUIHandlerLandscape : EmoteReactionUIHandler
         }
     }
 
-    private IEnumerator ActivateDuplicateActionMessage()
+    private IEnumerator ActivateDuplicateActionMessage(EmoteReactionItemBtnHandler.ItemType type)
     {
+        if(type== EmoteReactionItemBtnHandler.ItemType.Emote)
+        {
+            DuplicateMessage.GetComponent<TMP_Text>().text = "Duplicate Animation";
+        }
+        else
+        {
+            DuplicateMessage.GetComponent<TMP_Text>().text = "Duplicate Reaction";
+        }
         DuplicateMessage.gameObject.SetActive(true);
         yield return new WaitForSeconds(3f);
         DuplicateMessage.gameObject.SetActive(false);

@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9410,7 +9411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
@@ -20596,7 +20596,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641493, y: -0.00089248497, z: 0.000009499775, w: 0.999943}
+  m_LocalRotation: {x: 0.0106414985, y: -0.00089248695, z: 0.000009499802, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -22084,7 +22084,6 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 10
@@ -22976,7 +22975,7 @@ LODGroup:
   m_Enabled: 1
 --- !u!95 &1808683680640967394
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -22993,8 +22992,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!143 &1808683680640967395
 CharacterController:
   m_ObjectHideFlags: 0
@@ -39857,6 +39855,18 @@ PrefabInstance:
     - target: {fileID: 613305893840204087, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 613305895821578473, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 613305895821578473, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 613305895821578473, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 657205613546806104, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
