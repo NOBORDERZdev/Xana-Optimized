@@ -84,7 +84,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public userRoleScript userRoleScriptScriptableObj;
     public static UserLoginSignupManager instance;
     EyesBlinking ref_EyesBlinking;
-    
+
+    public GameObject DownloadPermissionPopup;
 
     private void OnEnable()
     {
@@ -914,14 +915,18 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            {
+                DownloadPermissionPopup.SetActive(true);
+            }
+
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetString("PlayerName", userUsername);
             ConstantsHolder.userName = userUsername;
             GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
             OpenUIPanel(16);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+            
             return;
         }
 
@@ -955,6 +960,18 @@ public class UserLoginSignupManager : MonoBehaviour
      
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
+    }
+
+    public void AllowDownloadPermission()
+    {
+        PlayerPrefs.SetString("DownloadPermission", "true");
+        LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+        XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+    }
+    public void CancelDownloadPermission()
+    {
+        PlayerPrefs.SetString("DownloadPermission", "false");
+        Application.Quit();
     }
     public void UserDisplayNameErrors(string errorMSg) {
 
