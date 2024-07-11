@@ -1788,7 +1788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 205.12975, y: 38.878124}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &4789487305993394211
@@ -2636,6 +2636,7 @@ GameObject:
   - component: {fileID: 4789487306196868294}
   - component: {fileID: 4789487306196868292}
   - component: {fileID: 4789487306196868295}
+  - component: {fileID: 6446122696290520399}
   m_Layer: 5
   m_Name: WrongCode
   m_TagString: Untagged
@@ -2760,6 +2761,21 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6446122696290520399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4789487306196868297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 4789487306196868295}
 --- !u!1 &4789487306232719440
 GameObject:
   m_ObjectHideFlags: 0
