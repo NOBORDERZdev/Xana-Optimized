@@ -74,7 +74,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
     private IEnumerator DownloadAddressableActionAnimation(string label)//, Action downloadCompleteCallBack
     {
-        Debug.LogError("Label ----> " + label);
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
             int playerId = ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID;
@@ -91,14 +90,46 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Label ----> " + label+"  --- Addressable Loadede ---->>>>>   " + playerId);
                     AnimationPlaying = true;
+                    SyncDataWithPlayers(label);
                    StartCoroutine( ApplyAnimationToAnimatorSet(loadOp.Result, playerId));
                 }
             }
         }
     }
+    private IEnumerator DownloadAddressableActionAnimation(string label, int playerID)//, Action downloadCompleteCallBack
+    {
+        if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
+        {
+            AsyncOperationHandle<AnimationClip> loadOp;
+            loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
+            while (!loadOp.IsDone)
+                yield return loadOp;
 
+            if (loadOp.Status == AsyncOperationStatus.Succeeded)
+            {
+                if (loadOp.Result == null || loadOp.Result.Equals(null))
+                {
+                    Debug.LogError("NULLLLLL");
+                }
+                else
+                {
+                    StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result, playerID));
+                }
+            }
+        }
+    }
+    private void SyncDataWithPlayers(string animationName)
+    {
+        Dictionary<object, object> sharedData = new Dictionary<object, object>();
+        sharedData.Add(ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID.ToString(), animationName);
+
+        RaiseEventOptions options = new RaiseEventOptions();
+        options.CachingOption = EventCaching.DoNotCache;
+        options.Receivers = ReceiverGroup.All;
+        PhotonNetwork.RaiseEvent(12, sharedData, options,
+            SendOptions.SendReliable);
+    }
     private IEnumerator ApplyAnimationToAnimatorSet(AnimationClip animationClip,int playerId)
     {
         Animator animator;
@@ -113,6 +144,8 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 {
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
                     {
+                        Debug.LogError("ApplyAnimationToAnimatorSet ---> " + playerId);
+
                         if (animator.GetBool("EtcAnimStart"))
                         {
                             animator.SetBool("Stand", true);
@@ -143,10 +176,47 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
 
     private void NetworkingClient_EventReceived(EventData obj)
     {
+
         if (obj.Code == 1)
         {
             object[] minePlayer = (object[])obj.CustomData;
             DisableAnimationReaction((int)minePlayer[0]);
         }
+        else if (obj.Code == 12)
+        {
+            StartCoroutine(waittostart(obj));
+        }
+    }
+    public IEnumerator waittostart(EventData obj)
+    {
+        List<EventData> data = new List<EventData>();
+        data.Clear();
+        if (data.Count > 0)
+        {
+            data.Add(obj);
+            yield break;
+        }
+        data.Add(obj);
+
+
+        while (data.Count > 0)
+        {
+
+            Dictionary<object, object> DataShared = new Dictionary<object, object>();
+
+            DataShared = (Dictionary<object, object>)data[0].CustomData;
+
+            foreach (KeyValuePair<object, object> keyValue in DataShared)
+            {
+                string keyDataShared = keyValue.Key.ToString();
+
+                if (!string.IsNullOrEmpty(DataShared[keyDataShared].ToString()))
+                    yield return StartCoroutine(DownloadAddressableActionAnimation(DataShared[keyDataShared].ToString(), int.Parse(keyDataShared)));
+
+            }
+            data.RemoveAt(0);
+
+        }
+        yield return null;
     }
 }
