@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ActionAnimationApplyToPlayer : MonoBehaviour
@@ -101,20 +102,25 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
     {
         if (label != "" && Application.internetReachability != NetworkReachability.NotReachable)
         {
-            AsyncOperationHandle<AnimationClip> loadOp;
-            loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
+            AsyncOperationHandle loadOp;
+            bool flag = false;
+            loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(label, ref flag);
+            if (!flag)
+                loadOp = Addressables.LoadAssetAsync<AnimationClip>("Action_" + label);
             while (!loadOp.IsDone)
                 yield return loadOp;
 
             if (loadOp.Status == AsyncOperationStatus.Succeeded)
             {
+
                 if (loadOp.Result == null || loadOp.Result.Equals(null))
                 {
-                    Debug.LogError("NULLLLLL");
+                    Debug.LogError("DownloadAddressableActionAnimation -> "+ label);
                 }
                 else
                 {
-                    StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result, playerID));
+                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, label);
+                    StartCoroutine(ApplyAnimationToAnimatorSet(loadOp.Result as AnimationClip, playerID));
                 }
             }
         }
@@ -144,8 +150,6 @@ public class ActionAnimationApplyToPlayer : MonoBehaviour
                 {
                     if (!PlayerSelfieController.Instance.selfiePanel.activeInHierarchy)
                     {
-                        Debug.LogError("ApplyAnimationToAnimatorSet ---> " + playerId);
-
                         if (animator.GetBool("EtcAnimStart"))
                         {
                             animator.SetBool("Stand", true);
