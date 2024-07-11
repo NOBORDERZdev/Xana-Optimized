@@ -19,8 +19,8 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
     public static Action<OnTriggerSceneSwitch> OnInitDome;
     
-    private Dictionary<int, Transform> allInitDomes = new Dictionary<int, Transform>();
-    private Transform playerTransform;
+    private Dictionary<int, Transform> _allInitDomes = new Dictionary<int, Transform>();
+    private Transform _playerTransform;
     private int _clickedDomeID;
     private int _totalDomeCount = 128;
 
@@ -37,7 +37,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
 
     public void SummitSceneReloaded()
     {
-        allInitDomes.Clear();
+        _allInitDomes.Clear();
         if (ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
         {
             GetVisitedDomeData();
@@ -45,11 +45,11 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     void UpdateDomeList(OnTriggerSceneSwitch domeObj)
     {
-        if (!allInitDomes.ContainsKey(domeObj.domeId))
-            allInitDomes.Add(domeObj.domeId, domeObj.transform);
+        if (!_allInitDomes.ContainsKey(domeObj.domeId))
+            _allInitDomes.Add(domeObj.domeId, domeObj.transform);
         else
         {
-            allInitDomes[domeObj.domeId]= domeObj.transform;
+            _allInitDomes[domeObj.domeId]= domeObj.transform;
         }
     }
     public async Task GetVisitedDomeData()
@@ -101,14 +101,14 @@ public class DomeMinimapDataHolder : MonoBehaviour
     }
     public void OnClickTeleportPlayerDomePosition(int domeId)
     {
-        if(playerTransform == null)
-            playerTransform = GameplayEntityLoader.instance.mainController.transform;
+        if(_playerTransform == null)
+            _playerTransform = GameplayEntityLoader.instance.mainController.transform;
         _clickedDomeID = domeId;
         ConfirmationPanelHandling(true);
     }
     void TeleportPlayerToSelectedDome(int _domeId, Transform playerTransform)
     {
-        if (allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
+        if (_allInitDomes.TryGetValue(_domeId, out Transform domeTransform))
         {
             // Attempt to find "Player Spawner" or default to first child if not found
             Transform domePos = domeTransform.Find("Player Spawner") ?? domeTransform.GetChild(0);
@@ -131,6 +131,6 @@ public class DomeMinimapDataHolder : MonoBehaviour
         ConfirmationPanelHandling(false);
         ReferencesForGamePlay.instance.FullScreenMapStatus(false);
 
-        TeleportPlayerToSelectedDome(_clickedDomeID, playerTransform);
+        TeleportPlayerToSelectedDome(_clickedDomeID, _playerTransform);
     }
 }
