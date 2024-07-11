@@ -117,6 +117,12 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
     public SNSSettingController SNSSettingController;
+
+    [Space]
+    [Header("Confirm To Unfollow")]
+    public GameObject ConfirmUnfollowPanel;
+    public Button UnfollowButton;
+
     private void Awake()
     {
         if (Instance == null)
