@@ -351,7 +351,7 @@ public class FindFriendWithNameItem : MonoBehaviour
             else
             {
                Debug.Log("Follow User call:" + searchUserRow.id);
-                gameObject.GetComponent<Button>().interactable = false;
+                //gameObject.GetComponent<Button>().interactable = false;
                 //FeedUIController.Instance.ShowLoader(true);//active api loader
                 //follow
                 RequestFollowAUser(searchUserRow.id.ToString());
