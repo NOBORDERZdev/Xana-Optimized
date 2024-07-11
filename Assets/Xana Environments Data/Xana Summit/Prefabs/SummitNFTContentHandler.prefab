@@ -32165,7 +32165,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1712506365679373193}
   - component: {fileID: 5916455977444990730}
-  - component: {fileID: 6300676433223581937}
+  - component: {fileID: 8563685460173530124}
   m_Layer: 0
   m_Name: LiveVideoPlayUIObj (2)
   m_TagString: Untagged
@@ -32180,14 +32180,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701981252465694153}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8737634598737674174}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -32201,7 +32201,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3701981252465694153}
   m_CullTransparentMesh: 1
---- !u!114 &6300676433223581937
+--- !u!114 &8563685460173530124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -32210,10 +32210,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3701981252465694153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -32221,16 +32221,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  _mediaPlayer: {fileID: 8737634598737674160}
+  _defaultTexture: {fileID: 0}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 1
+  _displayInEditor: 1
 --- !u!1 &3732762309586713198
 GameObject:
   m_ObjectHideFlags: 0
@@ -36504,7 +36506,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9107717842013514851}
   - component: {fileID: 3290406663525210263}
-  - component: {fileID: 1091273342812741153}
+  - component: {fileID: 730080805449684115}
   m_Layer: 0
   m_Name: LiveVideoPlayUIObj
   m_TagString: Untagged
@@ -36540,7 +36542,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4497284207816935615}
   m_CullTransparentMesh: 1
---- !u!114 &1091273342812741153
+--- !u!114 &730080805449684115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -36549,27 +36551,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 4497284207816935615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  _mediaPlayer: {fileID: 8737634598520849389}
+  _defaultTexture: {fileID: 0}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 2
+  _noDefaultDisplay: 1
+  _displayInEditor: 1
 --- !u!1 &4517710246831858942
 GameObject:
   m_ObjectHideFlags: 0
@@ -37538,7 +37542,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4024549519374498536}
   - component: {fileID: 7595620977691981327}
-  - component: {fileID: 5222785959043526069}
+  - component: {fileID: 8456565376888685600}
   m_Layer: 0
   m_Name: LiveVideoPlayUIObj (1)
   m_TagString: Untagged
@@ -37553,14 +37557,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4829312258691287099}
-  m_LocalRotation: {x: -0, y: -0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8737634600185175501}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -37574,7 +37578,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4829312258691287099}
   m_CullTransparentMesh: 1
---- !u!114 &5222785959043526069
+--- !u!114 &8456565376888685600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -37583,10 +37587,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4829312258691287099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -37594,16 +37598,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  _mediaPlayer: {fileID: 8737634600185175495}
+  _defaultTexture: {fileID: 0}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 0
+  _noDefaultDisplay: 1
+  _displayInEditor: 1
 --- !u!1 &4829673078231095893
 GameObject:
   m_ObjectHideFlags: 0
@@ -45665,7 +45671,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -90427,7 +90433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8292096531876586966}
   - component: {fileID: 7184734522500791081}
-  - component: {fileID: 3733550065948213689}
+  - component: {fileID: 1586822738352378042}
   m_Layer: 0
   m_Name: LiveVideoPlayUIObj
   m_TagString: Untagged
@@ -90463,7 +90469,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8352549697692332774}
   m_CullTransparentMesh: 1
---- !u!114 &3733550065948213689
+--- !u!114 &1586822738352378042
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90472,27 +90478,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8352549697692332774}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0f17cdc186456a4469a139a104d2ca72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
+  m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  _mediaPlayer: {fileID: 8737634600085804439}
+  _defaultTexture: {fileID: 2800000, guid: f9b3eff7ef0c7594b8e0cfb71ee37c23, type: 3}
+  _uvRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  _setNativeSize: 0
+  _scaleMode: 2
+  _noDefaultDisplay: 1
+  _displayInEditor: 1
 --- !u!1 &8384742574457451699
 GameObject:
   m_ObjectHideFlags: 0
@@ -91552,7 +91560,7 @@ MonoBehaviour:
   autoPlay: 1
   useTargetAsV3: 0
   endValueFloat: 0
-  endValueV3: {x: 0, y: 0, z: 360}
+  endValueV3: {x: 0, y: 0, z: -360}
   endValueV2: {x: 0, y: 0}
   endValueColor: {r: 1, g: 1, b: 1, a: 1}
   endValueString: 
@@ -92519,7 +92527,6 @@ GameObject:
   - component: {fileID: 8737634598520849391}
   - component: {fileID: 8737634598520849384}
   - component: {fileID: 8737634598520849385}
-  - component: {fileID: 1208102879228099646}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -92880,27 +92887,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634598520849396}
   m_CullTransparentMesh: 1
---- !u!114 &1208102879228099646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737634598520849396}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _media: {fileID: 8737634598520849389}
-  _automaticStereoPacking: 1
-  _overrideStereoPacking: 0
-  _stereoRedGreenTint: 0
-  _defaultTexture: {fileID: 0}
-  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
-  _texturePropertyName: _MainTex
-  _offset: {x: 0, y: 0}
-  _scale: {x: 1, y: 1}
 --- !u!1 &8737634598529426918
 GameObject:
   m_ObjectHideFlags: 0
@@ -94483,7 +94469,6 @@ GameObject:
   - component: {fileID: 8737634598737674162}
   - component: {fileID: 8737634598737674163}
   - component: {fileID: 8737634598737674172}
-  - component: {fileID: 2553336136555215452}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -94844,27 +94829,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634598737674175}
   m_CullTransparentMesh: 1
---- !u!114 &2553336136555215452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737634598737674175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _media: {fileID: 8737634598737674160}
-  _automaticStereoPacking: 1
-  _overrideStereoPacking: 0
-  _stereoRedGreenTint: 0
-  _defaultTexture: {fileID: 0}
-  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
-  _texturePropertyName: _MainTex
-  _offset: {x: 0, y: 0}
-  _scale: {x: 1, y: 1}
 --- !u!1 &8737634598810618984
 GameObject:
   m_ObjectHideFlags: 0
@@ -100698,7 +100662,6 @@ GameObject:
   - component: {fileID: 8737634600085804433}
   - component: {fileID: 8737634600085804434}
   - component: {fileID: 8737634600085804435}
-  - component: {fileID: 443260806654276419}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -101059,27 +101022,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634600085804446}
   m_CullTransparentMesh: 1
---- !u!114 &443260806654276419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737634600085804446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _media: {fileID: 8737634600085804439}
-  _automaticStereoPacking: 1
-  _overrideStereoPacking: 0
-  _stereoRedGreenTint: 0
-  _defaultTexture: {fileID: 0}
-  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
-  _texturePropertyName: _MainTex
-  _offset: {x: 0, y: 0}
-  _scale: {x: 1, y: 1}
 --- !u!1 &8737634600146802982
 GameObject:
   m_ObjectHideFlags: 0
@@ -101590,7 +101532,6 @@ GameObject:
   - component: {fileID: 8737634600185175489}
   - component: {fileID: 8737634600185175490}
   - component: {fileID: 8737634600185175491}
-  - component: {fileID: 645395030884278765}
   m_Layer: 0
   m_Name: LiveStreamPlayer 2d
   m_TagString: Untagged
@@ -101951,27 +101892,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8737634600185175502}
   m_CullTransparentMesh: 1
---- !u!114 &645395030884278765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8737634600185175502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2feedce2e2e63647b8f875ec0894a15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _media: {fileID: 8737634600185175495}
-  _automaticStereoPacking: 1
-  _overrideStereoPacking: 0
-  _stereoRedGreenTint: 0
-  _defaultTexture: {fileID: 0}
-  _material: {fileID: 2100000, guid: 6663bccbeb6d5e84e9e9b11a61e02134, type: 2}
-  _texturePropertyName: _MainTex
-  _offset: {x: 0, y: 0}
-  _scale: {x: 1, y: 1}
 --- !u!1 &8737634600199790266
 GameObject:
   m_ObjectHideFlags: 0
