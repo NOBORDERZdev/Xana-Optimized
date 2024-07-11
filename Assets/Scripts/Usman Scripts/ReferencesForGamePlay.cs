@@ -375,6 +375,10 @@ public class ReferencesForGamePlay : MonoBehaviour
         if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
         {
             minimap_summit.SetActive(true);
+
+            minimap.transform.parent.GetComponent<RawImage>().enabled = true;
+            minimap.transform.parent.GetComponent<Mask>().enabled = true;
+
             if (!ScreenOrientationManager._instance.isPotrait)
                 minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
         }
