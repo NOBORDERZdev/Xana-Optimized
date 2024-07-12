@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
+        QuestDataHandler.Instance.CheckForTaskCDomplete();
+
     }
     
     public void HomeCameraInputHandler(bool flag)
@@ -149,7 +151,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-       // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
         OnceGuestBool = false;
         OnceLoginBool = false;
         if (QualitySettings.GetQualityLevel() != 4)

@@ -49,6 +49,7 @@ public class GlobalConstants
         URL_Consult,
         URL_LandInfo,
         URL_Architec,
+        SE_UU_Mobile_App_THA,
 
         // Added Xana Items
         App_Started,

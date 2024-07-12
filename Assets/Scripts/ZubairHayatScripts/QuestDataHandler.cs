@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class QuestDataHandler : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class QuestDataHandler : MonoBehaviour
     [Header("*UI-References*")]
     [SerializeField] private TextMeshProUGUI _totalReward;
     [SerializeField] private TextMeshProUGUI _totalQuestCompleted;
+    [SerializeField] private TextMeshProUGUI _questTaskCompleted;
     [SerializeField] private Sprite _blackSpriteOnButton;
     [SerializeField] private Sprite _greySpriteOnButton;
     [SerializeField] private Image _totalQuesttaskFilledbar;
@@ -32,6 +34,7 @@ public class QuestDataHandler : MonoBehaviour
     [SerializeField] private GameObject _taskPrefab;
     [SerializeField] private GameObject _questPanel;
     [SerializeField] private GameObject _rewardPopUp;
+    [SerializeField] private GameObject _taskPopUp;
     [SerializeField] private GameObject _parentobject;
     [SerializeField] private RectTransform _container;
     [SerializeField] private List<QuestTaskDetails> _questTaskDetails;
@@ -44,6 +47,7 @@ public class QuestDataHandler : MonoBehaviour
     private int _pageSize = 10;
     private bool _questDataLoaded = false;
     private bool _compareQuestDataLoaded = false;
+    private bool _taskComplete = false;
     private string msg;
 
     #region Mono Functions
@@ -246,13 +250,13 @@ public class QuestDataHandler : MonoBehaviour
         {
             taskDetails.TaskButtonImage.sprite = _blackSpriteOnButton;
             taskDetails.TaskButtonText.text = "Done";
-            taskDetails.TaskButtonText.color = Color.white;
+            taskDetails.TaskButtonText.color = Color.black;
             taskDetails.TaskButton.interactable = false;
             _countCompletedTasks++;
         }
         else if (_currentTask.task_id == _quest.data.rows[i].id)
         {
-            taskDetails.TaskButtonImage.sprite = _blackSpriteOnButton;
+            taskDetails.TaskButtonImage.sprite = _greySpriteOnButton;
             taskDetails.TaskButtonText.text = "Active";
             taskDetails.TaskButtonText.color = Color.white;
             taskDetails.TaskButton.interactable = false;
@@ -384,7 +388,7 @@ public class QuestDataHandler : MonoBehaviour
                 _currentTask.isActive = true;
                 _currentTaskIndex = i;
 
-                _questTaskDetails[i].TaskButton.GetComponent<Image>().sprite = _blackSpriteOnButton;
+                _questTaskDetails[i].TaskButton.GetComponent<Image>().sprite = _greySpriteOnButton;
                 _questTaskDetails[i].TaskButtonText.text = "Active";
                 _questTaskDetails[i].TaskButtonText.color = Color.white;
                 _questTaskDetails[i].TaskButton.interactable = false;
@@ -407,7 +411,6 @@ public class QuestDataHandler : MonoBehaviour
                 }
 
                 msg = "Your Xana Quest Task [" + _questTaskDetails[i].TaskDescription + "] is Started";
-                SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
             }
         }
 
@@ -425,7 +428,9 @@ public class QuestDataHandler : MonoBehaviour
     }
     private void UpdateQuestUITaskList()
     {
+        _questTaskDetails[_currentTaskIndex].TaskButton.GetComponent<Image>().sprite = _blackSpriteOnButton;
         _questTaskDetails[_currentTaskIndex].TaskButtonText.text = "Done";
+        _questTaskDetails[_currentTaskIndex].TaskButtonText.color = Color.black;
         _countCompletedTasks++;
         DisableEnableAllStartFunctions(true);
         updateCountQuestbar();
@@ -444,6 +449,21 @@ public class QuestDataHandler : MonoBehaviour
             MyQuestButton.SetActive(false);
         }
     }
+    public void CheckForTaskCDomplete()
+    {
+        if (_taskComplete)
+        {
+            _questTaskCompleted.text = msg;
+            _taskComplete = false;
+            Invoke("AddDelayInPopUp", 3f);
+        }
+    }
+
+    private void AddDelayInPopUp()
+    {
+        _taskPopUp.SetActive(true);
+    }
+
     private void TaskProgession()
     {
         if (_currentTask.numberOfTimesTaskPrefrom > 0)
@@ -451,20 +471,24 @@ public class QuestDataHandler : MonoBehaviour
             _currentTask.numberOfTimesTaskPrefrom = _currentTask.numberOfTimesTaskPrefrom - 1;
             if (_currentTask.numberOfTimesTaskPrefrom == 0)
             {
-                print("Complete");
+                _taskComplete = true;
                 _quest.data.rows[_currentTaskIndex].status = true;
                 _quest.data.rows[_currentTaskIndex].isActive = false;
                 msg = "Your Xana Quest Task [" + _quest.data.rows[_currentTaskIndex].description + "] is Completed";
-                SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
                 StartCoroutine(SaveTaskInformationVivaApi(_currentTask.task_id, 0, true, false));
                 UnsubscribeEvents();
                 UpdateQuestUITaskList();
+                Scene currentScene = SceneManager.GetActiveScene();
+                string sceneName = currentScene.name;
+                if (sceneName == "Home")
+                {
+                    _taskPopUp.SetActive(true);
+                    _taskComplete = false;
+                }
             }
             else
             {
                 StartCoroutine(SaveTaskInformationVivaApi(_currentTask.task_id, _currentTask.numberOfTimesTaskPrefrom, false, true));
-                print("remove 1");
-
             }
         }
     }

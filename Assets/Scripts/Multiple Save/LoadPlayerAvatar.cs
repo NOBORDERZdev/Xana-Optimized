@@ -526,6 +526,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                     {
                         if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
                         {
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender);
                             //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
                             string _temptype = _CharacterData.myItemObj[i].Slug;
 
