@@ -50,11 +50,8 @@ public class PMY_BGM : MonoBehaviour
             MusicSource.spatialBlend = 1;
             MusicSource.rolloffMode = AudioRolloffMode.Linear;
             MusicSource.maxDistance = 55;
-            if (Application.platform == RuntimePlatform.IPhonePlayer)
-                MusicSource.volume = 1;
-            //   MusicSource.minDistance = 20;
-            //else
-            //    MusicSource.minDistance = 10;
+            //if (Application.platform == RuntimePlatform.IPhonePlayer)
+            //    MusicSource.volume = 1;
         }
     }
 
