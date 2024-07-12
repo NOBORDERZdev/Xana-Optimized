@@ -51,11 +51,18 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //if user does not have data then open preset panel
-                    ConstantsHolder.xanaConstants.isFirstPanel = true; 
+                    ConstantsHolder.xanaConstants.isFirstPanel = true;
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
                 }
                 else
                 {
+                    if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        yield break;
+                    }
+
                     string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;

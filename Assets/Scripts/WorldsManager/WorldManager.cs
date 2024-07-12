@@ -120,6 +120,7 @@ public class WorldManager : MonoBehaviour
         ConstantsHolder.xanaConstants.MuseumID="2562";
         WorldItemView.m_EnvName = "RooftopParty";
         ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         LoadingHandler.Instance.ShowLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0);
