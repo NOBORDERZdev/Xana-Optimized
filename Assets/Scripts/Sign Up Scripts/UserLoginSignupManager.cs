@@ -273,6 +273,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
+        ConstantsHolder.userId = PlayerPrefs.GetString("UserId");
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 

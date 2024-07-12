@@ -294,7 +294,6 @@ public class XanaChatSystem : MonoBehaviour
         //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
-        removeBadWords = "";
     }
 
     public void OnEnterSend(string s)
