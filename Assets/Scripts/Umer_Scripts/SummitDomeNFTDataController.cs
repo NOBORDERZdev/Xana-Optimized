@@ -536,7 +536,10 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         {
             GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
-
+        if (SoundSettings.soundManagerSettings.bgmSource)
+        {
+            SoundSettings.soundManagerSettings.bgmSource.mute = false;
+        }
     }
     IEnumerator GetNFTDatAForDynamicMuseum()
     {

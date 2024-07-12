@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
+using static UnityEditor.LightingExplorerTableColumn;
 
 public class SummitVideoAndImageController : MonoBehaviour
 {
@@ -117,6 +118,10 @@ public class SummitVideoAndImageController : MonoBehaviour
                 SummitDomeNFTDataController.Instance.SetInfo(_imgVideoRatio, SummitDomeNFTDataController.Instance.worldInfos[id].Title[1], SummitDomeNFTDataController.Instance.worldInfos[id].Aurthor[1], SummitDomeNFTDataController.Instance.worldInfos[id].Des[1], SummitDomeNFTDataController.Instance.worldInfos[id].url, _texture, SummitDomeNFTDataController.Instance.worldInfos[id].Type, SummitDomeNFTDataController.Instance.worldInfos[id].VideoLink, SummitDomeNFTDataController.Instance.worldInfos[id].videoType, id, museumType, roomNumber);
 
             }
+        }
+        if (SoundSettings.soundManagerSettings.bgmSource && !(string.IsNullOrEmpty(videoLink)))
+        {
+            SoundSettings.soundManagerSettings.bgmSource.mute = true;
         }
     }
 
