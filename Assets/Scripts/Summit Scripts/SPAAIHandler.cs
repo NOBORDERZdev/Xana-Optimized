@@ -48,6 +48,20 @@ public class SPAAIHandler : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        {
+            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                if (CurrentAIPerformerRef)
+                {
+                    CurrentAIPerformerRef.SetActive(false);
+                }
+            }
+        }
+    }
+
     void CallPrfrmrAvtrAPI()
     {
         string _finalAPIURL = ConstantsGod.API_BASEURL + prfrmrAvtrAPIURL + AreaID + "/" + AvatarID;
@@ -118,8 +132,11 @@ public class SPAAIHandler : MonoBehaviour
 
     void GenderBasedPrefabSlect(int _index)
     {
-        CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
-        AssignFtchDataToAIAvtr();
+        if (!CurrentAIPerformerRef)
+        {
+            CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
+            AssignFtchDataToAIAvtr();
+        }
     }
 
     void AssignFtchDataToAIAvtr()
@@ -135,6 +152,7 @@ public class SPAAIHandler : MonoBehaviour
             _spawnAIEmoteControllerRef.AnimPlayList.Add(animData.name);
             _spawnAIEmoteControllerRef.AnimPlayTimer.Add(animData.playTime);
         }
+        CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().spaAIHandlerRef = this;
         StartCoroutine(CurrentAIPerformerRef.GetComponent<SPAAIBehvrController>().PerformAction());
     }
 

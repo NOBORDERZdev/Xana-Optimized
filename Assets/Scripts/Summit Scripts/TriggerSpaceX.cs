@@ -24,6 +24,7 @@ public class TriggerSpaceX : MonoBehaviour
     {
         if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
         {
+            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             BuilderEventManager.spaceXActivated?.Invoke(vClip,playerPos.position);
         }
     }

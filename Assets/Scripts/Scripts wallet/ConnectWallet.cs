@@ -826,7 +826,7 @@ public class ConnectWallet : MonoBehaviour
                 PlayerPrefs.Save();
                 SetNameInServer();
                 GetNFTList();
-
+                MainSceneEventHandler.OnSucessFullLogin?.Invoke();
                 WalletConnectDataClasses.VerifySignedMsgClass VerifySignatureObj = new WalletConnectDataClasses.VerifySignedMsgClass();
                 VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
                 var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 public class SPAAIDresser : MonoBehaviour
 {
     public SkinnedMeshRenderer _body;
-
+    public List<SkinnedMeshRenderer> CurNPCCloths = new List<SkinnedMeshRenderer>();
     public Color DefaultSkinColor, DefaultHairColor;
 
     private GameObject wornShirt, wornPant, wornHair, wornShose;
@@ -29,6 +30,39 @@ public class SPAAIDresser : MonoBehaviour
         Eye_ColorName = "_Mask_Color";
 
         Custom_InitializeAvatar(AvatarJson);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        {
+            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                UpdateClothingViewHandle(true);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "PhotonLocalPlayer" && other.gameObject.GetComponent<PhotonView>())
+        {
+            if (other.gameObject.GetComponent<PhotonView>().IsMine)
+            {
+                UpdateClothingViewHandle(false);
+            }
+        }
+    }
+
+    void UpdateClothingViewHandle(bool _state)
+    {
+        if (CurNPCCloths.Count > 0)
+        {
+            foreach (SkinnedMeshRenderer smr in CurNPCCloths)
+            {
+                smr.updateWhenOffscreen = _state;
+            }
+        }
     }
 
     void Custom_InitializeAvatar(SavingCharacterDataClass _avatarClothData)
@@ -132,6 +166,7 @@ public class SPAAIDresser : MonoBehaviour
         }
 
         item = this.stitcher.Stitch(item, applyOn);
+        CurNPCCloths.Add(item.GetComponentInChildren<SkinnedMeshRenderer>());
         if (type == "Hair")
         {
             StartCoroutine(ImplementColors(Color.black, SliderType.HairColor, applyOn));

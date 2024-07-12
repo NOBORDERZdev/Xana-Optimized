@@ -73,6 +73,8 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
     }
+
+    
     
     public void HomeCameraInputHandler(bool flag)
     {
@@ -149,7 +151,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
-       // Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
         OnceGuestBool = false;
         OnceLoginBool = false;
         if (QualitySettings.GetQualityLevel() != 4)
@@ -157,6 +159,11 @@ public class GameManager : MonoBehaviour
             //PlayerPrefs.SetInt("QualitySettings", index);
             QualitySettings.SetQualityLevel(4);
             QualitySettings.renderPipeline = _homeScreenURPAsset;
+        }
+
+        if (QuestDataHandler.Instance) // If Null then find object
+        {
+            QuestDataHandler.Instance.CheckForTaskCDomplete();
         }
     }
     IEnumerator WaitForInstancefromWorld()

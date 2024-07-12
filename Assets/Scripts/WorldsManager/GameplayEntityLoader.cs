@@ -25,7 +25,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
-
+    public bool IsJoinSummitWorld = false;
     public GameObject mainPlayer;
     public GameObject mainController;
     private GameObject mainControllerRefHolder;
@@ -335,7 +335,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         spawnPoint = player.transform.position;
         Destroy(player);
         Debug.Log("player shoud be destroyed");
-        InstantiatePlayerAvatar();
+        InstantiatePlayerAvatar(spawnPoint);
 
         ReferencesForGamePlay.instance.m_34player = player;
         //  SetAxis();
@@ -464,12 +464,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             SetPlayerCameraAngle();
         }
+
+
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         if (mainController == null)
             mainController = mainControllerRefHolder;
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
 
-        InstantiatePlayerAvatar();
+        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        InstantiatePlayerAvatar(newPos);
 
         ReferencesForGamePlay.instance.m_34player = player;
         SetAxis();
@@ -488,7 +491,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (!ConstantsHolder.xanaConstants.isCameraMan)
         {
             LoadingHandler.Instance.HideLoading();
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
+            // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
+            //// LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
         if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
         {
@@ -622,7 +626,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
     }
 
-    void InstantiatePlayerAvatar()
+    public void SetPlayerPos()
+    {
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+    }
+
+    void InstantiatePlayerAvatar(Vector3 pos)
     {
         if (ConstantsHolder.isPenguin)
         {
@@ -705,14 +714,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         mainPlayer.transform.position = new Vector3(0, 0, 0);
         mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
 
-        InstantiatePlayerAvatar();
+        InstantiatePlayerAvatar(newPos);
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             player.transform.localScale = Vector3.one * 1.153f;
             Rigidbody playerRB = player.AddComponent<Rigidbody>();
-            playerRB.mass = 70;
+            playerRB.mass = 60;
             playerRB.isKinematic = true;
             playerRB.useGravity = true;
             playerRB.constraints = RigidbodyConstraints.FreezeRotation;

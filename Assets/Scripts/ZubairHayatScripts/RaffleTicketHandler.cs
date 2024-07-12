@@ -170,13 +170,13 @@ public class RaffleTicketHandler : MonoBehaviour
             _earnTicketsInOneCycle += 4;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
             _earnTicketsInOneCycle = 0;
-            StartCoroutine(RewardPopUp("Gift 5 extra tickets your total coin count is a multiple of 5!", "05", true, 5f));
+            StartCoroutine(RewardPopUp("You have earned 5 tickets for visiting 5 unique domes", "05", true, 5f));
         }
         if (_totalNumberOfDomes == _allVisitedDomeIds.Count)
         {
             _earnTicketsInOneCycle += 50;
             _totalNumberOfTickets += _earnTicketsInOneCycle;
-            StartCoroutine(RewardPopUp("50 raffle tickets assign to you for the completion of each summit dome ", "50", false, 8f));
+            StartCoroutine(RewardPopUp("You've been awarded 50 raffle tickets for completing each summit dome visit", "50", false, 8f));
             _earnTicketsInOneCycle = 0;
         }
         UpdateUI();

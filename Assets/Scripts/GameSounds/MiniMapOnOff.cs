@@ -49,6 +49,13 @@ public class MiniMapOnOff : MonoBehaviour
         }
         else
         {
+            if (GameplayEntityLoader.instance != null && GameplayEntityLoader.instance.IsJoinSummitWorld)
+            {
+                Debug.Log("Minimap is not allowed in Summit World");
+                return;
+            }
+
+
             ReferencesForGamePlay.instance.minimap.SetActive(true);
             PlayerPrefs.SetInt("minimap", 1);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DomeDataForMap : MonoBehaviour
 {
-    public int domeId;
+    public int domeId; // Multiple Objects with different domeId
     [HideInInspector]
     public Image MyImage;
 

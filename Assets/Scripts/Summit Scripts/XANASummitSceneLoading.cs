@@ -8,12 +8,16 @@ public class XANASummitSceneLoading : MonoBehaviour
     public static Vector3 playerPos;
     public static Quaternion playerRot;
     public static Vector3 playerScale;
+    public static Action<bool> OnJoinSubItem; // Car, GiantWheel, Planets
 
     public MutiplayerController multiplayerController;
 
     public GameplayEntityLoader gameplayEntityLoader;
 
     public XANASummitDataContainer dataContainer;
+    
+    [SerializeField]
+    private DomeMinimapDataHolder _domeMiniMap;
 
     private int previousUserLimit;
     private void OnEnable()
@@ -22,6 +26,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.LoadSummitScene += LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
+        OnJoinSubItem += SummitMiniMapStatusOnSceneChange;
     }
 
     private void OnDisable()
@@ -30,11 +35,29 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.LoadSummitScene -= LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit -= LoadingXANASummitOnBack;
+        OnJoinSubItem -= SummitMiniMapStatusOnSceneChange;
     }
 
     void LoadDomesData()
     {
         dataContainer.GetAllDomesData();
+    }
+
+
+    void SummitMiniMapStatusOnSceneChange(bool makeActive)
+    {
+        GameplayEntityLoader.instance.IsJoinSummitWorld = !makeActive;
+
+        if (makeActive && ConstantsHolder.xanaConstants.minimap == 1)
+        {
+            ReferencesForGamePlay.instance.minimap.SetActive(true);
+            ReferencesForGamePlay.instance.SumitMapStatus(true);
+        }
+        else
+        {
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+        }
     }
 
     void LoadingNewScene(int domeId, Vector3 playerPos)
@@ -45,6 +68,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(domeGeneralData.world))
             return;
 
+        SummitMiniMapStatusOnSceneChange(false);
         StartCoroutine(LoadingHandler.Instance.FadeIn());
 
         GetPlayerPosition(playerPos);
@@ -83,6 +107,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(SceneName))
             return;
 
+        SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = SceneName;
@@ -128,6 +153,8 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
+
+
         StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
@@ -152,6 +179,11 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         multiplayerController.Connect(sceneName);
         ConstantsHolder.DiasableMultiPartPhoton = false;
+
+        // Map Working
+        _domeMiniMap.SummitSceneReloaded();
+        SummitMiniMapStatusOnSceneChange(true);
+        //
     }
     XANASummitDataContainer.DomeGeneralData GetDomeData(int sceneId)
     {

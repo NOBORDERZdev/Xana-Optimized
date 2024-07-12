@@ -29,6 +29,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
     {
         MeetingRoomText.text = "";
         MeetingRoomText.text = data;
+        // tmp.color = txtColor;
         MeetingRoomText.alpha = 1f;
     }
 
@@ -55,6 +56,7 @@ public class ThaMeetingTxtUpdate : MonoBehaviour
             else
             {
                 WrapObjectClass wrapObjectClass = JsonConvert.DeserializeObject<WrapObjectClass>(request.downloadHandler.text);
+
                 Debug.Log("Wrap Object Status is :: " + wrapObjectClass.data);
                 _portalMesh.enabled = wrapObjectClass.data;
                 _boxCollider.enabled = wrapObjectClass.data;

@@ -117,6 +117,12 @@ public class FeedUIController : MonoBehaviour
     [SerializeField] GameObject FeedSerachBar;
     public FeedController feedController;
     public SNSSettingController SNSSettingController;
+
+    [Space]
+    [Header("Confirm To Unfollow")]
+    public GameObject ConfirmUnfollowPanel;
+    public Button UnfollowButton;
+
     private void Awake()
     {
         if (Instance == null)
@@ -185,11 +191,7 @@ public class FeedUIController : MonoBehaviour
 
     public void SetAddFriendScreen(bool flag){
         AddFriendPanel.SetActive(flag);    
-        HotFriendPanel.SetActive(true);
         AddFriendSerachBar.SetActive(false);
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().HeightPadding = 190f;
-        HotFriendPanel.GetComponentInParent<FollowParentHeight>().SetChildHeight();
         AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=50;
         AddFriendFollowing.SetActive(false);
         AddFrndNoSearchFound.SetActive(false);

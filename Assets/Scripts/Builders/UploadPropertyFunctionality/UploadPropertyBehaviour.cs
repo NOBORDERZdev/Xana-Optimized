@@ -28,6 +28,8 @@ public class UploadPropertyBehaviour : MonoBehaviour
         BuilderEventManager.BGMVolume += BGMVolume;
         feedMediaPlayer.Events.AddListener(HandleEvent);
         videoAudioSource = videoPlayer.GetComponent<AudioSource>();
+        mediaPlayer.AudioVolume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        videoAudioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
     }
 
     private void OnDisable()
