@@ -5,7 +5,6 @@ using UnityEngine.Networking;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using RenderHeads.Media.AVProVideo;
-using static UnityEditor.LightingExplorerTableColumn;
 
 public class SummitVideoAndImageController : MonoBehaviour
 {
