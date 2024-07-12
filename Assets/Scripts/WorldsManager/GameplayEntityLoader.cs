@@ -39,7 +39,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
-
     private GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
@@ -74,6 +73,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     //Bool for BuilderSpawn point available or not
     bool BuilderSpawnPoint = false;
 
+
+
     private void Awake()
     {
         instance = this;
@@ -105,14 +106,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             StartEventTimer();
         }
         Input.multiTouchEnabled = true;
-        for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
+        if (PlayerSelfieController.Instance)
         {
-            if (PlayerSelfieController.Instance.OnFeatures[i] != null)
+            for (int i = 0; i < PlayerSelfieController.Instance.OnFeatures.Length; i++)
             {
-                if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                if (PlayerSelfieController.Instance.OnFeatures[i] != null)
                 {
-                    leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
-                    break;
+                    if (PlayerSelfieController.Instance.OnFeatures[i].name == "LeftJoyStick")
+                    {
+                        leftJoyStick = PlayerSelfieController.Instance.OnFeatures[i];
+                        break;
+                    }
                 }
             }
         }
@@ -207,7 +211,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         environmentCameraRender.gameObject.SetActive(true);
         //environmentCameraRender.transform.GetChild(0).gameObject.SetActive(true);
 
-        PlayerSelfieController.Instance.DisableSelfieFromStart();
+        if(PlayerSelfieController.Instance)
+            PlayerSelfieController.Instance.DisableSelfieFromStart();
 
 
 
@@ -892,17 +897,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
-        if (PhotonNetwork.IsMasterClient && GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
-        {
-            foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
-            {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
-        }
+        //if ( GamificationComponentData.instance.MultiplayerComponentData.Count > 0)
+        //{
+        //    foreach (var _itemData in GamificationComponentData.instance.MultiplayerComponentData)
+        //    {
+        //        var multiplayerObject = Instantiate(GamificationComponentData.instance.MultiplayerComponente, _itemData.Position, _itemData.Rotation);
+        //        MultiplayerComponentData multiplayerComponentData = new();
+        //        multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
+        //        //multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
+        //        GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+        //    }
+        //}
 
         while (!GamificationComponentData.instance.isSkyLoaded)
             yield return new WaitForSeconds(0.5f);

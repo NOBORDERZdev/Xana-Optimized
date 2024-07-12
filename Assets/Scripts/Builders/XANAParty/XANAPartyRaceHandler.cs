@@ -19,7 +19,7 @@ public class XANAPartyRaceHandler : MonoBehaviour
     {
         if (ForceRaceStart)
         {
-            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 2f);
+            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 1f);
             ForceRaceStart = false;
         }
     }
@@ -28,7 +28,7 @@ public class XANAPartyRaceHandler : MonoBehaviour
     {
         if (GamificationComponentData.instance.SinglePlayer)
         {
-            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 2f);
+            new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 1f);
         }
     }
 

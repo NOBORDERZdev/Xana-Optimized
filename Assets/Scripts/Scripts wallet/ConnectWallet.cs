@@ -812,7 +812,8 @@ public class ConnectWallet : MonoBehaviour
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (VerifySignatureReadObj.success)
-            { 
+            {
+                
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
@@ -820,7 +821,6 @@ public class ConnectWallet : MonoBehaviour
                 ConstantsHolder.userId = VerifySignatureReadObj.data.user.id.ToString();
                 //ConstantsHolder.loggedIn = true; // Updating Value in LoginWithWallet();
                 PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
-
                 UserLoginSignupManager.instance.LoginWithWallet();
                 PlayerPrefs.Save();
                 SetNameInServer();

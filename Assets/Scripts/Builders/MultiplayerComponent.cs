@@ -1,19 +1,18 @@
-using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class MultiplayerComponent : MonoBehaviourPun
+public class MultiplayerComponent : MonoBehaviour
 {
-    string RunTimeItemID;
+   public string RunTimeItemID;
     string ItemID;
     ItemData itemData;
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
         if (GamificationComponentData.instance != null && GamificationComponentData.instance.withMultiplayer)
-        {
+        {/* 
             MultiplayerComponentDatas multiplayerComponentdatas = new MultiplayerComponentDatas();
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("gamificationMultiplayerComponentDatas", out object multiplayerComponentdatasObj))
             {
@@ -32,7 +31,7 @@ public class MultiplayerComponent : MonoBehaviourPun
                         }
                     }
                 }
-            }
+            }*/
             Rigidbody rb = null;
             gameObject.TryGetComponent(out rb);
             if (rb == null)
@@ -77,17 +76,25 @@ public class MultiplayerComponent : MonoBehaviourPun
                     }
                 }
             }
+
+          
+
             transform.SetParent(BMD.builderAssetsParent);
             XanaItem xanaItem = gameObject.AddComponent<XanaItem>();
             xanaItem.itemData = itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
-            if (PhotonNetwork.IsMasterClient || (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle))
+            if  (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle)
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
             if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.xanaItems.Add(xanaItem);
+
+            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem)){
+                GamificationComponentData.instance.MultiplayerComponentstoSet.Add(xanaItem);
+            }
+
         }
     }
 }

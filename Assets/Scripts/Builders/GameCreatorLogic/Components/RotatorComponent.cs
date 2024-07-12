@@ -1,33 +1,65 @@
 using System.Collections;
 using UnityEngine;
 using Models;
+using Photon.Pun;
+
 public class RotatorComponent : ItemComponent
 {
     private RotatorComponentData rotatorComponentData;
-    private IEnumerator routine;
+    private bool startComponent;
+    private Vector3 currentRotation;
+    private string itemID;
+    private float m_Angle;
 
-    public void Init(RotatorComponentData rotatorComponentData)
+    public void Init(RotatorComponentData rotatorComponentData,string itemid)
     {
         InitRotate(rotatorComponentData);
+        itemID = itemid;
+        NetworkSyncManager.instance.rotatorComponent.TryAdd(itemid,Vector3.zero);
+        NetworkSyncManager.instance.OnDeserilized += Sync;
     }
 
     public void InitRotate(RotatorComponentData rotatorComponentData)
     {
         this.rotatorComponentData = rotatorComponentData;
+     
         PlayBehaviour();
     }
-
-    Vector3 currentRotation;
-    IEnumerator RotateModule()
-    {
-        while (true)
+    void Sync()
+    { object component;
+        if (NetworkSyncManager.instance.rotatorComponent.TryGetValue(itemID,out component))
         {
-            yield return new WaitForEndOfFrame();
-            currentRotation = gameObject.transform.rotation.eulerAngles;
-            currentRotation += new Vector3(0f, rotatorComponentData.speed * Time.deltaTime, 0f);
-            gameObject.transform.rotation = Quaternion.Euler(currentRotation);
-            yield return null;
+            this.m_Angle = Quaternion.Angle(transform.rotation, Quaternion.Euler((Vector3)component));
         }
+       
+    }
+
+
+    private void Update() //Provide better performance than infinite corutine
+    {
+        if (startComponent)
+        {
+            if (PhotonNetwork.IsMasterClient) {
+                currentRotation = gameObject.transform.rotation.eulerAngles;
+                currentRotation += new Vector3(0f, rotatorComponentData.speed * Time.deltaTime, 0f);
+                gameObject.transform.rotation = Quaternion.Euler(currentRotation);
+                NetworkSyncManager.instance.rotatorComponent[itemID] = currentRotation;
+              //  Debug.LogError("Setting data" + (Vector3)NetworkSyncManager.instance.rotatorComponent[itemID]);
+
+            }
+            else
+            {
+                object obj;
+                if (NetworkSyncManager.instance.rotatorComponent.TryGetValue(itemID,out obj))
+                {
+                    currentRotation = (Vector3)obj;
+               //     Debug.LogError("Rotation  " + currentRotation);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(this.currentRotation), this.m_Angle * (1.0f / PhotonNetwork.SerializationRate));
+                }
+               
+            }
+        }
+        
     }
 
     #region BehaviourControl
@@ -35,12 +67,11 @@ public class RotatorComponent : ItemComponent
     {
         StopComponent();
 
-        routine = RotateModule();
-        StartCoroutine(routine);
+        startComponent = true;
     }
     private void StopComponent()
     {
-        if (routine != null) StopCoroutine(routine);
+       startComponent = false;
     }
 
     public override void StopBehaviour()

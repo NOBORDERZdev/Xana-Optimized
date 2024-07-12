@@ -104,6 +104,12 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public bool SinglePlayer = false;
     internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
+    
+    public GameObject MultiplayerComponente;
+
+    int MxaxMultiplayerComponent = 0;
+    public List<XanaItem> MultiplayerComponentstoSet = new List<XanaItem>();
+
     public bool isRaceStarted = false;
     private void Awake()
     {
@@ -395,7 +401,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         string json = JsonUtility.ToJson(multiplayerComponentdatas);
         //Debug.LogError(json);
         hash.Add("gamificationMultiplayerComponentDatas", json);
-        PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.SetCustomProperties(hash);
+        }
     }
 
     public void MasterClientSwitched(Player newMasterClient)
@@ -403,14 +412,14 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (!withMultiplayer)
             return;
 
-        if (PhotonNetwork.LocalPlayer == newMasterClient)
+        /*if (PhotonNetwork.LocalPlayer == newMasterClient)
         {
             foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
             {
                 if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
                     xanaItem.SetData(xanaItem.itemData);
             }
-        }
+        }*/
     }
 
     public void StartXANAPartyRace()
@@ -459,15 +468,18 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
            // allPalyerReady = true;
         }
         //new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
-      //  print("~~~ all player ready ~~~");
-        this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
-        isRaceStarted= true;
+        //  print("~~~ all player ready ~~~");
+        if (PhotonNetwork.IsMasterClient)
+        {
+            this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+            isRaceStarted = true;
+        }
     }
     [PunRPC]
     void StartGameRPC()
     {
        // print(" RPC call");
-        new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 5f);
+        new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 1f);
     }
 
 

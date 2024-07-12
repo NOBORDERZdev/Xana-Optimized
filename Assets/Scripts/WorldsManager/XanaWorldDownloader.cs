@@ -46,6 +46,10 @@ public class XanaWorldDownloader : MonoBehaviour
     public static SceneData xanaSceneData = new SceneData();
 
     public string response;
+
+
+    private long totalDownloadSize = 0;
+    private bool isDownloadSizeCalculated = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -247,15 +251,25 @@ public class XanaWorldDownloader : MonoBehaviour
         //StartCoroutine(CheckShortIntervalSorting());
 
     }
-
+    
     IEnumerator DownloadAssetsFromSortedList()
     {
+        if (!isDownloadSizeCalculated)
+        {
+            StartCoroutine(CalculateAssetsDownloadSize());
+        }
+        while (!isDownloadSizeCalculated)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
         while (downloadDataQueue.Count > 0 && !stopDownloading)
         {
             downloadIsGoingOn = true;
             string downloadKey = downloadDataQueue[0].ItemID;
             string dicKey = downloadDataQueue[0].DcitionaryKey;
             AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+
+
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
@@ -295,9 +309,35 @@ public class XanaWorldDownloader : MonoBehaviour
                 downloadDataQueue.RemoveAt(0);
             }
 
+
             downloadIsGoingOn = false;
         }
         isDefaultPriorityObjectDownloaded = true;
+    }
+
+    IEnumerator CalculateAssetsDownloadSize()
+    {
+        // Calculate the total download size
+        for (int i = 0; i < downloadDataQueue.Count; i++)
+        {
+            string downloadKey = downloadDataQueue[0].ItemID;
+
+            // Get the download size for the addressable asset
+            var sizeHandle = Addressables.GetDownloadSizeAsync(downloadKey);
+            yield return sizeHandle;
+
+            if (sizeHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                totalDownloadSize += sizeHandle.Result; // Size in bytes
+            }
+            else
+            {
+                Debug.LogError($"Failed to get download size for {downloadKey}");
+            }
+        }
+        isDownloadSizeCalculated = true;
+        Debug.Log($"Total download size: {totalDownloadSize / (1024.0 * 1024.0)} MB");
+
     }
 
 
@@ -308,7 +348,7 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             string downloadKey = downloadFailed[0].ItemID;
             string dicKey = downloadFailed[0].DcitionaryKey;
-            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);
+            AsyncOperationHandle<GameObject> _async = Addressables.LoadAssetAsync<GameObject>(downloadKey);                                         
             //bool flag = false;
             //AsyncOperationHandle _async = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(downloadKey, ref flag);
             //if (!flag)
@@ -396,10 +436,9 @@ public class XanaWorldDownloader : MonoBehaviour
         ++downloadedTillNow;
         switch (GameManager.currentLanguage)
         {
-
             case "en":
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
@@ -412,8 +451,8 @@ public class XanaWorldDownloader : MonoBehaviour
                 }
                 break;
             case "ja":
-                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "現在ワールドを構築中です.... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "読み込み完了.... " + downloadedTillNow + "/" + (totalAssetCount);
@@ -425,8 +464,8 @@ public class XanaWorldDownloader : MonoBehaviour
                 }
                 break;
             default:
-                assetDownloadingText.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
-                assetDownloadingTextPotrait.text = "Currently Setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount);
+                assetDownloadingText.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
+                assetDownloadingTextPotrait.text = "Currently setting up the world... " + (downloadedTillNow) + "/" + (totalAssetCount) + $" ({(totalDownloadSize / (1024.0 * 1024.0)).ToString("F1")} MB)";
                 if (downloadedTillNow == totalAssetCount)
                 {
                     assetDownloadingText.text = "Loading Completed.... " + downloadedTillNow + "/" + (totalAssetCount);
