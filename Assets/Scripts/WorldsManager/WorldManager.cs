@@ -98,50 +98,37 @@ public class WorldManager : MonoBehaviour
         }
 
     }
-    void Start()
-    {
-        //ChangeWorldTab(APIURL.Hot);
-        Invoke(nameof(LoadJjworld), 0);
-    }
-    /*public void CheckWorldTabAndReset(APIURL tab)
-    {
-        if (WorldItemManager.GetWorldCountPresentInMemory(tab.ToString()) > 0)
-        {
-            //Debug.LogError("display world");
-            WorldItemManager.DisplayWorlds(tab);
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        }
-        else
-        {
-            //Debug.LogError("api hit again");
-            ChangeWorldTab(tab);
-        }
-    }
-    public void ChangeWorld(APIURL tab)
-    {
-        if (GameManager.Instance.UiManager.IsSplashActive)
-        {
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(false);
-        }
-        else
-        {
-            LoadingHandler.Instance.worldLoadingScreen.SetActive(true);
-        }
 
-        WorldItemManager.DisplayWorlds(APIURL.Temp);
-        StartCoroutine(WorldCall(tab));
-    }
-    IEnumerator WorldCall(APIURL tab)
+    private void OnEnable()
     {
-        //while (!dataIsFatched)
-        //{
-        //    Debug.LogError("Clear Fetch");
-        //    yield return null;
-        //    NotProcessRequest = true;
-        //}
-        yield return new WaitForEndOfFrame();
-        CheckWorldTabAndReset(tab);
-    }*/
+        Invoke(nameof(LoadJjworld), 0);
+        MainSceneEventHandler.OpenLandingScene += OpenLandingScene;
+    }
+
+    private void OnDisable()
+    {
+        MainSceneEventHandler.OpenLandingScene -= OpenLandingScene;
+    }
+
+    void OpenLandingScene()
+    {
+        ConstantsHolder.userLimit = 100;
+        ConstantsHolder.isPenguin = true;
+        ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+        ConstantsHolder.xanaConstants.isBuilderScene = false;
+        ConstantsHolder.xanaConstants.isFromHomeTab = true;
+        ConstantsHolder.xanaConstants.MuseumID="2562";
+        WorldItemView.m_EnvName = "RooftopParty";
+        ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        LoadingHandler.Instance.ShowLoading();
+        LoadingHandler.Instance.UpdateLoadingSlider(0);
+        LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+        //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+        Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+    }
+
     public void ChangeWorldTab(APIURL tab, string _searchKey)
     {
         aPIURLGlobal = tab;
@@ -734,7 +721,6 @@ public class WorldManager : MonoBehaviour
         if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
         {
             WorldItemView.m_EnvName = "D_Infinity_Labo";
-            MutiplayerController.sceneName = WorldItemView.m_EnvName;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail_PlayBtn.ToString());
         }
@@ -962,6 +948,7 @@ public class WorldManager : MonoBehaviour
         SetAutoSwtichStreaming();
         if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
+            Debug.LogError("load jj scene here");
             LoadingHandler.Instance.characterLoading.SetActive(false);
             LoadingHandler.Instance.presetCharacterLoading.SetActive(false);
             LoadingHandler.Instance.characterLoading.SetActive(false);
@@ -973,20 +960,19 @@ public class WorldManager : MonoBehaviour
             WorldItemView.m_EnvName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
             if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "Xana Festival")
             {
-                ConstantsHolder.xanaConstants.userLimit = "16";
+                ConstantsHolder.userLimit = 16;
             }
             else
             {
                 if (ConstantsHolder.xanaConstants.isBuilderScene)
                 {
-                    ConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.userLimit = 15;
                 }
                 else
                 {
-                    ConstantsHolder.xanaConstants.userLimit = "15";
+                    ConstantsHolder.userLimit = 15;
                 }
             }
-            MutiplayerController.sceneName = ConstantsHolder.xanaConstants.JjWorldTeleportSceneName;
             PlayWorld();
         }
     }

@@ -87,6 +87,8 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
+        if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+            return;
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
 

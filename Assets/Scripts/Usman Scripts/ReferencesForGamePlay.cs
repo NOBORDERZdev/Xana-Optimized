@@ -24,6 +24,9 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject m_34player;
     public PlayerController playerControllerNew;
     public GameObject minimap;
+    public GameObject MinimapSummit;
+    public GameObject FullscreenMapSummit;
+
     public GameObject minimapSettingsBtn;
     public TMPro.TextMeshProUGUI totalCounter; // Counter to show total connected peoples.
     public GameObject ReferenceObject;
@@ -31,7 +34,6 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject FirstPersonCam;
     public Button RotateBtn;
     public GameObject JoyStick;
-    public int RoomMaxPlayerCount = 0;
     public int PlayerCount = 0;
     public float MonitorDistance;
     //MoveWhileDancing add kamran
@@ -49,6 +51,8 @@ public class ReferencesForGamePlay : MonoBehaviour
             {
                 m_34player = instance.m_34player;
             }
+            if (instance.playerControllerNew != null)
+                playerControllerNew = instance.playerControllerNew;
         }
 
         instance = this;
@@ -59,33 +63,37 @@ public class ReferencesForGamePlay : MonoBehaviour
                 go.SetActive(false);
             }
         }
-        if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
-        {
-            if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
-            {
-                if (ConstantsHolder.xanaConstants.minimap == 1)
-                {
-                    minimap.SetActive(true);
-                }
-                minimapSettingsBtn.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false);
-                minimapSettingsBtn.SetActive(false);
-            }
-        }
-        else
-        {
-            if (ConstantsHolder.xanaConstants.minimap == 1)
-            {
-                minimap.SetActive(true);
-            }
-            else
-            {
-                minimap.SetActive(false); // Disable Minimap Bydefault
-            }
-            minimapSettingsBtn.SetActive(true);
+        { // This Patch code also written in onEnable, Running twice 
+            //if (WorldItemView.m_EnvName.Contains("AfterParty") || ConstantsHolder.xanaConstants.IsMuseum)
+            //{
+            //    if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
+            //    {
+            //        if (ConstantsHolder.xanaConstants.minimap == 1)
+            //        {
+            //            minimap.SetActive(true);
+            //        }
+            //        minimapSettingsBtn.SetActive(true);
+            //    }
+            //    else
+            //    {
+            //        minimap.SetActive(false);
+            //        minimapSettingsBtn.SetActive(false);
+            //    }
+            //}
+            //else
+            //{
+            //    if (ConstantsHolder.xanaConstants.minimap == 1)
+            //    {
+            //        minimap.SetActive(true);
+            //        SumitMapStatus(true);
+            //    }
+            //    else
+            //    {
+            //        minimap.SetActive(false); // Disable Minimap Bydefault
+            //        SumitMapStatus(false);
+            //    }
+            //    minimapSettingsBtn.SetActive(true);
+            //}
         }
         playerControllerNew = MainPlayerParent.GetComponent<PlayerController>();
     }
@@ -96,7 +104,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         instance = this;
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit) - 1;
+            //RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);
             if (PhotonNetwork.CurrentRoom != null)
             {
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) - 1;
@@ -109,7 +117,7 @@ public class ReferencesForGamePlay : MonoBehaviour
         //}
         else
         {
-            RoomMaxPlayerCount = Convert.ToInt32(ConstantsHolder.xanaConstants.userLimit);
+            //RoomMaxPlayerCount = ConstantsHolder.xanaConstants.userLimit;
             if (PhotonNetwork.CurrentRoom != null)
                 PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
         }
@@ -117,24 +125,20 @@ public class ReferencesForGamePlay : MonoBehaviour
         {
             if (instance.totalCounter != null)
             {
-                totalCounter.text = totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
+                totalCounter.text = totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
             }
         }
       
-        if (ReferenceObject.activeInHierarchy && m_34player != null)
+        if (ReferenceObject.activeInHierarchy && m_34player != null && !ConstantsHolder.isPenguin)
         {
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(true);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(false);
         }
-
-
-        if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null)
+        if (ReferenceObjectPotrait.activeInHierarchy && m_34player != null && !ConstantsHolder.isPenguin)
         {
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRender.SetActive(false);
             m_34player.GetComponent<MyBeachSelfieCam>().SelfieCapture_CamRenderPotraiat.SetActive(true);
         }
-
-
         if (counterCoroutine == null)
         {
             counterCoroutine = SetPlayerCounter();
@@ -151,18 +155,24 @@ public class ReferencesForGamePlay : MonoBehaviour
             if (WorldItemView.m_EnvName.Contains("J&J WORLD_5"))
             {
                 if (ConstantsHolder.xanaConstants.minimap == 1)
-                    ReferencesForGamePlay.instance.minimap.SetActive(true);
+                    minimap.SetActive(true);
                 else
-                    ReferencesForGamePlay.instance.minimap.SetActive(false);
+                    minimap.SetActive(false);
             }
             return;
         }
         else
         {
             if (ConstantsHolder.xanaConstants.minimap == 1)
-                ReferencesForGamePlay.instance.minimap.SetActive(true);
+            {
+                minimap.SetActive(true);
+                SumitMapStatus(true);
+            }
             else
-                ReferencesForGamePlay.instance.minimap.SetActive(false);
+            {
+                minimap.SetActive(false);
+                SumitMapStatus(false);
+            }
         }
         moveWhileDanceCheck = PlayerPrefs.GetInt("dancebutton"); //add kamran
         if (moveWhileDanceCheck == 0)
@@ -319,7 +329,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                     {
                         PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
                     }
-                    totalCounter.text = PlayerCount + "/" + RoomMaxPlayerCount /*ConstantsHolder.xanaConstants.userLimit*/;
+                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit /*ConstantsHolder.xanaConstants.userLimit*/;
 
                     //if (ConstantsHolder.xanaConstants.isCameraMan)
                     //{
@@ -343,7 +353,7 @@ public class ReferencesForGamePlay : MonoBehaviour
                 if (WorldItemView.m_EnvName.Contains("XANA Lobby"))
                 {
                     PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + NpcSpawner.npcSpawner.npcCounter;
-                    totalCounter.text = PlayerCount + "/" + (Convert.ToInt32(RoomMaxPlayerCount) + 5);
+                    totalCounter.text = PlayerCount + "/" + ConstantsHolder.userLimit + 5;
                 }
                 //else
                 //{
@@ -360,7 +370,28 @@ public class ReferencesForGamePlay : MonoBehaviour
         yield return new WaitForSeconds(2f);
         goto CheckAgain;
     }
+    public void SumitMapStatus(bool _status)
+    {
+        if (_status && ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+        {
+            MinimapSummit.SetActive(true);
 
+            minimap.transform.parent.GetComponent<RawImage>().enabled = true;
+            minimap.transform.parent.GetComponent<Mask>().enabled = true;
+
+            if (!ScreenOrientationManager._instance.isPotrait)
+                minimap.GetComponent<RectTransform>().sizeDelta = new Vector2(530, 300);
+        }
+        else
+        {
+            MinimapSummit.SetActive(false);
+        }
+    }
+
+    public void FullScreenMapStatus (bool _enable)
+    {
+        FullscreenMapSummit.SetActive(_enable);
+    }
 }
 
 

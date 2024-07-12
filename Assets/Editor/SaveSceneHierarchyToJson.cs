@@ -1,10 +1,7 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System;
-using TMPro;
+
 
 public class SaveParentObjectsToJson : EditorWindow
 {
@@ -53,7 +50,9 @@ public class SaveParentObjectsToJson : EditorWindow
             ObjectsInfo data = new ObjectsInfo();
 
             if (rootObject.GetComponent<SetPrefabInfo>() != null)
+            {
                 data.addressableKey = rootObject.GetComponent<SetPrefabInfo>().downloadKey;
+            }
             else
                 data.addressableKey=rootObject.name;
             data.name = rootObject.name;
@@ -66,6 +65,7 @@ public class SaveParentObjectsToJson : EditorWindow
             data.priority = GetObjectPriority(rootObject.gameObject);
             data.isActive = rootObject.gameObject.activeSelf;
             data.lightmapData = GetLightmapData(rootObject.gameObject);
+            data.summitDomeInfo=GetDomeId(rootObject.gameObject);
             sceneObjectsData.SceneObjects.Add(data);
         }
 
@@ -110,7 +110,6 @@ public class SaveParentObjectsToJson : EditorWindow
         return lightmapData;
     }
 
-
     public Priority GetObjectPriority(GameObject rootObject)
     {
         if(rootObject.GetComponent<SetPrefabInfo>()!=null)
@@ -118,6 +117,18 @@ public class SaveParentObjectsToJson : EditorWindow
             return rootObject.GetComponent<SetPrefabInfo>().objectPriority;
         }
         return Priority.defaultPriority;
+    }
+
+    public SummitDomeInfo GetDomeId(GameObject rootObject)
+    {
+        SummitDomeInfo summitDomeInfo = new SummitDomeInfo();
+        if (rootObject.GetComponent<SetDomeId>()!=null)
+        {
+            summitDomeInfo.domeIndex = rootObject.GetComponent<SetDomeId>().domeId;
+            return summitDomeInfo;
+        }
+        summitDomeInfo.domeIndex = 0;
+        return summitDomeInfo;
     }
 }
 

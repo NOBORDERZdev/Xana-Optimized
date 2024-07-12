@@ -709,6 +709,11 @@ public class HomeFooterHandler : MonoBehaviour
         {
             FeedUIController.Instance.SNSSettingController.settingScreen.SetActive(false);
             FeedUIController.Instance.SNSSettingController.myAccountScreen.SetActive(false);
+            if (FeedUIController.Instance.BestFriendFull.activeInHierarchy || FeedUIController.Instance.ConfirmUnfollowPanel.activeInHierarchy)
+            {
+                FeedUIController.Instance.BestFriendFull.SetActive(false);
+                FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(false);
+            }
         }
     }
 

@@ -18,7 +18,7 @@ public class ConstantsGod
     public static readonly string MIC = "MIC VOLUME";
     public static readonly string VIDEO_VOLUME = "VIDEO VOLUME";
     public static readonly string CAMERA_SENSITIVITY = "CAMERA SENSITIVITY";
-    public static readonly string BASE_URL = "https://api-xana.angelium.net/api/";
+    //public static readonly string BASE_URL = "https://api-xana.angelium.net/api/";
     public static string ReactionThumb = "reaction thumb";
     public static string SENDMESSAGETEXT = "send message";
     public static string GUSTEUSERNAME = "guste user";
@@ -62,7 +62,7 @@ public class ConstantsGod
 
     public static string GETENVIRONMENTSAPINew = "/item/environment/1/30";
     public static string GetAllMuseumsAPI = "/item/museums/2/1/25";
-    
+
     // public static string GetAllMuseumsAPI = "/item/museums/v2/1/20";
     public static string BACKGROUNDFILES = "/item/background-files";
     public static string ANIMATIONFILES = "/item/animations";
@@ -122,7 +122,7 @@ public class ConstantsGod
 
     // Xana Lobby WOrlds
     public static string GetXanaLobbyWorlds = "/item/get-xana-lobby-worlds";
-    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";  
+    public static string GetXanaLobbyDynamicText = "/item/get-xana-lobby-dynamic-data";
 
     public static string GETXANAOFFICIALWORLDBYID = "";
 
@@ -165,9 +165,9 @@ public class ConstantsGod
     public static string r_url_HotUsers = /*"/social/get-non-friends/"*/ "/users/hot-users/";
     public static string r_url_RecommendedUser = "/social/get-friends-recommendations/";
     public static string r_url_MutalFrnd = "/social/follow/get-user-mutual-followers/";
-    public static string r_url_GetBestFrnd ="/social/get-close-friends/";
-    public static string r_url_AdBestFrnd ="/social/create-close-friend/";
-    public static string r_url_RemoveBestFrnd ="/social/remove-close-friend/";
+    public static string r_url_GetBestFrnd = "/social/get-close-friends/";
+    public static string r_url_AdBestFrnd = "/social/create-close-friend/";
+    public static string r_url_RemoveBestFrnd = "/social/remove-close-friend/";
     public static string r_url_WebsiteValidation = "/auth/check-website-validity";
 
     public static string r_url_SetName = "/users/set-name";
@@ -274,7 +274,7 @@ public class ConstantsGod
 
 
     #endregion
-   
+
     #region UserPost
     public static string SendPostToServer = "/item/new-text-post";
     public static string GetPostSentToServer = "/item/get-latest-text-post/";///"/item/get-user-text-post/1/100";
@@ -299,11 +299,21 @@ public class ConstantsGod
 
     public static string FeedGetAllByUserId = "/item/get-following-text-post/";
     public static string FeedLikeDislikePost = "/item/like-text-post";
-    public static string FeedSearch="/item/search-following-text-post";
+    public static string FeedSearch = "/item/search-following-text-post";
     #endregion
 
     #region PMY World Api's
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
+    #endregion
+
+
+    #region XANA Summit Api's
+    public static string GETDOMENPCINFO = "/domes/getDomeNPCInfo/";  //:domeId/:type
+    public static string GETALLDOMES = "/domes/getcreatedDomes";
+    public static string GETSINGLEDOME = "/domes/getDomeGeneralInfoById/";  //:domeId
+    public static string GETVISITDOMES = "/domes/getvisitedomes";
+    public static string SETVISITDOMEWITHID = "/domes/domesvisits/";
+    public static string GETUSERDETAIL = "/users/get-custom-intro";
     #endregion
     #region Toyota Email Api's
     public static string toyotaEmailApi = "/toyotaAichiWorlds/get-all-space-email-public/";
@@ -321,5 +331,11 @@ public class ConstantsGod
     public static string UpdateComapreQuestTaskDataPerformance = "/quest/get-user-performed-list";
     public static string ClaimQuestReward = "/quest/claim-quest-reward";
     public static string ClaimQuestRewardCheque = "/quest/claim-status/";
+    #endregion
+    #region Dome reward API's
+    public static string UpdateVisitedDomes = "/domes/domesvisits/";
+    public static string UpdateUserRaffleTickets = "/domes/updatetickets";
+    public static string GetUserRaffleTickets = "/domes/getusertickets";
+    public static string GetUserVisitedDomes = "/domes/getvisitedomes";
     #endregion
 }

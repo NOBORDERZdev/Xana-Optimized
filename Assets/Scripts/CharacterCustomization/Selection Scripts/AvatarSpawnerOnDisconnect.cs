@@ -69,14 +69,6 @@ namespace Metaverse
             StartCoroutine(MainReconnect());
         }
 
-        public void InitCharacter()
-        {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-        }
-
         private void OffSelfie()
         {
             PlayerSelfieController.Instance.SwitchFromSelfieControl();
@@ -105,7 +97,7 @@ namespace Metaverse
                 yield return new WaitForSeconds(0.2f);
             }
 
-            string lastRoomName = PlayerPrefs.GetString("roomname");
+            string lastRoomName = Photon.Pun.Demo.PunBasics.MutiplayerController.CurrRoomName;
             if (!PhotonNetwork.ReconnectAndRejoin())
             {
                 if (PhotonNetwork.RejoinRoom(lastRoomName))
@@ -122,8 +114,9 @@ namespace Metaverse
                 roomOptions.IsVisible = true;
                 roomOptions.PublishUserId = true;
                 roomOptions.CleanupCacheOnLeave = true;
-                PhotonNetwork.JoinOrCreateRoom(PlayerPrefs.GetString("roomname"), roomOptions, new TypedLobby(PlayerPrefs.GetString("lb"), LobbyType.Default), null);
+                PhotonNetwork.JoinOrCreateRoom(lastRoomName, roomOptions, new TypedLobby(Photon.Pun.Demo.PunBasics.MutiplayerController.CurrLobbyName, LobbyType.Default), null);
             }
+            
         }
 
 
