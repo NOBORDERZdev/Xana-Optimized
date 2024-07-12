@@ -251,6 +251,7 @@ public class Web3AuthCustom : MonoBehaviour
 
                 case Web3AuthSociallogin.Login:
                     UserLoginSignupManager.instance.emailOrWalletLoginPanel.SetActive(false);
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;
@@ -258,6 +259,7 @@ public class Web3AuthCustom : MonoBehaviour
 
                 case Web3AuthSociallogin.NewRegistration:
                     UserLoginSignupManager.instance.signUpPanel.SetActive(false);
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
 
                     break;

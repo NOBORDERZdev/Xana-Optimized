@@ -121,7 +121,7 @@ public class WorldManager : MonoBehaviour
             (PlayerPrefs.GetString("PlayerName") == ""))
             {
                 //GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
-                UserLoginSignupManager.instance.OpenUserNamePanel();
+                //UserLoginSignupManager.instance.OpenUserNamePanel();
             }
             else if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {
