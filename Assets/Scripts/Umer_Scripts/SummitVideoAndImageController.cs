@@ -118,6 +118,10 @@ public class SummitVideoAndImageController : MonoBehaviour
 
             }
         }
+        if (SoundSettings.soundManagerSettings.bgmSource && !(string.IsNullOrEmpty(videoLink)))
+        {
+            SoundSettings.soundManagerSettings.bgmSource.mute = true;
+        }
     }
 
     void SetImage()
