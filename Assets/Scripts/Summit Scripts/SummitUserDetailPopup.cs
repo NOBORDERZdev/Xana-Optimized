@@ -2,11 +2,13 @@ using Photon.Pun;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class SummitUserDetailPopup : MonoBehaviour
 {
     public GameObject userProfilePopup;
-
+    public CanvasScaler profileCanvas;
+    public GameObject panel;
     public TMPro.TextMeshProUGUI userName;
     public TMPro.TextMeshProUGUI company;
     public TMPro.TextMeshProUGUI role;
@@ -25,6 +27,13 @@ public class SummitUserDetailPopup : MonoBehaviour
     {
         if (GetComponent<PhotonView>().IsMine)
             GetUserInfo();
+
+        ScreenOrientationManager.switchOrientation += CheckOrientation;
+    }
+
+    private void OnDisable()
+    {
+        ScreenOrientationManager.switchOrientation -= CheckOrientation;
     }
 
     private void OnMouseDown()
@@ -123,6 +132,21 @@ public class SummitUserDetailPopup : MonoBehaviour
     void SetPopUpActive()
     {
         userProfilePopup.SetActive(true);
+    }
+
+
+    public void CheckOrientation()
+    {
+        if (ScreenOrientationManager._instance.isPotrait)
+        {
+            profileCanvas.referenceResolution = new Vector2(1080, 1920);
+            panel.transform.localScale = new Vector3(1.74f, 1.74f, 1.74f);
+        }
+        else
+        {
+            profileCanvas.referenceResolution = new Vector2(1920, 1080);
+            panel.transform.localScale = new Vector3(1f, 1f, 1f);
+        }
     }
 
     [System.Serializable]

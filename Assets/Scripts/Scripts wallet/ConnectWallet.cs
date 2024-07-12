@@ -812,9 +812,10 @@ public class ConnectWallet : MonoBehaviour
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (VerifySignatureReadObj.success)
-            { 
+            {
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+                PlayerPrefs.SetString("UserId", VerifySignatureReadObj.data.user.id.ToString());
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 ConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
                 ConstantsHolder.userId = VerifySignatureReadObj.data.user.id.ToString();

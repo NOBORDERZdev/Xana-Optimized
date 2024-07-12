@@ -109,7 +109,7 @@ public class ScreenOrientationManager : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
 
-        if (ArrowManager.Instance && ConstantsHolder.isPenguin)
+        if (ArrowManager.Instance && !ConstantsHolder.isPenguin)
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
             AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetChild(0).GetChild(0).GetComponent<Animator>().runtimeAnimatorController;
