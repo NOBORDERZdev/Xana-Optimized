@@ -265,6 +265,39 @@ public class XanaChatSystem : MonoBehaviour
             chatButton.GetComponent<Image>().enabled = false;
         }
     }
+    public void OpenCloseChatDialog(bool _state)
+    {
+        isChatOpen = _state;
+
+        if (isChatOpen)
+        {
+            chatDialogBox.SetActive(true);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = true;
+
+            // Confirmation Panel Not Require
+            //if (!isPanelConfirmationRequire)
+            //{
+            //    if (!string.IsNullOrEmpty(ChatSocketManager.instance.oldChatResponse))
+            //    {
+            //        JSONNode jsonNode = JSON.Parse(ChatSocketManager.instance.oldChatResponse);
+            //        int countValue = jsonNode["count"].AsInt;
+
+            //        if (countValue > 0)
+            //        {
+            //            isPanelConfirmationRequire = true;
+            //            chatConfirmationPanel.SetActive(true);
+            //        }
+            //    }
+            //}
+        }
+        else
+        {
+            chatDialogBox.SetActive(false);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = false;
+        }
+    }
     public void OnEnterSend()
     {
         string removeBadWords = "";
