@@ -74,6 +74,8 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistSkinToneColor;
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
+    public StoreGenereatedObjDataHolder StoreGenereatedObjDataHolder;
+
 
     private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
         shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
@@ -157,6 +159,11 @@ public class InventoryManager : MonoBehaviour
     CharacterBodyParts characterBodyParts;
     public Sprite defaultPngForSkinIcon;
     AvatarController _avatarController;
+
+    private int _apiRecallCounter = 0; // Counter to recall Coins API if it fails
+
+
+
     public static event Action<BackButtonHandler.screenTabs> OnScreenTabStateChange;
 
     private void Awake()
@@ -225,6 +232,7 @@ public class InventoryManager : MonoBehaviour
             LastSavedreset.GetComponent<Button>().onClick.AddListener(Character_ResettoLastSaved);
         }
 
+        _apiRecallCounter = 0;
     }
 
     public void SetDefaultValues() // This is called When comming back from Worlds
@@ -843,7 +851,7 @@ public class InventoryManager : MonoBehaviour
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
             //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 100, "asc", "name",!ShopOpened)); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name",!ShopOpened)); // API Update New Parameter added for sorting
             
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
@@ -1138,20 +1146,24 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            if (request.isNetworkError)
-            {
-                CheckAPILoaded = true;
-            }
-            else
-            {
-                if (request.error != null)
-                {
-                    if (JsonDataObj.success == false)
-                    {
-                        CheckAPILoaded = true;
-                    }
-                }
-            }
+            Debug.Log("<color = red> Error in Sub Categories API </color>");
+            // Recall API
+            GetAllSubCategories();
+            
+            //if (request.isNetworkError)
+            //{
+            //    CheckAPILoaded = true;
+            //}
+            //else
+            //{
+            //    if (request.error != null)
+            //    {
+            //        if (JsonDataObj.success == false)
+            //        {
+            //            CheckAPILoaded = true;
+            //        }
+            //    }
+            //}
         }
         request.Dispose();
     }
@@ -1459,6 +1471,9 @@ public class InventoryManager : MonoBehaviour
         panelIndex = TakeIndex;
         DisableAllItems();
         ShopOpened = false;
+        if (ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully)
+            PreviousSelectionCount = -1;
+
         if (TakeIndex == 0)
         {
             // CLoth
@@ -1509,10 +1524,22 @@ public class InventoryManager : MonoBehaviour
     void DisableBtnsWhenShopOpen(bool btnStatus)
     {
         myAvatarButton.interactable = btnStatus;
-        SaveStoreBtn.GetComponent<Button>().interactable = btnStatus;
-        UndoBtn.GetComponent<Button>().interactable = btnStatus;
-        RedoBtn.GetComponent<Button>().interactable = btnStatus;
+        SaveStoreBtn.GetComponent<Button>().enabled = btnStatus;
+        UpdateBtnStatusUsingCanvasGroup(RedoBtn.transform.GetComponentInParent<CanvasGroup>(),btnStatus);
     }
+
+    void UpdateBtnStatusUsingCanvasGroup(CanvasGroup _BtnObj, bool _Status)
+    {
+        float _alphaValue = 1f; // For active 1 and for inactive 0.5
+
+        if (!_Status)
+            _alphaValue = 0.5f;
+
+        _BtnObj.alpha = _alphaValue;
+        _BtnObj.interactable = _Status;
+    }
+
+
 
     void DisableAllItems()
     {
@@ -1613,6 +1640,10 @@ public class InventoryManager : MonoBehaviour
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[m_GetIndex + 8].id, false);
             }
+            else
+            {
+                GetAllSubCategories();
+            }
 
         }
         else
@@ -1683,6 +1714,10 @@ public class InventoryManager : MonoBehaviour
                 // Debug.LogError("second time :- " + m_GetIndex);
                 //print(SubCategoriesList[m_GetIndex + 8].id);
                 SubmitAllItemswithSpecificSubCategory(SubCategoriesList[IndexofPanel].id, false);
+            }
+            else
+            {
+                GetAllSubCategories();
             }
 
         }
@@ -2757,6 +2792,8 @@ public class InventoryManager : MonoBehaviour
         if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
         {
             Debug.Log("<color=red> Get XENY Api Error: " + request.error + "</color>");
+            TotalGameCoins.text = "--";
+            RecallCoinApi();
         }
         else
         {
@@ -2766,6 +2803,15 @@ public class InventoryManager : MonoBehaviour
         request.Dispose();
         StopCoroutine(RequestUserXenyDataRoutine());
 
+    }
+
+    void RecallCoinApi()
+    {
+        _apiRecallCounter++;
+        if (_apiRecallCounter < 4) // Max 3 times recall
+        {
+            UpdateUserXeny();
+        }
     }
 
     public void SubmitUserDetailAPI()
@@ -3587,6 +3633,10 @@ public class InventoryManager : MonoBehaviour
     {
         int _ShopItemCount = 0;
         int loopStart = GetDownloadedNumber(TempEnumVar);
+
+        if (!ShopOpened && ConstantsHolder.xanaConstants.isStoreItemPurchasedSuccessfully)
+            loopStart = 0;
+
        
         for (int i = loopStart; i < dataListOfItems.Count; i++)
         {
@@ -3603,7 +3653,13 @@ public class InventoryManager : MonoBehaviour
                 }
                 else if(!ShopOpened && (dataListOfItems[i].isPurchased || dataListOfItems[i].userPurchased))
                 {
-                    InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                    //InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                    string _CompareName = dataListOfItems[i].name;
+                    if (!StoreGenereatedObjDataHolder.AllObjsData[myIndexInList].ObjNames.Contains(_CompareName)) 
+                    {
+                        InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+                        StoreGenereatedObjDataHolder.AllObjsData[myIndexInList].ObjNames.Add(dataListOfItems[i].name);
+                    }
                 }
                 
             }
@@ -4900,6 +4956,21 @@ public class InventoryManager : MonoBehaviour
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
 }
+
+[System.Serializable]
+public class StoreGenereatedObjDataHolder
+{
+    public List<StoreGeneratedObjNameList> AllObjsData;
+}
+
+[System.Serializable]
+public class  StoreGeneratedObjNameList
+{
+    public string ListName;
+    public List<string> ObjNames;
+}
+
+
 public class XenyRequestedData
 {
     public string userAddress;

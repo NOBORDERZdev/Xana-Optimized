@@ -76,6 +76,8 @@ public class ItemDetail : MonoBehaviour
     private void OnEnable()
     {
         downloader = AddressableDownloader.Instance;
+        if(!store)
+            store = InventoryManager.instance;
         if (enableUpdate)
             StartRun();
 
@@ -104,7 +106,7 @@ public class ItemDetail : MonoBehaviour
 
     void ItemPurchased_DisableMe()
     {
-        if (GameManager.Instance.PurchasedItemIds.Contains(id))
+        if (!store.ShopOpened && GameManager.Instance.PurchasedItemIds.Contains(id))
         {
             gameObject.SetActive(false);
         }

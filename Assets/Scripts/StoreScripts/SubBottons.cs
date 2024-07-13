@@ -66,6 +66,7 @@ public class SubBottons : MonoBehaviour
         }
         else if (ShopBool)
         {
+            AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
             InventoryManager.instance.OpenShopContainerPanel(m_Index);
             //currentSelectedCategoryIndex = m_Index;
 

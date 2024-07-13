@@ -206,6 +206,7 @@ public class ShopCartHandler : MonoBehaviour
     }
     public void RemoveTryonCloth()
     {
+        selectedItems.Clear();
         // Refactored to reduce repetitive code and improve readability
         var itemsToCheck = new[] {ac.wornPant, ac.wornShirt, ac.wornHair, ac.wornShoes };
         for (int i = 0; i < itemsToCheck.Length; i++)
@@ -213,7 +214,12 @@ public class ShopCartHandler : MonoBehaviour
             var item = itemsToCheck[i];
             if (item != null && IsDressChanged(item.name))
             {
-                StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(0, _oldItemReferences[i].dressName, _oldItemReferences[i].itemtype, SaveCharacterProperties.instance.SaveItemList.gender, ac, Color.clear));
+                if(!_oldItemReferences[i].dressName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                    StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(0, _oldItemReferences[i].dressName, _oldItemReferences[i].itemtype, SaveCharacterProperties.instance.SaveItemList.gender, ac, Color.clear));
+                else
+                {
+                    ac.WearDefaultItem(_oldItemReferences[i].itemtype, ac.gameObject, SaveCharacterProperties.instance.SaveItemList.gender);
+                }
             }
         }
     }

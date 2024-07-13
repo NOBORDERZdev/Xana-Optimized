@@ -1575,7 +1575,7 @@ public class UserLoginSignupManager : MonoBehaviour
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+        //UserPassManager.Instance.testing = false; // Alpha pass is removed Force Enable Testing Bool 
         if (FeedUIController.Instance.SNSSettingController != null)
         {
             FeedUIController.Instance.SNSSettingController.LogoutSuccess();

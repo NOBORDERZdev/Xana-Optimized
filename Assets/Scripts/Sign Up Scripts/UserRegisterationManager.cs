@@ -1254,7 +1254,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+        //UserPassManager.Instance.testing = false; // Alpha pass is removed Force Enable Testing Bool 
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
@@ -3435,7 +3435,7 @@ public class UserRegisterationManager : MonoBehaviour
                     }
                     else
                     {
-                        UserPassManager.Instance.testing = false;
+                        //UserPassManager.Instance.testing = false; // Alpha pass is removed Force Enable Testing Bool 
                     }
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
