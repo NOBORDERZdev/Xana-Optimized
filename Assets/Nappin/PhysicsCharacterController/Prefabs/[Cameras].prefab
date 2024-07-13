@@ -612,7 +612,7 @@ MonoBehaviour:
     FieldOfView: 80
     OrthographicSize: 10
     NearClipPlane: 0.1
-    FarClipPlane: 1000
+    FarClipPlane: 500
     Dutch: 0
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
@@ -626,7 +626,7 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_YAxis:
-    Value: 0.5
+    Value: 1
     m_SpeedMode: 0
     m_MaxSpeed: 5
     m_AccelTime: 0.1
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_SplineCurvature: 0.2
   m_Orbits:
   - m_Height: 1.14
-    m_Radius: 0.1
+    m_Radius: 0.5
   - m_Height: 0.5
     m_Radius: 2.5
   - m_Height: -0.12
@@ -710,11 +710,11 @@ MonoBehaviour:
   m_TransparentLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_MinimumDistanceFromTarget: 0.1
+  m_MinimumDistanceFromTarget: 0.5
   m_AvoidObstacles: 1
-  m_DistanceLimit: 0
+  m_DistanceLimit: 15
   m_MinimumOcclusionTime: 0
-  m_CameraRadius: 0.1
+  m_CameraRadius: 0.3
   m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
@@ -734,8 +734,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orientationType: 0
-  lookSpeed: 0.15
-  lookSpeedd: 0.75
   cinemachine: {fileID: 0}
   freelookup: {fileID: 0}
   editorSensitivity: 0.05
@@ -1667,9 +1665,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 1.14, z: -0.1000014}
-  m_XDamping: 2.37
-  m_YDamping: 1.62
-  m_ZDamping: 1.52
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1870,9 +1868,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 4
   m_FollowOffset: {x: 0, y: 1.14, z: -0.1000014}
-  m_XDamping: 1.52
-  m_YDamping: 1.9
-  m_ZDamping: 1.43
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
