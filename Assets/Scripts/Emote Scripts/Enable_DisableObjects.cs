@@ -24,22 +24,24 @@ public class Enable_DisableObjects : MonoBehaviour
         Instance = this;
     }
     // Start is called before the first frame update
-    private void OnEnable()
-    {
-        PlayerController.PlayerIsWalking += OnPlayerWalking;
-        PlayerController.PlayerIsIdle += OnPlayerIdle;
+    //private void OnEnable()
+    //{
+    //    PlayerController.PlayerIsWalking += OnPlayerWalking;
+    //    PlayerController.PlayerIsIdle += OnPlayerIdle;
 
-    }
-    private void OnDisable()
-    {
-        PlayerController.PlayerIsWalking -= OnPlayerWalking;
-        PlayerController.PlayerIsIdle -= OnPlayerIdle;
-    }
+    //}
+    //private void OnDisable()
+    //{
+    //    PlayerController.PlayerIsWalking -= OnPlayerWalking;
+    //    PlayerController.PlayerIsIdle -= OnPlayerIdle;
+    //}
 
     private void OnPlayerWalking()
     {
-        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
+        if (ConstantsHolder.isPenguin)
+            return;
 
+        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
         {
             btns.interactable = false;
             ChatInputField.interactable = false;
@@ -54,8 +56,10 @@ public class Enable_DisableObjects : MonoBehaviour
 
     private void OnPlayerIdle()
     {
-        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
+        if (ConstantsHolder.isPenguin)
+            return;
 
+        foreach (Button btns in ButtontoUninteractable)//...Added by Abdullah
         {
             btns.interactable = true;
             ChatInputField.interactable = true;

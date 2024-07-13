@@ -10,6 +10,9 @@ public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
 
+    public bool pushToTalk;
+    public bool openLandingSceneDirectly;
+
     //Login Info
     public static bool isAdmin;
     public static bool isGuestLogin;
@@ -37,7 +40,7 @@ public class ConstantsHolder : MonoBehaviour
     public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
-    public string userLimit;
+    public static int userLimit;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
@@ -135,6 +138,18 @@ public class ConstantsHolder : MonoBehaviour
     [SerializeField]
     public MeetingStatus meetingStatus;
     public bool IsShowChatToAll = true;
+
+
+    //XANA Summit 
+    public static bool isFromXANASummit=false;
+    public static bool MultiSectionPhoton = false;
+    public static bool TempDiasableMultiPartPhoton = false;
+    public static bool DiasableMultiPartPhoton = false;
+    public static bool DisableFppRotation = false;
+    public static int domeId;
+    public static bool isPenguin;
+    public static bool isFixedHumanoid;
+
     public string r_EmoteStoragePersistentPath
     {
         get

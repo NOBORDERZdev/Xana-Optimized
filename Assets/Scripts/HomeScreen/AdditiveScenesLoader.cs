@@ -21,6 +21,15 @@ public class AdditiveScenesLoader : MonoBehaviour
 
     private void Start()
     {
+        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        {
+            sceneDelay = .5f;
+            StartCoroutine(AddDelayStore(sceneDelay / 3));
+            StartCoroutine(AddDelay(sceneDelay));
+            GameManager.Instance.isAllSceneLoaded = true;
+            return;
+        }
+
         if(!ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;

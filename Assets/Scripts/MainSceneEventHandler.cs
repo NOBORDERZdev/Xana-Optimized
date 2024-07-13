@@ -16,4 +16,6 @@ public static class MainSceneEventHandler
     public static Action BackHomeSucessfully;
 
     public static Action MakeScreenSpaceAdditive;
+
+    public static Action OpenLandingScene;
 }

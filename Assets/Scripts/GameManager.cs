@@ -76,29 +76,10 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
-        QuestDataHandler.Instance.CheckForTaskCDomplete();
-
-
-        PurchasedItemIds = new List<string>();
-    }
-    void Start()
-    {
-        Screen.sleepTimeout = SleepTimeout.NeverSleep;
-        Application.targetFrameRate = 30;
-        OnceGuestBool = false;
-        OnceLoginBool = false;
-        if (QualitySettings.GetQualityLevel() != 4)
-        {
-            //PlayerPrefs.SetInt("QualitySettings", index);
-            QualitySettings.SetQualityLevel(4);
-            QualitySettings.renderPipeline = _homeScreenURPAsset;
-        }
     }
 
-    public void ClearPurchaseListData()
-    {
-        PurchasedItemIds.Clear();
-    }
+    
+    
     public void HomeCameraInputHandler(bool flag)
     {
         HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
@@ -170,8 +151,29 @@ public class GameManager : MonoBehaviour
          yield return new WaitForSeconds(1f);
         print("wait");
         print("Loaded");
-    }  
-   
+    }
+    public void ClearPurchaseListData()
+    {
+        PurchasedItemIds.Clear();
+    }
+    void Start()
+    {
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+        Application.targetFrameRate = 30;
+        OnceGuestBool = false;
+        OnceLoginBool = false;
+        if (QualitySettings.GetQualityLevel() != 4)
+        {
+            //PlayerPrefs.SetInt("QualitySettings", index);
+            QualitySettings.SetQualityLevel(4);
+            QualitySettings.renderPipeline = _homeScreenURPAsset;
+        }
+
+        if (QuestDataHandler.Instance) // If Null then find object
+        {
+            QuestDataHandler.Instance.CheckForTaskCDomplete();
+        }
+    }
     IEnumerator WaitForInstancefromWorld()
     {
         yield return new WaitForSeconds(.05f);

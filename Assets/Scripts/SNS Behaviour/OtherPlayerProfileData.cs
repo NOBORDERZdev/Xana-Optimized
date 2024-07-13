@@ -688,17 +688,26 @@ public class OtherPlayerProfileData : MonoBehaviour
         if (isFollowFollowing)
         {
             //unfollow.......
-            SNS_APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
+            FeedUIController.Instance.ConfirmUnfollowPanel.SetActive(true);
+            FeedUIController.Instance.UnfollowButton.onClick.RemoveAllListeners(); // To Avoid multiple function calls
+            FeedUIController.Instance.UnfollowButton.onClick.AddListener(UnFollowAUser);
         }
         else
         {
             //follow.......
+            //feedUIController.ShowLoader(true);
+            //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = false;
             SNS_APIManager.Instance.RequestFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
-            profileUIHandler.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
+            //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Unfollow");
         }
     }
-
+    public void UnFollowAUser()
+    {
+        //feedUIController.ShowLoader(true);
+        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = false;
+        SNS_APIManager.Instance.RequestUnFollowAUser(singleUserProfileData.id.ToString(), "OtherUserProfile");
+        //ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextLocalization>().LocalizeTextText("Follow");
+    }
 
     #region Get User Details API Integrate........
     public void RequestGetUserDetails(SingleUserProfileData singleUserProfileData1, bool _callFromFindFriendWithName = false)

@@ -48,6 +48,7 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
+        PlayerPrefs.SetInt("WalletLogin", 1);
         ConstantsHolder.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;
@@ -69,7 +70,6 @@ public class WalletLogin: MonoBehaviour
             int expirationTime = timestamp + 60;
             // set message
             string message = expirationTime.ToString();
-            print("message is "+ message);
              string signature;
             string account;
             // sign message
