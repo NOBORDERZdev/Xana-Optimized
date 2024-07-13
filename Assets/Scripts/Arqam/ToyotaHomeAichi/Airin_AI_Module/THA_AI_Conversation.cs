@@ -60,6 +60,7 @@ public class THA_AI_Conversation : MonoBehaviour
 
     private IEnumerator SetApiData()
     {
+        yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
         string worldId = ConstantsHolder.xanaConstants.MuseumID;
         string ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";

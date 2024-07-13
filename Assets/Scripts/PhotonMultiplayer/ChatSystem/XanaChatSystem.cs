@@ -99,7 +99,7 @@ public class XanaChatSystem : MonoBehaviour
     public void Start()
     {
 
-        InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        //InputFieldChat.onSubmit.AddListener(OnEnterSend);
 
         //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
@@ -305,7 +305,7 @@ public class XanaChatSystem : MonoBehaviour
         {
             removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
         }
-
+        Debug.LogError("removeBadWords_" + removeBadWords);
         if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
