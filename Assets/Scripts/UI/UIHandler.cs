@@ -128,7 +128,10 @@ public class UIHandler : MonoBehaviour
             portraitSplashScreen.SetActive(true);
 
         }
-
+        if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        {
+              StartCoroutine(IsSplashEnable(false, 3f));
+        }
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
             if (PlayerPrefs.HasKey("TermsConditionAgreement"))
@@ -165,7 +168,7 @@ public class UIHandler : MonoBehaviour
         _footerCan.GetComponent<CanvasGroup>().interactable=false;
         _footerCan.GetComponent<CanvasGroup>().blocksRaycasts=false;
         yield return new WaitForSeconds(_time);
-        _SplashScreen.SetActive(_state);
+       // _SplashScreen.SetActive(_state);
         Canvas.GetComponent<CanvasGroup>().alpha = 1.0f;
         Canvas.GetComponent<CanvasGroup>().interactable =true;
         Canvas.GetComponent<CanvasGroup>().blocksRaycasts =true;
