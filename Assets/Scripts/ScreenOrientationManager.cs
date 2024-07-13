@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 using DG.Tweening;
 using Metaverse;
-using UnityEngine.UIElements;
 using UnityEngine.UI;
 
 public class ScreenOrientationManager : MonoBehaviour
@@ -142,30 +141,30 @@ public class ScreenOrientationManager : MonoBehaviour
         if (isPotrait)
         {
             //Set Camera view switching button state
-            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<UnityEngine.UI.Image>(), 
-                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<UnityEngine.UI.Image>());
+            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>(), 
+                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>());
 
             //Set Chat button and panel state
-            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>(),
-                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>());
+            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
+                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
                 potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].transform.parent.parent.parent.GetComponent<XanaChatSystem>().OpenCloseChatDialog(
-                    landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>().isActiveAndEnabled);
+                    landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
         }
         else
         {
             //Set Camera view switching button state
-            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<UnityEngine.UI.Image>(),
-                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<UnityEngine.UI.Image>());
+            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>(),
+                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>());
 
             //Set Chat button and panel state
-            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>(),
-            potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>());
+            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
+            potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
             landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].transform.parent.parent.parent.GetComponent<XanaChatSystem>().OpenCloseChatDialog(
-                                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<UnityEngine.UI.Image>().isActiveAndEnabled);
+                                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
         }
     }
 
-    void StateHandlingOfGPBtns(UnityEngine.UI.Image _objectStateToApply, UnityEngine.UI.Image _objStateToCheck)
+    void StateHandlingOfGPBtns(Image _objectStateToApply, Image _objStateToCheck)
     {
         _objectStateToApply.enabled = _objStateToCheck.isActiveAndEnabled;
     }
