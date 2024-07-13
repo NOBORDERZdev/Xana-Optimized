@@ -4393,6 +4393,22 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -1.4835085e-11
       objectReference: {fileID: 0}
+    - target: {fileID: 4096008613447409452, guid: b57adf25177c6df4094c57797a86de33, type: 3}
+      propertyPath: m_Orbits.Array.data[0].m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4096008613447409453, guid: b57adf25177c6df4094c57797a86de33, type: 3}
+      propertyPath: m_CameraRadius
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4096008613447409453, guid: b57adf25177c6df4094c57797a86de33, type: 3}
+      propertyPath: m_DistanceLimit
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4096008613447409453, guid: b57adf25177c6df4094c57797a86de33, type: 3}
+      propertyPath: m_MinimumDistanceFromTarget
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4096008613512118296, guid: b57adf25177c6df4094c57797a86de33, type: 3}
       propertyPath: m_TagString
       value: MainCamera
@@ -25887,7 +25903,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: debugEchoMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: voiceDetectionThreshold
@@ -25895,7 +25911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318627, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: photonMicrophoneDeviceId
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4245204776719318628, guid: e576c40fcd6b3ad47a464b9c1233d5a7, type: 3}
       propertyPath: m_RootOrder
@@ -29255,7 +29271,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046813, z: 0.000060756487, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904728, z: 0.000060756804, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29707,7 +29723,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.0106416205, y: -0.00089249463, z: 0.000009499992, w: 0.999943}
+  m_LocalRotation: {x: 0.010641996, y: -0.0008925164, z: 0.000009500559, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
