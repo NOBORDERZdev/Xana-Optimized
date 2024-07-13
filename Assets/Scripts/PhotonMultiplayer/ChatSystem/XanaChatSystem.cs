@@ -274,22 +274,6 @@ public class XanaChatSystem : MonoBehaviour
             chatDialogBox.SetActive(true);
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
-
-            // Confirmation Panel Not Require
-            //if (!isPanelConfirmationRequire)
-            //{
-            //    if (!string.IsNullOrEmpty(ChatSocketManager.instance.oldChatResponse))
-            //    {
-            //        JSONNode jsonNode = JSON.Parse(ChatSocketManager.instance.oldChatResponse);
-            //        int countValue = jsonNode["count"].AsInt;
-
-            //        if (countValue > 0)
-            //        {
-            //            isPanelConfirmationRequire = true;
-            //            chatConfirmationPanel.SetActive(true);
-            //        }
-            //    }
-            //}
         }
         else
         {
