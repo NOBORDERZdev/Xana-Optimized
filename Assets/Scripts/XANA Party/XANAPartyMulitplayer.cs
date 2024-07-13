@@ -43,7 +43,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     public IEnumerator ShowLobbyCounter(float waitTime)
     {
-        if (GetComponent<PhotonView>().IsMine)
+        if (GetComponent<PhotonView>().IsMine && PhotonNetwork.IsMasterClient)
         {
             ReferencesForGamePlay.instance.isCounterStarted = true;
             yield return new WaitForSeconds(waitTime); // wait to show that other player spwan and then lobby full

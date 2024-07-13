@@ -59,7 +59,7 @@ public class StartPoint : MonoBehaviour
 
    IEnumerator StartGame()
     {
-        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("READY!", 2, true);
+        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("READY!", 1, true);
         //yield return new WaitForSeconds(2);
         //BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         //yield return new WaitForSeconds(4);
