@@ -51,17 +51,7 @@ public class UIHandler : MonoBehaviour
         _SplashScreen.SetActive(false);
         _SplashScreen.SetActive(true);
 
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-        {
-            Screen.orientation = ScreenOrientation.LandscapeLeft;
-            portraitSplashScreen.SetActive(false);
-
-        }
-        else {
-            Screen.orientation = ScreenOrientation.Portrait;
-            portraitSplashScreen.SetActive(true);
-
-        }
+       
         //if(PlayerPrefs.GetString("PlayerName") == "")
         //{
         //    Screen.orientation = ScreenOrientation.Portrait;
@@ -74,8 +64,6 @@ public class UIHandler : MonoBehaviour
         //}
     }
     bool a =false;
-
-
     public void AvatarSelectionBtnClicked()
     {
         if (!isAvatarSelectionBtnClicked)
@@ -129,6 +117,17 @@ public class UIHandler : MonoBehaviour
     }
     private void Start()
     {
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            Screen.orientation = ScreenOrientation.LandscapeLeft;
+            portraitSplashScreen.SetActive(false);
+
+        }
+        else {
+            Screen.orientation = ScreenOrientation.Portrait;
+            portraitSplashScreen.SetActive(true);
+
+        }
 
         if (SaveCharacterProperties.NeedToShowSplash == 1)
         {
