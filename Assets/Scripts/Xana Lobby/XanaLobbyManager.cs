@@ -46,6 +46,12 @@ public class XanaLobbyManager : MonoBehaviour
     {
         
     }
+    private void OnDisable()
+    {
+        GC.Collect();
+        Resources.UnloadUnusedAssets();
+        Debug.LogError("memory released here Lobby..");
+    }
     public async void InitXanaLobbyWorlds()
     {
         StringBuilder apiUrl = new StringBuilder();
@@ -195,6 +201,8 @@ public class XanaLobbyManager : MonoBehaviour
             GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
         }
     }
+
+   
 }
 [Serializable]
 public class XanaLobbyWorldInfo

@@ -1,5 +1,7 @@
 using Paroxe.PdfRenderer;
 using Photon.Pun;
+using System.Collections;
+using System;
 using System.Collections.Generic;
 using Toyota;
 using UnityEngine;
@@ -46,6 +48,12 @@ public class NFT_Holder_Manager : MonoBehaviour
             instance = this;
         else
             Destroy(this.gameObject);
+    }
+    private void OnDisable()
+    {
+        GC.Collect();
+        Resources.UnloadUnusedAssets();
+        Debug.Log("memory released here Toyota..");
     }
 
     private void Start()
@@ -110,5 +118,8 @@ public class NFT_Holder_Manager : MonoBehaviour
         currentRoom.EnableControlls();
         if (currentRoom != null) currentRoom = null;
     }
+    
+
+  
 
 }
