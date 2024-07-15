@@ -265,6 +265,23 @@ public class XanaChatSystem : MonoBehaviour
             chatButton.GetComponent<Image>().enabled = false;
         }
     }
+    public void OpenCloseChatDialog(bool _state)
+    {
+        isChatOpen = _state;
+
+        if (isChatOpen)
+        {
+            chatDialogBox.SetActive(true);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            chatDialogBox.SetActive(false);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = false;
+        }
+    }
     public void OnEnterSend()
     {
         string removeBadWords = "";
