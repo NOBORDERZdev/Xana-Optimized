@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-using SuperStar.Helpers;
+using Newtonsoft.Json.Linq;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -130,6 +130,59 @@ public class UserLoginSignupManager : MonoBehaviour
             return;
         }
 
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
+        {
+            StartCoroutine(RefreshXanaTokenAPI());
+        }
+        else
+        {
+            ShowWelcomeScreen();
+        }
+    }
+
+    IEnumerator RefreshXanaTokenAPI()
+    {
+        string FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
+        UnityWebRequest www = UnityWebRequest.Post(FinalUrl, new Dictionary<string, string>
+        {
+            { "token", PlayerPrefs.GetString("LoginToken") }
+        });
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Token Refresh Error: {www.error}");
+        }
+        else
+        {
+            try
+            {
+                JObject jsonObj = JObject.Parse(www.downloadHandler.text);
+                bool isSuccess = jsonObj["success"].ToObject<bool>();
+                if (isSuccess)
+                {
+                    string token = jsonObj["data"]["token"].ToString();
+                    ConstantsGod.AUTH_TOKEN = token;
+                    ConstantsHolder.xanaToken = token;
+                    PlayerPrefs.SetString("LoginToken", token);
+                    PlayerPrefs.Save();
+
+                    AutoLogin();
+                }
+                else
+                {
+                    Debug.Log($"Token Refresh Error: {jsonObj["msg"]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Error parsing token refresh response: {ex.Message}");
+            }
+        }
+    }
+    void AutoLogin()
+    {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
@@ -149,11 +202,9 @@ public class UserLoginSignupManager : MonoBehaviour
             WalletAutoLogin();
             GetUserCoinsAfterLogin();
         }
-        else
-        {
-            ShowWelcomeScreen();
-        }
     }
+
+
 
     void GetUserCoinsAfterLogin()
     {

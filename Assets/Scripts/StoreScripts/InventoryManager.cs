@@ -59,6 +59,8 @@ public class InventoryManager : MonoBehaviour
     public Text TotalGameCoins;
 
     public List<StoreItemHolder> AllCategoriesData;
+    public StoreGenereatedObjDataHolder StoreGenereatedObjDataHolder; // Save the downloaded items name
+
 
     public List<ItemDetail> TotalBtnlist;
     public List<ItemDetail> CategorieslistHeads;
@@ -74,7 +76,6 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistSkinToneColor;
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
-    public StoreGenereatedObjDataHolder StoreGenereatedObjDataHolder;
 
 
     private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
@@ -663,6 +664,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         _ShopCartHandler.selectedItems.Clear();
+         StoreGenereatedObjDataHolder.AllObjsData.Clear();
 
         ResetDownloadCount();
 

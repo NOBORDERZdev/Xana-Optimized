@@ -39,6 +39,8 @@ public class ConstantsGod
     public static string UserPriorityRole = "Guest";
     public static List<string> UserRoles = new List<string>() { "Guest" };
 
+    public static string REFRESHXANATOKEN = "/auth/refresh-token";
+
     #region World Manager
 
     public static string GETENVIRONMENTSAPI = API + "xanaEvent/getEnvironments";
