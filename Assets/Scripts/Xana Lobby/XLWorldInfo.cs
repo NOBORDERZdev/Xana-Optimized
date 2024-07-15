@@ -28,6 +28,7 @@ public class XLWorldInfo : MonoBehaviour
     {
         DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
         imgVideo1x1.GetComponent<RawImage>().texture = null;
+        Debug.Log("Data Cleared At Xana Lobby");
     }
 
     // Update is called once per frame
