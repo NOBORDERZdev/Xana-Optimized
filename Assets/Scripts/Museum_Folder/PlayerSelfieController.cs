@@ -483,6 +483,7 @@ public class PlayerSelfieController : MonoBehaviour
         // GamePlayButtonEvents.inst.UpdateSelfieBtn(true);
         m_PlayerController.GetComponent<PlayerController>().gyroButton.SetActive(false);
         m_PlayerController.GetComponent<PlayerController>().gyroButton_Portait.SetActive(false);
+        Enable_DisableObjects.Instance.ButtontoUninteractable[1].interactable = true;
 
 #if UNITY_EDITOR
 
