@@ -60,6 +60,9 @@ public class MiniMapOnOff : MonoBehaviour
             PlayerPrefs.SetInt("minimap", 1);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
             ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+            if (XanaChatSystem.instance.chatDialogBox.activeSelf)
+                XanaChatSystem.instance.OpenCloseChatDialog();
         }
         OnEnable();
     }
