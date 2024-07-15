@@ -13,6 +13,7 @@ public class NFT_Holder_Manager : MonoBehaviour
     public bool worldPlayingVideos;
     [NonReorderable]
     public List<RatioRef> ratioReferences;
+    private List<Shader> usedShaders = new List<Shader>();
 
     [Space(10)]
     [Header("PDF Data Refrences")]
@@ -54,6 +55,7 @@ public class NFT_Holder_Manager : MonoBehaviour
         GC.Collect();
         Resources.UnloadUnusedAssets();
         Debug.Log("memory released here Toyota..");
+        usedShaders.Clear();
     }
 
     private void Start()
@@ -83,6 +85,8 @@ public class NFT_Holder_Manager : MonoBehaviour
         }
         // send Space_Entry_UniqueUsers_Mobile_App
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
+        usedShaders.Clear();
+        FindShadersInScene();
     }
 
     public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
@@ -118,8 +122,18 @@ public class NFT_Holder_Manager : MonoBehaviour
         currentRoom.EnableControlls();
         if (currentRoom != null) currentRoom = null;
     }
-    
+    private void FindShadersInScene()
+    {
+        Renderer[] renderers = FindObjectsOfType<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer.sharedMaterial != null)
+            {
+                usedShaders.Add(renderer.sharedMaterial.shader);
+            }
+        }
+    }
 
-  
+
 
 }
