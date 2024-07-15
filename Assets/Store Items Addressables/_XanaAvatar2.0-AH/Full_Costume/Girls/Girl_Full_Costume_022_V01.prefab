@@ -158,7 +158,7 @@ Transform:
   - {fileID: 4999498054952501928}
   - {fileID: 8540684530303869448}
   - {fileID: 890620015108083372}
-  m_Father: {fileID: 8209214283827964438}
+  m_Father: {fileID: 9116723243172935409}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947228510627025362
@@ -253,7 +253,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8209214283827964438}
+  m_Father: {fileID: 9116723243172935409}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &441357558986635900
@@ -1656,6 +1656,55 @@ Transform:
   m_Father: {fileID: 8369638073104317126}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6525020218935184907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9116723243172935409}
+  - component: {fileID: 1035574700729790882}
+  m_Layer: 0
+  m_Name: Girl_Full_Costume_022_V01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9116723243172935409
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525020218935184907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9190836030663511012}
+  - {fileID: 8184198620728831263}
+  m_Father: {fileID: 8209214283827964438}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1035574700729790882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525020218935184907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff36c30dcd9f68449d7b60103ed5d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyParts: {fileID: 0}
+  texture: {fileID: 2800000, guid: 9729ce1dd246d6449b841d3d2b3ad82f, type: 3}
+  variation_Texture: {fileID: 2800000, guid: 2e972775112880340bd905cc612ac309, type: 3}
 --- !u!1 &6555307569682888473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,7 +2357,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8209214283827964438}
-  - component: {fileID: 8531583067098025467}
   m_Layer: 0
   m_Name: Girl_Full_Costume_022_V01
   m_TagString: Untagged
@@ -2324,30 +2372,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8838081485816770732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.30026582, y: 0.563008, z: -0.45819467}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9190836030663511012}
-  - {fileID: 8184198620728831263}
+  - {fileID: 9116723243172935409}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8531583067098025467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8838081485816770732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ff36c30dcd9f68449d7b60103ed5d34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyParts: {fileID: 0}
-  texture: {fileID: 2800000, guid: 9729ce1dd246d6449b841d3d2b3ad82f, type: 3}
-  variation_Texture: {fileID: 2800000, guid: 2e972775112880340bd905cc612ac309, type: 3}
 --- !u!1 &8854006213695193762
 GameObject:
   m_ObjectHideFlags: 0
