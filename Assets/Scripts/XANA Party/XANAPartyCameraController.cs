@@ -15,7 +15,7 @@ public class XANAPartyCameraController : MonoBehaviour
     public OrientationType orientationType;
     [Space(5)]
     float _editorLookSpeed = 0.01f;
-    float _touchLookSpeed = 0.8f;
+    float _touchLookSpeed = 0.6f;
     [SerializeField]
     private CinemachineFreeLook cinemachine;
     private CinemachineFreeLook.Orbit[] originalOrbits;
