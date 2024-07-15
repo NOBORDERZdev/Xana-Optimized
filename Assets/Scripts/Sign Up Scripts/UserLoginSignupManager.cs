@@ -11,9 +11,8 @@ using UnityEngine.Networking;
 using System.Text;
 using UnityEngine.UI;
 using System.IO;
-using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-using SuperStar.Helpers;
+using Newtonsoft.Json.Linq;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -130,13 +129,72 @@ public class UserLoginSignupManager : MonoBehaviour
             return;
         }
 
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
+        {
+            StartCoroutine(RefreshXanaTokenAPI());
+        }
+        else
+        {
+            ShowWelcomeScreen();
+        }
+    }
+
+    IEnumerator RefreshXanaTokenAPI()
+    {
+        string _FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
+        UnityWebRequest www = UnityWebRequest.Post(_FinalUrl, new Dictionary<string, string>
+        {
+            { "token", PlayerPrefs.GetString("LoginToken") }
+        });
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Token Refresh Error: {www.error}");
+        }
+        else
+        {
+            try
+            {
+                JObject _JsonObj = JObject.Parse(www.downloadHandler.text);
+                bool _IsSuccess = _JsonObj["success"].ToObject<bool>();
+                if (_IsSuccess)
+                {
+                    string _Token = _JsonObj["data"]["token"].ToString();
+                    ConstantsGod.AUTH_TOKEN = _Token;
+                    ConstantsHolder.xanaToken = _Token;
+                    PlayerPrefs.SetString("LoginToken", _Token);
+                    PlayerPrefs.Save();
+
+                    AutoLogin();
+                }
+                else
+                {
+                    Debug.Log($"Token Refresh Error: {_JsonObj["msg"]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Error parsing token refresh response: {ex.Message}");
+            }
+        }
+    }
+    void AutoLogin()
+    {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
+            string _UserNameAndPassword = PlayerPrefs.GetString("UserNameAndPassword");
+            if (string.IsNullOrEmpty(_UserNameAndPassword))
+                return;
+
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+            LoginObj = LoginObj.CreateFromJSON(_UserNameAndPassword);
+            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, _UserNameAndPassword, (isSucess) =>
             {
                 //write if you want something on sucessfull login
+                // After Success Login Get the Coins Values
+                //GetUserCoinsAfterLogin();
             }));
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
@@ -145,10 +203,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
             WalletAutoLogin();
-        }
-        else
-        {
-            ShowWelcomeScreen();
+            //GetUserCoinsAfterLogin();
         }
     }
 
