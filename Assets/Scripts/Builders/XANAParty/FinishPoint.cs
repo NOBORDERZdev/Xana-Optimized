@@ -1,8 +1,10 @@
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using PhysicsCharacterController;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class FinishPoint : MonoBehaviour
 {
@@ -44,7 +46,8 @@ public class FinishPoint : MonoBehaviour
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
         penguinAnimator.SetBool("isGrounded", true);
         penguinAnimator.SetBool("isJump", false);
-        penguinAnimator.SetBool("Win", true);
+        //penguinAnimator.SetBool("Win", true);
+        StartCoroutine(DelayedWinAnimation(penguinAnimator, 0.01f));
         FinishRaceCollider.enabled = false;
         BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
@@ -53,6 +56,15 @@ public class FinishPoint : MonoBehaviour
         Hashtable _hash = new Hashtable();
         _hash.Add("IsReady", false);
         PhotonNetwork.LocalPlayer.SetCustomProperties(_hash);
+    }
+
+    IEnumerator DelayedWinAnimation(Animator animator, float delay)
+    {
+        while (!animator.GetBool("isGrounded"))
+        {
+            yield return new WaitForSeconds(delay); // Wait for the next frame
+        }
+        animator.SetBool("Win", true);
     }
 
     internal void FinishRace()

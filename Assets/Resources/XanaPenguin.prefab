@@ -92,7 +92,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 513
-  movementSpeed: 4.5
+  movementSpeed: 4.2
   crouchSpeedMultiplier: 0.248
   movementThrashold: 0
   dampSpeedUp: 0.2
@@ -106,7 +106,7 @@ MonoBehaviour:
   groundCheckerThrashold: 0.04
   slopeCheckerThrashold: 0.06
   stepCheckerThrashold: 0.07
-  maxClimbableSlopeAngle: 80
+  maxClimbableSlopeAngle: 89
   maxStepHeight: 0.3
   speedMultiplierOnAngle:
     serializedVersion: 2
@@ -138,7 +138,7 @@ MonoBehaviour:
   gravityMultiplier: 1.5
   gravityMultiplyerOnSlideChange: 2
   gravityMultiplierIfUnclimbableSlope: 30
-  lockOnSlope: 1
+  lockOnSlope: 0
   wallCheckerThrashold: 0.15
   hightWallCheckerChecker: 0.07
   jumpFromWallMultiplier: 31
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927154725259993610}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc0a9bbaa87b9b84dad7bee8d61c5bd3, type: 3}
   m_Name: 
@@ -2210,6 +2210,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: -2761037191480125781, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: -2512910251052849870, guid: a978384e6679b417586606780c9093c7, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -2266,10 +2270,22 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3641903908863267065, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3677499634617676399, guid: a978384e6679b417586606780c9093c7, type: 3}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_LODs.Array.data[0].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 605968031659433094}
+    - target: {fileID: 4742473837712756890, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_LODs.Array.data[1].renderers.Array.data[0].renderer
+      value: 
+      objectReference: {fileID: 605968031659433094}
     - target: {fileID: 5708609653210379446, guid: a978384e6679b417586606780c9093c7, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -2277,6 +2293,14 @@ PrefabInstance:
     - target: {fileID: 5708609653210379446, guid: a978384e6679b417586606780c9093c7, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5789886226085324683, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927889809738712805, guid: a978384e6679b417586606780c9093c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7915920373050198915, guid: a978384e6679b417586606780c9093c7, type: 3}
       propertyPath: m_Layer
@@ -2286,8 +2310,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4742473837712756890, guid: a978384e6679b417586606780c9093c7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a978384e6679b417586606780c9093c7, type: 3}
+--- !u!137 &605968031659433094 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -114626609523731141, guid: a978384e6679b417586606780c9093c7, type: 3}
+  m_PrefabInstance: {fileID: 8502821395473516989}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2007172366163313214 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7915920373050198915, guid: a978384e6679b417586606780c9093c7, type: 3}
