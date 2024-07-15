@@ -159,7 +159,7 @@ public class BackButtonHandler : MonoBehaviour
 
     private void PromptQuitGame()
     {
-        exitPanel.SetActive(true);
+       // exitPanel.SetActive(true);
     }
 
     public void ConfirmQuitDialog()
