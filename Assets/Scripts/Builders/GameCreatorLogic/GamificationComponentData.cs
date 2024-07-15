@@ -517,6 +517,15 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         }
     }
 
+    public void MovePlayersToNextGame()
+    {
+        var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
+        xanaPartyMulitplayer.ResetValuesOnCompleteRace();
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
+        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+    }
+
+    
     //[PunRPC]
     //public void ShowLeaderBoard()
     //{ 

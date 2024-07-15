@@ -64,6 +64,17 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         {
             ShowLeaderboard = false;
             PrintLeaderboard();
+            if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
+            {
+                GamePlayUIHandler.inst.MoveToLobbyBtn.SetActive(true);
+            }
+            else
+            {
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    Invoke(nameof(GamificationComponentData.instance.MovePlayersToNextGame), 10f);
+                }
+            }
         }
 
         //if (ShowLeaderboard)// && targetPlayer == PhotonNetwork.LocalPlayer)

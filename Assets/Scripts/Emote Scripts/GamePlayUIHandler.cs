@@ -51,6 +51,7 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject LeaderboardPanel;
     public GameObject PlayerLeaderboardStatsContainer;
     public GameObject PlayerLeaderboardStatsPrefab;
+    public GameObject MoveToLobbyBtn;
 
     private void Start()
     {
@@ -64,6 +65,7 @@ public class GamePlayUIHandler : MonoBehaviour
         if (_inst != this)
             _inst = this;
     }
+
     void ChangeOrientation()
     {
         ScreenOrientationManager._instance.ChangeOrientation_editor();
@@ -237,4 +239,12 @@ public class GamePlayUIHandler : MonoBehaviour
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
     }
+
+    #region Penpenz
+    public void MoveToLobbyBtnClick()
+    {
+        XANAPartyManager.Instance.GameIndex = 0;
+        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
+    }
+    #endregion
 }
