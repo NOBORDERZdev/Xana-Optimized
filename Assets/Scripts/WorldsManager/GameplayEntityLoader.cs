@@ -646,8 +646,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
-        XanaWorldController.SetActive(true);
         XanaPartyController.SetActive(false);
+        XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
@@ -1153,6 +1153,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
+        Debug.LogError("scene name to be active :- "+temp+"----"+ ConstantsHolder.xanaConstants.EnviornmentName);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (ConstantsHolder.xanaConstants.isBuilderScene)
