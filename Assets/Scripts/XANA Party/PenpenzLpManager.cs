@@ -186,10 +186,18 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
         // Print the sorted leaderboard
         Debug.Log("Leaderboard:");
+
+        GamePlayUIHandler.inst.MyRankText.text = MyRank.ToString();
+        GamePlayUIHandler.inst.MyPointsText.text = MyPoints.ToString();
         foreach (var playerInfo in playerInfoList)
         {
+            GameObject obj = Instantiate(GamePlayUIHandler.inst.PlayerLeaderboardStatsPrefab, GamePlayUIHandler.inst.PlayerLeaderboardStatsContainer.transform);
+            obj.GetComponent<PlayerLeaderboardStats>().PlayerRank.text = playerInfo.Rank.ToString();
+            obj.GetComponent<PlayerLeaderboardStats>().PlayerName.text = playerInfo.PlayerId;
+            obj.GetComponent<PlayerLeaderboardStats>().PlayerPoints.text = playerInfo.MyPoints.ToString();
             Debug.Log($"Player ID: {playerInfo.PlayerId}, Rank: {playerInfo.Rank}, LP: {playerInfo.MyPoints}");
         }
+        GamePlayUIHandler.inst.LeaderboardPanel.SetActive(true);
     }
 
     // Resets the game and player properties for a new game

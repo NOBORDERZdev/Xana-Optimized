@@ -46,10 +46,11 @@ public class GamePlayUIHandler : MonoBehaviour
     public string[] JJPortalPopupTextData;
 
     [Header ("Penpenz Leaderboard")]
-    public int MyRank = 0;
-    public int MyPoints = 0;
-    public GameObject playerLeaderboardStatsContainer;
-    public GameObject playerLeaderboardStatsPrefab;
+    public Text MyRankText;
+    public Text MyPointsText;
+    public GameObject LeaderboardPanel;
+    public GameObject PlayerLeaderboardStatsContainer;
+    public GameObject PlayerLeaderboardStatsPrefab;
 
     private void Start()
     {
