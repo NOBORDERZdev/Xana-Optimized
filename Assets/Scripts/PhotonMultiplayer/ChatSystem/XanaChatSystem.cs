@@ -99,7 +99,7 @@ public class XanaChatSystem : MonoBehaviour
     public void Start()
     {
 
-        InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        //InputFieldChat.onSubmit.AddListener(OnEnterSend);
 
         //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
@@ -265,6 +265,23 @@ public class XanaChatSystem : MonoBehaviour
             chatButton.GetComponent<Image>().enabled = false;
         }
     }
+    public void OpenCloseChatDialog(bool _state)
+    {
+        isChatOpen = _state;
+
+        if (isChatOpen)
+        {
+            chatDialogBox.SetActive(true);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            chatDialogBox.SetActive(false);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = false;
+        }
+    }
     public void OnEnterSend()
     {
         string removeBadWords = "";
@@ -272,7 +289,7 @@ public class XanaChatSystem : MonoBehaviour
         {
             removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
         }
-
+        Debug.LogError("removeBadWords_" + removeBadWords);
         if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
