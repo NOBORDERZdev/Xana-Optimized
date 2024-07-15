@@ -40,6 +40,7 @@ public class FinishPoint : MonoBehaviour
     void EnableCollider()
     {
         GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RequestRankUpdate", RpcTarget.MasterClient);
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().NeedToUpdateMyRank = true;
         //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdatePlayerRankAndLP();
         GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;

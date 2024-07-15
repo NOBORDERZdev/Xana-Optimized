@@ -44,6 +44,13 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
+
+    [Header ("Penpenz Leaderboard")]
+    public int MyRank = 0;
+    public int MyPoints = 0;
+    public GameObject playerLeaderboardStatsContainer;
+    public GameObject playerLeaderboardStatsPrefab;
+
     private void Start()
     {
         if (rotateOrientationLand)

@@ -5,6 +5,11 @@ using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PenpenzLpManager : MonoBehaviourPunCallbacks
 {
+    public int CurrentUpdatedRank = 0;
+    public bool NeedToUpdateMyRank = false;
+    public int MyRank = 0;
+    public int MyPoints = 0;
+    public bool ShowLeaderboard = false;
     // Initializes room properties for rank management
     //public void Initialize()
     //{
@@ -18,8 +23,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
-    
-    
+
+
 
     //public void UpdateLastRank()
     //{
@@ -39,17 +44,49 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
+        Debug.Log("Calling Current lastRank: ");
         if (propertiesThatChanged.ContainsKey("lastRank"))
         {
             // Handle the updated property
-            int updatedLastRank = (int)propertiesThatChanged["lastRank"];
-            Debug.Log("Updated lastRank: " + updatedLastRank);
+            CurrentUpdatedRank = (int)propertiesThatChanged["lastRank"];
+            Debug.Log("Updated lastRank: " + CurrentUpdatedRank);
+
+            if (NeedToUpdateMyRank)
+            {
+                AssignMyRank();
+                //UpdatePlayerRankAndLP();
+            }
         }
+    }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        if(changedProps.ContainsKey("MyRank") && changedProps.ContainsKey("MyPoints") && ShowLeaderboard)
+        {
+            ShowLeaderboard = false;
+            PrintLeaderboard();
+        }
+
+        //if (ShowLeaderboard)// && targetPlayer == PhotonNetwork.LocalPlayer)
+        //{
+        //    ShowLeaderboard = false;
+        //    PrintLeaderboard();
+        //}
     }
 
 
-
-
+    public void AssignMyRank()
+    {
+        if (NeedToUpdateMyRank)
+        {
+            NeedToUpdateMyRank = false;
+            MyRank = CurrentUpdatedRank;
+            MyPoints = CalculateLPFromRank(MyRank);
+            Debug.Log("MyRank" + MyRank);
+            var playerProps = new ExitGames.Client.Photon.Hashtable { { "MyRank", MyRank }, { "MyPoints", MyPoints } };
+            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProps);
+            Debug.Log($"Updated Rank to: {MyRank}, MyPoints to: {MyPoints}");
+        }
+    }
 
 
 
@@ -57,14 +94,14 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     // Assigns the next rank to the local player and updates room properties
     public int AssignNextRank()
     {
+        Debug.Log("Assigning next rank to player...enter");
         if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("lastRank", out object lastRankObj))
         {
             Debug.Log("Assigning next rank to player..." + (int)lastRankObj);
             int lastRank = (int)lastRankObj;
             int newRank = lastRank + 1;
 
-            var playerProps = new ExitGames.Client.Photon.Hashtable { { "Rank", newRank } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProps);
+            
 
             var roomProps = new ExitGames.Client.Photon.Hashtable { { "lastRank", newRank } };
             PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
@@ -79,33 +116,22 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         }
     }
 
-    //public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    //{
-    //    if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("lastRank", out object lastRankObj))
-    //    {
-    //        Debug.Log(">Room properties updated: lastRank = " + lastRankObj);
-    //    }
-    //    if(propertiesThatChanged.ContainsKey("lastRank"))
-    //    {
-    //        Debug.Log("Room properties updated: lastRank = " + propertiesThatChanged["lastRank"]);
-    //    }
-    //}
 
     // Updates the player's rank and LP based on the newly assigned rank
     public void UpdatePlayerRankAndLP()
     {
-        int rank = AssignNextRank();
-        if (rank == 0) return; // Early exit if rank assignment failed
+        //int rank = AssignNextRank();
+        //if (rank == 0) return; // Early exit if rank assignment failed
 
-        Player localPlayer = PhotonNetwork.LocalPlayer;
-        int lp = CalculateLPFromRank(rank);
+        //Player localPlayer = PhotonNetwork.LocalPlayer;
+        //MyPoints = CalculateLPFromRank(MyRank);
 
-        var playerProperties = new ExitGames.Client.Photon.Hashtable { { "LP", lp }, { "Rank", rank } };
-        localPlayer.SetCustomProperties(playerProperties);
+        //var playerProperties = new ExitGames.Client.Photon.Hashtable { { "MyPoints", MyPoints }, { "MyRank", MyRank } };
+        //localPlayer.SetCustomProperties(playerProperties);
 
-        UpdateRoomCustomPropertiesForRank(localPlayer.UserId, rank);
+        //UpdateRoomCustomPropertiesForRank(localPlayer.UserId, MyRank);
 
-        Debug.Log($"Updated Rank to: {rank}, LP to: {lp}");
+        Debug.Log($"Updated Rank to: {MyRank}, MyPoints to: {MyPoints}");
     }
 
     // Calculates LP based on the assigned rank
@@ -129,18 +155,18 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     }
 
     // Retrieves the player's LP and Rank from custom properties
-    public (int lp, int rank) GetPlayerLpAndRank()
-    {
-        Player localPlayer = PhotonNetwork.LocalPlayer;
+    //public (int lp, int rank) GetPlayerLpAndRank()
+    //{
+    //    Player localPlayer = PhotonNetwork.LocalPlayer;
 
-        int lp = localPlayer.CustomProperties.TryGetValue("LP", out object lpValue) ? (int)lpValue : 0;
-        int rank = localPlayer.CustomProperties.TryGetValue("Rank", out object rankValue) ? (int)rankValue : 0;
+    //    int lp = localPlayer.CustomProperties.TryGetValue("MyPoints", out object lpValue) ? (int)lpValue : 0;
+    //    int rank = localPlayer.CustomProperties.TryGetValue("MyRank", out object rankValue) ? (int)rankValue : 0;
 
-        // Print the LP and Rank to the console
-        Debug.Log($"Player LP: {lp}, Rank: {rank}");
+    //    // Print the LP and Rank to the console
+    //    Debug.Log($"Player LP: {lp}, Rank: {rank}");
 
-        return (lp, rank);
-    }
+    //    return (lp, rank);
+    //}
 
     //To print the leaderboard
     public void PrintLeaderboard()
@@ -152,8 +178,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         var playerInfoList = players.Select(player => new
         {
             PlayerId = player.UserId,
-            Rank = player.CustomProperties.TryGetValue("Rank", out object rankValue) ? (int)rankValue : int.MaxValue, // Use int.MaxValue for unranked players to sort them at the end
-            LP = player.CustomProperties.TryGetValue("LP", out object lpValue) ? (int)lpValue : 0
+            Rank = player.CustomProperties.TryGetValue("MyRank", out object rankValue) ? (int)rankValue : int.MaxValue, // Use int.MaxValue for unranked players to sort them at the end
+            MyPoints = player.CustomProperties.TryGetValue("MyPoints", out object myPointsValue) ? (int)myPointsValue : 0
         })
         .OrderBy(playerInfo => playerInfo.Rank) // Sort by rank
         .ToList();
@@ -162,7 +188,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         Debug.Log("Leaderboard:");
         foreach (var playerInfo in playerInfoList)
         {
-            Debug.Log($"Player ID: {playerInfo.PlayerId}, Rank: {playerInfo.Rank}, LP: {playerInfo.LP}");
+            Debug.Log($"Player ID: {playerInfo.PlayerId}, Rank: {playerInfo.Rank}, LP: {playerInfo.MyPoints}");
         }
     }
 
@@ -178,8 +204,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         {
             var playerProps = new ExitGames.Client.Photon.Hashtable
             {
-                { "LP", 0 }, // Reset LP to 0 or any default value
-                { "Rank", 0 } // Reset Rank to 0 or any default value
+                { "MyPoints", 0 }, // Reset LP to 0 or any default value
+                { "MyRank", 0 } // Reset Rank to 0 or any default value
             };
             player.SetCustomProperties(playerProps);
         }

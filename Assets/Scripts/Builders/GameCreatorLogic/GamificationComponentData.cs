@@ -497,27 +497,31 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
             XANAPartyManager.Instance.GameIndex++;
-            Invoke(nameof(ShowLeaderBoard),2);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
-                {
-                    XANAPartyManager.Instance.GameIndex = 0;
-                    this.GetComponent<PhotonView>().RPC(nameof(BackToLobby), RpcTarget.AllBuffered);
-                }
-                else
-                {
-                    xanaPartyMulitplayer.ResetValuesOnCompleteRace();
-                    XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
-                    xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
-                }
-            }
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ShowLeaderboard = true;
+            //ShowLeaderBoard();
+             //Invoke(nameof(ShowLeaderBoard),2);
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
+            //    {
+            //        XANAPartyManager.Instance.GameIndex = 0;
+            //        this.GetComponent<PhotonView>().RPC(nameof(BackToLobby), RpcTarget.AllBuffered);
+            //    }
+            //    else
+            //    {
+            //        xanaPartyMulitplayer.ResetValuesOnCompleteRace();
+            //        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
+            //        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
+            //    }
+            //}
         }
     }
 
-    void ShowLeaderBoard(){ 
-       XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
-    }
+    //[PunRPC]
+    //public void ShowLeaderBoard()
+    //{ 
+    //   XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
+    //}
 
     [PunRPC]
     public void BackToLobby()
