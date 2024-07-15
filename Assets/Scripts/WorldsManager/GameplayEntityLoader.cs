@@ -1153,7 +1153,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             temp = "Astroboy x Tottori Metaverse Museum";
         }
-        Debug.LogError("scene name to be active :- "+temp+"----"+ ConstantsHolder.xanaConstants.EnviornmentName);
         if (!string.IsNullOrEmpty(temp))
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(temp));
         else if (ConstantsHolder.xanaConstants.isBuilderScene)
