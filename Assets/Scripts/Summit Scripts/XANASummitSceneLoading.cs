@@ -23,6 +23,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     private void OnEnable()
     {
         BuilderEventManager.LoadNewScene += LoadingNewScene;
+        BuilderEventManager.LoadSceneByName += LoadingNewScene;
         BuilderEventManager.LoadSummitScene += LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
@@ -32,6 +33,7 @@ public class XANASummitSceneLoading : MonoBehaviour
     private void OnDisable()
     {
         BuilderEventManager.LoadNewScene -= LoadingNewScene;
+        BuilderEventManager.LoadSceneByName -= LoadingNewScene;
         BuilderEventManager.LoadSummitScene -= LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated -= SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit -= LoadingXANASummitOnBack;

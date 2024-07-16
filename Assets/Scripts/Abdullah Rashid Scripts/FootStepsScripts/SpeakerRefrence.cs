@@ -17,6 +17,10 @@ public class SpeakerRefrence : MonoBehaviour
         {
             RangeVolSpeaker.maxDistance = 3;
         }
+
+        if(!GetComponent<PhotonView>().IsMine)
+            Destroy(GetComponent<AudioListener>());
+
     }
 
     //public void MyspeakerSync2D()                  //Added by Ali Hamza

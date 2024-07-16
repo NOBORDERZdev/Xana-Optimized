@@ -646,8 +646,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             return;
         }
-        XanaWorldController.SetActive(true);
         XanaPartyController.SetActive(false);
+        XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
