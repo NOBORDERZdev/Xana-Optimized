@@ -33,7 +33,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     private void Awake()
     {
-        voiceNetwork = FindObjectOfType<PhotonVoiceNetwork>();
+       
         isInsideCAr = false;
       //  MutiplayerController.instance.OnEnteredRoom += OnPlayerEnteredRoom;
         PhotonNetwork.AddCallbackTarget(this);
@@ -82,6 +82,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
@@ -124,7 +126,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             else
             {
                 car.pasengerseatemty = false;
-                if (GetComponent<PhotonView>().IsMine)
+                if (view.IsMine)
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
@@ -143,6 +145,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    if (voiceNetwork == null ) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                 }
                 else
@@ -176,7 +180,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 {
                     car.showLove();
                 }
-                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
+
 
             }
         }
@@ -215,7 +219,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
-              
+                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+
+                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
+
             }
             else
             {
@@ -235,7 +242,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         else
         {
             car.pasengerseatemty = true;
-            if (GetComponent<PhotonView>().IsMine)
+            if (view.IsMine)
             {
 
                 ConstantsHolder.TempDiasableMultiPartPhoton = false;    
@@ -248,6 +255,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 PlayerCameraController.instance.DisableCameraRecenter();
+                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+             
 
             }
             else
@@ -266,7 +275,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         }
 
 
-        Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
+        
         yield return new WaitForSeconds(2);
         isInsideCAr = false;
     }
