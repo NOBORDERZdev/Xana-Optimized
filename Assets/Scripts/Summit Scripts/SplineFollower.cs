@@ -60,6 +60,8 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
     private void Start()
     {
+        newRot = onewheel.localEulerAngles + new Vector3(90, 0, 0);
+        currentRot = onewheel.localEulerAngles;
     }
     
 
