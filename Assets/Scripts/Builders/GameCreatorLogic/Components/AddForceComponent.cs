@@ -120,7 +120,7 @@ public class AddForceComponent : ItemComponent
             if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && _characterControllerNew == null)
                 _characterControllerNew = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<CharacterController>();
 
-            if (GamificationComponentData.instance.withMultiplayer)
+            if (GamificationComponentData.instance.withMultiplayer  && !_addForceComponentData.forceApplyOnAvatar)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, _runtimeItemID, _componentType);
             else
                 GamificationComponentData.instance.GetObjectwithoutRPC(_runtimeItemID, _componentType);
@@ -135,7 +135,7 @@ public class AddForceComponent : ItemComponent
         collideWithComponent = true;
         Invoke(nameof(CollideWithComponet), 0.5f);
         ApplyAddForce();
-        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
+        //ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.AddForce);
 
     }
 

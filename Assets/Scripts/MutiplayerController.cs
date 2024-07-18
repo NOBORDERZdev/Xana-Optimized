@@ -350,7 +350,7 @@ namespace Photon.Pun.Demo.PunBasics
         {
             if (targetPlayer == PhotonNetwork.LocalPlayer)
             {
-                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ReferencesForGamePlay.instance != null)
                 {
                     ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
                 }
