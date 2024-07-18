@@ -94,6 +94,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     {
         var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
         roomProperties[userId + "_Points"] = points;
+        roomProperties[userId + "_Name"] = PhotonNetwork.LocalPlayer.NickName;
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
     }
 
@@ -102,17 +103,24 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public void PrintLeaderboard()
     {
         var playerRanks = GetPlayerRanks();
-       
+        var playerNames = GetPlayerNames();
+
+
 
         GamePlayUIHandler.inst.MyRankText.text = MyRankInCurrentRace.ToString();
         GamePlayUIHandler.inst.MyPointsText.text = MyPointsInCurrentRace.ToString();
+
+        GameObject obj = Instantiate(GamePlayUIHandler.inst.PlayerLeaderboardStatsPrefab, GamePlayUIHandler.inst.PlayerLeaderboardStatsContainer.transform);
         foreach (var playerInfo in playerRanks)
         {
-            GameObject obj = Instantiate(GamePlayUIHandler.inst.PlayerLeaderboardStatsPrefab, GamePlayUIHandler.inst.PlayerLeaderboardStatsContainer.transform);
             obj.GetComponent<PlayerLeaderboardStats>().PlayerRank.text = playerInfo.rank.ToString();
-            obj.GetComponent<PlayerLeaderboardStats>().PlayerName.text = playerInfo.playerId;
+            //obj.GetComponent<PlayerLeaderboardStats>().PlayerName.text = playerInfo.playerId;
             obj.GetComponent<PlayerLeaderboardStats>().PlayerPoints.text = playerInfo.points.ToString();
             Debug.Log($"Player ID: {playerInfo.playerId}, Rank: {playerInfo.rank}, LP: {playerInfo.points}");
+        }
+        foreach(var playerNamesInfo in playerNames)
+        {
+            obj.GetComponent<PlayerLeaderboardStats>().PlayerName.text = playerNamesInfo.name;
         }
         GamePlayUIHandler.inst.LeaderboardPanel.SetActive(true);
 
@@ -165,6 +173,24 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         }
 
         return playerPoints;
+    }
+
+    private List<(string playerId, string name)> GetPlayerNames()
+    {
+        List<(string playerId, string name)> playerNames = new List<(string playerId, string name)>();
+        foreach(string pId in playerIDs)
+        {
+            if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(pId + "_Name", out object userName))
+            {
+                playerNames.Add((pId, (string)userName));
+            }
+            else
+            {
+                playerNames.Add((pId, "ABC")); // Default to 0 if no name is found
+            }
+        }
+
+        return playerNames;
     }
 
 
