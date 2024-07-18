@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using System.IO;
 using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
-using SuperStar.Helpers;
+using Newtonsoft.Json.Linq;
 
 public class UserLoginSignupManager : MonoBehaviour
 {
@@ -130,13 +130,93 @@ public class UserLoginSignupManager : MonoBehaviour
             return;
         }
 
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        //{
+        //    MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+        //    LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+        //    StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+        //    {
+        //        //write if you want something on sucessfull login
+        //    }));
+        //}
+        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
+        //{
+        //    ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.isWalletLogin = true;
+        //    WalletAutoLogin();
+        //}
+        //else
+        //{
+        //    ShowWelcomeScreen();
+        //}
+
+
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
+        {
+            StartCoroutine(RefreshXanaTokenAPI());
+        }
+        else
+        {
+            ShowWelcomeScreen();
+        }
+    }
+    IEnumerator RefreshXanaTokenAPI()
+    {
+        string _FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
+        UnityWebRequest www = UnityWebRequest.Post(_FinalUrl, new Dictionary<string, string>
+        {
+            { "token", PlayerPrefs.GetString("LoginToken") }
+        });
+
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Token Refresh Error: {www.error}");
+        }
+        else
+        {
+            try
+            {
+                JObject _JsonObj = JObject.Parse(www.downloadHandler.text);
+                bool _IsSuccess = _JsonObj["success"].ToObject<bool>();
+                if (_IsSuccess)
+                {
+                    string _Token = _JsonObj["data"]["token"].ToString();
+                    ConstantsGod.AUTH_TOKEN = _Token;
+                    ConstantsHolder.xanaToken = _Token;
+                    PlayerPrefs.SetString("LoginToken", _Token);
+                    PlayerPrefs.Save();
+
+                    AutoLogin();
+                }
+                else
+                {
+                    Debug.Log($"Token Refresh Error: {_JsonObj["msg"]}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Error parsing token refresh response: {ex.Message}");
+            }
+        }
+    }
+    void AutoLogin()
+    {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
+            string _UserNameAndPassword = PlayerPrefs.GetString("UserNameAndPassword");
+            if (string.IsNullOrEmpty(_UserNameAndPassword))
+                return;
+
             MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+            LoginObj = LoginObj.CreateFromJSON(_UserNameAndPassword);
+            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, _UserNameAndPassword, (isSucess) =>
             {
                 //write if you want something on sucessfull login
+                // After Success Login Get the Coins Values
+                //GetUserCoinsAfterLogin();
             }));
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
@@ -145,14 +225,9 @@ public class UserLoginSignupManager : MonoBehaviour
             ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
             WalletAutoLogin();
-        }
-        else
-        {
-            ShowWelcomeScreen();
+            //GetUserCoinsAfterLogin();
         }
     }
-
-
     #region SignUp Functions 
 
     public void ShowWelcomeScreen()
@@ -953,7 +1028,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetInt("FirstTime", 1);
-                        PlayerPrefs.SetInt("WalletLogin", 0);
+                        //PlayerPrefs.SetInt("WalletLogin", 0); // in Each case now we are login with Wallet
                         PlayerPrefs.SetString("PlayerName", NameofUser);
                         ConstantsHolder.userName = NameofUser;
                         ConstantsHolder.loggedIn = true;
@@ -1038,8 +1113,6 @@ public class UserLoginSignupManager : MonoBehaviour
         request.Dispose();
     }
 
-
-
     public void SubmitCredentialsForSignIn()
     {
         loginLoader.SetActive(true);
@@ -1117,7 +1190,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
                 PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                 PlayerPrefs.SetInt("shownWelcome", 1);
-                PlayerPrefs.SetInt("WalletLogin", 0);
+                //PlayerPrefs.SetInt("WalletLogin", 0); //  in Each case now we are login with Wallet
                 PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                 PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
                 PlayerPrefs.SetString("UserName", myObject1.data.user.id);
@@ -1193,7 +1266,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-
+   
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
