@@ -5,7 +5,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MultiplayerComponent : MonoBehaviour
 {
-   public string RunTimeItemID;
+    public string RunTimeItemID;
     string ItemID;
     ItemData itemData;
     IEnumerator Start()
@@ -67,6 +67,7 @@ public class MultiplayerComponent : MonoBehaviour
                 GameObject newObj = Instantiate(_async.Result as GameObject, this.transform);
                 newObj.transform.localPosition = Vector3.zero;
                 newObj.transform.localEulerAngles = Vector3.zero;
+                newObj.transform.localScale = itemData.Scale;
                 Component[] components = newObj.GetComponents<Component>();
                 for (int i = components.Length - 1; i >= 0; i--)
                 {
@@ -77,21 +78,22 @@ public class MultiplayerComponent : MonoBehaviour
                 }
             }
 
-          
+
 
             transform.SetParent(BMD.builderAssetsParent);
             XanaItem xanaItem = gameObject.AddComponent<XanaItem>();
             xanaItem.itemData = itemData;
             //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
             //    GamificationComponentData.instance.xanaItems.Add(xanaItem);
-            if  (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle)
+            if (itemData.addForceComponentData.isActive || itemData.translateComponentData.avatarTriggerToggle)
                 xanaItem.SetData(itemData);
             if (!GamificationComponentData.instance.multiplayerComponentsxanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.multiplayerComponentsxanaItems.Add(xanaItem);
             if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
                 GamificationComponentData.instance.xanaItems.Add(xanaItem);
 
-            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem)){
+            if (!GamificationComponentData.instance.MultiplayerComponentstoSet.Contains(xanaItem))
+            {
                 GamificationComponentData.instance.MultiplayerComponentstoSet.Add(xanaItem);
             }
 
