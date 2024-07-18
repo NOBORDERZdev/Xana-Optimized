@@ -243,8 +243,10 @@ public class GamePlayUIHandler : MonoBehaviour
     #region Penpenz
     public void MoveToLobbyBtnClick()
     {
-        XANAPartyManager.Instance.GameIndex = 0;
+        XANAPartyManager.Instance.GameIndex = 0; 
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
+        LeaderboardPanel.SetActive(false);
     }
     #endregion
 }

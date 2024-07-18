@@ -438,6 +438,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             //    PhotonNetwork.CurrentRoom.IsVisible = false;
             //    PhotonNetwork.CurrentRoom.IsOpen = false;
             //}
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SaveCurrentRoomPlayerIds();
             StartCoroutine(WaitForWorldLoadingAllPlayer());
         }
     }
@@ -517,8 +518,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         }
     }
 
-    public void MovePlayersToNextGame()
+    public IEnumerator MovePlayersToNextGame()
     {
+        yield return new WaitForSeconds(10f);
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
         xanaPartyMulitplayer.ResetValuesOnCompleteRace();
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();

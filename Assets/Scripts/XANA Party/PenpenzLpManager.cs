@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -10,6 +11,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public int MyRank = 0;
     public int MyPoints = 0;
     public bool ShowLeaderboard = false;
+    private List<string> playerIDs = new List<string>();
+    public bool IsPlayerIdsSaved = false;
     // Initializes room properties for rank management
     //public void Initialize()
     //{
@@ -23,6 +26,18 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     //    }
     //}
 
+    public void SaveCurrentRoomPlayerIds()
+    {
+        if (!IsPlayerIdsSaved)
+        {
+            playerIDs.Clear();
+            foreach (Player player in PhotonNetwork.PlayerList)
+            {
+                playerIDs.Add(player.UserId);
+            }
+            IsPlayerIdsSaved = true;
+        }
+    }
 
 
 
@@ -57,25 +72,20 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 //UpdatePlayerRankAndLP();
             }
         }
+        if(propertiesThatChanged.ContainsKey(PhotonNetwork.LocalPlayer.UserId+ "_Points") && ShowLeaderboard)
+        {
+            ShowLeaderboard = false;
+            Invoke(nameof(PrintLeaderboard), 3f);
+        }
+
     }
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if(changedProps.ContainsKey("MyRank") && changedProps.ContainsKey("MyPoints") && ShowLeaderboard)
-        {
-            ShowLeaderboard = false;
-            PrintLeaderboard();
-            if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
-            {
-                GamePlayUIHandler.inst.MoveToLobbyBtn.SetActive(true);
-            }
-            else
-            {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    Invoke(nameof(GamificationComponentData.instance.MovePlayersToNextGame), 10f);
-                }
-            }
-        }
+        //if(changedProps.ContainsKey("MyRank") && changedProps.ContainsKey("MyPoints") && ShowLeaderboard)
+        //{
+        //    ShowLeaderboard = false;
+        //    Invoke(nameof(PrintLeaderboard), 3f);
+        //}
 
         //if (ShowLeaderboard)// && targetPlayer == PhotonNetwork.LocalPlayer)
         //{
@@ -89,13 +99,16 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     {
         if (NeedToUpdateMyRank)
         {
+            Player localPlayer = PhotonNetwork.LocalPlayer;
             NeedToUpdateMyRank = false;
             MyRank = CurrentUpdatedRank;
-            MyPoints = CalculateLPFromRank(MyRank);
+            MyPoints += CalculateLPFromRank(MyRank);
             Debug.Log("MyRank" + MyRank);
             var playerProps = new ExitGames.Client.Photon.Hashtable { { "MyRank", MyRank }, { "MyPoints", MyPoints } };
-            PhotonNetwork.LocalPlayer.SetCustomProperties(playerProps);
+            localPlayer.SetCustomProperties(playerProps);
             Debug.Log($"Updated Rank to: {MyRank}, MyPoints to: {MyPoints}");
+
+            UpdateRoomCustomPropertiesForPoints(localPlayer.UserId, MyPoints);
         }
     }
 
@@ -125,6 +138,12 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             Debug.LogError("Failed to retrieve lastRank from room properties.");
             return 0; // Consider how to handle this error case in your game logic
         }
+    }
+    private void UpdateRoomCustomPropertiesForPoints(string userId, int points)
+    {
+        var roomProperties = PhotonNetwork.CurrentRoom.CustomProperties;
+        roomProperties[userId + "_Points"] = points;
+        PhotonNetwork.CurrentRoom.SetCustomProperties(roomProperties);
     }
 
 
@@ -209,7 +228,21 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             Debug.Log($"Player ID: {playerInfo.PlayerId}, Rank: {playerInfo.Rank}, LP: {playerInfo.MyPoints}");
         }
         GamePlayUIHandler.inst.LeaderboardPanel.SetActive(true);
+
+
+        if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
+        {
+            GamePlayUIHandler.inst.MoveToLobbyBtn.SetActive(true);
+        }
+        else
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+            }
+        }
     }
+
 
     // Resets the game and player properties for a new game
     public void ResetGame()
