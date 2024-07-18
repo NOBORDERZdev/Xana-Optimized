@@ -6,10 +6,8 @@ using System;
 using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
-using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using SuperStar.Helpers;
-using System.Security.Policy;
+
 
 public class WorldManager : MonoBehaviour
 {
