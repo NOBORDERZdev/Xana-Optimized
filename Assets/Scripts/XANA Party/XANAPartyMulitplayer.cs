@@ -21,6 +21,10 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     void DisbleAnimatedController()
     {
+        if (PhotonNetwork.IsMasterClient &&photonView.IsMine )
+        {
+            return;
+        }
         if (photonView != null && !photonView.IsMine) {
             this.GetComponentInChildren<AnimatedController>().enabled = false;
         }
@@ -105,6 +109,17 @@ public class XANAPartyMulitplayer : MonoBehaviour
         _XanaConstants.XanaPartyGameName = "";
         _XanaConstants.isBuilderScene = false;
         _XanaConstants.builderMapID = 0;
+    }
+
+
+    [PunRPC]
+    public void RequestRankUpdate()
+    {
+        // Only the MasterClient should handle the rank update
+        if (PhotonNetwork.IsMasterClient)
+        {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdateLastRank();
+        }
     }
 
 

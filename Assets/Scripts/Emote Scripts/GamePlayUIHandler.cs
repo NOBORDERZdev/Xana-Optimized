@@ -44,6 +44,15 @@ public class GamePlayUIHandler : MonoBehaviour
     public GameObject currentPortalObject;
     public TextMeshProUGUI JJPortalPopupText;
     public string[] JJPortalPopupTextData;
+
+    [Header ("Penpenz Leaderboard")]
+    public Text MyRankText;
+    public Text MyPointsText;
+    public GameObject LeaderboardPanel;
+    public GameObject PlayerLeaderboardStatsContainer;
+    public GameObject PlayerLeaderboardStatsPrefab;
+    public GameObject MoveToLobbyBtn;
+
     private void Start()
     {
         if (rotateOrientationLand)
@@ -56,6 +65,7 @@ public class GamePlayUIHandler : MonoBehaviour
         if (_inst != this)
             _inst = this;
     }
+
     void ChangeOrientation()
     {
         ScreenOrientationManager._instance.ChangeOrientation_editor();
@@ -229,4 +239,14 @@ public class GamePlayUIHandler : MonoBehaviour
         currentPortalObject = obj;
         JJPortalPopup.SetActive(true);
     }
+
+    #region Penpenz
+    public void MoveToLobbyBtnClick()
+    {
+        XANAPartyManager.Instance.GameIndex = 0; 
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
+        StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
+        LeaderboardPanel.SetActive(false);
+    }
+    #endregion
 }
