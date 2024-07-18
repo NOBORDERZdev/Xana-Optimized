@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
     public MoodManager moodManager;
     public UserAnimationPostFeature userAnimationPostFeature;
     public Transform FriendsHomeManager;
+    [Space(5)]
+    public ClassAPIResponse rootObject;
+
     private void Awake()
     {
         if (Instance == null)
@@ -256,7 +259,7 @@ public class GameManager : MonoBehaviour
         string token = ConstantsGod.AUTH_TOKEN;
 
         StringBuilder api = new StringBuilder();
-        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50);
+        api.Append(ConstantsGod.API_BASEURL + "/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  150);
         //string api = "https://api-test.xana.net/classCode/get-all-class-codes" + "/" +/* Page Size */ 1 + "/" +/* Record Size  */  50;
        
         Debug.Log("<color=red> ClassCode -- API : " + api + "</color>");
@@ -279,7 +282,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("<color=green> ClassCode -- OldMessages : " + www.downloadHandler.text + "</color>");
             string jsonString = www.downloadHandler.text;
             //ClassAPIResponse response = JsonUtility.FromJson<ClassAPIResponse>(www.downloadHandler.text);
-            ClassAPIResponse rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
+            rootObject = new ClassAPIResponse();
+            rootObject = JsonConvert.DeserializeObject<ClassAPIResponse>(jsonString);
 
 
             if (rootObject.success)
@@ -309,18 +313,20 @@ public class GameManager : MonoBehaviour
     }
 }
 
-
+[Serializable]
 public class ClassAPIResponse
 {
     public bool success;
     public DataContain data;
     //public string msg;
 }
+[Serializable]
 public class DataContain
 {
     public int count;
     public List<ClassCode> rows;
 }
+[Serializable]
 public class ClassCode
 {
     public int id;
