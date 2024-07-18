@@ -169,7 +169,11 @@ public class UserLoginSignupManager : MonoBehaviour
             { "token", PlayerPrefs.GetString("LoginToken") }
         });
 
-        yield return www.SendWebRequest();
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -1653,7 +1657,7 @@ public class UserLoginSignupManager : MonoBehaviour
         //[Waqas] Reset Guest Username After Delete All
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+        //UserPassManager.Instance.testing = false; // Forces Enabled
         if (FeedUIController.Instance.SNSSettingController != null)
         {
             FeedUIController.Instance.SNSSettingController.LogoutSuccess();

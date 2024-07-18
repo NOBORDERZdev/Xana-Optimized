@@ -1254,7 +1254,7 @@ public class UserRegisterationManager : MonoBehaviour
 
 
         PlayerPrefs.Save();
-        UserPassManager.Instance.testing = false;
+        //UserPassManager.Instance.testing = false; // Forces Enabled
         yield return StartCoroutine(WaitAndLogout());
         yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
@@ -3433,10 +3433,10 @@ public class UserRegisterationManager : MonoBehaviour
                     {
                         UserPassManager.Instance.testing = true;
                     }
-                    else
-                    {
-                        UserPassManager.Instance.testing = false;
-                    }
+                    //else  // Forces Enabled
+                    //{
+                    //    UserPassManager.Instance.testing = false;
+                    //}
                     if (PlayerPrefs.GetString("LoginTokenxanalia") != "" && XanaliaBool)
                     {
                         WalletConnectDataClasses.NFTListMainNet NFTCreateJsonMain = new WalletConnectDataClasses.NFTListMainNet();
