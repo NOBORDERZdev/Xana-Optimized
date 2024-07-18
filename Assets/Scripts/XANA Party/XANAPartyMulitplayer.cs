@@ -23,7 +23,6 @@ public class XANAPartyMulitplayer : MonoBehaviour
     {
         if (PhotonNetwork.IsMasterClient &&photonView.IsMine )
         {
-            //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().Initialize();
             return;
         }
         if (photonView != null && !photonView.IsMine) {

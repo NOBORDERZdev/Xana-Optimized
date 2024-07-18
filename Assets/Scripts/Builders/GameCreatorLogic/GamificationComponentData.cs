@@ -499,22 +499,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         {
             XANAPartyManager.Instance.GameIndex++;
             XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ShowLeaderboard = true;
-            //ShowLeaderBoard();
-             //Invoke(nameof(ShowLeaderBoard),2);
-            //if (PhotonNetwork.IsMasterClient)
-            //{
-            //    if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
-            //    {
-            //        XANAPartyManager.Instance.GameIndex = 0;
-            //        this.GetComponent<PhotonView>().RPC(nameof(BackToLobby), RpcTarget.AllBuffered);
-            //    }
-            //    else
-            //    {
-            //        xanaPartyMulitplayer.ResetValuesOnCompleteRace();
-            //        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
-            //        xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
-            //    }
-            //}
         }
     }
 
@@ -529,12 +513,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     }
 
     
-    //[PunRPC]
-    //public void ShowLeaderBoard()
-    //{ 
-    //   XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
-    //}
-
     [PunRPC]
     public void BackToLobby()
     {
