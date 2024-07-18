@@ -119,7 +119,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
         // Only the MasterClient should handle the rank update
         if (PhotonNetwork.IsMasterClient)
         {
-            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().AssignNextRank();
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdateLastRank();
         }
     }
 
