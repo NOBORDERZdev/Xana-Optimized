@@ -10,7 +10,9 @@ using UnityEngine.Events;
 public class StreamYoutubeVideo : MonoBehaviour
 {
     public string streamAbleUrl;
-    private string oldUrl;
+    public string oldUrl;
+    public GameObject LiveVideoUIRef;
+    public SummitDomeNFTDataController SumitDomeNftCntrlrRef;
     public MediaPlayer mediaPlayer;
     public VideoPlayer videoPlayer;
     public UnityEvent liveVideoPlay;
@@ -31,6 +33,13 @@ public class StreamYoutubeVideo : MonoBehaviour
         else if (!isLive)
         {
             PlayPrerecordedVideo();
+        }
+        else
+        {
+            if (SumitDomeNftCntrlrRef)
+            {
+                SumitDomeNftCntrlrRef.TurnOfLdrOnPlayLiveVideo();
+            }
         }
     }
 

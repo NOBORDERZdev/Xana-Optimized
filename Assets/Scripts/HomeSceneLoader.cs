@@ -58,6 +58,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public void LoadMain(bool changeOritentationChange)
     {
+
+        GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)

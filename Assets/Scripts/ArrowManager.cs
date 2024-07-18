@@ -61,65 +61,44 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     }
     void Start()
     {
-
-        //if (ConstantsHolder.xanaConstants.userName == 1)
-        //{
-        //    PhotonUserName.enabled = true;
-        //}
-        //else {
-
-        //    PhotonUserName.enabled = false;
-        //}
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
-        if (XanaChatSystem.instance.UserName.Length > 12)
+        try
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            if (XanaChatSystem.instance.UserName.Length > 12)
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+            }
+            else
+            {
+                PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            }
         }
-        else
+        catch(Exception e)
         {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+            PhotonNetwork.NickName = ConstantsHolder.userName;
         }
-
+       
         arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
         playerMat = Resources.Load<Material>("Material #25");
-        mainPlayerParent = AvatarSpawnerOnDisconnect.Instance.spawnPoint.transform;
-        print("nick name 3 4==" + XanaChatSystem.instance.UserName);
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
                 GamificationComponentData.instance.nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
             if (AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer == null)
             {
-                this.transform.parent = mainPlayerParent;
-                this.transform.localPosition = new Vector3(0, -0.081f, 0);
-                this.transform.localEulerAngles = new Vector3(0, 0, 0);
                 AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = this.gameObject;
-                print("nick name 3==" + XanaChatSystem.instance.UserName);
                 PhotonUserName.text = PhotonNetwork.NickName;
 
-                //if ((!string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.ReactionThumb)))
-                //    && !PlayerPrefs.GetString(ConstantsGod.ReactionThumb).Equals(ConstantsGod.ReactionThumb))
-                //{
-                //    //StartCoroutine(LoadSpriteEnv(PlayerPrefs.GetString(ConstantsGod.ReactionThumb),reactionUi));
-                //    sendDataReactionUrl(PlayerPrefs.GetString(ConstantsGod.ReactionThumb));
-                //}
-
-
-
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
-                //AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<EmoteAnimationHandler>().animatorremote = this.GetComponent<Animator>();
-                AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
-
-                AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                if(!ConstantsHolder.isPenguin)
+                {
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().animator = this.GetComponent<Animator>();
+                    AvatarSpawnerOnDisconnect.Instance.spawnPoint.GetComponent<PlayerController>().playerRig = GetComponent<FirstPersonJump>().jumpRig;
+                    AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+                }
             }
         }
         StartCoroutine(WaitForArrowIntanstiate(this.transform, !this.GetComponent<PhotonView>().IsMine));
-        Debug.Log("call arrow");
-        //GameObject myobj = GameObject.FindGameObjectWithTag("PhotonLocalPlayer");
-        //Debug.Log("Arrow manager for is mine " + myobj.GetComponent<PhotonView>().IsMine + "view id object==" + myobj.GetComponent<PhotonView>().ViewID);
-        //myobj.GetComponent<RPCCallforBufferPlayers>().sendData();
-
         try
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.GetComponent<IKMuseum>().Initialize();
@@ -137,13 +116,11 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (VoiceView.IsSpeaking)
             {
-                //Debug.Log("Speaker in use true");
                 VoiceImage.gameObject.SetActive(true);
                 IsSpeak = true;
             }
             else
             {
-                // Debug.Log("Speaker in use false");
                 VoiceImage.gameObject.SetActive(false);
                 IsSpeak = false;
             }
@@ -183,42 +160,22 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     private void OnChangeReactionIcon(string url)
     {
-
-        Debug.Log($"sendDataReactionUrl {url}");
-        if ((!string.IsNullOrEmpty(url))
-                  /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
+        if ((!string.IsNullOrEmpty(url)))
         {
-
-            //sendDataReactionUrl(url);
-
             gameObject.GetComponent<PhotonView>().RPC("sendDataReactionUrl", RpcTarget.All, url, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
         }
     }
     private void OnChangeUsernameToggle(int userNameToggleConstant)
     {
-
-
-        //sendDataReactionUrl(url);
-
         gameObject.GetComponent<PhotonView>().RPC("sendDataUserNAmeToggle", RpcTarget.All, userNameToggleConstant, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
-
-
     }
     private void OnChangeText(string text)
     {
-        Debug.Log($"sendDatatext {text}");
-
-        if (!string.IsNullOrEmpty(text)
-                 )
+        if (!string.IsNullOrEmpty(text))
         {
-            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.All, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.Others, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
             text = string.Empty;
         }
-        //if ((!string.IsNullOrEmpty(text))
-        //          /*  && !PlayerPrefs.GetString(url).Equals(url)*/)
-        //{
-        //    sendDataReactionUrl(text);
-        //}
     }
 
     IEnumerator LoadSpriteEnv(string ImageUrl, int id)
@@ -230,8 +187,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if (gameObject.GetComponent<PhotonView>().ViewID == id)
             {
-
-                Debug.Log("photon objects reaction====" + ImageUrl);
                 using (WWW www = new WWW(ImageUrl))
                 {
 
@@ -378,6 +333,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void sendDataChatMsg(string chat, int viewId)
     {
+        Debug.LogError("RPC chat :- "+chat+"--"+viewId);
         PlayerPrefs.SetString(ConstantsGod.ReactionThumb, "");
         reactionUi.SetActive(false);
         if (chatco != null)
@@ -425,14 +381,6 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
     public void InstantiateArrow(Transform parent, bool isOtherPlayer)
     {
-        if (XanaChatSystem.instance.UserName.Length > 12)
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
-        }
-        else
-        {
-            PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
-        }
 
         GameObject go = Instantiate(arrow, parent);
         go.layer = 17;
@@ -458,9 +406,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         else
         {
 
-            go.transform.localPosition = new Vector3(-0.74f, 0.1f, -26f);
+            go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f); // Vector3(-0.74f, 0.1f, -26f);
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-            go.transform.localScale = new Vector3(6.0f, 5.25f, 1);
+            go.transform.localScale = new Vector3(4.0f, 3.8f, 1); //Old Values [Vector3(6.0f, 5.25f, 1);]
 
             //EmoteAnimationHandler.Instance.controller = (AnimatorController)EmoteAnimationHandler.Instance.animator.runtimeAnimatorController;
             //// var state = controller.layers[0].stateMachine.defaultState;

@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4008359237381090533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2991402456127330883}
+  - component: {fileID: 1960084290801234524}
+  - component: {fileID: 2629470179826676854}
+  m_Layer: 0
+  m_Name: PerformerAvatarHndObj
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 119
+  m_IsActive: 1
+--- !u!4 &2991402456127330883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008359237381090533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 14}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5558852467004903915}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960084290801234524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008359237381090533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b073d5ec65346a640ac928e9f88b7cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AreaID: 6
+  AvatarID: 0
+  AIAvatarPrefabs:
+  - {fileID: 5958298307327268428, guid: 9603519ca337723458c79e857f7779a8, type: 3}
+  - {fileID: 4894719807666117210, guid: 0ab61f970144d8443b71b12c1ce22c71, type: 3}
+  SpawnPoint: {fileID: 5558852467004903915}
+  CurrentAIPerformerRef: {fileID: 0}
+  AvatarData:
+    Success: 0
+    performerAvatar:
+      id: 0
+      areaId: 0
+      index: 0
+      gender: 
+      clothingJson:
+        id: 
+        name: 
+        thumbnail: 
+        gender: 
+        avatarType: OldAvatar
+        myItemObj: []
+        ai_gender: 
+        hair_color: {r: 0, g: 0, b: 0, a: 0}
+        skin_color: 
+        lip_color: {r: 0, g: 0, b: 0, a: 0}
+        faceItemData: 0
+        lipItemData: 0
+        noseItemData: 0
+        hairItemData: 
+        eyeItemData: 
+        eyeShapeItemData: 0
+        charactertypeAi: 0
+        SavedBones: []
+        SkinId: 0
+        Skin: {r: 0, g: 0, b: 0, a: 0}
+        LipColor: {r: 0, g: 0, b: 0, a: 0}
+        HairColor: {r: 0, g: 0, b: 0, a: 0}
+        EyebrowColor: {r: 0, g: 0, b: 0, a: 0}
+        EyeColor: {r: 0, g: 0, b: 0, a: 0}
+        isSkinColorChanged: 0
+        isLipColorChanged: 0
+        HairColorPaletteValue: 0
+        BodyFat: 0
+        FaceValue: 0
+        NoseValue: 0
+        EyeValue: 0
+        EyesColorValue: 0
+        EyesColorPaletteValue: 0
+        EyeBrowValue: 0
+        EyeBrowColorPaletteValue: 0
+        EyeLashesValue: 0
+        MakeupValue: 0
+        LipsValue: 0
+        LipsColorValue: 0
+        LipsColorPaletteValue: 0
+        faceMorphed: 0
+        eyeBrowMorphed: 0
+        eyeMorphed: 0
+        noseMorphed: 0
+        lipMorphed: 0
+        PresetValue: 
+        eyeTextureName: 
+        eyeLashesName: 
+        makeupName: 
+        SssIntensity: 0
+        SkinGerdientColor: {r: 0, g: 0, b: 0, a: 0}
+        eyebrrowTexture: 
+        mustacheTextureName: 
+        faceTattooTextureName: 
+        chestTattooTextureName: 
+        legsTattooTextureName: 
+        armTattooTextureName: 
+        eyeLidTextureName: 
+        FaceBlendsShapes: []
+        stamina: 0
+        speed: 0
+        profile: 
+        defence: 0
+        special_move: 0
+        punch: 0
+        kick: 0
+      animations: []
+      areaName: 
+    msg: 
+  IsAIDataFetched: 0
+  IsPlayerTriggered: 0
+--- !u!135 &2629470179826676854
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4008359237381090533}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 54
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6884937686945825653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5558852467004903915}
+  m_Layer: 0
+  m_Name: AISpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 119
+  m_IsActive: 1
+--- !u!4 &5558852467004903915
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6884937686945825653}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 2.43, z: 17.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2991402456127330883}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}

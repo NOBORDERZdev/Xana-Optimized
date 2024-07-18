@@ -72,9 +72,9 @@ public class GameManager : MonoBehaviour
         {
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
-        QuestDataHandler.Instance.CheckForTaskCDomplete();
-
     }
+
+    
     
     public void HomeCameraInputHandler(bool flag)
     {
@@ -159,6 +159,11 @@ public class GameManager : MonoBehaviour
             //PlayerPrefs.SetInt("QualitySettings", index);
             QualitySettings.SetQualityLevel(4);
             QualitySettings.renderPipeline = _homeScreenURPAsset;
+        }
+
+        if (QuestDataHandler.Instance) // If Null then find object
+        {
+            QuestDataHandler.Instance.CheckForTaskCDomplete();
         }
     }
     IEnumerator WaitForInstancefromWorld()
@@ -253,7 +258,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeCharacterAnimationState(bool l_State)
     {    
-        m_CharacterAnimator.SetBool("Idle", l_State);
+        m_CharacterAnimator.SetBool("IdleMenu", l_State);
     }
     public void ResetCharacterAnimationController()
     {

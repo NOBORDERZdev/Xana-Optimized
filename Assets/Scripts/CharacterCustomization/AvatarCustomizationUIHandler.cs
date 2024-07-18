@@ -235,7 +235,7 @@ public class AvatarCustomizationUIHandler : MonoBehaviour
     {
         AvatarCustomizationManager.Instance.ResetCharacterRotation(180f);
         AvatarCustomizationManager.Instance.m_IsCharacterRotating = true;
-        gameManager.ChangeCharacterAnimationState(false);
+        gameManager.ChangeCharacterAnimationState(true);
         ZoomOutCamera();
     }
     #endregion

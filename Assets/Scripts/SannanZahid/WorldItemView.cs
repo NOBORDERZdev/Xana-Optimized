@@ -77,7 +77,7 @@ public class WorldItemView : EnhancedScrollerCellView
         worldTags = detail.WorldTags;
         Creator_Name = detail.Creator_Name;
         CreatorAvatarURL = detail.CreatorAvatarURL;
-        CreatorDescription = detail.CreatorDescription;
+        CreatorDescription = SNS_APIManager.DecodedString(detail.CreatorDescription);
         worldVisitCount = detail.WorldVisitCount;
         isFavourite = detail.isFavourite;
         if (creatorNameText)
@@ -373,7 +373,6 @@ public class WorldItemView : EnhancedScrollerCellView
         ConstantsHolder.xanaConstants.builderMapID = int.Parse(idOfObject);
         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-        MutiplayerController.sceneName = m_EnvName;
 
         //if (m_EnvironmentName.Contains("XANA Lobby"))
         //{
@@ -394,11 +393,11 @@ public class WorldItemView : EnhancedScrollerCellView
             WorldDescriptionPopupPreview.m_MuseumIsClicked = true;
         if (m_EnvironmentName == "Xana Festival")
         {
-            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(userLimit) /*- 1*/).ToString();
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         else
         {
-            ConstantsHolder.xanaConstants.userLimit = userLimit;
+            ConstantsHolder.userLimit = int.Parse(userLimit);
         }
         if (m_EnvironmentName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail.ToString());
