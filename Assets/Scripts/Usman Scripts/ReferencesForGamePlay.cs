@@ -460,7 +460,7 @@ public class ReferencesForGamePlay : MonoBehaviour
  
     public void CheckActivePlayerInCurrentLevel()
     {
-        if (GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
+        if (GameplayEntityLoader.instance.PenguinPlayer != null && GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
         {
             foreach (Player player in PhotonNetwork.PlayerList)
             {

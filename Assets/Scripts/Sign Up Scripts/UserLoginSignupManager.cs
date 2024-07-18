@@ -180,7 +180,8 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.loggedIn)
         {
             Debug.Log("Already Login Dont Call API");
-            InventoryManager.instance.SetDefaultValues();
+            if(InventoryManager.instance)
+                InventoryManager.instance.SetDefaultValues();
             return;
         }
         Debug.Log("Auto Login");
@@ -197,9 +198,13 @@ public class UserLoginSignupManager : MonoBehaviour
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-           ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
-            InventoryManager.instance.WalletLoggedinCall();
+            if (InventoryManager.instance != null)
+            {
+              InventoryManager.instance.WalletLoggedinCall();
+            }
+           
             WalletAutoLogin();
         }
         else
