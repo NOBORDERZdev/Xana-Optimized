@@ -46,6 +46,9 @@ public class MiniMapOnOff : MonoBehaviour
             PlayerPrefs.SetInt("minimap", 0);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
             ReferencesForGamePlay.instance.SumitMapStatus(false);
+
+            if (XanaChatSystem.instance.chatButton.GetComponent<UnityEngine.UI.Image>().enabled)
+                XanaChatSystem.instance.chatDialogBox.SetActive(true);
         }
         else
         {
@@ -60,6 +63,8 @@ public class MiniMapOnOff : MonoBehaviour
             PlayerPrefs.SetInt("minimap", 1);
             ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
             ReferencesForGamePlay.instance.SumitMapStatus(true);
+
+            XanaChatSystem.instance.chatDialogBox.SetActive(false);
         }
         OnEnable();
     }
