@@ -17,9 +17,12 @@ public class UserDailyRewardHandler : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _rewardedAmountText;
 
+    //[SerializeField]
+    //private int _myUserId = 0;
+
     private SocketManager _socketManager;
-    private int _myUserId = 0;
     private bool _hasToShowDailyPopup = false;
+
 
     private string SocketUrl
     {
@@ -53,6 +56,10 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private IEnumerator Start()
     {
+        while (ConstantsHolder.userId == null)
+        {
+            yield return new WaitForSeconds(1f);
+        }
 
         if (SocketUrl != null)
         {
@@ -61,12 +68,6 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         }
-
-        while (ConstantsHolder.userId == null)
-            yield return new WaitForSeconds(0.5f);
-
-        _myUserId = int.Parse(ConstantsHolder.userId);
-        //Debug.LogError("Daily Reward User Id : " + _myUserId);
     }
 
     private void OnDisable()
@@ -86,7 +87,7 @@ public class UserDailyRewardHandler : MonoBehaviour
 
     private void OnSocketError(CustomError args)
     {
-        Debug.Log("<color=red>Daily Reward Socket Error : " + args + "</color>");
+        Debug.LogError("<color=red>Daily Reward Socket Error : " + args + "</color>");
     }
 
     private void OnSocketDisconnect(CustomError args)
@@ -95,11 +96,14 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void DailyRewardResponse(string resp)
     {
-        //Debug.LogError("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("<color=green>Daily Reward ConstantsHolder.userId received : " + ConstantsHolder.userId + "</color>");
+
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
 
-        if (data.userId == _myUserId)
+        if (data.userId == int.Parse(ConstantsHolder.userId))
         {
+            //Debug.Log("Daily Reward Daily Reward Response Id matched : " + resp);
             _rewardedAmountText.text = data.coin.ToString();
             if (SceneManager.GetActiveScene().name == "Home")
             {

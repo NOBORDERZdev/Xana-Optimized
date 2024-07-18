@@ -628,7 +628,7 @@ namespace PhysicsCharacterController
                 rigidbody.velocity += Vector3.up * jumpVelocity;
                 isJumping = true;
                 canJumpNow = false;
-                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
+                //new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
             }
             //jumped from wall
             else if (jump && canJumpNow && !isGrounded && isTouchingWall)
@@ -638,7 +638,7 @@ namespace PhysicsCharacterController
 
 
                 canJumpNow = false;
-                new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
+                //new Delayed.Action(() => { canJumpNow = true; }, PhyJumpTimeout);
                 targetAngle = Mathf.Atan2(wallNormal.x, wallNormal.z) * Mathf.Rad2Deg;
 
                 forward = wallNormal;

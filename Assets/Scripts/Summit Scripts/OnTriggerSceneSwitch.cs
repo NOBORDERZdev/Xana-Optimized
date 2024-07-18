@@ -6,6 +6,8 @@ using UnityEngine;
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
     public int domeId;
+    [Tooltip("This only require when dome id is set to -1")]
+    public string sceneName;
 
     public TMPro.TextMeshPro textMeshPro;
     private void OnTriggerEnter(Collider other)
@@ -16,10 +18,12 @@ public class OnTriggerSceneSwitch : MonoBehaviour
             {
                 if (ConstantsHolder.MultiSectionPhoton)
                 {
-                   ConstantsHolder.DiasableMultiPartPhoton = true;
+                    ConstantsHolder.DiasableMultiPartPhoton = true;
                 }
-
-                TriggerSceneLoading();
+                if (domeId == -1 && !string.IsNullOrEmpty(sceneName))
+                    TriggerSceneLoading(sceneName);
+                else
+                    TriggerSceneLoading();
             }
         }
     }
@@ -28,6 +32,11 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     {
         GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
         ConstantsHolder.domeId = domeId;
-        BuilderEventManager.LoadNewScene?.Invoke(domeId,transform.GetChild(0).transform.position);
+        BuilderEventManager.LoadNewScene?.Invoke(domeId, transform.GetChild(0).transform.position);
+    }
+
+    void TriggerSceneLoading(string sceneName)
+    {
+        BuilderEventManager.LoadSceneByName?.Invoke(sceneName, transform.GetChild(0).transform.position);
     }
 }

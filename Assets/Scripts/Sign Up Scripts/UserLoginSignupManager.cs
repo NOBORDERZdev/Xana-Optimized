@@ -206,18 +206,13 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
         {
-            string _UserNameAndPassword = PlayerPrefs.GetString("UserNameAndPassword");
-            if (string.IsNullOrEmpty(_UserNameAndPassword))
-                return;
-
-            MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            LoginObj = LoginObj.CreateFromJSON(_UserNameAndPassword);
-            StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, _UserNameAndPassword, (isSucess) =>
-            {
-                //write if you want something on sucessfull login
-                // After Success Login Get the Coins Values
-                //GetUserCoinsAfterLogin();
-            }));
+            //Debug.LogError("Email login .... ");
+            //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+            //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+            //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+            //{
+            //    //write if you want something on sucessfull login
+            //}));
         }
         else if (PlayerPrefs.GetInt("WalletLogin") == 1)
         {
@@ -1173,7 +1168,6 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 if (!ConstantsHolder.loggedIn)
                 {
-                    Debug.Log("Email Login");
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Email_Success.ToString());
                 }
 
