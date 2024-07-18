@@ -157,7 +157,7 @@ public class XanaWorldDownloader : MonoBehaviour
                     {
                         preLoadObjects.Add(temp);
                     }
-                    if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
+                    else if (xanaSceneData.SceneObjects[i].priority == Priority.Low)
                     {
                         postLoadObjects.Add(temp);
                     }
