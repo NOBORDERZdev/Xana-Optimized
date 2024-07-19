@@ -80,7 +80,7 @@ namespace Photon.Pun.Demo.PunBasics
         [Space]
         [Header("PhotonSectors")]
         private List<GameObject> playerobjectRoom;
-        private string SectorName = "GrassLand";
+        private string SectorName = "Default";
         public bool disableSector;
         private bool isWheel;
         #endregion
