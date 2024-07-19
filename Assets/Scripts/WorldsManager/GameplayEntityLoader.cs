@@ -1183,7 +1183,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             yield return handle;
             addressableSceneName = environmentLabel;
             //...
-
+            if (environmentLabel=="RoofTopParty")
+            {
+                GameObject obj = new GameObject();
+                obj.name = "Sky Fix";
+                obj.AddComponent<ApplySkyBoxShader>();
+            }
             //One way to handle manual scene activation.
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
