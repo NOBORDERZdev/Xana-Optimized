@@ -78,9 +78,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
+        ConstantsHolder.loadedScenes.Push(existingSceneName);
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
-        ConstantsHolder.loadedScenes.Push(ConstantsHolder.xanaConstants.EnviornmentName);
         previousUserLimit = ConstantsHolder.userLimit;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
@@ -116,7 +116,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
-        ConstantsHolder.loadedScenes.Push(ConstantsHolder.xanaConstants.EnviornmentName);
+        ConstantsHolder.loadedScenes.Push(existingSceneName);
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         previousUserLimit = ConstantsHolder.userLimit;
