@@ -218,7 +218,15 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void ShowWelcomeScreen()
     {
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            termsConditionPanel.SetActive(false);
+            enterNamePanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
         ClearInputFieldsData();
     }
 
