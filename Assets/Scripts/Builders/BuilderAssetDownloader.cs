@@ -385,6 +385,14 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
+        if(ConstantsHolder.haveSubWorlds)
+        {
+            if(_itemData.ItemID.Contains("pfTLP"))
+            {
+                BuilderData.sceneTeleportingObjects.Add(newObj);
+            }
+        }
+
         if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
         {
             newObj.SetActive(false);

@@ -75,8 +75,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         SummitMiniMapStatusOnSceneChange(false);
         StartCoroutine(LoadingHandler.Instance.FadeIn());
-
         GetPlayerPosition(playerPos);
+
+        ConstantsHolder.domeId = domeId;
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
@@ -85,23 +86,21 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
+        ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
         if (domeGeneralData.Ishumanoid)
             XANASummitDataContainer.fixedAvatarJson = domeGeneralData.Avatarjson;
         gameplayEntityLoader.currentEnvironment = null;
         gameplayEntityLoader.addressableSceneName = domeGeneralData.world;
-        multiplayerController.isConnecting = false;
         multiplayerController.singlePlayerInstance = domeGeneralData.experienceType != "double";
+        multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
+
         multiplayerController.Disconnect();
-
         XanaWorldDownloader.ResetAll();
-
         multiplayerController.playerobjects.Clear();
-
         SceneManager.UnloadSceneAsync(existingSceneName);
-
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
