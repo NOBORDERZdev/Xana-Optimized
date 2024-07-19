@@ -15,11 +15,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     public GameplayEntityLoader gameplayEntityLoader;
 
     public XANASummitDataContainer dataContainer;
-    
+
     [SerializeField]
     private DomeMinimapDataHolder _domeMiniMap;
 
     private int previousUserLimit;
+
+    public delegate void SetPlayerOnSubworldBack();
+    public event SetPlayerOnSubworldBack setPlayerPositionDelegate;
     private void OnEnable()
     {
         BuilderEventManager.LoadNewScene += LoadingNewScene;
@@ -77,6 +80,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
+        ConstantsHolder.loadedScenes.Push(ConstantsHolder.xanaConstants.EnviornmentName);
         previousUserLimit = ConstantsHolder.userLimit;
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
@@ -112,6 +116,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
+        ConstantsHolder.loadedScenes.Push(ConstantsHolder.xanaConstants.EnviornmentName);
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         previousUserLimit = ConstantsHolder.userLimit;
@@ -156,9 +161,12 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit == false)
             return;
 
+        setPlayerPositionDelegate = SetPlayerOnback;
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
-        string sceneName = "XANA Summit";
+        string sceneName = ConstantsHolder.loadedScenes.Pop();
+
+        //string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = sceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
@@ -226,14 +234,23 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit == false)
             return;
 
-        if (WorldItemView.m_EnvName == "XANA Summit")
-        {
+        setPlayerPositionDelegate?.Invoke();
+        
+
+        StartCoroutine(LoadingHandler.Instance.FadeOut());
+    }
+
+    void SetPlayerOnback()
+    {
+        //if (WorldItemView.m_EnvName == "XANA Summit")
+        //{
             GameplayEntityLoader.instance.mainController.transform.position = playerPos;
             GameplayEntityLoader.instance.mainController.transform.rotation = playerRot;
             GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
             ConstantsHolder.isFromXANASummit = false;
-        }
-
-        StartCoroutine(LoadingHandler.Instance.FadeOut());
+        //}
+        setPlayerPositionDelegate = null;
     }
+
+
 }

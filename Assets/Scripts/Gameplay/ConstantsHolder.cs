@@ -141,6 +141,7 @@ public class ConstantsHolder : MonoBehaviour
 
 
     //XANA Summit 
+    public static Stack<string> loadedScenes = new Stack<string>();
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
