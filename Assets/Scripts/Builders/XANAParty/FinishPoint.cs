@@ -1,4 +1,4 @@
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using PhysicsCharacterController;
 using System.Collections;
@@ -52,7 +52,10 @@ public class FinishPoint : MonoBehaviour
         //penguinAnimator.SetBool("Win", true);
         StartCoroutine(DelayedWinAnimation(penguinAnimator, 0.01f));
         FinishRaceCollider.enabled = false;
-        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("レースに勝利しました", 3, true);
+        else
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("YOU WON THE RACE", 3, true);
         triggerCollider.SetActive(true);
         GamificationComponentData gamificationTemp = GamificationComponentData.instance;
         gamificationTemp.TriggerRaceStatusUpdate();

@@ -146,7 +146,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public GameObject DisplayMessageParentUI;
     public GameObject XANAPartyMessageParentUI;
     public TextMeshProUGUI DisplayMessageText;
-    public Text XANAPartyMessageText;
+    public TextMeshProUGUI XANAPartyMessageText;
     public TextMeshProUGUI DisplayMessageTimeText;
 
     //Door Key Component
