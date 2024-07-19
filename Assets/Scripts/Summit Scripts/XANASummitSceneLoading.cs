@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class XANASummitSceneLoading : MonoBehaviour
 {
+    [SerializeField]
+    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
     public static Vector3 playerPos;
     public static Quaternion playerRot;
     public static Vector3 playerScale;
@@ -18,7 +20,6 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     [SerializeField]
     private DomeMinimapDataHolder _domeMiniMap;
-
     private int previousUserLimit;
 
     public delegate void SetPlayerOnSubworldBack();
@@ -106,6 +107,21 @@ public class XANASummitSceneLoading : MonoBehaviour
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
         multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
+        string eventName;
+        if (domeGeneralData.worldType)
+            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.builderWorldId;
+        else
+            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.worldId;
+        GlobalConstants.SendFirebaseEventForSummit(eventName);
+        if (_stayTimeTrackerForSummit != null)
+        {
+            _stayTimeTrackerForSummit.DomeId = domeId;
+            if (domeGeneralData.worldType)
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
+            else
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+            _stayTimeTrackerForSummit.StartTrackingTime();
+        }
     }
 
     public void LoadingNewScene(string SceneName, Vector3 playerPos)
@@ -160,7 +176,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
-
+        if (_stayTimeTrackerForSummit != null)
+        {
+            if (_stayTimeTrackerForSummit.isTrackingTime)
+            {
+                _stayTimeTrackerForSummit.StopTrackingTime();
+                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+            }
+        }
         setPlayerPositionDelegate = SetPlayerOnback;
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
