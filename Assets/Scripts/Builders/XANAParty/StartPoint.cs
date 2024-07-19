@@ -9,6 +9,7 @@ public class StartPoint : MonoBehaviour
     public List<Transform> SpawnPoints;
     public GameObject triggerCollider;
     public bool isStartPoint;
+    public Animator OpenGateAnimator;
 
     private void OnEnable()
     {
@@ -69,5 +70,7 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         triggerCollider.SetActive(false);
+        if (OpenGateAnimator != null)
+            OpenGateAnimator.SetTrigger("OpenGate");
     }
 }
