@@ -46,7 +46,7 @@ public class YoutubeVideoByScene : MonoBehaviour
                     string incominglink = _response.data.link;
                     if (!incominglink.Equals(" "))
                     {
-                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
+                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
                     }
                     else
                     {
