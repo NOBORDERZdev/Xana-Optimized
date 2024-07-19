@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +24,11 @@ public class PartyTimerManager : MonoBehaviour
         {
             return;
         }
-        ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
+        if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + "60s";
+        else
+            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + "60s";
+
         if (PhotonNetwork.IsMasterClient && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
             if (startTime <= -1)
@@ -48,7 +52,10 @@ public class PartyTimerManager : MonoBehaviour
                 isTimerRunning = false;
                 ReferencesForGamePlay.instance.isMatchingTimerFinished = true;
             }
-            ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + currentTime.ToString("F0") + "s";
+            if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+                ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "他のプレイヤーを待っています... " + currentTime.ToString("F0") + "s";
+            else
+                ReferencesForGamePlay.instance.XANAPartyWaitingText.GetComponentInChildren<TMPro.TextMeshProUGUI>().text = "Waiting for other players... " + currentTime.ToString("F0") + "s";
         }
     }
 

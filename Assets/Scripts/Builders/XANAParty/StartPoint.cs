@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,13 +60,21 @@ public class StartPoint : MonoBehaviour
 
    IEnumerator StartGame()
     {
-        BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("READY!", 1, true);
+        if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("レディー！", 1, true);
+        else
+            BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("READY!", 1, true);
         //yield return new WaitForSeconds(2);
         //BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         //yield return new WaitForSeconds(4);
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(true);
-        ReferencesForGamePlay.instance.XANAPartyCounterText.text = "GO!".ToString();
+
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+            ReferencesForGamePlay.instance.XANAPartyCounterText.text = "ゴー！".ToString();
+        else
+            ReferencesForGamePlay.instance.XANAPartyCounterText.text = "GO!".ToString();
+
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         triggerCollider.SetActive(false);
