@@ -21,7 +21,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public static string fixedAvatarJson;
 
-    public static Stack<string> loadedScenes = new Stack<string>();
+    public static Stack<SubWorldInfo> loadedScenes = new Stack<SubWorldInfo>();
     //private void OnEnable()
     //{
     //    for (int i = 0; i < 128; i++)
@@ -127,13 +127,13 @@ public class XANASummitDataContainer : ScriptableObject
     [System.Serializable]
     public class SubWorldInfo
     {
-        public int id;
         public string name;
         public string thumbnail;
         public bool worldType;
         public int worldId;
         public string world;
         public int builderWorldId;
+        public int UserLimit;
     }
     #endregion
 

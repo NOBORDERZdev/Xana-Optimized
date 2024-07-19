@@ -79,7 +79,16 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         ConstantsHolder.domeId = domeId;
         string existingSceneName = WorldItemView.m_EnvName;
-        ConstantsHolder.loadedScenes.Push(existingSceneName);
+
+        XANASummitDataContainer.SubWorldInfo subWorldInfo=new XANASummitDataContainer.SubWorldInfo();
+        subWorldInfo.worldId = domeGeneralData.worldId;
+        subWorldInfo.world = domeGeneralData.world;
+        subWorldInfo.worldType = domeGeneralData.worldType;
+        subWorldInfo.thumbnail= domeGeneralData.thumbnail;
+        subWorldInfo.builderWorldId= domeGeneralData.builderWorldId;
+        subWorldInfo.UserLimit = domeGeneralData.maxPlayer;
+        XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
+
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
         previousUserLimit = ConstantsHolder.userLimit;
@@ -115,7 +124,16 @@ public class XANASummitSceneLoading : MonoBehaviour
         SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
-        ConstantsHolder.loadedScenes.Push(existingSceneName);
+
+        XANASummitDataContainer.SubWorldInfo subWorldInfo = new XANASummitDataContainer.SubWorldInfo();
+        subWorldInfo.worldId = domeGeneralData.worldId;
+        subWorldInfo.world = domeGeneralData.world;
+        subWorldInfo.worldType = domeGeneralData.worldType;
+        subWorldInfo.thumbnail = domeGeneralData.thumbnail;
+        subWorldInfo.builderWorldId = domeGeneralData.builderWorldId;
+        subWorldInfo.UserLimit = domeGeneralData.maxPlayer;
+        XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
+
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         previousUserLimit = ConstantsHolder.userLimit;
@@ -163,7 +181,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         setPlayerPositionDelegate = SetPlayerOnback;
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
-        string sceneName = ConstantsHolder.loadedScenes.Pop();
+        string sceneName = XANASummitDataContainer.loadedScenes.Pop();
 
         //string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
