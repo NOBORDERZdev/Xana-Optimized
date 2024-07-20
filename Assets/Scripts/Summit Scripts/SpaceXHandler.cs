@@ -81,7 +81,7 @@ public class SpaceXHandler : MonoBehaviour
     {
         StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = planetNames[x];
-        summitSceneLoading.LoadingNewScene(sceneName,returnPlayerPos);
+        summitSceneLoading.LoadingSceneByIDOrName(sceneName,returnPlayerPos);
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();

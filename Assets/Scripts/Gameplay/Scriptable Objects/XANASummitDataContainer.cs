@@ -130,7 +130,7 @@ public class XANASummitDataContainer : ScriptableObject
         public string name;
         public string thumbnail;
         public bool worldType;
-        public int worldId;
+        public string worldId;
         public string world;
         public int builderWorldId;
         public int UserLimit;
