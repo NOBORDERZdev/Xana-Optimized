@@ -13,9 +13,9 @@ public class AvProDirectionalSound : MonoBehaviour
     [Range(0.2f, 0.5f)]
     public float updateInterval = 0.5f; // Time interval for volume update
 
-    private Transform playerCam; // Reference to your player object or camera
+    public Transform playerCam; // Reference to your player object or camera
     private WaitForSeconds updateDelay;
-    private Coroutine volumeCoroutine;
+    public Coroutine volumeCoroutine;
     public MediaPlayer activePlayer;
     public AudioSource audioSource;
     private float defaultMaxDis = 0;
@@ -67,8 +67,6 @@ public class AvProDirectionalSound : MonoBehaviour
         else
             AddEventTrigger(eventTrigger, EventTriggerType.PointerUp, OnPointerUp);
     }
-
-
    
     void UpdateSliderValue(float value)
     {
@@ -100,7 +98,6 @@ public class AvProDirectionalSound : MonoBehaviour
             //maxDistance = defaultMaxDis;
         }
     }
-
 
     public void ActiveDirectionalSound()
     {

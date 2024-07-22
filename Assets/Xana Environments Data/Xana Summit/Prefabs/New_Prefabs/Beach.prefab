@@ -31,9 +31,9 @@ Transform:
   m_Children:
   - {fileID: 2966185640317100722}
   - {fileID: 3908867479997894121}
+  - {fileID: 7837536064571172921}
   - {fileID: 1886550283320572105}
   - {fileID: 4392181494799869767}
-  - {fileID: 7837536064571172921}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -219,7 +219,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: defafc270006f9542810c84a52cd6d39, type: 2}
+  - {fileID: 2100000, guid: d9fa16b30c20bf84da4ef95009a200df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -278,6 +278,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3446975444006253509}
     m_Modifications:
+    - target: {fileID: 1648405487636350863, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648405487636350863, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 12.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689215386332057433, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: _audioFocusEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_Name
       value: SummitVideoPlayerHandler
@@ -286,13 +298,37 @@ PrefabInstance:
       propertyPath: m_TargetMaterialRenderer
       value: 
       objectReference: {fileID: 2774705122971356199}
+    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -9.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 32.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: maxDistance
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: minDistance
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 2714939065781328881, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 2774705122971356199}
     - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_LocalPosition.x
@@ -334,8 +370,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8117263461359333614, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MaxDistance
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8117263461359333614, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: MinDistance
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: Data.URL
+      value: https://www.youtube.com/watch?v=dKqfoaRmWYk
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: Data.IsLive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: Data.isPlaying
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: Data.IsYoutubeURL
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+--- !u!1 &1689301956164760148 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 898828797538883107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1816741990141085896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689301956164760148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8810f4d3d6ad3a47b9f607d5f658a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTriggerChecker: {fileID: 2926875302217421014}
+  DirectionalSoundController: {fileID: 2904817340921780865}
+--- !u!114 &2904817340921780865 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 898828797538883107}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689301956164760148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &4392181494799869767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
@@ -354,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2991402456127330883, guid: 0f2bb1e8bd9a2f8438180e59815197b6, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2991402456127330883, guid: 0f2bb1e8bd9a2f8438180e59815197b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -439,6 +529,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2991402456127330883, guid: 0f2bb1e8bd9a2f8438180e59815197b6, type: 3}
   m_PrefabInstance: {fileID: 3723852178265170570}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2926875302217421014 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1960084290801234524, guid: 0f2bb1e8bd9a2f8438180e59815197b6, type: 3}
+  m_PrefabInstance: {fileID: 3723852178265170570}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b073d5ec65346a640ac928e9f88b7cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7732184662963818450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,7 +549,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -490,6 +591,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d9fa16b30c20bf84da4ef95009a200df, type: 2}
     - target: {fileID: 919132149155446097, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_Name
       value: Beach_Screen_Live
