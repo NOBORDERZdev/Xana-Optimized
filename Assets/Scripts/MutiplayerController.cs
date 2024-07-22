@@ -80,7 +80,7 @@ namespace Photon.Pun.Demo.PunBasics
         [Space]
         [Header("PhotonSectors")]
         private List<GameObject> playerobjectRoom;
-        private string SectorName = "GrassLand";
+        private string SectorName = "Default";
         public bool disableSector;
         private bool isWheel;
         #endregion
@@ -292,10 +292,12 @@ namespace Photon.Pun.Demo.PunBasics
                     {
                         if(ConstantsHolder.MultiSectionPhoton)
                         {
-                            if (info.CustomProperties["Sector"] != null)
+                            object sector;
+                            if (info.CustomProperties.TryGetValue("Sector",out sector))
                             {
-                                var sector = (string)info.CustomProperties["Sector"];
-                                if (sector != SectorName) { continue; }
+                                
+                                
+                                if (((string)sector) != SectorName) { continue; }
                             }
                             else { continue; }
                         }

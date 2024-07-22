@@ -268,7 +268,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeCharacterAnimationState(bool l_State)
     {    
-        m_CharacterAnimator.SetBool("Idle", l_State);
+        m_CharacterAnimator.SetBool("IdleMenu", l_State);
     }
     public void ResetCharacterAnimationController()
     {

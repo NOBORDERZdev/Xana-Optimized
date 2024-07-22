@@ -3424,7 +3424,7 @@ public class UserRegisterationManager : MonoBehaviour
                         savePasswordList.instance.saveData(LoginEmailOrPhone.Text.Trim(), LoginPassword.Text.Trim());
                     }
 
-                    PlayerPrefs.SetInt("WalletLogin", 0);
+                    //PlayerPrefs.SetInt("WalletLogin", 0); //  in Each case now we are login with Wallet
                     ConstantsGod.AUTH_TOKEN = myObject1.data.token;
                     PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                     //DynamicEventManager.deepLink?.Invoke("Login user here");

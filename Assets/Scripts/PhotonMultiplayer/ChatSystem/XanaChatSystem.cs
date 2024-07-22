@@ -242,6 +242,11 @@ public class XanaChatSystem : MonoBehaviour
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
 
+
+            // Due to Overlapping of Minimap and Chat, Disable Minimap
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
+            
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
@@ -257,6 +262,32 @@ public class XanaChatSystem : MonoBehaviour
             //        }
             //    }
             //}
+        }
+        else
+        {
+            chatDialogBox.SetActive(false);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = false;
+
+            if (PlayerPrefs.GetInt("minimap") == 1)
+            {
+                ReferencesForGamePlay.instance.minimap.SetActive(true);
+                ReferencesForGamePlay.instance.SumitMapStatus(true);
+            }
+        }
+
+
+        
+    }
+    public void OpenCloseChatDialog(bool _state)
+    {
+        isChatOpen = _state;
+
+        if (isChatOpen)
+        {
+            chatDialogBox.SetActive(true);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = true;
         }
         else
         {

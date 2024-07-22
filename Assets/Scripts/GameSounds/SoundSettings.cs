@@ -79,6 +79,7 @@ public class SoundSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
+        cameraSensitivitySliderPotrait.maxValue = 1f;
     }
     IEnumerator LiveVideoInstancs(float value)
     {

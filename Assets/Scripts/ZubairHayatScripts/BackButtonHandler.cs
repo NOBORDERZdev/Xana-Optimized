@@ -7,6 +7,7 @@ public class BackButtonHandler : MonoBehaviour
     public screenTabs _screenTabs;
     public static BackButtonHandler instance;
     public GameObject exitPanel;
+    public GameObject landscapeExit;
 
     public enum screenTabs
     {
@@ -159,7 +160,10 @@ public class BackButtonHandler : MonoBehaviour
 
     private void PromptQuitGame()
     {
-        exitPanel.SetActive(true);
+        if (Screen.orientation == ScreenOrientation.Portrait)
+            exitPanel.SetActive(true);
+        else
+            landscapeExit.SetActive(true);
     }
 
     public void ConfirmQuitDialog()

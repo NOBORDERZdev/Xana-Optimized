@@ -130,6 +130,28 @@ public class UserLoginSignupManager : MonoBehaviour
             return;
         }
 
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        //{
+        //    MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+        //    LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+        //    StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+        //    {
+        //        //write if you want something on sucessfull login
+        //    }));
+        //}
+        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
+        //{
+        //    ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        //    ConstantsHolder.isWalletLogin = true;
+        //    WalletAutoLogin();
+        //}
+        //else
+        //{
+        //    ShowWelcomeScreen();
+        //}
+
+
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
             StartCoroutine(RefreshXanaTokenAPI());
@@ -139,16 +161,19 @@ public class UserLoginSignupManager : MonoBehaviour
             ShowWelcomeScreen();
         }
     }
-
     IEnumerator RefreshXanaTokenAPI()
     {
-        string FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
-        UnityWebRequest www = UnityWebRequest.Post(FinalUrl, new Dictionary<string, string>
+        string _FinalUrl = ConstantsGod.API_BASEURL + ConstantsGod.REFRESHXANATOKEN;
+        UnityWebRequest www = UnityWebRequest.Post(_FinalUrl, new Dictionary<string, string>
         {
             { "token", PlayerPrefs.GetString("LoginToken") }
         });
 
-        yield return www.SendWebRequest();
+        www.SendWebRequest();
+        while (!www.isDone)
+        {
+            yield return null;
+        }
 
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -158,21 +183,21 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             try
             {
-                JObject jsonObj = JObject.Parse(www.downloadHandler.text);
-                bool isSuccess = jsonObj["success"].ToObject<bool>();
-                if (isSuccess)
+                JObject _JsonObj = JObject.Parse(www.downloadHandler.text);
+                bool _IsSuccess = _JsonObj["success"].ToObject<bool>();
+                if (_IsSuccess)
                 {
-                    string token = jsonObj["data"]["token"].ToString();
-                    ConstantsGod.AUTH_TOKEN = token;
-                    ConstantsHolder.xanaToken = token;
-                    PlayerPrefs.SetString("LoginToken", token);
+                    string _Token = _JsonObj["data"]["token"].ToString();
+                    ConstantsGod.AUTH_TOKEN = _Token;
+                    ConstantsHolder.xanaToken = _Token;
+                    PlayerPrefs.SetString("LoginToken", _Token);
                     PlayerPrefs.Save();
 
                     AutoLogin();
                 }
                 else
                 {
-                    Debug.Log($"Token Refresh Error: {jsonObj["msg"]}");
+                    Debug.Log($"Token Refresh Error: {_JsonObj["msg"]}");
                 }
             }
             catch (Exception ex)
@@ -1011,7 +1036,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         PlayerPrefs.SetInt("IsLoggedIn", 1);
                         PlayerPrefs.SetInt("FristPresetSet", 1);
                         PlayerPrefs.SetInt("FirstTime", 1);
-                        PlayerPrefs.SetInt("WalletLogin", 0);
+                        //PlayerPrefs.SetInt("WalletLogin", 0); // in Each case now we are login with Wallet
                         PlayerPrefs.SetString("PlayerName", NameofUser);
                         ConstantsHolder.userName = NameofUser;
                         ConstantsHolder.loggedIn = true;
@@ -1096,8 +1121,6 @@ public class UserLoginSignupManager : MonoBehaviour
         request.Dispose();
     }
 
-
-
     public void SubmitCredentialsForSignIn()
     {
         loginLoader.SetActive(true);
@@ -1158,7 +1181,6 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 if (!ConstantsHolder.loggedIn)
                 {
-                    Debug.Log("Email Login");
                     GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Email_Success.ToString());
                 }
 
@@ -1175,7 +1197,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
                 PlayerPrefs.SetString("UserNameAndPassword", Jsondata);
                 PlayerPrefs.SetInt("shownWelcome", 1);
-                PlayerPrefs.SetInt("WalletLogin", 0);
+                //PlayerPrefs.SetInt("WalletLogin", 0); //  in Each case now we are login with Wallet
                 PlayerPrefs.SetString("LoginTokenxanalia", myObject1.data.xanaliaToken);
                 PlayerPrefs.SetString("publicID", myObject1.data.user.walletAddress);
                 PlayerPrefs.SetString("UserName", myObject1.data.user.id);
@@ -1251,7 +1273,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-
+   
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
