@@ -334,7 +334,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
             {
                 ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
-                GamificationComponentData.instance.GetComponent<PhotonView>().RPC("UpdateRaceStatusIfPlayerLeaveWithoutCompletiting", RpcTarget.All);
+                GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
             }
         }
 
