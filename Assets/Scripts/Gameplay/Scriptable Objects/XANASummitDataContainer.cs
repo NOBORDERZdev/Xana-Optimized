@@ -21,7 +21,7 @@ public class XANASummitDataContainer : ScriptableObject
 
     public static string fixedAvatarJson;
 
-    public static Stack<SubWorldInfo> loadedScenes = new Stack<SubWorldInfo>();
+    public static Stack<StackInfoWorld> loadedScenes = new Stack<StackInfoWorld>();
     //private void OnEnable()
     //{
     //    for (int i = 0; i < 128; i++)
@@ -121,19 +121,43 @@ public class XANASummitDataContainer : ScriptableObject
         public int AvatarIndex;
         public string Avatarjson;
         public int maxPlayer;
-        public List<SubWorldInfo> subWorldInfos;
+        public List<SubWorldInfo> SubWorlds;
+        public bool isSubWorld;
     }
 
     [System.Serializable]
     public class SubWorldInfo
     {
+        public bool builderWorld;
+        public bool officialWorld;
+        public OfficialWorldDetails selectWorld;
+        public string builderSubWorldId;
+    }
+
+    [System.Serializable]
+    public class OfficialWorldDetails
+    {
+        public int id;
+        public string label;
+        public string icon;
+        public int userLimit;
+    }
+
+
+    [System.Serializable]
+    public class StackInfoWorld
+    {
+        public string id;
         public string name;
+        public int user_limit;
         public string thumbnail;
-        public bool worldType;
-        public string worldId;
-        public string world;
-        public int builderWorldId;
-        public int UserLimit;
+        public string banner;
+        public string thumbnail_new;
+        public string description;
+        public string creator;
+        public bool isBuilderWorld;
+        public int domeId;
+        public bool haveSubWorlds;
     }
     #endregion
 
