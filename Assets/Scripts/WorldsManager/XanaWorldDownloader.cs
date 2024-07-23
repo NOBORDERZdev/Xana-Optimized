@@ -498,7 +498,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
-        AssignDomeId(newObj, _itemData);
+        //AssignDomeId(newObj, _itemData);
 
        
 
