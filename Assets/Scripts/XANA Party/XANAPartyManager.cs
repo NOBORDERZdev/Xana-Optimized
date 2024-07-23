@@ -134,8 +134,12 @@ public class XANAPartyManager : MonoBehaviour
                         var rows = data["data"]["rows"];
                         foreach (var row in rows)
                         {
-                            TotalGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
-                            RemainingGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
+                            if (row["name"].ToString().Contains("Yogibo")) // to ensure only yogibo games are fetched
+                            {
+                                TotalGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
+                                RemainingGamesToVisit.Add(new GameData((int)row["id"], row["name"].ToString()));
+                            }
+                          
                         }
                         RandomizeAndUpdateGameData();
                         StartCoroutine(LoadXanaPartyGame(true));
