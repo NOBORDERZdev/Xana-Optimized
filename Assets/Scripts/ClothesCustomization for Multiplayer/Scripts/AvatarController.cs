@@ -467,8 +467,7 @@ public class AvatarController : MonoBehaviour
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
                             if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
-                            {
-                               
+                            {  
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                                 if (itemTypes.Any(item => type.Contains(item)))
                                 {
@@ -480,7 +479,7 @@ public class AvatarController : MonoBehaviour
                                             if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
                                             else
-                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController,_CharacterData.HairColor));
+                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
                                         }
                                         else
                                             StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, Color.clear));
@@ -584,7 +583,8 @@ public class AvatarController : MonoBehaviour
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                }
+                    StartCoroutine(LoadSumitFirsttime());
+                } 
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
@@ -885,6 +885,28 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
+    private IEnumerator LoadSumitFirsttime() {
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
+        {
+            while (!UserLoginSignupManager.instance)
+            {
+                Debug.Log("Waiting :::: Initialize Avatar with Guest");
+                yield return null; // Wait for the next frame
+                
+            }
+            if (UserLoginSignupManager.instance.LoggedInAsGuest)
+            {
+                Debug.Log("Initialize Avatar with Guest");
+                yield return new WaitForSeconds(0.5f);
+                  MainSceneEventHandler.OpenLandingScene?.Invoke();
+            }
+
+
+        }
+    }
+       
+
+    
 
     /// <summary>
     /// Setting Character from localJson neither than server
