@@ -99,7 +99,7 @@ public class XanaChatSystem : MonoBehaviour
     public void Start()
     {
 
-        //InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        InputFieldChat.onSubmit.AddListener(OnEnterSend);
 
         //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
