@@ -70,10 +70,13 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(true);
 
-        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja"){ 
+            ReferencesForGamePlay.instance.XANAPartyCounterText.fontSize=70;
             ReferencesForGamePlay.instance.XANAPartyCounterText.text = "ゴー！".ToString();
-        else
+        }
+        else{ 
             ReferencesForGamePlay.instance.XANAPartyCounterText.text = "GO!".ToString();
+        }
 
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
