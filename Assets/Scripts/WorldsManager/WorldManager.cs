@@ -755,8 +755,8 @@ public class WorldManager : MonoBehaviour
         {
             if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
             {
-                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
-                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
+                //UserLoginSignupManager.instance.LoginRegisterScreen.transform.SetAsLastSibling();
+                UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
             }
             else
             {

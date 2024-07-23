@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
     }
     public void NotNowOfSignManager()
     {
-      UiManager.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+        UserLoginSignupManager.instance.GetComponent<OnEnableDisable>().ClosePopUp();
        
         if (UiManager.HomePage.activeInHierarchy )
             UiManager.HomePage.SetActive(false);
