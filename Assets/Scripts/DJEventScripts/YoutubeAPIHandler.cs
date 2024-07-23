@@ -421,35 +421,37 @@ public class YoutubeAPIHandler : MonoBehaviour
                     _apiResponse = JsonUtility.FromJson<SummitVideoData>(www.downloadHandler.text.Trim());
                     if (_apiResponse != null)
                     {
-                        string incominglink = _apiResponse.videoData[0].url;
+                        string incominglink = _apiResponse.videoData.url;
                         if (!string.IsNullOrEmpty(incominglink))
                         {
-                            if (_apiResponse.videoData[0].isYoutube)
+                            if (_apiResponse.videoData.isYoutube)
                             {
-                                bool _isLiveVideo = _apiResponse.videoData[0].type.Contains("Live")? true : false;
-                                Data = new StreamData(incominglink, _isLiveVideo, true, _apiResponse.videoData[0].isYoutube);
+                                bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
+                                Data = new StreamData(incominglink, _isLiveVideo, true, _apiResponse.videoData.isYoutube);
                                 if (GetComponent<AvProLiveVideoSoundEnabler>())
                                 {
                                     GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
                                 }
+                                OldAWSURL = "";
                             }
                             else//For AWS Video playing
                             {
-                                if (OldAWSURL != _apiResponse.videoData[0].url)
+                                if (OldAWSURL != _apiResponse.videoData.url)
                                 {
                                     if (GetComponent<AvProLiveVideoSoundEnabler>())
                                     {
                                         GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
                                     }
-                                    OldAWSURL = _apiResponse.videoData[0].url;
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
 
                                     SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                                     SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                                     SoundSettings.soundManagerSettings.setNewSliderValues();
 
-                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData[0].url;
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData.url;
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+                                    OldAWSURL = _apiResponse.videoData.url;
+                                    Data = null;
                                 }
                             }
                         }
@@ -530,7 +532,7 @@ public partial class IncomingData
 [System.Serializable]
 public class SummitVideoData
 {
-    public SummitVideoDetails[] videoData;
+    public SummitVideoDetails videoData;
 }
 
 [System.Serializable]
