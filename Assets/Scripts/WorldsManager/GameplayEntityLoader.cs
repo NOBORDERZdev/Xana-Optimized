@@ -700,6 +700,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         //tempRef.EmoteFavPotraite.SetActive(false);
         tempRef.PartyChatCanvasPotraite.SetActive(true);
         tempRef.PartJumpPotraite.SetActive(true);
+        PositionResetButton.SetActive(false);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
         {
             ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(true);

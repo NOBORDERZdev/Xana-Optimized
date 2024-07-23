@@ -393,7 +393,10 @@ public class ReferencesForGamePlay : MonoBehaviour
                     else
                         StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().ShowLobbyCounter(10f));
                 }
-                    
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance!= null && !GamificationComponentData.instance.isRaceStarted  &&  ReferencesForGamePlay.instance != null)
+                {
+                    ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                }   
                 //else
                 //{
                 //    PlayerCount = Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount);
