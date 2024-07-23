@@ -20,7 +20,7 @@ public class WorldManager : MonoBehaviour
     private string finalAPIURL;
     private string status = "Publish";
     [HideInInspector]
-    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1, seeAllPN = 1;
+    public int hotFeatSpacePN = 1, hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1, seeAllPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -111,7 +111,7 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        SearchKey= "XANA Summit";
+        SearchKey = "D +  Infinity Labo";     // XANA Summit //D_Infinity_Labo
         string url = PrepareApiURL(APIURL.SearchWorld);
         StartCoroutine(FetchUserMapFromServer(url, (check) =>
         {
@@ -122,6 +122,10 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
             WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
+            if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo")
+            {
+                WorldItemView.m_EnvName = "D_Infinity_Labo";
+            }
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
@@ -359,7 +363,7 @@ public class WorldManager : MonoBehaviour
                         }
                         else
                         {
-                            if (_WorldInfo.data.count <= 0 )
+                            if (_WorldInfo.data.count <= 0)
                             {
                                 WorldLoadingText(aPIURL);
                             }
@@ -488,7 +492,7 @@ public class WorldManager : MonoBehaviour
             }
             if (_WorldInfo.data.rows[i].user != null)
             {
-                _event.UserAvatarURL= _WorldInfo.data.rows[i].user.avatar;
+                _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
             }
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
@@ -742,14 +746,14 @@ public class WorldManager : MonoBehaviour
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
-        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
+        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo")
         {
             WorldItemView.m_EnvName = "D_Infinity_Labo";
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail_PlayBtn.ToString());
         }
-        
-        
+
+
         _callSingleTime = true;
         if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         {
@@ -824,7 +828,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }
         if (WorldItemView.m_EnvName == "ZONE-X")
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
 
     public async void JoinBuilderWorld()
