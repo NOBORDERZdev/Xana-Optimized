@@ -686,6 +686,20 @@ MonoBehaviour:
         flareIntensity: 1
     ppVolumeProfile: {fileID: 11400000, guid: b28ff51476a4fda43b7ad5b8e5ddbba1, type: 2}
   - skyId: 48
+    skyName: ChimneySky
+    shaderName: Skybox/Cubemap
+    directionalLightData:
+      directionLightRot: {x: 50, y: -30, z: 0}
+      lightIntensity: 0.4
+      directionLightColor: {r: 1, g: 0.88235295, b: 0.72156864, a: 1}
+      directionLightShadowStrength: 0.72
+      character_directionLightIntensity: 0.2
+      lensFlareData:
+        falreData: {fileID: 0}
+        flareScale: 0.6
+        flareIntensity: 1
+    ppVolumeProfile: {fileID: 11400000, guid: 07920c587c2b7f24e93b733bbf1f9b41, type: 2}
+  - skyId: 49
     skyName: YogiboSky
     shaderName: Skybox/Cubemap
     directionalLightData:
@@ -699,17 +713,3 @@ MonoBehaviour:
         flareScale: 0.6
         flareIntensity: 1
     ppVolumeProfile: {fileID: 11400000, guid: df45b5755389ef544a34e641072d8a2b, type: 2}
-  - skyId: 49
-    skyName: ChimneySky
-    shaderName: Skybox/Cubemap
-    directionalLightData:
-      directionLightRot: {x: 50, y: -30, z: 0}
-      lightIntensity: 0.4
-      directionLightColor: {r: 1, g: 0.88235295, b: 0.72156864, a: 1}
-      directionLightShadowStrength: 0.72
-      character_directionLightIntensity: 0.2
-      lensFlareData:
-        falreData: {fileID: 0}
-        flareScale: 0.6
-        flareIntensity: 1
-    ppVolumeProfile: {fileID: 11400000, guid: a6560a915ef98420e9faacc1c7438823, type: 2}
