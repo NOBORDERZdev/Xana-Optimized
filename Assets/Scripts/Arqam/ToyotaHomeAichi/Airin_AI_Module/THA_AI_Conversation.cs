@@ -27,13 +27,15 @@ public class THA_AI_Conversation : MonoBehaviour
     public void AirinDeActivated()
     {
         NFT_Holder_Manager.instance.Extended_XCS.AirinQuestion -= ReplyUserMsg;
-        XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.RuntimeOnly);
+        //XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.RuntimeOnly);
+        XanaChatSystem.instance.InputFieldChat.onSubmit.AddListener(XanaChatSystem.instance.OnEnterSend);
         NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.RemoveAllListeners();
     }
 
     public void StartConversation(string name)
     {
-        XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.Off);
+        //XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.Off);
+        XanaChatSystem.instance.InputFieldChat.onSubmit.RemoveAllListeners();
         NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.AddListener(NFT_Holder_Manager.instance.Extended_XCS.SendMessage);
         NFT_Holder_Manager.instance.Extended_XCS.AirinQuestion += ReplyUserMsg;
 

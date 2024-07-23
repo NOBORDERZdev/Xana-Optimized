@@ -199,7 +199,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-        ConstantsHolder.isFromXANASummit = true;
+        ConstantsHolder.isFromXANASummit = false;
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
