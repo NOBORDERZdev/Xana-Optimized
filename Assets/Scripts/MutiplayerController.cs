@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "2";
+        string gameVersion = "3";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -334,6 +334,7 @@ namespace Photon.Pun.Demo.PunBasics
             if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
             {
                 ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
+                GamificationComponentData.instance.GetComponent<PhotonView>().RPC("UpdateRaceStatusIfPlayerLeaveWithoutCompletiting", RpcTarget.All);
             }
         }
 
