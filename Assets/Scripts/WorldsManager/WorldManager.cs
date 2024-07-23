@@ -6,9 +6,8 @@ using System;
 using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
-using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using SuperStar.Helpers;
+
 
 public class WorldManager : MonoBehaviour
 {
@@ -112,22 +111,46 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        ConstantsHolder.userLimit = 100;
-        ConstantsHolder.isPenguin = true;
-        ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
-        ConstantsHolder.xanaConstants.isBuilderScene = false;
-        ConstantsHolder.xanaConstants.isFromHomeTab = true;
-        ConstantsHolder.xanaConstants.MuseumID="2562";
-        WorldItemView.m_EnvName = "RooftopParty";
-        ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-        LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        LoadingHandler.Instance.ShowLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0);
-        LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-        //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-        Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        SearchKey= "XANA Summit";
+        string url = PrepareApiURL(APIURL.SearchWorld);
+        StartCoroutine(FetchUserMapFromServer(url, (check) =>
+        {
+            ConstantsHolder.userLimit = int.Parse(_WorldInfo.data.rows[0].user_limit);
+            ConstantsHolder.isPenguin = false;
+            ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+            ConstantsHolder.xanaConstants.isBuilderScene = false;
+            ConstantsHolder.xanaConstants.isFromHomeTab = true;
+            ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
+            WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        }));
+
+
+        //ConstantsHolder.userLimit = 100;
+        //ConstantsHolder.isPenguin = true;
+        //ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+        //ConstantsHolder.xanaConstants.isBuilderScene = false;
+        //ConstantsHolder.xanaConstants.isFromHomeTab = true;
+        //ConstantsHolder.xanaConstants.MuseumID = "2562";
+        //WorldItemView.m_EnvName = "RooftopParty";
+        //ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+        //LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        //LoadingHandler.Instance.ShowLoading();
+        //LoadingHandler.Instance.UpdateLoadingSlider(0);
+        //LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+        ////this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+        //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+        //LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+
     }
 
     public void ChangeWorldTab(APIURL tab, string _searchKey)

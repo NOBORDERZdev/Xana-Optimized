@@ -76,6 +76,7 @@ public class UIHandler : MonoBehaviour
         }
         else
         {
+            CharacterHandler.instance.playerNameCanvas.SetActive(!flag);
             GameManager.Instance.HomeCameraInputHandler(!flag);
 
             _postScreen.gameObject.SetActive(flag);
