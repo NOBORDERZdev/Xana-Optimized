@@ -3992,6 +3992,16 @@ public class InventoryManager : MonoBehaviour
     public void UpdateStoreSelection(int index)
     {
         ////Debug.Log("<color=blue>Update Store Selection: "+index+"</color>");
+        ///
+
+        if (SaveCharacterProperties.instance.characterController == null)
+        {
+            if(GameManager.Instance.avatarController)
+                SaveCharacterProperties.instance.characterController = GameManager.Instance.avatarController;
+            else
+                return; // Prevent the Null Exceptions
+        }
+
         switch (index)
         {
             case 0:
