@@ -502,7 +502,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         }
     }
 
-    [PunRPC]
     public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting()
     {
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
