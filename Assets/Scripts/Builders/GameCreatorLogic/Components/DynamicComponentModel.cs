@@ -104,6 +104,7 @@ public class ItemData
     public WarpFunctionComponentData warpFunctionComponentData;
     public BlindComponentData blindComponentData;
     public PhysicsComponentData physicsComponentData;
+    public TeleportComponentData teleportComponentData;
     #endregion
 
     public ItemData(string itemID, string itemType, string itemName, Vector3 position)
@@ -174,6 +175,7 @@ public class ItemData
         this.warpFunctionComponentData = new WarpFunctionComponentData();
         this.blindComponentData = new BlindComponentData();
         this.physicsComponentData = new PhysicsComponentData();
+        this.teleportComponentData = new TeleportComponentData();
     }
 
     public ItemData(ItemData itemData)
@@ -244,6 +246,7 @@ public class ItemData
         this.warpFunctionComponentData = new WarpFunctionComponentData(itemData.warpFunctionComponentData);
         this.blindComponentData = new BlindComponentData(itemData.blindComponentData);
         this.physicsComponentData = new PhysicsComponentData(itemData.physicsComponentData);
+        this.teleportComponentData = new TeleportComponentData(itemData.teleportComponentData);
     }
 }
 
@@ -1473,5 +1476,28 @@ namespace Models
         }
     }
 
+    [System.Serializable]
+    public class TeleportComponentData
+    {
+        public bool IsActive;
+        public string spaceID;
+
+        public TeleportComponentData()
+        {
+            IsActive = false;
+            spaceID = string.Empty;
+        }
+        public void Reset()
+        {
+            IsActive = false;
+            spaceID = string.Empty;
+        }
+
+        public TeleportComponentData(TeleportComponentData data)
+        {
+            IsActive = data.IsActive;
+            spaceID = data.spaceID;
+        }
+    }
     #endregion
 }
