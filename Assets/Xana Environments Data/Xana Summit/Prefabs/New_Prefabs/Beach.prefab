@@ -169,9 +169,8 @@ GameObject:
   - component: {fileID: 2774705122971356199}
   - component: {fileID: 8068124449202931861}
   - component: {fileID: 5507985247092500926}
-  - component: {fileID: 2844576066553038999}
   m_Layer: 0
-  m_Name: VideoScreen
+  m_Name: Screen_Android_PR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,21 +271,6 @@ MonoBehaviour:
   isMeshRendrer: 1
   shaderName: Sprites/Default
   isTerrain: 0
---- !u!114 &2844576066553038999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4462663705397575996}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f12ae4e703e0354bb90ee5b6081e521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_filter: {fileID: 1943811335590655454}
-  iosScreen: {fileID: -5597002278806442958, guid: 52154b95de264d4498b1993384cc9762, type: 3}
-  androidScreen: {fileID: 7721911704355516731, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
 --- !u!1001 &898828797538883107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -400,19 +384,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.URL
-      value: https://www.youtube.com/watch?v=dKqfoaRmWYk
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.IsLive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: summitAreaID
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.isPlaying
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.IsYoutubeURL
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
@@ -435,6 +423,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTriggerChecker: {fileID: 2926875302217421014}
   DirectionalSoundController: {fileID: 2904817340921780865}
+  PreRecVideoScreen: {fileID: 4462663705397575996}
+  LiveVideoScreen: {fileID: 7462276746614911619}
 --- !u!114 &2904817340921780865 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
@@ -577,7 +567,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 150.48
+      value: 150.64877
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -585,7 +575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -82.18
+      value: -82.049995
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -621,14 +611,35 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: d9fa16b30c20bf84da4ef95009a200df, type: 2}
     - target: {fileID: 919132149155446097, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_Name
-      value: Beach_Screen_Live
+      value: Screen_Android_Live
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
+--- !u!1 &7462276746614911619 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}
+  m_PrefabInstance: {fileID: 7732184662963818450}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7899499476317087866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7462276746614911619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  isMeshRendrer: 1
+  shaderName: Sprites/Default
+  isTerrain: 0
 --- !u!4 &7837536064571172921 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 32fecd8cc6d709c4c9360c31c7b5442a, type: 3}

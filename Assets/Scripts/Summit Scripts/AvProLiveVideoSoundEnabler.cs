@@ -6,6 +6,8 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
 {
     public SPAAIHandler PlayerTriggerChecker;
     public AvProDirectionalSound DirectionalSoundController;
+    public GameObject PreRecVideoScreen;
+    public GameObject LiveVideoScreen;
 
     private void OnEnable()
     {
@@ -31,6 +33,20 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
                 StopCoroutine(DirectionalSoundController.volumeCoroutine);
             }
             DirectionalSoundController.enabled = false;
+        }
+    }
+
+    public void EnableVideoScreen(bool _isLiveVideo)
+    {
+        if(_isLiveVideo)
+        {
+            LiveVideoScreen.SetActive(_isLiveVideo);
+            PreRecVideoScreen.SetActive(!_isLiveVideo);
+        }
+        else
+        {
+            PreRecVideoScreen.SetActive(!_isLiveVideo);
+            LiveVideoScreen.SetActive(_isLiveVideo);
         }
     }
 }

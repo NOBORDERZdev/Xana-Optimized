@@ -14535,11 +14535,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: defafc270006f9542810c84a52cd6d39, type: 2}
     - target: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_Name
-      value: ScreensFix_Live
+      value: Screen_Android_Live
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
@@ -14929,8 +14929,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9085368634543030172, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_Name
+      value: Screen_Android_PR
+      objectReference: {fileID: 0}
+    - target: {fileID: 9085368634543030172, guid: cf0babc408386a345b6de20d74273457, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cf0babc408386a345b6de20d74273457, type: 3}
@@ -15413,19 +15417,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.URL
-      value: https://www.youtube.com/watch?v=dKqfoaRmWYk
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.IsLive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: summitAreaID
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.isPlaying
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: SummitVideoIndex
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: Data.IsYoutubeURL
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8846511716583873032, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
@@ -15468,6 +15480,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerTriggerChecker: {fileID: 9182067351820796744}
   DirectionalSoundController: {fileID: 5267373346194548142}
+  PreRecVideoScreen: {fileID: 3807208245232873131}
+  LiveVideoScreen: {fileID: 3284571603807320296}
 --- !u!1001 &7906032420700042891
 PrefabInstance:
   m_ObjectHideFlags: 0

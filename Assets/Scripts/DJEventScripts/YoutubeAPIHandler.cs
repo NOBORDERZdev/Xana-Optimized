@@ -11,11 +11,14 @@ public class YoutubeAPIHandler : MonoBehaviour
 {
 
     private StreamResponse _response;
+    public SummitVideoData _apiResponse = new SummitVideoData();
 
     private int DataIndex = 4;
     public StreamData Data;
     bool _urlDataInitialized = false;
     public string OldAWSURL = "xyz";
+    public int summitAreaID;
+    public int SummitVideoIndex;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -398,69 +401,64 @@ public class YoutubeAPIHandler : MonoBehaviour
         }
         else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
-            //WWWForm form = new WWWForm();
-            //print("============Setting WWW data");
-            //using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
-            //{
-            //    www.timeout = 10;
-
-            //    yield return www.SendWebRequest();
-
-            //    while (!www.isDone)
-            //    {
-            //        yield return null;
-            //    }
-            //    if (www.isHttpError || www.isNetworkError)
-            //    {
-            //        _response = null;
-            //        Debug.Log("Youtube API returned no result");
-            //    }
-            //    else
-            //    {
-            //        //Debug.Log("You tube respns===" + www.downloadHandler.text.Trim());
-            //        _response = JsonUtility.FromJson<StreamResponse>(www.downloadHandler.text.Trim());
-            //        if (_response != null)
-            //        {
-            //            string incominglink = _response.data.link;
-            //            if (!string.IsNullOrEmpty(incominglink))
-            //            {
-            //                Data = new SummitstreamData(incominglink, _response.data.isLive, _response.data.isPlaying, false);
-            //            }
-            //            else
-            //            {
-            //                Debug.Log("No Link Found Turning off player");
-            //                Data = null;
-            //            }
-            //        }
-
-            //    }
-            //}
-
-            //For AWS Video playing
-            if (!Data.IsYoutubeURL)
+            using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SUMMITYOUTUBEVIDEOBYID + summitAreaID + "/" + SummitVideoIndex))
             {
-                if (OldAWSURL != Data.URL)
+                www.timeout = 10;
+
+                yield return www.SendWebRequest();
+
+                while (!www.isDone)
                 {
-                    OldAWSURL = Data.URL;
-                    //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
-                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
-                    //imgVideo16x9.GetComponent<RawImage>().texture = imgVideo16x9.GetComponent<VideoPlayer>().targetTexture;
-                    //RenderTexture renderTexture = new RenderTexture(SummitDomeNFTDataController.Instance.renderTexture_16x9);
-                    //renderTexture_temp = renderTexture;
-                    //if (!isForceAudioOn)
-                    //{
-                    //    imgVideo16x9.GetComponent<VideoPlayer>().audioOutputMode = VideoAudioOutputMode.None;
+                    yield return null;
+                }
+                if (www.isHttpError || www.isNetworkError)
+                {
+                    _apiResponse = null;
+                    Debug.Log("Youtube API returned no result");
+                }
+                else
+                {
+                    _apiResponse = JsonUtility.FromJson<SummitVideoData>(www.downloadHandler.text.Trim());
+                    if (_apiResponse != null)
+                    {
+                        string incominglink = _apiResponse.videoData[0].url;
+                        if (!string.IsNullOrEmpty(incominglink))
+                        {
+                            if (_apiResponse.videoData[0].isYoutube)
+                            {
+                                bool _isLiveVideo = _apiResponse.videoData[0].type.Contains("Live")? true : false;
+                                Data = new StreamData(incominglink, _isLiveVideo, true, _apiResponse.videoData[0].isYoutube);
+                                if (GetComponent<AvProLiveVideoSoundEnabler>())
+                                {
+                                    GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
+                                }
+                            }
+                            else//For AWS Video playing
+                            {
+                                if (OldAWSURL != _apiResponse.videoData[0].url)
+                                {
+                                    if (GetComponent<AvProLiveVideoSoundEnabler>())
+                                    {
+                                        GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
+                                    }
+                                    OldAWSURL = _apiResponse.videoData[0].url;
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
 
-                    //}
-                    //else
-                    //{
+                                    SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    SoundSettings.soundManagerSettings.setNewSliderValues();
 
-                    SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                    SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                    SoundSettings.soundManagerSettings.setNewSliderValues();
-
-                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = Data.URL;
-                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData[0].url;
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("No Link Found Turning off player");
+                            Data = null;
+                        }
+                    }
                 }
             }
         }
@@ -527,4 +525,22 @@ public partial class IncomingData
     public object createdAt;
     public object updatedAt;
     public bool isPlaying;
+}
+
+[System.Serializable]
+public class SummitVideoData
+{
+    public SummitVideoDetails[] videoData;
+}
+
+[System.Serializable]
+public class SummitVideoDetails
+{
+    public int id;
+    public int areaId;
+    public string areaName;
+    public int index;
+    public string url;
+    public string type;
+    public bool isYoutube;
 }
