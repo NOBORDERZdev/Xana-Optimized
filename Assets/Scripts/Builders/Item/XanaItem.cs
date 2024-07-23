@@ -272,6 +272,14 @@ public class XanaItem : MonoBehaviour
             BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
         }
 
+        TeleportComponentData teleportComponentData = itemData.teleportComponentData;
+        if (teleportComponentData.IsActive)
+        {
+            TeleportComponent itemComponent = gameObject.AddComponent<TeleportComponent>();
+            itemComponent.Init(teleportComponentData);
+            BuilderEventManager.AddItemComponent?.Invoke(itemComponent);
+        }
+
         Color color;
         ColorUtility.TryParseHtmlString("#" + itemData.placedMaterialColor, out color);
         itemGFXHandler.SetMaterialColorFromItemData(color);
