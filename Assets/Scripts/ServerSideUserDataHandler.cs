@@ -67,6 +67,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
 
                     if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
                     {
+                        Debug.Log("<color=red>LoadTHAWorld Directly</color>");
                         MainSceneEventHandler.OpenLandingScene?.Invoke();
                         yield break;
                     }

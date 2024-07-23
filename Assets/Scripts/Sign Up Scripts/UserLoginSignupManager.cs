@@ -1658,7 +1658,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetString("publicID", "");
         PlayerPrefs.Save();
         //UserPassManager.Instance.testing = false; // Forces Enabled
-        if (FeedUIController.Instance.SNSSettingController != null)
+        if (FeedUIController.Instance && FeedUIController.Instance.SNSSettingController != null)
         {
             FeedUIController.Instance.SNSSettingController.LogoutSuccess();
         }
@@ -2154,7 +2154,7 @@ public class UserLoginSignupManager : MonoBehaviour
     public void UpdateProfilePic()
     {
         StartCoroutine(EditProfilePic());
-
+        Debug.Log("<color=red>LoadTHAWorld Directly</color>");
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             MainSceneEventHandler.OpenLandingScene?.Invoke();
     }
