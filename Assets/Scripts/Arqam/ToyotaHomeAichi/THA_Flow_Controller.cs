@@ -1,6 +1,6 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -19,6 +19,8 @@ public class THA_Flow_Controller : MonoBehaviour
                 DeleteAcc_Screen.SetActive(true);
             }
         }
+
+        GetEmailData();
     }
 
     public void DeleteAccount()
@@ -43,26 +45,43 @@ public class THA_Flow_Controller : MonoBehaviour
         DeleteAcc_Screen.SetActive(false);
     }
 
-    public static async Task<string> GetFeaturesList()
+    public async void GetEmailData()
     {
-        UnityWebRequest www = new UnityWebRequest(ConstantsGod.API_BASEURL + "admin/get-features-list");
-                                                                                       
-        www.downloadHandler = new DownloadHandlerBuffer();
-        await www.SendWebRequest();
-
-        if (www.error != null)
+        string _apiURL = ConstantsGod.API_BASEURL + "admin/get-features-list";
+        Debug.Log("API URL is : " + _apiURL);
+        using (UnityWebRequest request = UnityWebRequest.Get(_apiURL))
         {
-            Debug.Log("GetFeaturesList>> " + www.error);
-            return null;
+            //request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            await request.SendWebRequest();
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.LogError("Error is" + request.error);
+            }
+            else
+            {
+                GetFeatureResponse features = JsonConvert.DeserializeObject<GetFeatureResponse>(request.downloadHandler.text);
+                for (int i=0; i<features.data.Count; i++)
+                {
+                    Debug.LogError(features.data[i].feature_name + ":" + features.data[i].feature_status);
+                }
+            }
         }
-        else
-        {
-            // Show results as text
-            string resultdata = www.downloadHandler.text;
-            Debug.LogError("GetFeaturesList Success data : " + resultdata);
+    }
 
-            return resultdata;
-        }
+    private class GetFeatureResponse
+    {
+        public bool success;
+        public List<Data> data;
+        public string msg;
+    }
+
+    private class Data
+    {
+        public int id;
+        public string feature_name;
+        public bool feature_status;
+        public string created_at;
+        public string updated_at;
     }
 
 }
