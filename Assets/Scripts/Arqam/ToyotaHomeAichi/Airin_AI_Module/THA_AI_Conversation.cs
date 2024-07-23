@@ -21,8 +21,12 @@ public class THA_AI_Conversation : MonoBehaviour
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        ScreenOrientationManager.switchOrientation += CheckOrientation;
     }
-
+    private void OnDisable()
+    {
+        ScreenOrientationManager.switchOrientation -= CheckOrientation;
+    }
 
     public void AirinDeActivated()
     {
@@ -98,6 +102,21 @@ public class THA_AI_Conversation : MonoBehaviour
             Debug.LogError(request.error);
         }
         request.Dispose();
+    }
+
+    private void CheckOrientation()
+    {
+        StartCoroutine(RemoveListnerFromChat());
+    }
+
+    private IEnumerator RemoveListnerFromChat()
+    {
+        NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.RemoveAllListeners();
+        yield return new WaitForSeconds(1);
+        NFT_Holder_Manager.instance.SetChatRefrence();
+        yield return new WaitForEndOfFrame();
+        NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.RemoveAllListeners();
+        NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.AddListener(NFT_Holder_Manager.instance.Extended_XCS.SendMessage);
     }
 
 
