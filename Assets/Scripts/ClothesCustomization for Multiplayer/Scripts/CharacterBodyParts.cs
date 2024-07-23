@@ -796,7 +796,7 @@ public class CharacterBodyParts : MonoBehaviour
         {
             foreach (var material in _materials)
             {
-                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony" }.Any(item => material.name.Contains(item)))
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads"}.Any(item => material.name.Contains(item)))
                 {
                     material.SetColor(Hair_ColorName, color);
                 }
@@ -814,7 +814,7 @@ public class CharacterBodyParts : MonoBehaviour
         {
             foreach (var material in _materials)
             {
-                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony" }.Any(item => material.name.Contains(item)))
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads" }.Any(item => material.name.Contains(item)))
                 {
                     material.SetColor(Hair_ColorName, hairColor[colorId]);
                 }
