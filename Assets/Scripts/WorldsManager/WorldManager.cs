@@ -111,7 +111,7 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        SearchKey = "D +  Infinity Labo";     // XANA Summit //D_Infinity_Labo
+        SearchKey = "XANA Summit";  
         string url = PrepareApiURL(APIURL.SearchWorld);
         StartCoroutine(FetchUserMapFromServer(url, (check) =>
         {
@@ -122,10 +122,6 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
             ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
             WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
-            if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo")
-            {
-                WorldItemView.m_EnvName = "D_Infinity_Labo";
-            }
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
