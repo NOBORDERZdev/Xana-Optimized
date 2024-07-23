@@ -92,15 +92,21 @@ public class XanaChatSystem : MonoBehaviour
     {
         if (instance != null && instance != this)
             this.isPanelConfirmationRequire = instance.isPanelConfirmationRequire;
+        //instance = this;
+    }
 
+    private void OnEnable()
+    {
         instance = this;
+        this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+    }
+    private void OnDisable()
+    {
+        this.InputFieldChat.onSubmit.RemoveAllListeners();
     }
 
     public void Start()
     {
-
-        //InputFieldChat.onSubmit.AddListener(OnEnterSend);
-
         //CheckIfDeviceHasNotch();
         CheckPlayerPrefItems();
 
