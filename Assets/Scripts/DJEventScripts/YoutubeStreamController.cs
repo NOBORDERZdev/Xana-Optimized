@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,7 +48,6 @@ public class YoutubeStreamController : MonoBehaviour
     public void PlayPrerecordedVideo()
     {
         //YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
-        NormalPlayer.gameObject.SetActive(true);
         NormalPlayer.url = APIHandler.Data.URL;
         NormalPlayer.Play();
     }
@@ -150,7 +149,7 @@ public class YoutubeStreamController : MonoBehaviour
             //    NormalPlayer.GetComponent<YoutubeSimplified>().mPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 
             //player.OnInternetDisconnect();
-            //NormalPlayer.Stop();
+            NormalPlayer.Stop();
         }
         else if (APIHandler.Data.isPlaying && APIHandler.Data.IsLive && !LiveStreamPlayer.GetComponent<MediaPlayer>().Info.HasVideo())
         {
@@ -179,7 +178,6 @@ public class YoutubeStreamController : MonoBehaviour
     {
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
-            NormalPlayer.Stop();
             Debug.Log("Hardik changes check");
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
@@ -202,7 +200,7 @@ public class YoutubeStreamController : MonoBehaviour
         {
 
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
-            NormalPlayer.Stop();
+
             LiveStreamPlayer.SetActive(false);
             NormalPlayer.gameObject.SetActive(true);
 

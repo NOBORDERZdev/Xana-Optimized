@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -46,7 +46,7 @@ public class YoutubeVideoByScene : MonoBehaviour
                     string incominglink = _response.data.link;
                     if (!incominglink.Equals(" "))
                     {
-                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                     }
                     else
                     {
