@@ -78,6 +78,8 @@ public class StartPoint : MonoBehaviour
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(false);
         triggerCollider.SetActive(false);
+       GameplayEntityLoader.instance.PositionResetButton.SetActive(true);
+
         if (OpenGateAnimator != null)
             OpenGateAnimator.SetTrigger("OpenGate");
     }
