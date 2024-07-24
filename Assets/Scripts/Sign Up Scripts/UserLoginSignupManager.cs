@@ -371,7 +371,7 @@ public class UserLoginSignupManager : MonoBehaviour
         enterNamePanel.SetActive(false);
         displayrNameField.Clear();
         userUsernameField.Clear();
-        MainSceneEventHandler.OpenPresetPanel?.Invoke();
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
 
