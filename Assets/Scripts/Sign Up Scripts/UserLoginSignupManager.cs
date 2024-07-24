@@ -208,24 +208,10 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     void AutoLogin()
     {
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        {
-            //Debug.LogError("Email login .... ");
-            //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-            //{
-            //    //write if you want something on sucessfull login
-            //}));
-        }
-        else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        {
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            WalletAutoLogin();
-            //GetUserCoinsAfterLogin();
-        }
+        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.isWalletLogin = true;
+        WalletAutoLogin();
     }
     #region SignUp Functions 
 
@@ -351,7 +337,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
             return;
@@ -529,7 +515,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
-       // PlayerPrefs.SetInt("WalletLogin", 1);
+        // PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
@@ -1264,7 +1250,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-   
+
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))

@@ -56,6 +56,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
+            GamePlayButtonEvents.OnExitButtonXANASummit += ResetAll;
         }
     }
 
@@ -66,6 +67,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation -= OnOrientationChange;
+            GamePlayButtonEvents.OnExitButtonXANASummit -= ResetAll;
         }
         ResetAll();
     }
@@ -387,7 +389,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         if(ConstantsHolder.haveSubWorlds)
         {
-            if(_itemData.ItemID.Contains("pfTLP"))
+            if(_itemData.ItemID.Contains("TLP"))
             {
                 BuilderData.sceneTeleportingObjects.Add(newObj);
             }
@@ -532,10 +534,10 @@ public class BuilderAssetDownloader : MonoBehaviour
     public void ResetAll()
     {
         stopDownloading = true;
-        //foreach(Transform t in assetParent)
-        //{
-        //    Destroy(t.gameObject);
-        //}
+        foreach (Transform t in assetParent)
+        {
+            Destroy(t.gameObject);
+        }
 
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();

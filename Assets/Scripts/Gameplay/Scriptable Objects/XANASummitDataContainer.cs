@@ -158,6 +158,8 @@ public class XANASummitDataContainer : ScriptableObject
         public bool isBuilderWorld;
         public int domeId;
         public bool haveSubWorlds;
+        public bool isFromSummitWorld;
+        public Vector3[] playerTrasnform;
     }
     #endregion
 

@@ -46,7 +46,7 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
-    internal string response;
+    //internal string response;
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -65,7 +65,8 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
 
-        Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
+        if (GamificationComponentData.instance.aiSkyMaterial)
+            Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
     }
 
@@ -101,11 +102,11 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
             }
             else
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());

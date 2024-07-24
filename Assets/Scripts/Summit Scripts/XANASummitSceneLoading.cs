@@ -1,3 +1,4 @@
+using Crosstales;
 using Photon.Pun.Demo.PunBasics;
 using System;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using UnityEngine.SceneManagement;
 public class XANASummitSceneLoading : MonoBehaviour
 {
     public static Vector3 playerPos;
-    public static Quaternion playerRot;
+    public static Vector3 playerRot;
     public static Vector3 playerScale;
     public static Action<bool> OnJoinSubItem; // Car, GiantWheel, Planets
 
@@ -24,9 +25,10 @@ public class XANASummitSceneLoading : MonoBehaviour
     public delegate void SetPlayerOnSubworldBack();
     public event SetPlayerOnSubworldBack setPlayerPositionDelegate;
 
-    
+
     private void OnEnable()
     {
+        setPlayerPositionDelegate = null;
         BuilderEventManager.LoadNewScene += LoadingFromDome;
         BuilderEventManager.LoadSceneByName += LoadingSceneByIDOrName;
         BuilderEventManager.LoadSummitScene += LoadDomesData;
@@ -77,17 +79,24 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         SummitMiniMapStatusOnSceneChange(false);
         StartCoroutine(LoadingHandler.Instance.FadeIn());
-        GetPlayerPosition(playerPos);
+        
+        Vector3[] currentPlayerPos=GetPlayerPosition(playerPos);
+        Debug.LogError(currentPlayerPos[0]);
+        Debug.LogError(currentPlayerPos[1]);
+        Debug.LogError(currentPlayerPos[2]);
 
         ConstantsHolder.domeId = domeId;
         string existingSceneName = WorldItemView.m_EnvName;
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
-        subWorldInfo.id = domeGeneralData.worldId.ToString();
-        subWorldInfo.name = domeGeneralData.world;
-        subWorldInfo.isBuilderWorld = domeGeneralData.worldType;
-        subWorldInfo.thumbnail = domeGeneralData.thumbnail;
-        subWorldInfo.user_limit = domeGeneralData.maxPlayer;
+        subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
+        subWorldInfo.name = existingSceneName;
+        subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
+        subWorldInfo.user_limit = ConstantsHolder.userLimit;
+        subWorldInfo.domeId = ConstantsHolder.domeId;
+        subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
+        subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
+        subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
 
         WorldItemView.m_EnvName = domeGeneralData.world;
@@ -96,7 +105,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = domeGeneralData.maxPlayer;
         ConstantsHolder.isPenguin = domeGeneralData.IsPenguin;
         ConstantsHolder.isFixedHumanoid = domeGeneralData.Ishumanoid;
-        ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
+        if (domeGeneralData.worldType)
+            ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
+        else
+            ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
+        ConstantsHolder.haveSubWorlds = domeGeneralData.isSubWorld;
         if (domeGeneralData.Ishumanoid)
             XANASummitDataContainer.fixedAvatarJson = domeGeneralData.Avatarjson;
         gameplayEntityLoader.currentEnvironment = null;
@@ -123,32 +136,37 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(worldId))
             return;
 
+        StartCoroutine(LoadingHandler.Instance.FadeIn());
         SummitMiniMapStatusOnSceneChange(false);
-        GetPlayerPosition(playerPos);
+        Vector3[] currentPlayerPos=GetPlayerPosition(playerPos);
+        Debug.LogError(currentPlayerPos[0]);
+        Debug.LogError(currentPlayerPos[1]);
+        Debug.LogError(currentPlayerPos[2]);
         string existingSceneName = WorldItemView.m_EnvName;
 
-        WorldInfo worldInfo =await GetSingleWorldData(worldId);
+        SingleWorldInfo worldInfo = await GetSingleWorldData(worldId);
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
-        subWorldInfo.id = worldInfo.id;
-        subWorldInfo.name = worldInfo.name;
-        subWorldInfo.isBuilderWorld = (worldInfo.entityType== WorldType.USER_WORLD.ToString())?true : false;
-        subWorldInfo.thumbnail = worldInfo.thumbnail_new;
-        subWorldInfo.user_limit = worldInfo.user_limit;
+        subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
+        subWorldInfo.name = existingSceneName;
+        subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
+        subWorldInfo.user_limit = ConstantsHolder.userLimit;
         subWorldInfo.domeId = ConstantsHolder.domeId;
         subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
+        subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
+        subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
 
-        WorldItemView.m_EnvName = worldInfo.name;
-        ConstantsHolder.xanaConstants.EnviornmentName = worldInfo.name;
-        gameplayEntityLoader.addressableSceneName = worldInfo.name;
-        ConstantsHolder.userLimit = worldInfo.user_limit;
-        ConstantsHolder.xanaConstants.MuseumID = worldInfo.id.ToString();
+        WorldItemView.m_EnvName = worldInfo.data.name;
+        ConstantsHolder.xanaConstants.EnviornmentName = worldInfo.data.name;
+        gameplayEntityLoader.addressableSceneName = worldInfo.data.name;
+        ConstantsHolder.userLimit = worldInfo.data.user_limit;
+        ConstantsHolder.xanaConstants.MuseumID = worldInfo.data.id;
+        ConstantsHolder.haveSubWorlds = false;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-        ConstantsHolder.isFromXANASummit = true;
 
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
@@ -161,9 +179,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         await SceneManager.UnloadSceneAsync(existingSceneName);
 
         if (subWorldInfo.isBuilderWorld)
-            LoadBuilderSceneLoading(int.Parse(worldInfo.id));
+            LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
 
-        multiplayerController.Connect("XANA Summit-" + worldInfo.name);
+        multiplayerController.Connect("XANA Summit-" + worldInfo.data.name);
     }
 
     void AddStack()
@@ -172,14 +190,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     }
 
 
-    void LoadBuilderSceneLoading(int builderMapId)
+    async void LoadBuilderSceneLoading(int builderMapId)
     {
         ConstantsHolder.xanaConstants.builderMapID = builderMapId;
         ConstantsHolder.xanaConstants.isBuilderScene = true;
         gameplayEntityLoader.addressableSceneName = null;
         WorldItemView.m_EnvName = "Builder";
         ConstantsHolder.xanaConstants.EnviornmentName = "Builder";
-        AsyncOperation handle = SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
+        AsyncOperation handle = await SceneManager.LoadSceneAsync("Builder", LoadSceneMode.Additive);
         handle.completed += Handle_completed;
     }
 
@@ -188,7 +206,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         obj.allowSceneActivation = true;
     }
 
-    void LoadingXANASummitOnBack()
+    async void LoadingXANASummitOnBack()
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
@@ -199,6 +217,14 @@ public class XANASummitSceneLoading : MonoBehaviour
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo = XANASummitDataContainer.loadedScenes.Pop();
 
+        playerPos = subWorldInfo.playerTrasnform[0];
+        playerRot= subWorldInfo.playerTrasnform[1];
+        playerScale= subWorldInfo.playerTrasnform[2];
+
+        Debug.LogError(subWorldInfo.playerTrasnform[0]);
+        Debug.LogError(subWorldInfo.playerTrasnform[1]);
+        Debug.LogError(subWorldInfo.playerTrasnform[2]);
+
         string existingSceneName = WorldItemView.m_EnvName;
         //string sceneName = "XANA Summit";
         WorldItemView.m_EnvName = subWorldInfo.name;
@@ -206,21 +232,25 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.userLimit = subWorldInfo.user_limit;
         ConstantsHolder.xanaConstants.isBuilderScene = subWorldInfo.isBuilderWorld;
         ConstantsHolder.xanaConstants.MuseumID = subWorldInfo.id;
+        ConstantsHolder.isFromXANASummit = subWorldInfo.isFromSummitWorld;
 
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.isFixedHumanoid = false;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
+        //ConstantsHolder.isFromXANASummit = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-        ConstantsHolder.isFromXANASummit = false;
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
 
         multiplayerController.playerobjects.Clear();
 
-        SceneManager.UnloadSceneAsync(existingSceneName);
+        await SceneManager.UnloadSceneAsync(existingSceneName);
+
+        if (subWorldInfo.isBuilderWorld)
+            LoadBuilderSceneLoading(int.Parse(subWorldInfo.id));
 
         multiplayerController.Connect(subWorldInfo.name);
         ConstantsHolder.DiasableMultiPartPhoton = false;
@@ -247,6 +277,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.Avatarjson = dataContainer.summitData.domes[i].Avatarjson;
                 domeGeneralData.AvatarIndex = dataContainer.summitData.domes[i].AvatarIndex;
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
+                domeGeneralData.isSubWorld= dataContainer.summitData.domes[i].isSubWorld;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
@@ -257,17 +288,19 @@ public class XANASummitSceneLoading : MonoBehaviour
         //return new[] { string.Empty, "0", "0" };
     }
 
-    void GetPlayerPosition(Vector3 _playerPos)
+    Vector3[] GetPlayerPosition(Vector3 _playerPos)
     {
         playerPos = _playerPos;
-        playerRot = GameplayEntityLoader.instance.mainController.transform.rotation;
+        playerRot = GameplayEntityLoader.instance.mainController.transform.rotation.eulerAngles;
         playerScale = GameplayEntityLoader.instance.mainController.transform.localScale;
+
+        return new []{playerPos,playerRot,playerScale };
     }
 
     void SetPlayerTransform()
     {
-        if (ConstantsHolder.isFromXANASummit == false)
-            return;
+        //if (ConstantsHolder.isFromXANASummit == false)
+        //    return;
 
         setPlayerPositionDelegate?.Invoke();
 
@@ -277,9 +310,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void SetPlayerOnback()
     {
-
+        Debug.LogError(playerPos);
         GameplayEntityLoader.instance.mainController.transform.position = playerPos;
-        GameplayEntityLoader.instance.mainController.transform.rotation = playerRot;
+        GameplayEntityLoader.instance.mainController.transform.rotation = playerRot.CTQuaternion();
         GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
@@ -290,9 +323,9 @@ public class XANASummitSceneLoading : MonoBehaviour
 
 
 
-    async Task<WorldInfo> GetSingleWorldData(string worldID)
+    async Task<SingleWorldInfo> GetSingleWorldData(string worldID)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL+ConstantsGod.SINGLEWORLDINFO+worldID))
+        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + worldID))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             await www.SendWebRequest();
@@ -303,30 +336,35 @@ public class XANASummitSceneLoading : MonoBehaviour
             }
             else
             {
-                WorldInfo worldInfo = new WorldInfo();
-                worldInfo= JsonUtility.FromJson<WorldInfo>(www.downloadHandler.text);
+                Debug.LogError(www.downloadHandler.text);
+                SingleWorldInfo worldInfo = new SingleWorldInfo();
+                worldInfo = JsonUtility.FromJson<SingleWorldInfo>(www.downloadHandler.text);
                 www.Dispose();
                 return worldInfo;
             }
-            
+
         }
     }
 
 
     [System.Serializable]
-    public class WorldInfo
+    public class SingleWorldInfo
+    {
+        public bool success;
+        public DataClassSingle data;
+    }
+    [System.Serializable]
+    public class DataClassSingle
     {
         public string id;
         public string name;
         public int user_limit;
         public string thumbnail;
         public string banner;
-        public string thumbnail_new;
         public string description;
         public string creator;
         public string entityType;
     }
 
 
-  
 }

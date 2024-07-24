@@ -8,6 +8,7 @@ public class SubWorldsHandler : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
+        Debug.LogError("handler");
         BuilderEventManager.AfterWorldInstantiated += AddSubWorld;
     }
 
@@ -29,11 +30,11 @@ public class SubWorldsHandler : MonoBehaviour
                         if (j < BuilderData.sceneTeleportingObjects.Count)
                         {
                             BuilderData.sceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>();
-                            BuilderData.sceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>().domeId = -1;
+                            BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().domeId = -1;
                             if (XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderWorld)
-                                BuilderData.sceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
+                                BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
                             else
-                                BuilderData.sceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
+                                BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
                         }
                     }
                     return;
