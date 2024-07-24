@@ -171,6 +171,8 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     async void StartDownloadingAssets()
     {
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            BuilderEventManager.ApplySkyoxSettings?.Invoke();
         SortingQueueData(initialPlayerPos);
         while (!dataSorted)
         {
