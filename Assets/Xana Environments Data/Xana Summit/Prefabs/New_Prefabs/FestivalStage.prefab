@@ -14483,11 +14483,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.009999997
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.009999997
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14533,6 +14533,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: defafc270006f9542810c84a52cd6d39, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38cfd16213a728740993c15a325297d6, type: 2}
     - target: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
       propertyPath: m_Name
       value: Screen_Android_Live
@@ -14753,6 +14757,24 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3920636863704595567, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
   m_PrefabInstance: {fileID: 3884111048947452245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &564381416800555430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3617014486622558451, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
+  m_PrefabInstance: {fileID: 3884111048947452245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4287853416664087114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564381416800555430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7e864de13f7543828fa129c80608a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetSpeed: 1
 --- !u!23 &916616077386719686 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4134123162065627283, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
@@ -14925,6 +14947,38 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5129932529088403584, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283810243342376521, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7283810243342376521, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 38cfd16213a728740993c15a325297d6, type: 2}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8457309367440106790, guid: cf0babc408386a345b6de20d74273457, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
