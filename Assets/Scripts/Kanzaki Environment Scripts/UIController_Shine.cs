@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,10 +82,11 @@ public class UIController_Shine : MonoBehaviour
     [SerializeField] private GameObject gourd;
     [HideInInspector] public GameObject SpawnedGourd;
     [SerializeField] private GameObject DataManager_Shrine;
+    [SerializeField] private Transform mizuya;
 
     //private GameObject player;
     private Animator _playerAnimator;
-    public string lang = "";
+    private string _lang = "";
 
     private void Awake()
     {
@@ -111,16 +113,16 @@ public class UIController_Shine : MonoBehaviour
         //Init Localized Image
         if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
         {
-            lang = "Eng";
+            _lang = "Eng";
         }
         else
         {
-            lang = "Jpn";
+            _lang = "Jpn";
         }
 
         for (int i = 0; i < infoImages.Count; i++)
         {
-            if (infoImages[i].name.Contains(lang))
+            if (infoImages[i].name.Contains(_lang))
             {
                 infos.Add(infoImages[i]);
             }
@@ -128,7 +130,7 @@ public class UIController_Shine : MonoBehaviour
 
         for (int i = 0; i < daisenInfoImages.Count; i++)
         {
-            if (daisenInfoImages[i].name.Contains(lang))
+            if (daisenInfoImages[i].name.Contains(_lang))
             {
                 daisenInfos.Add(daisenInfoImages[i]);
             }
@@ -136,7 +138,7 @@ public class UIController_Shine : MonoBehaviour
 
         for (int i = 0; i < duneInfoImages.Count; i++)
         {
-            if (duneInfoImages[i].name.Contains(lang))
+            if (duneInfoImages[i].name.Contains(_lang))
             {
                 duneInfos.Add(duneInfoImages[i]);
             }
@@ -144,7 +146,7 @@ public class UIController_Shine : MonoBehaviour
 
         for (int i = 0; i < worshipImages.Count; i++)
         {
-            if (worshipImages[i].name.Contains(lang))
+            if (worshipImages[i].name.Contains(_lang))
             {
                 worshipInfos.Add(worshipImages[i]);
             }
@@ -152,7 +154,7 @@ public class UIController_Shine : MonoBehaviour
 
         for (int i = 0; i < worshipRejectImages.Count; i++)
         {
-            if (worshipRejectImages[i].name.Contains(lang))
+            if (worshipRejectImages[i].name.Contains(_lang))
             {
                 worshipFails.Add(worshipRejectImages[i]);
             }
@@ -161,11 +163,11 @@ public class UIController_Shine : MonoBehaviour
         //Init Images
         informationUI.GetComponent<Image>().sprite = infos[infoNum];
         daisenInfoUI.GetComponent<Image>().sprite = daisenInfos[daisenNum];
-        daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[lang == "Eng" ? 1 : 0];
+        daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         duneInfoUI.GetComponent<Image>().sprite = duneInfos[duneNum];
         worshipInfoUI.GetComponent<Image>().sprite = worshipInfos[worshipNum];
         worshipFailUI.GetComponent<Image>().sprite = worshipFails[worshipFailNum];
-        daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[lang == "Eng" ? 1 : 0];
+        daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         worshipGameUI.GetComponent<RawImage>().texture = worshipAnimIconImages[worshipAnimNum].texture;
 
         //Button Interaction
@@ -222,7 +224,7 @@ public class UIController_Shine : MonoBehaviour
             //close information Popup
             daisenNum = 0;
             daisenInfoUI.gameObject.SetActive(false);
-            daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[lang == "Eng" ? 1 : 0];
+            daisenInfoUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         }
         else if (daisenNum == daisenInfos.Count - 1)
         {
@@ -273,7 +275,7 @@ public class UIController_Shine : MonoBehaviour
         {
             worshipFailNum = 0;
             SetWorshipFailUI(false);
-            worshipFailUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[lang == "Eng" ? 1 : 0];
+            worshipFailUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         }
         else if (worshipFailNum == worshipFails.Count - 1)
         {
@@ -294,32 +296,28 @@ public class UIController_Shine : MonoBehaviour
         if (idx == (int)PointerUIChild.Temizuya)
         {
             if (_playerAnimator == null)
-
             {
-
                 _playerAnimator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator;
-
                 _playerAnimator.gameObject.GetComponent<IKMuseum>().uIController_Shine = this;
             }
-
             Transform rightHand = _playerAnimator.gameObject.GetComponent<IKMuseum>().RightHand.transform;
-
             SpawnedGourd = Instantiate(gourd, rightHand);
 
-
-
             //Disabling gameplay UI intereactions
-
             PlayerController.PlayerIsWalking?.Invoke();
-
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
 
-
-
             _playerAnimator.SetTrigger("KanzakiWorld");
-
             _playerAnimator.SetTrigger("Washing");
 
+            Transform player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
+            Vector3 directionToMizuya = (mizuya.position - player.transform.position).normalized;
+            Vector3 newPosition = mizuya.position - directionToMizuya * 1.0f;
+            player.transform.position = newPosition;
+
+            Vector3 lookDirection = mizuya.position - player.transform.position;
+            float angleY = Mathf.Atan2(lookDirection.x, lookDirection.z) * Mathf.Rad2Deg;
+            player.transform.rotation = Quaternion.Euler(0, angleY, 0);
 
 
         }
@@ -330,6 +328,9 @@ public class UIController_Shine : MonoBehaviour
             {
                 case PointerUIChild.Worship:
                     gamespaceIdx = (int)GameSpaceUIChild.Worship;
+                    //Disabling gameplay UI intereactions
+                    PlayerController.PlayerIsWalking?.Invoke();
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
                     break;
                 case PointerUIChild.DuneGuide:
                     gamespaceIdx = (int)GameSpaceUIChild.DuneGuide;
@@ -383,8 +384,8 @@ public class UIController_Shine : MonoBehaviour
         _playerAnimator.SetTrigger("KanzakiWorld");
 
         //Disabling gameplay UI intereactions
-        PlayerController.PlayerIsWalking?.Invoke();
-        ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
+        //PlayerController.PlayerIsWalking?.Invoke();
+        //ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
 
         if (worshipAnimNum == 0)
         {

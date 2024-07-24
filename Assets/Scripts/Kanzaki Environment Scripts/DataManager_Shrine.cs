@@ -1,3 +1,4 @@
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,6 +17,8 @@ public class DataManager_Shrine : MonoBehaviour
     [SerializeField] private GameObject worshipFailUI;
     [SerializeField] private UIController_Shine uIController_Shine;
     [SerializeField] private GameObject coinParticle;
+    [SerializeField] private Transform altar;
+
 
     void Start() {
 
@@ -80,6 +83,21 @@ public class DataManager_Shrine : MonoBehaviour
             uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
             //TODO: 동전 효과 넣기
             coinParticle.GetComponent<ParticleSystem>().Play();
+            Transform player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
+            if (player != null)
+            {
+                Vector3 directionToAltar = (altar.position - player.transform.position).normalized;
+                Vector3 newPosition = altar.position - directionToAltar * 2.0f;
+                player.transform.position = newPosition;
+
+                Vector3 lookDirection = altar.position - player.transform.position;
+                float angleY = Mathf.Atan2(lookDirection.x, lookDirection.z) * Mathf.Rad2Deg;
+                player.transform.rotation = Quaternion.Euler(0, angleY, 0);
+            }
+            else
+            {
+                Debug.LogWarning("Player not found!");
+            }
         } else if (www.downloadHandler.text == "fail") {
             worshipFailUI.SetActive(true);
         }
