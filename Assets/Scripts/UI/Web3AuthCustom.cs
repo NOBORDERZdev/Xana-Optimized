@@ -14,8 +14,8 @@ public class Web3AuthCustom : MonoBehaviour
 {
   
     [Header("Web3Auth Project settings")]
-    public string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
-    public string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
+    public string redirectURIAndroid = "web3auth://com.wujie.toyota/auth";
+    public string redirectURIiOS = "web3auth://com.wujie.toyota/auth";
     private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
     private string loginVerifier;
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
@@ -44,7 +44,7 @@ public class Web3AuthCustom : MonoBehaviour
         if(Instance==null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+           // DontDestroyOnLoad(this);
         }
         else
         {
@@ -225,6 +225,8 @@ public class Web3AuthCustom : MonoBehaviour
             return;
 
 #endif
+        WebViewManager.Instance.CloseWebView();
+
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         userInfo = response.userInfo;
@@ -280,7 +282,12 @@ public class Web3AuthCustom : MonoBehaviour
         }
 
     }
-    private void OnDestroy()
+    //private void OnDestroy()
+    //{
+    //    Debug.Log("Logged out!");
+    //    logout();
+    //}
+    private void OnApplicationQuit()
     {
         Debug.Log("Logged out!");
         logout();

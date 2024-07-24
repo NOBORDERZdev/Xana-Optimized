@@ -65,11 +65,14 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
 
-                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                    {
-                        MainSceneEventHandler.OpenLandingScene?.Invoke();
-                        yield break;
-                    }
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+                    FindAnyObjectByType<THA_Flow_Controller>().DeleteAcc_Screen.SetActive(true);
+                    //if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    //{
+                    //    Debug.Log("<color=red>LoadTHAWorld Directly</color>");
+                    //    MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    //    yield break;
+                    //}
 
                     loadprevious();
 
