@@ -66,7 +66,6 @@ public class THA_Flow_Controller : MonoBehaviour
             else
             {
                 GetFeatureResponse features = JsonConvert.DeserializeObject<GetFeatureResponse>(request.downloadHandler.text);
-                //await Task.Delay(500);
                 for (int i = 0; i < features.data.Count; i++)
                 {
                     switch (features.data[i].feature_name)

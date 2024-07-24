@@ -75,10 +75,11 @@ public class ConnectWallet : MonoBehaviour
         if (walletFunctionalitybool)
         {
             print("IS true " + walletFunctionalitybool);
-            foreach (GameObject go in WalletUIObj)
-            {
-                go.SetActive(true);
-            }
+            Debug.Log("<color=yellow>Commented Wallet Button By AR </color>");
+            //foreach (GameObject go in WalletUIObj)
+            //{
+            //    go.SetActive(true);
+            //}
         }
         else
         {
