@@ -47,7 +47,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     //Orientation Changer
     public CanvasGroup landscapeCanvas;
     public CanvasGroup potraitCanvas;
-    bool isPotrait = false;
 
     internal IComponentBehaviour activeComponent;
 
@@ -98,6 +97,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     [Tooltip("What layers the character uses as ground")]
     public LayerMask GroundLayers;
 
+    internal List<ItemData> MultiplayerComponentData = new List<ItemData>();
+    public MultiplayerComponent MultiplayerComponent;
+
+    bool isPotrait = false;
     private void Awake()
     {
         instance = this;
@@ -375,17 +378,17 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
 
     public void MasterClientSwitched(Player newMasterClient)
     {
-        if (!withMultiplayer)
-            return;
+        //if (!withMultiplayer)
+        //    return;
 
-        if (PhotonNetwork.LocalPlayer == newMasterClient)
-        {
-            foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
-            {
-                if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
-                    xanaItem.SetData(xanaItem.itemData);
-            }
-        }
+        //if (PhotonNetwork.LocalPlayer == newMasterClient)
+        //{
+        //    foreach (XanaItem xanaItem in multiplayerComponentsxanaItems)
+        //    {
+        //        if (!xanaItem.itemData.addForceComponentData.isActive || !xanaItem.itemData.translateComponentData.avatarTriggerToggle)
+        //            xanaItem.SetData(xanaItem.itemData);
+        //    }
+        //}
     }
     #endregion
 }
