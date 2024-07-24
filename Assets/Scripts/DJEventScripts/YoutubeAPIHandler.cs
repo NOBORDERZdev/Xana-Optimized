@@ -442,7 +442,8 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     {
                                         GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
                                     }
-                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
+                                    GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
+                                    GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
 
                                     SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                                     SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
