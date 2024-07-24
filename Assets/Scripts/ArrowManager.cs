@@ -406,9 +406,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         else
         {
 
-            go.transform.localPosition = new Vector3(-0.74f, 0.1f, -26f);
+            go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f); // Vector3(-0.74f, 0.1f, -26f);
             go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-            go.transform.localScale = new Vector3(6.0f, 5.25f, 1);
+            go.transform.localScale = new Vector3(4.0f, 3.8f, 1); //Old Values [Vector3(6.0f, 5.25f, 1);]
 
             //EmoteAnimationHandler.Instance.controller = (AnimatorController)EmoteAnimationHandler.Instance.animator.runtimeAnimatorController;
             //// var state = controller.layers[0].stateMachine.defaultState;

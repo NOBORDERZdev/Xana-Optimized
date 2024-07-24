@@ -57,12 +57,6 @@ public class ServerSideUserDataHandler : MonoBehaviour
                 }
                 else
                 {
-                    if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                    {
-                        MainSceneEventHandler.OpenLandingScene?.Invoke();
-                        yield break;
-                    }
-
                     string jsonbody = JsonUtility.ToJson(getdata.data.rows[0].json);
                     LoadPlayerAvatar.avatarId = getdata.data.rows[0].id.ToString();
                     LoadPlayerAvatar.avatarName = getdata.data.rows[0].name;
@@ -70,6 +64,12 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
+
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        yield break;
+                    }
 
                     loadprevious();
 

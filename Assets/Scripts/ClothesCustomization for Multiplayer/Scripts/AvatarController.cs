@@ -426,8 +426,7 @@ public class AvatarController : MonoBehaviour
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            if (_data != null)
-                _CharacterData = _data;
+            
 
             if (ConstantsHolder.isPenguin)
                 return;
@@ -436,6 +435,8 @@ public class AvatarController : MonoBehaviour
                 _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.fixedAvatarJson);
                 clothJson = XANASummitDataContainer.fixedAvatarJson;
             }
+            else if (_data != null)
+                _CharacterData = _data;
             else
             {
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));

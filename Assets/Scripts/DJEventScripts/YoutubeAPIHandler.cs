@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -64,7 +64,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -102,7 +102,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                 _urlDataInitialized = true;
                             }
                             else
@@ -135,7 +135,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
                             //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true);
+                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
                             _urlDataInitialized = true;
                         }
                         else
@@ -173,7 +173,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                                 string incominglink = _response.data.link;
                                 if (!string.IsNullOrEmpty(incominglink))
                                 {
-                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                     _urlDataInitialized = true;
                                     // print("Stage 3 video link:" + Data);
                                 }
@@ -205,7 +205,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
                             //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true);
+                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
                             _urlDataInitialized = true;
                         }
                         else
@@ -243,7 +243,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                                 string incominglink = _response.data.link;
                                 if (!string.IsNullOrEmpty(incominglink))
                                 {
-                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                     _urlDataInitialized = true;
                                     // print("Stage 3 video link:" + Data);
                                 }
@@ -276,7 +276,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -314,7 +314,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                 _urlDataInitialized = true;
                                 // print("Stage 3 video link:" + Data);
                             }
@@ -346,7 +346,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
                         _urlDataInitialized = true;
                     }
                     else
@@ -384,7 +384,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, true);
+                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                 _urlDataInitialized = true;
                                 // print("Stage 3 video link:" + Data);
                             }
@@ -496,15 +496,12 @@ public class StreamData
     public string URL;
     public bool IsLive;
     public bool isPlaying;
-    public bool IsYoutubeURL;
 
-    public StreamData(string URL, bool isLive, bool isPlaying, bool isYoutubeURL)
+    public StreamData(string URL, bool isLive, bool isPlaying)
     {
         this.URL = URL;
         this.IsLive = isLive;
         this.isPlaying = isPlaying;
-        IsYoutubeURL = isYoutubeURL;
-
     }
 
 }

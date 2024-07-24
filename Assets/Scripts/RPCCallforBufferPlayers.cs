@@ -188,6 +188,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                     }
                     else // if player is all default cloths
                     {
+                        _CharacterData.gender = GetComponent<CharacterBodyParts>().AvatarGender.ToString();
                         otherPlayer.WearDefaultItem("Legs", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                         otherPlayer.WearDefaultItem("Chest", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");
                         otherPlayer.WearDefaultItem("Feet", otherPlayer.gameObject, _CharacterData.gender != null ? _CharacterData.gender : "Male");

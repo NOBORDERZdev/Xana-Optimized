@@ -15,11 +15,14 @@ public class XANASummitSceneLoading : MonoBehaviour
     public GameplayEntityLoader gameplayEntityLoader;
 
     public XANASummitDataContainer dataContainer;
-    
+
     [SerializeField]
     private DomeMinimapDataHolder _domeMiniMap;
 
     private int previousUserLimit;
+
+    public delegate void SetPlayerOnSubworldBack();
+    public event SetPlayerOnSubworldBack setPlayerPositionDelegate;
     private void OnEnable()
     {
         BuilderEventManager.LoadNewScene += LoadingNewScene;
@@ -75,6 +78,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
+        ConstantsHolder.loadedScenes.Push(existingSceneName);
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
         previousUserLimit = ConstantsHolder.userLimit;
@@ -101,6 +105,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
+        ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
+
         multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
     }
 
@@ -112,6 +118,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         SummitMiniMapStatusOnSceneChange(false);
         GetPlayerPosition(playerPos);
         string existingSceneName = WorldItemView.m_EnvName;
+        ConstantsHolder.loadedScenes.Push(existingSceneName);
         WorldItemView.m_EnvName = SceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = SceneName;
         previousUserLimit = ConstantsHolder.userLimit;
@@ -123,6 +130,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
+
+        ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
+
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
@@ -156,9 +166,12 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit == false)
             return;
 
+        setPlayerPositionDelegate = SetPlayerOnback;
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
-        string sceneName = "XANA Summit";
+        string sceneName = ConstantsHolder.loadedScenes.Pop();
+
+        //string sceneName = "XANA Summit";
         string existingSceneName = WorldItemView.m_EnvName;
         WorldItemView.m_EnvName = sceneName;
         ConstantsHolder.xanaConstants.EnviornmentName = sceneName;
@@ -170,7 +183,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.isConnecting = false;
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
-        ConstantsHolder.isFromXANASummit = true;
+        ConstantsHolder.isFromXANASummit = false;
         multiplayerController.Disconnect();
 
         XanaWorldDownloader.ResetAll();
@@ -198,12 +211,12 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.worldType = dataContainer.summitData.domes[i].worldType;
                 domeGeneralData.experienceType = dataContainer.summitData.domes[i].experienceType;
                 domeGeneralData.builderWorldId = dataContainer.summitData.domes[i].builderWorldId;
-                domeGeneralData.maxPlayer= dataContainer.summitData.domes[i].maxPlayer;
-                domeGeneralData.IsPenguin= dataContainer.summitData.domes[i].IsPenguin;
-                domeGeneralData.Ishumanoid= dataContainer.summitData.domes[i].Ishumanoid;
-                domeGeneralData.Avatarjson= dataContainer.summitData.domes[i].Avatarjson;
-                domeGeneralData.AvatarIndex= dataContainer.summitData.domes[i].AvatarIndex;
-                domeGeneralData.name= dataContainer.summitData.domes[i].name;
+                domeGeneralData.maxPlayer = dataContainer.summitData.domes[i].maxPlayer;
+                domeGeneralData.IsPenguin = dataContainer.summitData.domes[i].IsPenguin;
+                domeGeneralData.Ishumanoid = dataContainer.summitData.domes[i].Ishumanoid;
+                domeGeneralData.Avatarjson = dataContainer.summitData.domes[i].Avatarjson;
+                domeGeneralData.AvatarIndex = dataContainer.summitData.domes[i].AvatarIndex;
+                domeGeneralData.name = dataContainer.summitData.domes[i].name;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
@@ -226,14 +239,24 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (ConstantsHolder.isFromXANASummit == false)
             return;
 
-        if (WorldItemView.m_EnvName == "XANA Summit")
-        {
-            GameplayEntityLoader.instance.mainController.transform.position = playerPos;
-            GameplayEntityLoader.instance.mainController.transform.rotation = playerRot;
-            GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
-            ConstantsHolder.isFromXANASummit = false;
-        }
+        setPlayerPositionDelegate?.Invoke();
+
 
         StartCoroutine(LoadingHandler.Instance.FadeOut());
     }
+
+    void SetPlayerOnback()
+    {
+
+        GameplayEntityLoader.instance.mainController.transform.position = playerPos;
+        GameplayEntityLoader.instance.mainController.transform.rotation = playerRot;
+        GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
+        if (WorldItemView.m_EnvName == "XANA Summit")
+        {
+            ConstantsHolder.isFromXANASummit = false;
+        }
+        setPlayerPositionDelegate = null;
+    }
+
+
 }
