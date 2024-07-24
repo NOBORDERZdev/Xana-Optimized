@@ -101,13 +101,13 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             IsNFTCharacter = (bool)Datasend[2];
         SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
         _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
-        for (int j = 0; j < MutiplayerController.instance.playerobjects.Count; j++)
-        {
-            if (MutiplayerController.instance.playerobjects[j] != null && MutiplayerController.instance.playerobjects[j].GetComponent<PhotonView>())
-            {
-                if (MutiplayerController.instance.playerobjects[j].GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
+        //for (int j = 0; j < MutiplayerController.instance.playerobjects.Count; j++)
+        //{
+            //if (MutiplayerController.instance.playerobjects[j] != null && MutiplayerController.instance.playerobjects[j].GetComponent<PhotonView>())
+            //{
+                if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
                 {
-                    otherPlayer = MutiplayerController.instance.playerobjects[j].GetComponent<AvatarController>();
+                    otherPlayer = gameObject.GetComponent<AvatarController>();
                     CharacterBodyParts bodyparts = otherPlayer.GetComponent<CharacterBodyParts>();
 
                     //otherPlayer._CharData = _CharacterData;
@@ -398,8 +398,8 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                         StartCoroutine(otherPlayer.GetComponent<EyesBlinking>().BlinkingStartRoutine());
                     }
                 }
-            }
-        }
+            //}
+        //}
     }
 
 
