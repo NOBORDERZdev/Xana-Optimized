@@ -71,7 +71,7 @@ public class StartPoint : MonoBehaviour
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(true);
 
         if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja"){ 
-            ReferencesForGamePlay.instance.XANAPartyCounterText.fontSize=70;
+            ReferencesForGamePlay.instance.XANAPartyCounterText.fontSize=50;
             ReferencesForGamePlay.instance.XANAPartyCounterText.text = "ゴー！".ToString();
         }
         else{ 

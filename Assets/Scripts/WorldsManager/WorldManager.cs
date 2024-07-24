@@ -117,13 +117,23 @@ public class WorldManager : MonoBehaviour
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-            if ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
-            (PlayerPrefs.GetString("PlayerName") == ""))
-            {
-                //GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
-                //UserLoginSignupManager.instance.OpenUserNamePanel();
-            }
-            else if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            //if ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
+            //(PlayerPrefs.GetString("PlayerName") == ""))
+            //{
+            //    //GameManager.Instance.UiManager.portraitSplashScreen.SetActive(false);
+            //    //UserLoginSignupManager.instance.OpenUserNamePanel();
+            //}
+            //else if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            //{
+            //    UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
+            //}
+            //else
+            //{
+            //    XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+            //     yield return null;
+            //}
+
+            if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {
                 UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
             }
