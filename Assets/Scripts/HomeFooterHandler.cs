@@ -68,7 +68,7 @@ public class HomeFooterHandler : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.CurrentSceneName = "";
             GameManager.Instance.defaultSelection = 10;
-            if (ConstantsHolder.xanaConstants.isFromHomeTab)
+            if (ConstantsHolder.xanaConstants.isFromHomeTab && !ConstantsHolder.xanaConstants.OpenSpaceScreen_fromSummit)
             {
                 Invoke(nameof(OnClickHomeButton), 0);
                 ConstantsHolder.xanaConstants.isFromHomeTab = false;
@@ -83,8 +83,11 @@ public class HomeFooterHandler : MonoBehaviour
                     Debug.LogError("going here");
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
                 }
-                else
+                else if(!ConstantsHolder.xanaConstants.OpenSpaceScreen_fromSummit)
+                {
                     Invoke(nameof(OnClickHomeWorldButton), 0f);
+                }
+                   
             }
         }
         else
