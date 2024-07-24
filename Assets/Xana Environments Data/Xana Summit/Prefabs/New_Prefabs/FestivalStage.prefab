@@ -153,8 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IsGlobal: 0
   priority: 0
-  blendDistance: 5.13
-  weight: 1
+  blendDistance: 0
+  weight: 0.5
   sharedProfile: {fileID: 11400000, guid: 0028007d9b6a201488d599d5d2747a8c, type: 2}
 --- !u!1 &2186972116789248596
 GameObject:
@@ -14756,6 +14756,24 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3920636863704595567, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
   m_PrefabInstance: {fileID: 3884111048947452245}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &564381416800555430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3617014486622558451, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
+  m_PrefabInstance: {fileID: 3884111048947452245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8239018150866775171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 564381416800555430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff7e864de13f7543828fa129c80608a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offsetSpeed: 1
 --- !u!23 &916616077386719686 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 4134123162065627283, guid: 2f97f454e4f56de4b8b3c8d6e486c711, type: 3}
