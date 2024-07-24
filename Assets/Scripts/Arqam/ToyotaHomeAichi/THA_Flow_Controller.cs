@@ -16,6 +16,10 @@ public class THA_Flow_Controller : MonoBehaviour
     public GameObject GoogleBtn;
     public GameObject AppleBtn;
 
+    //https://api-test.xana.net/admin/get-features-list         // Get API
+    //https://api-test.xana.net/admin/delete-feature-control    // Delete API
+    //https://api-test.xana.net/admin/update-feature-control    // add feature API
+
     void Start()
     {
         if (ConstantsHolder.xanaConstants.isBackFromWorld)
@@ -83,7 +87,7 @@ public class THA_Flow_Controller : MonoBehaviour
                             AppleBtn.SetActive(features.data[i].feature_status);
                             break;
                     }
-                    Debug.LogError(features.data[i].feature_name + ":" + features.data[i].feature_status);
+                    //Debug.LogError(features.data[i].feature_name + ":" + features.data[i].feature_status);
                 }
             }
         }
