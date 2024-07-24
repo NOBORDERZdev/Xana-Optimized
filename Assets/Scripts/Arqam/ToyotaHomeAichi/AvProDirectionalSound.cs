@@ -21,6 +21,7 @@ public class AvProDirectionalSound : MonoBehaviour
     private float defaultMaxDis = 0;
     private Slider landscapeSlider;
     private float sliderValue = 0f;
+    public SPAAIHandler PlayerTriggerCheck;
 
 
     private void OnEnable()
@@ -102,12 +103,28 @@ public class AvProDirectionalSound : MonoBehaviour
     public void ActiveDirectionalSound()
     {
         if (activePlayer.gameObject.activeSelf)
-            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        {
+            if (volumeCoroutine == null)
+            {
+                volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+            }
+        }
+    }
+
+    public void ActivateDirectionalSoundIfNotYet()
+    {
+            if (volumeCoroutine == null)
+            {
+                if (PlayerTriggerCheck.IsPlayerTriggered)
+                {
+                    volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+                }
+            }
     }
 
     IEnumerator AdjustScreenVolume()
     {
-        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
+            playerCam = ReferencesForGamePlay.instance.m_34player.transform;
 
         while (true)
         {

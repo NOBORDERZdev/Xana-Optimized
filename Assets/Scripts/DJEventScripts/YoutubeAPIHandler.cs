@@ -427,7 +427,8 @@ public class YoutubeAPIHandler : MonoBehaviour
                             if (_apiResponse.videoData.isYoutube)
                             {
                                 bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
-                                Data = new StreamData(incominglink, _isLiveVideo, true, _apiResponse.videoData.isYoutube);
+                                Data = new StreamData(incominglink, _isLiveVideo, true);
+                                GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
                                 if (GetComponent<AvProLiveVideoSoundEnabler>())
                                 {
                                     GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
@@ -442,6 +443,8 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     {
                                         GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
                                     }
+                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.gameObject.SetActive(false);
+                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.enabled = false;
                                     GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
                                     GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
 
@@ -452,8 +455,8 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData.url;
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
                                     OldAWSURL = _apiResponse.videoData.url;
-                                    Data = null;
                                 }
+                                Data = null;
                             }
                         }
                         else
