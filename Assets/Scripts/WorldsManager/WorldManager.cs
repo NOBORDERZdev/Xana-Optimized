@@ -112,7 +112,9 @@ public class WorldManager : MonoBehaviour
     void OpenLandingScene()
     {
         SearchKey= "XANA Summit";
+        ConstantsHolder.xanaConstants.OpenSpaceScreen_fromSummit = true;
         string url = PrepareApiURL(APIURL.SearchWorld);
+
         StartCoroutine(FetchUserMapFromServer(url, (check) =>
         {
             ConstantsHolder.userLimit = int.Parse(_WorldInfo.data.rows[0].user_limit);

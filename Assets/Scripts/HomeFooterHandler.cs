@@ -83,8 +83,11 @@ public class HomeFooterHandler : MonoBehaviour
                     Debug.LogError("going here");
                     PlayerPrefs.SetInt("PlayerDeepLinkOpened", 0);
                 }
-                else
+                else if(!ConstantsHolder.xanaConstants.OpenSpaceScreen_fromSummit)
+                {
                     Invoke(nameof(OnClickHomeWorldButton), 0f);
+                }
+                   
             }
         }
         else
