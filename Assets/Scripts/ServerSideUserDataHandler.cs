@@ -65,12 +65,12 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
 
-                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                    {
-                        Debug.Log("<color=red>LoadTHAWorld Directly</color>");
-                        MainSceneEventHandler.OpenLandingScene?.Invoke();
-                        yield break;
-                    }
+                    //if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    //{
+                    //    Debug.Log("<color=red>LoadTHAWorld Directly</color>");
+                    //    MainSceneEventHandler.OpenLandingScene?.Invoke();
+                    //    yield break;
+                    //}
 
                     loadprevious();
 

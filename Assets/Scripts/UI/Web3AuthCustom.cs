@@ -44,7 +44,7 @@ public class Web3AuthCustom : MonoBehaviour
         if(Instance==null)
         {
             Instance = this;
-            DontDestroyOnLoad(this);
+           // DontDestroyOnLoad(this);
         }
         else
         {
@@ -280,7 +280,12 @@ public class Web3AuthCustom : MonoBehaviour
         }
 
     }
-    private void OnDestroy()
+    //private void OnDestroy()
+    //{
+    //    Debug.Log("Logged out!");
+    //    logout();
+    //}
+    private void OnApplicationQuit()
     {
         Debug.Log("Logged out!");
         logout();

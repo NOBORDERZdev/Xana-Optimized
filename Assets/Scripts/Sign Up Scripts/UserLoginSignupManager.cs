@@ -2153,9 +2153,10 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void UpdateProfilePic()
     {
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         StartCoroutine(EditProfilePic());
         Debug.Log("<color=red>LoadTHAWorld Directly</color>");
-        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        //if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
             MainSceneEventHandler.OpenLandingScene?.Invoke();
     }
 

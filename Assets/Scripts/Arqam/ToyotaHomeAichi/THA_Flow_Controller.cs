@@ -20,17 +20,45 @@ public class THA_Flow_Controller : MonoBehaviour
     //https://api-test.xana.net/admin/delete-feature-control    // Delete API
     //https://api-test.xana.net/admin/update-feature-control    // add feature API
 
-    void Start()
+    void Awake()
     {
-        if (ConstantsHolder.xanaConstants.isBackFromWorld)
-        {
-            if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
-            {
-                DeleteAcc_Screen.SetActive(true);
-            }
-        }
+        WalletBtn.SetActive(false);
+        GoogleBtn.SetActive(false);
+        AppleBtn.SetActive(false);
+        //MainSceneEventHandler.OpenLandingScene += OpenLandingScene;
 
+        //if (ConstantsHolder.xanaConstants.isBackFromWorld)
+        //{
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
+        {
+            if (!ConstantsHolder.xanaConstants.isBackFromWorld)
+                Web3AuthCustom.Instance.onLoginAction += AfterLogin;
+            DeleteAcc_Screen.SetActive(true);
+        }
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        //}       
+    }
+
+    private void Start()
+    {
         GetEmailData();
+    }
+    private void OnDisable()
+    {
+        Web3AuthCustom.Instance.onLoginAction -= AfterLogin;
+        // MainSceneEventHandler.OpenLandingScene -= OpenLandingScene;
+    }
+
+    //private void OpenLandingScene()
+    //{
+    //    Debug.LogError("NFT_LoadingTrue");
+    //    LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+    //}
+
+    private void AfterLogin(string email)
+    {
+        Debug.Log("<color=red>Email:" + email + "</color>");
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
     }
 
     public void DeleteAccount()
@@ -45,6 +73,7 @@ public class THA_Flow_Controller : MonoBehaviour
 
     public void Load_THAWorld()
     {
+        LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         MainSceneEventHandler.OpenLandingScene?.Invoke();
         StartCoroutine(Load_THA());
     }
