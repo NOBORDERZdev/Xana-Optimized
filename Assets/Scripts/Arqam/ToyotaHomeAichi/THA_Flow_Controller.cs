@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,6 +10,11 @@ public class THA_Flow_Controller : MonoBehaviour
     public GameObject DeleteAcc_Screen;
     public GameObject DeleteAcc_Popup;
     public GameObject LoginWelcome_Screen;
+    [Header("On Boarding Features Button")]
+    public GameObject WalletBtn;
+    public GameObject EmailBtn;
+    public GameObject GoogleBtn;
+    public GameObject AppleBtn;
 
     void Start()
     {
@@ -47,8 +53,8 @@ public class THA_Flow_Controller : MonoBehaviour
 
     public async void GetEmailData()
     {
-        string _apiURL = ConstantsGod.API_BASEURL + "admin/get-features-list";
-        Debug.Log("API URL is : " + _apiURL);
+        string _apiURL = ConstantsGod.API_BASEURL + "/admin/get-features-list";
+        //Debug.Log("<color=red>API URL is : " + _apiURL + "</color>");
         using (UnityWebRequest request = UnityWebRequest.Get(_apiURL))
         {
             //request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -60,8 +66,24 @@ public class THA_Flow_Controller : MonoBehaviour
             else
             {
                 GetFeatureResponse features = JsonConvert.DeserializeObject<GetFeatureResponse>(request.downloadHandler.text);
-                for (int i=0; i<features.data.Count; i++)
+                //await Task.Delay(500);
+                for (int i = 0; i < features.data.Count; i++)
                 {
+                    switch (features.data[i].feature_name)
+                    {
+                        case "WalletBtn":
+                            WalletBtn.SetActive(features.data[i].feature_status);
+                            break;
+                        case "EmailBtn":
+                            EmailBtn.SetActive(features.data[i].feature_status);
+                            break;
+                        case "GoogleBtn":
+                            GoogleBtn.SetActive(features.data[i].feature_status);
+                            break;
+                        case "AppleBtn":
+                            AppleBtn.SetActive(features.data[i].feature_status);
+                            break;
+                    }
                     Debug.LogError(features.data[i].feature_name + ":" + features.data[i].feature_status);
                 }
             }
