@@ -113,6 +113,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
 
+        ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
+
         multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
     }
 
@@ -147,7 +149,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.isEnvLoaded = false;
         gameplayEntityLoader.isAlreadySpawned = true;
         ConstantsHolder.isFromXANASummit = true;
-        //XANASummitDataContainer.fixedAvatarJson = dataContainer.avatarJson[domeGeneralData.avatarId];
+
+        ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
         multiplayerController.Disconnect();
 
@@ -274,15 +277,14 @@ public class XANASummitSceneLoading : MonoBehaviour
 
     void SetPlayerOnback()
     {
+
         GameplayEntityLoader.instance.mainController.transform.position = playerPos;
         GameplayEntityLoader.instance.mainController.transform.rotation = playerRot;
         GameplayEntityLoader.instance.mainController.transform.localScale = playerScale;
-
         if (WorldItemView.m_EnvName == "XANA Summit")
         {
             ConstantsHolder.isFromXANASummit = false;
         }
-
         setPlayerPositionDelegate = null;
     }
 
