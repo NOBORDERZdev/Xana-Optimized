@@ -90,6 +90,13 @@ public class JjWorldChanger : MonoBehaviour
                         else
                             XanaConstants.xanaConstants.pmy_classRoomID_Test = 12;
                     }
+                    else if (WorldID == 6)
+                    {
+                        if (APIBaseUrlChange.instance.IsXanaLive)
+                            XanaConstants.xanaConstants.pmy_classRoomID_Main = 13;
+                        else
+                            XanaConstants.xanaConstants.pmy_classRoomID_Test = 13;
+                    }
                 }
                 if (isEnteringPopup)
                     CanvasButtonsHandler.inst.EnableJJPortalPopup(this.gameObject, 0);
