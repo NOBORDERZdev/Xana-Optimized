@@ -173,7 +173,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     {
         if (!string.IsNullOrEmpty(text))
         {
-            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.Others, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
+            gameObject.GetComponent<PhotonView>().RPC("sendDataChatMsg", RpcTarget.All, text, ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID);
             text = string.Empty;
         }
     }
