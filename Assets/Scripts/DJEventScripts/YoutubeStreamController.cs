@@ -65,11 +65,11 @@ public class YoutubeStreamController : MonoBehaviour
             //}
             //else
             //{
-                SoundController.Instance.videoPlayerSource = videoPlayerAudioSource;
-                SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
+                //SoundController.Instance.videoPlayerSource = videoPlayerAudioSource;
+                //SoundSettings.soundManagerSettings.videoSource = videoPlayerAudioSource;
             //}
             
-            SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
+            //SoundController.Instance.livePlayerSource = LiveStreamPlayer.GetComponent<MediaPlayer>();
             SoundSettings.soundManagerSettings.setNewSliderValues();
         }
     }
@@ -179,9 +179,13 @@ public class YoutubeStreamController : MonoBehaviour
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
             Debug.Log("Hardik changes check");
+            streamYoutubeVideo.mediaPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
-
+            if (GetComponent<AvProDirectionalSound>())
+            {
+                GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
+            }
 
 
             //YoutubePlayerLivestream player = LiveStreamPlayer.GetComponent<YoutubePlayerLivestream>();

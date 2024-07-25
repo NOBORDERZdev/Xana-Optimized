@@ -73,7 +73,8 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
         }
         textEditor.SelectAll();
         textEditor.Copy();
-#if UNITY_IOS
+
+#if UNITY_IOS || UNITY_EDITOR
         copiedTextPanel.SetActive(true);
         Invoke("DisableToast",1f);
 #endif

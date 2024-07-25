@@ -995,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlreadySpawned: 0
+  MiniMapCamera: {fileID: 1265632383}
   IsJoinSummitWorld: 0
   mainPlayer: {fileID: 360146152713065801}
   mainController: {fileID: 1808683680640967398}
@@ -9530,7 +9531,6 @@ GameObject:
   m_Component:
   - component: {fileID: 654609737}
   - component: {fileID: 654609736}
-  - component: {fileID: 654609738}
   m_Layer: 0
   m_Name: Stay_Time_Tracker
   m_TagString: Untagged
@@ -9567,18 +9567,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &654609738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654609735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debd8ed692439454db363aa7319fff70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &655967485
 GameObject:
   m_ObjectHideFlags: 0
@@ -17292,10 +17280,6 @@ PrefabInstance:
       propertyPath: multiplayerController
       value: 
       objectReference: {fileID: 860513761}
-    - target: {fileID: 2363225616550771675, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
-      propertyPath: _stayTimeTrackerForSummit
-      value: 
-      objectReference: {fileID: 654609738}
     - target: {fileID: 2363225616550771678, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
       propertyPath: audioSource
       value: 
@@ -29288,7 +29272,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904674, z: 0.000060756436, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904878, z: 0.000060757826, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29740,7 +29724,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641528, y: -0.00089248887, z: 0.000009499849, w: 0.999943}
+  m_LocalRotation: {x: 0.010643733, y: -0.00089269574, z: 0.000009504019, w: 0.99994296}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

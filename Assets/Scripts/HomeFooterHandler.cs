@@ -106,14 +106,14 @@ public class HomeFooterHandler : MonoBehaviour
 
     public void OnSelectedClick(int index)
     {
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
-        {
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        //{
 
-            // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-            //PostButton.transform.GetComponent<Button>().interactable = false;
-            //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
-        }
+        //    // allButtonIcon[2].transform.parent.GetComponent<Button>().interactable = false;
+        //    allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
+        //    //PostButton.transform.GetComponent<Button>().interactable = false;
+        //    //  allButtonIcon[4].transform.GetChild(0).GetComponent<Image>().color = Color.gray;
+        //}
 
 
         for (int i = 0; i < allButtonIcon.Count; i++)
@@ -154,8 +154,8 @@ public class HomeFooterHandler : MonoBehaviour
             allButtonIcon[2].transform.GetComponent<Image>().color = DisableButtonColor;
             allButtonIcon[3].transform.parent.GetComponent<Button>().interactable = false;
             allButtonIcon[3].transform.GetComponent<Image>().color = DisableButtonColor;
-            allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
-            allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
+           // allButtonIcon[4].transform.parent.GetComponent<Button>().interactable = false;
+           // allButtonIcon[4].transform.GetComponent<Image>().color = DisableButtonColor;
         }
         else
         {
@@ -725,108 +725,114 @@ public class HomeFooterHandler : MonoBehaviour
     //this method is used to Profile button click.......
     public void OnClickProfileButton()
     {
-        gameManager.HomeCameraInputHandler(false);
-
-        if (/*gameManager.defaultSelection != 4*/ true)
+        if (PlayerPrefs.GetInt("IsLoggedIn") != 0)
         {
-            // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
-            //---->>>Sannan OnSelectedClick(4);
-            if (GlobalVeriableClass.callingScreen == "Profile")
-                return;
+            gameManager.HomeCameraInputHandler(false);
 
-
-            if (FeedUIController.Instance)
+            if (/*gameManager.defaultSelection != 4*/ true)
             {
-                FeedUIController.Instance.feedUiScreen.SetActive(false);
-            }
+                // gameManager.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(true);
+                //---->>>Sannan OnSelectedClick(4);
+                if (GlobalVeriableClass.callingScreen == "Profile")
+                    return;
 
-            if (ProfileUIHandler.instance)
-            {
-                // Reset Scroller position 
-                Transform contantObj = ProfileUIHandler.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
-                Vector2 tempPos = contantObj.position;
-                tempPos.y = 0f;
-                contantObj.position = tempPos;
-            }
 
-            gameManager.defaultSelection = 4;
-            GlobalVeriableClass.callingScreen = "Profile";
-            gameManager.ActorManager._cinemaCam.SetActive(true);
-            // LoaderShow(true);
-            //gameManager.ActorManager.IdlePlayerAvatorForMenu(true);
-
-            if (additiveScenesManager != null)
-            {
-                additiveScenesManager.SNSmodule.SetActive(true);
-                // additiveScenesManager.SNSMessage.SetActive(false);
-                gameManager.defaultSelection = 4;
-                gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(4);
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
-            }
-            else
-            {
-                if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
+                if (FeedUIController.Instance)
                 {
-                    Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
+                    FeedUIController.Instance.feedUiScreen.SetActive(false);
                 }
+
+                if (ProfileUIHandler.instance)
+                {
+                    // Reset Scroller position 
+                    Transform contantObj = ProfileUIHandler.instance.mainscrollControllerRef.m_ScrollRect.content.transform;
+                    Vector2 tempPos = contantObj.position;
+                    tempPos.y = 0f;
+                    contantObj.position = tempPos;
+                }
+
+                gameManager.defaultSelection = 4;
+                GlobalVeriableClass.callingScreen = "Profile";
+                gameManager.ActorManager._cinemaCam.SetActive(true);
+                // LoaderShow(true);
+                //gameManager.ActorManager.IdlePlayerAvatorForMenu(true);
+
+                if (additiveScenesManager != null)
+                {
+                    additiveScenesManager.SNSmodule.SetActive(true);
+                    // additiveScenesManager.SNSMessage.SetActive(false);
+                    gameManager.defaultSelection = 4;
+                    gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(4);
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().OnSelectedClick(4);
+                }
+                else
+                {
+                    if (SceneManager.GetActiveScene().name != "SNSFeedModuleScene")
+                    {
+                        Initiate.Fade("SNSFeedModuleScene", Color.black, 1.0f, true);
+                    }
+                }
+                //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
+                //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
+                //{
+                //MyProfileDataManager.Instance.ProfileTabButtonClick();
+                //FeedUIController.Instance.ResetAllFeedScreen(false);
+                //}
+                if (MyProfileDataManager.Instance)
+                {
+                    MyProfileDataManager.Instance.ProfileTabButtonClick();
+                    FeedUIController.Instance.ResetAllFeedScreen(false);
+                    FeedUIController.Instance.AddFriendPanel.SetActive(false);
+                    FeedUIController.Instance.ShowLoader(true);
+                }
+                if (gameManager.UiManager.Canvas.activeSelf)
+                {
+                    gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0; // hiding home footer
+                    gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
+                    gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    gameManager.UiManager.Canvas.SetActive(false);
+
+                    gameManager.UiManager.HomeWorldScreen.SetActive(false);
+                    FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
+                    FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
+                    Invoke("ClearUnloadAssetData", 0.2f);
+                }
+                //gameManager.ActorManager.IdlePlayerAvatorForPostMenu(true);
+                if (OtherPlayerProfileData.Instance)
+                {
+                    OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
+                    MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
+                }
+                if (MyProfileDataManager.Instance)
+                {
+                    MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
+                }
+                ConstantsHolder.xanaConstants.SnsProfileID = SNS_APIManager.Instance.userId;
+                ConstantsHolder.xanaConstants.IsProfileVisit = true;
+                ConstantsHolder.xanaConstants.IsOtherProfileVisit = false;
+                ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
+                ProfileUIHandler.instance.SetMainScrollRefs();
+                ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
+                ProfileUIHandler.instance.editProfileBtn.SetActive(true);
+                ProfileUIHandler.instance.followProfileBtn.SetActive(false);
+                DisableSubScreen();
             }
-            //Commented in order to make profile 2.0 work after ahsan removed old feedui object from scene ----- UMER
-            //if (!MyProfileDataManager.Instance.myProfileScreen.activeSelf)
-            //{
-            //MyProfileDataManager.Instance.ProfileTabButtonClick();
-            //FeedUIController.Instance.ResetAllFeedScreen(false);
-            //}
+
+            //home page thumnbail images destroy
+            WorldManager.instance.ClearHomePageData();
+            gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
             if (MyProfileDataManager.Instance)
             {
-                MyProfileDataManager.Instance.ProfileTabButtonClick();
-                FeedUIController.Instance.ResetAllFeedScreen(false);
-                FeedUIController.Instance.AddFriendPanel.SetActive(false);
-                FeedUIController.Instance.ShowLoader(true);
+                MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
             }
-            if (gameManager.UiManager.Canvas.activeSelf)
-            {
-                gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().alpha = 0; // hiding home footer
-                gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().interactable = false;
-                gameManager.UiManager._footerCan.GetComponent<CanvasGroup>().blocksRaycasts = false;
-                gameManager.UiManager.Canvas.SetActive(false);
-
-                gameManager.UiManager.HomeWorldScreen.SetActive(false);
-                FeedUIController.Instance.footerCan.GetComponent<HomeFooterHandler>().HomeSceneFooterSNSButtonIntrectableTrueFalse();
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().alpha = 1;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().interactable = true;
-                FeedUIController.Instance.footerCan.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                Invoke("ClearUnloadAssetData", 0.2f);
-            }
-            //gameManager.ActorManager.IdlePlayerAvatorForPostMenu(true);
-            if (OtherPlayerProfileData.Instance)
-            {
-                OtherPlayerProfileData.Instance.myPlayerdataObj.SetActive(true);
-                MyProfileDataManager.Instance.ResetMainScrollDefaultTopPos();
-            }
-            if (MyProfileDataManager.Instance)
-            {
-                MyProfileDataManager.Instance.OtherPlayerdataObj.SetActive(false);
-            }
-            ConstantsHolder.xanaConstants.SnsProfileID = SNS_APIManager.Instance.userId;
-            ConstantsHolder.xanaConstants.IsProfileVisit = true;
-            ConstantsHolder.xanaConstants.IsOtherProfileVisit = false;
-            ProfileUIHandler.instance.SwitchBetweenUserAndOtherProfileUI(true);
-            ProfileUIHandler.instance.SetMainScrollRefs();
-            ProfileUIHandler.instance.SetUserAvatarClothing(gameManager.mainCharacter.GetComponent<AvatarController>()._PCharacterData);
-            ProfileUIHandler.instance.editProfileBtn.SetActive(true);
-            ProfileUIHandler.instance.followProfileBtn.SetActive(false);
-            DisableSubScreen();
+            OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
+            QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
         }
-
-        //home page thumnbail images destroy
-        WorldManager.instance.ClearHomePageData();
-        gameManager.FriendsHomeManager.GetComponent<FriendHomeManager>().EnableFriendsView(false);
-        if (MyProfileDataManager.Instance)
-        {
-            MyProfileDataManager.Instance.UpdateBackButtonAction(OnClickProfileButton);
+        else { 
+        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
         }
-        OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Othertabs);
-        QuestDataHandler.Instance.OpenAndCloseQuestPanel(false);
     }
     public void InitProfileData()
     {
