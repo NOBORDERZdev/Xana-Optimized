@@ -33,7 +33,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     private void Awake()
     {
-        voiceNetwork = FindObjectOfType<PhotonVoiceNetwork>();
+       
         isInsideCAr = false;
       //  MutiplayerController.instance.OnEnteredRoom += OnPlayerEnteredRoom;
         PhotonNetwork.AddCallbackTarget(this);
@@ -43,7 +43,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     public void ExitCar()
     {
         view.RPC("ExitCAr", RpcTarget.All);
-
+        GameplayEntityLoader.instance.IsJoinSummitWorld = false;
     }
 
     private void FixedUpdate()
@@ -80,8 +80,11 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.localPosition = car.DriverPosition.transform.localPosition;
                     PlayerCameraController.instance.EnableCameraRecenter();
                     CarNavigationManager.instance.EnableExitCanvas();
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
@@ -124,7 +127,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             else
             {
                 car.pasengerseatemty = false;
-                if (GetComponent<PhotonView>().IsMine)
+                if (view.IsMine)
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
                     transform.parent.gameObject.GetComponent<CharacterController>().enabled = false;
@@ -138,11 +141,13 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.localPosition = Vector3.zero;
                     transform.parent.transform.localPosition = car.PacengerPosition.transform.localPosition;
                     CarNavigationManager.instance.EnableExitCanvas();
-
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
+                    if (voiceNetwork == null ) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+                    Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
 
                 }
                 else
@@ -176,7 +181,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 {
                     car.showLove();
                 }
-                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { voiceNetwork.Client.GlobalInterestGroup }, new byte[] { car.PrivateRoomName }));
+
 
             }
         }
@@ -207,6 +212,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
                 ConstantsHolder.TempDiasableMultiPartPhoton = false;
                 CarNavigationManager.instance.DisableExitCanvas();
+                SummitCarUIHandler.instance.UpdateUIelement(true);
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.DriverExitPosition.transform.position;
                 PlayerCameraController.instance.DisableCameraRecenter();
@@ -215,7 +221,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
-              
+                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+
+                Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
+
             }
             else
             {
@@ -235,11 +244,12 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         else
         {
             car.pasengerseatemty = true;
-            if (GetComponent<PhotonView>().IsMine)
+            if (view.IsMine)
             {
 
                 ConstantsHolder.TempDiasableMultiPartPhoton = false;    
                 CarNavigationManager.instance.DisableExitCanvas();
+                SummitCarUIHandler.instance.UpdateUIelement(true);
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = car.PassengerExitPosition.transform.position;
                 transform.parent.gameObject.GetComponent<CharacterController>().enabled = true;
@@ -248,6 +258,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 gameObject.GetComponent<ArrowManager>().enabled = true;
                 gameObject.GetComponent<PhotonTransformView>().enabled = true;
                 PlayerCameraController.instance.DisableCameraRecenter();
+                if (voiceNetwork == null) { voiceNetwork = PhotonVoiceNetwork.Instance; }
+             
 
             }
             else
@@ -266,7 +278,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         }
 
 
-        Debug.Log("RoomChanger " + voiceNetwork.Client.OpChangeGroups(new byte[] { car.PrivateRoomName }, new byte[] { voiceNetwork.Client.GlobalInterestGroup }));
+        
         yield return new WaitForSeconds(2);
         isInsideCAr = false;
     }
@@ -302,7 +314,9 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     public  void OnPlayerEnteredRoom(Player newPlayer)
     {
-        Debug.LogError("OnPlayerEnteredRoo");
+        if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { return; }
+
+            Debug.LogError("OnPlayerEnteredRoo");
         if (isInsideCAr && view.IsMine)
         {
             view.RPC("EnterCAr", newPlayer, carID, isdriver);
@@ -323,6 +337,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
   }
     private void Start()
     {
+        if (ConstantsHolder.xanaConstants.EnviornmentName != "XANA Summit") { return; }
         string name = PhotonNetwork.CurrentRoom.CustomProperties["Sector"].ToString();
         if (name == "Wheel")
         {
@@ -388,8 +403,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                         CarNavigationManager.instance.EnableExitCanvas();
                         transform.rotation = new Quaternion(0, 0, 0, 0);
                         transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
-
-                        CarNavigationManager.instance.onExitpress += Exit;
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
+                    CarNavigationManager.instance.onExitpress += Exit;
                         CarNavigationManager.instance.onCancelPress += CancelExit;
                         ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
                         GamePlayButtonEvents.inst.OnSwitchCameraClick();
@@ -437,8 +452,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                         transform.parent.transform.parent = car.SecondPlayerPos;
                         transform.localPosition = Vector3.zero;
                         transform.parent.transform.localPosition = Vector3.zero;
-
-                        CarNavigationManager.instance.EnableExitCanvas();
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
+                    CarNavigationManager.instance.EnableExitCanvas();
                         transform.rotation = new Quaternion(0, 0, 0, 0);
                         transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
 
@@ -490,8 +505,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                         transform.parent.transform.parent = car.ThirdPlayerPos;
                         transform.localPosition = Vector3.zero;
                         transform.parent.transform.localPosition = Vector3.zero;
-
-                        CarNavigationManager.instance.EnableExitCanvas();
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
+                    CarNavigationManager.instance.EnableExitCanvas();
                         transform.rotation = new Quaternion(0, 0, 0, 0);
                         transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
 
@@ -543,8 +558,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                         transform.parent.transform.parent = car.ForthPlayerPos;
                         transform.localPosition = Vector3.zero;
                         transform.parent.transform.localPosition = Vector3.zero;
-
-                        CarNavigationManager.instance.EnableExitCanvas();
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
+                    CarNavigationManager.instance.EnableExitCanvas();
                         transform.rotation = new Quaternion(0, 0, 0, 0);
                         transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
 
@@ -624,7 +639,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
-                 
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     CarNavigationManager.instance.onExitpress += Exit;
                     CarNavigationManager.instance.onCancelPress += CancelExit;
                     ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().firstPersonCameraObj.GetComponent<Camera>().useOcclusionCulling = false;
@@ -672,7 +687,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.parent = car.SecondPlayerPos;
                     transform.localPosition = Vector3.zero;
                     transform.parent.transform.localPosition = Vector3.zero;
-
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -725,7 +740,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.parent = car.ThirdPlayerPos;
                     transform.localPosition = Vector3.zero;
                     transform.parent.transform.localPosition = Vector3.zero;
-
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -778,7 +793,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                     transform.parent.transform.parent = car.ForthPlayerPos;
                     transform.localPosition = Vector3.zero;
                     transform.parent.transform.localPosition = Vector3.zero;
-
+                    SummitCarUIHandler.instance.UpdateUIelement(false);
                     CarNavigationManager.instance.EnableExitCanvas();
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                     transform.parent.transform.rotation = new Quaternion(0, 0, 0, 0);
@@ -834,8 +849,8 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
              CarNavigationManager.instance.DisableExitCanvas();
                 transform.parent.transform.parent = Parent;
                 transform.parent.transform.position = GiantWheelManager.Instance.Exit.position;
-
-                transform.parent.gameObject.GetComponent<CharacterController>().enabled = true;
+            SummitCarUIHandler.instance.UpdateUIelement(true);
+            transform.parent.gameObject.GetComponent<CharacterController>().enabled = true;
                 transform.parent.gameObject.GetComponent<PlayerController>().enabled = true;
                 gameObject.GetComponent<CharacterController>().enabled = true;
                 gameObject.GetComponent<ArrowManager>().enabled = true;
@@ -889,6 +904,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
        if(PhotonNetwork.IsMasterClient)
         {
             view.RPC("WheelStoped", RpcTarget.All);
+            GameplayEntityLoader.instance.IsJoinSummitWorld = false;
         }
     }
 

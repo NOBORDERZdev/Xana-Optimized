@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
     }
     public void NotNowOfSignManager()
     {
-      UiManager.LoginRegisterScreen.GetComponent<OnEnableDisable>().ClosePopUp();
+        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(false);
        
         if (UiManager.HomePage.activeInHierarchy )
             UiManager.HomePage.SetActive(false);
@@ -199,7 +199,7 @@ public class GameManager : MonoBehaviour
         UiManager.AvaterButtonCustomPushed();
         AvatarCustomizationUIHandler.Instance.LoadMyClothCustomizationPanel();
         //Debug.Log("IsLoggedIn VALUEeeeeeeeee" + (PlayerPrefs.GetInt("IsLoggedIn")));
-        if (ConstantsHolder.loggedIn) 
+        if (ConstantsHolder.loggedIn || UserLoginSignupManager.instance.LoggedInAsGuest) 
         {
             UiManager.HomePage.SetActive(false);
             InventoryManager.instance.SignUpAndLoginPanel(3);
@@ -258,7 +258,7 @@ public class GameManager : MonoBehaviour
     }
     public void ChangeCharacterAnimationState(bool l_State)
     {    
-        m_CharacterAnimator.SetBool("Idle", l_State);
+        m_CharacterAnimator.SetBool("IdleMenu", l_State);
     }
     public void ResetCharacterAnimationController()
     {
