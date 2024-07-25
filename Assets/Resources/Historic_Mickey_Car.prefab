@@ -485,6 +485,7 @@ MonoBehaviour:
   view: {fileID: 219662702}
   PrivateRoomName: 0
   stopcar: 0
+  rigidbody: {fileID: 2297046681859229656}
   onewheel: {fileID: 1605458765611811858}
   twowheel: {fileID: 7799287071564510439}
   threewheel: {fileID: 7752746350795450667}
@@ -520,7 +521,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3519169386107185965}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4aaf4f21da328dd408c20c8cb65a336a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1
@@ -551,7 +552,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3519169386107185965}
   serializedVersion: 2
-  m_Mass: 50
+  m_Mass: 10000
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
