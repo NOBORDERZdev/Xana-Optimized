@@ -1,9 +1,10 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummitEntityManager : MonoBehaviour
+public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 {
      public static SummitEntityManager instance;
 
@@ -18,6 +19,16 @@ public class SummitEntityManager : MonoBehaviour
     {
         instance = this;
     }
+
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
+
+    private void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
     private void Start()
     {
       
@@ -28,11 +39,11 @@ public class SummitEntityManager : MonoBehaviour
         if(!PhotonNetwork.IsMasterClient) { return; }
             CarSpline = SplineDone.Instance;
         var length = CarSpline.GetSplineLength(.0005f);
-       var distancebetweencar = length / 8;
+       var distancebetweencar = length / 12;
 
         float firstSpawn = Random.Range(0, (int)length);
         
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 12; i++) {
 
         var obje =   PhotonNetwork.InstantiateRoomObject("Historic_Mickey_Car", CarSpawnpoint.position, Quaternion.identity);
             var splineFollow = obje.GetComponent<SplineFollower>();
@@ -46,4 +57,43 @@ public class SummitEntityManager : MonoBehaviour
         
     }
 
+    public void OnFriendListUpdate(List<FriendInfo> friendList)
+    {
+       
+    }
+
+    public void OnCreatedRoom()
+    {
+       
+    }
+
+    public void OnCreateRoomFailed(short returnCode, string message)
+    {
+     
+    }
+
+    public void OnJoinedRoom()
+    {
+       if(PhotonNetwork.IsMasterClient)
+        {
+
+            InstantiateCAR();
+
+        }
+    }
+
+    public void OnJoinRoomFailed(short returnCode, string message)
+    {
+      
+    }
+
+    public void OnJoinRandomFailed(short returnCode, string message)
+    {
+      
+    }
+
+    public void OnLeftRoom()
+    {
+       
+    }
 }

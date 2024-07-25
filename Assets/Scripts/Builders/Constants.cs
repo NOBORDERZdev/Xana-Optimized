@@ -192,7 +192,8 @@ public static class Constants
         HyperLinkPopComponent = 29,
         BlindComponent = 30,
         PhysicsComponent = 31,
-        none = 32
+        TeleportComponent = 32,
+        none = 33
     }
     #endregion
 

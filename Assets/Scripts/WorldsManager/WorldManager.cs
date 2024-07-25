@@ -6,9 +6,8 @@ using System;
 using System.IO;
 using UnityEditor;
 using System.Threading.Tasks;
-using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
-using SuperStar.Helpers;
+
 
 public class WorldManager : MonoBehaviour
 {
@@ -112,22 +111,46 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        ConstantsHolder.userLimit = 100;
-        ConstantsHolder.isPenguin = true;
-        ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
-        ConstantsHolder.xanaConstants.isBuilderScene = false;
-        ConstantsHolder.xanaConstants.isFromHomeTab = true;
-        ConstantsHolder.xanaConstants.MuseumID="2562";
-        WorldItemView.m_EnvName = "RooftopParty";
-        ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
-        LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-        LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        LoadingHandler.Instance.ShowLoading();
-        LoadingHandler.Instance.UpdateLoadingSlider(0);
-        LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
-        //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
-        Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        SearchKey= "XANA Summit";
+        string url = PrepareApiURL(APIURL.SearchWorld);
+        StartCoroutine(FetchUserMapFromServer(url, (check) =>
+        {
+            ConstantsHolder.userLimit = int.Parse(_WorldInfo.data.rows[0].user_limit);
+            ConstantsHolder.isPenguin = false;
+            ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+            ConstantsHolder.xanaConstants.isBuilderScene = false;
+            ConstantsHolder.xanaConstants.isFromHomeTab = true;
+            ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
+            WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
+            ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.ShowLoading();
+            LoadingHandler.Instance.UpdateLoadingSlider(0);
+            LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+            //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+            Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+        }));
+
+
+        //ConstantsHolder.userLimit = 100;
+        //ConstantsHolder.isPenguin = true;
+        //ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
+        //ConstantsHolder.xanaConstants.isBuilderScene = false;
+        //ConstantsHolder.xanaConstants.isFromHomeTab = true;
+        //ConstantsHolder.xanaConstants.MuseumID = "2562";
+        //WorldItemView.m_EnvName = "RooftopParty";
+        //ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+        //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+        //LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        //LoadingHandler.Instance.ShowLoading();
+        //LoadingHandler.Instance.UpdateLoadingSlider(0);
+        //LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+        ////this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
+        //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+        //LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+
     }
 
     public void ChangeWorldTab(APIURL tab, string _searchKey)
@@ -354,6 +377,9 @@ public class WorldManager : MonoBehaviour
                     CallBackCheck = 0;
                     return;
                 }
+                WorldLoadingText(APIURL.SearchWorld);
+                LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
             }
@@ -728,25 +754,25 @@ public class WorldManager : MonoBehaviour
         
         
         _callSingleTime = true;
-        if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
-        {
-            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-            {
-                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
-                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
-            }
-            else
-            {
-                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
-                {
-                    Debug.Log("YOU DONT HAVE DEEMO NFT");
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
-                }
-            }
-        }
-        else
-        {
+        //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        //{
+        //    if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+        //    {
+        //        //UserLoginSignupManager.instance.LoginRegisterScreen.transform.SetAsLastSibling();
+        //        UserLoginSignupManager.instance.LoginRegisterScreen.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
+        //        {
+        //            Debug.Log("YOU DONT HAVE DEEMO NFT");
+        //            GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+        //            return;
+        //        }
+        //    }
+        //}
+        //else
+        //{
             if (PlayerPrefs.HasKey("Equiped"))
             {
                 Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
@@ -780,14 +806,14 @@ public class WorldManager : MonoBehaviour
                     }
                 }
             }
-            if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-            {
-                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
-                {
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
-                }
-            }
+            //if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+            //{
+            //    if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
+            //    {
+            //        GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+            //        return;
+            //    }
+            //}
             AssetBundle.UnloadAllAssetBundles(false);
             Resources.UnloadUnusedAssets();
             GC.Collect();
@@ -799,7 +825,7 @@ public class WorldManager : MonoBehaviour
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
-        }
+       // }
         if (WorldItemView.m_EnvName == "ZONE-X")
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
     }
@@ -809,25 +835,25 @@ public class WorldManager : MonoBehaviour
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
 
-        if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
-        {
-            if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-            {
-                GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
-                GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
-            }
-            else
-            {
-                if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
-                {
-                    Debug.Log("YOU DONT HAVE DEEMO NFT");
-                    GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                    return;
-                }
-            }
-        }
-        else
-        {
+        //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        //{
+        //    if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+        //    {
+        //        GameManager.Instance.UiManager.LoginRegisterScreen.transform.SetAsLastSibling();
+        //        GameManager.Instance.UiManager.LoginRegisterScreen.SetActive(true);
+        //    }
+        //    else
+        //    {
+        //        if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
+        //        {
+        //            Debug.Log("YOU DONT HAVE DEEMO NFT");
+        //            GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+        //            return;
+        //        }
+        //    }
+        //}
+        //else
+        //{
             if (PlayerPrefs.HasKey("Equiped"))
             {
                 Task<bool> task = UserLoginSignupManager.instance._web3APIforWeb2.CheckSpecificNFTAndReturnAsync((PlayerPrefs.GetInt("nftID")).ToString());
@@ -845,14 +871,14 @@ public class WorldManager : MonoBehaviour
                 {
                     print("NFT is in your OwnerShip Enjoy");
                 }
-                if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
-                {
-                    if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
-                    {
-                        GameManager.Instance.RequiredNFTPopUP.SetActive(true);
-                        return;
-                    }
-                }
+                //if (WorldItemView.m_EnvName == "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
+                //{
+                //    if (!ConstantsHolder.xanaConstants.IsDeemoNFT)
+                //    {
+                //        GameManager.Instance.RequiredNFTPopUP.SetActive(true);
+                //        return;
+                //    }
+                //}
             }
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
@@ -862,7 +888,7 @@ public class WorldManager : MonoBehaviour
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "Builder";
             LoadingHandler.Instance.LoadSceneByIndex("Builder");
-        }
+       // }
     }
 
     private IEnumerator Check_Orientation(Action CallBack)

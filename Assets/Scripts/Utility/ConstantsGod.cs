@@ -39,7 +39,7 @@ public class ConstantsGod
     public static string NFTCREATOR = "nft creator";
     public static string NFTDES = "nft des";
     public static string NFTLINK = "nft link";
-
+    public static string REFRESHXANATOKEN = "/auth/refresh-token";
 
     public static string API = "https://api.xana.net/";
     public static string SERVER = "ws://socket-lb-648131231.us-east-2.elb.amazonaws.com:3000";
@@ -79,6 +79,7 @@ public class ConstantsGod
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
+    public static string SUMMITYOUTUBEVIDEOBYID = "/domes/getSummitVideoByAreaIdIndex/";//Add areaId and index
     public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
@@ -271,7 +272,7 @@ public class ConstantsGod
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
-
+    public static string SINGLEWORLDINFO = "/hot/get-single-world-hot/";   //:id/:type
 
     #endregion
 
