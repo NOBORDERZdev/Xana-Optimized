@@ -154,10 +154,14 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
+            //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+            //LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
+            //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
+            //LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             ShowWelcomeScreen();
         }
     }
@@ -208,24 +212,24 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     void AutoLogin()
     {
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        {
-            //Debug.LogError("Email login .... ");
-            //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-            //{
-            //    //write if you want something on sucessfull login
-            //}));
-        }
-        else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        {
+        //if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        //{
+        //    //Debug.LogError("Email login .... ");
+        //    //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
+        //    //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
+        //    //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
+        //    //{
+        //    //    //write if you want something on sucessfull login
+        //    //}));
+        //}
+        //else if (PlayerPrefs.GetInt("WalletLogin") == 1)
+        //{
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
             WalletAutoLogin();
             //GetUserCoinsAfterLogin();
-        }
+        //}
     }
     #region SignUp Functions 
 
