@@ -22,6 +22,8 @@ public class SPAAIHandler : MonoBehaviour
     public bool IsAIDataFetched = false;
     public bool IsPlayerTriggered = false;
     string prfrmrAvtrAPIURL = "/domes/getDomePerfomerAvatarsInfoByAreaIdIndex/";
+    public delegate void SoundEnabler(bool _soundEnable);
+    public SoundEnabler LiveVideoSoundEnabler;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +46,7 @@ public class SPAAIHandler : MonoBehaviour
                     CallPrfrmrAvtrAPI();
                 }
                 IsPlayerTriggered = true;
+                LiveVideoSoundEnabler?.Invoke(true);
             }
         }
     }
@@ -58,6 +61,7 @@ public class SPAAIHandler : MonoBehaviour
                 {
                     CurrentAIPerformerRef.SetActive(false);
                 }
+                LiveVideoSoundEnabler?.Invoke(false);
             }
         }
     }

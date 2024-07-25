@@ -154,14 +154,14 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
-            //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
-            //LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
-            //LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
-            //LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             ShowWelcomeScreen();
         }
     }

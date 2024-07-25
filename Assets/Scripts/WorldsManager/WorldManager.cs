@@ -403,6 +403,9 @@ public class WorldManager : MonoBehaviour
                     CallBackCheck = 0;
                     return;
                 }
+                WorldLoadingText(APIURL.SearchWorld);
+                LoadingHandler.Instance.SearchLoadingCanvas.SetActive(false);
+
                 GetBuilderWorlds(aPIURLGlobal, (a) => { });
                 CallBack(false);
             }
