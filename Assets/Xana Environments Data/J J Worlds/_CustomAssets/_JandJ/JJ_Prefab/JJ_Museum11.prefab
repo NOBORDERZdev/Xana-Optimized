@@ -700,6 +700,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -801,6 +802,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -1278,16 +1280,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -1406,7 +1398,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -1455,11 +1450,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532953605245398}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532953605245224
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1722,9 +1719,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955213341128}
   imgVideo4x3: {fileID: 105532954163941377}
   liveVideoPlayer: {fileID: 105532955455942727}
-  preRecordedPlayer: {fileID: 105532953708001551}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -1943,6 +1940,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953625834155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2138,16 +2136,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -2266,7 +2254,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -2315,11 +2306,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532953626881044}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532953626881046
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3508,6 +3501,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953641415816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3705,6 +3699,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953648844711
 GameObject:
   m_ObjectHideFlags: 0
@@ -5107,6 +5102,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953712460006
 GameObject:
   m_ObjectHideFlags: 0
@@ -5379,6 +5375,7 @@ GameObject:
   - component: {fileID: 105532953715818985}
   - component: {fileID: 105532953715818903}
   - component: {fileID: 105532953715818984}
+  - component: {fileID: 7359099204259379952}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -5451,6 +5448,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7359099204259379952
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532953715818986}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532953718772568
 GameObject:
   m_ObjectHideFlags: 0
@@ -7194,6 +7204,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -7569,9 +7580,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954344752419}
   imgVideo4x3: {fileID: 105532954379839820}
   liveVideoPlayer: {fileID: 105532955235816622}
-  preRecordedPlayer: {fileID: 105532954585930519}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -7696,6 +7707,7 @@ GameObject:
   - component: {fileID: 105532953763729359}
   - component: {fileID: 105532953763729357}
   - component: {fileID: 105532953763729358}
+  - component: {fileID: 5274702730797578695}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -7768,6 +7780,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5274702730797578695
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532953763729344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532953763819198
 GameObject:
   m_ObjectHideFlags: 0
@@ -8121,9 +8146,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954540076247}
   imgVideo4x3: {fileID: 105532954295365894}
   liveVideoPlayer: {fileID: 105532954059077404}
-  preRecordedPlayer: {fileID: 105532955101524967}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -9237,6 +9262,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953809856101
 GameObject:
   m_ObjectHideFlags: 0
@@ -9665,6 +9691,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953820361587
 GameObject:
   m_ObjectHideFlags: 0
@@ -9953,6 +9980,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -10528,6 +10556,7 @@ GameObject:
   - component: {fileID: 105532953851062054}
   - component: {fileID: 105532953851062052}
   - component: {fileID: 105532953851062053}
+  - component: {fileID: 7472477970237550811}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -10600,6 +10629,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7472477970237550811
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532953851062055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532953855157013
 GameObject:
   m_ObjectHideFlags: 0
@@ -10915,16 +10957,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -11043,7 +11075,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -11092,11 +11127,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532953859215156}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532953859215158
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11750,6 +11787,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532953878995627
 GameObject:
   m_ObjectHideFlags: 0
@@ -13358,6 +13396,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -13726,16 +13765,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -13854,7 +13883,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -13903,11 +13935,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532953951416166}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532953951416184
 AudioSource:
   m_ObjectHideFlags: 0
@@ -14687,6 +14721,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -14742,6 +14777,7 @@ GameObject:
   - component: {fileID: 105532953972918979}
   - component: {fileID: 105532953972918977}
   - component: {fileID: 105532953972918978}
+  - component: {fileID: 8343644812200957002}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -14814,6 +14850,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8343644812200957002
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532953972918980}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532953975425569
 GameObject:
   m_ObjectHideFlags: 0
@@ -14980,6 +15029,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -15430,16 +15480,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -15558,7 +15598,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -15607,11 +15650,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532953995174744}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532953995174746
 AudioSource:
   m_ObjectHideFlags: 0
@@ -16041,6 +16086,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954018974689
 GameObject:
   m_ObjectHideFlags: 0
@@ -16342,9 +16388,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954266155733}
   imgVideo4x3: {fileID: 105532954747476129}
   liveVideoPlayer: {fileID: 105532954825485686}
-  preRecordedPlayer: {fileID: 105532953647928099}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -16521,16 +16567,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -16649,7 +16685,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -16698,11 +16737,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954041002438}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954041002456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17328,16 +17369,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -17456,7 +17487,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -17505,11 +17539,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954059077383}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954059077401
 AudioSource:
   m_ObjectHideFlags: 0
@@ -17689,9 +17725,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955613164991}
   imgVideo4x3: {fileID: 105532954116567416}
   liveVideoPlayer: {fileID: 105532955046982903}
-  preRecordedPlayer: {fileID: 105532955070651356}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -17890,9 +17926,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532953755238750}
   imgVideo4x3: {fileID: 105532954830504735}
   liveVideoPlayer: {fileID: 105532955236176320}
-  preRecordedPlayer: {fileID: 105532954356948402}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -18831,9 +18867,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954761709803}
   imgVideo4x3: {fileID: 105532953868807229}
   liveVideoPlayer: {fileID: 105532955005604880}
-  preRecordedPlayer: {fileID: 105532954114665172}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -19010,16 +19046,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -19138,7 +19164,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -19187,11 +19216,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954108889225}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954108889227
 AudioSource:
   m_ObjectHideFlags: 0
@@ -19631,6 +19662,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954114665172
 GameObject:
   m_ObjectHideFlags: 0
@@ -19685,6 +19717,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954116567416
 GameObject:
   m_ObjectHideFlags: 0
@@ -20391,9 +20424,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954246566161}
   imgVideo4x3: {fileID: 105532955153633387}
   liveVideoPlayer: {fileID: 105532955127927485}
-  preRecordedPlayer: {fileID: 105532953818182423}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -22727,6 +22760,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -22931,16 +22965,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -23059,7 +23083,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -23108,11 +23135,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954194001113}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954194001115
 AudioSource:
   m_ObjectHideFlags: 0
@@ -23282,6 +23311,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -23819,16 +23849,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -23947,7 +23967,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -23996,11 +24019,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954202991791}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954202991777
 AudioSource:
   m_ObjectHideFlags: 0
@@ -25074,6 +25099,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -25891,9 +25917,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532953598765688}
   imgVideo4x3: {fileID: 105532955474477472}
   liveVideoPlayer: {fileID: 105532954705704409}
-  preRecordedPlayer: {fileID: 105532955009607260}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -26445,9 +26471,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954811194900}
   imgVideo4x3: {fileID: 105532955546076102}
   liveVideoPlayer: {fileID: 105532955357437007}
-  preRecordedPlayer: {fileID: 105532954396384365}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -26531,9 +26557,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954758256862}
   imgVideo4x3: {fileID: 105532953920392608}
   liveVideoPlayer: {fileID: 105532954202991780}
-  preRecordedPlayer: {fileID: 105532955585279068}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -26928,6 +26954,7 @@ GameObject:
   - component: {fileID: 105532954269889207}
   - component: {fileID: 105532954269889205}
   - component: {fileID: 105532954269889206}
+  - component: {fileID: 3499784459836225444}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -27000,6 +27027,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3499784459836225444
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532954269889160}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532954272621508
 GameObject:
   m_ObjectHideFlags: 0
@@ -27260,16 +27300,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -27388,7 +27418,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -27437,11 +27470,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954273667505}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954273667507
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27621,9 +27656,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954241978733}
   imgVideo4x3: {fileID: 105532954905457053}
   liveVideoPlayer: {fileID: 105532954108889230}
-  preRecordedPlayer: {fileID: 105532953877575745}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -27844,6 +27879,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -28924,6 +28960,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954305172972
 GameObject:
   m_ObjectHideFlags: 0
@@ -29630,9 +29667,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532953721232390}
   imgVideo4x3: {fileID: 105532953750019309}
   liveVideoPlayer: {fileID: 105532955164190643}
-  preRecordedPlayer: {fileID: 105532955589015879}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -30384,16 +30421,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -30512,7 +30539,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -30561,11 +30591,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954329950150}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954329950168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -31296,6 +31328,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954353903084
 GameObject:
   m_ObjectHideFlags: 0
@@ -31607,6 +31640,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954361480732
 GameObject:
   m_ObjectHideFlags: 0
@@ -31767,16 +31801,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -31895,7 +31919,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -31944,11 +31971,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954361480711}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954361480729
 AudioSource:
   m_ObjectHideFlags: 0
@@ -32174,6 +32203,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954362583627
 GameObject:
   m_ObjectHideFlags: 0
@@ -32840,6 +32870,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -33217,6 +33248,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954379839820
 GameObject:
   m_ObjectHideFlags: 0
@@ -33413,6 +33445,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954397644450
 GameObject:
   m_ObjectHideFlags: 0
@@ -33574,6 +33607,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -34586,6 +34620,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954435922926
 GameObject:
   m_ObjectHideFlags: 0
@@ -35226,6 +35261,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954453413739
 GameObject:
   m_ObjectHideFlags: 0
@@ -35540,6 +35576,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954462800671
 GameObject:
   m_ObjectHideFlags: 0
@@ -36708,9 +36745,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954455286535}
   imgVideo4x3: {fileID: 105532954554687181}
   liveVideoPlayer: {fileID: 105532955157526573}
-  preRecordedPlayer: {fileID: 105532955578561931}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -36877,9 +36914,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532953596969922}
   imgVideo4x3: {fileID: 105532954199525268}
   liveVideoPlayer: {fileID: 105532954273667510}
-  preRecordedPlayer: {fileID: 105532954450025800}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -36986,6 +37023,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -38433,6 +38471,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -38534,6 +38573,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -38875,9 +38915,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532953925067368}
   imgVideo4x3: {fileID: 105532955460081144}
   liveVideoPlayer: {fileID: 105532955141758556}
-  preRecordedPlayer: {fileID: 105532955338011930}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -39185,9 +39225,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955122776319}
   imgVideo4x3: {fileID: 105532954322694327}
   liveVideoPlayer: {fileID: 105532955178449302}
-  preRecordedPlayer: {fileID: 105532954755861405}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -39370,9 +39410,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955571947023}
   imgVideo4x3: {fileID: 105532954285958342}
   liveVideoPlayer: {fileID: 105532953626881129}
-  preRecordedPlayer: {fileID: 105532954935420114}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -39562,6 +39602,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -39880,6 +39921,7 @@ GameObject:
   - component: {fileID: 105532954579044971}
   - component: {fileID: 105532954579044969}
   - component: {fileID: 105532954579044970}
+  - component: {fileID: 5449828667201861808}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -39952,6 +39994,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5449828667201861808
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532954579044972}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532954580625114
 GameObject:
   m_ObjectHideFlags: 0
@@ -40006,6 +40061,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954581224516
 GameObject:
   m_ObjectHideFlags: 0
@@ -40166,16 +40222,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -40294,7 +40340,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -40343,11 +40392,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954581224527}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954581224513
 AudioSource:
   m_ObjectHideFlags: 0
@@ -40514,6 +40565,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954586905592
 GameObject:
   m_ObjectHideFlags: 0
@@ -41009,16 +41061,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -41137,7 +41179,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -41186,11 +41231,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954598198269}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954598198271
 AudioSource:
   m_ObjectHideFlags: 0
@@ -42099,6 +42146,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -42210,9 +42258,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954759923441}
   imgVideo4x3: {fileID: 105532955558577422}
   liveVideoPlayer: {fileID: 105532954361480732}
-  preRecordedPlayer: {fileID: 105532954113431652}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -42401,6 +42449,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -42837,6 +42886,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -43667,9 +43717,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954269087188}
   imgVideo4x3: {fileID: 105532955137305587}
   liveVideoPlayer: {fileID: 105532953951416187}
-  preRecordedPlayer: {fileID: 105532954905782143}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -44295,16 +44345,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -44423,7 +44463,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -44472,11 +44515,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954705704388}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954705704390
 AudioSource:
   m_ObjectHideFlags: 0
@@ -45143,6 +45188,7 @@ GameObject:
   - component: {fileID: 105532954713055892}
   - component: {fileID: 105532954713055890}
   - component: {fileID: 105532954713055891}
+  - component: {fileID: 6407619850287109559}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -45215,6 +45261,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6407619850287109559
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532954713055893}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532954715042311
 GameObject:
   m_ObjectHideFlags: 0
@@ -46407,9 +46466,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954156341857}
   imgVideo4x3: {fileID: 105532953736324147}
   liveVideoPlayer: {fileID: 105532955619613864}
-  preRecordedPlayer: {fileID: 105532954017756464}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -46672,6 +46731,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954756276666
 GameObject:
   m_ObjectHideFlags: 0
@@ -48958,6 +49018,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -49672,16 +49733,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -49800,7 +49851,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -49849,11 +49903,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532954825485681}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532954825485683
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50175,9 +50231,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955334244423}
   imgVideo4x3: {fileID: 105532954789174553}
   liveVideoPlayer: {fileID: 105532954041002459}
-  preRecordedPlayer: {fileID: 105532954462640022}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -50669,6 +50725,7 @@ GameObject:
   - component: {fileID: 105532954864218635}
   - component: {fileID: 105532954864218633}
   - component: {fileID: 105532954864218634}
+  - component: {fileID: 2346231318017143770}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -50741,6 +50798,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2346231318017143770
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532954864218636}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532954870213863
 GameObject:
   m_ObjectHideFlags: 0
@@ -51434,6 +51504,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -52003,6 +52074,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954920509495
 GameObject:
   m_ObjectHideFlags: 0
@@ -52382,9 +52454,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955266820981}
   imgVideo4x3: {fileID: 105532955463389130}
   liveVideoPlayer: {fileID: 105532953605245227}
-  preRecordedPlayer: {fileID: 105532954350033022}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -53020,6 +53092,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532954939600191
 GameObject:
   m_ObjectHideFlags: 0
@@ -53357,9 +53430,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954293899994}
   imgVideo4x3: {fileID: 105532955148942958}
   liveVideoPlayer: {fileID: 105532954598198258}
-  preRecordedPlayer: {fileID: 105532954304763065}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -53612,6 +53685,7 @@ GameObject:
   - component: {fileID: 105532954959609167}
   - component: {fileID: 105532954959609165}
   - component: {fileID: 105532954959609166}
+  - component: {fileID: 6453505362844155181}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -53684,6 +53758,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &6453505362844155181
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532954959609152}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532954959951003
 GameObject:
   m_ObjectHideFlags: 0
@@ -54409,6 +54496,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -54733,9 +54821,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955090851188}
   imgVideo4x3: {fileID: 105532953649501362}
   liveVideoPlayer: {fileID: 105532954329950171}
-  preRecordedPlayer: {fileID: 105532954362006688}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -55027,16 +55115,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -55155,7 +55233,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -55204,11 +55285,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955005604891}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955005604893
 AudioSource:
   m_ObjectHideFlags: 0
@@ -55375,6 +55458,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955009728545
 GameObject:
   m_ObjectHideFlags: 0
@@ -55685,6 +55769,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -56584,16 +56669,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -56712,7 +56787,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -56761,11 +56839,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955046982898}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955046982900
 AudioSource:
   m_ObjectHideFlags: 0
@@ -57495,6 +57575,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955070700496
 GameObject:
   m_ObjectHideFlags: 0
@@ -57896,6 +57977,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -58627,6 +58709,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955115082348
 GameObject:
   m_ObjectHideFlags: 0
@@ -58684,6 +58767,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -59106,16 +59190,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -59234,7 +59308,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -59283,11 +59360,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955127927480}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955127927482
 AudioSource:
   m_ObjectHideFlags: 0
@@ -64711,16 +64790,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -64839,7 +64908,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -64888,11 +64960,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955141758535}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955141758553
 AudioSource:
   m_ObjectHideFlags: 0
@@ -65524,16 +65598,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -65652,7 +65716,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -65701,11 +65768,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955157526568}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955157526570
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66061,16 +66130,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -66189,7 +66248,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -66238,11 +66300,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955164190654}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955164190640
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66550,16 +66614,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -66678,7 +66732,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -66727,11 +66784,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955178449297}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955178449299
 AudioSource:
   m_ObjectHideFlags: 0
@@ -67328,6 +67387,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -67833,9 +67893,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954237031172}
   imgVideo4x3: {fileID: 105532954795353110}
   liveVideoPlayer: {fileID: 105532954581224516}
-  preRecordedPlayer: {fileID: 105532955294982683}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -68122,9 +68182,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954923955596}
   imgVideo4x3: {fileID: 105532954658137582}
   liveVideoPlayer: {fileID: 105532954194001118}
-  preRecordedPlayer: {fileID: 105532953807218181}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -68301,16 +68361,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -68429,7 +68479,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -68478,11 +68531,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955235816617}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955235816619
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68755,16 +68810,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -68883,7 +68928,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -68932,11 +68980,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955236176331}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955236176333
 AudioSource:
   m_ObjectHideFlags: 0
@@ -69106,6 +69156,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -69713,16 +69764,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -69841,7 +69882,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -69890,11 +69934,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955258157215}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955258157201
 AudioSource:
   m_ObjectHideFlags: 0
@@ -70512,6 +70558,7 @@ GameObject:
   - component: {fileID: 105532955273256303}
   - component: {fileID: 105532955273256301}
   - component: {fileID: 105532955273256302}
+  - component: {fileID: 2438425839374552047}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -70584,6 +70631,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2438425839374552047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532955273256288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532955285540414
 GameObject:
   m_ObjectHideFlags: 0
@@ -70689,9 +70749,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954926841166}
   imgVideo4x3: {fileID: 105532955479989181}
   liveVideoPlayer: {fileID: 105532953995174749}
-  preRecordedPlayer: {fileID: 105532953624428260}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -71139,6 +71199,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955296316040
 GameObject:
   m_ObjectHideFlags: 0
@@ -71958,6 +72019,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -72317,6 +72379,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955340914009
 GameObject:
   m_ObjectHideFlags: 0
@@ -73213,16 +73276,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -73341,7 +73394,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -73390,11 +73446,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955357437002}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955357437004
 AudioSource:
   m_ObjectHideFlags: 0
@@ -75763,6 +75821,7 @@ GameObject:
   - component: {fileID: 105532955416855557}
   - component: {fileID: 105532955416855555}
   - component: {fileID: 105532955416855556}
+  - component: {fileID: 4106500893194968104}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -75835,6 +75894,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &4106500893194968104
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532955416855558}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532955422544927
 GameObject:
   m_ObjectHideFlags: 0
@@ -75892,6 +75964,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -76099,6 +76172,7 @@ GameObject:
   - component: {fileID: 105532955429332257}
   - component: {fileID: 105532955429332271}
   - component: {fileID: 105532955429332256}
+  - component: {fileID: 2382592717617453136}
   m_Layer: 0
   m_Name: Plant02_LOD1
   m_TagString: Untagged
@@ -76171,6 +76245,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2382592717617453136
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105532955429332258}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 88.151245, y: 98.32564, z: 69.93184}
+  m_Center: {x: -2.50163, y: 66.782936, z: 3.45911}
 --- !u!1 &105532955430105969
 GameObject:
   m_ObjectHideFlags: 0
@@ -76238,9 +76325,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955376502854}
   imgVideo4x3: {fileID: 105532955126051112}
   liveVideoPlayer: {fileID: 105532955627611432}
-  preRecordedPlayer: {fileID: 105532954379633993}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -76479,9 +76566,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955645204258}
   imgVideo4x3: {fileID: 105532955318311635}
   liveVideoPlayer: {fileID: 105532953859215113}
-  preRecordedPlayer: {fileID: 105532954580625114}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -77123,16 +77210,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -77251,7 +77328,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -77300,11 +77380,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955455942722}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955455942724
 AudioSource:
   m_ObjectHideFlags: 0
@@ -78390,9 +78472,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532955657657603}
   imgVideo4x3: {fileID: 105532955073194330}
   liveVideoPlayer: {fileID: 105532955258157204}
-  preRecordedPlayer: {fileID: 105532954433231442}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -85128,6 +85210,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955581809524
 GameObject:
   m_ObjectHideFlags: 0
@@ -85224,6 +85307,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955587289165
 GameObject:
   m_ObjectHideFlags: 0
@@ -85291,9 +85375,9 @@ MonoBehaviour:
   imgVideo1x1: {fileID: 105532954689144138}
   imgVideo4x3: {fileID: 105532955564052628}
   liveVideoPlayer: {fileID: 105532955661646070}
-  preRecordedPlayer: {fileID: 105532953641232089}
   videoLink: 
   imageLink: 
+  isForceAudioOn: 0
   _videoType: 0
   _imgVideoRatio: 0
   ApplyImageOnTexture: 0
@@ -85479,6 +85563,7 @@ MonoBehaviour:
   x: 0
   y: 0
   z: 0
+  isEnableBtn: 1
 --- !u!1 &105532955600958288
 GameObject:
   m_ObjectHideFlags: 0
@@ -85890,16 +85975,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -86018,7 +86093,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -86067,11 +86145,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955619613523}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955619613525
 AudioSource:
   m_ObjectHideFlags: 0
@@ -86379,16 +86459,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -86507,7 +86577,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -86556,11 +86629,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955627611603}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955627611605
 AudioSource:
   m_ObjectHideFlags: 0
@@ -87287,6 +87362,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -87770,16 +87846,6 @@ MonoBehaviour:
   _textureFilterMode: 1
   _textureWrapMode: 1
   _textureAnisoLevel: 0
-  _useVideoResolve: 0
-  _videoResolveOptions:
-    applyHSBC: 0
-    hue: 0
-    saturation: 0.5
-    brightness: 0.5
-    contrast: 0.5
-    gamma: 1
-    tint: {r: 1, g: 1, b: 1, a: 1}
-    generateMipmaps: 0
   _sideloadSubtitles: 0
   _subtitlePath:
     _pathType: 2
@@ -87898,7 +87964,10 @@ MonoBehaviour:
     showPosterFrame: 0
     audioOutput: 0
     audio360ChannelMode: 0
+    audio360LatencyMS: 0
     preferSoftwareDecoder: 0
+    forceRtpTCP: 0
+    forceEnableMediaCodecAsyncQueueing: 0
     blitTextureFiltering: 0
     fileOffset: 0
     startWithHighestBitrate: 0
@@ -87947,11 +88016,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f897ddd262e2794686f0e6984a5adc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  envType: 0
   _livestreamUrl: 
   mPlayer: {fileID: 105532955661646065}
   rotateScreen: 1
   rotateScreenValue: {x: 0, y: 0, z: 0}
   videoPlayerParent: {fileID: 0}
+  nftMAnager: {fileID: 0}
 --- !u!82 &105532955661646067
 AudioSource:
   m_ObjectHideFlags: 0
@@ -88204,6 +88275,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 163

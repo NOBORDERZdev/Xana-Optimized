@@ -83,10 +83,10 @@ public class PresetData_Jsons : MonoBehaviour
             else
                 return;
         }
-        else 
-        { 
-        ConstantsHolder.xanaConstants.isFirstPanel = true;
-        }
+        //else 
+        //{ 
+        //ConstantsHolder.xanaConstants.isFirstPanel = true;
+        //}
         GameManager.Instance.characterBodyParts.DefaultTexture(false);
 
         if (!IsStartUp_Canvas && !UserPassManager.Instance.CheckSpecificItem(PresetNameinServer))

@@ -22,7 +22,7 @@ using PhysicsCharacterController;
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     public bool isAlreadySpawned;
-
+    public Camera MiniMapCamera; 
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
     public bool IsJoinSummitWorld = false;
@@ -119,6 +119,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         updatedSpawnpoint = _updatedSpawnPoint.transform;
         BuilderSpawnPoint = false;
 
+
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        {
+            // Zoom Out map Camera
+            MiniMapCamera.orthographicSize = 30;
+        }
     }
 
     void OnEnable()
