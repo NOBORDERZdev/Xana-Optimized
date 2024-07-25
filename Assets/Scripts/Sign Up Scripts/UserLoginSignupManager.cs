@@ -1708,11 +1708,29 @@ public class UserLoginSignupManager : MonoBehaviour
                         UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
                         PlayerPrefs.Save();
+                        LoadSummit();
 
-                        
+
                     }
                 }
             }
+        }
+    }
+
+
+    void LoadSummit()
+    {
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
+        {
+            
+            print("Initialize ---=======  LoggedInAsGuest " + UserLoginSignupManager.instance.LoggedInAsGuest);
+            if (LoggedInAsGuest)
+            {
+                Debug.Log("Initialize Avatar with Guest");
+                MainSceneEventHandler.OpenLandingScene?.Invoke();
+            }
+
+
         }
     }
 
@@ -1796,7 +1814,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        UserLoginSignupManager.instance.ShowWelcomeScreen();
+        signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();

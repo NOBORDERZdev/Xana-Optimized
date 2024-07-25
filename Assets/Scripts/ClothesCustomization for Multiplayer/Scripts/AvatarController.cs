@@ -583,7 +583,6 @@ public class AvatarController : MonoBehaviour
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                    StartCoroutine(LoadSumitFirsttime());
                 } 
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
@@ -885,29 +884,7 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
-    private IEnumerator LoadSumitFirsttime() {
-        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
-        {
-            while (!UserLoginSignupManager.instance)
-            {
-                Debug.Log("Waiting :::: Initialize Avatar with Guest");
-                yield return null; // Wait for the next frame
-                
-            }
-            if (UserLoginSignupManager.instance.LoggedInAsGuest)
-            {
-                Debug.Log("Initialize Avatar with Guest");
-                yield return new WaitForSeconds(0.5f);
-                  MainSceneEventHandler.OpenLandingScene?.Invoke();
-            }
-
-
-        }
-    }
-       
-
-    
-
+  
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>
