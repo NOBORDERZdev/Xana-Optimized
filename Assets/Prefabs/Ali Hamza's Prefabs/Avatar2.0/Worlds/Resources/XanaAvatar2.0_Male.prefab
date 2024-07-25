@@ -5443,7 +5443,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &6365620064579044139
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5460,7 +5460,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &6365620064579044150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5788,6 +5789,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_366
       ObjectType: Feet
+  AvatarGender: 0
   pelvisBoneNewCharacter: {fileID: 2072187989912639022}
 --- !u!114 &1279257289774219683
 MonoBehaviour:
@@ -5946,6 +5948,30 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 0
     Name: canDoubleJump
+  - Type: 9
+    SynchronizeType: 1
+    Name: BowTwice
+  - Type: 9
+    SynchronizeType: 1
+    Name: Clap
+  - Type: 9
+    SynchronizeType: 1
+    Name: Pray
+  - Type: 9
+    SynchronizeType: 1
+    Name: BowOnce
+  - Type: 9
+    SynchronizeType: 1
+    Name: Washing
+  - Type: 9
+    SynchronizeType: 1
+    Name: KanzakiWorld
+  - Type: 4
+    SynchronizeType: 1
+    Name: IsStart
+  - Type: 9
+    SynchronizeType: 1
+    Name: BoardOn
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -8138,6 +8164,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 180
