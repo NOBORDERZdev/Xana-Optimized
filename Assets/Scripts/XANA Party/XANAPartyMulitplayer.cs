@@ -65,6 +65,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
     [PunRPC]
     void MovePlayersToRoom(int gameId, string gameName)
     {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         // Set the game details in the constants holder
         _XanaConstants.isJoinigXanaPartyGame = true;
         _XanaConstants.XanaPartyGameId = gameId;

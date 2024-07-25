@@ -14,6 +14,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public List<string> playerIDs = new List<string>();
     public bool IsPlayerIdsSaved = false;
 
+    public bool isLeaderboardShown = false;
+    public int MyRankInOverallGames = 0;
     public void SaveCurrentRoomPlayerIds()  // Save the current room's player IDs; a player's ID will remain in the list even if they leave the room
     {
         if (!IsPlayerIdsSaved)
@@ -102,11 +104,16 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     //To print the leaderboard
     public void PrintLeaderboard()
     {
+        if(isLeaderboardShown)
+        {
+            return;
+        }
+        isLeaderboardShown = true;
         var playerRanks = GetPlayerRanks();
 
 
 
-        GamePlayUIHandler.inst.MyRankText.text = MyRankInCurrentRace.ToString();
+        GamePlayUIHandler.inst.MyRankText.text = MyRankInOverallGames.ToString();
         GamePlayUIHandler.inst.MyPointsText.text = MyPointsInCurrentRace.ToString();
 
         
@@ -150,6 +157,10 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         for (int i = 0; i < sortedPlayerPoints.Count; i++)
         {
             playerRanks.Add((sortedPlayerPoints[i].playerId, sortedPlayerPoints[i].points, i + 1));
+            if (sortedPlayerPoints[i].playerId == PhotonNetwork.LocalPlayer.UserId)
+            {
+                MyRankInOverallGames = i + 1;
+            }
         }
 
         return playerRanks;

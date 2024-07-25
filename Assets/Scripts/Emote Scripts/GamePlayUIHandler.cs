@@ -244,6 +244,7 @@ public class GamePlayUIHandler : MonoBehaviour
     public void MoveToLobbyBtnClick()
     {
         XANAPartyManager.Instance.GameIndex = 0; 
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown = false;
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         StartCoroutine(GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>().MoveToLobby());
         LeaderboardPanel.SetActive(false);
