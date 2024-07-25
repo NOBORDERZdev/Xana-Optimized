@@ -193,7 +193,8 @@ public class InventoryManager : MonoBehaviour
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false; 
+        CheckAPILoaded = false;
+        Debug.Log("##################################################%%%%%%%%%%%%%%%%%%%");
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -345,15 +346,21 @@ public class InventoryManager : MonoBehaviour
         //saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         //if (PlayerPrefs.GetInt("IsLoggedIn") == 1) // As Guest Functionality Removed, No need for this check anymore 
         //{
+
+        Debug.Log("################################### Assigning ");
         if (MultipleSave)
         {
             if (AvatarSelfie.instance != null)
             {
                 _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
-            
+
+            Debug.Log("################################### Checking ");
             if (LoadPlayerAvatar.instance_loadplayer != null)
+            {
+                Debug.Log("################################### Found ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+            }
 
             if (AvatarSelfie.instance != null)
                 newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
@@ -380,7 +387,7 @@ public class InventoryManager : MonoBehaviour
     {
         Button _storeSaveBtn = SaveStoreBtn.GetComponent<Button>();
         _storeSaveBtn.onClick.RemoveAllListeners();
-
+        Debug.Log("################################### Removed ");
         saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         yield return new WaitForSeconds(.1f);
         //SaveStoreBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -392,7 +399,10 @@ public class InventoryManager : MonoBehaviour
             }
             
             if (LoadPlayerAvatar.instance_loadplayer != null)
+            {
+                Debug.Log("################################### Added ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+            }
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
         }
         else
@@ -695,7 +705,7 @@ public class InventoryManager : MonoBehaviour
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
 
-        // print("ppp");
+        Debug.LogError("##############Save Btn CLicked");
         if (DefaultClothDatabase.instance.gameObject != null)
         {
             //  print("ppp+");
@@ -1048,6 +1058,9 @@ public class InventoryManager : MonoBehaviour
     ////////////////////////// <SUB Category STARTS here> ///////////////////////////////////////////////
     private string AccessIndexOfSpecificCategory()
     {
+        if (ArrayofMainCategories == null || ArrayofMainCategories.Length == 0)
+            return "";
+
         var result = string.Join(",", ArrayofMainCategories);
         result = "[" + result + "]";
         return result;
@@ -1066,6 +1079,12 @@ public class InventoryManager : MonoBehaviour
     public void GetAllSubCategories()
     {
         string result = AccessIndexOfSpecificCategory();
+
+        if (result.IsNullOrEmpty())
+        {
+            Debug.LogError("ArrayofMainCategories is null or empty");
+            return;
+        }
         ConvertMainCat_Index_ToJson MainCatString = new ConvertMainCat_Index_ToJson();
         string bodyJson = JsonUtility.ToJson(MainCatString.CreateTOJSON(result));
         StartCoroutine(HitSUBCategoriesAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMSUBCATEGORY, bodyJson));

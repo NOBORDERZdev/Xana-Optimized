@@ -466,7 +466,8 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
@@ -694,7 +695,8 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = item.ItemType;
-                            if (!string.IsNullOrEmpty(item.ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!string.IsNullOrEmpty(item.ItemName) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                                 if (itemTypes.Any(item => type.Contains(item)))
@@ -917,7 +919,8 @@ public class AvatarController : MonoBehaviour
                         HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                         if (itemTypes.Any(item => type.Contains(item)))
                         {
-                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.GetComponent<AvatarController>(), Color.clear));
                             }
@@ -1387,6 +1390,17 @@ public class AvatarController : MonoBehaviour
     {
         CharacterBodyParts bodyParts = characterBodyParts;
 
+        //Debug.Log("Item: " + type + " --- Gender: " + gender);
+
+        if (gender.IsNullOrEmpty())
+        {
+            if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
+                gender = "Female";
+            else
+                gender = "Male";
+        }
+
+
         if (itemDatabase== null)
         {
             itemDatabase = DefaultClothDatabase.instance;
@@ -1439,26 +1453,27 @@ public class AvatarController : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-            switch (type)
-            {
-                case "Legs":
-                    StichItem(-1, itemDatabase.DefaultPent, type, applyOn);
-                    break;
-                case "Chest":
-                    StichItem(-1, itemDatabase.DefaultShirt, type, applyOn);
-                    break;
-                case "Feet":
-                    StichItem(-1, itemDatabase.DefaultShoes, type, applyOn);
-                    break;
-                case "Hair":
-                    StichItem(-1, itemDatabase.DefaultHair, type, applyOn);
-                    break;
-                default:
-                    break;
-            }
-        }
+       
+        //else
+        //{
+        //    switch (type)
+        //    {
+        //        case "Legs":
+        //            StichItem(-1, itemDatabase.DefaultPent, type, applyOn);
+        //            break;
+        //        case "Chest":
+        //            StichItem(-1, itemDatabase.DefaultShirt, type, applyOn);
+        //            break;
+        //        case "Feet":
+        //            StichItem(-1, itemDatabase.DefaultShoes, type, applyOn);
+        //            break;
+        //        case "Hair":
+        //            StichItem(-1, itemDatabase.DefaultHair, type, applyOn);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 
     /// <summary>
@@ -2060,7 +2075,8 @@ public class AvatarController : MonoBehaviour
                         if (itemTypes.Any(item => type.Contains(item)))
                         {
                             //getHairColorFormFile = true;
-                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
                                 {
