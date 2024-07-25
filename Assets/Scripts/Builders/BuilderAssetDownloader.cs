@@ -171,6 +171,8 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     async void StartDownloadingAssets()
     {
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            BuilderEventManager.ApplySkyoxSettings?.Invoke();
         SortingQueueData(initialPlayerPos);
         while (!dataSorted)
         {
@@ -368,11 +370,6 @@ public class BuilderAssetDownloader : MonoBehaviour
     private static void InstantiateAsset(GameObject objectTobeInstantiate, ItemData _itemData)
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, assetParentStatic);
-        //Rigidbody rb = null;
-        //newObj.TryGetComponent(out rb);
-        //if (rb == null)
-        //    rb = newObj.AddComponent<Rigidbody>();
-        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -385,23 +382,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
-        {
-            newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
-            return;
-        }
-
-        //if (!newObj.name.Contains("pfBLD1210015_XANA"))
-        //    meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
-
+        //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{
         //    childTransform.tag = "Item";
