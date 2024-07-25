@@ -133,13 +133,13 @@ public class WorldManager : MonoBehaviour
             //     yield return null;
             //}
 
-            if(PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            if(PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission") == "false")
             {
                 UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
             }
-            else
+            else if( PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission") == "true")
             {
-                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+                 XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
                  yield return null;
             }
         }
