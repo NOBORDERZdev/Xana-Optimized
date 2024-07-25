@@ -12,7 +12,6 @@ using UnityEngine.Networking;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using Photon.Voice.PUN;
-using Lean.Touch;
 
 public class ArrowManager : MonoBehaviourPunCallbacks
 {
