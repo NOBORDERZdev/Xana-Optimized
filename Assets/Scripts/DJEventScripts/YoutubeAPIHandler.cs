@@ -428,7 +428,6 @@ public class YoutubeAPIHandler : MonoBehaviour
                             {
                                 bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
                                 Data = new StreamData(incominglink, _isLiveVideo, true);
-                                GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
                                 if (GetComponent<AvProLiveVideoSoundEnabler>())
                                 {
                                     GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
@@ -448,9 +447,9 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
                                     GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
 
-                                    SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                    SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                    SoundSettings.soundManagerSettings.setNewSliderValues();
+                                    //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    //SoundSettings.soundManagerSettings.setNewSliderValues();
 
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData.url;
                                     gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
