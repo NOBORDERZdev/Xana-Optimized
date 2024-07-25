@@ -406,8 +406,10 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
 
     public void WearAddreesable(string itemtype, string itemName, GameObject applyOn, Color hairColor, string _gender)
     {
-        //print("~~~~~~~~ itemtype "+ itemtype + "~~~ itemName " + itemName +"~~ applyOn " +applyOn.name + "~~~ hairColor "+hairColor);
-        if (!itemName.Contains("md", StringComparison.CurrentCultureIgnoreCase) && !string.IsNullOrEmpty(itemName))
+        //print("~~~~~~~~ itemtype "+ itemtype + "~~~ itemName " + itemName +"~~ applyOn " +applyOn.name + "~~~ _gender "+ _gender);
+        if (!itemName.Contains("md", StringComparison.CurrentCultureIgnoreCase) && 
+            !itemName.Contains("default", StringComparison.CurrentCultureIgnoreCase) &&
+            !string.IsNullOrEmpty(itemName))
         {
             try
             {
