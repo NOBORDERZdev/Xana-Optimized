@@ -6,10 +6,7 @@ public class PatchForProfileWallet : MonoBehaviour
 {
     public GameObject closeloader;
     GameManager gameManager;
-    private void Awake()
-    {
-        gameManager = GameManager.Instance;
-    }
+ 
 
     private void OnDisable()
     {
@@ -22,6 +19,7 @@ public class PatchForProfileWallet : MonoBehaviour
 
     private void Start()
     {
+        gameManager = GameManager.Instance;
         if (ConstantsHolder.xanaConstants.isWalletLoadingbool)
         {
             Invoke("OpenCrossbtn", 8f);
