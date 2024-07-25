@@ -112,6 +112,16 @@ public class WorldManager : MonoBehaviour
             (PlayerPrefs.GetString("PlayerName") == "") && PlayerPrefs.GetInt("FirstTime") == 0 &&
             ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN" )
                     yield return new WaitForSeconds(0.5f);
+
+            if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            {
+                UserLoginSignupManager.instance.DownloadPermissionPopup.SetActive(true);
+            }
+            else if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission", "false") == "true")
+            {
+                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+                yield return null;
+            }
         }
         else if(XANAPartyManager.Instance.EnableXANAPartyGuest)
         {

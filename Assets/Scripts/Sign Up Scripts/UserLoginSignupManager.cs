@@ -213,6 +213,31 @@ public class UserLoginSignupManager : MonoBehaviour
         }
     }
 
+    #region Penpenz
+
+    public IEnumerator CreateUserForPenpenzLeaderboard(string userId, string userName)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("user_id", userId);
+        form.AddField("user_name", userName);
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.CreateUser_Penpenz, form))
+        {
+            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return webRequest.SendWebRequest();
+
+            if(webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log("Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Response: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+
+    #endregion
 
     #region SignUp Functions 
 
@@ -514,7 +539,10 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("FirstTime", 1);
         PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
-        UserLoginSignupManager.instance.OpenUserNamePanel();
+        if (PlayerPrefs.GetString("PlayerName") == "")
+        {
+            UserLoginSignupManager.instance.OpenUserNamePanel();
+        }
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         PlayerPrefs.Save();
         
@@ -928,6 +956,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
+            StartCoroutine(CreateUserForPenpenzLeaderboard(ConstantsHolder.userId, userUsername));
             if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {
                 DownloadPermissionPopup.SetActive(true);

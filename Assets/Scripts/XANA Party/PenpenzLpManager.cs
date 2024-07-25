@@ -1,8 +1,12 @@
+using BetterJSON;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class PenpenzLpManager : MonoBehaviourPunCallbacks
 {
@@ -14,6 +18,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public List<string> playerIDs = new List<string>();
     public bool IsPlayerIdsSaved = false;
 
+    private int page = 1;
+    private int limit = 10;
     public void SaveCurrentRoomPlayerIds()  // Save the current room's player IDs; a player's ID will remain in the list even if they leave the room
     {
         if (!IsPlayerIdsSaved)
@@ -71,21 +77,62 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             Player localPlayer = PhotonNetwork.LocalPlayer;
             NeedToUpdateMyRank = false;
             MyRankInCurrentRace = CurrentUpdatedRank;
-            MyPointsInCurrentRace += CalculatePointsFromRank(MyRankInCurrentRace);
+            StartCoroutine(GetPointsFromRank(MyRankInCurrentRace));
+            //MyPointsInCurrentRace += CalculatePointsFromRank(MyRankInCurrentRace);
 
-            UpdateRoomCustomPropertiesForPoints(localPlayer.UserId, MyPointsInCurrentRace);
+            UpdateUserPoints(MyPointsInCurrentRace);
+            //UpdateRoomCustomPropertiesForPoints(localPlayer.UserId, MyPointsInCurrentRace);
         }
     }
 
     // Calculates LP based on the assigned rank
-    private int CalculatePointsFromRank(int rank)
+    //private int CalculatePointsFromRank(int rank)
+    //{
+    //    switch (rank)
+    //    {
+    //        case 1: return 100;
+    //        case 2: return 80;
+    //        case 3: return 60;
+    //        default: return 0; // Consider if this default is appropriate
+    //    }
+    //}
+    IEnumerator GetPointsFromRank(int rank)
     {
-        switch (rank)
+        string url = $"{ConstantsGod.API_BASEURL_Penpenz}{ConstantsGod.GetRankPoints_Penpenz}?page={page}&limit={limit}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
         {
-            case 1: return 100;
-            case 2: return 80;
-            case 3: return 60;
-            default: return 0; // Consider if this default is appropriate
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
+                Debug.LogError("Response: " + webRequest.downloadHandler.text);
+            }
+            else
+            {
+                string response = webRequest.downloadHandler.text;
+                Debug.Log("Response: " + response);
+
+                GetPointsAPIResponse getPointsAPIResponse = JsonUtility.FromJson<GetPointsAPIResponse>(response);
+
+                if (getPointsAPIResponse.success)
+                {
+                    GetPointsRankData[] rows = getPointsAPIResponse.data.rows;
+                    foreach (GetPointsRankData row in rows)
+                    {
+                        if (row.rank == rank)
+                        {
+                            MyPointsInCurrentRace += row.points;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Error: " + getPointsAPIResponse.msg);
+                }
+            }
         }
     }
 
@@ -182,4 +229,63 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
     }
 
+
+    IEnumerator UpdateUserPoints(int _points) // Update the user's points in the database
+    {
+        var data = new
+        {
+            user_id = ConstantsHolder.userId,
+            points = _points
+        };
+        string jsonData = JsonUtility.ToJson(data);
+
+        byte[] bodyData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+
+        using (UnityWebRequest webRequest = new UnityWebRequest(ConstantsGod.API_BASEURL_Penpenz+ ConstantsGod.UpdateUserPoints_Penpenz, "PUT"))
+        {
+            webRequest.uploadHandler = new UploadHandlerRaw(bodyData);
+            webRequest.downloadHandler = new DownloadHandlerBuffer();
+            webRequest.SetRequestHeader("Content-Type", "application/json");
+
+            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return webRequest.SendWebRequest();
+
+            if(webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError("Error: " + webRequest.error);
+            }
+            else
+            {
+                string response = webRequest.downloadHandler.text;
+                Debug.Log("Response: " + response);
+            }
+        }
+    }
+
+
+
+
+    [Serializable]
+    public class GetPointsAPIResponse
+    {
+        public bool success;
+        public GetPointsData data;
+        public string msg;
+    }
+    [Serializable]
+    public class GetPointsData
+    {
+        public int count;
+        public GetPointsRankData[] rows;
+    }
+
+    [Serializable]
+    public class GetPointsRankData
+    {
+        public int rank;
+        public int points;
+    }
 }
+
+
+

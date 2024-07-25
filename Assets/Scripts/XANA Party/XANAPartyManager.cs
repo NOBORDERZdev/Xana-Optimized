@@ -36,6 +36,11 @@ public class XANAPartyManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        Debug.Log("AUTH_TOKEN : " + ConstantsGod.AUTH_TOKEN);
+        Debug.Log("User Id : " + ConstantsHolder.userId);
+    }
     private void Start()
     {
         

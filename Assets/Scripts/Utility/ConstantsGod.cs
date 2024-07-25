@@ -286,7 +286,11 @@ public class ConstantsGod
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
 
-    #region XANA Party Api's
+    #region Penpenz Api's
+    public static string API_BASEURL_Penpenz = "https://penpenz-dev.xana.net";
     public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  
+    public static string CreateUser_Penpenz = "/api/users";
+    public static string GetRankPoints_Penpenz = "/api/rankpoints";
+    public static string UpdateUserPoints_Penpenz = "/api/users";
     #endregion
 }
