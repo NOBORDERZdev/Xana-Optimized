@@ -92,6 +92,14 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    //For Metabuzz Environments
+    public enum ComingFrom{
+        None,
+        Dune,
+        Daisen
+    }
+    public ComingFrom comingFrom = ComingFrom.None;
+
     // Is in Store
     public bool isStoreActive = false;
 

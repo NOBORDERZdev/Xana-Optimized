@@ -975,7 +975,7 @@ public class WorldManager : MonoBehaviour
             {
                 ConstantsHolder.xanaConstants.userLimit = "16";
             }
-            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_DUNE" || ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_KANZAKI")
+            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_DUNE" /*|| ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_KANZAKI"*/)
             {
                 ConstantsHolder.xanaConstants.userLimit = "1";
             }

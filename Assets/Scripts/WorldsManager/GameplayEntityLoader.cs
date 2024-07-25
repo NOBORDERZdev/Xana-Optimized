@@ -31,6 +31,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [HideInInspector]
     private Transform updatedSpawnpoint;
     private Vector3 spawnPoint;
+    private Transform _spawnTransform;
     private GameObject currentEnvironment;
     public bool isEnvLoaded = false;
 
@@ -469,7 +470,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             }
             if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI"))
             {
-                mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                mainPlayer.transform.rotation = _spawnTransform.rotation;
+
                 StartCoroutine(setPlayerCamAngle(0f, 0.5f));
             }
             //else
@@ -1056,19 +1058,37 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         isEnvLoaded = true;
         StartCoroutine(spwanPlayerWithWait());
     }
-
     IEnumerator spwanPlayerWithWait()
     {
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
     CheckAgain:
         Transform temp = null;
-        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
-            temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune)
+        {
+            if (GameObject.FindGameObjectWithTag("PortalDune"))
+                temp = GameObject.FindGameObjectWithTag("PortalDune").transform;
+            else
+                temp = new GameObject("SpawnPoint").transform;
+        }
+        else if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen)
+        {
+            if (GameObject.FindGameObjectWithTag("PortalDaisen"))
+                temp = GameObject.FindGameObjectWithTag("PortalDaisen").transform;
+            else
+                temp = new GameObject("SpawnPoint").transform;
+        }
         else
-            temp = new GameObject("SpawnPoint").transform;
+        {
+            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+                temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+            else
+                temp = new GameObject("SpawnPoint").transform;
+        }
+
         if (temp)
         {
+            _spawnTransform = temp;
             spawnPoint = temp.position;
         }
         else

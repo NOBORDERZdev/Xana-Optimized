@@ -83,6 +83,8 @@ public class SandGameManager : MonoBehaviour
         {
             instance = this;
         }
+        ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.Dune;
+
         player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
         player.AddComponent<XanaDuneControllerHandler>();
 

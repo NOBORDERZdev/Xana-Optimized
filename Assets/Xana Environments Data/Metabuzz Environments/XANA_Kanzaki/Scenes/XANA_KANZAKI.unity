@@ -2788,8 +2788,8 @@ GameObject:
   - component: {fileID: 406477881}
   - component: {fileID: 406477880}
   m_Layer: 0
-  m_Name: Portal to Sand Dune
-  m_TagString: Untagged
+  m_Name: Portal to Dune
+  m_TagString: PortalDune
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2801,14 +2801,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406477878}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -47.849, y: 13.286, z: -30.547}
   m_LocalScale: {x: 0.58481216, y: 1.0207522, z: 0.5758151}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1791121840}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &406477880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2838,7 +2838,7 @@ BoxCollider:
   m_GameObject: {fileID: 406477878}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -4597,7 +4597,7 @@ GameObject:
   - component: {fileID: 687263210}
   m_Layer: 0
   m_Name: Portal to Daisen
-  m_TagString: Untagged
+  m_TagString: PortalDaisen
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4609,14 +4609,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 687263208}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -100.357, y: 15.271, z: -30.662}
   m_LocalScale: {x: 0.58481216, y: 1.0207522, z: 0.5758151}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1791121840}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &687263210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4646,7 +4646,7 @@ BoxCollider:
   m_GameObject: {fileID: 687263208}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -12141,7 +12141,7 @@ Transform:
   - {fileID: 1317299989}
   - {fileID: 905853712}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1424142933
 PrefabInstance:
@@ -14196,6 +14196,94 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 5289167104818508631, guid: b3d3275b23350e64194ea8fcb7e42b1b, type: 3}
   m_PrefabInstance: {fileID: 1653258566}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1662007555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1662007558}
+  - component: {fileID: 1662007557}
+  - component: {fileID: 1662007556}
+  - component: {fileID: 1662007560}
+  - component: {fileID: 1662007559}
+  m_Layer: 0
+  m_Name: PortalTriggersHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1662007556
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662007555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.5, y: 6.87, z: 4.05}
+  m_Center: {x: 16.47, y: 0, z: 0}
+--- !u!65 &1662007557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662007555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.72, y: 6.87, z: 4.04}
+  m_Center: {x: -35.78, y: 0, z: 0}
+--- !u!4 &1662007558
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662007555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -64.3, y: 15.4, z: -30.48}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1662007559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662007555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83894ccb43763944ebc5f255688dc0a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  daisenTrigger: {fileID: 687263211}
+  duneTrigger: {fileID: 406477881}
+--- !u!65 &1662007560
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662007555}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.33, y: 7.5, z: 5.98}
+  m_Center: {x: -0.24, y: -2.04, z: 24.5}
 --- !u!1001 &1697028073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15039,7 +15127,7 @@ Transform:
   - {fileID: 687263209}
   - {fileID: 406477879}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1804708397
 GameObject:
@@ -16904,7 +16992,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &2080744601
 PrefabInstance:
@@ -29714,7 +29802,7 @@ Transform:
   - {fileID: 7769502339733267649}
   - {fileID: 7769502339192054698}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7769502341312050403
 GameObject:

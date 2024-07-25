@@ -20,8 +20,9 @@ public class DataManager_Shrine : MonoBehaviour
     [SerializeField] private Transform altar;
 
 
-    void Start() {
-
+    void Start() 
+    {
+        ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
         if (ConstantsHolder.userId != null)
         {
