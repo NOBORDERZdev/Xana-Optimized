@@ -43,7 +43,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
     public void ExitCar()
     {
         view.RPC("ExitCAr", RpcTarget.All);
-
+        GameplayEntityLoader.instance.IsJoinSummitWorld = false;
     }
 
     private void FixedUpdate()
@@ -898,6 +898,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
        if(PhotonNetwork.IsMasterClient)
         {
             view.RPC("WheelStoped", RpcTarget.All);
+            GameplayEntityLoader.instance.IsJoinSummitWorld = false;
         }
     }
 

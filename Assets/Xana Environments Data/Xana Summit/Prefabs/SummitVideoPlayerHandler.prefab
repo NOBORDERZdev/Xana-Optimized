@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8485164774061021887}
   - component: {fileID: 4134301991366607334}
   - component: {fileID: 2286232385020354246}
+  - component: {fileID: 2609470930501225634}
   m_Layer: 0
   m_Name: SummitVideoPlayerHandler
   m_TagString: Untagged
@@ -94,6 +95,23 @@ MonoBehaviour:
   videoPlayerAudioSource: {fileID: 8117263461359333614}
   mediaPlayerAudioSource: {fileID: 892990331988367870}
   streamYoutubeVideo: {fileID: 4134301991366607334}
+--- !u!114 &2609470930501225634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948039019143160951}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 10
+  minDistance: 2
+  updateInterval: 0.5
+  activePlayer: {fileID: 1689215386332057433}
+  audioSource: {fileID: 8117263461359333614}
 --- !u!1 &3570232398872960906
 GameObject:
   m_ObjectHideFlags: 0
@@ -1427,7 +1445,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9086633365135249571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -12.91, y: 0, z: 31.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1491,10 +1509,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 0
   DopplerLevel: 1
-  MinDistance: 11
-  MaxDistance: 23
+  MinDistance: 5
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1527,7 +1545,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0

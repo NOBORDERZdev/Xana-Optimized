@@ -669,7 +669,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         }
 
         questionIndex += 1;
-        next = TextLocalization.GetLocaliseTextByKey("Next");
+        next = TextLocalization.GetLocaliseTextByKey("BuilderNext");
         result = TextLocalization.GetLocaliseTextByKey("Result");
         //Debug.Log("TextLocalization==>" + next + " " + result);
 

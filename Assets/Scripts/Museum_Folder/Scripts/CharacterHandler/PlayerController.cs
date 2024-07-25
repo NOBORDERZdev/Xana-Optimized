@@ -2036,7 +2036,7 @@ public class PlayerController : MonoBehaviour
     internal bool isOnMovingPlatform;
     private void CalculateMovingPlatformSpeed()
     {
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || GamificationComponentData.instance == null)
             return;
 
         if (!characterController.isGrounded)
