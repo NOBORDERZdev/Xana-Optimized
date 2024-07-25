@@ -3688,6 +3688,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -5396,7 +5397,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!95 &8580286353949959674
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5413,7 +5414,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8580286353949959172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5442,6 +5444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70540a75fca8e944ca1483c457646e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActorId: 0
   ActionClipTime: 0
   NameTagHolderObj: {fileID: 0}
   overrideController: {fileID: 0}
@@ -5517,7 +5520,7 @@ MonoBehaviour:
   blendHolder: {fileID: 3805438726464574936}
   AllEyeBlendShapes: []
   blinkingRate: 20
-  isEyeClose: 0
+  AreEyesClosed: 0
   waitTime: 2
   blinkingSpeed: 0.15
   isBlinking: 1
@@ -6267,6 +6270,7 @@ MonoBehaviour:
     ShoesPresetData:
       ObjectName: Shoes_366
       ObjectType: Feet
+  AvatarGender: 0
   pelvisBoneNewCharacter: {fileID: 0}
 --- !u!114 &8580286353949959676
 MonoBehaviour:
@@ -6766,7 +6770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5525119576249717473
 Transform:
   m_ObjectHideFlags: 0
