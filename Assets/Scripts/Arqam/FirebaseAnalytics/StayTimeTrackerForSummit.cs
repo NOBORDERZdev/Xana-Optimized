@@ -6,30 +6,33 @@ using static GlobalConstants;
 
 public class StayTimeTrackerForSummit : MonoBehaviour
 {
+
     private float startTime;
     public bool isTrackingTime = false;
+    public bool isTrackingTimeForExteriorArea;
+    public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
-    public SummitAreaTrigger SummitArea;
     public enum SummitAreaTrigger
-    { 
-        Middle,
-        Sand,
-        Water,
-        FestivalStage,
-        ChimmnyTown,
-        SpaceX
-    }
-    private void OnTriggerEnter(Collider other)
     {
-        if (!isTrackingTime)
+        Central_Area,
+        Entertainment_Area,
+        Business_Area,
+        Game_Area,
+        Web3_Area
+    }
+    private void Start()
+    {
+        SummitAreaName = SummitAreaTrigger.Central_Area.ToString();
+    }
+    private void OnDisable()
+    {
+        if (isTrackingTime && ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
-            StartTrackingTime();
+            StopTrackingTime();
+            CalculateAndLogStayTime();
         }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (isTrackingTime) 
+        else if (isTrackingTime && ConstantsHolder.isFromXANASummit)
         {
             StopTrackingTime();
             CalculateAndLogStayTime();
@@ -40,14 +43,6 @@ public class StayTimeTrackerForSummit : MonoBehaviour
         startTime = Time.time;
         isTrackingTime = true;
     }
-    private void OnDisable()
-    {
-        if (isTrackingTime && ConstantsHolder.isFromXANASummit)
-        {
-            StopTrackingTime();
-            CalculateAndLogStayTime();
-        }
-    }
     public void StopTrackingTime()
     {
         isTrackingTime = false;
@@ -57,7 +52,11 @@ public class StayTimeTrackerForSummit : MonoBehaviour
         float stayTime = Time.time - startTime;
         startTime = Mathf.Abs(startTime);
         int minutes = Mathf.FloorToInt(stayTime / 60f);
-        string worldName ="_Dome_" + DomeId + "_World_" + DomeWorldId;
+        string worldName;
+        if (isTrackingTimeForExteriorArea)
+            worldName = "_XS_" + SummitAreaName;
+        else
+            worldName ="_Dome_" + DomeId + "_World_" + DomeWorldId;
         if (minutes < 3)
             SendFirebaseEventForSummit("ST_" + (minutes + 1) + worldName);
         else

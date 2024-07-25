@@ -109,14 +109,15 @@ public class XANASummitSceneLoading : MonoBehaviour
         ReferencesForGamePlay.instance.m_34player.transform.localScale = new Vector3(0, 0, 0);
 
         multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
-        string eventName;
-        if (domeGeneralData.worldType)
-            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.builderWorldId;
-        else
-            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.worldId;
-        GlobalConstants.SendFirebaseEventForSummit(eventName);
+        // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
         {
+            if (_stayTimeTrackerForSummit.isTrackingTimeForExteriorArea)
+            {
+                _stayTimeTrackerForSummit.StopTrackingTime();
+                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = false;
+            }
             _stayTimeTrackerForSummit.DomeId = domeId;
             if (domeGeneralData.worldType)
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
@@ -124,6 +125,12 @@ public class XANASummitSceneLoading : MonoBehaviour
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
+        string eventName;
+        if (domeGeneralData.worldType)
+            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.builderWorldId;
+        else
+            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.worldId;
+        GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
     public void LoadingNewScene(string SceneName, Vector3 playerPos)
@@ -187,6 +194,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
                 _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = true;
             }
         }
         setPlayerPositionDelegate = SetPlayerOnback;
