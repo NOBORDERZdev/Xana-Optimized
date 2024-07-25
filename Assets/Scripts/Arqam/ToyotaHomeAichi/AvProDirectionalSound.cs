@@ -13,14 +13,15 @@ public class AvProDirectionalSound : MonoBehaviour
     [Range(0.2f, 0.5f)]
     public float updateInterval = 0.5f; // Time interval for volume update
 
-    private Transform playerCam; // Reference to your player object or camera
+    public Transform playerCam; // Reference to your player object or camera
     private WaitForSeconds updateDelay;
-    private Coroutine volumeCoroutine;
+    public Coroutine volumeCoroutine;
     public MediaPlayer activePlayer;
     public AudioSource audioSource;
     private float defaultMaxDis = 0;
     private Slider landscapeSlider;
     private float sliderValue = 0f;
+    public SPAAIHandler PlayerTriggerCheck;
 
 
     private void OnEnable()
@@ -67,8 +68,6 @@ public class AvProDirectionalSound : MonoBehaviour
         else
             AddEventTrigger(eventTrigger, EventTriggerType.PointerUp, OnPointerUp);
     }
-
-
    
     void UpdateSliderValue(float value)
     {
@@ -101,16 +100,31 @@ public class AvProDirectionalSound : MonoBehaviour
         }
     }
 
-
     public void ActiveDirectionalSound()
     {
         if (activePlayer.gameObject.activeSelf)
-            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+        {
+            if (volumeCoroutine == null)
+            {
+                volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+            }
+        }
+    }
+
+    public void ActivateDirectionalSoundIfNotYet()
+    {
+            if (volumeCoroutine == null)
+            {
+                if (PlayerTriggerCheck.IsPlayerTriggered)
+                {
+                    volumeCoroutine = StartCoroutine(AdjustScreenVolume());
+                }
+            }
     }
 
     IEnumerator AdjustScreenVolume()
     {
-        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
+            playerCam = ReferencesForGamePlay.instance.m_34player.transform;
 
         while (true)
         {

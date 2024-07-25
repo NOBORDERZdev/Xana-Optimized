@@ -405,10 +405,22 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+            {
+                go.transform.localPosition = new Vector3(-1.6f, -1.46f, -50f);
+                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+                go.transform.localScale = new Vector3(10.0f, 10f, 1);
+            }
+            else
+            {
+                // Old Default Position = Vector3(-0.74f, 0.1f, -26f);
+                // Old Default Scale = Vector3(6.0f, 5.25f, 1);
 
-            go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f); // Vector3(-0.74f, 0.1f, -26f);
-            go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-            go.transform.localScale = new Vector3(4.0f, 3.8f, 1); //Old Values [Vector3(6.0f, 5.25f, 1);]
+                go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f);
+                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+                go.transform.localScale = new Vector3(4.0f, 3.8f, 1); 
+            }
+            
 
             //EmoteAnimationHandler.Instance.controller = (AnimatorController)EmoteAnimationHandler.Instance.animator.runtimeAnimatorController;
             //// var state = controller.layers[0].stateMachine.defaultState;
