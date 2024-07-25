@@ -55,10 +55,10 @@ public class ScreenSpaceRefHolder : MonoBehaviour
         WorldManager.instance.worldSearchManager.searchWorldInput = searchWorldInput;
         gameObject.transform.parent = WorldManager.instance.uiHandlerRef.Canvas.transform;
         gameObject.transform.SetAsFirstSibling();
-        gameObject.GetComponent<RectTransform>().Stretch();
+       /* gameObject.GetComponent<RectTransform>().Stretch();
         gameObject.transform.up = Vector3.zero;
         gameObject.transform.right = Vector3.zero;
-        gameObject.transform.localScale = Vector3.one;
+        gameObject.transform.localScale = Vector3.one;*/
 
         MainSceneEventHandler.BackHomeSucessfully?.Invoke();
     }
