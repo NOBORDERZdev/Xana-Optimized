@@ -127,9 +127,9 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
-        StartDownloadingAssets();
         if (totalAssetCount != downloadedTillNow)
             EnableDownloadingText();
+        StartDownloadingAssets();
     }
 
     void LoadAddressableSceneAfterDownload()
