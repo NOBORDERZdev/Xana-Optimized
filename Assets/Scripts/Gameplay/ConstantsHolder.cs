@@ -138,7 +138,7 @@ public class ConstantsHolder : MonoBehaviour
     [SerializeField]
     public MeetingStatus meetingStatus;
     public bool IsShowChatToAll = true;
-
+    public bool IsChatUseByOther = false;
 
     //XANA Summit 
     public static Stack<string> loadedScenes = new Stack<string>();

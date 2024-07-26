@@ -34,10 +34,12 @@ public class THA_AI_Conversation : MonoBehaviour
         //XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.RuntimeOnly);
         XanaChatSystem.instance.InputFieldChat.onSubmit.AddListener(XanaChatSystem.instance.OnEnterSend);
         NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.RemoveAllListeners();
+        ConstantsHolder.xanaConstants.IsChatUseByOther = false;
     }
 
     public void StartConversation(string name)
     {
+        ConstantsHolder.xanaConstants.IsChatUseByOther = true;
         //XanaChatSystem.instance.InputFieldChat.onSubmit.SetPersistentListenerState(0, UnityEngine.Events.UnityEventCallState.Off);
         XanaChatSystem.instance.InputFieldChat.onSubmit.RemoveAllListeners();
         NFT_Holder_Manager.instance.Extended_XCS.InputFieldChat.onSubmit.AddListener(NFT_Holder_Manager.instance.Extended_XCS.SendMessage);

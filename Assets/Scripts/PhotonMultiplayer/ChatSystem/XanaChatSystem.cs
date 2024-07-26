@@ -98,11 +98,17 @@ public class XanaChatSystem : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
-        this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        }
     }
     private void OnDisable()
     {
-        this.InputFieldChat.onSubmit.RemoveAllListeners();
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.RemoveAllListeners();
+        }
     }
 
     public void Start()
