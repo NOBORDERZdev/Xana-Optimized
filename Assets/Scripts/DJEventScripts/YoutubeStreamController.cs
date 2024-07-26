@@ -179,6 +179,10 @@ public class YoutubeStreamController : MonoBehaviour
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
             Debug.Log("Hardik changes check");
+            if (GetComponent<AvProLiveVideoSoundEnabler>())
+            {
+                GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
+            }
             streamYoutubeVideo.mediaPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
