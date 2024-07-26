@@ -2303,6 +2303,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
+        if(UserLoginSignupManager.instance!=null)
         StartCoroutine(IERequestUpdateUserProfilePic(user_avatar, callingFrom));
     }
 
