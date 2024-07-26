@@ -1779,7 +1779,7 @@ public class PlayerController : MonoBehaviour
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = GamificationComponentData.instance.MapValue(jumpMultiplier,
-                Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
+                Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
