@@ -3424,7 +3424,13 @@ public class InventoryManager : MonoBehaviour
         L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
         ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
 
-        abc.iconLink = useDefaultValue ? "" : dataListOfItems[objId].iconLink;
+        // Implement Image Kit URL
+        string ImageKitUrl = dataListOfItems[objId].iconLink;
+        ImageKitUrl = ImageKitUrl.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://ik.imagekit.io/xanalia/xanaprod/Defaults/"); 
+        ImageKitUrl+= "?width=128&height=128";
+
+
+        abc.iconLink = useDefaultValue ? "" : ImageKitUrl;
         abc.id = useDefaultValue ? (objId + 1).ToString() : dataListOfItems[objId].id.ToString();
         abc.isFavourite = useDefaultValue ? "False" : dataListOfItems[objId].isFavourite.ToString();
         abc.isOccupied = useDefaultValue ? "False" : dataListOfItems[objId].isOccupied.ToString();
