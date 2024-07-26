@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using Photon.Pun;
 public class InRoomSoundHandler : MonoBehaviour
@@ -48,17 +48,38 @@ public class InRoomSoundHandler : MonoBehaviour
 
         if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
         {
-            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Waiting For Interviewer");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("面接官を待っています");
+            }
             //Debug.LogError("Join Meeting Now!");
         }
         else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {
-            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("今すぐミーティングに参加してください!");
+            }
             //Debug.LogError("Meeting Ended");
         }
         else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.HouseFull))
         {
-            NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Meeting Is In Progress");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議が進行中です");
+            }
             //Debug.LogError("House Full");
         }
     }

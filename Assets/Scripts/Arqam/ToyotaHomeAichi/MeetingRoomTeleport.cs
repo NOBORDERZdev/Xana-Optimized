@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using Newtonsoft.Json;
@@ -139,12 +139,26 @@ public class MeetingRoomTeleport : MonoBehaviour
         if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {// for customer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("面接官を待っています");
+            }
         }
         else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
         { // for interviewer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("会議が進行中です");
+            }
         }
     }
 
@@ -163,7 +177,15 @@ public class MeetingRoomTeleport : MonoBehaviour
         if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
         {
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+            
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("今すぐミーティングに参加してください!");
+            }
         }
         NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
     }
@@ -171,7 +193,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaRoomId + "/" + _thaPageNumber + "/" + _thaPageSize);
-        Debug.LogError("API URL is : " + ApiURL.ToString());
+        //Debug.LogError("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

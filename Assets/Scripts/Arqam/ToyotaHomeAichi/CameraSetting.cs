@@ -1,18 +1,20 @@
 using UnityEngine;
+using System.Collections;
 
 public class CameraSetting : MonoBehaviour
 {
     public float NearValue = 0.3f;
 
     // Start is called before the first frame update
-    void Start()
+    IEnumerator Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += UpdateCamNear;
-        
+        yield return new WaitForSeconds(0.1f);
+        UpdateCamNear();
+       // BuilderEventManager.AfterPlayerInstantiated += UpdateCamNear; 
     }
     private void OnDisable()
     {
-        BuilderEventManager.AfterPlayerInstantiated -= UpdateCamNear;
+       // BuilderEventManager.AfterPlayerInstantiated -= UpdateCamNear;
     }
 
     private void UpdateCamNear()

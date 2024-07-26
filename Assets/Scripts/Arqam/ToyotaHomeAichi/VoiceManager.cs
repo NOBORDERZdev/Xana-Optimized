@@ -2,25 +2,28 @@ using Photon.Pun;
 using Photon.Voice.PUN;
 using Photon.Voice.Unity;
 using UnityEngine;
-using UnityEngine.Rendering;
+using System.Collections;
 
 public class VoiceManager : MonoBehaviourPunCallbacks
 {
     public Recorder recorder;
     private byte currentGroup;
-    private void Start()
+    IEnumerator Start()
     {
-        BuilderEventManager.AfterPlayerInstantiated += AssignReference;
+        yield return new WaitForSeconds(0.1f);
+        AssignReference();
+        //BuilderEventManager.AfterPlayerInstantiated += AssignReference;
     }
-    private void OnDisable()
-    {
-        BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
-    }
+    //private void OnDisable()
+    //{
+    //    BuilderEventManager.AfterPlayerInstantiated -= AssignReference;
+    //}
     private void AssignReference()
     {
         NFT_Holder_Manager.instance.voiceManager = this;
-        recorder = GameObject.FindObjectOfType<Recorder>();
+        recorder = FindObjectOfType<Recorder>();
     }
+
     public void SetVoiceGroup(byte newGroup)
     {
         byte oldGroup = currentGroup;
