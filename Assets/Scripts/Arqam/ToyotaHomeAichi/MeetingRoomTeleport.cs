@@ -1,4 +1,4 @@
-using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 using System.Collections;
 using Newtonsoft.Json;
@@ -139,12 +139,26 @@ public class MeetingRoomTeleport : MonoBehaviour
         if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.End))
         {// for customer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.Inprogress);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Waiting For Interviewer");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("面接官を待っています");
+            }
         }
         else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
         { // for interviewer
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.HouseFull);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Meeting Is In Progress");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("会議が進行中です");
+            }
         }
     }
 

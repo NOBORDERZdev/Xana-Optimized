@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -87,7 +87,14 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
             {
                 NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)MeetingStatus.End);
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+                if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+                {
+                    NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("Join Meeting Now!");
+                }
+                else if (GameManager.currentLanguage == "ja")
+                {
+                    NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("今すぐミーティングに参加してください!");
+                }
             }
         }
     }
