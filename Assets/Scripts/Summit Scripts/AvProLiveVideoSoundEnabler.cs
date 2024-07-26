@@ -1,3 +1,4 @@
+using RenderHeads.Media.AVProVideo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,9 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
     public SPAAIHandler PlayerTriggerChecker;
     public AvProDirectionalSound DirectionalSoundController;
     public GameObject PreRecVideoScreen;
-    public GameObject LiveVideoScreen;
+    public MeshFilter LiveVideoPlayerScreen;
+    public Mesh AndroidLiveVideoMesh;
+    public Mesh IOSLiveVideoMesh;
 
     private void OnEnable()
     {
@@ -38,15 +41,21 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
 
     public void EnableVideoScreen(bool _isLiveVideo)
     {
-        if(_isLiveVideo)
+        if (_isLiveVideo)
         {
-            LiveVideoScreen.SetActive(_isLiveVideo);
+
+#if UNITY_ANDROID
+            LiveVideoPlayerScreen.mesh = AndroidLiveVideoMesh;
+#elif UNITY_IOS
+            LiveVideoPlayerScreen.mesh = IOSLiveVideoMesh;
+#endif
+            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
             PreRecVideoScreen.SetActive(!_isLiveVideo);
         }
         else
         {
             PreRecVideoScreen.SetActive(!_isLiveVideo);
-            LiveVideoScreen.SetActive(_isLiveVideo);
+            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
         }
     }
 }
