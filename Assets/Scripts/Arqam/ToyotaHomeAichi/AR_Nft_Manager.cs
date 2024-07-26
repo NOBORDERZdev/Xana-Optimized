@@ -454,7 +454,7 @@ namespace Toyota
 
                         }
 
-                        OnVideoEnlargeAction.Invoke();
+                        OnVideoEnlargeAction?.Invoke();
                     }
 
                 }
@@ -463,6 +463,7 @@ namespace Toyota
             {
                 GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
             }
+
             nftHolder.currentRoom = this;
             #region For firebase analytics
             SendCallAnalytics(nftId, roomType);         // firebase event calling in this method
