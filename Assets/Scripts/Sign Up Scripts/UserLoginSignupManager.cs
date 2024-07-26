@@ -533,7 +533,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
-       // PlayerPrefs.SetInt("WalletLogin", 1);
+        PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
