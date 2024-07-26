@@ -4797,7 +4797,7 @@ GameObject:
   - component: {fileID: 3612438506652031764}
   - component: {fileID: 5756297911590187127}
   m_Layer: 0
-  m_Name: Screen_Android_PR (1)
+  m_Name: Screen_Android_Live
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4816,7 +4816,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1004711107734768055}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &6473915143395362864
 MeshFilter:
@@ -14590,104 +14590,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2100372538717041488}
   m_Enabled: 1
---- !u!1001 &2401629890618590649
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1004711107734768055}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -7511558181221131132, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: defafc270006f9542810c84a52cd6d39, type: 2}
-    - target: {fileID: -7511558181221131132, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: 38cfd16213a728740993c15a325297d6, type: 2}
-    - target: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_Name
-      value: Screen_Android_Live
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
---- !u!1 &3284571603807320296 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
-  m_PrefabInstance: {fileID: 2401629890618590649}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6801202364367380118
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3284571603807320296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2853fa0813c90e349964c972eb0ff333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  isMeshRendrer: 1
-  shaderName: Sprites/Default
-  isTerrain: 0
 --- !u!1001 &2944431575280609425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15724,7 +15626,9 @@ MonoBehaviour:
   PlayerTriggerChecker: {fileID: 9182067351820796744}
   DirectionalSoundController: {fileID: 5267373346194548142}
   PreRecVideoScreen: {fileID: 3807208245232873131}
-  LiveVideoScreen: {fileID: 6438475895580648691}
+  LiveVideoPlayerScreen: {fileID: 6473915143395362864}
+  AndroidLiveVideoMesh: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
+  IOSLiveVideoMesh: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
 --- !u!1001 &7906032420700042891
 PrefabInstance:
   m_ObjectHideFlags: 0
