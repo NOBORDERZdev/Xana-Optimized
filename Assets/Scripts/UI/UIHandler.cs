@@ -128,7 +128,7 @@ public class UIHandler : MonoBehaviour
             portraitSplashScreen.SetActive(true);
 
         }
-        if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
+        if (PlayerPrefs.GetInt("IsLoggedIn") != 1 && PlayerPrefs.GetInt("WalletLogin") != 1  ||  PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
               StartCoroutine(IsSplashEnable(false, 3f));
         }

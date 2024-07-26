@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "3";
+        string gameVersion = "5";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -336,6 +336,11 @@ namespace Photon.Pun.Demo.PunBasics
                 ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
                 GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
             }
+               
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance!= null && !GamificationComponentData.instance.isRaceStarted  &&  ReferencesForGamePlay.instance != null)
+            {
+                ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+            }  
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
