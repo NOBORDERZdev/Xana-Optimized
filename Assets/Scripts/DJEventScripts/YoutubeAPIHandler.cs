@@ -405,7 +405,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             {
                 www.timeout = 10;
 
-                yield return www.SendWebRequest();
+                www.SendWebRequest();
 
                 while (!www.isDone)
                 {
