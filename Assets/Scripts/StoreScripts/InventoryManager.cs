@@ -76,9 +76,26 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
 
-    private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
-        shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
-        eyeBrowColorDwonloadedCount, eyeLashesDwonloadedCount, eyesDwonloadedCount, lipsDwonloadedCount;
+    private int 
+        headsDownlaodedCount, 
+        faceDownlaodedCount, 
+        innerDownlaodedCount, innerDownlaodedCountFemale,
+        outerDownlaodedCount, outerDownlaodedCountFemale,
+        accesaryDownlaodedCount, 
+        bottomDownlaodedCount, bottomDownlaodedCountFemale,
+        socksDownlaodedCount,
+        shoesDownlaodedCount, shoesDownlaodedCountFemale,
+        hairDwonloadedCount, hairDwonloadedCountFemale,
+        LipsColorDwonloadedCount, 
+        EyesColorDwonloadedCount, 
+        EyeBrowColorDwonloadedCount, 
+        HairColorDwonloadedCount, 
+        skinColorDwonloadedCount, 
+        eyeBrowDwonloadedCount,
+        eyeBrowColorDwonloadedCount, 
+        eyeLashesDwonloadedCount, 
+        eyesDwonloadedCount, 
+        lipsDwonloadedCount;
 
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
@@ -289,7 +306,7 @@ public class InventoryManager : MonoBehaviour
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
 
-        ResetDownloadCount();
+        //ResetDownloadCount();
     }
     public void skipAvatarSelection()
     {
@@ -3461,6 +3478,7 @@ public class InventoryManager : MonoBehaviour
 
     int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)
     {
+        string _MyGender = CharacterHandler.instance.activePlayerGender.ToString();
         switch (TempEnumVar)
         {
             case EnumClass.CategoryEnum.Head:
@@ -3468,18 +3486,30 @@ public class InventoryManager : MonoBehaviour
             case EnumClass.CategoryEnum.Face:
                 return faceDownlaodedCount;
             case EnumClass.CategoryEnum.Inner:
-                return innerDownlaodedCount;
+                if (_MyGender == "Female")
+                    return innerDownlaodedCountFemale;
+                else
+                    return innerDownlaodedCount;
             case EnumClass.CategoryEnum.Outer:
-                return outerDownlaodedCount;
+                if (_MyGender == "Female")
+                    return outerDownlaodedCountFemale;
+                else
+                    return outerDownlaodedCount;
             case EnumClass.CategoryEnum.Accesary:
                 return accesaryDownlaodedCount;
             case EnumClass.CategoryEnum.Bottom:
-                return bottomDownlaodedCount;
+                if (_MyGender == "Female")
+                 return bottomDownlaodedCountFemale;
+                else
+                 return bottomDownlaodedCount;
             case EnumClass.CategoryEnum.Socks:
                 return socksDownlaodedCount;
             case EnumClass.CategoryEnum.Shoes:
                 return shoesDownlaodedCount;
             case EnumClass.CategoryEnum.HairAvatar:
+                if (_MyGender == "Female")
+                    return hairDwonloadedCountFemale;
+                else
                 return hairDwonloadedCount;
             case EnumClass.CategoryEnum.HairAvatarColor:
                 return HairColorDwonloadedCount;
@@ -3506,6 +3536,8 @@ public class InventoryManager : MonoBehaviour
 
     void UpdateCategoryDownloadedInt(EnumClass.CategoryEnum TempEnumVar)
     {
+        string _MyGender = CharacterHandler.instance.activePlayerGender.ToString();
+            
         switch (TempEnumVar)
         {
             case EnumClass.CategoryEnum.Head:
@@ -3520,12 +3552,18 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Inner:
                 {
-                    innerDownlaodedCount++;
+                    if(_MyGender == "Female")
+                        innerDownlaodedCountFemale++;
+                    else
+                        innerDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Outer:
                 {
-                    outerDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        outerDownlaodedCountFemale++;
+                    else
+                        outerDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Accesary:
@@ -3535,7 +3573,10 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Bottom:
                 {
-                    bottomDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        bottomDownlaodedCountFemale++;
+                    else
+                        bottomDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Socks:
@@ -3545,12 +3586,18 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Shoes:
                 {
-                    shoesDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        shoesDownlaodedCountFemale++;
+                    else
+                        shoesDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.HairAvatar:
                 {
-                    hairDwonloadedCount++;
+                    if (_MyGender == "Femle")
+                        hairDwonloadedCountFemale++;
+                    else
+                        hairDwonloadedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.HairAvatarColor:

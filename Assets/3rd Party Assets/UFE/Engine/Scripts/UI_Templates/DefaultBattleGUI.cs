@@ -554,11 +554,11 @@ public class DefaultBattleGUI : BattleGUI
         {
             if (UFE.gameMode == GameMode.TrainingRoom)
             {
-                this.player1GUI.name.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName"));
+                this.player1GUI.name.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("UserName"));
             }
             else if (UFE.gameMode == GameMode.VersusMode)
             {
-                this.player1GUI.name.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("PlayerName"));
+                this.player1GUI.name.text = GetFirstNameOfPlayer(PlayerPrefs.GetString("UserName"));
             }
             else
             {
