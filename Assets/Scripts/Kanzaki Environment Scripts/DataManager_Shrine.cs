@@ -23,7 +23,7 @@ public class DataManager_Shrine : MonoBehaviour
     void Start() 
     {
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
-        worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
+        //worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
         if (ConstantsHolder.userId != null)
         {
             id = ConstantsHolder.userId;
@@ -125,15 +125,14 @@ public class DataManager_Shrine : MonoBehaviour
             if (point == "There is no player Data") point = "0";
 
             Debug.Log("getPoint" + point);
-
             uIController_Shine.SetPointUI(point);
             //www.Dispose();
         }
     }
 
-    public void closeWorshipFailUI() {
-        worshipFailUI.SetActive(false);
-    }
+    //public void closeWorshipFailUI() {
+    //    worshipFailUI.SetActive(false);
+    //}
     public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))

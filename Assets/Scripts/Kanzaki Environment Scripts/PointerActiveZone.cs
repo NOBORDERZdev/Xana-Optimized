@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class PointerActiveZone : MonoBehaviour
 {
@@ -10,7 +9,8 @@ public class PointerActiveZone : MonoBehaviour
     [SerializeField]
     private PointerUIChild _child;
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("PhotonLocalPlayer")) {
+        if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine)
+        {
             GameObject pointerIconUI = uIController_Shine.GetWorldPointerUI().transform.GetChild((int)_child).gameObject;
             if (!pointerIconUI.activeSelf) {
                 pointerIconUI.SetActive(true);
@@ -19,7 +19,8 @@ public class PointerActiveZone : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("PhotonLocalPlayer")) {
+        if (other.CompareTag("PhotonLocalPlayer") && other.GetComponent<PhotonView>().IsMine)
+        {
             GameObject pointerIconUI = uIController_Shine.GetWorldPointerUI().transform.GetChild((int)_child).gameObject;
             if (pointerIconUI.activeSelf) {
                 pointerIconUI.SetActive(false);

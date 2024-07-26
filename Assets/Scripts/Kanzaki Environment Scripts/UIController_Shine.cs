@@ -79,8 +79,7 @@ public class UIController_Shine : MonoBehaviour
     // private string padletUrl = "https://padlet.com/metabuzz2021/padlet-pm18k4b03ik18lby";
 
     // Models
-    [SerializeField] private GameObject gourd;
-    [HideInInspector] public GameObject SpawnedGourd;
+    [SerializeField] public GameObject gourd;
     [SerializeField] private GameObject DataManager_Shrine;
     [SerializeField] private Transform mizuya;
 
@@ -275,6 +274,8 @@ public class UIController_Shine : MonoBehaviour
         {
             worshipFailNum = 0;
             SetWorshipFailUI(false);
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+            PlayerController.PlayerIsIdle?.Invoke();
             worshipFailUI.GetChild(0).GetComponent<Image>().sprite = buttonImages[_lang == "Eng" ? 1 : 0];
         }
         else if (worshipFailNum == worshipFails.Count - 1)
@@ -298,10 +299,11 @@ public class UIController_Shine : MonoBehaviour
             if (_playerAnimator == null)
             {
                 _playerAnimator = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator;
-                _playerAnimator.gameObject.GetComponent<IKMuseum>().uIController_Shine = this;
+
             }
-            Transform rightHand = _playerAnimator.gameObject.GetComponent<IKMuseum>().RightHand.transform;
-            SpawnedGourd = Instantiate(gourd, rightHand);
+            IKMuseum iKMuseum = _playerAnimator.gameObject.GetComponent<IKMuseum>();
+            iKMuseum.uIController_Shine = this;
+            iKMuseum.RPCForKanzakiGourdEnable();
 
             //Disabling gameplay UI intereactions
             PlayerController.PlayerIsWalking?.Invoke();
