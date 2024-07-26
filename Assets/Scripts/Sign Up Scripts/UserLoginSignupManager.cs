@@ -589,7 +589,10 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
-
+        if (signUpOrloginSelectionPanel.activeInHierarchy)
+        {
+            signUpOrloginSelectionPanel.SetActive(false);
+        }
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
@@ -2303,6 +2306,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
+        if(UserLoginSignupManager.instance!=null)
         StartCoroutine(IERequestUpdateUserProfilePic(user_avatar, callingFrom));
     }
 
