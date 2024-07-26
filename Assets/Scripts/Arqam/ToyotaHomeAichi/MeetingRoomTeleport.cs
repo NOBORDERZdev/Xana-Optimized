@@ -171,7 +171,7 @@ public class MeetingRoomTeleport : MonoBehaviour
     {
         StringBuilder ApiURL = new StringBuilder();
         ApiURL.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaEmailApi + _thaRoomId + "/" + _thaPageNumber + "/" + _thaPageSize);
-        Debug.LogError("API URL is : " + ApiURL.ToString());
+        //Debug.LogError("API URL is : " + ApiURL.ToString());
         using (UnityWebRequest request = UnityWebRequest.Get(ApiURL.ToString()))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
