@@ -177,7 +177,15 @@ public class MeetingRoomTeleport : MonoBehaviour
         if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
         {
             NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)ThaMeetingStatusUpdate.MeetingStatus.End);
-            triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+            
+            if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("Join Meeting Now!");
+            }
+            else if (GameManager.currentLanguage == "ja")
+            {
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("今すぐミーティングに参加してください!");
+            }
         }
         NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
     }
