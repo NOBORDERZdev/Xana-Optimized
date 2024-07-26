@@ -141,6 +141,8 @@ public class XanaVoiceChat : MonoBehaviour
         micOnBtnPotrait.SetActive(true);
         if (recorder != null)
             recorder.TransmitEnabled = true;
+
+        EnableRecoder();
     }
 
     public void TurnOffMic()
@@ -151,6 +153,9 @@ public class XanaVoiceChat : MonoBehaviour
         micOnBtnPotrait.SetActive(false);
         if (recorder != null)
             recorder.TransmitEnabled = false;
+
+        StopRecorder();
+
     }
 
 
@@ -185,6 +190,16 @@ public class XanaVoiceChat : MonoBehaviour
         {
             recorder.AutoStart = recorder.TransmitEnabled = false;
             recorder.StopRecording();
+            recorder.Init(voiceConnection);
+        }
+    }
+
+    public void EnableRecoder()
+    {
+        if (recorder != null)
+        {
+            recorder.AutoStart = recorder.TransmitEnabled = true;
+            recorder.StartRecording();
             recorder.Init(voiceConnection);
         }
     }
