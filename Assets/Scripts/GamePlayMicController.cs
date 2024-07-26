@@ -13,11 +13,12 @@ public class GamePlayMicController : MonoBehaviour
     public GameObject otherButtonPotrait;
     void Start()
     {
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena"))
+        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena") || WorldItemView.m_EnvName.Contains("XANA Summit"))
         {
             if (ConstantsHolder.xanaConstants.mic == 1)
             {
                 ConstantsHolder.xanaConstants.StopMic();
+                XanaVoiceChat.instance.StopRecorder();
                 XanaVoiceChat.instance.TurnOffMic();
                 micOn.SetActive(false);
                 micOnPotrait.SetActive(false);
