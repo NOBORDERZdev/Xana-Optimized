@@ -177,7 +177,7 @@ public class WorldManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError(www.downloadHandler.text);
+                //Debug.LogError(www.downloadHandler.text);
                 singleWorldInfo = JsonUtility.FromJson<SingleWorldInfo>(www.downloadHandler.text);
                 worldstr = www.downloadHandler.text;
                 callback(true);

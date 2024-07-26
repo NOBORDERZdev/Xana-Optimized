@@ -44,7 +44,7 @@ public class SNS_APIManager : MonoBehaviour
             Instance = this;
         }
         userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-        userId = int.Parse(PlayerPrefs.GetString("UserName"));
+        userId = int.Parse(PlayerPrefs.GetString("UserId"));
         gameManager = GameManager.Instance;
         if (apiController == null)
         {
