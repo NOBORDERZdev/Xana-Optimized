@@ -133,6 +133,8 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
+
+            Invoke(nameof(AddingDeleyToLoadScene), 1f);
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }));
 
@@ -154,6 +156,11 @@ public class WorldManager : MonoBehaviour
         //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
         //LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
 
+    }
+
+    void AddingDeleyToLoadScene()
+    {
+        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
     }
 
     IEnumerator GetSingleWorldData(string apiURL, Action<bool> callback)
