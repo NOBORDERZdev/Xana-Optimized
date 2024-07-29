@@ -498,7 +498,7 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
         AddObjectInPool(downloadKey, newObj);
-        //AssignDomeId(newObj, _itemData);
+        AssignDomeId(newObj, _itemData);
 
        
 
@@ -535,7 +535,7 @@ public class XanaWorldDownloader : MonoBehaviour
         if (_itemData.summitDomeInfo.domeIndex != 0)
         {
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+            //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
 
