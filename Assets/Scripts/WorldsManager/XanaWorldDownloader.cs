@@ -127,9 +127,9 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
-        StartDownloadingAssets();
         if (totalAssetCount != downloadedTillNow)
             EnableDownloadingText();
+        StartDownloadingAssets();
     }
 
     void LoadAddressableSceneAfterDownload()
@@ -535,7 +535,7 @@ public class XanaWorldDownloader : MonoBehaviour
         if (_itemData.summitDomeInfo.domeIndex != 0)
         {
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+            //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
 

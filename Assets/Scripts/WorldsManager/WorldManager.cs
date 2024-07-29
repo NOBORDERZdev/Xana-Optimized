@@ -20,7 +20,7 @@ public class WorldManager : MonoBehaviour
     private string finalAPIURL;
     private string status = "Publish";
     [HideInInspector]
-    public int hotFeatSpacePN = 1,hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1, seeAllPN = 1;
+    public int hotFeatSpacePN = 1, hotSpacePN = 1, hotGamesPN = 1, followingPN = 1, mySpacesPN = 1, seeAllPN = 1;
     /*private int pageNumberHot = 1;
     private int pageNumberAllWorld = 1;
     private int pageNumberMyWorld = 1;
@@ -58,6 +58,7 @@ public class WorldManager : MonoBehaviour
 
     public WorldItemManager WorldItemManager;
     public WorldsInfo _WorldInfo;
+    public SingleWorldInfo singleWorldInfo;
     public WorldSpacesHomeScreen worldSpaceHomeScreenRef;
     public WorldDescriptionPopupPreview worldItemPreviewTabRef;
     public SearchWorldUIController worldSearchManager;
@@ -111,17 +112,19 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        SearchKey= "XANA Summit";
-        string url = PrepareApiURL(APIURL.SearchWorld);
-        StartCoroutine(FetchUserMapFromServer(url, (check) =>
+        //SearchKey= "XANA Summit";
+        //string url = PrepareApiURL(APIURL.SearchWorld);
+        int worldId = 6239;
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + worldId;
+        StartCoroutine(GetSingleWorldData(url, (check) =>
         {
-            ConstantsHolder.userLimit = int.Parse(_WorldInfo.data.rows[0].user_limit);
+            ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
             ConstantsHolder.isPenguin = false;
             ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
             ConstantsHolder.xanaConstants.isBuilderScene = false;
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
-            ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
-            WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
+            ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
+            WorldItemView.m_EnvName = singleWorldInfo.data.name;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
@@ -130,7 +133,9 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
             Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
-            LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+
+            Invoke(nameof(AddingDeleyToLoadScene), .5f);
+            //LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
         }));
 
 
@@ -151,6 +156,34 @@ public class WorldManager : MonoBehaviour
         //Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
         //LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
 
+    }
+
+    void AddingDeleyToLoadScene()
+    {
+        LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
+    }
+
+    IEnumerator GetSingleWorldData(string apiURL, Action<bool> callback)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(apiURL))
+        {
+            www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            www.SendWebRequest();
+            while (!www.isDone)
+                yield return null;
+            if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
+            {
+                callback(false);
+            }
+            else
+            {
+                //Debug.LogError(www.downloadHandler.text);
+                singleWorldInfo = JsonUtility.FromJson<SingleWorldInfo>(www.downloadHandler.text);
+                worldstr = www.downloadHandler.text;
+                callback(true);
+            }
+            www.Dispose();
+        }
     }
 
     public void ChangeWorldTab(APIURL tab, string _searchKey)
@@ -359,7 +392,7 @@ public class WorldManager : MonoBehaviour
                         }
                         else
                         {
-                            if (_WorldInfo.data.count <= 0 )
+                            if (_WorldInfo.data.count <= 0)
                             {
                                 WorldLoadingText(aPIURL);
                             }
@@ -491,7 +524,7 @@ public class WorldManager : MonoBehaviour
             }
             if (_WorldInfo.data.rows[i].user != null)
             {
-                _event.UserAvatarURL= _WorldInfo.data.rows[i].user.avatar;
+                _event.UserAvatarURL = _WorldInfo.data.rows[i].user.avatar;
             }
             if (_WorldInfo.data.rows[i].entityType == WorldType.USER_WORLD.ToString())
             {
@@ -745,14 +778,14 @@ public class WorldManager : MonoBehaviour
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
-        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo") 
+        if (WorldItemView.m_EnvName == "D + Infinity Labo" || WorldItemView.m_EnvName == "D +  Infinity Labo")
         {
             WorldItemView.m_EnvName = "D_Infinity_Labo";
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.THA_Home_Thumbnail_PlayBtn.ToString());
         }
-        
-        
+
+
         _callSingleTime = true;
         //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         //{
@@ -827,7 +860,7 @@ public class WorldManager : MonoBehaviour
             LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
        // }
         if (WorldItemView.m_EnvName == "ZONE-X")
-            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());  
+            GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Home_Thumbnail_PlayBtn.ToString());
     }
 
     public async void JoinBuilderWorld()
@@ -1036,6 +1069,15 @@ public class DataClass
     public int count;
     public List<RowList> rows;
 }
+
+[System.Serializable]
+public class SingleWorldInfo
+{
+    public bool success;
+    public RowList data;
+    public string msg;
+}
+
 [System.Serializable]
 public class RowList
 {

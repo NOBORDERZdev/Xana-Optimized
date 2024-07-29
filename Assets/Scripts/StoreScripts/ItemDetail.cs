@@ -435,6 +435,7 @@ public class ItemDetail : MonoBehaviour
         {
             if (!completedCoroutine)
             {
+                //Debug.Log("Downloading-Icon-Link: " + iconLink);
                 AssetCache.Instance.EnqueueOneResAndWait(iconLink, iconLink, (success) =>
                 {
                     if (success)
