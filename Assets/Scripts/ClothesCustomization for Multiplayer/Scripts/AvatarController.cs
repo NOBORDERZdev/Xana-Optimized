@@ -481,7 +481,7 @@ public class AvatarController : MonoBehaviour
                                             if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
                                             else
-                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController,_CharacterData.HairColor));
+                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
                                         }
                                         else
                                             StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, Color.clear));
@@ -585,7 +585,7 @@ public class AvatarController : MonoBehaviour
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                }
+                } 
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
@@ -887,7 +887,7 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
-
+  
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>

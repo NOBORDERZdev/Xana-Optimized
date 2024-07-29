@@ -2619,7 +2619,10 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdateUserXeny()
     {
-        StartCoroutine(RequestUserXenyDataRoutine());
+        if (!UserLoginSignupManager.instance.LoggedInAsGuest)
+        {
+            StartCoroutine(RequestUserXenyDataRoutine());
+        }
     }
 
     private IEnumerator RequestUserXenyDataRoutine()

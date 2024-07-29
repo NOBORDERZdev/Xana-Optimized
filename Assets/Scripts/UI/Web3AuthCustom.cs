@@ -157,6 +157,7 @@ public class Web3AuthCustom : MonoBehaviour
                 ui_locales=currentLan,
                 prompt = Prompt.LOGIN,
             }
+
         };
         foreach (Button button in myButtons)
         {
@@ -226,6 +227,9 @@ public class Web3AuthCustom : MonoBehaviour
             return;
 
 #endif
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+        UserLoginSignupManager.instance.StartCoroutine(UserLoginSignupManager.instance.LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        UserLoginSignupManager.instance.LoggedInAsGuest = false;
         Debug.Log(JsonConvert.SerializeObject(response, Formatting.Indented));
         LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         userInfo = response.userInfo;
