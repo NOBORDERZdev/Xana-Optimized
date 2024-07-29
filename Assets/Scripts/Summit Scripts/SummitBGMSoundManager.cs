@@ -14,12 +14,15 @@ public class SummitBGMSoundManager : MonoBehaviour
     {
         BuilderEventManager.AfterPlayerInstantiated += StartBGMSound;
         GamePlayButtonEvents.OnExitButtonXANASummit += StopBGM;
+        BuilderEventManager.loadBGMDirectly += SetBGMDirectly;
+        BuilderEventManager.StopBGM += StopBGM;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterPlayerInstantiated -= StartBGMSound;
         GamePlayButtonEvents.OnExitButtonXANASummit -= StopBGM;
+        BuilderEventManager.StopBGM -= StopBGM;
     }
 
     void StartBGMSound()
@@ -53,6 +56,11 @@ public class SummitBGMSoundManager : MonoBehaviour
 
             }
         }
+    }
+
+    void SetBGMDirectly(string url)
+    {
+        StartCoroutine(SetAudioFromUrl(url));
     }
 
 

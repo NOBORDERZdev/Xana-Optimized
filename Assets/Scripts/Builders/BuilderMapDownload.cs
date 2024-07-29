@@ -65,7 +65,7 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
 
-        if (GamificationComponentData.instance.aiSkyMaterial)
+        if (GamificationComponentData.instance.aiSkyMaterial != null)
             Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
     }
@@ -764,13 +764,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
-        //objectTobeInstantiate.AddComponent<PhotonView>();
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
-        //Rigidbody rb = null;
-        //newObj.TryGetComponent(out rb);
-        //if (rb == null)
-        //    rb = newObj.AddComponent<Rigidbody>();
-        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -783,27 +777,15 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
-        {
-            newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
-            return;
-        }
-
-        //meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
+        //{
+        //    childTransform.tag = "Item";
+        //}
 
         //Add game object into XanaItems List for Hirarchy
         //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
         GamificationComponentData.instance.xanaItems.Add(xanaItem);
-
-
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }

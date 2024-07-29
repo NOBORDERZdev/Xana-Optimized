@@ -34,7 +34,13 @@ public class XANASummitSceneLoading : MonoBehaviour
         BuilderEventManager.LoadSummitScene += LoadDomesData;
         BuilderEventManager.AfterPlayerInstantiated += SetPlayerTransform;
         GamePlayButtonEvents.OnExitButtonXANASummit += LoadingXANASummitOnBack;
-        OnJoinSubItem += SummitMiniMapStatusOnSceneChange;
+        OnJoinSubItem += SummitMiniMapStatusOnSceneChange; 
+
+
+        if(LoadingHandler.Instance.nftLoadingScreen.activeInHierarchy)
+        {
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
+        }
     }
 
     private void OnDisable()

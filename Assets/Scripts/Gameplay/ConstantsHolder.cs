@@ -12,6 +12,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool OpenSpaceScreen_fromSummit = false;
 
     //Login Info
     public static bool isAdmin;

@@ -48,7 +48,6 @@ public class WalletLogin: MonoBehaviour
     }
     async public void OnLogin(bool isNewReg)
     {
-        PlayerPrefs.SetInt("WalletLogin", 1);
         ConstantsHolder.xanaConstants.isWalletLoadingbool = true;
         SetChainSafeInfo();
         WalletConnectCallType type = WalletConnectCallType.None;

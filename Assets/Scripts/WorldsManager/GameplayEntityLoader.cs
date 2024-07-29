@@ -22,7 +22,7 @@ using PhysicsCharacterController;
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
     public bool isAlreadySpawned;
-
+    public Camera MiniMapCamera; 
     [Header("singleton object")]
     public static GameplayEntityLoader instance;
     public bool IsJoinSummitWorld = false;
@@ -119,6 +119,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         updatedSpawnpoint = _updatedSpawnPoint.transform;
         BuilderSpawnPoint = false;
 
+
+        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        {
+            // Zoom Out map Camera
+            MiniMapCamera.orthographicSize = 30;
+        }
     }
 
     void OnEnable()
@@ -327,11 +333,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     }
     public async void SpawnPlayerSection()  // Created this for summit
     {
-        if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
-        {
-            LoadingHandler.Instance.UpdateLoadingStatusText("Joining World...");
-        }
-
         spawnPoint = player.transform.position;
         Destroy(player);
         Debug.Log("player shoud be destroyed");
@@ -348,79 +349,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         //change youtube player instantiation code because while env is in loading and youtube started playing video
 
-        if (!ConstantsHolder.xanaConstants.isCameraMan)
-        {
-            LoadingHandler.Instance.HideLoading();
-            LoadingHandler.Instance.UpdateLoadingStatusText("");
-        }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
-        {
-            if (!ConstantsHolder.xanaConstants.isCameraMan)
-                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-        }
-        else
-        {
-            if (JjMusuem.Instance)
-                JjMusuem.Instance.SetPlayerPos(ConstantsHolder.xanaConstants.mussuemEntry);
-            else
-            {
-                if (!ConstantsHolder.xanaConstants.isCameraMan)
-                    LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
-            }
-        }
-        ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
+      
 
-        updatedSpawnpoint.transform.localPosition = spawnPoint;
-        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
-        {
-            ConstantsHolder.xanaConstants.isFromXanaLobby = false;
-        }
-        //   StartCoroutine(VoidCalculation());
-
-
-        if (ConstantsHolder.xanaConstants.isCameraMan)
-        {
-            ReferencesForGamePlay.instance.randerCamera.gameObject.SetActive(false);
-            ReferencesForGamePlay.instance.FirstPersonCam.gameObject.SetActive(false);
-            ConstantsHolder.xanaConstants.StopMic();
-            XanaVoiceChat.instance.TurnOffMic();
-            //ReferencesForGamePlay.instance.m_34player.GetComponent<CharcterBodyParts>().HidePlayer();/*.gameObject.SetActive(false);*/
-        }
-        LoadingHandler.Instance.manualRoomController.HideRoomList();
-
-        if (!ConstantsHolder.xanaConstants.isCameraMan)
-            LoadingHandler.Instance.HideLoading();
-
-        // Join Room Activate Chat
-        ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
-        {
-            string worldId = 0.ToString();
-            if (XanaEventDetails.eventDetails.environmentId != 0)
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.environmentId;
-            }
-            else
-            {
-                ConstantsHolder.xanaConstants.MuseumID = "" + XanaEventDetails.eventDetails.museumId;
-            }
-        }
-
-        ChatSocketManager.onJoinRoom?.Invoke(ConstantsHolder.xanaConstants.MuseumID);
-        if (ConstantsHolder.xanaConstants.isCameraMan)
-        {
-            if (StreamingCamera.instance)
-            {
-                StreamingCamera.instance.TriggerStreamCam();
-            }
-            else // sterming cam's not found so switching to main menu 
-            {
-                _uiReferences.LoadMain(false);
-            }
-        }
 
         XanaWorldDownloader.initialPlayerPos = mainController.transform.localPosition;
-        BuilderEventManager.AfterPlayerInstantiated?.Invoke();
+      
 
 
         // Firebase Event for Join World
