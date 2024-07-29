@@ -989,6 +989,10 @@ public class WorldManager : MonoBehaviour
             {
                 ConstantsHolder.userLimit = 16;
             }
+            if (ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_DUNE" /*|| ConstantsHolder.xanaConstants.JjWorldTeleportSceneName == "XANA_KANZAKI"*/)
+            {
+                ConstantsHolder.xanaConstants.userLimit = "1";
+            }
             else
             {
                 if (ConstantsHolder.xanaConstants.isBuilderScene)

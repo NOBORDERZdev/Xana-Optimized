@@ -22,6 +22,7 @@ public class ConstantsHolder : MonoBehaviour
     public static string xanaToken;
     public static string userId;
     public static string userName;
+    public static string uniqueUserName;
 
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;
@@ -94,6 +95,14 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    //For Metabuzz Environments
+    public enum ComingFrom{
+        None,
+        Dune,
+        Daisen
+    }
+    public ComingFrom comingFrom = ComingFrom.None;
+
     // Is in Store
     public bool isStoreActive = false;
 
@@ -126,6 +135,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
     public bool isFromHomeTab = false;
+    public bool isFromTottoriWorld = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;
