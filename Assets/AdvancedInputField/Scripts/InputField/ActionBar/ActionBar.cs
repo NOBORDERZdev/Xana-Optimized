@@ -178,8 +178,8 @@ namespace AdvancedInputFieldPlugin
 
 			if(Canvas != null)
 			{
-				UpdateSize(Canvas.scaleFactor);
-				actionBarRenderer.Initialize();
+				//UpdateSize(Canvas.scaleFactor);
+				//actionBarRenderer.Initialize();
 			}
 		}
 
@@ -357,9 +357,9 @@ namespace AdvancedInputFieldPlugin
 				Vector3[] canvasCorners = new Vector3[4];
 				canvasTransform.GetWorldCorners(canvasCorners);
 				Vector2 canvasWorldSize = new Vector2(Mathf.Abs(canvasCorners[3].x - canvasCorners[1].x), Mathf.Abs(canvasCorners[3].y - canvasCorners[1].y));
-				float ratioX = canvasWorldSize.x / ((Canvas.worldCamera.orthographicSize * 2) / Screen.height * Screen.width);
+				/*float ratioX = canvasWorldSize.x / ((Canvas.worldCamera.orthographicSize * 2) / Screen.height * Screen.width);
 				float ratioY = canvasWorldSize.y / (Canvas.worldCamera.orthographicSize * 2);
-				canvasMinSize = Mathf.Min(Canvas.pixelRect.width / ratioX, Canvas.pixelRect.height / ratioY);
+				canvasMinSize = Mathf.Min(Canvas.pixelRect.width / ratioX, Canvas.pixelRect.height / ratioY);*/
 			}
 			fullSize = new Vector2((canvasMinSize * CANVAS_MIN_SIZE_RATIO) / canvasScaleFactor, cursorSize);
 			RectTransform.sizeDelta = fullSize;

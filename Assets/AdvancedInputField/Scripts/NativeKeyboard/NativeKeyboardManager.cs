@@ -115,32 +115,35 @@ namespace AdvancedInputFieldPlugin
 		#region UNITY
 		private void Awake()
 		{
-#if UNITY_EDITOR
+
 #if(UNITY_ANDROID || UNITY_IOS)
-			if(Settings.SimulateMobileBehaviourInEditor)
-			{
+			
 				Canvas mobileKeyboardCanvas = null;
-				if(Screen.height > Screen.width)
+				mobileKeyboardCanvas = GameObject.Instantiate(Settings.PortraitKeyboardCanvasPrefab);
+				Debug.Log("generated");
+				if (Screen.height > Screen.width)
 				{
+					Debug.Log("keyboard loaded 001");
 					mobileKeyboardCanvas = GameObject.Instantiate(Settings.PortraitKeyboardCanvasPrefab);
 				}
 				else
 				{
+					Debug.Log("keyboard loaded");
 					mobileKeyboardCanvas = GameObject.Instantiate(Settings.LandscapeKeyboardCanvasPrefab);
 				}
 				DontDestroyOnLoad(mobileKeyboardCanvas.gameObject);
 				keyboard = mobileKeyboardCanvas.GetComponentInChildren<SimulatorKeyboard>();
 				keyboard.Init(name);
-			}
-			else
+			
+			/*else
 			{
 				keyboard = gameObject.AddComponent<StandaloneKeyboard>();
 				keyboard.Init(name);
-			}
+			}*/
 #elif UNITY_STANDALONE || UNITY_WSA || UNITY_WEBGL
 			keyboard = gameObject.AddComponent<StandaloneKeyboard>();
 			keyboard.Init(name);
-#endif
+
 #elif UNITY_ANDROID
 			keyboard = gameObject.AddComponent<AndroidKeyboard>();
 			keyboard.Init(name);

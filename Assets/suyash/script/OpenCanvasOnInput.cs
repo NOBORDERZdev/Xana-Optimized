@@ -3,11 +3,18 @@ using UnityEngine.InputSystem;
 
 public class OpenCanvasOnInput : MonoBehaviour
 {
+    public static OpenCanvasOnInput instance;
     public GameObject canvas; // Assign your Canvas GameObject here
     private bool isCanvasActive = false;
 
     // Define the Input Action
     public InputActionReference buttonPressAction;
+    public GameObject player;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void OnEnable()
     {

@@ -990,6 +990,7 @@ public class UserLoginSignupManager : MonoBehaviour
         if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
         {
             Debug.LogError("Set Name for Guest User");
+            VR_UImanager.instance.EnableUIElements();
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
             NameScreenNextButton.interactable = true;
