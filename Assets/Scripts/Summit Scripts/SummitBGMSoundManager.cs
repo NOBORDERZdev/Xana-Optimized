@@ -68,6 +68,11 @@ public class SummitBGMSoundManager : MonoBehaviour
 
     void StopBGM()
     {
+        if (!audioSource)
+        {
+            Debug.Log("<color=red> Audio Source is null <color>");
+            return;
+        }
         audioSource.Stop();
         audioSource.clip = null;
         Destroy(clip); 
