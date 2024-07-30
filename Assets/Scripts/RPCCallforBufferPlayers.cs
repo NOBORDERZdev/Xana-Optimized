@@ -60,7 +60,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         if (ConstantsHolder.isFixedHumanoid)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
-            _mydatatosend[1] = XANASummitDataContainer.fixedAvatarJson as object;
+            _mydatatosend[1] = XANASummitDataContainer.FixedAvatarJson as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
 
             CallRpcInvoke();

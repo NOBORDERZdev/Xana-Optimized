@@ -8,7 +8,6 @@ public class SubWorldsHandler : MonoBehaviour
     // Start is called before the first frame update
     void OnEnable()
     {
-        Debug.LogError("handler");
         BuilderEventManager.AfterWorldInstantiated += AddSubWorld;
     }
 
@@ -27,14 +26,14 @@ public class SubWorldsHandler : MonoBehaviour
                 {
                     for (int j = 0; j < XANASummitDataContainer.summitData.domes[i].SubWorlds.Count; j++)
                     {
-                        if (j < BuilderData.sceneTeleportingObjects.Count)
+                        if (j < BuilderData.SceneTeleportingObjects.Count)
                         {
-                            BuilderData.sceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>();
-                            BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().domeId = -1;
+                            BuilderData.SceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>();
+                            BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().DomeId = -1;
                             if (XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderWorld)
-                                BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
+                                BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
                             else
-                                BuilderData.sceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().worldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
+                                BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
                         }
                     }
                     return;

@@ -12,16 +12,13 @@ public class XANASummitDataContainer : ScriptableObject
     public GameObject maleAIAvatar;
     public GameObject femaleAIAvatar;
     public string[] avatarJson;
+    public DomeData summitData=new DomeData();
+    public AIData aiData=new AIData();
+    public static string FixedAvatarJson;
+    public static Stack<StackInfoWorld> LoadedScenesInfo = new Stack<StackInfoWorld>();
 
     string[] s ={ "ZONE-X", "ZONE X Musuem", "Xana Lobby", "XANA Festival Stage", "Xana Festival", "THE RHETORIC STAR", "ROCK’N ROLL CIRCUS", "MASAMI TANAKA", "Koto-ku Virtual Exhibition", "JJ MUSEUM", "HOKUSAI KATSUSHIKA", "Green Screen Studio", "GOZANIMATOR HARUNA GOUZU GALLERY 2021", "Genesis ART Metaverse Museum", "FIVE ELEMENTS", "DEEMO THE MOVIE Metaverse Museum", "D_Infinity_Labo", "BreakingDown Arena", "Astroboy x Tottori Metaverse Museum" };
 
-    public DomeData summitData=new DomeData();
-
-    public AIData aiData=new AIData();
-
-    public static string fixedAvatarJson;
-
-    public static Stack<StackInfoWorld> loadedScenes = new Stack<StackInfoWorld>();
     //private void OnEnable()
     //{
     //    for (int i = 0; i < 128; i++)

@@ -391,7 +391,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             if(_itemData.ItemID.Contains("TLP"))
             {
-                BuilderData.sceneTeleportingObjects.Add(newObj);
+                BuilderData.SceneTeleportingObjects.Add(newObj);
             }
         }
 
@@ -536,7 +536,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
-        BuilderData.sceneTeleportingObjects.Clear();
+        BuilderData.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;

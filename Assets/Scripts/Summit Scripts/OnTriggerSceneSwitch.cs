@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
-    public int domeId;
+    public int DomeId;
     [Tooltip("This only require when dome id is set to -1")]
-    public string worldId;
+    public string WorldId;
+    public TMPro.TextMeshPro DomeIndexText;
 
-    public TMPro.TextMeshPro textMeshPro;
 
     private bool alreadyTriggered;
     private void OnTriggerEnter(Collider other)
@@ -23,8 +23,8 @@ public class OnTriggerSceneSwitch : MonoBehaviour
                 {
                     ConstantsHolder.DiasableMultiPartPhoton = true;
                 }
-                if (domeId == -1 && !string.IsNullOrEmpty(worldId))
-                    TriggerSceneLoading(worldId);
+                if (DomeId == -1 && !string.IsNullOrEmpty(WorldId))
+                    TriggerSceneLoading(WorldId);
                 else
                     TriggerSceneLoading();
 
@@ -35,8 +35,8 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading()
     {
-        GameplayEntityLoader.instance.AssignRaffleTickets(domeId);
-        BuilderEventManager.LoadNewScene?.Invoke(domeId, transform.GetChild(0).transform.position);
+        GameplayEntityLoader.instance.AssignRaffleTickets(DomeId);
+        BuilderEventManager.LoadNewScene?.Invoke(DomeId, transform.GetChild(0).transform.position);
     }
 
     void TriggerSceneLoading(string worldId)

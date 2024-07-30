@@ -100,7 +100,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.playerTrasnform = currentPlayerPos;
-        XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
+        XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
         WorldItemView.m_EnvName = domeGeneralData.world;
         ConstantsHolder.xanaConstants.EnviornmentName = domeGeneralData.world;
@@ -114,7 +114,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
         ConstantsHolder.haveSubWorlds = domeGeneralData.isSubWorld;
         if (domeGeneralData.Ishumanoid)
-            XANASummitDataContainer.fixedAvatarJson = domeGeneralData.Avatarjson;
+            XANASummitDataContainer.FixedAvatarJson = domeGeneralData.Avatarjson;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.singlePlayerInstance = domeGeneralData.experienceType != "double";
         multiplayerController.isConnecting = false;
@@ -160,7 +160,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.playerTrasnform = currentPlayerPos;
-        XANASummitDataContainer.loadedScenes.Push(subWorldInfo);
+        XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
 
         WorldItemView.m_EnvName = worldInfo.data.name;
         ConstantsHolder.xanaConstants.EnviornmentName = worldInfo.data.name;
@@ -230,7 +230,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
-        subWorldInfo = XANASummitDataContainer.loadedScenes.Pop();
+        subWorldInfo = XANASummitDataContainer.LoadedScenesInfo.Pop();
 
         playerPos = subWorldInfo.playerTrasnform[0];
         playerRot = subWorldInfo.playerTrasnform[1];
