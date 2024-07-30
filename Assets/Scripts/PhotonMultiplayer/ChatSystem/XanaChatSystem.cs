@@ -120,19 +120,17 @@ public class XanaChatSystem : MonoBehaviour
         }
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            this.UserName = PlayerPrefs.GetString("PlayerName");
+            this.UserName = PlayerPrefs.GetString("UserName");
         else if (string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME)))
         {
             if (string.IsNullOrEmpty(this.UserName))
             {
                 this.UserName = "user" + Environment.TickCount % 99; //made-up username
-                Debug.Log("username chat===" + this.UserName);
             }
         }
         else
         {
             this.UserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-            Debug.Log("username chat1===" + this.UserName);
         }
 
         Connect();
@@ -223,7 +221,7 @@ public class XanaChatSystem : MonoBehaviour
     public void Connect()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            this.UserName = PlayerPrefs.GetString("PlayerName");
+            this.UserName = PlayerPrefs.GetString("UserName");
 
         PlayerPrefs.SetString(UsernamePrefs, this.UserName);
         PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, this.UserName);
@@ -233,7 +231,6 @@ public class XanaChatSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(.3f);
         ChatScrollRect.verticalNormalizedPosition = 1f;
-        //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
     protected bool isChatOpen;

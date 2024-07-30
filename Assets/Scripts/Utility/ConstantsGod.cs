@@ -272,7 +272,7 @@ public class ConstantsGod
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
-    public static string SINGLEWORLDINFO = "/hot/get-single-world-hot/";   //:id/:type
+    public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //worldName=&worldId=
 
     #endregion
 

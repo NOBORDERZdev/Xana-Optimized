@@ -76,9 +76,26 @@ public class InventoryManager : MonoBehaviour
     public List<ItemDetail> CategorieslistHairs;
     public List<ItemDetail> CategorieslistHairsColors;
 
-    private int headsDownlaodedCount, faceDownlaodedCount, innerDownlaodedCount, outerDownlaodedCount, accesaryDownlaodedCount, bottomDownlaodedCount, socksDownlaodedCount,
-        shoesDownlaodedCount, hairDwonloadedCount, LipsColorDwonloadedCount, EyesColorDwonloadedCount, EyeBrowColorDwonloadedCount, HairColorDwonloadedCount, skinColorDwonloadedCount, eyeBrowDwonloadedCount,
-        eyeBrowColorDwonloadedCount, eyeLashesDwonloadedCount, eyesDwonloadedCount, lipsDwonloadedCount;
+    private int 
+        headsDownlaodedCount, 
+        faceDownlaodedCount, 
+        innerDownlaodedCount, innerDownlaodedCountFemale,
+        outerDownlaodedCount, outerDownlaodedCountFemale,
+        accesaryDownlaodedCount, 
+        bottomDownlaodedCount, bottomDownlaodedCountFemale,
+        socksDownlaodedCount,
+        shoesDownlaodedCount, shoesDownlaodedCountFemale,
+        hairDwonloadedCount, hairDwonloadedCountFemale,
+        LipsColorDwonloadedCount, 
+        EyesColorDwonloadedCount, 
+        EyeBrowColorDwonloadedCount, 
+        HairColorDwonloadedCount, 
+        skinColorDwonloadedCount, 
+        eyeBrowDwonloadedCount,
+        eyeBrowColorDwonloadedCount, 
+        eyeLashesDwonloadedCount, 
+        eyesDwonloadedCount, 
+        lipsDwonloadedCount;
 
     [Space(10f)]
     public GameObject colorCustomizationPrefabBtn;
@@ -193,7 +210,8 @@ public class InventoryManager : MonoBehaviour
         saveButton = LoadPlayerAvatar.instance_loadplayer.saveButton.gameObject;
         //saveStoreBtnImage = SaveStoreBtn.GetComponent<Image>();
         //saveStoreBtnButton = SaveStoreBtn.GetComponent<Button>();
-        CheckAPILoaded = false; 
+        CheckAPILoaded = false;
+        Debug.Log("##################################################%%%%%%%%%%%%%%%%%%%");
         if (PlayerPrefs.GetInt("WalletLogin") != 1)
         {
             GetAllMainCategories();
@@ -288,7 +306,7 @@ public class InventoryManager : MonoBehaviour
         AvatarCustomizationManager.Instance.m_MainCharacter = GameManager.Instance.mainCharacter;
         AvatarCustomizationManager.Instance.f_MainCharacter = GameManager.Instance.mainCharacter;
 
-        ResetDownloadCount();
+        //ResetDownloadCount();
     }
     public void skipAvatarSelection()
     {
@@ -345,15 +363,21 @@ public class InventoryManager : MonoBehaviour
         //saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         //if (PlayerPrefs.GetInt("IsLoggedIn") == 1) // As Guest Functionality Removed, No need for this check anymore 
         //{
+
+        Debug.Log("################################### Assigning ");
         if (MultipleSave)
         {
             if (AvatarSelfie.instance != null)
             {
                 _storeSaveBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
             }
-            
+
+            Debug.Log("################################### Checking ");
             if (LoadPlayerAvatar.instance_loadplayer != null)
+            {
+                Debug.Log("################################### Found ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+            }
 
             if (AvatarSelfie.instance != null)
                 newAvatarPresetBtn.onClick.AddListener(() => AvatarSelfie.instance.TakeScreenShootAndSaveData((IsSucess) => { }));
@@ -380,7 +404,7 @@ public class InventoryManager : MonoBehaviour
     {
         Button _storeSaveBtn = SaveStoreBtn.GetComponent<Button>();
         _storeSaveBtn.onClick.RemoveAllListeners();
-
+        Debug.Log("################################### Removed ");
         saveButton.GetComponent<Button>().onClick.RemoveAllListeners();
         yield return new WaitForSeconds(.1f);
         //SaveStoreBtn.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
@@ -392,7 +416,10 @@ public class InventoryManager : MonoBehaviour
             }
             
             if (LoadPlayerAvatar.instance_loadplayer != null)
+            {
+                Debug.Log("################################### Added ");
                 _storeSaveBtn.onClick.AddListener(() => LoadPlayerAvatar.instance_loadplayer.OpenPlayerNamePanel());
+            }
             saveButton.GetComponent<Button>().onClick.AddListener(OnSaveBtnClicked);
         }
         else
@@ -695,7 +722,7 @@ public class InventoryManager : MonoBehaviour
         //AssetBundle.UnloadAllAssetBundles(false);
         //Resources.UnloadUnusedAssets();
 
-        // print("ppp");
+        Debug.LogError("##############Save Btn CLicked");
         if (DefaultClothDatabase.instance.gameObject != null)
         {
             //  print("ppp+");
@@ -1048,6 +1075,9 @@ public class InventoryManager : MonoBehaviour
     ////////////////////////// <SUB Category STARTS here> ///////////////////////////////////////////////
     private string AccessIndexOfSpecificCategory()
     {
+        if (ArrayofMainCategories == null || ArrayofMainCategories.Length == 0)
+            return "";
+
         var result = string.Join(",", ArrayofMainCategories);
         result = "[" + result + "]";
         return result;
@@ -1066,6 +1096,12 @@ public class InventoryManager : MonoBehaviour
     public void GetAllSubCategories()
     {
         string result = AccessIndexOfSpecificCategory();
+
+        if (result.IsNullOrEmpty())
+        {
+            Debug.LogError("ArrayofMainCategories is null or empty");
+            return;
+        }
         ConvertMainCat_Index_ToJson MainCatString = new ConvertMainCat_Index_ToJson();
         string bodyJson = JsonUtility.ToJson(MainCatString.CreateTOJSON(result));
         StartCoroutine(HitSUBCategoriesAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMSUBCATEGORY, bodyJson));
@@ -3391,7 +3427,13 @@ public class InventoryManager : MonoBehaviour
         L_ItemBtnObj.transform.localScale = new Vector3(1, 1, 1);
         ItemDetail abc = L_ItemBtnObj.GetComponent<ItemDetail>();
 
-        abc.iconLink = useDefaultValue ? "" : dataListOfItems[objId].iconLink;
+        // Implement Image Kit URL
+        string ImageKitUrl = dataListOfItems[objId].iconLink;
+        ImageKitUrl = ImageKitUrl.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://ik.imagekit.io/xanalia/xanaprod/Defaults/"); 
+        ImageKitUrl+= "?width=128&height=128";
+
+
+        abc.iconLink = useDefaultValue ? "" : ImageKitUrl;
         abc.id = useDefaultValue ? (objId + 1).ToString() : dataListOfItems[objId].id.ToString();
         abc.isFavourite = useDefaultValue ? "False" : dataListOfItems[objId].isFavourite.ToString();
         abc.isOccupied = useDefaultValue ? "False" : dataListOfItems[objId].isOccupied.ToString();
@@ -3445,6 +3487,7 @@ public class InventoryManager : MonoBehaviour
 
     int GetDownloadedNumber(EnumClass.CategoryEnum categoryEnum)
     {
+        string _MyGender = CharacterHandler.instance.activePlayerGender.ToString();
         switch (TempEnumVar)
         {
             case EnumClass.CategoryEnum.Head:
@@ -3452,18 +3495,30 @@ public class InventoryManager : MonoBehaviour
             case EnumClass.CategoryEnum.Face:
                 return faceDownlaodedCount;
             case EnumClass.CategoryEnum.Inner:
-                return innerDownlaodedCount;
+                if (_MyGender == "Female")
+                    return innerDownlaodedCountFemale;
+                else
+                    return innerDownlaodedCount;
             case EnumClass.CategoryEnum.Outer:
-                return outerDownlaodedCount;
+                if (_MyGender == "Female")
+                    return outerDownlaodedCountFemale;
+                else
+                    return outerDownlaodedCount;
             case EnumClass.CategoryEnum.Accesary:
                 return accesaryDownlaodedCount;
             case EnumClass.CategoryEnum.Bottom:
-                return bottomDownlaodedCount;
+                if (_MyGender == "Female")
+                 return bottomDownlaodedCountFemale;
+                else
+                 return bottomDownlaodedCount;
             case EnumClass.CategoryEnum.Socks:
                 return socksDownlaodedCount;
             case EnumClass.CategoryEnum.Shoes:
                 return shoesDownlaodedCount;
             case EnumClass.CategoryEnum.HairAvatar:
+                if (_MyGender == "Female")
+                    return hairDwonloadedCountFemale;
+                else
                 return hairDwonloadedCount;
             case EnumClass.CategoryEnum.HairAvatarColor:
                 return HairColorDwonloadedCount;
@@ -3490,6 +3545,8 @@ public class InventoryManager : MonoBehaviour
 
     void UpdateCategoryDownloadedInt(EnumClass.CategoryEnum TempEnumVar)
     {
+        string _MyGender = CharacterHandler.instance.activePlayerGender.ToString();
+            
         switch (TempEnumVar)
         {
             case EnumClass.CategoryEnum.Head:
@@ -3504,12 +3561,18 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Inner:
                 {
-                    innerDownlaodedCount++;
+                    if(_MyGender == "Female")
+                        innerDownlaodedCountFemale++;
+                    else
+                        innerDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Outer:
                 {
-                    outerDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        outerDownlaodedCountFemale++;
+                    else
+                        outerDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Accesary:
@@ -3519,7 +3582,10 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Bottom:
                 {
-                    bottomDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        bottomDownlaodedCountFemale++;
+                    else
+                        bottomDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.Socks:
@@ -3529,12 +3595,18 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.Shoes:
                 {
-                    shoesDownlaodedCount++;
+                    if (_MyGender == "Female")
+                        shoesDownlaodedCountFemale++;
+                    else
+                        shoesDownlaodedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.HairAvatar:
                 {
-                    hairDwonloadedCount++;
+                    if (_MyGender == "Femle")
+                        hairDwonloadedCountFemale++;
+                    else
+                        hairDwonloadedCount++;
                     break;
                 }
             case EnumClass.CategoryEnum.HairAvatarColor:
