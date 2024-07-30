@@ -9,34 +9,30 @@ using UnityEngine.AI;
 
 public class CarNavigationManager : MonoBehaviour
 {
-
-    public static CarNavigationManager instance;
-
-
+    //Public Variables
+    public static CarNavigationManager CarNavigationInstance;
+    public Action OnExitpress;
+    public Action OnCancelPress;
     public Dictionary<int, PhotonView> Cars = new Dictionary<int, PhotonView>();
 
+    //Private variables
     [SerializeField]
     private GameObject CarCanvas;
 
-    public Action onExitpress, onCancelPress;
-
-
     private void Awake()
     {
-        instance = this;
+        CarNavigationInstance = this;
     }
 
     private void Start()
     {
 
         SummitEntityManager.instance.InstantiateCAR();
-        /*  yield return new WaitForSeconds(2f);
-          MutiplayerController.instance.ADDReference?.Invoke();*/
-        if (SummitCarUIHandler.instance)
+        if (SummitCarUIHandler.SummitCarUIHandlerInstance)
         {
-            CarCanvas = SummitCarUIHandler.instance.carCanvas;
-            SummitCarUIHandler.instance.exitButton.onClick.RemoveAllListeners();
-            SummitCarUIHandler.instance.exitButton.onClick.AddListener(ExitCar);
+            CarCanvas = SummitCarUIHandler.SummitCarUIHandlerInstance.CarCanvas;
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.RemoveAllListeners();
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.AddListener(ExitCar);
         }
     }
 
@@ -93,12 +89,12 @@ public class CarNavigationManager : MonoBehaviour
 
     public void ExitCar()
     {
-        onExitpress?.Invoke();
+        OnExitpress?.Invoke();
 
     }
     public void CancelExitCar()
     {
-        onCancelPress?.Invoke();
+        OnCancelPress?.Invoke();
 
     }
 

@@ -3,24 +3,30 @@ using UnityEngine;
 
 public class SummitCarUIHandler : MonoBehaviour
 {
-    public static SummitCarUIHandler instance;
+    //Public variables
+    public static SummitCarUIHandler SummitCarUIHandlerInstance;
+    public GameObject CarCanvas;
+    public Button ExitButton;
 
+    //private variables 
     [SerializeField]
-    private GameObject JoyStick, UIObjects;
-    public GameObject carCanvas;
-    public Button exitButton;
+    private GameObject joyStick;
+    [SerializeField]
+    private GameObject uiObjects;
+
+   
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
+        if (SummitCarUIHandlerInstance == null)
+            SummitCarUIHandlerInstance = this;
         else DestroyImmediate(this);
     }
 
     public void UpdateUIelement(bool enable)
     {
-        JoyStick.SetActive(enable);
-        UIObjects.SetActive(enable);
+        joyStick.SetActive(enable);
+        uiObjects.SetActive(enable);
     }
 
 }
