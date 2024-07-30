@@ -7,9 +7,9 @@ using static GlobalConstants;
 public class StayTimeTrackerForSummit : MonoBehaviour
 {
 
-    private float startTime;
-    public bool isTrackingTime = false;
-    public bool isTrackingTimeForExteriorArea;
+    private float _startTime;
+    public bool IsTrackingTime = false;
+    public bool IsTrackingTimeForExteriorArea;
     public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
@@ -27,12 +27,12 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (isTrackingTime && ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        if (IsTrackingTime && ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
             StopTrackingTime();
             CalculateAndLogStayTime();
         }
-        else if (isTrackingTime && ConstantsHolder.isFromXANASummit)
+        else if (IsTrackingTime && ConstantsHolder.isFromXANASummit)
         {
             StopTrackingTime();
             CalculateAndLogStayTime();
@@ -40,20 +40,20 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     }
     public void StartTrackingTime()
     {
-        startTime = Time.time;
-        isTrackingTime = true;
+        _startTime = Time.time;
+        IsTrackingTime = true;
     }
     public void StopTrackingTime()
     {
-        isTrackingTime = false;
+        IsTrackingTime = false;
     }
     public void CalculateAndLogStayTime()
     {
-        float stayTime = Time.time - startTime;
-        startTime = Mathf.Abs(startTime);
+        float stayTime = Time.time - _startTime;
+        _startTime = Mathf.Abs(_startTime);
         int minutes = Mathf.FloorToInt(stayTime / 60f);
         string worldName;
-        if (isTrackingTimeForExteriorArea)
+        if (IsTrackingTimeForExteriorArea)
             worldName = "_XS_" + SummitAreaName;
         else
             worldName ="_Dome_" + DomeId + "_World_" + DomeWorldId;
