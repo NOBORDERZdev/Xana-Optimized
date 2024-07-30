@@ -6,12 +6,10 @@ using UnityEngine.UI;
 
 public class DataManager_Shrine : MonoBehaviour
 {
-    //private GameObject player;
-
     // API configs
     [SerializeField] private string id;
     [SerializeField] private string userName = "--";
-    [SerializeField] private string url;
+    [SerializeField] private string url = "https://7cjaa2ckmj.execute-api.ap-northeast-1.amazonaws.com/default/Lambda-XANA";
 
     // UI Configs
     [SerializeField] private GameObject worshipFailUI;
@@ -23,14 +21,18 @@ public class DataManager_Shrine : MonoBehaviour
     void Start() 
     {
         ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
-        //worshipFailUI.GetComponentInChildren<Button>().onClick.AddListener(closeWorshipFailUI);
         if (ConstantsHolder.userId != null)
         {
             id = ConstantsHolder.userId;
-            //StartCoroutine(CheckPoint());
 
         }
-        if (ConstantsHolder.userId != null && ConstantsHolder.uniqueUserName != null)
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        {
+            id = ConstantsHolder.userId;
+            userName = ConstantsHolder.userId;
+            StartCoroutine(InitPlayerDB(id, userName));
+        }
+        else if (ConstantsHolder.userId != null && ConstantsHolder.uniqueUserName != null)
         {
             id = ConstantsHolder.userId;
             userName = ConstantsHolder.uniqueUserName;
@@ -40,7 +42,6 @@ public class DataManager_Shrine : MonoBehaviour
         {
             StartCoroutine(IERequestGetUserDetails());
         }
-
     }
 
     public void GetPlayerData() => StartCoroutine(CommunicateWithDB(id));
@@ -68,7 +69,6 @@ public class DataManager_Shrine : MonoBehaviour
             string point = www.downloadHandler.text;
             if (point == "There is no player Data") point = "0";
             uIController_Shine.SetPointUI(point);
-            //www.Dispose();
         }
     }
     public IEnumerator CommunicateWithDB(string id) {
@@ -82,7 +82,6 @@ public class DataManager_Shrine : MonoBehaviour
         yield return www.SendWebRequest();
         if (www.downloadHandler.text == "success") {
             uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
-            //TODO: 동전 효과 넣기
             coinParticle.GetComponent<ParticleSystem>().Play();
             Transform player = ReferencesForGamePlay.instance.MainPlayerParent.transform;
             if (player != null)
@@ -130,9 +129,6 @@ public class DataManager_Shrine : MonoBehaviour
         }
     }
 
-    //public void closeWorshipFailUI() {
-    //    worshipFailUI.SetActive(false);
-    //}
     public IEnumerator IERequestGetUserDetails()
     {
         using (UnityWebRequest www = UnityWebRequest.Get((ConstantsGod.API_BASEURL + ConstantsGod.r_url_GetUserDetails)))

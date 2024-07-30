@@ -1011,7 +1011,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         Resources.UnloadUnusedAssets();
         CheckAgain:
         Transform temp = null;
-
         if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune || ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen))
         {
             JjWorldChanger[] portals = FindObjectsOfType<JjWorldChanger>();
@@ -1042,33 +1041,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
             }
         }
-
-        //if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune)
-        //{
-        //    Debug.Log("coming from dune spawn");
-        //    if (GameObject.FindGameObjectWithTag("PortalDune"))
-        //    {
-        //        Debug.Log("coming from dune spawn 2");
-        //        temp = GameObject.FindGameObjectWithTag("PortalDune").transform;
-        //    }
-        //    //else
-        //    //    temp = new GameObject("SpawnPoint").transform;
-        //}
-
-        //else if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen)
-        //{
-        //    Debug.Log("coming from daisen spawn");
-
-        //    if (GameObject.FindGameObjectWithTag("PortalDaisen"))
-        //    {
-        //        Debug.Log("coming from daisen spawn 2");
-
-        //        temp = GameObject.FindGameObjectWithTag("PortalDaisen").transform;
-        //    }
-        //    //else
-        //    //    temp = new GameObject("SpawnPoint").transform;
-        //}
-
         else
         {
             Debug.Log("not coming from else");

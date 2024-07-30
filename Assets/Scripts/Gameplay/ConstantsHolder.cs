@@ -30,6 +30,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
     public bool LoginasGustprofile = false; // for gust profile
+    public bool LoggedInAsGuest = false; // to check is user logged in as guest
     public bool isFirstPanel = false; // User has Not data Open First Panel
     public string NFTUrl;
     public string clothJson;
