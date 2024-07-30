@@ -97,7 +97,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
         subWorldInfo.user_limit = ConstantsHolder.userLimit;
         subWorldInfo.domeId = ConstantsHolder.domeId;
-        subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
+        subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
@@ -112,7 +112,7 @@ public class XANASummitSceneLoading : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.builderWorldId.ToString();
         else
             ConstantsHolder.xanaConstants.MuseumID = domeGeneralData.worldId.ToString();
-        ConstantsHolder.haveSubWorlds = domeGeneralData.isSubWorld;
+        ConstantsHolder.HaveSubWorlds = domeGeneralData.isSubWorld;
         if (domeGeneralData.Ishumanoid)
             XANASummitDataContainer.FixedAvatarJson = domeGeneralData.Avatarjson;
         gameplayEntityLoader.currentEnvironment = null;
@@ -157,7 +157,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         subWorldInfo.isBuilderWorld = ConstantsHolder.xanaConstants.isBuilderScene;
         subWorldInfo.user_limit = ConstantsHolder.userLimit;
         subWorldInfo.domeId = ConstantsHolder.domeId;
-        subWorldInfo.haveSubWorlds = ConstantsHolder.haveSubWorlds;
+        subWorldInfo.haveSubWorlds = ConstantsHolder.HaveSubWorlds;
         subWorldInfo.isFromSummitWorld = ConstantsHolder.isFromXANASummit;
         subWorldInfo.playerTrasnform = currentPlayerPos;
         XANASummitDataContainer.LoadedScenesInfo.Push(subWorldInfo);
@@ -167,7 +167,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         gameplayEntityLoader.addressableSceneName = worldInfo.data.name;
         ConstantsHolder.userLimit = worldInfo.data.user_limit;
         ConstantsHolder.xanaConstants.MuseumID = worldInfo.data.id;
-        ConstantsHolder.haveSubWorlds = false;
+        ConstantsHolder.HaveSubWorlds = false;
         ConstantsHolder.xanaConstants.isBuilderScene = worldInfo.data.entityType == "USER_WORLD" ? true : false;
         gameplayEntityLoader.currentEnvironment = null;
         multiplayerController.isConnecting = false;
@@ -244,7 +244,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         ConstantsHolder.xanaConstants.isBuilderScene = subWorldInfo.isBuilderWorld;
         ConstantsHolder.xanaConstants.MuseumID = subWorldInfo.id;
         ConstantsHolder.isFromXANASummit = subWorldInfo.isFromSummitWorld;
-        ConstantsHolder.haveSubWorlds = subWorldInfo.haveSubWorlds;
+        ConstantsHolder.HaveSubWorlds = subWorldInfo.haveSubWorlds;
 
         ConstantsHolder.isPenguin = false;
         ConstantsHolder.isFixedHumanoid = false;

@@ -18,7 +18,7 @@ public class SubWorldsHandler : MonoBehaviour
 
     void AddSubWorld()
     {
-        if (ConstantsHolder.haveSubWorlds)
+        if (ConstantsHolder.HaveSubWorlds)
         {
             for (int i = 0; i < XANASummitDataContainer.summitData.domes.Count; i++)
             {

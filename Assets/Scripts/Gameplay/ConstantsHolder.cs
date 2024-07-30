@@ -150,7 +150,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int domeId;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
-    public static bool haveSubWorlds;
+    public static bool HaveSubWorlds;
 
     public string r_EmoteStoragePersistentPath
     {

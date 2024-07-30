@@ -387,7 +387,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
-        if(ConstantsHolder.haveSubWorlds)
+        if(ConstantsHolder.HaveSubWorlds)
         {
             if(_itemData.ItemID.Contains("TLP"))
             {
