@@ -21,7 +21,7 @@ using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
 {
-    public StayTimeTrackerForSummit _stayTimeTrackerForSummit;
+    public StayTimeTrackerForSummit StayTimeTrackerForSummit;
     public bool isAlreadySpawned;
     public Camera MiniMapCamera; 
     [Header("singleton object")]
@@ -506,12 +506,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
         {
             ReferencesForGamePlay.instance.m_34player.AddComponent<SummitAnalyticsTrigger>();
-            if (_stayTimeTrackerForSummit != null)
+            if (StayTimeTrackerForSummit != null)
             {
-                string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
+                string eventName = "XS_TV_" + StayTimeTrackerForSummit.SummitAreaName;
                 GlobalConstants.SendFirebaseEventForSummit(eventName);
-                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
-                _stayTimeTrackerForSummit.StartTrackingTime();
+                StayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
+                StayTimeTrackerForSummit.StartTrackingTime();
             }
         }
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);

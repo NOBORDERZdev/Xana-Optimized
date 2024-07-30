@@ -8,7 +8,8 @@ public class SummitAnalyticsTrigger : MonoBehaviour
     private string _lastTriggeredArea;
     private void Start()
     {
-        _stayTimeTrackerForSummit = GameplayEntityLoader.instance._stayTimeTrackerForSummit;
+        if (GameplayEntityLoader.instance!=null)
+            _stayTimeTrackerForSummit = GameplayEntityLoader.instance.StayTimeTrackerForSummit;
     }
     private void OnTriggerEnter(Collider other)
     {
