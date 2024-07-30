@@ -23,14 +23,14 @@ public class SummitAIChatHandler : XanaChatSystem
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
-        GamePlayButtonEvents.OnExitButtonXANASummit += ResetOnExit;
+        BuilderEventManager.ResetSummit += ResetOnExit;
     }
     private void OnDisable()
     {
         BuilderEventManager.AINPCActivated -= LoadAIChat;
         BuilderEventManager.AINPCDeactivated -= RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated -= LoadNPC;
-        GamePlayButtonEvents.OnExitButtonXANASummit -= ResetOnExit;
+        BuilderEventManager.ResetSummit -= ResetOnExit;
     }
 
     private void Start()

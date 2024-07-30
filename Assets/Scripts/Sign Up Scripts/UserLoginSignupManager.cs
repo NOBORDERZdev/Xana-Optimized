@@ -27,6 +27,7 @@ public class UserLoginSignupManager : MonoBehaviour
     [Header("User Login Section")]
     public GameObject emailOrWalletLoginPanel;
     public GameObject emailLoginPanel;
+    public GameObject LoginRegisterScreen;
 
     [Space(10)]
     public GameObject signUpWithEmailPanel;
@@ -85,8 +86,9 @@ public class UserLoginSignupManager : MonoBehaviour
     public static UserLoginSignupManager instance;
     public Action logoutAction;
     EyesBlinking ref_EyesBlinking;
-
+    [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
+    public bool LoggedInAsGuest = false;
 
     private void OnEnable()
     {
@@ -154,10 +156,14 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1 || PlayerPrefs.GetInt("WalletLogin") == 1)
         {
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
             StartCoroutine(RefreshXanaTokenAPI());
         }
         else
         {
+            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             ShowWelcomeScreen();
         }
     }
@@ -208,33 +214,53 @@ public class UserLoginSignupManager : MonoBehaviour
     }
     void AutoLogin()
     {
-        if (PlayerPrefs.GetInt("IsLoggedIn") == 1 && PlayerPrefs.GetInt("WalletLogin") != 1)
-        {
-            //Debug.LogError("Email login .... ");
-            //MyClassOfLoginJson LoginObj = new MyClassOfLoginJson();
-            //LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
-            //StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
-            //{
-            //    //write if you want something on sucessfull login
-            //}));
-        }
-        else if (PlayerPrefs.GetInt("WalletLogin") == 1)
-        {
-            ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
-            ConstantsHolder.isWalletLogin = true;
-            WalletAutoLogin();
-            //GetUserCoinsAfterLogin();
-        }
+        ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
+        ConstantsHolder.isWalletLogin = true;
+        WalletAutoLogin();
     }
     #region SignUp Functions 
 
     public void ShowWelcomeScreen()
     {
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (PlayerPrefs.GetInt("shownWelcome") == 0)
+        {
+            signUpOrloginSelectionPanel.SetActive(true);
+        }
+        else
+        {
+            signUpOrloginSelectionPanel.SetActive(false);
+        }
+        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI));
         ClearInputFieldsData();
     }
+    public void OnClickGuestSelection() {
+        if (PlayerPrefs.GetInt("IsProcessComplete") == 1)
+        {
+            if (PlayerPrefs.GetInt("iSignup") == 1)
+            {
+                PlayerPrefs.SetInt("presetPanel", 1);
+                DefaultClothDatabase.instance.GetComponent<SaveCharacterProperties>().SavePlayerProperties();
+                InventoryManager.instance.OnSaveBtnClicked();  // reg complete go home
+            }
+        }
+        else
+        {
 
+            signUpOrloginSelectionPanel.SetActive(false);
+
+            if (!PlayerPrefs.HasKey("shownWelcome"))
+            {
+                InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
+            }
+        }
+
+
+    }
+    public void ContinueAsGuest()
+    {
+         GameManager.Instance.NotNowOfSignManager();
+    }
     public void OnClickSignUpSelection()
     {
         signUpOrloginSelectionPanel.SetActive(false);
@@ -265,17 +291,34 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void OnClickLoginSelection()
     {
-        emailOrWalletLoginPanel.SetActive(true);
-        signUpOrloginSelectionPanel.SetActive(false);
-        signUpPanel.SetActive(false);
-        signUpWithEmailPanel.SetActive(false);
-        ClearInputFieldsData();
+        if (LoggedInAsGuest)
+        {
+            LoginRegisterScreen.SetActive(false);
+            emailOrWalletLoginPanel.SetActive(true);
+            ClearInputFieldsData();
+        }
+        else
+        {
+            emailOrWalletLoginPanel.SetActive(true);
+            signUpOrloginSelectionPanel.SetActive(false);
+            signUpPanel.SetActive(false);
+            signUpWithEmailPanel.SetActive(false);
+            ClearInputFieldsData();
+
+        }
     }
 
     public void BackFromLoginSelection()
     {
-        emailOrWalletLoginPanel.SetActive(false);
-        signUpOrloginSelectionPanel.SetActive(true);
+        if (LoggedInAsGuest)
+        {
+            emailOrWalletLoginPanel.SetActive(false);
+            
+        }
+        else {
+            emailOrWalletLoginPanel.SetActive(false);
+            signUpOrloginSelectionPanel.SetActive(true);
+             }
     }
 
     public void OnClickLoginWithEmail()
@@ -317,7 +360,7 @@ public class UserLoginSignupManager : MonoBehaviour
         enterNamePanel.SetActive(false);
         displayrNameField.Clear();
         userUsernameField.Clear();
-        MainSceneEventHandler.OpenPresetPanel?.Invoke();
+        InventoryManager.instance.StartPanel_PresetParentPanel.SetActive(true);
     }
 
 
@@ -351,7 +394,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
             return;
@@ -529,13 +572,16 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
-       // PlayerPrefs.SetInt("WalletLogin", 1);
+        PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
         SubmitSetDeviceToken();
-
+        if (signUpOrloginSelectionPanel.activeInHierarchy)
+        {
+            signUpOrloginSelectionPanel.SetActive(false);
+        }
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
@@ -933,7 +979,26 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             userUsername = userUsername.TrimEnd(' ');
         }
-
+        if (PlayerPrefs.GetInt("shownWelcome") == 0 && PlayerPrefs.GetInt("IsProcessComplete") == 0 && PlayerPrefs.GetInt("iSignup") == 0)
+        {
+            Debug.LogError("Set Name for Guest User");
+            //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
+            PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
+            NameScreenNextButton.interactable = true;
+            NameScreenLoader.SetActive(false);
+            enterNamePanel.SetActive(false);
+            //checkbool_preser_start = true;
+            PlayerPrefs.SetInt("shownWelcome", 1);
+            if (PlayerPrefs.GetInt("shownWelcome") == 1)
+            {
+                InventoryManager.instance.OnSaveBtnClicked();
+            }
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+            PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
+            if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                MainSceneEventHandler.OpenLandingScene?.Invoke();
+            return;
+        }
 
         PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
@@ -959,19 +1024,19 @@ public class UserLoginSignupManager : MonoBehaviour
 
             RequestSubmitUsername(userUsername);
         }
-        else
-        {
-            StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
-            {
+        //else
+        //{
+        //    StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
+        //    {
 
-                NameScreenLoader.SetActive(false);
-                NameScreenNextButton.interactable = true;
+        //        NameScreenLoader.SetActive(false);
+        //        NameScreenNextButton.interactable = true;
 
-                Debug.Log("Email Signup");
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
-                UserPassManager.Instance.GetGroupDetails("freeuser");
-            }));
-        }
+        //        Debug.Log("Email Signup");
+        //        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
+        //        UserPassManager.Instance.GetGroupDetails("freeuser");
+        //    }));
+        //}
 
 
         //ProfilePictureManager.instance.MakeProfilePicture(Localusername);
@@ -1264,7 +1329,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-   
+
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
@@ -1462,8 +1527,9 @@ public class UserLoginSignupManager : MonoBehaviour
                 }
             case 19:
                 {
-                    //PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
-                    //ConstantsHolder.xanaConstants.LoginasGustprofile = true;
+                    PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
+                    LoggedInAsGuest = true;
+                    ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
 
@@ -1593,6 +1659,73 @@ public class UserLoginSignupManager : MonoBehaviour
         request.Dispose();
     }
 
+    public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
+    {
+        using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
+        {
+            LoggedInAsGuest = true;
+            ConstantsHolder.xanaConstants.LoginasGustprofile = true;
+            var operation = www.SendWebRequest();
+            while (!operation.isDone)
+            {
+                yield return null;
+            }
+            ClassWithToken myObject1 = new ClassWithToken();
+            myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
+            if (!www.isHttpError && !www.isNetworkError)
+            {
+                if (www.error == null)
+                {
+                    if (myObject1.success)
+                    {
+
+                        ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+
+                        if (PlayerPrefs.GetInt("shownWelcome") == 1)
+                        {
+                            //DynamicEventManager.deepLink?.Invoke("Guest login");
+                        }
+                        if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                        {
+                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                            {
+                                UserPassManager.Instance.GetGroupDetails("guest");
+                            }
+                        }
+                        ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                        PlayerPrefs.SetInt("FirstTime", 1);
+                        PlayerPrefs.Save();
+                        LoadSummit();
+
+
+                    }
+                }
+            }
+        }
+    }
+
+
+    void LoadSummit()
+    {
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
+        {
+            
+            print("Initialize ---=======  LoggedInAsGuest " + UserLoginSignupManager.instance.LoggedInAsGuest);
+            if (LoggedInAsGuest)
+            {
+                Debug.Log("Initialize Avatar with Guest");
+                MainSceneEventHandler.OpenLandingScene?.Invoke();
+            }
+
+
+        }
+    }
+
     IEnumerator DeleteAccountApi(Action<bool> CallBack)
     {
 
@@ -1633,7 +1766,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.isAdmin = false;
         ConstantsHolder.loggedIn = false;
         ConstantsHolder.xanaConstants.LoginasGustprofile = false;
-
+        LoggedInAsGuest = false;
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
         {
@@ -1662,6 +1795,7 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             FeedUIController.Instance.SNSSettingController.LogoutSuccess();
         }
+        yield return StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         ConstantsGod.UserRoles = new List<string>() { "Guest" };
         if (InventoryManager.instance.MultipleSave)
         {
@@ -1672,7 +1806,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.xanaConstants.isCameraMan = false;
         ConstantsHolder.xanaConstants.IsDeemoNFT = false;
         InventoryManager.instance.CheckWhenUserLogin();
-        UserLoginSignupManager.instance.ShowWelcomeScreen();
+        signUpOrloginSelectionPanel.SetActive(true);
         if (_web3APIforWeb2._OwnedNFTDataObj != null)
         {
             _web3APIforWeb2._OwnedNFTDataObj.ClearAllLists();
@@ -2161,6 +2295,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)
     {
+        if(UserLoginSignupManager.instance!=null)
         StartCoroutine(IERequestUpdateUserProfilePic(user_avatar, callingFrom));
     }
 

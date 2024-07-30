@@ -103,7 +103,11 @@ public class UploadPropertyBehaviour : MonoBehaviour
     void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
     {
         Debug.Log("MediaPlayer " + mp.Info + " generated event: " + eventType.ToString());
-        if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
+        if (eventType == MediaPlayerEvent.EventType.Error)
+        {
+            loadingScreen.SetActive(true);
+        }
+        else if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
         {
             if (loadingScreen) loadingScreen.SetActive(false);
             feedMediaPlayer.VideoPrepared?.Invoke(feedMediaPlayer);

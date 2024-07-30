@@ -21,7 +21,7 @@ public class AdditiveScenesLoader : MonoBehaviour
 
     private void Start()
     {
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
         {
             sceneDelay = .5f;
             StartCoroutine(AddDelayStore(sceneDelay / 3));

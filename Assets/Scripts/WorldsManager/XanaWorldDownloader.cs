@@ -127,9 +127,9 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
-        StartDownloadingAssets();
         if (totalAssetCount != downloadedTillNow)
             EnableDownloadingText();
+        StartDownloadingAssets();
     }
 
     void LoadAddressableSceneAfterDownload()
@@ -444,6 +444,11 @@ public class XanaWorldDownloader : MonoBehaviour
 
     void ResetDisplayDownloadText()
     {
+        if (!assetDownloadingText)
+        {
+            Debug.LogError("<color=red> Textmesh is Destroyed </color>");
+            return;
+        }
         assetDownloadingText.text = string.Empty;
         assetDownloadingTextPotrait.text = string.Empty;
         assetDownloadingText.transform.parent.gameObject.SetActive(false);
@@ -534,8 +539,8 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         if (_itemData.summitDomeInfo.domeIndex != 0)
         {
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().domeId = _itemData.summitDomeInfo.domeIndex;
-            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
 

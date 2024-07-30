@@ -19,6 +19,8 @@ public class CollectibleComponent : ItemComponent
         {
             BuilderEventManager.onComponentActivated?.Invoke(_componentType);
             PlayBehaviour();
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
+            ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
             if (GamificationComponentData.instance.withMultiplayer)
                 GamificationComponentData.instance.photonView.RPC("GetObject", RpcTarget.All, RuntimeItemID, Constants.ItemComponentType.none);
             else GamificationComponentData.instance.GetObjectwithoutRPC(RuntimeItemID, Constants.ItemComponentType.none);
@@ -28,7 +30,6 @@ public class CollectibleComponent : ItemComponent
     #region BehaviourControl
     public void StartComponent()
     {
-        ReferencesForGamePlay.instance.m_34player.GetComponent<SoundEffects>().PlaySoundEffects(SoundEffects.Sounds.Collectible);
         //this.gameObject.SetActive(false);
         //Toast.Show(ConstantsHolder.collectibleMsg);
     }

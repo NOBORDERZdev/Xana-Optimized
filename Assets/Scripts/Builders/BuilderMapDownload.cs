@@ -46,7 +46,7 @@ public class BuilderMapDownload : MonoBehaviour
     internal LevelData levelData;
     private AISkyboxItem aiSkyboxItem;
     #endregion
-    internal string response;
+    //internal string response;
 
     #region UNITY_METHOD
     private void OnEnable()
@@ -65,7 +65,8 @@ public class BuilderMapDownload : MonoBehaviour
         BuilderEventManager.AfterWorldInstantiated -= XanaSetItemData;
         BuilderData.spawnPoint.Clear();
 
-        Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
+        if (GamificationComponentData.instance.aiSkyMaterial != null)
+            Destroy(GamificationComponentData.instance.aiSkyMaterial.mainTexture); // AR changes
         RenderSettings.skybox = null;
     }
 
@@ -101,11 +102,11 @@ public class BuilderMapDownload : MonoBehaviour
             }
             if ((www.result == UnityWebRequest.Result.ConnectionError) || (www.result == UnityWebRequest.Result.ProtocolError))
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
             }
             else
             {
-                response = www.downloadHandler.text;
+                //response = www.downloadHandler.text;
                 serverData = JsonUtility.FromJson<ServerData>(www.downloadHandler.text);
                 BuilderData.mapData = serverData;
                 StartCoroutine(PopulateLevel());
@@ -159,7 +160,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
-
+        
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -195,7 +196,6 @@ public class BuilderMapDownload : MonoBehaviour
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
-            //Debug.LogError("Map is downloaed start post loading");
             BuilderEventManager.AfterMapDataDownloaded?.Invoke();
         }
         else
@@ -763,13 +763,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     private void CreateENV(GameObject objectTobeInstantiate, ItemData _itemData)
     {
-        //objectTobeInstantiate.AddComponent<PhotonView>();
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, builderAssetsParent);
-        //Rigidbody rb = null;
-        //newObj.TryGetComponent(out rb);
-        //if (rb == null)
-        //    rb = newObj.AddComponent<Rigidbody>();
-        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -782,27 +776,15 @@ public class BuilderMapDownload : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
-        {
-            newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
-            {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
-            }
-            return;
-        }
-
-        //meshCombiner.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
+        //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
+        //{
+        //    childTransform.tag = "Item";
+        //}
 
         //Add game object into XanaItems List for Hirarchy
         //if (!GamificationComponentData.instance.xanaItems.Exists(x => x == xanaItem))
         GamificationComponentData.instance.xanaItems.Add(xanaItem);
-
-
         if (!_itemData.isVisible)
             newObj.SetActive(false);
     }
@@ -853,7 +835,10 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{

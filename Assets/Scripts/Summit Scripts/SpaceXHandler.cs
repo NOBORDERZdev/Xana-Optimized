@@ -40,12 +40,13 @@ public class SpaceXHandler : MonoBehaviour
 
     async Task ShowCounter()
     {
-        
+
         //AudioClip audioClip = launchCountingAudioSource.clip;
         //launchCountingAudioSource.clip = countingAudioClip;
         //launchCountingAudioSource.volume = 1;
         //launchCountingAudioSource.Play();
         //await Task.Delay(4000);
+        launchCounter.GetComponent<Animator>().enabled = true;
         waitForRestart = true;
         int x = 10;
         launchCounter.gameObject.SetActive(true);
@@ -55,7 +56,7 @@ public class SpaceXHandler : MonoBehaviour
             await Task.Delay(1000);
             x--;
         }
-        //launchCounter.GetComponent<Animator>().StopPlayback();
+        launchCounter.GetComponent<Animator>().enabled=false;
         await Task.Delay(1000);
         //launchCountingAudioSource.clip=audioClip;
         launchCounter.gameObject.SetActive(false);
@@ -81,7 +82,7 @@ public class SpaceXHandler : MonoBehaviour
     {
         StartCoroutine(LoadingHandler.Instance.FadeIn());
         string sceneName = planetNames[x];
-        summitSceneLoading.LoadingNewScene(sceneName,returnPlayerPos);
+        summitSceneLoading.LoadingSceneByIDOrName(sceneName,returnPlayerPos);
         Destroy(videoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();

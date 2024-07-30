@@ -12,8 +12,12 @@ public static class Constants
 
     public const float minPlayerUISpeed = 1f;
     public const float maxPlayerUISpeed = 20f;
-    public const float minPlayerSprintSpeed = 5f;
-    public const float maxPlayerSprintSpeed = 20f;
+    public const float minPlayerSprintSpeed = 4.5f;
+    public const float maxPlayerSprintSpeed = 15f;
+    public const float minPlayerUIJump = 1f;
+    public const float maxPlayerUIJump = 20f;
+    public const float minPlayerJumpHeight = 2f;
+    public const float maxPlayerJumpHeight = 15f;
 
     public const string HomeScene = "Home";
     public const string BuilderScene = "XanaBuilder";
@@ -192,7 +196,8 @@ public static class Constants
         HyperLinkPopComponent = 29,
         BlindComponent = 30,
         PhysicsComponent = 31,
-        none = 32
+        TeleportComponent = 32,
+        none = 33
     }
     #endregion
 

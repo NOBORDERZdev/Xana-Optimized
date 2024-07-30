@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -11,10 +11,14 @@ public class YoutubeAPIHandler : MonoBehaviour
 {
 
     private StreamResponse _response;
+    public SummitVideoData _apiResponse = new SummitVideoData();
 
     private int DataIndex = 4;
     public StreamData Data;
     bool _urlDataInitialized = false;
+    public string OldAWSURL = "xyz";
+    public int summitAreaID;
+    public int SummitVideoIndex;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -395,6 +399,70 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
+        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SUMMITYOUTUBEVIDEOBYID + summitAreaID + "/" + SummitVideoIndex))
+            {
+                www.timeout = 10;
+
+                www.SendWebRequest();
+
+                while (!www.isDone)
+                {
+                    yield return null;
+                }
+                if (www.isHttpError || www.isNetworkError)
+                {
+                    _apiResponse = null;
+                    Debug.Log("Youtube API returned no result");
+                }
+                else
+                {
+                    _apiResponse = JsonUtility.FromJson<SummitVideoData>(www.downloadHandler.text.Trim());
+                    if (_apiResponse != null)
+                    {
+                        string incominglink = _apiResponse.videoData.url;
+                        if (!string.IsNullOrEmpty(incominglink))
+                        {
+                            if (_apiResponse.videoData.isYoutube)
+                            {
+                                bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
+                                Data = new StreamData(incominglink, _isLiveVideo, true);
+                                OldAWSURL = "";
+                            }
+                            else//For AWS Video playing
+                            {
+                                if (OldAWSURL != _apiResponse.videoData.url)
+                                {
+                                    if (GetComponent<AvProLiveVideoSoundEnabler>())
+                                    {
+                                        GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
+                                    }
+                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.gameObject.SetActive(false);
+                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.enabled = false;
+                                    GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
+                                    GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
+
+                                    //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                    //SoundSettings.soundManagerSettings.setNewSliderValues();
+
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData.url;
+                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+                                    OldAWSURL = _apiResponse.videoData.url;
+                                }
+                                Data = null;
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("No Link Found Turning off player");
+                            Data = null;
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
@@ -455,4 +523,22 @@ public partial class IncomingData
     public object createdAt;
     public object updatedAt;
     public bool isPlaying;
+}
+
+[System.Serializable]
+public class SummitVideoData
+{
+    public SummitVideoDetails videoData;
+}
+
+[System.Serializable]
+public class SummitVideoDetails
+{
+    public int id;
+    public int areaId;
+    public string areaName;
+    public int index;
+    public string url;
+    public string type;
+    public bool isYoutube;
 }
