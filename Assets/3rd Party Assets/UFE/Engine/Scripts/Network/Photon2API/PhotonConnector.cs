@@ -558,7 +558,7 @@ public class PhotonConnector : MonoBehaviourPunCallbacks, IOnEventCallback
         if (debugInfo) Debug.Log("PhotonConnector.OnConnectedToMaster");
 
         Hashtable playerProperties = new Hashtable();
-        playerProperties.Add("PlayerName", PlayerPrefs.GetString("PlayerName"));
+        playerProperties.Add("PlayerName", PlayerPrefs.GetString("UserName"));
         playerProperties.Add("NFTURL", ConstantsHolder.xanaConstants.NFTUrl);
         playerProperties.Add("ClothJson", ConstantsHolder.xanaConstants.clothJson);
         PhotonNetwork.LocalPlayer.CustomProperties = playerProperties;

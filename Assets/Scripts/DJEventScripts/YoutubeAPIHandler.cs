@@ -405,7 +405,7 @@ public class YoutubeAPIHandler : MonoBehaviour
             {
                 www.timeout = 10;
 
-                yield return www.SendWebRequest();
+                www.SendWebRequest();
 
                 while (!www.isDone)
                 {
@@ -428,10 +428,6 @@ public class YoutubeAPIHandler : MonoBehaviour
                             {
                                 bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
                                 Data = new StreamData(incominglink, _isLiveVideo, true);
-                                if (GetComponent<AvProLiveVideoSoundEnabler>())
-                                {
-                                    GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
-                                }
                                 OldAWSURL = "";
                             }
                             else//For AWS Video playing
