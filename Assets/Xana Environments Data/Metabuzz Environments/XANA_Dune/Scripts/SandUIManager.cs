@@ -16,6 +16,10 @@ public class SandUIManager : MonoBehaviour
     [SerializeField] List<Sprite> sandGameImagesEn;
     [SerializeField] List<Sprite> timerImages;
 
+    [SerializeField] Sprite gameResultJp;
+    [SerializeField] Sprite gameResultEn;
+
+    [Space(20)]
     [SerializeField] Image description;
     [SerializeField] Image result;
     [SerializeField] Image rankingBoard;
@@ -44,12 +48,14 @@ public class SandUIManager : MonoBehaviour
             desImgs.Add(Des.StartInform, startInformImagesJp);
             desImgs.Add(Des.SandInform, sandGameImagesJp);
             desImgs.Add(Des.FinishInform, finishImagesJp);
+            result.GetComponent<Image>().sprite = gameResultJp;
         }
         else if (SandGameManager.Instance.local == Localiztion.En)
         {
             desImgs.Add(Des.StartInform, startInformImagesEn);
             desImgs.Add(Des.SandInform, sandGameImagesEn);
             desImgs.Add(Des.FinishInform, finishImagesEn);
+            result.GetComponent<Image>().sprite = gameResultEn;
         }
         camelBtn.onClick.AddListener(() => DescriptionStart(Des.SandInform));
         camel2Btn.onClick.AddListener(() => SandGameManager.Instance.ResetPlayerPos());

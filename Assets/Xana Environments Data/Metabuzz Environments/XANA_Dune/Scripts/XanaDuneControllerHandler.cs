@@ -74,10 +74,14 @@ public class XanaDuneControllerHandler : MonoBehaviour
     }
     public void DisableSkating()
     {
-        _capsuleCollider.center = _colliderCenter;
-        _capsuleCollider.radius = _colliderRadius;
-        _capsuleCollider.height = _colliderHeight;
-        _capsuleCollider.material = null;
+        if (_capsuleCollider)
+        {
+            _capsuleCollider.center = _colliderCenter;
+            _capsuleCollider.radius = _colliderRadius;
+            _capsuleCollider.height = _colliderHeight;
+            _capsuleCollider.material = null;
+        }
+
         EnableDisableUI(true);
     }
 

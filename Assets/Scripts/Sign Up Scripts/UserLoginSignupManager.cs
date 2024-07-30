@@ -1010,7 +1010,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
             return;
         }
-
+        ConstantsHolder.uniqueUserName = userUsername;
         PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(displayrname));
