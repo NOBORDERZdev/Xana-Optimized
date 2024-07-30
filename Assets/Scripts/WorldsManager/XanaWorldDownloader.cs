@@ -444,6 +444,11 @@ public class XanaWorldDownloader : MonoBehaviour
 
     void ResetDisplayDownloadText()
     {
+        if (!assetDownloadingText)
+        {
+            Debug.LogError("<color=red> Textmesh is Destroyed </color>");
+            return;
+        }
         assetDownloadingText.text = string.Empty;
         assetDownloadingTextPotrait.text = string.Empty;
         assetDownloadingText.transform.parent.gameObject.SetActive(false);
