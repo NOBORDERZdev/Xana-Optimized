@@ -874,12 +874,12 @@ public class MyProfileDataManager : MonoBehaviour
 
     void EditProfileInfoCheckAndAPICalling()
     {
-        string _tempStr;
-        string _keytoLocalize;
+        string tempStr;
+        string keytoLocalize;
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text) && editProfileNameAdvanceInputfield.Text != playerNameText.text)
         {
-            _tempStr = editProfileNameAdvanceInputfield.Text.Trim();
-            username = _tempStr;
+            tempStr = editProfileNameAdvanceInputfield.Text.Trim();
+            username = tempStr;
             checkEditNameUpdated = 1;
             GameManager.Instance.UpdatePlayerName(username);
         }
@@ -894,21 +894,21 @@ public class MyProfileDataManager : MonoBehaviour
         {
              if (editProfileUniqueNameAdvanceInputfield.Text.Length < 5 || editProfileUniqueNameAdvanceInputfield.Text.Length > 15)
             {
-                _keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
-                ShowEditProfileUniqueNameErrorMessage(_keytoLocalize);
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
                 return;
             }
             else if (!editProfileUniqueNameAdvanceInputfield.Text.Any(c => char.IsDigit(c) || c == '_'))
             {
-                _keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-                ShowEditProfileUniqueNameErrorMessage(_keytoLocalize);
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
                 return;
 
             }
             
-            _tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
-            _tempStr = _tempStr.Replace("@", "");
-            uniqueUsername = _tempStr;
+            tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
+            tempStr = tempStr.Replace("@", "");
+            uniqueUsername = tempStr;
             checkEditInfoUpdated = 1;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
@@ -919,8 +919,8 @@ public class MyProfileDataManager : MonoBehaviour
 
         if (editProfileBioInputfield.Text != bio)
         {
-            _tempStr = editProfileBioInputfield.Text.Trim();
-            bio = _tempStr;
+            tempStr = editProfileBioInputfield.Text.Trim();
+            bio = tempStr;
             checkEditInfoUpdated = 1;
         }
         else if (string.IsNullOrEmpty(editProfileBioInputfield.Text))
