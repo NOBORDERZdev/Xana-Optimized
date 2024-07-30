@@ -32,7 +32,7 @@ public class BackButtonHandler : MonoBehaviour
         FeedData.OnScreenTabStateChange += setScreenTabEnum;
         FindFriendWithNameItem.OnScreenTabStateChange += setScreenTabEnum;
         MyProfileDataManager.OnScreenTabStateChange += setScreenTabEnum;
-        UGCUIManager.OnScreenTabStateChange += setScreenTabEnum;
+        //UGCUIManager.OnScreenTabStateChange += setScreenTabEnum;
         WorldManager.OnScreenTabStateChange += setScreenTabEnum;
         FollowingItemController.OnScreenTabStateChange += setScreenTabEnum;
         SNSSettingController.OnScreenTabStateChange += setScreenTabEnum;
@@ -46,7 +46,7 @@ public class BackButtonHandler : MonoBehaviour
         FeedData.OnScreenTabStateChange -= setScreenTabEnum;
         FindFriendWithNameItem.OnScreenTabStateChange -= setScreenTabEnum;
         MyProfileDataManager.OnScreenTabStateChange -= setScreenTabEnum;
-        UGCUIManager.OnScreenTabStateChange -= setScreenTabEnum;
+        //UGCUIManager.OnScreenTabStateChange -= setScreenTabEnum;
         WorldManager.OnScreenTabStateChange -= setScreenTabEnum;
         FollowingItemController.OnScreenTabStateChange -= setScreenTabEnum;
         SNSSettingController.OnScreenTabStateChange -= setScreenTabEnum;
@@ -128,7 +128,7 @@ public class BackButtonHandler : MonoBehaviour
 
     private void ExitFromfaceCam()
     {
-        UGCUIManager.instance.BackToHomeScreen();
+        //UGCUIManager.instance.BackToHomeScreen();
     }
 
     private void ExitFromAvatarTab()
