@@ -875,6 +875,7 @@ public class MyProfileDataManager : MonoBehaviour
     void EditProfileInfoCheckAndAPICalling()
     {
         string tempStr;
+        string keytoLocalize;
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text) && editProfileNameAdvanceInputfield.Text != playerNameText.text)
         {
             tempStr = editProfileNameAdvanceInputfield.Text.Trim();
@@ -891,6 +892,20 @@ public class MyProfileDataManager : MonoBehaviour
         if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text) && editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
+             if (editProfileUniqueNameAdvanceInputfield.Text.Length < 5 || editProfileUniqueNameAdvanceInputfield.Text.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+            }
+            else if (!editProfileUniqueNameAdvanceInputfield.Text.Any(c => char.IsDigit(c) || c == '_'))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+
+            }
+            
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
             tempStr = tempStr.Replace("@", "");
             uniqueUsername = tempStr;
