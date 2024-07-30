@@ -1099,7 +1099,7 @@ public class InventoryManager : MonoBehaviour
 
         if (result.IsNullOrEmpty())
         {
-            Debug.LogError("ArrayofMainCategories is null or empty");
+            Debug.Log("<color=red> ArrayofMainCategories is null or empty </color>");
             return;
         }
         ConvertMainCat_Index_ToJson MainCatString = new ConvertMainCat_Index_ToJson();
