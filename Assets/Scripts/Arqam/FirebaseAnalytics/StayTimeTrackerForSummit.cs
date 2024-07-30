@@ -66,9 +66,9 @@ public class StayTimeTrackerForSummit : MonoBehaviour
             SendFirebaseEventForSummit("ST_3" + worldName);
         }
         if (minutes >= 3) SendFirebaseEventForSummit("ST_5"+ worldName);
-        if (minutes >= 5) SendFirebaseEventForSummit("ST_10"+ worldName);
-        if (minutes >= 10) SendFirebaseEventForSummit("ST_20" + worldName);
-        if (minutes >= 20) SendFirebaseEventForSummit("ST_30" + worldName);
-        if (minutes >= 30) SendFirebaseEventForSummit("ST_30+" + worldName);
+        else if (minutes >= 5) SendFirebaseEventForSummit("ST_10"+ worldName);
+        else if (minutes >= 10) SendFirebaseEventForSummit("ST_20" + worldName);
+        else if (minutes >= 20) SendFirebaseEventForSummit("ST_30" + worldName);
+        else if (minutes >= 30) SendFirebaseEventForSummit("ST_30+" + worldName);
     }
 }
