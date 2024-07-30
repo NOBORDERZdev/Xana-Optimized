@@ -133,9 +133,9 @@ public class XANASummitSceneLoading : MonoBehaviour
         }
         string eventName;
         if (domeGeneralData.worldType)
-            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.builderWorldId;
+            eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
         else
-            eventName = "TV_Dome_" + domeId + "_World_" + domeGeneralData.worldId;
+            eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
