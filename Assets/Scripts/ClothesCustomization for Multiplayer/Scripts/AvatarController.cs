@@ -432,8 +432,8 @@ public class AvatarController : MonoBehaviour
                 return;
             else if(ConstantsHolder.isFixedHumanoid)
             {
-                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.fixedAvatarJson);
-                clothJson = XANASummitDataContainer.fixedAvatarJson;
+                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.FixedAvatarJson);
+                clothJson = XANASummitDataContainer.FixedAvatarJson;
             }
             else if (_data != null)
                 _CharacterData = _data;
