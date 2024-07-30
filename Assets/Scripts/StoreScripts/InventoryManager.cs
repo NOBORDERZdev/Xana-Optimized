@@ -3281,6 +3281,8 @@ public class InventoryManager : MonoBehaviour
                         TempEnumVar = EnumClass.CategoryEnum.EyeBrowAvatar;
                         eyeBrowTapButton.SetActive(true);
 
+                        break; // currently there is no eyebrow available
+
                         for (int i = 1; i < AllCategoriesData[20].parentObj.transform.childCount; i++)
                         {
                             if (AllCategoriesData[20].parentObj.transform.GetChild(i).GetComponent<ItemDetail>().id.ParseToInt() == SaveCharacterProperties.instance.characterController.eyeBrowId)
@@ -3429,7 +3431,7 @@ public class InventoryManager : MonoBehaviour
 
         // Implement Image Kit URL
         string ImageKitUrl = dataListOfItems[objId].iconLink;
-        ImageKitUrl = ImageKitUrl.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://ik.imagekit.io/xanalia/xanaprod/Defaults/"); 
+        ImageKitUrl = ImageKitUrl.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults/"); 
         ImageKitUrl+= "?width=128&height=128";
 
 
