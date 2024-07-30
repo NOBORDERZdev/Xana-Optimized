@@ -114,7 +114,9 @@ public class WorldManager : MonoBehaviour
     {
         //SearchKey= "XANA Summit";
         //string url = PrepareApiURL(APIURL.SearchWorld);
-        int worldId = 6239;
+       // int worldId = 6239;    //Mainnet
+        int worldId = 2455;
+
         string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + worldId;
         StartCoroutine(GetSingleWorldData(url, (check) =>
         {

@@ -1,7 +1,7 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
+
 
 public class OnTriggerSceneSwitch : MonoBehaviour
 {
@@ -10,12 +10,15 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public string worldId;
 
     public TMPro.TextMeshPro textMeshPro;
+
+    private bool alreadyTriggered;
     private void OnTriggerEnter(Collider other)
     {
         if (PhotonNetwork.InRoom)
         {
-            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine)
+            if (other.tag == "PhotonLocalPlayer" && other.GetComponent<PhotonView>().IsMine && !alreadyTriggered)
             {
+                alreadyTriggered = true;
                 if (ConstantsHolder.MultiSectionPhoton)
                 {
                     ConstantsHolder.DiasableMultiPartPhoton = true;
@@ -24,6 +27,8 @@ public class OnTriggerSceneSwitch : MonoBehaviour
                     TriggerSceneLoading(worldId);
                 else
                     TriggerSceneLoading();
+
+                DisableCollider();
             }
         }
     }
@@ -37,5 +42,11 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     void TriggerSceneLoading(string worldId)
     {
         BuilderEventManager.LoadSceneByName?.Invoke(worldId, transform.GetChild(0).transform.position);
+    }
+
+    async void DisableCollider()
+    {
+        await Task.Delay(2000);
+        alreadyTriggered = false;
     }
 }

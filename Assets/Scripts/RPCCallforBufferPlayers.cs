@@ -106,7 +106,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         //{
         if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
         {
-            Debug.LogError("cloths are applying here...");
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
 

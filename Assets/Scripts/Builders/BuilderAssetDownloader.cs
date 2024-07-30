@@ -56,7 +56,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
-            GamePlayButtonEvents.OnExitButtonXANASummit += ResetAll;
+            BuilderEventManager.ResetSummit += ResetAll;
         }
     }
 
@@ -67,7 +67,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation -= OnOrientationChange;
-            GamePlayButtonEvents.OnExitButtonXANASummit -= ResetAll;
+            BuilderEventManager.ResetSummit -= ResetAll;
         }
         ResetAll();
     }
@@ -90,7 +90,10 @@ public class BuilderAssetDownloader : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
 
@@ -512,6 +515,14 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
     }
 
+    void ResetDisplayDownloadText()
+    {
+        assetDownloadingText.text = string.Empty;
+        assetDownloadingTextPotrait.text = string.Empty;
+        assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+    }
+
     public void ResetAll()
     {
         stopDownloading = true;
@@ -525,6 +536,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
+        BuilderData.sceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;
@@ -532,7 +544,10 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         // BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
+
+        ResetDisplayDownloadText();
+        StopAllCoroutines();
     }
 
-
+   
 }

@@ -160,7 +160,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
-
+        
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -196,7 +196,6 @@ public class BuilderMapDownload : MonoBehaviour
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
-            //Debug.LogError("Map is downloaed start post loading");
             BuilderEventManager.AfterMapDataDownloaded?.Invoke();
         }
         else
@@ -836,7 +835,10 @@ public class BuilderMapDownload : MonoBehaviour
     void LoadAddressableSceneAfterDownload()
     {
         if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
             return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
