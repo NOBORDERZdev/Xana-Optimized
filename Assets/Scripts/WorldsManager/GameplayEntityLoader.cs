@@ -510,7 +510,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             {
                 string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
                 GlobalConstants.SendFirebaseEventForSummit(eventName);
-                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = true;
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
                 _stayTimeTrackerForSummit.StartTrackingTime();
             }
         }

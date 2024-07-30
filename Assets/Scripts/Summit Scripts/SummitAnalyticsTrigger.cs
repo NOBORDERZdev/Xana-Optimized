@@ -5,16 +5,16 @@ using UnityEngine;
 public class SummitAnalyticsTrigger : MonoBehaviour
 {
     private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
-    private string LastTriggeredArea;
+    private string _lastTriggeredArea;
     private void Start()
     {
         _stayTimeTrackerForSummit = GameplayEntityLoader.instance._stayTimeTrackerForSummit;
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.transform.parent.name == LastTriggeredArea)
+        if (other.gameObject.transform.parent.name == _lastTriggeredArea)
             return;
-        LastTriggeredArea = other.gameObject.transform.parent.name;
+        _lastTriggeredArea = other.gameObject.transform.parent.name;
         if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Central_Area.ToString())
             CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Central_Area.ToString());
         else if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Entertainment_Area.ToString())
@@ -32,24 +32,24 @@ public class SummitAnalyticsTrigger : MonoBehaviour
     {
         if (_stayTimeTrackerForSummit != null)
         {
-            if (_stayTimeTrackerForSummit.isTrackingTimeForExteriorArea)
+            if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
                 _stayTimeTrackerForSummit.CalculateAndLogStayTime();
-                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = false;
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             else
             {
                 _stayTimeTrackerForSummit.SummitAreaName = areaName;
                 string eventName = "XS_TV_" + _stayTimeTrackerForSummit.SummitAreaName;
                 GlobalConstants.SendFirebaseEventForSummit(eventName);
-                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = true;
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
                 _stayTimeTrackerForSummit.StartTrackingTime();
             }
         }
     }
     private void RemoveLastTriggeredArea()
     {
-        LastTriggeredArea = "";
+        _lastTriggeredArea = "";
     }
 }

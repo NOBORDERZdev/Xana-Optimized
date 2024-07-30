@@ -118,11 +118,11 @@ public class XANASummitSceneLoading : MonoBehaviour
         // Summit Analytics Part
         if (_stayTimeTrackerForSummit != null)
         {
-            if (_stayTimeTrackerForSummit.isTrackingTimeForExteriorArea)
+            if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
                 _stayTimeTrackerForSummit.CalculateAndLogStayTime();
-                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = false;
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
             }
             _stayTimeTrackerForSummit.DomeId = domeId;
             if (domeGeneralData.worldType)
@@ -196,11 +196,11 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
         if (_stayTimeTrackerForSummit != null)
         {
-            if (_stayTimeTrackerForSummit.isTrackingTime)
+            if (_stayTimeTrackerForSummit.IsTrackingTime)
             {
                 _stayTimeTrackerForSummit.StopTrackingTime();
                 _stayTimeTrackerForSummit.CalculateAndLogStayTime();
-                _stayTimeTrackerForSummit.isTrackingTimeForExteriorArea = true;
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
             }
         }
         setPlayerPositionDelegate = SetPlayerOnback;
