@@ -81,6 +81,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     [SerializeField] ReferenceForPenguinAvatar referenceForPenguin;
     [SerializeField] RaffleTicketHandler _raffleTickets;
 
+    [Header("XANA Summit Performer AI")]
+    public GameObject[] AIAvatarPrefab;
+
     private void Awake()
     {
         instance = this;
