@@ -64,13 +64,13 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         nameCanvas = PhotonUserName.GetComponentInParent<Canvas>();
         try
         {
-            if (XanaChatSystem.instance.UserName.Length > 12)
+            if (ConstantsHolder.userName.Length > 12)
             {
-                PhotonNetwork.NickName = XanaChatSystem.instance.UserName.Substring(0, 12) + "...";
+                PhotonNetwork.NickName = ConstantsHolder.userName.Substring(0, 12) + "...";
             }
             else
             {
-                PhotonNetwork.NickName = XanaChatSystem.instance.UserName;
+                PhotonNetwork.NickName = ConstantsHolder.userName;
             }
         }
         catch(Exception e)

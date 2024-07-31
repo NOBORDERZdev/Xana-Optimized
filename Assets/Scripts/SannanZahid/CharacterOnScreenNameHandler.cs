@@ -12,7 +12,7 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     {
         if (name.Contains("Home"))
         {
-            UpdateNameText(PlayerPrefs.GetString("PlayerName"));
+            UpdateNameText(PlayerPrefs.GetString("UserName"));
         }
         StartCoroutine(SetName());
        
@@ -91,8 +91,8 @@ public class CharacterOnScreenNameHandler : MonoBehaviour
     }
     private void UpdatePlayerNameRef(string localUsername)
     {
-        print("PlayerName == " + PlayerPrefs.GetString("PlayerName"));
         PlayerPrefs.SetString("PlayerName", localUsername);
+        PlayerPrefs.SetString("UserName", localUsername);
         ConstantsHolder.userName = localUsername;
     }
 

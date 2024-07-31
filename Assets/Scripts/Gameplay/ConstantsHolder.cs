@@ -12,6 +12,7 @@ public class ConstantsHolder : MonoBehaviour
 
     public bool pushToTalk;
     public bool openLandingSceneDirectly;
+    public bool OpenSpaceScreen_fromSummit = false;
 
     //Login Info
     public static bool isAdmin;
@@ -141,7 +142,6 @@ public class ConstantsHolder : MonoBehaviour
 
 
     //XANA Summit 
-    public static Stack<string> loadedScenes = new Stack<string>();
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
@@ -150,6 +150,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int domeId;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
+    public static bool HaveSubWorlds;
 
     public string r_EmoteStoragePersistentPath
     {
