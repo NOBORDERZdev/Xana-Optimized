@@ -1,4 +1,4 @@
-using Firebase.Extensions;
+﻿using Firebase.Extensions;
 using Firebase.Messaging;
 using Firebase;
 using System;
@@ -25,14 +25,33 @@ public class FB_Notification_Initilizer : MonoBehaviour
     public static FB_Notification_Initilizer Instance;
 
     [SerializeField]
-    private GameObject notificationTray;
-    [SerializeField]
-    private TextMeshProUGUI titleTxt;
-    [SerializeField]
-    private TextMeshProUGUI bodyTxt;
-
-    [SerializeField]
     private bool isFirebaseInitialized = false;
+
+    [Serializable]
+    private class PotraitNotification
+    {
+        public GameObject notificationTrayPotrait;
+        public TextMeshProUGUI headerTxtPotrait;
+        public TextMeshProUGUI titleTxtPotrait;
+        public TextMeshProUGUI bodyTxtPotrait;
+    }
+    [SerializeField]
+    [Space(5)]
+    private PotraitNotification potraitNotification;
+
+    [Serializable]
+    private class LandscapeNotification
+    {
+        public GameObject notificationTrayLandscape;
+        public TextMeshProUGUI headerTxtLandscape;
+        public TextMeshProUGUI titleTxtLandscape;
+        public TextMeshProUGUI bodyTxtLandscape;
+    }
+    [SerializeField]
+    [Space(5)]
+    private LandscapeNotification landscapeNotification;
+
+
     private string topic = "TestTopic";
     DependencyStatus dependencyStatus = DependencyStatus.UnavailableOther;
 
@@ -148,12 +167,60 @@ public class FB_Notification_Initilizer : MonoBehaviour
         var notification = e.Message.Notification;
         if (notification != null)
         {
-            notificationTray.SetActive(true);
-            titleTxt.text = "";
-            titleTxt.text = notification.Title;
-            bodyTxt.text = "";
-            bodyTxt.text = notification.Body;
+            if (ScreenOrientationManager._instance.isPotrait)
+            {
+                potraitNotification.headerTxtPotrait.text = "";
+                potraitNotification.titleTxtPotrait.text = "";
+                potraitNotification.bodyTxtPotrait.text = "";
 
+                if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+                {
+                    potraitNotification.headerTxtPotrait.text = "(D+ Infinity Labo) A user has entered a private meeting room.";
+                    potraitNotification.titleTxtPotrait.text = "User Display Name: " + notification.Title;
+                    potraitNotification.bodyTxtPotrait.text = "Browser or App: " + notification.Body;
+                }
+                else if (GameManager.currentLanguage == "ja")
+                {
+                    potraitNotification.headerTxtPotrait.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。";
+                    potraitNotification.titleTxtPotrait.text = "表示名: " + notification.Title;
+                    if (notification.Body == "App")
+                    {
+                        potraitNotification.bodyTxtPotrait.text = "ブラウザ or アプリ: アプリ";
+                    }
+                    else if (notification.Body == "Browser")
+                    {
+                        potraitNotification.bodyTxtPotrait.text = "ブラウザ or アプリ: ブラウザ";
+                    }
+                }
+                potraitNotification.notificationTrayPotrait.SetActive(true);
+            }
+            else if (!ScreenOrientationManager._instance.isPotrait)
+            {
+                landscapeNotification.headerTxtLandscape.text = "";
+                landscapeNotification.titleTxtLandscape.text = "";
+                landscapeNotification.bodyTxtLandscape.text = "";
+
+                if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+                {
+                    landscapeNotification.headerTxtLandscape.text = "(D+ Infinity Labo) A user has entered a private meeting room.";
+                    landscapeNotification.titleTxtLandscape.text = "User Display Name: " + notification.Title;
+                    landscapeNotification.bodyTxtLandscape.text = "Browser or App: " + notification.Body;
+                }
+                else if (GameManager.currentLanguage == "ja")
+                {
+                    landscapeNotification.headerTxtLandscape.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。";
+                    landscapeNotification.titleTxtLandscape.text = "表示名: " + notification.Title;
+                    if (notification.Body == "App")
+                    {
+                        landscapeNotification.bodyTxtLandscape.text = "ブラウザ or アプリ: アプリ";
+                    }
+                    else if (notification.Body == "Browser")
+                    {
+                        landscapeNotification.bodyTxtLandscape.text = "ブラウザ or アプリ: ブラウザ";
+                    }
+                }
+                landscapeNotification.notificationTrayLandscape.SetActive(true);
+            }
             var android = notification.Android;
             if (android != null)
             {

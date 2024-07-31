@@ -15,8 +15,8 @@ public class FB_PushNotificationSender : MonoBehaviour
 
     public void SendNotification()
     {
-        string title = "Alert";
-        string body = "I am in meeting.";
+        string title = ConstantsHolder.userName;
+        string body = "App";
         StartCoroutine(CallAPISequentially(title, body)); ;
     }
 
