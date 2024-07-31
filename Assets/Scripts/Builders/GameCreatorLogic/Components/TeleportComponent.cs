@@ -28,6 +28,7 @@ public class TeleportComponent : ItemComponent
     {
         if (_other.gameObject.tag == "PhotonLocalPlayer" && _other.gameObject.GetComponent<PhotonView>().IsMine)
         {
+            //BuilderEventManager.LoadSceneByName?.Invoke(_teleportComponentData.spaceID, new Vector3(0,0,0));
             StartComponent();
         }
     }

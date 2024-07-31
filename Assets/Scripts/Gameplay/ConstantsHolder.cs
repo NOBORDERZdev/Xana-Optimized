@@ -153,7 +153,6 @@ public class ConstantsHolder : MonoBehaviour
 
 
     //XANA Summit 
-    public static Stack<string> loadedScenes = new Stack<string>();
     public static bool isFromXANASummit=false;
     public static bool MultiSectionPhoton = false;
     public static bool TempDiasableMultiPartPhoton = false;
@@ -162,6 +161,7 @@ public class ConstantsHolder : MonoBehaviour
     public static int domeId;
     public static bool isPenguin;
     public static bool isFixedHumanoid;
+    public static bool HaveSubWorlds;
 
     public string r_EmoteStoragePersistentPath
     {

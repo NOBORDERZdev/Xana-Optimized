@@ -133,9 +133,9 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
     private void FixedUpdate() {
 
-        if (NeedToAddReference && CarNavigationManager.instance)
+        if (NeedToAddReference && CarNavigationManager.CarNavigationInstance)
         {
-            CarNavigationManager.instance.Cars.Add(view.ViewID, view);
+            CarNavigationManager.CarNavigationInstance.Cars.Add(view.ViewID, view);
             spline = SplineDone.Instance;
             maxMoveAmount = spline.GetSplineLength(0.001f);
             NeedToAddReference = false;
