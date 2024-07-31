@@ -17,7 +17,7 @@ public class FB_PushNotificationSender : MonoBehaviour
     {
         string title = ConstantsHolder.userName;
         string body = "App";
-        StartCoroutine(CallAPISequentially(title, body)); ;
+        StartCoroutine(CallAPISequentially(title, body));
     }
 
     private IEnumerator CallAPISequentially(string title, string body)

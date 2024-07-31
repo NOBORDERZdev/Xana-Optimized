@@ -31,7 +31,6 @@ public class FB_Notification_Initilizer : MonoBehaviour
     private class PotraitNotification
     {
         public GameObject notificationTrayPotrait;
-        public TextMeshProUGUI headerTxtPotrait;
         public TextMeshProUGUI titleTxtPotrait;
         public TextMeshProUGUI bodyTxtPotrait;
     }
@@ -43,7 +42,6 @@ public class FB_Notification_Initilizer : MonoBehaviour
     private class LandscapeNotification
     {
         public GameObject notificationTrayLandscape;
-        public TextMeshProUGUI headerTxtLandscape;
         public TextMeshProUGUI titleTxtLandscape;
         public TextMeshProUGUI bodyTxtLandscape;
     }
@@ -169,20 +167,19 @@ public class FB_Notification_Initilizer : MonoBehaviour
         {
             if (ScreenOrientationManager._instance.isPotrait)
             {
-                potraitNotification.headerTxtPotrait.text = "";
                 potraitNotification.titleTxtPotrait.text = "";
                 potraitNotification.bodyTxtPotrait.text = "";
 
                 if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
                 {
-                    potraitNotification.headerTxtPotrait.text = "(D+ Infinity Labo) A user has entered a private meeting room.";
-                    potraitNotification.titleTxtPotrait.text = "User Display Name: " + notification.Title;
+                    potraitNotification.titleTxtPotrait.text = "(D+ Infinity Labo) A user has entered a private meeting room." 
+                        + "\n" + "User Display Name: " + notification.Title;
                     potraitNotification.bodyTxtPotrait.text = "Browser or App: " + notification.Body;
                 }
                 else if (GameManager.currentLanguage == "ja")
                 {
-                    potraitNotification.headerTxtPotrait.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。";
-                    potraitNotification.titleTxtPotrait.text = "表示名: " + notification.Title;
+                    potraitNotification.titleTxtPotrait.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。"
+                        + "\n" + "表示名: " + notification.Title;
                     if (notification.Body == "App")
                     {
                         potraitNotification.bodyTxtPotrait.text = "ブラウザ or アプリ: アプリ";
@@ -196,20 +193,19 @@ public class FB_Notification_Initilizer : MonoBehaviour
             }
             else if (!ScreenOrientationManager._instance.isPotrait)
             {
-                landscapeNotification.headerTxtLandscape.text = "";
                 landscapeNotification.titleTxtLandscape.text = "";
                 landscapeNotification.bodyTxtLandscape.text = "";
 
                 if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
                 {
-                    landscapeNotification.headerTxtLandscape.text = "(D+ Infinity Labo) A user has entered a private meeting room.";
-                    landscapeNotification.titleTxtLandscape.text = "User Display Name: " + notification.Title;
+                    landscapeNotification.titleTxtLandscape.text = "(D+ Infinity Labo) A user has entered a private meeting room."
+                        + "\n" + "User Display Name: " + notification.Title;
                     landscapeNotification.bodyTxtLandscape.text = "Browser or App: " + notification.Body;
                 }
                 else if (GameManager.currentLanguage == "ja")
                 {
-                    landscapeNotification.headerTxtLandscape.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。";
-                    landscapeNotification.titleTxtLandscape.text = "表示名: " + notification.Title;
+                    landscapeNotification.titleTxtLandscape.text = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。"
+                        + "\n" + "表示名: " + notification.Title;
                     if (notification.Body == "App")
                     {
                         landscapeNotification.bodyTxtLandscape.text = "ブラウザ or アプリ: アプリ";
