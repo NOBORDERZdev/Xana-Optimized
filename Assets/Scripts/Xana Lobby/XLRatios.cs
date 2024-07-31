@@ -34,7 +34,17 @@ public class XLRatios : MonoBehaviour
             GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            // Application is minimized
+            CloseInfoPop();
+        }
+       
+    }
 }
+
 [Serializable]
 public class XLRatioReferences
 {
