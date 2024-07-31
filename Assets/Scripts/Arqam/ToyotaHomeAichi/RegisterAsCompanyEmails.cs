@@ -53,6 +53,8 @@ public class RegisterAsCompanyEmails : MonoBehaviour
                 StringBuilder data = new StringBuilder();
                 data.Append(request.downloadHandler.text);
                 THAEmailDataResponse json = JsonConvert.DeserializeObject<THAEmailDataResponse>(data.ToString());
+                FB_Notification_Initilizer.Instance.companyEmails.Clear();
+                FB_Notification_Initilizer.Instance.fbTokens.Clear();
                 for (int i = 0; i < json.data.rows.Count; i++)
                 {
                     FB_Notification_Initilizer.Instance.companyEmails.Add(json.data.rows[i].email);
