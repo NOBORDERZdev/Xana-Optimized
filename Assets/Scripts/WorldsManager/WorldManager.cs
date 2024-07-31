@@ -115,14 +115,22 @@ public class WorldManager : MonoBehaviour
         string url = PrepareApiURL(APIURL.SearchWorld);
         StartCoroutine(FetchUserMapFromServer(url, (check) =>
         {
-            ConstantsHolder.userLimit = int.Parse(_WorldInfo.data.rows[0].user_limit);
+            ConstantsHolder.userLimit = 15; // int.Parse(_WorldInfo.data.rows[0].user_limit);
             ConstantsHolder.isPenguin = false;
             ConstantsHolder.xanaConstants.openLandingSceneDirectly = false;
             ConstantsHolder.xanaConstants.isBuilderScene = false;
             ConstantsHolder.xanaConstants.isFromHomeTab = true;
-            ConstantsHolder.xanaConstants.MuseumID = _WorldInfo.data.rows[0].id;
-            WorldItemView.m_EnvName = _WorldInfo.data.rows[0].name;
-            if (WorldItemView.m_EnvName == "D + Infinity Labo")   // spaces not allow in adressable scene name
+            //Debug.LogError("MuseumID_" + _WorldInfo.data.rows[0].id);
+            if (APIBasepointManager.instance.IsXanaLive)
+            {
+                ConstantsHolder.xanaConstants.MuseumID = "3755"; //_WorldInfo.data.rows[0].id
+            }
+            else if(!APIBasepointManager.instance.IsXanaLive)
+            {
+                ConstantsHolder.xanaConstants.MuseumID = "2121"; //_WorldInfo.data.rows[0].id
+            }
+            WorldItemView.m_EnvName = "D + Infinity Labo"; //_WorldInfo.data.rows[0].name;
+            if (WorldItemView.m_EnvName == "D + Infinity Labo")
             {
                 WorldItemView.m_EnvName = "D_Infinity_Labo";
                 ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;

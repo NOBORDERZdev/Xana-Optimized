@@ -446,7 +446,8 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         assetDownloadingText.text = string.Empty;
         assetDownloadingTextPotrait.text = string.Empty;
-        assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        if (assetDownloadingText.transform.parent != null)
+            assetDownloadingText.transform.parent.gameObject.SetActive(false);
         assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
     }
 
@@ -500,7 +501,7 @@ public class XanaWorldDownloader : MonoBehaviour
         AddObjectInPool(downloadKey, newObj);
         AssignDomeId(newObj, _itemData);
 
-       
+
 
     }
 
@@ -559,7 +560,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckForUnloading()
     {
-        CheckingAgain:
+    CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
         yield return new WaitForEndOfFrame();
@@ -584,7 +585,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckShortIntervalSorting()
     {
-        CheckingAgain:
+    CheckingAgain:
         yield return new WaitForSecondsRealtime(timeshortSorting);
         stopDownloading = true;
         currPlayerPosition = GameplayEntityLoader.instance.mainController.transform.localPosition;
@@ -610,7 +611,7 @@ public class XanaWorldDownloader : MonoBehaviour
 
     IEnumerator CheckLongIntervalSorting()
     {
-        CheckingAgain:
+    CheckingAgain:
         yield return new WaitForSecondsRealtime(timeFullSorting);
         StopCoroutine(CheckShortIntervalSorting());
         stopDownloading = true;
