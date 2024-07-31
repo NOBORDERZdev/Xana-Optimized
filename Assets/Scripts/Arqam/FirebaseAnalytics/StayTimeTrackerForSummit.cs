@@ -13,6 +13,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
+    public SummitAreaTrigger areaTrigger;
     public enum SummitAreaTrigger
     {
         Central_Area,
@@ -57,18 +58,9 @@ public class StayTimeTrackerForSummit : MonoBehaviour
             worldName = "_XS_" + SummitAreaName;
         else
             worldName ="_Dome_" + DomeId + "_World_" + DomeWorldId;
-        if (minutes < 3)
-            SendFirebaseEventForSummit("ST_" + (minutes + 1) + worldName);
+        if (minutes > 0)
+            SendFirebaseEventForSummit("ST_" + (minutes) + worldName);
         else
-        {
             SendFirebaseEventForSummit("ST_1" + worldName);
-            SendFirebaseEventForSummit("ST_2" + worldName);
-            SendFirebaseEventForSummit("ST_3" + worldName);
-        }
-        if (minutes >= 3) SendFirebaseEventForSummit("ST_5"+ worldName);
-        else if (minutes >= 5) SendFirebaseEventForSummit("ST_10"+ worldName);
-        else if (minutes >= 10) SendFirebaseEventForSummit("ST_20" + worldName);
-        else if (minutes >= 20) SendFirebaseEventForSummit("ST_30" + worldName);
-        else if (minutes >= 30) SendFirebaseEventForSummit("ST_30+" + worldName);
     }
 }

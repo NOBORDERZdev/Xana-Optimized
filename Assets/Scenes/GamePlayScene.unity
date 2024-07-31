@@ -994,7 +994,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9621213795040b449bd416a5e2695e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stayTimeTrackerForSummit: {fileID: 654609738}
+  StayTimeTrackerForSummit: {fileID: 654609738}
   isAlreadySpawned: 0
   MiniMapCamera: {fileID: 1265632383}
   IsJoinSummitWorld: 0
@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 95234478}
   - component: {fileID: 95234480}
   - component: {fileID: 95234479}
+  - component: {fileID: 95234481}
   m_Layer: 2
   m_Name: Label
   m_TagString: Untagged
@@ -1329,6 +1330,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 95234477}
   m_CullTransparentMesh: 1
+--- !u!114 &95234481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 95234477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 95234479}
 --- !u!1 &95457328
 GameObject:
   m_ObjectHideFlags: 0
@@ -3699,6 +3715,7 @@ GameObject:
   - component: {fileID: 333159309}
   - component: {fileID: 333159311}
   - component: {fileID: 333159310}
+  - component: {fileID: 333159312}
   m_Layer: 2
   m_Name: Label
   m_TagString: Untagged
@@ -3823,6 +3840,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333159308}
   m_CullTransparentMesh: 1
+--- !u!114 &333159312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333159308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 333159310}
 --- !u!1 &344425963
 GameObject:
   m_ObjectHideFlags: 0
@@ -7759,6 +7791,7 @@ GameObject:
   - component: {fileID: 561234181}
   - component: {fileID: 561234183}
   - component: {fileID: 561234182}
+  - component: {fileID: 561234184}
   m_Layer: 2
   m_Name: Label
   m_TagString: Untagged
@@ -7883,6 +7916,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 561234180}
   m_CullTransparentMesh: 1
+--- !u!114 &561234184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561234180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 561234182}
 --- !u!1 &606396804
 GameObject:
   m_ObjectHideFlags: 0
@@ -9588,11 +9636,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debd8ed692439454db363aa7319fff70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTrackingTime: 0
-  isTrackingTimeForExteriorArea: 0
+  IsTrackingTime: 0
+  IsTrackingTimeForExteriorArea: 0
   SummitAreaName: 
   DomeId: 0
   DomeWorldId: 0
+  areaTrigger: 0
 --- !u!1 &655967485
 GameObject:
   m_ObjectHideFlags: 0
@@ -18581,8 +18630,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37256efdeb06e04dbc57dc7d2661e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JoyStick: {fileID: 0}
-  UIObjects: {fileID: 0}
+  CarCanvas: {fileID: 0}
+  ExitButton: {fileID: 0}
+  joyStick: {fileID: 0}
+  uiObjects: {fileID: 0}
 --- !u!1001 &1355702924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26334,6 +26385,7 @@ GameObject:
   - component: {fileID: 1978072668}
   - component: {fileID: 1978072670}
   - component: {fileID: 1978072669}
+  - component: {fileID: 1978072671}
   m_Layer: 2
   m_Name: Label
   m_TagString: Untagged
@@ -26458,6 +26510,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978072667}
   m_CullTransparentMesh: 1
+--- !u!114 &1978072671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978072667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5fc663ea45534c4b8854a8a9e50f4f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: 
+  LocalizeText: {fileID: 0}
+  LocalizeTextTMP: {fileID: 1978072669}
 --- !u!1 &1978544874
 GameObject:
   m_ObjectHideFlags: 0
@@ -29447,7 +29514,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904681, z: 0.000060756483, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904684, z: 0.00006075651, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29899,7 +29966,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641612, y: -0.0008924941, z: 0.000009499979, w: 0.999943}
+  m_LocalRotation: {x: 0.010641654, y: -0.0008924967, z: 0.000009500044, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

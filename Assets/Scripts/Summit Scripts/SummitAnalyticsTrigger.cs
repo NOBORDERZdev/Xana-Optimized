@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,18 +17,10 @@ public class SummitAnalyticsTrigger : MonoBehaviour
         if (other.gameObject.transform.parent.name == _lastTriggeredArea)
             return;
         _lastTriggeredArea = other.gameObject.transform.parent.name;
-        //if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Central_Area.ToString())
-        //    CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Central_Area.ToString());
-        //else if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Entertainment_Area.ToString())
-        //    CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Entertainment_Area.ToString());
-        //else if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Business_Area.ToString())
-        //    CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Business_Area.ToString());
-        //else if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Game_Area.ToString())
-        //    CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Game_Area.ToString());
-        //else if (other.gameObject.transform.parent.name == StayTimeTrackerForSummit.SummitAreaTrigger.Web3_Area.ToString())
-        //    CallEvents(StayTimeTrackerForSummit.SummitAreaTrigger.Web3_Area.ToString());
-
-        CallEvents(_lastTriggeredArea);
+        if (Enum.TryParse(_lastTriggeredArea, out StayTimeTrackerForSummit.SummitAreaTrigger areaTrigger))
+        {
+            CallEvents(areaTrigger.ToString());
+        }
 
         Invoke("RemoveLastTriggeredArea", 2f);
 
