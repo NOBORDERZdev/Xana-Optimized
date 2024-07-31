@@ -333,8 +333,11 @@ public class HomeFooterHandler : MonoBehaviour
 
             }
             ConstantsHolder.xanaConstants.IsProfileVisit = false;
-            if (notLoadedAgain == false)
+            if (notLoadedAgain == false || ConstantsHolder.xanaConstants.hasWorldTransitionedInternally)
+            {
                 WorldManager.LoadHomeScreenWorlds?.Invoke();
+                ConstantsHolder.xanaConstants.hasWorldTransitionedInternally = false;
+            }
             //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);

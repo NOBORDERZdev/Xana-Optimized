@@ -105,6 +105,8 @@ public class ConstantsHolder : MonoBehaviour
     }
     public ComingFrom comingFrom = ComingFrom.None;
 
+    //for world transition from JJworldChanger a world
+    public bool hasWorldTransitionedInternally;
     // Is in Store
     public bool isStoreActive = false;
 

@@ -448,6 +448,10 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>().AddComponentOn34();
         }
+        if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
+        {
+            ConstantsHolder.xanaConstants.hasWorldTransitionedInternally = true;
+        }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
