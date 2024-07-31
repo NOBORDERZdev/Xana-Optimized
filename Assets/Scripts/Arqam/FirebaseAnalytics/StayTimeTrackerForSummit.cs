@@ -13,7 +13,6 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
-    public SummitAreaTrigger areaTrigger;
     public enum SummitAreaTrigger
     {
         Central_Area,
