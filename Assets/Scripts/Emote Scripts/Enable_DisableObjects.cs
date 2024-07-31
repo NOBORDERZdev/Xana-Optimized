@@ -23,6 +23,12 @@ public class Enable_DisableObjects : MonoBehaviour
     [SerializeField] private GameObject _micOffButton;
     [SerializeField] private GameObject _animationcloseButton;
     [SerializeField] private GameObject _screenRotateButton;
+
+    [Header("Rearrange UI Items")]
+    [SerializeField] private GameObject _chatSystem;
+    [SerializeField] private RectTransform[] _objectsToRepositioned;
+    [SerializeField] private float[] _objectsNewPosX;
+
     private bool _wasMicOn;
     private bool _once = false;
 
@@ -135,6 +141,24 @@ public class Enable_DisableObjects : MonoBehaviour
         _screenRotateButton.SetActive(false);
     }
 
+    //For Skating(Single player) Environment 
+    public void DisableChatFeature()
+    {
+        _chatSystem.SetActive(false);
+
+        //setting anchors to bottom center
+        foreach (RectTransform rect in _objectsToRepositioned)
+        {
+            rect.anchorMin = new Vector2(0.5f, 0);
+            rect.anchorMax = new Vector2(0.5f, 0);
+        }
+
+        for (int i = 0; i < _objectsToRepositioned.Length; i++)
+        {
+            _objectsToRepositioned[i].anchoredPosition = new Vector2(_objectsNewPosX[i], 35.5f);
+            _objectsToRepositioned[i].sizeDelta = new Vector2(30f, 33f);
+        }
+    }
 }
 
 

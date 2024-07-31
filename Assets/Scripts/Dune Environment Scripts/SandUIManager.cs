@@ -42,6 +42,9 @@ public class SandUIManager : MonoBehaviour
 
     void Start()
     {
+        //Disabling chat feature and UI as it is currently single player
+        Enable_DisableObjects.Instance.DisableChatFeature();
+
         nxtBtn.onClick.AddListener(OnNextBtnClick);
         if (SandGameManager.Instance.local == Localiztion.Jp)
         {

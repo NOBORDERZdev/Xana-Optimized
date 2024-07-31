@@ -1582,6 +1582,31 @@ RectTransform:
   m_AnchoredPosition: {x: 29.226501, y: 21}
   m_SizeDelta: {x: 427.5, y: 90}
   m_Pivot: {x: 0, y: 1}
+--- !u!224 &120912747 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2514870289285563235, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &120912748 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 700551830, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &120912749 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 396680712046028457, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &120912750 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1467097315224341909, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &120912751 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2514870289997866168, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &130955607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7103957107294246127, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
@@ -29435,7 +29460,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.00089046755, z: 0.000060756447, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.00089047477, z: 0.00006075694, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -29887,7 +29912,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641548, y: -0.0008924901, z: 0.000009499879, w: 0.999943}
+  m_LocalRotation: {x: 0.010642076, y: -0.0008925214, z: 0.0000095006835, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30320,6 +30345,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 657205614884564794}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _chatSystem
+      value: 
+      objectReference: {fileID: 908864873}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: _micOnButton
       value: 
       objectReference: {fileID: 2514870290428197345}
@@ -30360,8 +30389,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 913098791}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: UiObjectsToDisable.Array.size
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.data[0]
+      value: -52.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.data[1]
+      value: 52.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.data[2]
+      value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.data[3]
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsNewPosX.Array.data[4]
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: UiObjectsToDisable.Array.data[0]
@@ -30408,6 +30461,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2514870289579782168}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: ButtontoUninteractable.Array.data[0]
       value: 
       objectReference: {fileID: 2185985445957663740}
@@ -30447,6 +30504,26 @@ PrefabInstance:
       propertyPath: ButtontoUninteractable.Array.data[9]
       value: 
       objectReference: {fileID: 5793393466098113125}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.data[0]
+      value: 
+      objectReference: {fileID: 120912748}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.data[1]
+      value: 
+      objectReference: {fileID: 120912747}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.data[2]
+      value: 
+      objectReference: {fileID: 120912751}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.data[3]
+      value: 
+      objectReference: {fileID: 120912750}
+    - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
+      propertyPath: _objectsToRepositioned.Array.data[4]
+      value: 
+      objectReference: {fileID: 120912749}
     - target: {fileID: 8627693256884422878, guid: 89008c2d7a11bda4596d9f98b3992cc1, type: 3}
       propertyPath: ButtontoUninteractable.Array.data[10]
       value: 
@@ -48179,7 +48256,6 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: 415957b4-2a4f-4031-8645-ae46a44b6dbf
-    m_Id: 6830e406-dc74-469c-8392-78327b0af1e3
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -48189,7 +48265,6 @@ MonoBehaviour:
     m_Type: 0
     m_ExpectedControlType: 
     m_Id: c6c2ef1b-25dc-4e9a-a85f-18e340de874c
-    m_Id: b51dc7ba-71f1-4617-a0d3-696651466979
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
