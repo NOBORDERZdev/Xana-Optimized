@@ -1,6 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Networking;
+using UnityEngine.Playables;
 
 public class FB_PushNotificationSender : MonoBehaviour
 {
@@ -15,8 +16,19 @@ public class FB_PushNotificationSender : MonoBehaviour
 
     public void SendNotification()
     {
-        string title = ConstantsHolder.userName;
-        string body = "App";
+        string title = "";
+        string body = "";
+
+        if (GameManager.currentLanguage.Contains("en") && !LocalizationManager.forceJapanese)
+        {
+            title = "(D+ Infinity Labo) A user has entered a private meeting room."; 
+            body = "User Display Name: " + ConstantsHolder.userName + "\n" + "Browser or App: App";
+        }
+        else if (GameManager.currentLanguage == "ja")
+        {
+            title = "(D+ Infinity Labo) ユーザが個別商談部屋に入室しました。";
+            body = "表示名: " + ConstantsHolder.userName + "\n" + "ブラウザ or アプリ: アプリ";
+        }
         StartCoroutine(CallAPISequentially(title, body));
     }
 
