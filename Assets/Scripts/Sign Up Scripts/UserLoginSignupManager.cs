@@ -984,6 +984,7 @@ public class UserLoginSignupManager : MonoBehaviour
             Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
+            ConstantsHolder.userName= displayrname;
             NameScreenNextButton.interactable = true;
             NameScreenLoader.SetActive(false);
             enterNamePanel.SetActive(false);
@@ -1699,6 +1700,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         ConstantsHolder.userId = myObject1.data.user.id.ToString();
                         UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
+                        ConstantsHolder.userName= PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
                         LoadSummit();
 
