@@ -60,7 +60,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         if (ConstantsHolder.isFixedHumanoid)
         {
             _mydatatosend[0] = GetComponent<PhotonView>().ViewID as object;
-            _mydatatosend[1] = XANASummitDataContainer.fixedAvatarJson as object;
+            _mydatatosend[1] = XANASummitDataContainer.FixedAvatarJson as object;
             _mydatatosend[2] = ConstantsHolder.xanaConstants.isNFTEquiped;
 
             CallRpcInvoke();
@@ -106,7 +106,6 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
         //{
         if (GetComponent<PhotonView>().ViewID.ToString() == OtherPlayerId)
         {
-            Debug.LogError("cloths are applying here...");
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
             _CharacterData = JsonUtility.FromJson<SavingCharacterDataClass>(Datasend[1].ToString());
 
