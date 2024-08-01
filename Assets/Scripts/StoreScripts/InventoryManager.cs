@@ -60,6 +60,11 @@ public class InventoryManager : MonoBehaviour
     public Text TotalGameCoins;
 
     public List<StoreItemHolder> AllCategoriesData;
+    public ScrollRect[] ItemsScrollrect;
+    private int _BottomApiPagaCount = 1;
+    private int _OuterApiPagaCount = 1;
+    private int _ShoesApiPagaCount = 1;
+    private int _HairApiPagaCount = 1;
 
     public List<ItemDetail> TotalBtnlist;
     public List<ItemDetail> CategorieslistHeads;
@@ -800,7 +805,6 @@ public class InventoryManager : MonoBehaviour
             myObj.pageSize = _PageSize;
             return myObj;
         }
-
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -810,7 +814,6 @@ public class InventoryManager : MonoBehaviour
             myObj.order = _order;
             return myObj;
         }
-
         public ConvertSubCategoriesToJsonObj CreateTOJSON(string jsonString, int _pageNumber, int _PageSize, string _order, string sortingType)
         {
             ConvertSubCategoriesToJsonObj myObj = new ConvertSubCategoriesToJsonObj();
@@ -829,9 +832,6 @@ public class InventoryManager : MonoBehaviour
     }
     public void SubmitAllItemswithSpecificSubCategory(int GetCategoryIndex, bool check)
     {
-        //AssetBundle.UnloadAllAssetBundles(false);
-        //Resources.UnloadUnusedAssets();
-
         bool Once;
         Once = check;
         if (PreviousSelectionCount != IndexofPanel)
@@ -839,13 +839,16 @@ public class InventoryManager : MonoBehaviour
             PreviousSelectionCount = IndexofPanel;
             Once = true;
         }
-        if (Once)
+        else
+        {
+            Debug.Log("<color=red> Same Button Clicking </color>");
+        }
+        if (Once || loadingItems)
         {
             string result = StringIndexofSubcategories(GetCategoryIndex);
+            int _pagenumber = GetActivePanelPageIndex();
             ConvertSubCategoriesToJsonObj SubCatString = new ConvertSubCategoriesToJsonObj();
-            //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 41, "asc"));
-            //string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc")); // Increase item Waqas Ahmad
-            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, 1, 200, "asc", "name")); // API Update New Parameter added for sorting
+            string bodyJson = JsonUtility.ToJson(SubCatString.CreateTOJSON(result, _pagenumber, 40, "asc", "name")); // API Update New Parameter added for sorting
             if (hitAllItemAPICorountine != null)
                 StopCoroutine(hitAllItemAPICorountine);
             hitAllItemAPICorountine = StartCoroutine(HitALLItemsAPI(ConstantsGod.API_BASEURL + ConstantsGod.GETALLSTOREITEMS, bodyJson));
@@ -900,6 +903,13 @@ public class InventoryManager : MonoBehaviour
                     dataListOfItems.Clear();
 
                     dataListOfItems = JsonDataObj.data[0].items;
+
+                    if(dataListOfItems.Count == 0)
+                    {
+                        UpdateActivePanelPageIndex(false);
+                        yield break;
+                    }
+
                     PutDataInOurAPPNewAPI();
                     apiResponseHolder.AddReponse(url + Jsondata, request.downloadHandler.text);
                     if (LoadingHandler.Instance)
@@ -927,6 +937,131 @@ public class InventoryManager : MonoBehaviour
         }
         request.Dispose();
     }
+    
+    
+
+    public void CheckPageNumberForAssets()
+    {
+        ScrollRect myScroller = GetActiveRect();
+        Debug.LogError("Scroller Value : " + myScroller.verticalNormalizedPosition);
+        if (loadingItems)
+            return;
+
+        Debug.LogError("End of Scroll");
+
+        if (myScroller.verticalNormalizedPosition <= 0.1f)
+        {
+            if (loadingItems == false)
+            {
+                loadingItems = true;
+            }
+        }
+
+        if(loadingItems)
+        {
+            int pageIndex = UpdateActivePanelPageIndex();
+            if (pageIndex < 0)
+                return;
+            SubmitAllItemswithSpecificSubCategory(SubCategoriesList[pageIndex].id, false);
+        }
+    }
+
+    private ScrollRect GetActiveRect()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return ItemsScrollrect[1];  // Outer
+            if (_selectedPanel == 5) return ItemsScrollrect[2]; // Bottom
+            if (_selectedPanel == 7) return ItemsScrollrect[3]; // Shoes
+        }
+        else
+        {
+            return ItemsScrollrect[0]; // Hair Scroll Rect
+        }
+
+        return GetComponent<ScrollRect>();
+    }
+    private int GetActivePanelPageIndex()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return _OuterApiPagaCount ;  // Outer
+            if (_selectedPanel == 5) return _BottomApiPagaCount; // Bottom
+            if (_selectedPanel == 7) return _ShoesApiPagaCount ; // Shoes
+
+            return 1;
+        }
+        else
+        {
+            return _HairApiPagaCount;
+        }
+    }
+    private int UpdateActivePanelPageIndex(bool addValue = true)
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+
+
+        Debug.LogError("Selected Panel Index: " + _selectedPanel);
+
+        if (addValue)
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _selectedPanel; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _selectedPanel; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _selectedPanel; }// Shoes
+
+                return -1; ;
+            }
+            else if (_selectedPanel == 0)
+            {
+                _HairApiPagaCount += 1;
+                return 8;
+            }
+            else
+            {
+                Debug.LogError("Wrong Input: " + _selectedPanel);
+                return -1;
+            }
+        }
+        else
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { _OuterApiPagaCount -= 1; return _selectedPanel; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount -= 1; return _selectedPanel; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount -= 1; return _selectedPanel; }// Shoes
+
+                return -1; ;
+            }
+            else if (_selectedPanel == 0)
+            {
+                _HairApiPagaCount -= 1;
+                return 8;
+            }
+            else
+            {
+                Debug.LogError("Wrong Input: " + _selectedPanel);
+                return -1;
+            }
+        }
+
+
+    }
+
+    private void ResetPageIndex()
+    {
+        _BottomApiPagaCount = 1;
+        _OuterApiPagaCount = 1;
+        _ShoesApiPagaCount = 1;
+        _HairApiPagaCount = 1;
+    }
+
+
+
 
     [System.Serializable]
     public class GetItemInfoNewAPI
@@ -1376,7 +1511,7 @@ public class InventoryManager : MonoBehaviour
 
         }
         BackToMain();
-
+        ResetPageIndex();
         //Transform parentEyeBrowAvatar = ParentOfBtnsAvatarEyeBrows;                 // AH Working
         //if (parentEyeBrowAvatar.childCount > 1)
         //{
@@ -3405,18 +3540,22 @@ public class InventoryManager : MonoBehaviour
                 {
                     UpdateStoreSelection(buttonIndex);
                 }
-            }
+            } 
         }
     }
     int localcount = 0;
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
         int loopStart = GetDownloadedNumber(TempEnumVar);
-        for (int i = loopStart; i < dataListOfItems.Count; i++)
+        int gettinAssetForSingleApi = 40; // Getting 40 items from server in single Page
+        int _maxItems = ((GetActivePanelPageIndex() -1 ) * gettinAssetForSingleApi) + dataListOfItems.Count;
+        for (int i = loopStart; i < _maxItems; i++)
         {
             yield return new WaitForEndOfFrame();
             InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
         }
+        // All Data is Loaded
+        loadingItems = false;
     }
 
     CharacterHandler _charHandler;
