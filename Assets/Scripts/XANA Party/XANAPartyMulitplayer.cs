@@ -12,6 +12,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     private ConstantsHolder _XanaConstants = ConstantsHolder.xanaConstants;
 
+    public int UserId;
     public int RaceFinishCount = 0;
     private void Start()
     {
@@ -123,6 +124,14 @@ public class XANAPartyMulitplayer : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void RPC_AddPlayerID(string playerID)
+    {
+        if (!XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Contains(playerID))
+        {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Add(playerID);
+        }
+    }
 
     //public void JumpRPCTrigger(){
     //    print("Trigger JUMP RPC");

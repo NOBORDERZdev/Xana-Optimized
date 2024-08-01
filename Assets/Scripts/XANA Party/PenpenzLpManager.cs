@@ -15,7 +15,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public int MyRankInCurrentRace = 0;
     public int MyPointsInCurrentRace = 0;
     public bool ShowLeaderboard = false;
-    public List<string> playerIDs = new List<string>();
+    public List<string> PlayerIDs = new List<string>();
     public bool IsPlayerIdsSaved = false;
 
     private int page = 1;
@@ -23,14 +23,24 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public bool isLeaderboardShown = false;
     public int MyRankInOverallGames = 0;
     public int MyPointsInOverallGames = 0;
+
+    private const string PlayerIDsKey = "PlayerIDs";
+
+    #region Player IDs
+
+    
+    
+    #endregion
+
+
     public void SaveCurrentRoomPlayerIds()  // Save the current room's player IDs; a player's ID will remain in the list even if they leave the room
     {
         if (!IsPlayerIdsSaved)
         {
-            playerIDs.Clear();
+            PlayerIDs.Clear();
             foreach (Player player in PhotonNetwork.PlayerList)
             {
-                playerIDs.Add(player.UserId);
+                PlayerIDs.Add(player.UserId);
             }
             IsPlayerIdsSaved = true;
         }
@@ -219,7 +229,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     {
         List<(string playerId, int points)> playerPoints = new List<(string playerId, int points)>();
 
-        foreach (string pId in playerIDs)
+        foreach (string pId in PlayerIDs)
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(pId + "_Points", out object userPoints))
             {
@@ -368,17 +378,17 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Start Race
     public IEnumerator SendingUsersIdsAtStartOfRace()
     {
-        foreach (Player player in PhotonNetwork.PlayerList)
-        {
-            playerIDs.Add(player.UserId);
-        }
+        //foreach (Player player in PhotonNetwork.PlayerList)
+        //{
+        //    PlayerIDs.Add(player.UserId);
+        //}
 
         // Create a form and add the user IDs
         WWWForm form = new WWWForm();
-        for (int i = 0; i < playerIDs.Count; i++)
+        for (int i = 0; i < PlayerIDs.Count; i++)
         {
             // Assuming player.UserId is a string and we need to convert it to an int
-            if (int.TryParse(playerIDs[i], out int userId))
+            if (int.TryParse(PlayerIDs[i], out int userId))
             {
               //  userIds.Add(userId);
             }
@@ -387,7 +397,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                // Debug.LogError("Failed to parse UserId: " + player.UserId);
             }
 
-            form.AddField("user_ids", int.Parse(playerIDs[i]));
+            form.AddField("user_ids", int.Parse(PlayerIDs[i]));
         }
 
 
