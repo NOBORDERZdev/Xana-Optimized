@@ -38,7 +38,7 @@ public class XLRatios : MonoBehaviour
     {
         if (!hasFocus)
         {
-            // Application is minimized
+            Debug.Log("---Nft Close due to Application minimized");
             CloseInfoPop();
         }
        

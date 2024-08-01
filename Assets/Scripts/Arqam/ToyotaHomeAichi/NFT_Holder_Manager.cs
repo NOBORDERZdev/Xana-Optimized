@@ -65,7 +65,15 @@ public class NFT_Holder_Manager : MonoBehaviour
         // send Space_Entry_UniqueUsers_Mobile_App
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---Infinity Labo Nft Close due to Application minimized");
+            CloseBtnClicked();
+        }
 
+    }
     public void SetChatRefrence()
     {
         _chatSystem = XanaChatSystem.instance;
