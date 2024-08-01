@@ -1699,10 +1699,9 @@ public class UserLoginSignupManager : MonoBehaviour
                         ConstantsHolder.userId = myObject1.data.user.id.ToString();
                         UserPassManager.Instance.GetGroupDetailsForComingSoon();
                         PlayerPrefs.SetInt("FirstTime", 1);
+                        ConstantsHolder.userName= PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
                         LoadSummit();
-
-
                     }
                 }
             }

@@ -174,9 +174,11 @@ public class PlayerController : MonoBehaviour
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
-                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
-                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
@@ -1808,7 +1810,7 @@ public class PlayerController : MonoBehaviour
         //Ninja_Throw(false);
         isDrawSword = false;
         JumpVelocity = GamificationComponentData.instance.MapValue(jumpMultiplier,
-                Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
+                Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
