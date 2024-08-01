@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class XANASummitSceneLoading : MonoBehaviour
 {
+    [SerializeField]
+    private StayTimeTrackerForSummit _stayTimeTrackerForSummit;
     public static Vector3 playerPos;
     public static Vector3 playerRot;
     public static Vector3 playerScale;
@@ -136,6 +138,29 @@ public class XANASummitSceneLoading : MonoBehaviour
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
             multiplayerController.Connect("XANA Summit-" + domeGeneralData.world);
+
+        // Summit Analytics Part
+        if (_stayTimeTrackerForSummit != null)
+        {
+            if (_stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea)
+            {
+                _stayTimeTrackerForSummit.StopTrackingTime();
+                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = false;
+            }
+            _stayTimeTrackerForSummit.DomeId = domeId;
+            if (domeGeneralData.worldType)
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
+            else
+                _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+            _stayTimeTrackerForSummit.StartTrackingTime();
+        }
+        string eventName;
+        if (domeGeneralData.worldType)
+            eventName = "TV_Dome_" + domeId + "_BW_" + domeGeneralData.builderWorldId;
+        else
+            eventName = "TV_Dome_" + domeId + "_XW_" + domeGeneralData.worldId;
+        GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
     public async void LoadingSceneByIDOrName(string worldId, Vector3 playerPos)
@@ -225,7 +250,15 @@ public class XANASummitSceneLoading : MonoBehaviour
     {
         if (ConstantsHolder.isFromXANASummit == false)
             return;
-
+        if (_stayTimeTrackerForSummit != null)
+        {
+            if (_stayTimeTrackerForSummit.IsTrackingTime)
+            {
+                _stayTimeTrackerForSummit.StopTrackingTime();
+                _stayTimeTrackerForSummit.CalculateAndLogStayTime();
+                _stayTimeTrackerForSummit.IsTrackingTimeForExteriorArea = true;
+            }
+        }
         setPlayerPositionDelegate = SetPlayerOnback;
 
         StartCoroutine(LoadingHandler.Instance.FadeIn());
