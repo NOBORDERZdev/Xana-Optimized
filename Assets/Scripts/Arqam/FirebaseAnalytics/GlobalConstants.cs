@@ -79,6 +79,21 @@ public class GlobalConstants
 
         Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }
+    public static void SendFirebaseEventForSummit(string eventName)
+    {
+        if (eventName.IsNullOrEmpty() || eventName.Substring(0) == "_") return;
+
+        string prefix = "TA_";
+
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            prefix = "LA_"; environmentType = EnvironmentType.Live;
+        }
+        eventName = prefix + eventName;
+        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+    }
     #endregion
 
 }
