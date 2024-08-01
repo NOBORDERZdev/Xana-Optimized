@@ -951,14 +951,7 @@ public class InventoryManager : MonoBehaviour
 
         if (myScroller.verticalNormalizedPosition <= 0.1f)
         {
-            if (loadingItems == false)
-            {
-                loadingItems = true;
-            }
-        }
-
-        if(loadingItems)
-        {
+            loadingItems = true;
             int pageIndex = UpdateActivePanelPageIndex();
             if (pageIndex < 0)
                 return;
@@ -3544,17 +3537,27 @@ public class InventoryManager : MonoBehaviour
         }
     }
     int localcount = 0;
+    
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
-        int loopStart = GetDownloadedNumber(TempEnumVar);
-        int gettinAssetForSingleApi = 40; // Getting 40 items from server in single Page
-        int _maxItems = ((GetActivePanelPageIndex() -1 ) * gettinAssetForSingleApi) + dataListOfItems.Count;
-        for (int i = loopStart; i < _maxItems; i++)
+        int _LoopStart = GetDownloadedNumber(TempEnumVar);
+        const int _ItemsPerPage = 40; // Getting 40 items from the server in a single page
+        int _CurrentPageIndex = GetActivePanelPageIndex() - 1;
+        int _MaxItems = (_CurrentPageIndex * _ItemsPerPage) + dataListOfItems.Count;
+
+        // Calculate the starting index for the data list
+        int _StartFromIndex = _MaxItems - dataListOfItems.Count;
+
+        for (int i = _LoopStart; i < _MaxItems; i++)
         {
+            int _DataIndex = i - _StartFromIndex;
+
+            // Wait until the end of the frame to instantiate the item
             yield return new WaitForEndOfFrame();
-            InstantiateStoreItems(parentObj, i, "", TempitemDetail, false);
+            InstantiateStoreItems(parentObj, _DataIndex, string.Empty, TempitemDetail, false);
         }
-        // All Data is Loaded
+
+        // Indicate that all data has been loaded
         loadingItems = false;
     }
 
