@@ -124,7 +124,6 @@ public class FP_CamControllerMouseLook : MonoBehaviour
 
     void MouseMovement()
     {
-        Debug.LogError(playerController.horizontal + "---" + playerController.vertical);
 #if UNITY_EDITOR
 
         // Get mouse movement
@@ -230,22 +229,22 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     {
 
         // Get touch count
-        int touchCount = Input.touchCount;
+        int _touchCount = Input.touchCount;
 
         // Check for touch input
-        if (touchCount > 0)
+        if (_touchCount > 0)
         {
             // Get the first touch position
             //Touch touch = Input.GetTouch(0);
             //Vector2 touchDelta = touch.deltaPosition;
 
-            Vector2 touchDelta = delta;
+            Vector2 _touchDelta = delta;
             // Rotate the camera horizontally (around the y-axis)
-            yRotation += touchDelta.x * touchSensitivity;
+            yRotation += _touchDelta.x * touchSensitivity;
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
             // Calculate vertical rotation
-            xRotation -= touchDelta.y * touchSensitivity;
+            xRotation -= _touchDelta.y * touchSensitivity;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             // Rotate the camera vertically (around the x-axis)
