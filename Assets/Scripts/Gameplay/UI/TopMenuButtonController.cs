@@ -21,6 +21,7 @@ public class TopMenuButtonController : MonoBehaviour
     public static TopMenuButtonController Instance;
 
     [SerializeField] public List<Btn> btns;
+    [SerializeField] public Button leaveRoomBtn;
 
     public bool Settings_pressed = false;
 
@@ -32,6 +33,13 @@ public class TopMenuButtonController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        leaveRoomBtn.onClick.AddListener(() =>
+        {
+            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
+            {
+                ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
+            }
+        });
     }
 
     public void OnEnable()

@@ -8832,6 +8832,10 @@ PrefabInstance:
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5942558483825590715, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
+      propertyPath: leaveRoomBtn
+      value: 
+      objectReference: {fileID: 1005412100}
     - target: {fileID: 6157868412728492864, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -14308,6 +14312,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2328668967248422314, guid: 3624bcee55e70974ca1c165f011e6d68, type: 3}
   m_PrefabInstance: {fileID: 1004208624}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1005412100 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3936379157591439248, guid: 9aa41bd66064d3c44aed5d4391fab33f, type: 3}
+  m_PrefabInstance: {fileID: 631382438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1025527051 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 799665483621473385, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
@@ -39570,6 +39585,7 @@ MonoBehaviour:
     pressed: {fileID: 21300000, guid: 649c9fc94c3df9c4ab3980b382feb582, type: 3}
     screens:
     - {fileID: 244934654}
+  leaveRoomBtn: {fileID: 6408302776192530263}
   Settings_pressed: 0
 --- !u!114 &4338721142732702077
 MonoBehaviour:

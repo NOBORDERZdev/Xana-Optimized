@@ -61,7 +61,6 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
         GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
-        ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
         ConstantsHolder.xanaConstants.isBackFromWorld = true;
         if (exitOnce)
         {
