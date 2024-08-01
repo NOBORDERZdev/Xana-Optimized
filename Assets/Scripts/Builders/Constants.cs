@@ -16,7 +16,7 @@ public static class Constants
     public const float maxPlayerSprintSpeed = 15f;
     public const float minPlayerUIJump = 1f;
     public const float maxPlayerUIJump = 20f;
-    public const float minPlayerJumpHeight = 2f;
+    public const float minPlayerJumpHeight = 5f;
     public const float maxPlayerJumpHeight = 15f;
 
     public const string HomeScene = "Home";

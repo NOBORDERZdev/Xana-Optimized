@@ -151,7 +151,8 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     {
 
         delta = Vector2.zero;
-        if (playerController.horizontal != 0 && playerController.vertical != 0)//&& Input.touchCount > 0)
+        
+        if (playerController.horizontal != 0 || playerController.vertical != 0)//&& Input.touchCount > 0)
         {
             if (Input.touchCount > 1)
             {
@@ -175,7 +176,7 @@ public class FP_CamControllerMouseLook : MonoBehaviour
                 if (t.phase == TouchPhase.Moved /*&& t.position.x > 500*/) // && (playerController.horizontal == 0 && playerController.vertical == 0))
                 {
                     delta = Input.GetTouch(0).deltaPosition;
-                    _allowSyncedControl = true;
+                    _allowSyncedControl = false;
                 }
                 else
                 {
@@ -228,21 +229,22 @@ public class FP_CamControllerMouseLook : MonoBehaviour
     {
 
         // Get touch count
-        int touchCount = Input.touchCount;
+        int _touchCount = Input.touchCount;
 
         // Check for touch input
-        if (touchCount > 0)
+        if (_touchCount > 0)
         {
             // Get the first touch position
-            Touch touch = Input.GetTouch(0);
-            Vector2 touchDelta = touch.deltaPosition;
+            //Touch touch = Input.GetTouch(0);
+            //Vector2 touchDelta = touch.deltaPosition;
 
+            Vector2 _touchDelta = delta;
             // Rotate the camera horizontally (around the y-axis)
-            yRotation += touchDelta.x * touchSensitivity;
+            yRotation += _touchDelta.x * touchSensitivity;
             transform.rotation = Quaternion.Euler(xRotation, yRotation, 0f);
 
             // Calculate vertical rotation
-            xRotation -= touchDelta.y * touchSensitivity;
+            xRotation -= _touchDelta.y * touchSensitivity;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
             // Rotate the camera vertically (around the x-axis)
