@@ -162,7 +162,6 @@ public class UserLoginSignupManager : MonoBehaviour
         }
         else
         {
-            LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 0;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             ShowWelcomeScreen();
         }
