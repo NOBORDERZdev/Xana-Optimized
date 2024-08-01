@@ -83,7 +83,6 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             StartCoroutine(GetPointsFromRank(MyRankInCurrentRace));
             //MyPointsInCurrentRace += CalculatePointsFromRank(MyRankInCurrentRace);
 
-            UpdateUserPoints(MyPointsInCurrentRace);
             //UpdateRoomCustomPropertiesForPoints(localPlayer.UserId, MyPointsInCurrentRace);
         }
     }
@@ -127,6 +126,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                         if (row.rank == rank)
                         {
                             MyPointsInCurrentRace += row.points;
+                            StartCoroutine(UpdateUserPoints(MyPointsInCurrentRace));
                             break;
                         }
                     }
@@ -245,34 +245,72 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
     IEnumerator UpdateUserPoints(int _points) // Update the user's points in the database
     {
-        var data = new
+        UserData userData = new UserData { user_id = 14188, points = 100 };
+        string jsonBody = JsonUtility.ToJson(userData);
+
+        UnityWebRequest request = new UnityWebRequest(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.UpdateUserPoints_Penpenz, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        request.SetRequestHeader("Content-Type", "application/json");
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
         {
-            user_id = ConstantsHolder.userId,
-            points = _points
-        };
-        string jsonData = JsonUtility.ToJson(data);
-
-        byte[] bodyData = System.Text.Encoding.UTF8.GetBytes(jsonData);
-
-        using (UnityWebRequest webRequest = new UnityWebRequest(ConstantsGod.API_BASEURL_Penpenz+ ConstantsGod.UpdateUserPoints_Penpenz, "PUT"))
-        {
-            webRequest.uploadHandler = new UploadHandlerRaw(bodyData);
-            webRequest.downloadHandler = new DownloadHandlerBuffer();
-            webRequest.SetRequestHeader("Content-Type", "application/json");
-
-            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
-            yield return webRequest.SendWebRequest();
-
-            if(webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError("Error: " + webRequest.error);
-            }
-            else
-            {
-                string response = webRequest.downloadHandler.text;
-                Debug.Log("Response: " + response);
-            }
+            UpdateUserPointsResponseData response = JsonUtility.FromJson<UpdateUserPointsResponseData>(request.downloadHandler.text);
+            Debug.Log("Response: " + request.downloadHandler.text);
+            // Handle the response data as needed
         }
+        else
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+        //var data = new
+        //{
+        //    user_id = 14188,  // int.Parse(ConstantsHolder.userId),
+        //    points = 100//_points
+        //};
+        //string jsonData = JsonUtility.ToJson(data);
+
+        //byte[] bodyData = System.Text.Encoding.UTF8.GetBytes(jsonData);
+
+        //using (UnityWebRequest webRequest = new UnityWebRequest(ConstantsGod.API_BASEURL_Penpenz+ ConstantsGod.UpdateUserPoints_Penpenz, "POST"))
+        //{
+        //    webRequest.uploadHandler = new UploadHandlerRaw(bodyData);
+        //    webRequest.downloadHandler = new DownloadHandlerBuffer();
+        //    webRequest.SetRequestHeader("Content-Type", "application/json");
+
+        //    webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+        //    yield return webRequest.SendWebRequest();
+
+        //    if(webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+        //    {
+        //        Debug.LogError("Error: " + webRequest.error);
+        //    }
+        //    else
+        //    {
+        //        string response = webRequest.downloadHandler.text;
+        //        Debug.Log("Response: " + response);
+
+        //        // Deserialize the JSON response
+        //        UpdateUserPointsResponseData responseData = JsonUtility.FromJson<UpdateUserPointsResponseData>(response);
+
+        //        if (responseData.success)
+        //        {
+        //            Debug.Log("User points updated successfully");
+        //            foreach (var user in responseData.data)
+        //            {
+        //                Debug.Log($"ID: {user.id}, User ID: {user.user_id}, User Name: {user.user_name}, Points: {user.points}, Created At: {user.createdAt}, Updated At: {user.updatedAt}");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Debug.LogError("Failed to update user points");
+        //        }
+        //    }
+        //}
     }
 
 
@@ -298,6 +336,78 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         public int rank;
         public int points;
     }
+
+
+    [System.Serializable]
+    public class UserData
+    {
+        public int user_id;
+        public int points;
+    }
+
+    
+    [System.Serializable]
+    public class UpdateUserPointsResponseData
+    {
+        public bool success;
+        public UserData[] data;
+        public string msg;
+    }
+
+    [System.Serializable]
+    public class User
+    {
+        public int id;
+        public int user_id;
+        public string user_name;
+        public int points;
+        public string createdAt;
+        public string updatedAt;
+    }
+
+    #region Start Race
+    public IEnumerator SendingUsersIdsAtStartOfRace()
+    {
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            playerIDs.Add(player.UserId);
+        }
+
+        // Create a form and add the user IDs
+        WWWForm form = new WWWForm();
+        for (int i = 0; i < playerIDs.Count; i++)
+        {
+            // Assuming player.UserId is a string and we need to convert it to an int
+            if (int.TryParse(playerIDs[i], out int userId))
+            {
+              //  userIds.Add(userId);
+            }
+            else
+            {
+               // Debug.LogError("Failed to parse UserId: " + player.UserId);
+            }
+
+            form.AddField("user_ids", int.Parse(playerIDs[i]));
+        }
+
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.StartRace_Penpenz, form))
+        {
+            webRequest.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.Log("Error: " + webRequest.error);
+            }
+            else
+            {
+                Debug.Log("Response: " + webRequest.downloadHandler.text);
+            }
+        }
+    }
+    #endregion
+
 }
 
 

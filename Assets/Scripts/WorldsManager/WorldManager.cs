@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Photon.Pun.Demo.PunBasics;
 using UnityEngine.SceneManagement;
 using SuperStar.Helpers;
+using AIFLogger;
 
 public class WorldManager : MonoBehaviour
 {
@@ -108,10 +109,11 @@ public class WorldManager : MonoBehaviour
     public IEnumerator xanaParty(){
         if (!XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
-            while ((!ConstantsHolder.loggedIn || !ConstantsHolder.isWalletLogin) &&
-            (PlayerPrefs.GetString("PlayerName") == "") && PlayerPrefs.GetInt("FirstTime") == 0 &&
-            ConstantsGod.AUTH_TOKEN == "AUTH_TOKEN" )
-                    yield return new WaitForSeconds(0.5f);
+            LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+            while (PlayerPrefs.GetInt("WalletLogin") == 1 && ConstantsHolder.userId.IsNullOrEmpty() && ConstantsHolder.userName.IsNullOrEmpty())
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
 
             if (PlayerPrefs.GetInt("IsProcessComplete") == 1 && PlayerPrefs.GetString("DownloadPermission", "false") == "false")
             {

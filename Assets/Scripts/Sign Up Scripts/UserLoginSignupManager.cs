@@ -91,7 +91,10 @@ public class UserLoginSignupManager : MonoBehaviour
     {
 
         instance = this;
-        StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
+        }
        
         if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
         {
@@ -182,6 +185,10 @@ public class UserLoginSignupManager : MonoBehaviour
             Debug.Log("Already Login Dont Call API");
             if(InventoryManager.instance)
                 InventoryManager.instance.SetDefaultValues();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+            }
             return;
         }
         Debug.Log("Auto Login");
@@ -206,6 +213,10 @@ public class UserLoginSignupManager : MonoBehaviour
             }
            
             WalletAutoLogin();
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            {
+                WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+            }
         }
         else
         {
@@ -965,39 +976,43 @@ public class UserLoginSignupManager : MonoBehaviour
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetString("PlayerName", userUsername);
             ConstantsHolder.userName = userUsername;
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername); 
+            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().UpdateNameText(userUsername);
             OpenUIPanel(16);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
-            
-            return;
         }
-
-        if (ConstantsHolder.isWalletLogin)
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
         {
-           
-                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
-                {
-                   
-                    Debug.Log("Wallet Signup");
-                   
-                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
-                   
-                }));
-           
-            RequestSubmitUsername(userUsername);
+            return;
         }
         else
         {
-            StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
+            if (ConstantsHolder.isWalletLogin)
             {
-               
-                NameScreenLoader.SetActive(false);
-                NameScreenNextButton.interactable = true;
-                
-                Debug.Log("Email Signup");
-                GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
-                UserPassManager.Instance.GetGroupDetails("freeuser");
-            }));
+
+                StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, displayrname, (isSucess) =>
+                {
+
+                    Debug.Log("Wallet Signup");
+
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Wallet_Completed.ToString());
+
+                }));
+
+                RequestSubmitUsername(userUsername);
+            }
+            else
+            {
+                StartCoroutine(RegisterUserWithNewTechnique(url, _bodyJson, bodyJsonOfName, displayrname, (isSucess) =>
+                {
+
+                    NameScreenLoader.SetActive(false);
+                    NameScreenNextButton.interactable = true;
+
+                    Debug.Log("Email Signup");
+                    GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Signup_Email_Completed.ToString());
+                    UserPassManager.Instance.GetGroupDetails("freeuser");
+                }));
+            }
         }
      
 

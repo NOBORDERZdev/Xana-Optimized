@@ -292,5 +292,7 @@ public class ConstantsGod
     public static string CreateUser_Penpenz = "/api/users";
     public static string GetRankPoints_Penpenz = "/api/rankpoints";
     public static string UpdateUserPoints_Penpenz = "/api/users";
+
+    public static string StartRace_Penpenz = "/api/races/start";
     #endregion
 }
