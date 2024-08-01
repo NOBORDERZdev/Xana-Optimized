@@ -662,7 +662,8 @@ public class InventoryManager : MonoBehaviour
         }
 
         ResetDownloadCount();
-        
+        ResetPageIndex();
+
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(false);
 
@@ -672,13 +673,26 @@ public class InventoryManager : MonoBehaviour
     {
         headsDownlaodedCount = 0;
         faceDownlaodedCount = 0;
+        
         innerDownlaodedCount = 0;
+        innerDownlaodedCountFemale = 0;
+
         outerDownlaodedCount = 0;
+        outerDownlaodedCountFemale = 0;
+        
         accesaryDownlaodedCount = 0;
+        
         bottomDownlaodedCount = 0;
+        bottomDownlaodedCountFemale = 0;
+
         socksDownlaodedCount = 0;
+
         shoesDownlaodedCount = 0;
+        shoesDownlaodedCountFemale = 0;
+
         hairDwonloadedCount = 0;
+        hairDwonloadedCountFemale = 0;
+
         LipsColorDwonloadedCount = 0;
         EyesColorDwonloadedCount = 0;
         EyeBrowColorDwonloadedCount = 0;
@@ -868,7 +882,7 @@ public class InventoryManager : MonoBehaviour
             CheckAPILoaded = true; // Already Have the response not calling the API -- Resetting the value
             yield break;
         }
-        Debug.LogError("HitALLItemsAPI");
+        Debug.Log("<color=red> HitALLItemsAPI </color>");
         if (LoadingHandler.Instance)
             LoadingHandler.Instance.storeLoadingScreen.SetActive(true);
         var request = new UnityWebRequest(url, "POST");
@@ -943,11 +957,11 @@ public class InventoryManager : MonoBehaviour
     public void CheckPageNumberForAssets()
     {
         ScrollRect myScroller = GetActiveRect();
-        Debug.LogError("Scroller Value : " + myScroller.verticalNormalizedPosition);
+        //Debug.LogError("Scroller Value : " + myScroller.verticalNormalizedPosition);
         if (loadingItems)
             return;
 
-        Debug.LogError("End of Scroll");
+        //Debug.LogError("End of Scroll");
 
         if (myScroller.verticalNormalizedPosition <= 0.1f)
         {
@@ -3565,6 +3579,12 @@ public class InventoryManager : MonoBehaviour
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
+
+        if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink))
+        {
+            return;
+        }
+
         _charHandler = CharacterHandler.instance;
         GameObject L_ItemBtnObj = Instantiate(ItemsBtnPrefab, parentObj);
         L_ItemBtnObj.transform.parent = parentObj;
@@ -3621,7 +3641,7 @@ public class InventoryManager : MonoBehaviour
             if ((_charHandler.activePlayerGender == AvatarGender.Male && !dataListOfItems[objId].assetGender.Equals("0")) ||
                 (_charHandler.activePlayerGender == AvatarGender.Female && !dataListOfItems[objId].assetGender.Equals("1")))
             {
-                Debug.Log("Waqas: Gender not Matched With Asset");
+                Debug.Log("Gender not Matched With Asset");
                 L_ItemBtnObj.SetActive(false);
             }
         }
@@ -3747,7 +3767,7 @@ public class InventoryManager : MonoBehaviour
                 }
             case EnumClass.CategoryEnum.HairAvatar:
                 {
-                    if (_MyGender == "Femle")
+                    if (_MyGender == "Female")
                         hairDwonloadedCountFemale++;
                     else
                         hairDwonloadedCount++;
