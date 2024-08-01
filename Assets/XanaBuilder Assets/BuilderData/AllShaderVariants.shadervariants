@@ -1,0 +1,538 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AllShaderVariants
+  m_Shaders:
+  - first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: _SUNDISK_SIMPLE
+        passType: 0
+  - first: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 207, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 211, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: _ALPHABLEND_ON
+        passType: 0
+      - keywords: PROCEDURAL_INSTANCING_ON _ALPHABLEND_ON
+        passType: 8
+      - keywords: 
+        passType: 13
+  - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9004, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9007, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9101, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9103, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 10721, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: c17132b1f77d20942aa75f8429c0f8bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _DEPTH_MSAA_4
+        passType: 0
+  - first: {fileID: 4800000, guid: ec9fec698a3456d4fb18cf8bacb7a2bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
+    second:
+      variants:
+      - keywords: _HDR_GRADING
+        passType: 0
+  - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHATEST_ON
+        passType: 8
+      - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHAPREMULTIPLY_ON
+          _ALPHATEST_ON _MAIN_LIGHT_SHADOWS _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHAPREMULTIPLY_ON
+          _ALPHATEST_ON _MAIN_LIGHT_SHADOWS_CASCADE _REFLECTION_PROBE_BOX_PROJECTION
+          _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHAPREMULTIPLY_ON
+          _MAIN_LIGHT_SHADOWS _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHAPREMULTIPLY_ON
+          _MAIN_LIGHT_SHADOWS_CASCADE _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _EMISSION
+          _MAIN_LIGHT_SHADOWS _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _EMISSION
+          _MAIN_LIGHT_SHADOWS_CASCADE _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS
+          _OCCLUSIONMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS_CASCADE
+          _OCCLUSIONMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ALPHATEST_ON _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
+          _RECEIVE_SHADOWS_OFF _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE
+          _RECEIVE_SHADOWS_OFF _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ENVIRONMENTREFLECTIONS_OFF
+          _MAIN_LIGHT_SHADOWS _REFLECTION_PROBE_BOX_PROJECTION _SPECULARHIGHLIGHTS_OFF
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _ENVIRONMENTREFLECTIONS_OFF
+          _MAIN_LIGHT_SHADOWS_CASCADE _REFLECTION_PROBE_BOX_PROJECTION _SPECULARHIGHLIGHTS_OFF
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _METALLICSPECGLOSSMAP _NORMALMAP _PARALLAXMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _NORMALMAP _PARALLAXMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _NORMALMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _OCCLUSIONMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _METALLICSPECGLOSSMAP _NORMALMAP _PARALLAXMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _NORMALMAP _PARALLAXMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _NORMALMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _OCCLUSIONMAP _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION _SURFACE_TYPE_TRANSPARENT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS _NORMALMAP
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS _NORMALMAP _PARALLAXMAP
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS _RECEIVE_SHADOWS_OFF
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _NORMALMAP
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _NORMALMAP _PARALLAXMAP
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE _RECEIVE_SHADOWS_OFF
+        passType: 13
+      - keywords: _ALPHATEST_ON
+        passType: 13
+      - keywords: _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+        passType: 13
+  - first: {fileID: 4800000, guid: e198026df304af84a85675be636192ea, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_SINGLE_CHANNEL _CFXR_UV_DISTORTION
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DISSOLVE _CFXR_DITHERED_SHADOWS_ON
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_DITHERED_SHADOWS_ON _CFXR_SINGLE_CHANNEL _FLIPBOOK_BLENDING
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_EDGE_FADING _CFXR_HDR_BOOST
+          _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL
+          _CFXR_UV_DISTORTION _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _ALPHATEST_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL
+          _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_DISSOLVE _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_EDGE_FADING _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL
+          _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL _FADING_ON _FLIPBOOK_BLENDING
+        passType: 13
+  - first: {fileID: -6465566751694194690, guid: 4127de13d658355408f8d63b178b818e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+  - first: {fileID: 4800000, guid: bccaaca1f83315c4aad8d95e28fd9149, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 3dda44a7d9cec71439b5b8e20fcbccfb, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _CFXR_DISSOLVE _CFXR_WORLD_SPACE_RING
+        passType: 8
+      - keywords: _CFXR_SINGLE_CHANNEL
+        passType: 8
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_SINGLE_CHANNEL
+        passType: 13
+      - keywords: _CFXR_DISSOLVE _CFXR_WORLD_SPACE_RING
+        passType: 13
+      - keywords: _CFXR_HDR_BOOST _CFXR_SINGLE_CHANNEL _FADING_ON
+        passType: 13
+      - keywords: _FADING_ON
+        passType: 13
+  - first: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: 
+        passType: 13
+  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 6eb86e4931b506a408fd1477edec61ea, type: 3}
+    second:
+      variants:
+      - keywords: ADDITIVECONFIG_ON ALPHACUTOFF_ON COLORRAMPGRAD_ON COLORRAMP_ON
+          HSV_ON POSTERIZE_ON PREMULTIPLYCOLOR_ON SHAPE2CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON ALPHAFADEINPUTSTREAM_ON ALPHAFADETRANSPARENCYTOO_ON
+          ALPHAFADEUSESHAPE1_ON COLORGRADING_ON GLOW_ON HSV_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON ALPHAFADETRANSPARENCYTOO_ON ALPHAFADEUSESHAPE1_ON
+          ALPHAFADE_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON HSV_ON PREMULTIPLYCOLOR_ON
+          SHAPE1CONTRAST_ON SHAPE1DISTORT_ON SHAPE2CONTRAST_ON SHAPE2_ON SHAPE3_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON ALPHAFADETRANSPARENCYTOO_ON COLORGRADING_ON COLORRAMPGRAD_ON
+          GLOW_ON MASK_ON PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1DISTORT_ON
+          VERTOFFSET_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORGRADING_ON COLORRAMPGRAD_ON HSV_ON MASK_ON
+          POLARUV_ON POSTERIZE_ON PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE2CONTRAST_ON
+          SHAPE2_ON WAVEUV_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON DISTORT_ON HSV_ON
+          PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE2_ON SHAPE3CONTRAST_ON SHAPE3DISTORT_ON
+          SHAPE3_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON HSV_ON
+          POSTERIZE_ON SHAKEUV_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON HSV_ON
+          PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1MASK_ON SHAPE1ROTATE_ON SHAPE2CONTRAST_ON
+          SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON POLARUVDISTORT_ON
+          POLARUV_ON PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1DISTORT_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON PREMULTIPLYCOLOR_ON
+          SHAKEUV_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON PREMULTIPLYCOLOR_ON
+          SHAPE1CONTRAST_ON SHAPE2CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON SHAKEUV_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON MASK_ON
+          POLARUV_ON POSTERIZE_ON PREMULTIPLYCOLOR_ON SHAPE2CONTRAST_ON SHAPE2DISTORT_ON
+          SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON MASK_ON
+          POLARUV_ON POSTERIZE_ON PREMULTIPLYCOLOR_ON SHAPE2CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON POLARUV_ON
+          PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1DISTORT_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON POSTERIZE_ON
+          PREMULTIPLYCOLOR_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON PREMULTIPLYCOLOR_ON
+          SHAPE2CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON POLARUVDISTORT_ON
+          POLARUV_ON PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1DISTORT_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON PREMULTIPLYCOLOR_ON
+          SHAPE1CONTRAST_ON SHAPE2CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON GLOW_ON SHAPE1ROTATE_ON SHAPE2ROTATE_ON SHAPE2_ON
+        passType: 0
+      - keywords: ADDITIVECONFIG_ON PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE2_ON
+        passType: 0
+      - keywords: ALPHAFADE_ON CAMDISTFADE_ON COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON
+          HSV_ON MASK_ON POLARUVDISTORT_ON POLARUV_ON ROUNDWAVEUV_ON SHAPE1CONTRAST_ON
+          SHAPE1DISTORT_ON TWISTUV_ON WAVEUV_ON
+        passType: 0
+      - keywords: COLORGRADING_ON DISTORTONLYBACK_ON DISTORTUSECOL_ON GLOW_ON HSV_ON
+          MASK_ON RIM_ON SHAPE1DISTORT_ON SHAPE1MASK_ON SHAPE2CONTRAST_ON SHAPE2DISTORT_ON
+          SHAPE2_ON
+        passType: 0
+      - keywords: COLORGRADING_ON GLOW_ON HSV_ON MASK_ON RIM_ON SHAPE1DISTORT_ON
+          SHAPE1MASK_ON SHAPE2CONTRAST_ON SHAPE2DISTORT_ON SHAPE2_ON
+        passType: 0
+      - keywords: COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON HSV_ON MASK_ON ROUNDWAVEUV_ON
+          SHAPE2DISTORT_ON SHAPE2_ON TWISTUV_ON WAVEUV_ON
+        passType: 0
+      - keywords: COLORRAMPGRAD_ON COLORRAMP_ON GLOW_ON MASK_ON ROUNDWAVEUV_ON SHAPE2DISTORT_ON
+          SHAPE2_ON TWISTUV_ON WAVEUV_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+    second:
+      variants:
+      - keywords: _ALPHATEST_ON
+        passType: 0
+      - keywords: _ALPHATEST_ON _COLORADDSUBDIFF_ON _EMISSION
+        passType: 0
+      - keywords: _ALPHATEST_ON _EMISSION
+        passType: 0
+      - keywords: _ALPHATEST_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+      - keywords: _COLORCOLOR_ON _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+      - keywords: _EMISSION
+        passType: 0
+      - keywords: _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+      - keywords: 
+        passType: 13
+      - keywords: _ALPHATEST_ON
+        passType: 13
+      - keywords: _ALPHATEST_ON _COLORADDSUBDIFF_ON
+        passType: 13
+  - first: {fileID: 4800000, guid: 714e760b98304b44292e04841e05f258, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _ALPHABLEND_ON _FADING_ON
+        passType: 8
+      - keywords: _FADING_ON
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ALPHABLEND_ON _CFXR_HDR_BOOST _FADING_ON
+        passType: 13
+      - keywords: _CFXR_HDR_BOOST _FADING_ON
+        passType: 13
+      - keywords: _FADING_ON
+        passType: 13
+  - first: {fileID: 4800000, guid: b430983578466934c944e7171b4c372c, type: 3}
+    second:
+      variants:
+      - keywords: ADDITIVECONFIG_ON ALPHAFADEINPUTSTREAM_ON ALPHAFADE_ON PREMULTIPLYCOLOR_ON
+          SHAPE1DISTORT_ON SHAPE2_ON
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: e2335271dc0537147af5dbcb5f4ece06, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+  - first: {fileID: 4800000, guid: 877433bd4de4baa419bf2064db9eace7, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 682e207a5b7b4e94b84a76d7a9e61c5a, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+  - first: {fileID: -6465566751694194690, guid: b02bcd017ba0f11439736a955a3a0c81, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BOX_PROJECTION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+  - first: {fileID: 4800000, guid: 36e335017ad71d54fbb10842863188ae, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 0f07b2c0a398ba346a8acfd2928b036f, type: 3}
+    second:
+      variants:
+      - keywords: ADDITIVECONFIG_ON COLORRAMPGRAD_ON COLORRAMP_ON HSV_ON POLARUV_ON
+          PREMULTIPLYCOLOR_ON SHAPE1CONTRAST_ON SHAPE1DISTORT_ON SHAPE2_ON
+        passType: 0
