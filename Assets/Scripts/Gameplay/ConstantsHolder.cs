@@ -165,6 +165,10 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isFixedHumanoid;
     public static bool HaveSubWorlds;
 
+    //Daily reward
+    public bool isGoingForHomeScene = false;
+    public bool hasToShowDailyPopup = false;
+
     public string r_EmoteStoragePersistentPath
     {
         get

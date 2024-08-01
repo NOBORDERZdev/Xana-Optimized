@@ -39,6 +39,10 @@ public class TopMenuButtonController : MonoBehaviour
             {
                 ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
             }
+            if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
+            {
+                ConstantsHolder.xanaConstants.isGoingForHomeScene = true;
+            }
         });
     }
 

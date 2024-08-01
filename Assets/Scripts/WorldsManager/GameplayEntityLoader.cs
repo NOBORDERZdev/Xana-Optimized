@@ -130,6 +130,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             // Zoom Out map Camera
             MiniMapCamera.orthographicSize = 30;
         }
+        ConstantsHolder.xanaConstants.isGoingForHomeScene = false;
+
     }
 
     void OnEnable()
