@@ -13,7 +13,7 @@ public class ScreenOrientationManager : MonoBehaviour
 
     public bool isPotrait = false;
     public static ScreenOrientationManager _instance;
-    public static Action switchOrientation;
+    public static Action<bool> switchOrientation;
 
     [HideInInspector]
     public float joystickInitPosY = 0;
@@ -133,7 +133,7 @@ public class ScreenOrientationManager : MonoBehaviour
         ChangeGameplayBtnStates();
         StartCoroutine(ChangeOrientation(isPotrait));
         if (switchOrientation != null)
-            switchOrientation.Invoke();
+            switchOrientation.Invoke(isPotrait);
     }
 
     public void ChangeGameplayBtnStates()
