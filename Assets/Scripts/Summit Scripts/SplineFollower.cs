@@ -42,7 +42,7 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
     [HideInInspector]
     public byte PrivateRoomName;
     public bool stopcar = false;
-
+    public Rigidbody rigidbody;
     private bool checkforrigidbody = true;
     bool NeedToAddReference = true;
 
@@ -62,6 +62,14 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
     {
         newRot = onewheel.localEulerAngles + new Vector3(90, 0, 0);
         currentRot = onewheel.localEulerAngles;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            rigidbody.freezeRotation = false;
+        }
+        else
+        {
+            rigidbody.freezeRotation = true;
+        }
     }
     
 
@@ -99,6 +107,7 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
         if (counter < 1)
         {
+          
             if (stopcar)
             {
                 return;
@@ -124,9 +133,9 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
     private void FixedUpdate() {
 
-        if (NeedToAddReference&& CarNavigationManager.instance)
+        if (NeedToAddReference && CarNavigationManager.CarNavigationInstance)
         {
-            CarNavigationManager.instance.Cars.Add(view.ViewID, view);
+            CarNavigationManager.CarNavigationInstance.Cars.Add(view.ViewID, view);
             spline = SplineDone.Instance;
             maxMoveAmount = spline.GetSplineLength(0.001f);
             NeedToAddReference = false;
@@ -208,6 +217,9 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        
+        if(PhotonNetwork.IsMasterClient)
+        {
+            rigidbody.freezeRotation = false;
+        }
     }
 }

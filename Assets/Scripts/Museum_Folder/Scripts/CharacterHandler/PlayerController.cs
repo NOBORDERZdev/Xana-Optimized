@@ -171,9 +171,11 @@ public class PlayerController : MonoBehaviour
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
             if (cinemachineCollider != null)
             {
-                int layerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int noPostProcessingLayerIndex = LayerMask.NameToLayer("NoPostProcessing");
+                int characterLayerIndex = LayerMask.NameToLayer("Character");
                 // Remove the layer from the collide against mask
-                cinemachineCollider.m_CollideAgainst &= ~(1 << layerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << noPostProcessingLayerIndex);
+                cinemachineCollider.m_CollideAgainst &= ~(1 << characterLayerIndex);
             }
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
@@ -1355,7 +1357,7 @@ public class PlayerController : MonoBehaviour
     void PlayerJumpUpdate(float jumpValue, float playerSpeed)
     {
         //sprintSpeed = 5;
-        JumpVelocity += (jumpValue - 1);
+        JumpVelocity = GamificationComponentData.instance.MapValue(jumpValue, Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(playerSpeed,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         speedMultiplier = playerSpeed;
@@ -1778,7 +1780,8 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("BlendY", 3f, 0.0f, Time.deltaTime);
         //Ninja_Throw(false);
         isDrawSword = false;
-        JumpVelocity = originalJumpSpeed + (jumpMultiplier - 1);
+        JumpVelocity = GamificationComponentData.instance.MapValue(jumpMultiplier,
+                Constants.minPlayerUIJump, Constants.maxPlayerUIJump, Constants.minPlayerJumpHeight, Constants.maxPlayerJumpHeight);
         sprintSpeed = GamificationComponentData.instance.MapValue(speedMultiplier,
                 Constants.minPlayerUISpeed, Constants.maxPlayerUISpeed, Constants.minPlayerSprintSpeed, Constants.maxPlayerSprintSpeed);
         BuilderEventManager.DisableAnimationsButtons?.Invoke(true);
@@ -2036,7 +2039,7 @@ public class PlayerController : MonoBehaviour
     internal bool isOnMovingPlatform;
     private void CalculateMovingPlatformSpeed()
     {
-        if (!ConstantsHolder.xanaConstants.isBuilderScene)
+        if (!ConstantsHolder.xanaConstants.isBuilderScene || GamificationComponentData.instance == null)
             return;
 
         if (!characterController.isGrounded)

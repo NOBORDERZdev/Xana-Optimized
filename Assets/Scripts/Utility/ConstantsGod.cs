@@ -79,6 +79,7 @@ public class ConstantsGod
     public static string SHARELINKS = "/item/shareLinks";
     public static string SHAREDEMOS = "/item/shareDemos";
     public static string YOUTUBEVIDEOBYSCENE = "/item/v2/shareLinks/"; //scene name 
+    public static string SUMMITYOUTUBEVIDEOBYID = "/domes/getSummitVideoByAreaIdIndex/";//Add areaId and index
     public static string GetStreamableYoutubeUrl = "/item/get-yt-downloadable-url";
 
     public static string GetDefaultAPI = "/items/get-items-with-defaults";
@@ -271,7 +272,7 @@ public class ConstantsGod
     public static string FOLLOWINGSPACES = "/world/get-favourite-space-list-for-xana/";//pageNumber/pageSize
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
-    public static string SINGLEWORLDINFO = "/hot/get-single-world-hot/";   //:id/:type
+    public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //:id/:type
 
     #endregion
 

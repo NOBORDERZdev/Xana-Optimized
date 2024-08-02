@@ -68,7 +68,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "14";
+        string gameVersion = "15";
         #endregion
 
         #region Multtisection Fields
@@ -488,7 +488,7 @@ namespace Photon.Pun.Demo.PunBasics
                 playerobjectRoom = new List<GameObject>(playerobjects);
                 playerobjects.Clear();
                 JoinLobby(CurrLobbyName);
-                CarNavigationManager.instance.Cars.Clear();
+                CarNavigationManager.CarNavigationInstance.Cars.Clear();
             }
         }
 

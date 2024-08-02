@@ -15,13 +15,14 @@ public class SPAAIHandler : MonoBehaviour
 {
     public int AreaID = 0;
     public int AvatarID = 0;
-    public GameObject[] AIAvatarPrefabs;
     public Transform SpawnPoint;
     public GameObject CurrentAIPerformerRef;
     public PerformerAvatarData AvatarData;
     public bool IsAIDataFetched = false;
     public bool IsPlayerTriggered = false;
     string prfrmrAvtrAPIURL = "/domes/getDomePerfomerAvatarsInfoByAreaIdIndex/";
+    public delegate void SoundEnabler(bool _soundEnable);
+    public SoundEnabler LiveVideoSoundEnabler;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,7 @@ public class SPAAIHandler : MonoBehaviour
                     CallPrfrmrAvtrAPI();
                 }
                 IsPlayerTriggered = true;
+                LiveVideoSoundEnabler?.Invoke(true);
             }
         }
     }
@@ -58,6 +60,7 @@ public class SPAAIHandler : MonoBehaviour
                 {
                     CurrentAIPerformerRef.SetActive(false);
                 }
+                LiveVideoSoundEnabler?.Invoke(false);
             }
         }
     }
@@ -134,7 +137,7 @@ public class SPAAIHandler : MonoBehaviour
     {
         if (!CurrentAIPerformerRef)
         {
-            CurrentAIPerformerRef = Instantiate(AIAvatarPrefabs[_index], SpawnPoint.position, SpawnPoint.localRotation);
+            CurrentAIPerformerRef = Instantiate(GameplayEntityLoader.instance.AIAvatarPrefab[_index], SpawnPoint.position, SpawnPoint.localRotation);
             AssignFtchDataToAIAvtr();
         }
     }

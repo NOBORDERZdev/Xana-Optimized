@@ -20,6 +20,16 @@ public class StreamYoutubeVideo : MonoBehaviour
     //Store ID for Builder Scene
     public string id;
 
+    private void OnEnable()
+    {
+        Metaverse.AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+    }
+
+    private void OnDisable()
+    {
+        Metaverse.AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
+    }
+
     public void StreamYtVideo(string Url, bool isLive)
     {
         if (oldUrl != Url)
@@ -85,7 +95,7 @@ public class StreamYoutubeVideo : MonoBehaviour
         mediaPlayer.OpenMedia(MediaPathType.AbsolutePathOrURL, streamAbleUrl, true);
         mediaPlayer.Play();
         liveVideoPlay.Invoke();
-        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
+        //BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
     }
 
     private void PlayPrerecordedVideo()
@@ -107,6 +117,31 @@ public class StreamYoutubeVideo : MonoBehaviour
         vp.Play();
         BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(id);
     }
+
+    public void OnInternetDisconnect()
+    {
+        if (videoPlayer != null)
+        {
+            videoPlayer.Stop();
+        }
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.Stop();
+        }
+    }
+
+    public void OnInternetConnect()
+    {
+        if (videoPlayer != null)
+        {
+            videoPlayer.Play();
+        }
+        if (mediaPlayer != null)
+        {
+            mediaPlayer.Play();
+        }
+    }
+
 }
 [System.Serializable]
 public class GetYoutubeStreamableVideo
