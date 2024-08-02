@@ -430,6 +430,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //    PhotonNetwork.CurrentRoom.IsOpen = false;
         //    return;
         //}
+        if (GameplayEntityLoader.instance)
+        {
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddPlayerID", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
+        }
         print("!!!!!!! player count "+ Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) + "!!!! ConstantsHolder.XanaPartyMaxPlayers" + ConstantsHolder.XanaPartyMaxPlayers);
         if (Convert.ToInt32(PhotonNetwork.CurrentRoom.PlayerCount) == XANAPartyManager.Instance.ActivePlayerInCurrentLevel)//ConstantsHolder.XanaPartyMaxPlayers)
         {
@@ -438,7 +442,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             //    PhotonNetwork.CurrentRoom.IsVisible = false;
             //    PhotonNetwork.CurrentRoom.IsOpen = false;
             //}
-            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddPlayerID", RpcTarget.AllBuffered, ConstantsHolder.userId);
             //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SaveCurrentRoomPlayerIds();
             //StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
             StartCoroutine(WaitForWorldLoadingAllPlayer());
@@ -474,6 +477,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //  print("~~~ all player ready ~~~");
         if (PhotonNetwork.IsMasterClient)
         {
+            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
             this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
             isRaceStarted = true;
         }

@@ -125,11 +125,20 @@ public class XANAPartyMulitplayer : MonoBehaviour
     }
 
     [PunRPC]
-    public void RPC_AddPlayerID(string playerID)
+    public void RPC_AddPlayerID(int playerID)
     {
         if (!XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Contains(playerID))
         {
             XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Add(playerID);
+        }
+    }
+
+    [PunRPC]
+    public void RPC_AddWinnerId(int winnerID)
+    {
+        if (!XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Contains(winnerID))
+        {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Add(winnerID);
         }
     }
 

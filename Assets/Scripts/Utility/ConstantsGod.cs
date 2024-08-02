@@ -294,5 +294,6 @@ public class ConstantsGod
     public static string UpdateUserPoints_Penpenz = "/api/users";
 
     public static string StartRace_Penpenz = "/api/races/start";
+    public static string UpdateRoundData_Penpenz = "/api/races/:race_id/rounds/:round_number";
     #endregion
 }

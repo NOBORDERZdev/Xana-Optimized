@@ -38,8 +38,9 @@ public class XANAPartyManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("AUTH_TOKEN : " + ConstantsGod.AUTH_TOKEN);
-        Debug.Log("User Id : " + ConstantsHolder.userId);
+        Debug.Log("User> AUTH_TOKEN : " + ConstantsGod.AUTH_TOKEN);
+        Debug.Log("User> Id : " + ConstantsHolder.userId);
+        Debug.Log("User> Name : " + ConstantsHolder.userName+"    "+ PlayerPrefs.GetString("PlayerName","dummy"));
     }
     private void Start()
     {
@@ -163,7 +164,9 @@ public class XANAPartyManager : MonoBehaviour
 
         if (isJoiningLobby)
         {
-            XANAPartyManager.Instance.GameIndex = 0;
+            GameIndex = 0;
+            GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
+
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {

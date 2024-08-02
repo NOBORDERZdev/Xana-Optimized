@@ -1,4 +1,5 @@
 using BetterJSON;
+using Newtonsoft.Json.Linq;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -15,7 +16,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public int MyRankInCurrentRace = 0;
     public int MyPointsInCurrentRace = 0;
     public bool ShowLeaderboard = false;
-    public List<string> PlayerIDs = new List<string>();
+    public List<int> PlayerIDs = new List<int>();
     public bool IsPlayerIdsSaved = false;
 
     private int page = 1;
@@ -25,27 +26,28 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public int MyPointsInOverallGames = 0;
 
     private const string PlayerIDsKey = "PlayerIDs";
-
-    #region Player IDs
-
-    
-    
-    #endregion
+    public int RaceID;
+    public List<int> WinnerPlayerIds = new List<int>(3);
 
 
-    public void SaveCurrentRoomPlayerIds()  // Save the current room's player IDs; a player's ID will remain in the list even if they leave the room
+
+    //public void SaveCurrentRoomPlayerIds()  // Save the current room's player IDs; a player's ID will remain in the list even if they leave the room
+    //{
+    //    if (!IsPlayerIdsSaved)
+    //    {
+    //        PlayerIDs.Clear();
+    //        foreach (Player player in PhotonNetwork.PlayerList)
+    //        {
+    //            PlayerIDs.Add(player.UserId);
+    //        }
+    //        IsPlayerIdsSaved = true;
+    //    }
+    //}
+
+    private void Start()
     {
-        if (!IsPlayerIdsSaved)
-        {
-            PlayerIDs.Clear();
-            foreach (Player player in PhotonNetwork.PlayerList)
-            {
-                PlayerIDs.Add(player.UserId);
-            }
-            IsPlayerIdsSaved = true;
-        }
+        StartCoroutine(GetPointsFromRank());
     }
-
 
     public int UpdateLastRank()
     {
@@ -90,7 +92,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             Player localPlayer = PhotonNetwork.LocalPlayer;
             NeedToUpdateMyRank = false;
             MyRankInCurrentRace = CurrentUpdatedRank;
-            StartCoroutine(GetPointsFromRank(MyRankInCurrentRace));
+            //StartCoroutine(GetPointsFromRank(MyRankInCurrentRace));
             //MyPointsInCurrentRace += CalculatePointsFromRank(MyRankInCurrentRace);
 
             //UpdateRoomCustomPropertiesForPoints(localPlayer.UserId, MyPointsInCurrentRace);
@@ -108,46 +110,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     //        default: return 0; // Consider if this default is appropriate
     //    }
     //}
-    IEnumerator GetPointsFromRank(int rank)
-    {
-        string url = $"{ConstantsGod.API_BASEURL_Penpenz}{ConstantsGod.GetRankPoints_Penpenz}?page={page}&limit={limit}";
-
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
-        {
-            yield return webRequest.SendWebRequest();
-
-            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
-                Debug.LogError("Response: " + webRequest.downloadHandler.text);
-            }
-            else
-            {
-                string response = webRequest.downloadHandler.text;
-                Debug.Log("Response: " + response);
-
-                GetPointsAPIResponse getPointsAPIResponse = JsonUtility.FromJson<GetPointsAPIResponse>(response);
-
-                if (getPointsAPIResponse.success)
-                {
-                    GetPointsRankData[] rows = getPointsAPIResponse.data.rows;
-                    foreach (GetPointsRankData row in rows)
-                    {
-                        if (row.rank == rank)
-                        {
-                            MyPointsInCurrentRace += row.points;
-                            StartCoroutine(UpdateUserPoints(MyPointsInCurrentRace));
-                            break;
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Error: " + getPointsAPIResponse.msg);
-                }
-            }
-        }
-    }
+    
 
     // Updates the room custom properties with the player's points
     private void UpdateRoomCustomPropertiesForPoints(string userId, int points)
@@ -167,6 +130,9 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             return;
         }
         isLeaderboardShown = true;
+
+        StartCoroutine(UpdateRoundData());
+
         var playerRanks = GetPlayerRanks();
 
 
@@ -202,7 +168,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private List<(string playerId, int points, int rank)> GetPlayerRanks()
+    private List<(int playerId, int points, int rank)> GetPlayerRanks()
     {
         var playerPoints = GetPlayerPoints();
 
@@ -210,12 +176,12 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         var sortedPlayerPoints = playerPoints.OrderByDescending(player => player.points).ToList();
 
         // Assign ranks
-        List<(string playerId, int points, int rank)> playerRanks = new List<(string playerId, int points, int rank)>();
+        List<(int playerId, int points, int rank)> playerRanks = new List<(int playerId, int points, int rank)>();
 
         for (int i = 0; i < sortedPlayerPoints.Count; i++)
         {
             playerRanks.Add((sortedPlayerPoints[i].playerId, sortedPlayerPoints[i].points, i + 1));
-            if (sortedPlayerPoints[i].playerId == PhotonNetwork.LocalPlayer.UserId)
+            if (sortedPlayerPoints[i].playerId == int.Parse(PhotonNetwork.LocalPlayer.UserId))
             {
                 MyRankInOverallGames = i + 1;
                 MyPointsInOverallGames = sortedPlayerPoints[i].points;
@@ -225,11 +191,11 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         return playerRanks;
     }
 
-    private List<(string playerId, int points)> GetPlayerPoints()
+    private List<(int playerId, int points)> GetPlayerPoints()
     {
-        List<(string playerId, int points)> playerPoints = new List<(string playerId, int points)>();
+        List<(int playerId, int points)> playerPoints = new List<(int playerId, int points)>();
 
-        foreach (string pId in PlayerIDs)
+        foreach (int pId in PlayerIDs)
         {
             if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(pId + "_Points", out object userPoints))
             {
@@ -378,26 +344,11 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Start Race
     public IEnumerator SendingUsersIdsAtStartOfRace()
     {
-        //foreach (Player player in PhotonNetwork.PlayerList)
-        //{
-        //    PlayerIDs.Add(player.UserId);
-        //}
-
         // Create a form and add the user IDs
         WWWForm form = new WWWForm();
         for (int i = 0; i < PlayerIDs.Count; i++)
         {
-            // Assuming player.UserId is a string and we need to convert it to an int
-            if (int.TryParse(PlayerIDs[i], out int userId))
-            {
-              //  userIds.Add(userId);
-            }
-            else
-            {
-               // Debug.LogError("Failed to parse UserId: " + player.UserId);
-            }
-
-            form.AddField("user_ids", int.Parse(PlayerIDs[i]));
+            form.AddField("user_ids", PlayerIDs[i]);
         }
 
 
@@ -413,11 +364,141 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             else
             {
                 Debug.Log("Response: " + webRequest.downloadHandler.text);
+                JObject response = JObject.Parse(webRequest.downloadHandler.text);
+                RaceID = response["data"]["race_id"].ToObject<int>();
             }
         }
     }
     #endregion
 
+    #region Update Round Data
+
+    public IEnumerator UpdateRoundData()
+    {
+        Dictionary<int, int> points = new Dictionary<int, int>();
+
+        if (WinnerPlayerIds.Count > 0)
+        {
+            points.Add(WinnerPlayerIds[0], PointsRankData[0].points);
+        }
+        if (WinnerPlayerIds.Count > 1)
+        {
+            points.Add(WinnerPlayerIds[1], PointsRankData[1].points);
+        }
+        if (WinnerPlayerIds.Count > 2)
+        {
+            points.Add(WinnerPlayerIds[2], PointsRankData[2].points);
+        }
+
+
+        string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.UpdateRoundData_Penpenz, RaceID, XANAPartyManager.Instance.GameIndex,points);
+
+        var data = new
+        {
+            points = points
+        };
+        string jsonData = JsonUtility.ToJson(data);
+
+        UnityWebRequest request = new UnityWebRequest(url, "PUT");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
+        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
+
+        yield return request.SendWebRequest();
+
+        if(request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+        else
+        {
+            string response = request.downloadHandler.text;
+            Debug.Log("Response: " + response);
+        }
+    }
+    #endregion
+
+    #region Get Rank Points
+
+    public GetPointsRankData[] PointsRankData; 
+    IEnumerator GetPointsFromRank()
+    {
+        string url = $"{ConstantsGod.API_BASEURL_Penpenz}{ConstantsGod.GetRankPoints_Penpenz}?page={page}&limit={limit}";
+
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(url))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.ConnectionError || webRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"Error: {webRequest.error}, HTTP Status Code: {webRequest.responseCode}");
+                Debug.LogError("Response: " + webRequest.downloadHandler.text);
+            }
+            else
+            {
+                string response = webRequest.downloadHandler.text;
+                Debug.Log("Response: " + response);
+
+                GetPointsAPIResponse getPointsAPIResponse = JsonUtility.FromJson<GetPointsAPIResponse>(response);
+
+                if (getPointsAPIResponse.success)
+                {
+                    PointsRankData = getPointsAPIResponse.data.rows;
+                    //foreach (GetPointsRankData row in PointsRankData)
+                    //{
+                    //    if (row.rank == rank)
+                    //    {
+                    //        MyPointsInCurrentRace += row.points;
+                    //        StartCoroutine(UpdateUserPoints(MyPointsInCurrentRace));
+                    //        break;
+                    //    }
+                    //}
+                }
+                else
+                {
+                    Debug.LogError("Error: " + getPointsAPIResponse.msg);
+                }
+            }
+        }
+    }
+    #endregion
+
+
+    #region Get Round Data
+
+    [Serializable]
+    public class RoundData
+    {
+        public int rank;
+        public string name;
+        public int round_points;
+        public int user_id;
+        public int points;
+    }
+
+
+    public IEnumerator GetRoundData()
+    {
+        string requestUrl = string.Format(ConstantsGod.API_BASEURL_Penpenz + ConstantsGod.UpdateRoundData_Penpenz, RaceID, XANAPartyManager.Instance.GameIndex);
+
+        UnityWebRequest request = UnityWebRequest.Get(requestUrl);
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError("Error: " + request.error);
+        }
+        else
+        {
+            string response = request.downloadHandler.text;
+            RoundData data = JsonUtility.FromJson<RoundData>(response);
+            Debug.Log("Response: " + response + " data: "+ data);
+
+        }
+    }
+    #endregion
 }
 
 
