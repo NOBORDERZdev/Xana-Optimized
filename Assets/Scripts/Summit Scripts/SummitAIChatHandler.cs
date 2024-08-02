@@ -12,7 +12,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     public XanaChatSystem LandscapeChatRef;
     public XanaChatSystem PortraitChatRef;
-    private XanaChatSystem CommonChatRef;
+    private XanaChatSystem _CommonChatRef;
 
     [Header("This Class variables")]
     public XANASummitDataContainer XANASummitDataContainer;
@@ -24,7 +24,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        CommonChatRef = LandscapeChatRef;
+        _CommonChatRef = LandscapeChatRef;
         BuilderEventManager.AINPCActivated += LoadAIChat;
         BuilderEventManager.AINPCDeactivated += RemoveAIChat;
         BuilderEventManager.AfterPlayerInstantiated += LoadNPC;
@@ -43,9 +43,9 @@ public class SummitAIChatHandler : MonoBehaviour
     void UpdateChatInstance(bool IsPortrait)
     {
         if(IsPortrait)
-            CommonChatRef = PortraitChatRef;
+            _CommonChatRef = PortraitChatRef;
         else
-            CommonChatRef = PortraitChatRef;
+            _CommonChatRef = PortraitChatRef;
 
     }
 
@@ -106,59 +106,59 @@ public class SummitAIChatHandler : MonoBehaviour
         ClearOldMessages();
         OpenChatBox();
         foreach (string msg in welcomeMsgs)
-            CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
+            _CommonChatRef.DisplayMsg_FromSocket(npcName, msg);
     }
 
     void RemoveAIChat(int npcId)
     {
         ClearOldMessages();
         RemoveAIListenerFromChatField();
-        CommonChatRef.LoadOldChat();
+        _CommonChatRef.LoadOldChat();
     }
 
     void ClearOldMessages()
     {
-        CommonChatRef.CurrentChannelText.text = string.Empty;
-        CommonChatRef.PotriatCurrentChannelText.text = string.Empty;
+        _CommonChatRef.CurrentChannelText.text = string.Empty;
+        _CommonChatRef.PotriatCurrentChannelText.text = string.Empty;
     }
 
     void ClearInputField()
     {
-        CommonChatRef.InputFieldChat.text = "";
+        _CommonChatRef.InputFieldChat.text = "";
     }
 
     void OpenChatBox()
     {
-        CommonChatRef.chatDialogBox.SetActive(true);
-        CommonChatRef.chatNotificationIcon.SetActive(false);
-        CommonChatRef.chatButton.GetComponent<Image>().enabled = true;
+        _CommonChatRef.chatDialogBox.SetActive(true);
+        _CommonChatRef.chatNotificationIcon.SetActive(false);
+        _CommonChatRef.chatButton.GetComponent<Image>().enabled = true;
     }
 
     void CloseChatBox()
     {
-        CommonChatRef.chatDialogBox.SetActive(false);
-        CommonChatRef.chatNotificationIcon.SetActive(false);
-        CommonChatRef.chatButton.GetComponent<Image>().enabled = false;
+        _CommonChatRef.chatDialogBox.SetActive(false);
+        _CommonChatRef.chatNotificationIcon.SetActive(false);
+        _CommonChatRef.chatButton.GetComponent<Image>().enabled = false;
     }
 
 
     void AddAIListenerOnChatField()
     {
-        CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
-        CommonChatRef.InputFieldChat.onSubmit.AddListener(SendMessageFromAI);
+        _CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
+        _CommonChatRef.InputFieldChat.onSubmit.AddListener(SendMessageFromAI);
     }
 
     void RemoveAIListenerFromChatField()
     {
-        CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
-        CommonChatRef.InputFieldChat.onSubmit.AddListener(CommonChatRef.OnEnterSend);
+        _CommonChatRef.InputFieldChat.onSubmit.RemoveAllListeners();
+        _CommonChatRef.InputFieldChat.onSubmit.AddListener(_CommonChatRef.OnEnterSend);
     }
 
     async void SendMessageFromAI(string s)
     {
-        CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, CommonChatRef.InputFieldChat.text);
+        _CommonChatRef.DisplayMsg_FromSocket(ConstantsHolder.userName, _CommonChatRef.InputFieldChat.text);
 
-        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + CommonChatRef.InputFieldChat.text;
+        string url = npcURL + "&usr_id="+ConstantsHolder.userId + "&input_string=" + _CommonChatRef.InputFieldChat.text;
 
         ClearInputField();
 
@@ -170,7 +170,7 @@ public class SummitAIChatHandler : MonoBehaviour
 
         string res = JsonUtility.FromJson<AIResponse>(response).data;
 
-        CommonChatRef.DisplayMsg_FromSocket(npcName, res);
+        _CommonChatRef.DisplayMsg_FromSocket(npcName, res);
     }
 
     async Task<string> GetAIResponse(string url)

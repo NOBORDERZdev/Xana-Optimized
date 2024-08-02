@@ -112,21 +112,21 @@ public class WorldManager : MonoBehaviour
 
     void OpenLandingScene()
     {
-        int _worldId;
+        int WorldId;
         try
         {
             if (APIBasepointManager.instance.IsXanaLive)
-                _worldId = 6239;    //Mainnet
+                WorldId = 6239;    //Mainnet
             else
-                _worldId = 2455;
+                WorldId = 2455;
         }
         catch(Exception e)
         {
-            _worldId = 6239;
+            WorldId = 6239;
         }
         
 
-        string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + _worldId;
+        string url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldId;
         StartCoroutine(GetSingleWorldData(url, (check) =>
         {
             ConstantsHolder.userLimit = int.Parse(singleWorldInfo.data.user_limit);
