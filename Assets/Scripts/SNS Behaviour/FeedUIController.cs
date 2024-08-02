@@ -209,14 +209,14 @@ public class FeedUIController : MonoBehaviour
             HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
         }
         HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddToHeightPaddingForSearchUI();
-        //if (AddFriendSerachBar.activeInHierarchy)
-        //{
-        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=105;
-        //}
-        //else
-        //{
-        //AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
-        //}
+        if (AddFriendSerachBar.activeInHierarchy)
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
+        }
+        else
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
@@ -878,7 +878,7 @@ public class FeedUIController : MonoBehaviour
         profileFollowersPanel.SetActive(true);
         profileFollowingPanel.SetActive(false);
         profileFinfFriendScreen.SetActive(false);
-        SNS_APIManager.Instance.RequestGetAllFollowersFromProfile(SNS_APIManager.Instance.userId.ToString(), 1, 50);
+        SNS_APIManager.Instance.RequestGetAllFollowersFromProfile(SNS_APIManager.Instance.userId.ToString(), 1, MyProfileDataManager.Instance.myProfileData.followerCount);
         ProfileFollowerFollowingScreenSetup(0, "");
     }
     public void OnClickProfileFollowingButton()
