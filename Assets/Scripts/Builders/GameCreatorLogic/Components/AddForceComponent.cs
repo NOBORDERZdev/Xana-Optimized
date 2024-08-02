@@ -93,7 +93,8 @@ public class AddForceComponent : ItemComponent
         _rigidBody.isKinematic = true;
         if (_rigidBodyPlayer)
             _rigidBodyPlayer.isKinematic = true;
-        _characterControllerNew.enabled = true;
+        if (_characterControllerNew)
+            _characterControllerNew.enabled = true;
         //RemoveRigidBody();
     }
 

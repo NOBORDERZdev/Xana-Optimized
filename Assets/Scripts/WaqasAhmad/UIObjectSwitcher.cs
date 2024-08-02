@@ -24,9 +24,9 @@ public class UIObjectSwitcher : MonoBehaviour
     }
 
 
-    void OrientationChanged()
+    void OrientationChanged(bool IsPortrait)
     {
-        if (ScreenOrientationManager._instance.isPotrait)
+        if (IsPortrait)
         {
             foreach (GameObject landscapeAction in landscapeUIObjs)
                 landscapeAction.SetActive(false);

@@ -499,11 +499,11 @@ public class BuilderAssetDownloader : MonoBehaviour
     }
 
 
-    void OnOrientationChange()
+    void OnOrientationChange(bool IsPortrait)
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ScreenOrientationManager._instance.isPotrait)
+            if (IsPortrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
