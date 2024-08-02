@@ -14,13 +14,16 @@ using UnityEngine;
 public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 {
     [SerializeField]
-    private PhotonView view;
+    public PhotonView view;
     private PhotonVoiceNetwork voiceNetwork;
 
 
     public CharacterController charcontroller;
     public ArrowManager arrowManager;
     public PhotonTransformView Transformview;
+    public PhotonAnimatorView AnimatorView;
+    public PhotonVoiceView VoiceView;
+
 
     private Transform Parent;
     private bool isdriver;
