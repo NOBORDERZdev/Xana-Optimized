@@ -195,7 +195,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
             XanaAvatarIcon.gameObject.SetActive(true);
             AvatarIcon.gameObject.SetActive(false);
         }
-        else
+        else if (!string.IsNullOrEmpty(userAvatarURL))
         {
             //NoAvatarIcon.gameObject.SetActive(false);
             XanaAvatarIcon.gameObject.SetActive(false);
