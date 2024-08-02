@@ -63,7 +63,7 @@ public class AskForJoining : MonoBehaviour
     {
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
-           // LoadMain();
+            // LoadMain();
             GameplayEntityLoader.instance._uiReferences.LoadMain(true);
             TurnCameras(true);
             try
@@ -105,7 +105,7 @@ public class AskForJoining : MonoBehaviour
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
             MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
             AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
-            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
+            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
             Destroy(this.gameObject);
 
