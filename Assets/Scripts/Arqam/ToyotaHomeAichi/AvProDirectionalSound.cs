@@ -175,9 +175,9 @@ public class AvProDirectionalSound : MonoBehaviour
             maxDistance = defaultMaxDis;
     }
 
-    private void ChangeOrientation(bool _isPortrait)
+    private void ChangeOrientation(bool IsPortrait)
     {
-        if (_isPortrait)
+        if (IsPortrait)
         {
             sliderValue = SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.value;
             AddTriggerOnSlider(SoundSettings.soundManagerSettings.totalVolumeSliderPotrait);

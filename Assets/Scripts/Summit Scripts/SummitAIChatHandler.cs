@@ -40,9 +40,9 @@ public class SummitAIChatHandler : MonoBehaviour
         ScreenOrientationManager.switchOrientation -= UpdateChatInstance;
     }
 
-    void UpdateChatInstance(bool _isPortrait)
+    void UpdateChatInstance(bool IsPortrait)
     {
-        if(_isPortrait)
+        if(IsPortrait)
             CommonChatRef = PortraitChatRef;
         else
             CommonChatRef = PortraitChatRef;

@@ -104,7 +104,7 @@ public class THA_AI_Conversation : MonoBehaviour
         request.Dispose();
     }
 
-    private void CheckOrientation(bool _isPortrait)
+    private void CheckOrientation(bool IsPortrait)
     {
         StartCoroutine(RemoveListnerFromChat());
     }

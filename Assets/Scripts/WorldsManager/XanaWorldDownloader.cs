@@ -663,11 +663,11 @@ public class XanaWorldDownloader : MonoBehaviour
     //}
 
 
-    void OnOrientationChange(bool _isPortrait)
+    void OnOrientationChange(bool IsPortrait)
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (_isPortrait)
+            if (IsPortrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
