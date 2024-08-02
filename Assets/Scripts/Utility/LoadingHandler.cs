@@ -274,15 +274,13 @@ public class LoadingHandler : MonoBehaviour
 
     public void HideLoading()
     {
-        //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + "  isFromXanaLobby: " +  ConstantsHolder.xanaConstants.isFromXanaLobby +  " ~~~~~~~  Deactivated Loading ~~~~~~~ ");
-
-        if (isFirstTime || teleportFeader.gameObject.activeInHierarchy) //ConstantsHolder.xanaConstants.JjWorldSceneChange
+        if (isFirstTime || teleportFeader.gameObject.activeInHierarchy)
         {
             isFirstTime = false;
-            ConstantsHolder.xanaConstants.isBackFromWorld = false;    
+            ConstantsHolder.xanaConstants.isBackFromWorld = false;
             return;
         }
-        
+
         if (!loadingPanel.activeInHierarchy)
             return;
 
@@ -290,69 +288,48 @@ public class LoadingHandler : MonoBehaviour
         {
             Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
             blackScreen.DOKill();
-            blackScreen.DOFade(1, 0.2f).OnComplete(delegate
+            blackScreen.DOFade(1f, 0.01f).OnComplete(() =>
             {
                 if (ConstantsHolder.xanaConstants.isBackFromWorld)
-                {
-                    //Debug.LogError(" ~~~~~~~  BackFromWOrld: Portrait  ~~~~~~~ ");
-                    //Debug.LogError("8 ~~~~~~~~~~~~~~~~ Portrait");
                     Screen.orientation = ScreenOrientation.Portrait;
-                }
-                else
-                {
-                    //Debug.LogError(" ~~~~~~~  Simple: LandscapeLeft  ~~~~~~~ ");
-                    //Debug.LogError("9 ~~~~~~~~~~~~~~~~ LandscapeLeft");
-                    //Screen.orientation = ScreenOrientation.LandscapeLeft;
-                }
 
                 ConstantsHolder.xanaConstants.isBackFromWorld = false;
-
-
-                //if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait && !ConstantsHolder.xanaConstants.JjWorldSceneChange)
-                //{
-                //    // Debug.LogError("~~~~~ Waqas_ LoadingHandler ~~~~~~~~~~~");
-                //    Screen.orientation = ScreenOrientation.Portrait;
-                //}
-                //else
-                //{
-                //    Screen.orientation = oriantation;
-                //}
-                //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ ");
+                CustomHideLoading();
             });
         }
+        else
+        {
+            CustomHideLoading();
+        }
 
-        //StartCoroutine(CustomHideLoading());
-        CustomHideLoading();
+
     }
+
     void CustomHideLoading()
     {
-        //if (needWait)
-        //{
-        //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
-        //}
         StartCoroutine(ApplyDelay());
 
         if (ReferencesForGamePlay.instance != null)
             ReferencesForGamePlay.instance.workingCanvas.SetActive(true);
-        //loadingPanel.SetActive(false);
 
-        if (gameplayLoadingUIRefreshCo != null)//rik stop refreshing screen coroutine.......
-        {
+        if (gameplayLoadingUIRefreshCo != null)
             StopCoroutine(gameplayLoadingUIRefreshCo);
-        }
     }
 
     private IEnumerator ApplyDelay()
     {
         if (ConstantsHolder.xanaConstants.isBackFromWorld)
         {
+            yield return null; // Wait for one frame (to ensure synchronization)
             HideLoadingManually();
         }
         else
         {
-            yield return new WaitForSeconds(2f);
-            GameplayEntityLoader.instance.SetPlayerPos();
+            yield return new WaitForSeconds(1.7f);
+            if (GameplayEntityLoader.instance)
+            {
+                GameplayEntityLoader.instance.SetPlayerPos();
+            }
             HideLoadingManually();
         }
     }
@@ -362,7 +339,7 @@ public class LoadingHandler : MonoBehaviour
         LoadingHandler.Instance.UpdateLoadingStatusText("");
         loadingPanel.SetActive(false);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
+        blackScreen.DOFade(0, 0.1f).SetDelay(0.5f);
     }
 
 
