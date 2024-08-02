@@ -240,16 +240,17 @@ public class ReferencesForGamePlay : MonoBehaviour
         foreach (GameObject go in hiddenBtnObjects)
         {
             //go.SetActive(true);
-            if (go.name.Contains("map"))
-            {
-                if (!ConstantsHolder.xanaConstants.IsMuseum && ConstantsHolder.xanaConstants.minimap != 0)
-                    go.SetActive(true);
-            }
-            else
+            //if (go.name.Contains("map"))
+            //{
+            //    if (!ConstantsHolder.xanaConstants.IsMuseum)// && ConstantsHolder.xanaConstants.minimap != 0)
+            //        go.SetActive(true); 
+            //}
+            //else
             {
                 if (!go.GetComponent<CanvasGroup>())
                 {
                     go.AddComponent<CanvasGroup>();
+                    
                 }
                 go.GetComponent<CanvasGroup>().alpha = 1;
             }
@@ -258,9 +259,12 @@ public class ReferencesForGamePlay : MonoBehaviour
         //To enable disable Buttons
         foreach (GameObject go in disableBtnObjects)
         {
-
-            go.SetActive(true);
-
+            if (go.name.Contains("_Summit") && !ConstantsHolder.xanaConstants.EnviornmentName.Equals("XANA Summit"))
+            {
+                go.SetActive(false);
+            }
+            else if (!ConstantsHolder.xanaConstants.IsMuseum && !go.name.Contains("map"))
+                go.SetActive(true);
         }
 
     }
