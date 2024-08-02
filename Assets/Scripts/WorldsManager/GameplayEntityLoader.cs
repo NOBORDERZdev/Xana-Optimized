@@ -200,7 +200,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
 
         PlayerCamera.gameObject.SetActive(true);
-        environmentCameraRender.gameObject.SetActive(true);
+      //  environmentCameraRender.gameObject.SetActive(true);
         PlayerSelfieController.Instance.DisableSelfieFromStart();
     }
 
@@ -503,7 +503,9 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         // Firebase Event for Join World
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
         UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(true, false, false, false);
-        yield return null;
+        yield return new WaitForSeconds(2f);
+        FirstpersonControllerSetup.instance.DisablePlayerOnFPS();
+        
         /// <summary>
         /// Load NPC fake chat system
         /// </summary>
@@ -571,7 +573,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             XanaWorldController.SetActive(false);
             XanaPartyController.SetActive(true);
             player = PhotonNetwork.Instantiate("XanaPenguin", spawnPoint, Quaternion.identity, 0);
-            SetPosition.instance.transform.position = spawnPoint;
+           // SetPosition.instance.transform.position = spawnPoint;
             PenguinPlayer = player;
             mainController = player;
             if (player != null)
@@ -581,12 +583,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             return;
         }
         XanaPartyController.SetActive(false);
-        XanaWorldController.SetActive(false);
+        XanaWorldController.SetActive(true);
         mainController = mainControllerRefHolder;
         if (SaveCharacterProperties.instance?.SaveItemList.gender == AvatarGender.Male.ToString())
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Male", spawnPoint, Quaternion.identity, 0);    // Instantiate Male Avatar
-            SetPosition.instance.transform.position = spawnPoint;
+          //  SetPosition.instance.transform.position = spawnPoint;
             player.transform.parent = mainController.transform;
             player.transform.localPosition = Vector3.zero;
             player.transform.localRotation = Quaternion.identity;
@@ -595,14 +597,14 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         else
         {
             player = PhotonNetwork.Instantiate("XanaAvatar2.0_Female", spawnPoint, Quaternion.identity, 0);  // Instantiate Female Avatar
-            SetPosition.instance.transform.position = spawnPoint;
+          //  SetPosition.instance.transform.position = spawnPoint;
             player.transform.parent = mainController.transform;
             player.transform.localPosition = Vector3.zero;
             player.transform.localRotation = Quaternion.identity;
             player.GetComponent<AvatarController>().SetAvatarClothDefault(player.gameObject, "Female");      // Set Default Cloth to avoid naked avatar
         }
     }
-
+   
     void ActivateNpcChat()
     {
         GameObject npcChatSystem = Resources.Load("NpcChatSystem") as GameObject;

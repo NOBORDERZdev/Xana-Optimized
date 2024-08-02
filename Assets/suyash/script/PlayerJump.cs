@@ -9,10 +9,11 @@ public class PlayerJump : MonoBehaviour
     [SerializeField] private float jumpHeight = 2.0f;
     [SerializeField] private float gravityValue = -9.81f;
 
+    [SerializeField]
     private CharacterController _characterController;
     private Vector3 _playerVelocity;
 
-    private void Awake() => _characterController = GetComponent<CharacterController>();
+    //private void Awake() => _characterController = GetComponent<CharacterController>();
 
     private void OnEnable() => jumpButton.action.performed += Jumping;
 

@@ -364,7 +364,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnCreatedRoom()
         {
             print("OnCreatedRoom called");
-            OpenCanvasOnInput.instance.player.GetComponent<CharacterController>().enabled = true;
+          //  OpenCanvasOnInput.instance.player.GetComponent<CharacterController>().enabled = true;
         }
 
         public override void OnJoinedRoom()

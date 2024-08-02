@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        isFirstPerson = true;
+        SwitchCameraButton();
         originalSprintSpeed = sprintSpeed;
         originalJumpSpeed = JumpVelocity;
 
@@ -155,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
         if (GamePlayButtonEvents.inst != null)
         {
-            GamePlayButtonEvents.inst.OnSwitchCamera += SwitchCameraButton;
+          //  GamePlayButtonEvents.inst.OnSwitchCamera += SwitchCameraButton;
             GamePlayButtonEvents.inst.OnJumpBtnDownEvnt += JumpAllowed;
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt += JumpNotAllowed;
         }
@@ -186,7 +188,7 @@ public class PlayerController : MonoBehaviour
     {
         if (GamePlayButtonEvents.inst != null)
         {
-            GamePlayButtonEvents.inst.OnSwitchCamera -= SwitchCameraButton;
+          //  GamePlayButtonEvents.inst.OnSwitchCamera -= SwitchCameraButton;
             GamePlayButtonEvents.inst.OnJumpBtnDownEvnt -= JumpAllowed;
             GamePlayButtonEvents.inst.OnJumpBtnUpEvnt -= JumpNotAllowed;
         }
@@ -1286,7 +1288,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                SwitchCameraButton();
+             //   SwitchCameraButton();
             }
         }
     }

@@ -78,7 +78,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = ConstantsHolder.userName;
         }
        
-        arrow = Resources.Load<GameObject>("Arrow");
+       // arrow = Resources.Load<GameObject>("Arrow");
         clientMat = Resources.Load<Material>("Material #27");
         playerMat = Resources.Load<Material>("Material #25");
         if (this.GetComponent<PhotonView>().IsMine)
@@ -382,8 +382,8 @@ public class ArrowManager : MonoBehaviourPunCallbacks
     public void InstantiateArrow(Transform parent, bool isOtherPlayer)
     {
 
-        GameObject go = Instantiate(arrow, parent);
-        go.layer = 17;
+       // GameObject go = Instantiate(arrow, parent);
+       // go.layer = 17;
         if (isOtherPlayer)
         {
             PhotonUserName.text = gameObject.GetComponent<PhotonView>().Owner.NickName;
@@ -395,9 +395,9 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             }
 
 
-            go.transform.localPosition = new Vector3(-0.27f, 0.37f, -10.03f);
-            go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-            go.transform.localScale = new Vector3(2.35f, 2f, 1);
+         //   go.transform.localPosition = new Vector3(-0.27f, 0.37f, -10.03f);
+         //   go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+         //   go.transform.localScale = new Vector3(2.35f, 2f, 1);
 
             //go.AddComponent<ChangeGear>();
             // go.AddComponent<Equipment>();
@@ -407,18 +407,18 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         {
             if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
             {
-                go.transform.localPosition = new Vector3(-1.6f, -1.46f, -50f);
-                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-                go.transform.localScale = new Vector3(10.0f, 10f, 1);
+              //  go.transform.localPosition = new Vector3(-1.6f, -1.46f, -50f);
+             //   go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+             //   go.transform.localScale = new Vector3(10.0f, 10f, 1);
             }
             else
             {
                 // Old Default Position = Vector3(-0.74f, 0.1f, -26f);
                 // Old Default Scale = Vector3(6.0f, 5.25f, 1);
 
-                go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f);
-                go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
-                go.transform.localScale = new Vector3(4.0f, 3.8f, 1); 
+             //   go.transform.localPosition = new Vector3(-.98f, 0.43f, -18.73f);
+             //   go.transform.localEulerAngles = new Vector3(-85, -113.1f, -65);
+             //   go.transform.localScale = new Vector3(4.0f, 3.8f, 1); 
             }
             
 
@@ -440,7 +440,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
 
         if (isOtherPlayer)
         {
-            go.GetComponent<MeshRenderer>().material = clientMat;
+          //  go.GetComponent<MeshRenderer>().material = clientMat;
 
             //go.AddComponent<ChangeGear>();
             // go.AddComponent<Equipment>();
@@ -448,19 +448,19 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            go.GetComponent<MeshRenderer>().material = playerMat;
+          //  go.GetComponent<MeshRenderer>().material = playerMat;
         }
 
         if (isBear)
         {
-            go.SetActive(false);
+          //  go.SetActive(false);
         }
 
         //LoadingManager.Instance.HideLoading();
         //LoadingHandler.Instance.HideLoading();
 
         if (ConstantsHolder.xanaConstants.IsMuseum && WorldItemView.m_EnvName.Contains("J & J WORLD_5"))
-            go.SetActive(false);
+         //   go.SetActive(false);
         if (SoundController.Instance)
         {
 
