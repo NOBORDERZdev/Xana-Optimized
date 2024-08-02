@@ -325,7 +325,7 @@ public class LoadingHandler : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(1.7f);
+            yield return new WaitForSeconds(1.5f);
             if (GameplayEntityLoader.instance)
             {
                 GameplayEntityLoader.instance.SetPlayerPos();
