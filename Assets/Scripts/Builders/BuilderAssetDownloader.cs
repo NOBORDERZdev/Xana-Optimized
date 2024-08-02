@@ -91,7 +91,7 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("GamePlayScene", LoadSceneMode.Additive);
     }
 
     public static void ArrangeData()

@@ -205,11 +205,11 @@ public class BuilderMapDownload : MonoBehaviour
             ConstantsHolder.xanaConstants.isXanaPartyWorld = true;
         }
 
-        if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
-        {
-            yield return StartCoroutine(DownloadAddressableGamificationObject());
-            yield return StartCoroutine(GemificationObjectLoadWait(1f));
-        }
+        //if (GamificationComponentData.instance.withMultiplayer && levelData.otherItems.Count > 0)
+        //{
+        //    yield return StartCoroutine(DownloadAddressableGamificationObject());
+        //    yield return StartCoroutine(GemificationObjectLoadWait(1f));
+        //}
         //Debug.LogError("Map is downloaed");
         if (BuilderAssetDownloader.isPostLoading)
         {
@@ -244,6 +244,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     public IEnumerator DownloadAddressableGamificationObject()
     {
+        
         GamificationComponentData.instance.multiplayerComponentsObject.Clear();
         if (Application.internetReachability != NetworkReachability.NotReachable)
         {
@@ -686,11 +687,11 @@ public class BuilderMapDownload : MonoBehaviour
     {
         if (levelData.otherItems.Count > 0)
         {
-            if (!GamificationComponentData.instance.withMultiplayer)
-            {
-                yield return StartCoroutine(DownloadAddressableGamificationObject());
-                yield return StartCoroutine(GemificationObjectLoadWait(1f));
-            }
+            //if (!GamificationComponentData.instance.withMultiplayer)
+            //{
+            //    yield return StartCoroutine(DownloadAddressableGamificationObject());
+            //    yield return StartCoroutine(GemificationObjectLoadWait(1f));
+            //}
 
 
             while(GamificationComponentData.instance.MultiplayerComponentstoSet.Count!= GamificationComponentData.instance.MultiplayerComponentData.Count)
@@ -888,7 +889,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("GamePlayScene", LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
