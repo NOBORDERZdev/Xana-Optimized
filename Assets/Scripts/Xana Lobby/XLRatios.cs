@@ -34,7 +34,17 @@ public class XLRatios : MonoBehaviour
             GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         }
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---Nft Close due to Application minimized");
+            CloseInfoPop();
+        }
+       
+    }
 }
+
 [Serializable]
 public class XLRatioReferences
 {
