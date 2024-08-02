@@ -878,7 +878,7 @@ public class FeedUIController : MonoBehaviour
         profileFollowersPanel.SetActive(true);
         profileFollowingPanel.SetActive(false);
         profileFinfFriendScreen.SetActive(false);
-        SNS_APIManager.Instance.RequestGetAllFollowersFromProfile(SNS_APIManager.Instance.userId.ToString(), 1, MyProfileDataManager.Instance.myProfileData.followerCount);
+        SNS_APIManager.Instance.RequestGetAllFollowersFromProfile(SNS_APIManager.Instance.userId.ToString(), 1, 50);
         ProfileFollowerFollowingScreenSetup(0, "");
     }
     public void OnClickProfileFollowingButton()
