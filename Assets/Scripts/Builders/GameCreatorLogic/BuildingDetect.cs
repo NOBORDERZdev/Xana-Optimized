@@ -437,7 +437,7 @@ public class BuildingDetect : MonoBehaviour
     {
         print("Calling Routine" + _timer);
         yield return new WaitForSeconds(0.2f);
-        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight / 4, powerProviderSpeed / 6);
+        BuilderEventManager.SpecialItemPlayerPropertiesUpdate?.Invoke(powerProviderHeight, powerProviderSpeed);
         //_specialEffects.gameObject.SetActive(true);
         ApplySuperMarioEffect(true);
         powerUpCurTime = 0;
@@ -554,7 +554,7 @@ public class BuildingDetect : MonoBehaviour
 
     public void CameraEffect()
     {
-        StopSpecialItemComponent();
+        //StopSpecialItemComponent();
         volume = GamificationComponentData.instance.postProcessVol;
         RuntimeAnimatorController cameraEffect = GamificationComponentData.instance.cameraBlurEffect;
         cameraAnimator = GamificationComponentData.instance.playerControllerNew.ActiveCamera.GetComponent<Animator>();

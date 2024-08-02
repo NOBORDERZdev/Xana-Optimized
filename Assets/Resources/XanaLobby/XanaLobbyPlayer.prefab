@@ -68,6 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
   mediaPlayer: {fileID: 3433836251880016732}
   videoPlayer: {fileID: 616186312976060809}
   liveVideoPlay:
@@ -86,10 +89,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa8746eae9dc4748adb2d40834068a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _apiResponse:
+    videoData:
+      id: 0
+      areaId: 0
+      areaName: 
+      index: 0
+      url: 
+      type: 
+      isYoutube: 0
   Data:
     URL: 
     IsLive: 0
     isPlaying: 0
+  OldAWSURL: xyz
+  summitAreaID: 0
+  SummitVideoIndex: 0
+  VideoPlayerRef: {fileID: 0}
 --- !u!1 &3476779859716909978
 GameObject:
   m_ObjectHideFlags: 0
@@ -1265,7 +1281,7 @@ VideoPlayer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5644839793877288697}
-  m_Enabled: 1
+  m_Enabled: 0
   m_VideoClip: {fileID: 0}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
