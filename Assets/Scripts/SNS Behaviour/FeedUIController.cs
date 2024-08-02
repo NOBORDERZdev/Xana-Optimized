@@ -209,14 +209,14 @@ public class FeedUIController : MonoBehaviour
             HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddPading = false;
         }
         HotFriendPanel.GetComponentInParent<FollowParentHeight>().AddToHeightPaddingForSearchUI();
-        //if (AddFriendSerachBar.activeInHierarchy)
-        //{
-        //    AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top=105;
-        //}
-        //else
-        //{
-        //AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
-        //}
+        if (AddFriendSerachBar.activeInHierarchy)
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 105;
+        }
+        else
+        {
+            AddFreindContainer.GetComponent<VerticalLayoutGroup>().padding.top = 50;
+        }
         FeedUIController.Instance.findFriendInputFieldAdvanced.Text = "";
         FeedUIController.Instance.findFriendScreen.gameObject.SetActive(false);
     }
