@@ -928,11 +928,6 @@ public class UserLoginSignupManager : MonoBehaviour
 
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
-            if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
-            {
-                DownloadPermissionPopup.SetActive(true);
-            }
-
             PlayerPrefs.SetInt("IsLoggedIn", 1);
             PlayerPrefs.SetString("PlayerName", userUsername);
             ConstantsHolder.userName = userUsername;
@@ -940,7 +935,17 @@ public class UserLoginSignupManager : MonoBehaviour
             OpenUIPanel(16);
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             
+            if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+            {
+                DownloadPermissionPopup.SetActive(true);
+            }
+            else
+            {
+                LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
+                XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+            }
             return;
+
         }
 
         if (ConstantsHolder.isWalletLogin)

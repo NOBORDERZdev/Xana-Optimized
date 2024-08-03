@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
 
 /// <summary>
 /// Scene Manager class
@@ -100,6 +101,11 @@ public class SceneChanger : EditorWindow
             DeletePersistentPath();
         }
 
+        if (GUILayout.Button("Clean Addressable Cache"))
+        {
+            CleanAddressableCache();
+        }
+
     }
 
     /// <summary>
@@ -113,5 +119,9 @@ public class SceneChanger : EditorWindow
     void DeletePersistentPath()
     {
         Application.OpenURL(Application.persistentDataPath);
+    }
+
+    void CleanAddressableCache() {
+        Addressables.CleanBundleCache();
     }
 }

@@ -24,18 +24,21 @@ public class AssetDownloader : MonoBehaviour
     GameObject LoadingPopup;
     bool isLoading = false;
 
-    void Start(){ 
+    void Start(){
+        LoadingScreen.SetActive(false);
+        Splash.SetActive(true);
+        LoadingPopup.SetActive(false);
         StartCoroutine(DownloadAssets());
     }
 
     IEnumerator DownloadAssets()
     {
         AsyncOperationHandle<long> downloadSize = Addressables.GetDownloadSizeAsync(labelReference);
-        Debug.Log("Download Size : " + downloadSize.Result);
         while (!downloadSize.IsDone)
         {
             yield return null;
         }
+        Debug.Log("Download Size : " + downloadSize.Result);
 
         if (downloadSize.IsDone)
         {
@@ -46,6 +49,9 @@ public class AssetDownloader : MonoBehaviour
                 {
                     LoadingPopup.SetActive(true);
                 }
+                LoadingScreen.SetActive(true);
+                Splash.SetActive(false);
+                //LoadingPopup.SetActive(false);
             }
             else
             {
@@ -86,6 +92,7 @@ public class AssetDownloader : MonoBehaviour
             }
         }
         PlayerPrefs.SetString("DownloadPermission", "true");
+        PlayerPrefs.Save();
         Invoke(nameof(MoveToScene),0.5f);
     }
 
