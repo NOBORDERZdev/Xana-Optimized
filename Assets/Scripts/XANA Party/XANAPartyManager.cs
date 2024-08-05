@@ -35,13 +35,7 @@ public class XANAPartyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    private void Update()
-    {
-        Debug.Log("User> AUTH_TOKEN : " + ConstantsGod.AUTH_TOKEN);
-        Debug.Log("User> Id : " + ConstantsHolder.userId);
-        Debug.Log("User> Name : " + ConstantsHolder.userName+"    "+ PlayerPrefs.GetString("PlayerName","dummy"));
-    }
+  
     private void Start()
     {
         

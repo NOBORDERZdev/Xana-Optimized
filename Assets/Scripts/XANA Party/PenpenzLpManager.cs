@@ -146,7 +146,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             }
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         StartCoroutine(GetRoundData());
         //var playerRanks = GetPlayerRanks();
@@ -187,7 +187,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         //}
         GamePlayUIHandler.inst.LeaderboardPanel.SetActive(true);
 
-
+        ResetGame();
         if (XANAPartyManager.Instance.GameIndex >= XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count)
         {
             if (PhotonNetwork.IsMasterClient)

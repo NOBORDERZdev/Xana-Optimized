@@ -481,8 +481,11 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             {
                 StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
             }
-            //this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
-            //isRaceStarted = true;
+            else
+            {
+                this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All, XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID);
+                isRaceStarted = true;
+            }
         }
     }
     [PunRPC]
@@ -528,7 +531,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public IEnumerator MovePlayersToNextGame()
     {
         yield return new WaitForSeconds(10f);
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ResetGame();
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
         xanaPartyMulitplayer.ResetValuesOnCompleteRace();
         XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
