@@ -33,7 +33,7 @@ public class JjVideo : MonoBehaviour
     {
         if (isLiveVideo && liveVideoPlayer != null)
         {
-            liveVideoPlayer.SetActive(true);
+            liveVideoPlayer?.SetActive(true);
             preRecordedPlayer?.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>()._livestreamUrl = videoLink;
             liveVideoPlayer.GetComponent<YoutubePlayerLivestream>().GetLivestreamUrl(videoLink);
@@ -43,7 +43,7 @@ public class JjVideo : MonoBehaviour
         else if (isPrerecoreded && preRecordedPlayer != null)
         {
             liveVideoPlayer?.SetActive(false);
-            preRecordedPlayer.SetActive(true);
+            preRecordedPlayer?.SetActive(true);
             awsVideoplayer.gameObject.SetActive(false);
             liveVideoPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
             liveVideoPlayer.GetComponent<YoutubeSimplified>().Play();
