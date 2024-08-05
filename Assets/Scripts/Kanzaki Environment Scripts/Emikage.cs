@@ -46,7 +46,11 @@ public class Emikage : MonoBehaviour
         boards = new List<EmikageBoardContent>(GridContent.transform.childCount);
         Includeds = new List<Included>();
         createPost.onClick.AddListener(onCreatePost);
-        closePost.onClick.AddListener(() => { gameObject.SetActive(false); });
+        closePost.onClick.AddListener(() => { 
+            gameObject.SetActive(false);
+            PlayerController.PlayerIsIdle?.Invoke();
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+        });
         writeBoard.transform.GetChild((int)WriteBoardChild.CloseBtn).GetComponent<Button>().onClick.AddListener(closeBtnClick);
         writeBoard.transform.GetChild((int)WriteBoardChild.PostBtn).GetComponent<Button>().onClick.AddListener(onPostOnBoard);
         writeBoard.transform.GetChild((int)WriteBoardChild.CancelBtn).GetComponent<Button>().onClick.AddListener(cancelPost);
@@ -75,7 +79,7 @@ public class Emikage : MonoBehaviour
         }
         StartCoroutine(GetRequst());
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
     }
 

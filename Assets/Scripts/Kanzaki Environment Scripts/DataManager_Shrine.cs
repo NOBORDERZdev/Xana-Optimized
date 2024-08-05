@@ -29,7 +29,7 @@ public class DataManager_Shrine : MonoBehaviour
         if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
             id = ConstantsHolder.userId;
-            userName = ConstantsHolder.userId;
+            userName = ConstantsHolder.userName;
             StartCoroutine(InitPlayerDB(id, userName));
         }
         else if (ConstantsHolder.userId != null && ConstantsHolder.uniqueUserName != null)

@@ -342,16 +342,18 @@ public class UIController_Shine : MonoBehaviour
                     break;
                 case PointerUIChild.Emikage1:
                     gamespaceIdx = (int)GameSpaceUIChild.Emikage;
+                    PlayerController.PlayerIsWalking?.Invoke();
+                    ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
                     break;
                 default:
                     break;
             }
             if (gamespaceIdx != -1)
                 gameSpaceUI.transform.GetChild(gamespaceIdx).gameObject.SetActive(true);
-            if (gamespaceIdx == 3)
-            {
-                StartCoroutine(ScrollSizeControl());
-            }
+            //if (gamespaceIdx == 3)
+            //{
+            //    StartCoroutine(ScrollSizeControl());
+            //}
         }
         button.gameObject.SetActive(false);
     }
