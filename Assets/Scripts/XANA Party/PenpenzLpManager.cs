@@ -417,6 +417,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 Debug.Log("Response: " + webRequest.downloadHandler.text);
                 JObject response = JObject.Parse(webRequest.downloadHandler.text);
                 RaceID = response["data"]["race_id"].ToObject<int>();
+                GamificationComponentData.instance.GetComponent<PhotonView>().RPC("StartGameRPC", RpcTarget.All, RaceID);
+                GamificationComponentData.instance.isRaceStarted = true;
             }
         }
     }

@@ -481,13 +481,14 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             {
                 StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
             }
-            this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
-            isRaceStarted = true;
+            //this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
+            //isRaceStarted = true;
         }
     }
     [PunRPC]
-    void StartGameRPC()
+    void StartGameRPC(int raceId)
     {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceID = raceId;
        // print(" RPC call");
         new Delayed.Action(() => { BuilderEventManager.XANAPartyRaceStart?.Invoke(); }, 1f);
     }
