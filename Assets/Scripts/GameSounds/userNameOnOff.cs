@@ -6,36 +6,36 @@ public class userNameOnOff : MonoBehaviour
 {
     public GameObject otherButton;
 
-    //private void OnEnable()
-    //{
-        //    if (ConstantsHolder.xanaConstants.userName == 1)
-        //    {
-        //        if (this.gameObject.name == "OffButtonName")
-        //        {
-        //            otherButton.SetActive(true);
-        //            this.gameObject.SetActive(false);
-        //        }
-        //        else if (this.gameObject.name == "OnButtonName")
-        //        {
-        //            this.gameObject.SetActive(true);
-        //            otherButton.SetActive(false);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (this.gameObject.name == "OffButtonName")
-        //        {
-        //            this.gameObject.SetActive(true);
-        //            otherButton.SetActive(false);
-        //        }
-        //        else if (this.gameObject.name == "OnButtonName")
-        //        {
-        //            otherButton.SetActive(true);
-        //            this.gameObject.SetActive(false);
-        //        }
-        //    }
+    private void OnEnable()
+    {
+        if (ConstantsHolder.xanaConstants.userNameVisibilty == 1)
+        {
+            if (this.gameObject.name == "OffButtonName")
+            {
+                otherButton.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
+            else if (this.gameObject.name == "OnButtonName")
+            {
+                this.gameObject.SetActive(true);
+                otherButton.SetActive(false);
+            }
+        }
+        else
+        {
+            if (this.gameObject.name == "OffButtonName")
+            {
+                this.gameObject.SetActive(true);
+                otherButton.SetActive(false);
+            }
+            else if (this.gameObject.name == "OnButtonName")
+            {
+                otherButton.SetActive(true);
+                this.gameObject.SetActive(false);
+            }
+        }
         //XanaVoiceChat.instance.UpdateMicButton();
-    //}
+    }
 
     public void ClickUserName()
     {
