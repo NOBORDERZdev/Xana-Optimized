@@ -291,8 +291,6 @@ public class ConstantsGod
     public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  
     public static string CreateUser_Penpenz = "/users";
     public static string GetRankPoints_Penpenz = "/rankpoints";
-    public static string UpdateUserPoints_Penpenz = "/users";
-
     public static string StartRace_Penpenz = "/races/start";
     #endregion
 }
