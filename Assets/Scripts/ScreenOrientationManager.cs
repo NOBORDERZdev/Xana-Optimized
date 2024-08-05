@@ -147,7 +147,7 @@ public class ScreenOrientationManager : MonoBehaviour
             //Set Chat button and panel state
             StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
                 landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
-                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].transform.parent.parent.parent.GetComponent<XanaChatSystem>().OpenCloseChatDialog(
+                ReferencesForGamePlay.instance.ChatSystemRef.OpenCloseChatDialog(
                     landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
         }
         else
@@ -159,7 +159,7 @@ public class ScreenOrientationManager : MonoBehaviour
             //Set Chat button and panel state
             StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
             potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
-            landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].transform.parent.parent.parent.GetComponent<XanaChatSystem>().OpenCloseChatDialog(
+            ReferencesForGamePlay.instance.ChatSystemRef.OpenCloseChatDialog(
                                 potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
         }
     }
