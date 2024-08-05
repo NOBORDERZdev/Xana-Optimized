@@ -1570,11 +1570,13 @@ public class InventoryManager : MonoBehaviour
     {
         //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         ConstantsHolder.xanaConstants.isStoreActive = false;
+        ConstantsHolder.xanaConstants._lastClickedBtn = null;
         PresetData_Jsons.clickname = "";
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);
         BackToHomeFromCharCustomization();
+        
     }
     public bool isSaveFromreturnHomePopUp;
     public void OnClickSaveAvatarButton()
