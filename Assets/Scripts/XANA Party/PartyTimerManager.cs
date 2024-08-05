@@ -37,7 +37,6 @@ public class PartyTimerManager : MonoBehaviour
             }
             GetComponent<PhotonView>().RPC(nameof(StartTimer), RpcTarget.AllBuffered, startTime);
         }
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().IsPlayerIdsSaved = false;
     }
 
     void Update()

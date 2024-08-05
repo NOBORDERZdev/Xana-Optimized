@@ -45,9 +45,6 @@ public class FinishPoint : MonoBehaviour
         {
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddWinnerId", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
         }
-        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RequestRankUpdate", RpcTarget.MasterClient);
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().NeedToUpdateMyRank = true;
-        //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdatePlayerRankAndLP();
         GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
         Animator penguinAnimator = GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<Animator>();
