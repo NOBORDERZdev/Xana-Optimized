@@ -16,7 +16,6 @@ using System.IO;
 using UnityEngine.Rendering.Universal;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Voice.PUN;
-using Metaverse;
 using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
@@ -39,7 +38,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public Camera firstPersonCamera;
     [HideInInspector]
     private Transform updatedSpawnpoint;
-    private Vector3 spawnPoint;
+    [HideInInspector]
+    public Vector3 spawnPoint;
     public GameObject currentEnvironment;
     public bool isEnvLoaded = false;
 

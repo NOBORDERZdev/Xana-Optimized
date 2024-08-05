@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-using Metaverse;
 using UnityEngine.UI;
 
 public class ScreenOrientationManager : MonoBehaviour
@@ -113,8 +112,6 @@ public class ScreenOrientationManager : MonoBehaviour
         if (ArrowManager.Instance && !ConstantsHolder.isPenguin)
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
-            AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
-
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
         }
 
