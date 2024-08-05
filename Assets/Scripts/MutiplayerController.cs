@@ -461,18 +461,25 @@ namespace Photon.Pun.Demo.PunBasics
             this.SectorName = SectorName;
             Debug.Log("Triggered...." + this.SectorName);
             this.isWheel = isWheel;
-            Destroy(player.GetComponent<PhotonAnimatorView>());
-            Destroy(player.GetComponent<PhotonTransformView>());
-            Destroy(player.GetComponent<PhotonVoiceView>());
-            Destroy(player.GetComponent<PhotonView>());
+            SummitPlayerRPC summitplayer = player.GetComponent<SummitPlayerRPC>();
+            if (summitplayer)
+            {
+                Destroy(summitplayer.AnimatorView);
+                Destroy(summitplayer.VoiceView);
+                Destroy(summitplayer.Transformview);
+                Destroy(summitplayer.view);
+            }
+          
             foreach (var p in playerobjects)
             {
-                Destroy(p.GetComponent<PhotonAnimatorView>());
-                Destroy(p.GetComponent<PhotonTransformView>());
-                Destroy(p.GetComponent<PhotonVoiceView>());
-                Destroy(p.GetComponent<PhotonView>());
+                if (p == player) continue;
+                summitplayer = p.GetComponent<SummitPlayerRPC>();
+                Destroy(summitplayer.AnimatorView);
+                Destroy(summitplayer.VoiceView);
+                Destroy(summitplayer.Transformview);
+                Destroy(summitplayer.view);
             }
-            playerobjects.Clear();
+           
             PhotonNetwork.LeaveRoom();
 
         }
