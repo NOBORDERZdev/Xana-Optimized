@@ -91,8 +91,8 @@ public class AssetDownloader : MonoBehaviour
         while (!loader.IsDone)
         {
             yield return new WaitForEndOfFrame();
-            string s = (loader.GetDownloadStatus().Percent * 100f).ToString("F0");
-            downloadProgressText.text = /*"Please wait downloading assets... " +*/ s + "%";
+            string s = (loader.GetDownloadStatus().Percent * 100f).ToString("F0").PadLeft(2, '0');
+            downloadProgressText.text = /*"Please wait downloading assets... " +*/" "+ s + "%";
             if(loader.GetDownloadStatus().TotalBytes > 0 && !isLoading)
             {
                 Debug.Log("Inside Load Asset");
