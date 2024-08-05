@@ -287,13 +287,12 @@ public class ConstantsGod
     #endregion
 
     #region Penpenz Api's
-    public static string API_BASEURL_Penpenz = "https://penpenz-dev.xana.net";
+    public static string API_BASEURL_Penpenz = "https://penpenz-dev.xana.net/api";
     public static string GetXanaPartyWorlds = "/item/v1/get-world-by-world-type/1"; // 1 for xana party and 0 for simple builder  
-    public static string CreateUser_Penpenz = "/api/users";
-    public static string GetRankPoints_Penpenz = "/api/rankpoints";
-    public static string UpdateUserPoints_Penpenz = "/api/users";
+    public static string CreateUser_Penpenz = "/users";
+    public static string GetRankPoints_Penpenz = "/rankpoints";
+    public static string UpdateUserPoints_Penpenz = "/users";
 
-    public static string StartRace_Penpenz = "/api/races/start";
-    public static string UpdateRoundData_Penpenz = "/api/races/:race_id/rounds/:round_number";
+    public static string StartRace_Penpenz = "/races/start";
     #endregion
 }

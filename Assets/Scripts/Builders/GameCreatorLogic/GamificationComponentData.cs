@@ -477,7 +477,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         //  print("~~~ all player ready ~~~");
         if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
+            if (XANAPartyManager.Instance.GameIndex == 0)
+            {
+                StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
+            }
             this.GetComponent<PhotonView>().RPC(nameof(StartGameRPC), RpcTarget.All);
             isRaceStarted = true;
         }
@@ -503,8 +506,9 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
-            XANAPartyManager.Instance.GameIndex++;
-            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ShowLeaderboard = true;
+            XANAPartyManager.Instance.GameIndex++; 
+            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
+            //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ShowLeaderboard = true;
         }
     }
 
@@ -515,7 +519,7 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
             XANAPartyManager.Instance.GameIndex++;
-            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard();
+            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
         }
     }
 

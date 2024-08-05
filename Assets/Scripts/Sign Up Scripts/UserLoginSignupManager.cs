@@ -386,7 +386,10 @@ public class UserLoginSignupManager : MonoBehaviour
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
         StartCoroutine(WaitForDeepLink());
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        }
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
@@ -564,7 +567,10 @@ public class UserLoginSignupManager : MonoBehaviour
         GetOwnedNFTsFromAPI();
         UserPassManager.Instance.GetGroupDetails("freeuser");
         UserPassManager.Instance.GetGroupDetailsForComingSoon();
-        StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+        }
         CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
         if (GameManager.Instance.UiManager != null)//rik
         {

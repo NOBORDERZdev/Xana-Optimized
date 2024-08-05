@@ -166,6 +166,7 @@ public class XANAPartyManager : MonoBehaviour
         {
             GameIndex = 0;
             GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
+            GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
 
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
