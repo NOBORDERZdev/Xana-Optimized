@@ -869,7 +869,9 @@ public class InventoryManager : MonoBehaviour
         }
     }
     public bool loadingItems = false;
-    Coroutine itemLoading, hitAllItemAPICorountine;
+    bool _ResettingAssetList = false;
+
+    Coroutine itemLoading, hitAllItemAPICorountine, _generateCoroutin;
     IEnumerator HitALLItemsAPI(string url, string Jsondata)
     {
         if (apiResponseHolder.CheckResponse(url + Jsondata))
@@ -877,6 +879,10 @@ public class InventoryManager : MonoBehaviour
             GetItemInfoNewAPI JsonDataObj1 = new GetItemInfoNewAPI();
             JsonDataObj1 = JsonUtility.FromJson<GetItemInfoNewAPI>(apiResponseHolder.GetResponse(url + Jsondata));
             dataListOfItems.Clear();
+
+            _ResettingAssetList = true;
+            yield return new WaitForSeconds(0.2f);
+
             dataListOfItems = JsonDataObj1.data[0].items;
             PutDataInOurAPPNewAPI();
             CheckAPILoaded = true; // Already Have the response not calling the API -- Resetting the value
@@ -915,6 +921,9 @@ public class InventoryManager : MonoBehaviour
                 if (JsonDataObj.success == true)
                 {
                     dataListOfItems.Clear();
+
+                    _ResettingAssetList = true;
+                    yield return new WaitForSeconds(0.2f);
 
                     dataListOfItems = JsonDataObj.data[0].items;
 
@@ -1561,6 +1570,7 @@ public class InventoryManager : MonoBehaviour
     {
         //  GameManager.Instance.mainCharacter.GetComponent<AvatarControllerHome>().UpdateState(false);
         ConstantsHolder.xanaConstants.isStoreActive = false;
+        PresetData_Jsons.clickname = "";
         isSaveFromreturnHomePopUp = false;
         ReturnHomePopUp.SetActive(false);
         AvatarUpdated.SetActive(false);
@@ -3318,6 +3328,7 @@ public class InventoryManager : MonoBehaviour
 
     public void PutDataInOurAPPNewAPI()
     {
+        _ResettingAssetList = false;
         if (itemLoading != null)
             StopCoroutine(itemLoading);
         itemLoading = StartCoroutine(PutDataInOurAPPNewAPICoroutine());
@@ -3325,6 +3336,8 @@ public class InventoryManager : MonoBehaviour
     }
 
     int myIndexInList;
+
+    Transform TempSubcategoryParent = null;
     public IEnumerator PutDataInOurAPPNewAPICoroutine()
     {
         if (_avatarController == null)
@@ -3332,13 +3345,12 @@ public class InventoryManager : MonoBehaviour
             _avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
         }
 
-
         if (!colorMode)
             yield return null;
         RefreshDefault();
         List<ItemDetail> TempitemDetail;
         TempitemDetail = new List<ItemDetail>();
-        Transform TempSubcategoryParent = null;
+        
         //    //Debug.Log("<color=red>Planel Index: " + IndexofPanel + "</color>");
         switch (IndexofPanel)
         {
@@ -3355,7 +3367,9 @@ public class InventoryManager : MonoBehaviour
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     CategorieslistOuter = TempitemDetail;
                     TempEnumVar = EnumClass.CategoryEnum.Outer;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    if (_generateCoroutin != null)
+                        StopCoroutine(_generateCoroutin);
+                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, CategorieslistOuter));
                     break;
                 }
             case 4: // Presets
@@ -3372,7 +3386,9 @@ public class InventoryManager : MonoBehaviour
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Bottom;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    if (_generateCoroutin != null)
+                        StopCoroutine(_generateCoroutin);
+                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
                     break;
                 }
             case 7: // Shoes
@@ -3381,7 +3397,9 @@ public class InventoryManager : MonoBehaviour
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Shoes;
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    if (_generateCoroutin != null)
+                        StopCoroutine(_generateCoroutin);
+                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
                     break;
                 }
             case 8: // Hairs
@@ -3394,7 +3412,9 @@ public class InventoryManager : MonoBehaviour
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatar;
                         Debug.Log("Hair Color Button is Temporiry Disable");
                         //hairColorButton.gameObject.SetActive(true);
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        if (_generateCoroutin != null)
+                            StopCoroutine(_generateCoroutin);
+                        _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
                     }
                     else
                     {
@@ -3433,7 +3453,9 @@ public class InventoryManager : MonoBehaviour
                                 AllCategoriesData[20].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                         }
 
-                        StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        if (_generateCoroutin != null)
+                            StopCoroutine(_generateCoroutin);
+                        _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
                     }
                     else
                     {
@@ -3532,7 +3554,9 @@ public class InventoryManager : MonoBehaviour
                         else
                             AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                     }
-                    StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    if (_generateCoroutin != null)
+                        StopCoroutine(_generateCoroutin);
+                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
                     break;
                 }
         }
@@ -3561,6 +3585,7 @@ public class InventoryManager : MonoBehaviour
 
         // Calculate the starting index for the data list
         int _StartFromIndex = _MaxItems - dataListOfItems.Count;
+        _ResettingAssetList = false;
 
         for (int i = _LoopStart; i < _MaxItems; i++)
         {
@@ -3568,7 +3593,11 @@ public class InventoryManager : MonoBehaviour
 
             // Wait until the end of the frame to instantiate the item
             yield return new WaitForEndOfFrame();
-            InstantiateStoreItems(parentObj, _DataIndex, string.Empty, TempitemDetail, false);
+            if (_ResettingAssetList == false && parentObj == TempSubcategoryParent)
+            {
+                InstantiateStoreItems(parentObj, _DataIndex, string.Empty, TempitemDetail, false);
+            }
+            
         }
 
         // Indicate that all data has been loaded
@@ -3579,9 +3608,9 @@ public class InventoryManager : MonoBehaviour
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
-
-        if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink))
+        if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink) && parentObj != TempSubcategoryParent && _ResettingAssetList == false)
         {
+            Debug.LogError("Icon Link is Empty or Parent Object is not same");
             return;
         }
 
@@ -3678,7 +3707,10 @@ public class InventoryManager : MonoBehaviour
             case EnumClass.CategoryEnum.Socks:
                 return socksDownlaodedCount;
             case EnumClass.CategoryEnum.Shoes:
-                return shoesDownlaodedCount;
+                if (_MyGender == "Female")
+                    return shoesDownlaodedCountFemale;
+                else
+                    return shoesDownlaodedCount;
             case EnumClass.CategoryEnum.HairAvatar:
                 if (_MyGender == "Female")
                     return hairDwonloadedCountFemale;
