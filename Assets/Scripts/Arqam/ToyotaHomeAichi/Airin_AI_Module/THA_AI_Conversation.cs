@@ -17,6 +17,7 @@ public class THA_AI_Conversation : MonoBehaviour
     private string _playerName = "";
     private Animator _animator;
     private bool _isAirinTyping = false;
+    private string _ip;
 
     private void Start()
     {
@@ -69,14 +70,21 @@ public class THA_AI_Conversation : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
         string worldId = ConstantsHolder.xanaConstants.MuseumID;
-        string ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
-
+        if (ConstantsHolder.xanaConstants.MuseumID == "2871")
+        {
+            //ip =;
+            Debug.Log("jjtest " + ConstantsHolder.xanaConstants.MuseumID);
+        }
+        else
+        {
+            _ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
+        }
         //if (!APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://182.70.242.10:8034/";
         //else if (APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://15.152.55.82:8054/";
 
-        string url = ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
+        string url = _ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
         //Debug.Log("<color=red> Communication URL(Airin): " + url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(url);
