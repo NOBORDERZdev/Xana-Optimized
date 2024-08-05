@@ -314,7 +314,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         if (gameObject.GetComponent<PhotonView>().ViewID == id)
         {
             //Debug.Log("USERNAME VALUE:" + ConstantsHolder.xanaConstants.userName);
-            if (ToggleConstant == 0)
+            if (ToggleConstant == 1)
             {
                 Debug.Log("Onbtn:" + ReferencesForGamePlay.instance.onBtnUsername);
                 PhotonUserName.enabled = true;
