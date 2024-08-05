@@ -544,7 +544,10 @@ public class BuilderMapDownload : MonoBehaviour
                     //Remove texture downloading code
                     yield return StartCoroutine(AISkyTextureDownload());
                 }
-                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
+                //Texture compression added for AI Sky
+                Texture2D tempAITex = skyBoxItem.texture;
+                tempAITex.Compress(true);
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = tempAITex;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
                 directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
                 characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
