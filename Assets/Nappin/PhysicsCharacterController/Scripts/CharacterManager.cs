@@ -622,7 +622,7 @@ namespace PhysicsCharacterController
         {
            
             //jumped
-            if (jump && canJumpNow && isGrounded && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
+            if (jump && canJumpNow && isGrounded) // && ((isTouchingSlope && currentSurfaceAngle <= maxClimbableSlopeAngle) || !isTouchingSlope) && !isTouchingWall)
             {
               
                 rigidbody.velocity += Vector3.up * jumpVelocity;

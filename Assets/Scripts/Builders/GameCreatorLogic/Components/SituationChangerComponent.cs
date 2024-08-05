@@ -305,11 +305,11 @@ public class SituationChangerComponent : ItemComponent
         GetLightData();
         if (dimmerCoroutine != null)
         {
-            StopCoroutine(dimmerCoroutine);
-            dimmerCoroutine = null;
-            isRuninig = false;
-            canRun = false;
-            GamificationComponentData.instance.isNight = false;
+            //StopCoroutine(dimmerCoroutine);
+            //dimmerCoroutine = null;
+            //isRuninig = false;
+            //canRun = false;
+            //GamificationComponentData.instance.isNight = false;
             if (GamificationComponentData.instance.isBlindToogle)
                 GamificationComponentData.instance.isBlindToogle = false;
             SetDayMode(_light, _lightsIntensity);
