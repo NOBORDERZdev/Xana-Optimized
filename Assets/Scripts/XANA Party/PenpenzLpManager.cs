@@ -136,19 +136,24 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         }
         isLeaderboardShown = true;
 
-        StartCoroutine(UpdateRoundData());
-
-        while (!IsRoundDataUpdated)
+        if (PhotonNetwork.IsMasterClient)
         {
-            yield return new WaitForSeconds(0.1f);
+            StartCoroutine(UpdateRoundData());
+
+            while (!IsRoundDataUpdated)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
         }
+
+        yield return new WaitForSeconds(3f);
+
         StartCoroutine(GetRoundData());
         //var playerRanks = GetPlayerRanks();
         while (!IsRoundDataFetched)
         {
             yield return new WaitForSeconds(0.1f);
         }
-        yield return new WaitForSeconds(3f);
 
         //GamePlayUIHandler.inst.MyRankText.text = MyRankInOverallGames.ToString();
         //GamePlayUIHandler.inst.MyPointsText.text = MyPointsInOverallGames.ToString();
