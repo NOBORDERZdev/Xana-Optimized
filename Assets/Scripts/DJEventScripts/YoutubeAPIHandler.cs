@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Video;
 using WebSocketSharp;
 
 public class YoutubeAPIHandler : MonoBehaviour
@@ -19,14 +20,23 @@ public class YoutubeAPIHandler : MonoBehaviour
     public string OldAWSURL = "xyz";
     public int summitAreaID;
     public int SummitVideoIndex;
+    public StreamYoutubeVideo VideoPlayerRef;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
     private Camera mainCam;
+
+    private void OnEnable()
+    {
+        if (!VideoPlayerRef)
+        {
+            VideoPlayerRef = GetComponent<StreamYoutubeVideo>();
+        }
+    }
     private void Start()
     {
-        if(WorldItemView.m_EnvName.Contains("BreakingDown Arena") || WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage") || WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+        if (WorldItemView.m_EnvName.Contains("BreakingDown Arena") || WorldItemView.m_EnvName.Contains("DJ Event") || WorldItemView.m_EnvName.Contains("XANA Festival Stage") || WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
         {
             if (GameObject.FindGameObjectWithTag("MainCamera") != null)
             {
@@ -36,7 +46,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     public IEnumerator GetStream()
@@ -92,7 +102,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     {
                         _response = null;
                         Data = null;
-                       Debug.Log("Youtube API returned no result");
+                        Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
@@ -233,7 +243,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         {
                             _response = null;
                             Data = null;
-                           Debug.Log("Youtube API returned no result");
+                            Debug.Log("Youtube API returned no result");
                         }
                         else
                         {
@@ -290,12 +300,12 @@ public class YoutubeAPIHandler : MonoBehaviour
             else
             {
                 //print("============Setting WWW data");
-               //Debug.LogError("WaqasApi============" + ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName);
+                //Debug.LogError("WaqasApi============" + ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + FeedEventPrefab.m_EnvName);
                 using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.YOUTUBEVIDEOBYSCENE + WorldItemView.m_EnvName))
                 {
                     www.timeout = 10;
 
-                    yield return www.SendWebRequest();
+                    www.SendWebRequest();
 
                     while (!www.isDone)
                     {
@@ -314,9 +324,17 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
-                                _urlDataInitialized = true;
-                                // print("Stage 3 video link:" + Data);
+                                if (_response.data.isLive)
+                                {
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
+                                    _urlDataInitialized = true;
+                                    OldAWSURL = "";
+                                    // print("Stage 3 video link:" + Data);
+                                }
+                                else//For AWS Video playing
+                                {
+                                    PlayAWSVideoSetup();
+                                }
                             }
                             else
                             {
@@ -373,7 +391,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (www.isHttpError || www.isNetworkError)
                     {
                         _response = null;
-                       Debug.Log("Youtube API returned no result");
+                        Debug.Log("Youtube API returned no result");
                     }
                     else
                     {
@@ -426,7 +444,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         {
                             if (_apiResponse.videoData.isYoutube)
                             {
-                                bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live")? true : false;
+                                bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live") ? true : false;
                                 Data = new StreamData(incominglink, _isLiveVideo, true);
                                 OldAWSURL = "";
                             }
@@ -438,17 +456,28 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     {
                                         GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
                                     }
-                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.gameObject.SetActive(false);
-                                    GetComponent<StreamYoutubeVideo>().mediaPlayer.enabled = false;
-                                    GetComponent<StreamYoutubeVideo>().videoPlayer.gameObject.SetActive(true);
-                                    GetComponent<StreamYoutubeVideo>().videoPlayer.enabled = true;
+                                    if (VideoPlayerRef)
+                                    {
+                                        VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
+                                        VideoPlayerRef.mediaPlayer.enabled = false;
+                                        VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
+                                        VideoPlayerRef.videoPlayer.enabled = true;
 
-                                    //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                    //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                    //SoundSettings.soundManagerSettings.setNewSliderValues();
+                                        //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                        //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                                        //SoundSettings.soundManagerSettings.setNewSliderValues();
 
-                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.url = _apiResponse.videoData.url;
-                                    gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+                                        VideoPlayerRef.videoPlayer.url = _apiResponse.videoData.url;
+                                        VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
+                                        VideoPlayerRef.videoPlayer.Prepare();
+
+                                        // Assign the individual function to the prepareCompleted event
+                                        VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
+                                    }
+                                    else
+                                    {
+                                        Debug.LogError("No video players holder ref assigned");
+                                    }
                                     OldAWSURL = _apiResponse.videoData.url;
                                 }
                                 Data = null;
@@ -485,8 +514,47 @@ public class YoutubeAPIHandler : MonoBehaviour
         return false;
     }
 
+    public void PlayAWSVideoSetup()
+    {
+        if (OldAWSURL != _response.data.link)
+        {
+            if (VideoPlayerRef)
+            {
+                VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
+                VideoPlayerRef.mediaPlayer.enabled = false;
+                VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
+                VideoPlayerRef.videoPlayer.enabled = true;
+
+                //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+                //SoundSettings.soundManagerSettings.setNewSliderValues();
+
+                VideoPlayerRef.videoPlayer.url = _response.data.link;
+                VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
+                VideoPlayerRef.videoPlayer.Prepare();
+
+                // Assign the individual function to the prepareCompleted event
+                VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
+            }
+            else
+            {
+                Debug.LogError("No video players holder ref assigned");
+            }
+
+            //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.time = 0;
+            //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+            OldAWSURL = _response.data.link;
+        }
+        Data = null;
+    }
+
+    // Define the function to be called when prepareCompleted is triggered
+    void OnPrepareCompleted(VideoPlayer vp)
+    {
+        vp.time = 0;
+        vp.Play();
+    }
 }
-//}
 
 [System.Serializable]
 public class StreamData

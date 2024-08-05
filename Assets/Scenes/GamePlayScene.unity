@@ -1119,6 +1119,7 @@ MonoBehaviour:
   - XANA Lobby
   - D_Infinity_Labo
   - XANA Summit
+  - RooftopParty
 --- !u!114 &79798793
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5101,6 +5102,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 406231633}
   m_CullTransparentMesh: 0
+--- !u!114 &413106745 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2452571441569123080, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+  m_PrefabInstance: {fileID: 9067209682325055448}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908864873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99136ca53a1b5f14f976d51b21d65ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &414828971
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7821,8 +7833,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -3.5500183, y: 0}
-  m_SizeDelta: {x: 90.5, y: 43.299995}
+  m_AnchoredPosition: {x: 21.0122, y: 0}
+  m_SizeDelta: {x: 115.0622, y: 43.3}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &561234182
 MonoBehaviour:
@@ -10504,6 +10516,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796639982}
   m_CullTransparentMesh: 0
+--- !u!114 &799402924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1021198981760281683, guid: 62344a8fcd4e1794db151995fc3e98f9, type: 3}
+  m_PrefabInstance: {fileID: 429271888}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136874181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99136ca53a1b5f14f976d51b21d65ba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &803656933
 GameObject:
   m_ObjectHideFlags: 0
@@ -16667,7 +16690,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2db83d993b511a4880ef21489671f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientationType: 0
   lookSpeed: 2
   lookSpeedd: 0
   cinemachine: {fileID: 0}
@@ -17710,6 +17732,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2452571440786286108}
     - target: {fileID: 2363225616550771673, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+      propertyPath: PortraitChatRef
+      value: 
+      objectReference: {fileID: 799402924}
+    - target: {fileID: 2363225616550771673, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
       propertyPath: XanaChatPotrait
       value: 
       objectReference: {fileID: 429271912}
@@ -17717,6 +17743,10 @@ PrefabInstance:
       propertyPath: chatOutPutPenal
       value: 
       objectReference: {fileID: 197681018}
+    - target: {fileID: 2363225616550771673, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+      propertyPath: LandscapeChatRef
+      value: 
+      objectReference: {fileID: 413106745}
     - target: {fileID: 2363225616550771673, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
       propertyPath: CurrentChannelText
       value: 
@@ -29947,7 +29977,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904701, z: 0.00006075662, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.00089047954, z: 0.000060757262, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30109,7 +30139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2db83d993b511a4880ef21489671f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientationType: 0
   lookSpeed: 2
   lookSpeedd: 0.75
   cinemachine: {fileID: 0}
@@ -30399,7 +30428,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641832, y: -0.0008925061, z: 0.000009500302, w: 0.999943}
+  m_LocalRotation: {x: 0.010642244, y: -0.0008925333, z: 0.000009500959, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -41308,6 +41337,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: d715d7cfa5918144dacd738e1a9dc501, type: 2}
     - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.size
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
       propertyPath: overlayPanels.Array.data[0]
       value: 
       objectReference: {fileID: 5685236213032446030}
@@ -41415,6 +41448,10 @@ PrefabInstance:
       propertyPath: hiddenBtnObjects.Array.data[12]
       value: 
       objectReference: {fileID: 7265331069818700934}
+    - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
+      propertyPath: hiddenBtnObjects.Array.data[13]
+      value: 
+      objectReference: {fileID: 1402662872}
     - target: {fileID: 5112787733255262738, guid: 4a550f84130244340a5ef43e2a1fa849, type: 3}
       propertyPath: landscapeMoveWhileDancingButton
       value: 
@@ -49672,6 +49709,10 @@ PrefabInstance:
       propertyPath: _manager
       value: 
       objectReference: {fileID: 1339195405}
+    - target: {fileID: 342494998305114770, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
+      propertyPath: m_Name
+      value: Summit-MiniMap_Summit
+      objectReference: {fileID: 0}
     - target: {fileID: 342494998305114770, guid: 9c3a3fb9eaf26425797546387b5414b9, type: 3}
       propertyPath: m_IsActive
       value: 0

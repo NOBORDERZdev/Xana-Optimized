@@ -93,7 +93,7 @@ public class SoundSettings : MonoBehaviour
         ScreenOrientationManager.switchOrientation += OnOrientationChanged;
         //  Invoke("ObjectsDeley", 1f);
     }
-    void OnOrientationChanged()
+    void OnOrientationChanged(bool IsPortrait)
     {
         //Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
