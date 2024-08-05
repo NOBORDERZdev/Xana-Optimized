@@ -25,10 +25,19 @@ public class AssetDownloader : MonoBehaviour
     bool isLoading = false;
 
     void Start(){
-        LoadingScreen.SetActive(false);
-        Splash.SetActive(true);
-        LoadingPopup.SetActive(false);
-        StartCoroutine(DownloadAssets());
+        if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
+        {
+            LoadingScreen.SetActive(false);
+            Splash.SetActive(true);
+            LoadingPopup.SetActive(false);
+            StartCoroutine(DownloadAssets());
+        }
+        else
+        {
+            LoadingScreen.SetActive(true);
+            Splash.SetActive(false);
+            LoadingPopup.SetActive(false);
+        }
     }
 
     IEnumerator DownloadAssets()
@@ -44,7 +53,7 @@ public class AssetDownloader : MonoBehaviour
         {
             if (downloadSize.Result>0)
             {
-                fullDownloadProgress.text = $"Downloading Data {(downloadSize.Result / 1024f) / 1024f} MB";
+                fullDownloadProgress.text = $"{(downloadSize.Result / (1024f * 1024f)).ToString("F2")} MB";
                 if (PlayerPrefs.GetString("DownloadPermission", "false") == "false")
                 {
                     LoadingPopup.SetActive(true);
