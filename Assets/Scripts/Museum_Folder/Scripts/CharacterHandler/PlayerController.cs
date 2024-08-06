@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
-
+    public static PlayerController instance;
     public delegate void CameraChangeDelegate(Camera camera);
     public static event CameraChangeDelegate CameraChangeDelegateEvent;
 
@@ -104,6 +104,12 @@ public class PlayerController : MonoBehaviour
     float topRigDefaultRadius;
 
     internal float animationBlendValue = 0;
+
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void OnEnable()
     {
