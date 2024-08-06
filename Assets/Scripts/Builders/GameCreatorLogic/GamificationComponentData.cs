@@ -442,8 +442,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
             //    PhotonNetwork.CurrentRoom.IsVisible = false;
             //    PhotonNetwork.CurrentRoom.IsOpen = false;
             //}
-            //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SaveCurrentRoomPlayerIds();
-            //StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().SendingUsersIdsAtStartOfRace());
             StartCoroutine(WaitForWorldLoadingAllPlayer());
         }
     }
@@ -512,7 +510,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         {
             XANAPartyManager.Instance.GameIndex++; 
             StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
-            //XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().ShowLeaderboard = true;
         }
     }
 

@@ -217,6 +217,14 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             pointsData.points.Add(WinnerPlayerIds[2], RankPointsData[2].points);
         }
 
+        foreach (var player in PlayerIDs)
+        {
+            if (!WinnerPlayerIds.Contains(player))
+            {
+                pointsData.points.Add(player, 0);
+            }
+        }
+
         string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
 
         // Manually create JSON string
