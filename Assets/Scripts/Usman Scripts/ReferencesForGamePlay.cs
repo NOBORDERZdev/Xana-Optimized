@@ -41,6 +41,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     public GameObject portraitMoveWhileDancingButton;
     public int moveWhileDanceCheck;
     public QualityManager QualityManager;
+    public XanaChatSystem ChatSystemRef;
     // Start is called before the first frame update
     void Awake()
     {

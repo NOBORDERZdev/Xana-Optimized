@@ -94,16 +94,15 @@ public class ProfileUIHandler : MonoBehaviour
             _renderTexCamera.GetComponent<Camera>().targetTexture = null;
             _renderTexCamera.gameObject.SetActive(false);
         }
-        
+
+        // Properly destroy the newRenderTexture
         Object.Destroy(newRenderTexture);
 
-        //newRenderTexture.Release();
+        // Set game objects
         menuLightingObj.SetActive(true);
         lightingObj.SetActive(false);
-        if (maleAvatarRef)
-            maleAvatarRef.SetActive(false);
-        if(femaleAvatarRef)
-            femaleAvatarRef.SetActive(false);
+        maleAvatarRef?.SetActive(false);
+        femaleAvatarRef?.SetActive(false);
     }
 
     private void Start()
