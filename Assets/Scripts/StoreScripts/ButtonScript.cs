@@ -87,7 +87,7 @@ public class ButtonScript : MonoBehaviour
         ConstantsHolder.xanaConstants.currentButtonIndex = Index;
         inventoryManager.UpdateXanaConstants();
         inventoryManager.DisableColorPanels();
-        ResetSelectedItems();
+        //ResetSelectedItems();
 
 
         if (Index == 7 && inventoryManager.panelIndex == 1)

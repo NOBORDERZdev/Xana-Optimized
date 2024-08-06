@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using Photon.Pun;
+﻿using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
