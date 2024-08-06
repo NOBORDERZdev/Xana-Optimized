@@ -90,6 +90,8 @@ public class UIController_Shine : MonoBehaviour
     private void Awake()
     {
         Enable_DisableObjects.Instance.DisableScreenRotaionButton();
+        ReferencesForGamePlay.instance.minimap.SetActive(false);
+
         informationUI = gameSpaceUI.transform.GetChild((int)GameSpaceUIChild.Information);
         daisenInfoUI = gameSpaceUI.transform.GetChild((int)GameSpaceUIChild.DaisenGuide);
         duneInfoUI = gameSpaceUI.transform.GetChild((int)GameSpaceUIChild.DuneGuide);

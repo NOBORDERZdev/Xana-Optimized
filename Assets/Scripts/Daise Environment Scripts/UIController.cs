@@ -60,6 +60,7 @@ public class UIController : MonoBehaviour
     private void Awake()
     {
         Enable_DisableObjects.Instance.DisableScreenRotaionButton();
+        ReferencesForGamePlay.instance.minimap.SetActive(false);
 
         teleportPoints = new Dictionary<string, Transform>();
         foreach (Transform child in teleportPoint)
