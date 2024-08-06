@@ -40,7 +40,7 @@ public class SpaceXHandler : MonoBehaviour
     }
 
     async Task ShowCounter()
-    { 
+    {
         LaunchCounter.GetComponent<Animator>().enabled = true;
         _WaitForRestart = true;
         int x = 10;
@@ -52,9 +52,9 @@ public class SpaceXHandler : MonoBehaviour
             x--;
         }
         LaunchCounter.GetComponent<Animator>().enabled=false;
+        LaunchCounter.gameObject.SetActive(false);
         await Task.Delay(1000);
         //launchCountingAudioSource.clip=audioClip;
-        LaunchCounter.gameObject.SetActive(false);
     }
 
 
