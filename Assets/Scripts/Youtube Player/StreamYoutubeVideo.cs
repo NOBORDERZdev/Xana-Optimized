@@ -22,12 +22,12 @@ public class StreamYoutubeVideo : MonoBehaviour
 
     private void OnEnable()
     {
-        Metaverse.AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
     }
 
     private void OnDisable()
     {
-        Metaverse.AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
     }
 
     public void StreamYtVideo(string Url, bool isLive)

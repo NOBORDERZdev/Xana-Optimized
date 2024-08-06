@@ -5,7 +5,6 @@ using UnityEngine;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Pun;
 using UnityEngine.UI;
-using Metaverse;
 using UnityEngine.SceneManagement;
 
 public class AskForJoining : MonoBehaviour
@@ -14,16 +13,16 @@ public class AskForJoining : MonoBehaviour
     // Start is called before the first frame update
     // Start is called before the first frame update
 
-    AsyncOperation asyncLoading;
-    private PlayerCameraController[] _cameraLooks;
+    //AsyncOperation asyncLoading;
+    //private PlayerCameraController[] _cameraLooks;
 
 
 
-    private void Awake()
-    {
-        _cameraLooks = FindObjectsOfType<PlayerCameraController>();
+    //private void Awake()
+    //{
+    //    _cameraLooks = FindObjectsOfType<PlayerCameraController>();
 
-    }
+    //}
 
 
     //void LoadMain()
@@ -54,10 +53,10 @@ public class AskForJoining : MonoBehaviour
     //    UserAnalyticsHandler.onUpdateWorldRelatedStats(false, false, false, true);
     //}
 
-    void AsyncProgress()
-    {
-        //LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
-    }
+    //void AsyncProgress()
+    //{
+    //    LoadingHandler.Instance.UpdateLoadingSlider(asyncLoading.progress * 1.1f);
+    //}
 
     public void GoToMainMenu()
     {
@@ -103,8 +102,8 @@ public class AskForJoining : MonoBehaviour
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
-            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            MutiplayerController.instance.Connect(WorldItemView.m_EnvName);
+            //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
             Destroy(this.gameObject);
