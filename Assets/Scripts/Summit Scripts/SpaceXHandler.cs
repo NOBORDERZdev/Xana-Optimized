@@ -76,8 +76,9 @@ public class SpaceXHandler : MonoBehaviour
     public void LoadPlanetScene(int x)
     {
         string sceneId;
-        StartCoroutine(LoadingHandler.Instance.FadeIn());
-        if(APIBasepointManager.instance.IsXanaLive)
+        //StartCoroutine(LoadingHandler.Instance.FadeIn());
+        LoadingHandler.Instance.ShowVideoLoading();
+        if (APIBasepointManager.instance.IsXanaLive)
             sceneId = PlanetWorldId_Mainnet[x];
         else
             sceneId = PlanetWorldId_Testnet[x];
