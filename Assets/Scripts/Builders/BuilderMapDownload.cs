@@ -544,7 +544,10 @@ public class BuilderMapDownload : MonoBehaviour
                     //Remove texture downloading code
                     yield return StartCoroutine(AISkyTextureDownload());
                 }
-                GamificationComponentData.instance.aiSkyMaterial.mainTexture = skyBoxItem.texture;
+                //Texture compression added for AI Sky
+                Texture2D tempAITex = skyBoxItem.texture;
+                tempAITex.Compress(true);
+                GamificationComponentData.instance.aiSkyMaterial.mainTexture = tempAITex;
                 RenderSettings.skybox = GamificationComponentData.instance.aiSkyMaterial;
                 directionalLight.intensity = skyBoxItem.lightPPData.directionalLightData.lightIntensity;
                 characterLight.intensity = skyBoxItem.lightPPData.directionalLightData.character_directionLightIntensity;
@@ -716,7 +719,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         //CapsuleCollider playerCollider = GamificationComponentData.instance.charcterBodyParts.GetComponent<CapsuleCollider>();
         capsuleCollider_34.height = 1.5f;
-        capsuleCollider_34.center = Vector3.up * (capsuleCollider_34.height / 2);
+        capsuleCollider_34.center = Vector3.up * 0.68f;
         CharacterController playerCharacterController = GamificationComponentData.instance.charcterBodyParts.GetComponent<CharacterController>();
         playerCharacterController.height = capsuleCollider_34.height;
         playerCharacterController.center = capsuleCollider_34.center;
@@ -803,8 +806,14 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator AISkyTextureDownload()
     {
-        var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
-        var imagineImageRequest = UnityWebRequest.Get(aiSkyboxItem.textureURL);
+        string textureURL = aiSkyboxItem.textureURL;
+        if (textureURL.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
+        {
+            textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults/");
+            textureURL += "?width=512&height=256";
+        }
+        var texture = new Texture2D(512, 256, GamificationComponentData.instance.GetTextureFormat(), false);
+        var imagineImageRequest = UnityWebRequest.Get(textureURL);
         yield return imagineImageRequest.SendWebRequest();
 
         if (imagineImageRequest.result != UnityWebRequest.Result.Success)
