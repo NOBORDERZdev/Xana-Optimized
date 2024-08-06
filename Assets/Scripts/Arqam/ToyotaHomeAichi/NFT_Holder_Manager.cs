@@ -111,6 +111,7 @@ public class NFT_Holder_Manager : MonoBehaviour
     public void PdfClosed()
     {
         currentRoom?.EnableControlls();
+        if (currentRoom != null) currentRoom = null;
     }
 
 }
