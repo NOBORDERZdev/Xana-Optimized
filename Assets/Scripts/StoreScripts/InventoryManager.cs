@@ -3537,9 +3537,7 @@ public class InventoryManager : MonoBehaviour
                         else
                             AllCategoriesData[11].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                     }
-                    if (_generateCoroutin != null)
-                        StopCoroutine(_generateCoroutin);
-                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
         }
