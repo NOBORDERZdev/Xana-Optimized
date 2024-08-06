@@ -15,7 +15,6 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
-using Metaverse;
 using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
@@ -404,7 +403,7 @@ namespace Photon.Pun.Demo.PunBasics
         public override void OnJoinRoomFailed(short returnCode, string message)
         {
 
-            GameplayEntityLoader.instance._uiReferences.LoadMain(true);
+            //GameplayEntityLoader.instance._uiReferences.LoadMain(true);
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)

@@ -1005,6 +1005,7 @@ MonoBehaviour:
   playerCameraCharacterRender: {fileID: 1272852912}
   environmentCameraRender: {fileID: 360146153501369239}
   firstPersonCamera: {fileID: 1508993052}
+  spawnPoint: {x: 0, y: 0, z: 0}
   currentEnvironment: {fileID: 0}
   isEnvLoaded: 0
   setLightOnce: 0
@@ -17964,9 +17965,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1390032654}
     - target: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+      propertyPath: VideoPlayer
+      value: 
+      objectReference: {fileID: 1060322868}
+    - target: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
       propertyPath: videoPlayer
       value: 
       objectReference: {fileID: 1060322868}
+    - target: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+      propertyPath: LaunchCounter
+      value: 
+      objectReference: {fileID: 1060322867}
+    - target: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
+      propertyPath: PlanetOptions
+      value: 
+      objectReference: {fileID: 1060322869}
     - target: {fileID: 2363225616550771679, guid: 56da8922a8d488147b73989ca6d534ed, type: 3}
       propertyPath: launchCounter
       value: 
@@ -30153,7 +30166,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146153592788045}
-  m_LocalRotation: {x: 0.06806946, y: -0.0008904718, z: 0.000060756738, w: 0.99768025}
+  m_LocalRotation: {x: 0.06806946, y: -0.0008904691, z: 0.000060756556, w: 0.99768025}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -30604,7 +30617,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360146154280603800}
-  m_LocalRotation: {x: 0.010641959, y: -0.000892514, z: 0.0000095005, w: 0.999943}
+  m_LocalRotation: {x: 0.010641738, y: -0.00089250127, z: 0.000009500168, w: 0.999943}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40757,7 +40770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93cb85c0fbecdfe4faca243119952468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Defaultanimator: {fileID: 0}
   currentDummyPlayer: {fileID: 0}
   spawnPoint: {fileID: 1808683680640967398}
   JoinCurrentRoomPanel: {fileID: 4120509113057873630, guid: 6474c4ca0bd4bc4449d46e6437d6d2c7, type: 3}
