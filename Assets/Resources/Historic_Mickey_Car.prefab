@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: -3674431584955106511}
   - component: {fileID: 2297046681859229656}
   - component: {fileID: 8569365260853701381}
+  - component: {fileID: 6894026783024896747}
   m_Layer: 29
   m_Name: Historic_Mickey_Car
   m_TagString: CAR
@@ -437,7 +438,7 @@ Transform:
   m_GameObject: {fileID: 3519169386107185965}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.79999995}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7249205399518146729}
@@ -593,6 +594,20 @@ LODGroup:
     - renderer: {fileID: 3182620592774390352}
     - renderer: {fileID: 1497528836163828591}
   m_Enabled: 1
+--- !u!64 &6894026783024896747
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519169386107185965}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4747999854342016637, guid: c464023abd83f084ca679902cf2531ba, type: 3}
 --- !u!1 &3598931486028223864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,7 +1108,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6745402490390167274}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.5421449, z: -0.032424107}
+  m_LocalPosition: {x: 0, y: 1.5421449, z: -0.032424107}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2224,6 +2239,18 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c464023abd83f084ca679902cf2531ba, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c464023abd83f084ca679902cf2531ba, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c464023abd83f084ca679902cf2531ba, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: c464023abd83f084ca679902cf2531ba, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -2296,7 +2323,7 @@ MeshCollider:
   m_GameObject: {fileID: 3975003782311740293}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 1
   m_CookingOptions: 30

@@ -92,6 +92,12 @@ namespace Toyota
             }
         }
 
+        private void OnDisable()
+        {
+            EraseDownloadedData();
+            Resources.UnloadUnusedAssets();
+        }
+
         public void InitData(string imageurl, string videourl, PMY_Ratio imgvideores, PMY_DataType dataType, PMY_VideoTypeRes videoType)
         {
             imageLink = imageurl;
@@ -403,34 +409,30 @@ namespace Toyota
                 }
             }
         }
-
-
         public void EraseDownloadedData()
         {
-            if (imgVideo16x9.GetComponent<RawImage>().texture != null)
-            {
-                DestroyImmediate(imgVideo16x9.GetComponent<RawImage>().texture, true);
-                imgVideo16x9.SetActive(false);
-            }
-            else if (imgVideo9x16.GetComponent<RawImage>().texture != null)
-            {
-                DestroyImmediate(imgVideo9x16.GetComponent<RawImage>().texture, true);
-                imgVideo9x16.SetActive(false);
-            }
-            else if (imgVideo1x1.GetComponent<RawImage>().texture != null)
-            {
+            DestroyTextureAndDeactivate(imgVideo16x9);
+            DestroyTextureAndDeactivate(imgVideo9x16);
+            DestroyTextureAndDeactivate(imgVideo1x1);
+            DestroyTextureAndDeactivate(imgVideo4x3);
 
-                DestroyImmediate(imgVideo1x1.GetComponent<RawImage>().texture, true);
-                imgVideo1x1.SetActive(false);
-            }
-            else if (imgVideo4x3.GetComponent<RawImage>().texture != null)
-            {
-                DestroyImmediate(imgVideo4x3.GetComponent<RawImage>().texture, true);
-                imgVideo4x3.SetActive(false);
-            }
             if (liveVideoPlayer.activeSelf)
+            {
                 liveVideoPlayer.SetActive(false);
+            }
+
             disableFrame.Invoke();
+        }
+
+        private void DestroyTextureAndDeactivate(GameObject videoObject)
+        {
+            var rawImage = videoObject.GetComponent<RawImage>();
+            if (rawImage.texture != null)
+            {
+                DestroyImmediate(rawImage.texture, true);
+                rawImage.texture = null;
+            }
+            videoObject.SetActive(false);
         }
 
 
