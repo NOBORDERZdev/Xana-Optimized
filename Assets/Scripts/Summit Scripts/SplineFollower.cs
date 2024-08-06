@@ -34,7 +34,7 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
     public bool pasengerseatemty = true;
     public bool isDriverMale = true; 
     public bool isPassengerMale = true;
-
+    public float StepSize =0.001f;
     
     public float moveAmount;
     private float maxMoveAmount;
@@ -45,6 +45,11 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
     public Rigidbody rigidbody;
     private bool checkforrigidbody = true;
     bool NeedToAddReference = true;
+
+    public float carT;
+    public float carTFSS;
+   public float splineUnitDistance = 0f;
+   public Vector3 lastPosition;
 
     Vector3 newRot;
     float counter = 1;
@@ -82,8 +87,8 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
                 maxMoveAmount = 1f;
                 break;
             case MovementType.Units:
-                maxMoveAmount = spline.GetSplineLength(0.001f);
-                Debug.Log("Spline Length " + spline.GetSplineLength(0.001f));
+                maxMoveAmount = spline.GetSplineLength(StepSize);
+                Debug.Log("Spline Length " + spline.GetSplineLength(StepSize));
                 break;
         }
         // syncdata(moveAmount);
@@ -107,7 +112,7 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
 
         if (counter < 1)
         {
-          
+
             if (stopcar)
             {
                 return;
@@ -137,16 +142,17 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
         {
             CarNavigationManager.CarNavigationInstance.Cars.Add(view.ViewID, view);
             spline = SplineDone.Instance;
-            maxMoveAmount = spline.GetSplineLength(0.001f);
+            maxMoveAmount = spline.GetSplineLength(StepSize);
             NeedToAddReference = false;
         }
         if (spline == null || !PhotonNetwork.IsMasterClient) { return; }
-      
-      
-     /*   if (checkforrigidbody)
-        {
-            if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } checkforrigidbody = false;
-        }*/
+
+
+        /*   if (checkforrigidbody)
+           {
+               if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } checkforrigidbody = false;
+           }*/
+        if ((moveAmount + (Time.deltaTime * speed)) >= maxMoveAmount) carT = 0;
         moveAmount = (moveAmount + (Time.deltaTime * speed)) % maxMoveAmount;
 
         switch (movementType) {
@@ -158,15 +164,19 @@ public class SplineFollower : MonoBehaviour,IPunObservable, IInRoomCallbacks
                 transform.forward = new Vector3(forw.x, transform.position.y, forw.z);
                 break;
             case MovementType.Units:
-                var pose = spline.GetPositionAtUnits(moveAmount,.001f);
+                var pose = spline.GetPositionAtUnits(moveAmount,this,StepSize);
                 transform.position = new Vector3(pose.x, transform.position.y, pose.z);
-                var forwa = spline.GetForwardAtUnits(moveAmount,.001f);
+                var forwa = spline.GetForwardAtUnits(moveAmount, this, StepSize);
                 transform.forward = forwa; //new Vector3(forwa.x, transform.position.y, forwa.z);
                 break;
         }
 
 
 
+    }
+    private void OnDestroy()
+    {
+        
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

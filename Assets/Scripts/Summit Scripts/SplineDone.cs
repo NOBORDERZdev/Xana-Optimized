@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Jint.Parser;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 
 public class SplineDone : MonoBehaviour {
@@ -120,16 +123,23 @@ public class SplineDone : MonoBehaviour {
         return closestPoint;
     }
     float previoust = 0;
-    public Vector3 GetPositionAtUnits(float unitDistance, float stepSize = .0005f) {
+    Dictionary<float,Vector3>positiounit = new Dictionary<float,Vector3>();
+    public Vector3 GetPositionAtUnits(float unitDistance,SplineFollower CAR, float stepSize = .0005f) {
+       
+        
         float splineUnitDistance = 0f;
-
+        
         Vector3 lastPosition = GetPositionAt(0f);
         if (previoust >= 0) { previoust = 0; }
         float incrementAmount = stepSize;
-        for (float t = previoust; t < 1f; t += incrementAmount) {
-            splineUnitDistance += Vector3.Distance(lastPosition, GetPositionAt(t));
+        var t = CAR.carT;
+        while (CAR.carT<1) {
+        
+            if(!postionatT.TryGetValue(t, out var tpos)) return Vector3.zero;
 
-            lastPosition = GetPositionAt(t);
+            totaldistance.TryGetValue(t, out splineUnitDistance);
+
+            lastPosition = tpos;
 
             if (splineUnitDistance >= unitDistance) {
                 /*
@@ -138,37 +148,50 @@ public class SplineDone : MonoBehaviour {
                 Debug.Log(t - (remainingDistance / splineLength));
                 return GetPositionAt(t - (remainingDistance / splineLength));
                 */
-                Vector3 direction = (GetPositionAt(t) - GetPositionAt(t - incrementAmount)).normalized;
+                
+                CAR.splineUnitDistance = splineUnitDistance;
+                CAR.lastPosition = lastPosition;
+                Vector3 direction = (tpos - GetPositionAt(t - incrementAmount)).normalized;
                 previoust = t;
-                return GetPositionAt(t) + direction * (unitDistance - splineUnitDistance);
+                Vector3 pos = tpos + direction * (unitDistance - splineUnitDistance);
+                positiounit.TryAdd(unitDistance, pos);
+                return pos;
             }
+            CAR.carT = t;
+            t += incrementAmount;
         }
-
+        Debug.Log("HERE..........");
         // Default
         Anchor anchorA = anchorList[0];
         Anchor anchorB = anchorList[1];
         return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / splineLength);
     }
 
-    public Vector3 GetForwardAtUnits(float unitDistance, float stepSize = .0005f) {
+    public Vector3 GetForwardAtUnits(float unitDistance,SplineFollower CAR ,float stepSize = .0005f) {
         float splineUnitDistance = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
 
         float incrementAmount = stepSize;
         float lastDistance = 0f;
+        var t = CAR.carTFSS;
+        while (CAR.carT < 1)
+        {
 
-        for (float t = 0; t < 1f; t += incrementAmount) {
-            lastDistance = Vector3.Distance(lastPosition, GetPositionAt(t));
-            splineUnitDistance += lastDistance;
+            if (!postionatT.TryGetValue(t, out var tpos)) return Vector3.zero;
 
-            lastPosition = GetPositionAt(t);
+            totaldistance.TryGetValue(t, out splineUnitDistance); 
+            lastDistance = Vector3.Distance(lastPosition, tpos);
+         //   splineUnitDistance += lastDistance;
+
+            lastPosition = tpos;
 
             if (splineUnitDistance >= unitDistance) {
                 float remainingDistance = splineUnitDistance - unitDistance;
                 return GetForwardAt(t - ((remainingDistance / lastDistance) * incrementAmount));
             }
-
+            CAR.carTFSS = t;
+            t += incrementAmount;
         }
 
         // Default
@@ -228,15 +251,31 @@ public class SplineDone : MonoBehaviour {
         }
     }
 
-    public float GetSplineLength(float stepSize = .0005f) {
+    Dictionary<float, Vector3> postionatT = new Dictionary<float, Vector3>();
+    Dictionary<Vector3, float> DistanceatTpos = new Dictionary<Vector3, float>();
+    Dictionary<float, float> totaldistance = new Dictionary<float, float>();
+    public float GetSplineLength(float stepSize = .0005f) 
+    {
         float splineLength = 0f;
 
         Vector3 lastPosition = GetPositionAt(0f);
 
         for (float t = 0; t < 1f; t += stepSize) {
-            splineLength += Vector3.Distance(lastPosition, GetPositionAt(t));
 
-            lastPosition = GetPositionAt(t);
+            Vector3 tpos = Vector3.zero;
+
+            if (!postionatT.TryGetValue(t, out tpos))
+            {
+                tpos = GetPositionAt(t);
+            }
+            float distance = Vector3.Distance(lastPosition, tpos);
+            splineLength += distance;
+
+            lastPosition =tpos;
+            postionatT.TryAdd(t, tpos);
+            DistanceatTpos.TryAdd(tpos, distance);
+            totaldistance.TryAdd(t, splineLength);
+
         }
 
         splineLength += Vector3.Distance(lastPosition, GetPositionAt(1f));
