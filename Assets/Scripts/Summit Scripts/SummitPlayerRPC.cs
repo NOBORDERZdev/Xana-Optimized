@@ -45,16 +45,17 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
     private void Awake()
     {
-       
         isInsideCAr = false;
-      //  MutiplayerController.CarNavigationInstance.OnEnteredRoom += OnPlayerEnteredRoom;
         PhotonNetwork.AddCallbackTarget(this);
+
         if (view.IsMine)
         {
-            parentCharacterController = loader.mainController.GetComponent<CharacterController>();
-            parentPlayerController = loader.mainController.GetComponent<PlayerController>();
-            camera = parentPlayerController.firstPersonCameraObj.GetComponent<Camera>();
-
+            if (loader != null && loader.mainController != null)
+            {
+                parentCharacterController = loader.mainController.GetComponent<CharacterController>();
+                parentPlayerController = loader.mainController.GetComponent<PlayerController>();
+                camera = parentPlayerController?.firstPersonCameraObj?.GetComponent<Camera>();
+            }
         }
     }
 

@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 using System;
-using Metaverse;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerSelfieController : MonoBehaviour
