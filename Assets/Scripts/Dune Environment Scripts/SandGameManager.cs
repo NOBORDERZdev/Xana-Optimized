@@ -12,7 +12,11 @@ public class SandGameManager : MonoBehaviour
     public Localiztion local = Localiztion.En;
 
     private static SandGameManager instance = null;
+    [SerializeField]
+    private GameObject _skateBoardPrefab;
 
+    [SerializeField]
+    private GameObject _markPrefab;
     [SerializeField] private CrabSpawner crabSpr;
     [SerializeField] private SandUIManager uiMgr;
 
@@ -107,7 +111,6 @@ public class SandGameManager : MonoBehaviour
     {
         StartCoroutine(InitRoutine());
         ReferencesForGamePlay.instance.MainPlayerParent.transform.rotation = Quaternion.Euler(0, 90, 0);
-
     }
     public void DisableSkating()
     {
@@ -119,26 +122,19 @@ public class SandGameManager : MonoBehaviour
         uiMgr.SetTimerText("00.00");
         resetBtn.gameObject.SetActive(false);
         crabSpr.OnCrabStop();
-
     }
 
     IEnumerator InitRoutine()
     {
         yield return new WaitUntil(() => ReferencesForGamePlay.instance.m_34player);
 
-        yield return new WaitUntil(() => ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedSkateBoard);
-        board = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedSkateBoard.transform;
-
-        yield return new WaitUntil(() => ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedMarkObject);
-        mark = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>()._spawnedMarkObject.transform;
+        board = Instantiate(_skateBoardPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false).transform;
+        ReferencesForGamePlay.instance.spawnedSkateBoard = board.gameObject;
+        mark = Instantiate(_markPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false).transform;
 
         input = board.GetComponent<InputManager>();
-        //Animator34 = ReferencesForGamePlay.instance.m_34player.GetComponent<Animator>();
-
         uiMgr.AddCallback(Des.SandInform, () => { StartBoarding(); });
-
         resetBtn.onClick.AddListener(() => { ResetPlayer(); });
-
         resetBtn.gameObject.SetActive(false);
 
         StartCoroutine(CheckPoint());
@@ -151,7 +147,6 @@ public class SandGameManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("command", "getPoint");
         form.AddField("id", id);
-        //form.AddField("userName", userName);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -237,16 +232,10 @@ public class SandGameManager : MonoBehaviour
         Rigidbody rb = player.GetComponent<Rigidbody>();
         rb.mass = 0.1f;
         rb.freezeRotation = false;
-
-        //var playerPv= ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>();
-        //playerPv.RPC(nameof(EnableSkateBoardRpc), RpcTarget.All, playerPv.ViewID);
         board.gameObject.SetActive(true);
         input.enabled = true;
         input.force = 250;
-
         input.StopMove();
-        //board.gameObject.SetActive(true);
-
         int i = 0;
         Debug.Log("Boarding ready set");
 
@@ -273,18 +262,6 @@ public class SandGameManager : MonoBehaviour
 
         StopCoroutine(StartBoardingControl());
     }
-
-    //[PunRPC]
-    //private void EnableSkateBoardRpc(int viewId)
-    //{
-    //    // get all photonviews in the scene
-    //    //PhotonView.Find(viewId).gameObject.SetActive(true);
-
-    //    if (ReferencesForGamePlay.instance.m_34player.GetComponent<PhotonView>().ViewID == viewId)
-    //    {
-    //        board.gameObject.SetActive(true);
-    //    }
-    //}
 
     public void GameOver()
     {

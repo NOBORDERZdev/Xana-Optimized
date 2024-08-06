@@ -48,13 +48,11 @@ public class GamePlayFeatureHandler : MonoBehaviour
         {
             voiceChatSettingBtn.SetActive(false);
         }
-        //disable minimap
+
+        //disable minimap button
         if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
         {
             miniMapSettingBtn.SetActive(false);
-            ReferencesForGamePlay.instance.minimap.SetActive(false);
-            //PlayerPrefs.SetInt("minimap", 0);
-            //ConstantsHolder.xanaConstants.minimap = PlayerPrefs.GetInt("minimap");
         }
     }
 

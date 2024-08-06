@@ -32,10 +32,6 @@ public class XanaDuneControllerHandler : MonoBehaviour
     private void Start()
     {
         Enable_DisableObjects.Instance.DisableScreenRotaionButton();
-        _skateBoardPrefab = Resources.Load("XANADunePrefab/GameBoard") as GameObject;
-        _markPrefab = Resources.Load("XANADunePrefab/Mark") as GameObject;
-        _spawnedSkateBoard = Instantiate(_skateBoardPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false);
-        _spawnedMarkObject = Instantiate(_markPrefab, ReferencesForGamePlay.instance.MainPlayerParent.transform, false);
     }
 
     public void AddComponentOn34()
@@ -136,12 +132,12 @@ public class XanaDuneControllerHandler : MonoBehaviour
     //}
     public void TouchingCrab()
     {
-        _spawnedSkateBoard.GetComponent<InputManager>().OnTouchingCrab();
+        ReferencesForGamePlay.instance.spawnedSkateBoard.GetComponent<InputManager>().OnTouchingCrab();
     }
 
     public void TouchingFinish()
     {
-        _spawnedSkateBoard.GetComponent<InputManager>().force = 500f;
+        ReferencesForGamePlay.instance.spawnedSkateBoard.GetComponent<InputManager>().force = 500f;
         SandGameManager.Instance.GameOver();
     }
 
