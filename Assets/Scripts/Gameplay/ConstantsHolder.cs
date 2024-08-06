@@ -237,6 +237,7 @@ public class ConstantsHolder : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        userNameVisibilty = 1;
         avatarStoreSelection = new GameObject[11];
         wearableStoreSelection = new GameObject[8];
         colorSelection = new GameObject[6];
