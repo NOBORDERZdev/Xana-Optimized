@@ -25,7 +25,8 @@ public class JjVideo : MonoBehaviour
         }
         else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
         {
-            screenMesh.enabled = false;
+            if (screenMesh)
+                screenMesh.enabled = false;
         }
     }
 
@@ -53,7 +54,7 @@ public class JjVideo : MonoBehaviour
             liveVideoPlayer?.SetActive(false);
             preRecordedPlayer?.SetActive(false);
             awsVideoplayer.SetActive(true);
-            var videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+            VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
             videoPlayer.playOnAwake = true;
             videoPlayer.isLooping = true;
             videoPlayer.url = videoLink;
@@ -68,7 +69,7 @@ public class JjVideo : MonoBehaviour
 
     void SetPlayer(string link)
     {
-        var videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
+        VideoPlayer videoPlayer = awsVideoplayer.GetComponent<VideoPlayer>();
         videoPlayer.url = link;
         videoPlayer.Play();
     }

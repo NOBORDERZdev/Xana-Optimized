@@ -95,7 +95,6 @@ namespace Toyota
         private void OnDisable()
         {
             EraseDownloadedData();
-            Debug.Log("Data Cleared");
             Resources.UnloadUnusedAssets();
         }
 

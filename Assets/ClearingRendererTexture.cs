@@ -14,13 +14,11 @@ public class ClearingRendererTexture : MonoBehaviour
             if (renderer == null || renderer.sharedMaterial == null)
             {
                 continue; // Skip if renderer or sharedMaterial is null
-                Debug.Log("NO Need to Clear");
             }
 
             // Clear references
             renderer.sharedMaterial = null;
             DestroyImmediate(renderer);
-            Debug.Log("Clear");
         }
     }
 }

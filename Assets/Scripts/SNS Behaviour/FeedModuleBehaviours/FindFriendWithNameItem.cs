@@ -61,17 +61,17 @@ public class FindFriendWithNameItem : MonoBehaviour
 
     private void OnDisable()
     {
-        if (string.IsNullOrEmpty(searchUserRow.avatar) && string.IsNullOrEmpty(allFollowersRows.follower.avatar))
+        if (!string.IsNullOrEmpty(searchUserRow.avatar) || !string.IsNullOrEmpty(allFollowersRows.follower.avatar))
         {
-            return; // Exit early if both avatars are empty
+            // Remove sprite from asset cache
+            AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
+            profileImage.sprite = null;
+
+            // Unload specific assets
+            SNS_APIManager.Instance.ResourcesUnloadAssetFile();
         }
 
-        // Remove sprite from asset cache
-        AssetCache.Instance.RemoveFromMemory(profileImage.sprite);
-        profileImage.sprite = null;
-
-        // Unload specific assets
-        SNS_APIManager.Instance.ResourcesUnloadAssetFile();
+       
     }
 
     public void SetupData(SearchUserRow searchUserRow1, bool isFromSearch = false)

@@ -100,6 +100,7 @@ public class NFT_Holder_Manager : MonoBehaviour
     public void CloseBtnClicked()
     {
         currentRoom?.CloseInfoPop();
+        if (currentRoom != null) currentRoom = null;
         renderTexture_16x9?.Release();
         renderTexture_9x16?.Release();
         renderTexture_1x1?.Release();
