@@ -82,7 +82,7 @@ public class UserDailyRewardHandler : MonoBehaviour
 
     private void OnSocketError(CustomError args)
     {
-        Debug.LogError("<color=red>Daily Reward Socket Error : " + args + "</color>");
+        Debug.Log("<color=red>Daily Reward Socket Error : " + args + "</color>");
     }
 
     private void OnSocketDisconnect(CustomError args)

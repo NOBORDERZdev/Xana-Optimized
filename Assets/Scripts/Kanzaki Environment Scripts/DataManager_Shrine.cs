@@ -60,12 +60,12 @@ public class DataManager_Shrine : MonoBehaviour
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
             StartCoroutine(InitPlayerDB(id, userName));
-            Debug.LogError("Network Error initData" + www.downloadHandler.text);
+            Debug.Log("Network Error initData" + www.downloadHandler.text);
 
         }
         else
         {
-            Debug.LogError("initData" + www.downloadHandler.text);
+            Debug.Log("initData" + www.downloadHandler.text);
             string point = www.downloadHandler.text;
             if (point == "There is no player Data") point = "0";
             uIController_Shine.SetPointUI(point);
@@ -76,7 +76,7 @@ public class DataManager_Shrine : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("command", "checkPoint");
         form.AddField("id", id);
-        Debug.LogError("User ID checkPoint: " + id);
+        Debug.Log("User ID checkPoint: " + id);
 
         UnityWebRequest www = UnityWebRequest.Post(url, form);
         yield return www.SendWebRequest();
@@ -116,7 +116,7 @@ public class DataManager_Shrine : MonoBehaviour
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
             StartCoroutine(CheckPoint());
-            Debug.LogError("ConnectionError getPoint");
+            Debug.Log("ConnectionError getPoint");
         }
         else
         {

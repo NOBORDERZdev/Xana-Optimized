@@ -317,7 +317,7 @@ public class SandGameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Error in parsing personal rank : " + personalRank);
+            Debug.Log("Error in parsing personal rank : " + personalRank);
         }
 
         switch ((int)personalRankFloat)
@@ -396,7 +396,7 @@ public class SandGameManager : MonoBehaviour
         if (www.result == UnityWebRequest.Result.ConnectionError || www.result == UnityWebRequest.Result.ProtocolError)
         {
             StartCoroutine(SetRankingData());
-            Debug.LogError("ConnectionError getRank");
+            Debug.Log("ConnectionError getRank");
 
         }
         else

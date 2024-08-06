@@ -9,8 +9,6 @@ public class Btn
     public Sprite pressed;
     //public Image image;
     public GameObject[] screens;
-
-
 }
 
 public class TopMenuButtonController : MonoBehaviour
@@ -23,10 +21,6 @@ public class TopMenuButtonController : MonoBehaviour
     public bool Settings_pressed = false;
 
     bool IsHelpPanelOpen = false;
-
-
-
-
     private void Awake()
     {
         Instance = this;
@@ -59,8 +53,6 @@ public class TopMenuButtonController : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OnInvite -= OnInviteClick;
     }
 
-   
-
     public void SetPress(int index)
     {
         bool showScreen = !btns[index].screens[0].activeInHierarchy;
@@ -82,7 +74,6 @@ public class TopMenuButtonController : MonoBehaviour
         {
             Settings_pressed = false;
         }
-
     }
 
     void OnExitClick()
@@ -120,8 +111,6 @@ public class TopMenuButtonController : MonoBehaviour
     {
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.UpdateHelpObjects(IsHelpPanelOpen);
     }
-
-
    
     public void ResetAllToClose()
     {
