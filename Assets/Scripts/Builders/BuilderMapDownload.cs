@@ -806,8 +806,14 @@ public class BuilderMapDownload : MonoBehaviour
 
     IEnumerator AISkyTextureDownload()
     {
-        var texture = new Texture2D(512, 512, TextureFormat.RGB24, false);
-        var imagineImageRequest = UnityWebRequest.Get(aiSkyboxItem.textureURL);
+        string textureURL = aiSkyboxItem.textureURL;
+        if (textureURL.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
+        {
+            textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults/");
+            textureURL += "?width=512&height=256";
+        }
+        var texture = new Texture2D(512, 256, GamificationComponentData.instance.GetTextureFormat(), false);
+        var imagineImageRequest = UnityWebRequest.Get(textureURL);
         yield return imagineImageRequest.SendWebRequest();
 
         if (imagineImageRequest.result != UnityWebRequest.Result.Success)
