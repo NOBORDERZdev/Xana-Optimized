@@ -1020,7 +1020,7 @@ public class InventoryManager : MonoBehaviour
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
 
 
-        Debug.LogError("Selected Panel Index: " + _selectedPanel);
+        //Debug.LogError("Selected Panel Index: " + _selectedPanel);
 
         if (addValue)
         {
@@ -1039,7 +1039,6 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Wrong Input: " + _selectedPanel);
                 return -1;
             }
         }
@@ -1060,7 +1059,6 @@ public class InventoryManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Wrong Input: " + _selectedPanel);
                 return -1;
             }
         }
@@ -3364,14 +3362,11 @@ public class InventoryManager : MonoBehaviour
 
             case 3: // Outer - Shirts
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForOuter;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     CategorieslistOuter = TempitemDetail;
                     TempEnumVar = EnumClass.CategoryEnum.Outer;
-                    if (_generateCoroutin != null)
-                        StopCoroutine(_generateCoroutin);
-                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, CategorieslistOuter));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, CategorieslistOuter);
                     break;
                 }
             case 4: // Presets
@@ -3384,39 +3379,28 @@ public class InventoryManager : MonoBehaviour
                 }
             case 5: // Pants - Bottom
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForBottom;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Bottom;
-                    if (_generateCoroutin != null)
-                        StopCoroutine(_generateCoroutin);
-                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
             case 7: // Shoes
                 {
-                    //TempSubcategoryParent = ParentOfBtnsForShoes;
                     myIndexInList = IndexofPanel;
                     TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                     TempEnumVar = EnumClass.CategoryEnum.Shoes;
-                    if (_generateCoroutin != null)
-                        StopCoroutine(_generateCoroutin);
-                    _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                    ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     break;
                 }
             case 8: // Hairs
                 {
                     if (!colorMode)
                     {
-                        //TempSubcategoryParent = ParentOfBtnsAvatarHairs;
                         myIndexInList = IndexofPanel;
                         TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatar;
-                        Debug.Log("Hair Color Button is Temporiry Disable");
-                        //hairColorButton.gameObject.SetActive(true);
-                        if (_generateCoroutin != null)
-                            StopCoroutine(_generateCoroutin);
-                        _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     }
                     else
                     {
@@ -3454,10 +3438,7 @@ public class InventoryManager : MonoBehaviour
                             else
                                 AllCategoriesData[20].parentObj.transform.GetChild(i).GetComponent<Image>().enabled = false;
                         }
-
-                        if (_generateCoroutin != null)
-                            StopCoroutine(_generateCoroutin);
-                        _generateCoroutin = StartCoroutine(GenerateItemsBtn(TempSubcategoryParent.transform, TempitemDetail));
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
                     }
                     else
                     {
@@ -3564,20 +3545,23 @@ public class InventoryManager : MonoBehaviour
         }
 
 
-        if (TempSubcategoryParent != null)
+        if (TempSubcategoryParent != null && TempitemDetail.Count > 0)
         {
-            if (TempitemDetail.Count > 0)
-            {
-                UpdateColor(buttonIndex);
-                if (buttonIndex != -1)
-                {
-                    UpdateStoreSelection(buttonIndex);
-                }
-            } 
+           UpdateColor(buttonIndex);
+           if (buttonIndex != -1)
+           {
+             UpdateStoreSelection(buttonIndex);
+           }
         }
     }
-    int localcount = 0;
     
+    void ActivateGenerateItemsCoroutine(Transform parentObj, List<ItemDetail> TempitemDetail)
+    {
+        if (_generateCoroutin != null)
+            StopCoroutine(_generateCoroutin);
+        _generateCoroutin = StartCoroutine(GenerateItemsBtn(parentObj, TempitemDetail));
+    }
+
     private IEnumerator GenerateItemsBtn(Transform parentObj, List<ItemDetail> TempitemDetail)
     {
         int _LoopStart = GetDownloadedNumber(TempEnumVar);
@@ -3607,12 +3591,13 @@ public class InventoryManager : MonoBehaviour
     }
 
     CharacterHandler _charHandler;
+    int localcount = 0;
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
         if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink) && parentObj != TempSubcategoryParent && _ResettingAssetList == false)
         {
-            Debug.LogError("Icon Link is Empty or Parent Object is not same");
+            Debug.Log("Icon Link is Empty or Parent Object is not same");
             return;
         }
 
