@@ -207,7 +207,7 @@ public class UserLoginSignupManager : MonoBehaviour
             ConstantsGod.AUTH_TOKEN = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.xanaToken = PlayerPrefs.GetString("LoginToken");
             ConstantsHolder.isWalletLogin = true;
-            if (InventoryManager.instance != null)
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && InventoryManager.instance != null)
             {
               InventoryManager.instance.WalletLoggedinCall();
             }
@@ -366,7 +366,7 @@ public class UserLoginSignupManager : MonoBehaviour
     //wallet login functions 
     public void WalletAutoLogin()
     {
-        if (!ConstantsHolder.loggedIn)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.loggedIn)
         {
             //Debug.Log("Firebase: Wallet Login Event");
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Login_Wallet_Success.ToString());
@@ -380,6 +380,8 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+            return;
         GetUserClothData();
         GetOwnedNFTsFromAPI();
         
@@ -571,7 +573,10 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
         }
-        CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
+        if (CharacterHandler.instance)
+        {
+            CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
+        }
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();

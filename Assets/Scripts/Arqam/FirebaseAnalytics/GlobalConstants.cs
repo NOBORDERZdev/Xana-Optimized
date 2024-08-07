@@ -76,7 +76,7 @@ public class GlobalConstants
         eventName = prefix + eventName;
         Debug.Log("<color=red>FB Event: " + eventName + "</color>");
 
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+       // Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
     }
     #endregion
 
