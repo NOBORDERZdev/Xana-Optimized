@@ -23,12 +23,14 @@ public class ConstantsHolder : MonoBehaviour
     public static string xanaToken;
     public static string userId;
     public static string userName;
+    public static string uniqueUserName;
 
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
     public bool LoginasGustprofile = false; // for gust profile
+    public bool LoggedInAsGuest = false; // to check is user logged in as guest
     public bool isFirstPanel = false; // User has Not data Open First Panel
     public string NFTUrl;
     public string clothJson;
@@ -95,6 +97,16 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    //For Metabuzz Environments
+    public enum ComingFrom{
+        None,
+        Dune,
+        Daisen
+    }
+    public ComingFrom comingFrom = ComingFrom.None;
+
+    //for world transition from JJworldChanger a world
+    public bool hasWorldTransitionedInternally;
     // Is in Store
     public bool isStoreActive = false;
 
@@ -127,6 +139,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
     public bool isFromHomeTab = false;
+    public bool isFromTottoriWorld = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;
@@ -151,6 +164,10 @@ public class ConstantsHolder : MonoBehaviour
     public static bool isPenguin;
     public static bool isFixedHumanoid;
     public static bool HaveSubWorlds;
+
+    //Daily reward
+    public bool isGoingForHomeScene = false;
+    public bool hasToShowDailyPopup = false;
 
     public string r_EmoteStoragePersistentPath
     {
