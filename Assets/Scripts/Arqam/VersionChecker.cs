@@ -30,21 +30,17 @@ public class VersionChecker : MonoBehaviour
         string storedVersion = PlayerPrefs.GetString(VersionKey, "");
         int storedVersionCode = PlayerPrefs.GetInt(VersionCodeKey, -1);
 
-        Debug.LogError("currentVersion: " + currentVersion);
-        Debug.LogError("currentBuildVersion: " + currentVersionCode);
         if ((storedVersion != currentVersion) || (storedVersionCode != currentVersionCode))
         {
             Addressables.CleanBundleCache();
             Caching.ClearCache();
             ClearAddressablesCache();
-            Debug.LogError("Addressable cleared");
             PlayerPrefs.SetString(VersionKey, currentVersion);
             PlayerPrefs.SetInt(VersionCodeKey, currentVersionCode);
             Handheld.Vibrate();
         }
         else
         {
-            Debug.LogError("App version is up to date.");
             AddressableDownloader.Instance.DownloadCatalogFile();
         }
     }
@@ -105,11 +101,11 @@ public class VersionChecker : MonoBehaviour
     {
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
-            Debug.LogError("Addressables cache cleared via API.");
+            //Debug.LogError("Addressables cache cleared via API.");
         }
         else
         {
-            Debug.LogError("Failed to clear Addressables cache via API.");
+           // Debug.LogError("Failed to clear Addressables cache via API.");
         }
         AddressableDownloader.Instance.DownloadCatalogFile();
     }
