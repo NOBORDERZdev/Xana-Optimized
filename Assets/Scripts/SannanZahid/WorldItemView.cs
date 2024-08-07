@@ -395,6 +395,10 @@ public class WorldItemView : EnhancedScrollerCellView
         {
             ConstantsHolder.userLimit = int.Parse(userLimit);
         }
+        else if (m_EnvironmentName == "XANA_DUNE" /*|| m_EnvironmentName == "XANA_KANZAKI"*/)
+        {
+            ConstantsHolder.userLimit = 1;
+        }
         else
         {
             ConstantsHolder.userLimit = int.Parse(userLimit);
