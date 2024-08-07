@@ -50,6 +50,7 @@ public class Emikage : MonoBehaviour
             gameObject.SetActive(false);
             PlayerController.PlayerIsIdle?.Invoke();
             ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = true;
+            GamePlayUIHandler.inst.gamePlayUIParent.SetActive(true);
         });
         writeBoard.transform.GetChild((int)WriteBoardChild.CloseBtn).GetComponent<Button>().onClick.AddListener(closeBtnClick);
         writeBoard.transform.GetChild((int)WriteBoardChild.PostBtn).GetComponent<Button>().onClick.AddListener(onPostOnBoard);
