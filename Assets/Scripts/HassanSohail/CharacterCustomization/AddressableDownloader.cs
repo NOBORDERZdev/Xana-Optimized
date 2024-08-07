@@ -24,7 +24,7 @@ public class AddressableDownloader : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
             MemoryManager = GetComponent<AddressableMemoryReleaser>();
-            DownloadCatalogFile();
+            //DownloadCatalogFile();
         }
         else
         {

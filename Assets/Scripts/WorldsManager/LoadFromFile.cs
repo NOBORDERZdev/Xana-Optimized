@@ -478,9 +478,20 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
                 StartCoroutine(setPlayerCamAngle(1.74f, 0.5f));
             }
         }
+       
         mainPlayer.transform.position = new Vector3(0, 0, 0);
-        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
-        player = PhotonNetwork.Instantiate("34", spawnPoint, Quaternion.identity, 0);
+
+        Vector3 newPos = spawnPoint + new Vector3(500, 500f, 500);
+        if (!XanaConstants.xanaConstants.isFromPMYLobby)
+        {
+            mainController.transform.position = newPos;
+        }
+        else
+        {
+            mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+            newPos = spawnPoint;
+        }
+        player = PhotonNetwork.Instantiate("34", newPos, Quaternion.identity, 0);
 
         ReferrencesForDynamicMuseum.instance.m_34player = player;
         SetAxis();
@@ -505,12 +516,13 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
             // LoadingHandler.Instance.UpdateLoadingSlider(0, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("");
         }
-        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && player.GetComponent<PhotonView>().IsMine)
+        if ((WorldItemView.m_EnvName != "JJ MUSEUM") && XanaConstants.xanaConstants.isFromPMYLobby
+            && player.GetComponent<PhotonView>().IsMine)
         {
             if (!XanaConstants.xanaConstants.isCameraMan)
                 LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
         }
-        else
+        else if(XanaConstants.xanaConstants.isFromPMYLobby)
         {
             if (JjMusuem.Instance)
                 JjMusuem.Instance.SetPlayerPos(XanaConstants.xanaConstants.mussuemEntry);
@@ -599,6 +611,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
         /// Load NPC fake chat system
         /// </summary>
         ActivateNpcChat();
+    }
+
+    public void SetPlayerPos()
+    {
+        mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
     }
 
     void ActivateNpcChat()

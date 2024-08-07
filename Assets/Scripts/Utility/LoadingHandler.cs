@@ -331,11 +331,7 @@ public class LoadingHandler : MonoBehaviour
         //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
         //}
-
-        loadingPanel.SetActive(false);
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
-
+        StartCoroutine(ApplyDelay());
 
         if (ReferrencesForDynamicMuseum.instance != null)
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
@@ -345,6 +341,26 @@ public class LoadingHandler : MonoBehaviour
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
+    }
+    private IEnumerator ApplyDelay()
+    {
+        if (XanaConstants.xanaConstants.isBackFromWorld)
+        {
+            HideLoadingManually();
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+            LoadFromFile.instance.SetPlayerPos();
+            HideLoadingManually();
+        }
+    }
+    private void HideLoadingManually()
+    {
+        UpdateLoadingStatusText("");
+        loadingPanel.SetActive(false);
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
     }
 
 
