@@ -21,7 +21,7 @@ public class UpdateFontRuntime : MonoBehaviour
     // Update is called once per frame
     public void FontLoadOnRuntime()
     {
-        if (LocalizationManager.forceJapanese)
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
         {
             TMP_FontAsset fontAsset = Resources.Load<TMP_FontAsset>("Fonts/JP R");
             TextForRef.font = fontAsset;

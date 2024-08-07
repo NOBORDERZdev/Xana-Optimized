@@ -13,7 +13,7 @@ public class AccountDeleteToggle : MonoBehaviour
 
     public void Awake()
     {
-        if (LocalizationManager.forceJapanese)
+        if (LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
         {
             Vector3 localPos = transform.localPosition;
             localPos.y = TopAlignment; // Set your desired local Y position
