@@ -9,14 +9,14 @@ public class AccountDeleteToggle : MonoBehaviour
     public Toggle Toggle;
     public Button Button;
     // public TextMeshProUGUI DescriptionText;
-    public float topAlignment;
+    public float TopAlignment;
 
     public void Awake()
     {
         if (LocalizationManager.forceJapanese)
         {
             Vector3 localPos = transform.localPosition;
-            localPos.y = topAlignment; // Set your desired local Y position
+            localPos.y = TopAlignment; // Set your desired local Y position
             transform.localPosition = localPos;
         }
     }

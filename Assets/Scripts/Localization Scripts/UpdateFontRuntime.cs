@@ -5,16 +5,16 @@ using UnityEngine;
 
 public class UpdateFontRuntime : MonoBehaviour
 {
-    public TMP_Text text;
+    public TMP_Text TextForRef;
     public float FontSize;
     public float CharacterSpacing;
     public float LineSpacing;
-    public float newLeftMargin;
-    public float newTopMargin;
+    public float NewLeftMargin;
+    public float NewTopMargin;
     // Start is called before the first frame update
     void Awake()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        TextForRef = GetComponent<TextMeshProUGUI>();
         FontLoadOnRuntime();
     }
 
@@ -24,18 +24,18 @@ public class UpdateFontRuntime : MonoBehaviour
         if (LocalizationManager.forceJapanese)
         {
             TMP_FontAsset fontAsset = Resources.Load<TMP_FontAsset>("Fonts/JP R");
-            text.font = fontAsset;
-            text.fontSize = FontSize;
-            text.characterSpacing = CharacterSpacing;
-            text.lineSpacing = LineSpacing;
+            TextForRef.font = fontAsset;
+            TextForRef.fontSize = FontSize;
+            TextForRef.characterSpacing = CharacterSpacing;
+            TextForRef.lineSpacing = LineSpacing;
 
             // Modify the left margin
-            Vector4 currentMargin = text.margin;
-            currentMargin.x = newLeftMargin;
-            text.margin = currentMargin;
+            Vector4 currentMargin = TextForRef.margin;
+            currentMargin.x = NewLeftMargin;
+            TextForRef.margin = currentMargin;
             // Modify the Top margin
-            currentMargin.y = newTopMargin;
-            text.margin = currentMargin;
+            currentMargin.y = NewTopMargin;
+            TextForRef.margin = currentMargin;
             
 
 
