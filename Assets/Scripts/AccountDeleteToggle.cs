@@ -8,19 +8,8 @@ public class AccountDeleteToggle : MonoBehaviour
 {
     public Toggle Toggle;
     public Button Button;
-    // public TextMeshProUGUI DescriptionText;
-    public float topAlignment;
-
-    public void Awake()
-    {
-        if (LocalizationManager.forceJapanese)
-        {
-            Vector3 localPos = transform.localPosition;
-            localPos.y = topAlignment; // Set your desired local Y position
-            transform.localPosition = localPos;
-        }
-    }
-    public void ChangeButtonOnToggle()
+   // public TextMeshProUGUI DescriptionText;
+   public void ChangeButtonOnToggle()
    {
         if (Toggle.isOn)
         {
