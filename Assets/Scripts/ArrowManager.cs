@@ -78,8 +78,10 @@ public class ArrowManager : MonoBehaviourPunCallbacks
         }
        
         arrow = Resources.Load<GameObject>("Arrow");
-        clientMat = Resources.Load<Material>("Material #27");
-        playerMat = Resources.Load<Material>("Material #25");
+        Material _mat = Resources.Load<Material>("Material #25");
+        clientMat = playerMat = _mat;
+        //clientMat = Resources.Load<Material>("Material #27");
+        //playerMat = Resources.Load<Material>("Material #25");
         if (this.GetComponent<PhotonView>().IsMine)
         {
             if (ConstantsHolder.xanaConstants.isBuilderScene)
@@ -401,7 +403,7 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             // go.AddComponent<Equipment>();
             //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
         }
-        else
+        //else
         {
             if(ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Summit"))
             {
@@ -435,19 +437,21 @@ public class ArrowManager : MonoBehaviourPunCallbacks
             //}catch()
             //EmoteAnimationHandler.Instance.controller.SetStateEffectiveMotion(state, EmoteAnimationHandler.Instance.spawnCharacterObject.transform.GetComponent<Animation>().clip);
         }
+        go.GetComponent<MeshRenderer>().material = playerMat;
 
-        if (isOtherPlayer)
-        {
-            go.GetComponent<MeshRenderer>().material = clientMat;
 
-            //go.AddComponent<ChangeGear>();
-            // go.AddComponent<Equipment>();
-            //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
-        }
-        else
-        {
-            go.GetComponent<MeshRenderer>().material = playerMat;
-        }
+        //if (isOtherPlayer)
+        //{
+        //    go.GetComponent<MeshRenderer>().material = clientMat;
+
+        //    //go.AddComponent<ChangeGear>();
+        //    // go.AddComponent<Equipment>();
+        //    //  GameObject.FindGameObjectWithTag("DCloth").GetComponent<DefaultClothes>()._DefaultInitializer();
+        //}
+        //else
+        //{
+        //    go.GetComponent<MeshRenderer>().material = playerMat;
+        //}
 
         if (isBear)
         {
