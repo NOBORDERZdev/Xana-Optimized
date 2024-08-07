@@ -572,6 +572,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             StartCoroutine(setPlayerCamAngle(0f, 00.5f));
         }
+        if(WorldItemView.m_EnvName.Contains("JJTest"))
+        {
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+        }
     }
 
     public void SetPlayerPos()

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
+using static System.Net.WebRequestMethods;
 
 
 public class THA_AI_Conversation : MonoBehaviour
@@ -18,7 +19,7 @@ public class THA_AI_Conversation : MonoBehaviour
     private Animator _animator;
     private bool _isAirinTyping = false;
     private string _ip;
-
+    private string _url;
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -64,7 +65,6 @@ public class THA_AI_Conversation : MonoBehaviour
         _animator.SetBool("isChating", true);
         StartCoroutine(SetApiData());
     }
-
     private IEnumerator SetApiData()
     {
         yield return new WaitForSeconds(0.1f);
@@ -72,22 +72,23 @@ public class THA_AI_Conversation : MonoBehaviour
         string worldId = ConstantsHolder.xanaConstants.MuseumID;
         if (ConstantsHolder.xanaConstants.MuseumID == "2871")
         {
-            //ip =;
-            Debug.Log("jjtest " + ConstantsHolder.xanaConstants.MuseumID);
+            _ip = "http://182.70.242.10:8042/npc-chat?input_string=";
+            _url = _ip + _msg + "&npc_id=" + worldId + "&personality_id=" + worldId + "&usr_id=" + id + "&personality_name=karen";
+           // Debug.Log("jjtest " + ConstantsHolder.xanaConstants.MuseumID);
         }
         else
         {
             _ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
+            _url = _ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
         }
         //if (!APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://182.70.242.10:8034/";
         //else if (APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://15.152.55.82:8054/";
 
-        string url = _ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
-        //Debug.Log("<color=red> Communication URL(Airin): " + url + "</color>");
+        //Debug.LogError("<color=red> Communication URL(Airin): " + _url + "</color>");
 
-        UnityWebRequest request = UnityWebRequest.Get(url);
+        UnityWebRequest request = UnityWebRequest.Get(_url);
         request.downloadHandler = new DownloadHandlerBuffer();
         request.SendWebRequest();
         while (!request.isDone)

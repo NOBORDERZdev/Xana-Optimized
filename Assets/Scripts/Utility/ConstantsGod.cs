@@ -307,7 +307,7 @@ public class ConstantsGod
     public static string toyotaApi = "/toyotaAichiWorlds/get-all-assets-by-worldId/";//"/pmyWorlds/get-all-assets-by-worldId/";
     #endregion
     #region JJTest
-    public static string jjtestApi = "";
+    public static string jjtestApi = "/airin/get-all-assets-by-worldId/"; 
     #endregion
 
     #region XANA Summit Api's
