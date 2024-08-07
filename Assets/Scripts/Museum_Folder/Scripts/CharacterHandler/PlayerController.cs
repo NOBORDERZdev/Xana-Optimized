@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
-
     public delegate void CameraChangeDelegate(Camera camera);
     public static event CameraChangeDelegate CameraChangeDelegateEvent;
 
@@ -29,9 +27,13 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public float JumpVelocity = 3;
+
+    public float YourDownhillThreshold = 30f; // Adjust slope Threshold 
+    public float CurrentSlope = 0f;
+    private readonly float _rayOffsett = 0.5f;
+
     //[SerializeField]
     public float jumpHeight = 1.0f;
-
     public Transform cameraTransform = null;
     //public Transform cameraCharacterTransform = null;
     //public GameObject cmVcam;
@@ -152,6 +154,7 @@ public class PlayerController : MonoBehaviour
 
         innerJoystick.gameObject.AddComponent<JoyStickIssue>();
         innerJoystick_Portrait.gameObject.AddComponent<JoyStickIssue>();
+
 
         if (GamePlayButtonEvents.inst != null)
         {
@@ -418,20 +421,45 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    public bool IsGoingDownhill()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterController.height / 2f + _rayOffsett))
+        {
+            CurrentSlope = Vector3.Angle(Vector3.up, hit.normal);
+            return CurrentSlope >= 0 && CurrentSlope < YourDownhillThreshold;
+        }
+        else
+        {
+            // Character is not on ground, assume not downhill
+            return false;
+        }
+    }
+
 
     private void Update()
     {
         if (animator == null)
             return;
+        //IsGoingDownhill();
+        //if (IsGrounded() && !IsJumping)
+        //{
+        //    gravityVector.y = gravityValue * Time.deltaTime;
+        //    animator.SetBool("IsFalling", false);
+        //}
+        //else if (!IsGrounded() && characterController.velocity.y < -1)
+        //    animator.SetBool("IsFalling", true);
+
 
         if (characterController.isGrounded && !IsJumping)
         {
             gravityVector.y = gravityValue * Time.deltaTime;
             animator.SetBool("IsFalling", false);
         }
-        else if (!characterController.isGrounded && characterController.velocity.y < -1)
+        else if (!IsGoingDownhill())
             animator.SetBool("IsFalling", true);
+
+
 
         if (m_IsMovementActive)
         {
@@ -904,6 +932,7 @@ public class PlayerController : MonoBehaviour
         //    right.Normalize();
 
         Vector3 desiredMoveDirection = (forward * movementInput.y + right * movementInput.x).normalized;
+
         //Debug.Log("call hua for===="+ jumpNow + characterController.isGrounded + allowJump + Input.GetKeyDown(KeyCode.Space));
         //Debug.Log("MovmentInput:" + movementInput + "  :DesiredMoveDirection:" + desiredMoveDirection);
         if ((animator.GetCurrentAnimatorStateInfo(0).IsName("NormalStatus") || animator.GetCurrentAnimatorStateInfo(0).IsName("Dwarf Idle") || animator.GetCurrentAnimatorStateInfo(0).IsName("Animation")) && (((Input.GetKeyDown(KeyCode.Space) || IsJumpButtonPress) && characterController.isGrounded && !animator.IsInTransition(0))/* || (characterController.isGrounded && jumpNow && allowJump)*/))

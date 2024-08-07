@@ -519,7 +519,7 @@ public class LoadingHandler : MonoBehaviour
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
             if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                teleportFeader.gameObject.activeInHierarchy)
+                teleportFeader.gameObject.activeInHierarchy || ConstantsHolder.xanaConstants.isFromTottoriWorld)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -553,7 +553,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 currentValue = sliderCompleteValue;
                 if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy)
+                    teleportFeader.gameObject.activeInHierarchy || ConstantsHolder.xanaConstants.isFromTottoriWorld)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -570,6 +570,7 @@ public class LoadingHandler : MonoBehaviour
             }
             yield return null;
         }
+        ConstantsHolder.xanaConstants.isFromTottoriWorld = false;
     }
 
     public IEnumerator TeleportFader(FadeAction action)
