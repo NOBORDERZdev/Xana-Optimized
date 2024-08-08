@@ -43,7 +43,7 @@ public class BuilderMapDownload : MonoBehaviour
     private byte[] deformationData;
 
     public GameObject XANAPartyLoading;
-
+    public GameObject AssetLoadingBar;
     [Space]
     [Header("Dynamic Object Prefab")]
     public GameObject MultiplayerComponent;
@@ -172,6 +172,7 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
         XANAPartyLoading.SetActive(false);
+        AssetLoadingBar.SetActive(true);
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
