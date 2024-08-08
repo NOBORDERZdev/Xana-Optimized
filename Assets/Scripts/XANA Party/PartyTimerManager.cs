@@ -7,7 +7,8 @@ using UnityEngine;
 public class PartyTimerManager : MonoBehaviour
 {
     public float timerDuration = 60f;
-    private double startTime = -1;
+    [HideInInspector]
+    public double startTime = -1;
     public bool isTimerRunning = false;
 
     private void Awake()
@@ -59,7 +60,7 @@ public class PartyTimerManager : MonoBehaviour
     }
 
     [PunRPC]
-    void StartTimer(double masterStartTime)
+    public void StartTimer(double masterStartTime)
     {
         StartCoroutine(StartTimerDelay(masterStartTime));
     }

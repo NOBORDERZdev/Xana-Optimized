@@ -165,6 +165,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             obj.GetComponent<PlayerLeaderboardStats>().PlayerRank.text = player.rank.ToString();
             obj.GetComponent<PlayerLeaderboardStats>().PlayerName.text = player.name;
             obj.GetComponent<PlayerLeaderboardStats>().PlayerPoints.text = player.points.ToString();
+
             obj.gameObject.SetActive(true);
         }
 
@@ -219,13 +220,13 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
         foreach (var player in PlayerIDs)
         {
-            if (!WinnerPlayerIds.Contains(player))
+            if (!pointsData.points.ContainsKey(player))
             {
                 pointsData.points.Add(player, 0);
             }
         }
 
-        string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
+        string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "api/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
 
         // Manually create JSON string
         StringBuilder jsonBuilder = new StringBuilder();
@@ -272,7 +273,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
 
     public IEnumerator GetRoundData()
     {
-        string requestUrl = string.Format(ConstantsGod.API_BASEURL_Penpenz + "/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
+        string requestUrl = string.Format(ConstantsGod.API_BASEURL_Penpenz + "api/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
 
         UnityWebRequest request = UnityWebRequest.Get(requestUrl);
 
@@ -318,7 +319,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region End Race
     public IEnumerator EndRace()
     {
-        string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "/races/" + RaceID.ToString() + "/end");
+        string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "api/races/" + RaceID.ToString() + "/end");
 
         UnityWebRequest request = new UnityWebRequest(url, "PUT");
         request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);

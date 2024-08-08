@@ -104,6 +104,16 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 
+    
+
+    [PunRPC]
+    public void MovePlayerToNextGameOnReconnect()
+    {
+        if (PhotonNetwork.IsMasterClient && (XANAPartyManager.Instance.GameIndex < XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count))
+        {
+            StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+        }
+    }
     public void ResetValuesOnCompleteRace()
     {
         _XanaConstants.isJoinigXanaPartyGame = false;
