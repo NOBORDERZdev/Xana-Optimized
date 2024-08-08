@@ -113,6 +113,7 @@ public class BackButtonHandler : MonoBehaviour
     private void ExitFromEditProfile()
     {
         MyProfileDataManager.Instance.editProfileScreen.SetActive(false);
+        FeedUIController.Instance.footerCan.SetActive(true);
         _screenTabs = screenTabs.Othertabs;
     }
 

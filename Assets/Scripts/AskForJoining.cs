@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class AskForJoining : MonoBehaviour
 {
     [SerializeField]
-    private GameObject panel;
+    private GameObject _panel;
     //  public GameObject ss;
     // Start is called before the first frame update
     // Start is called before the first frame update
@@ -93,7 +93,7 @@ public class AskForJoining : MonoBehaviour
             if (ReferencesForGamePlay.instance != null)
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
 
-            LoadingHandler.Instance.ResetLoadingValues();
+            LoadingHandler.Instance.ShowLoading();
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
@@ -108,7 +108,7 @@ public class AskForJoining : MonoBehaviour
             //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
-            panel.SetActive(false);
+            _panel.SetActive(false);
             Destroy(this.gameObject,5f);
 
         }

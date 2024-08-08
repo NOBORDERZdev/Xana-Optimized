@@ -25,8 +25,8 @@ public class TagPrefabInfo : MonoBehaviour
         isSelected = !isSelected;   
         if (isSelected)
         {
-            GetComponent<UnityEngine.UI.Image>().color = new Color(236,236,236,255);
-            tagName.color = Color.black;
+            GetComponent<UnityEngine.UI.Image>().color = Color.black;
+            tagName.color = Color.white;
 
             if(!MyProfileDataManager.Instance.userSelectedTags.Contains(tagName.text))
                 MyProfileDataManager.Instance.userSelectedTags.Add(tagName.text);
