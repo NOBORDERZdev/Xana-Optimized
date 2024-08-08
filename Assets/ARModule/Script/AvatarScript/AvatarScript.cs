@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Animations.Rigging;
+//using UnityEngine.Animations.Rigging;
 using UnityEngine.SceneManagement;
 
 public class AvatarScript : MonoBehaviour
@@ -31,7 +31,7 @@ public class AvatarScript : MonoBehaviour
     public GameObject chestAnimObj;
     public GameObject mainRootRotationAnimObj;
     public GameObject mainRootPositionAnimObj;
-    public RigBuilder rigBuilder;
+   // public RigBuilder rigBuilder;
 
     public void Start()
     {
@@ -64,18 +64,18 @@ public class AvatarScript : MonoBehaviour
                     avatarHips = rootRotationObj.gameObject;
                     if (rootRotationObj != null)
                     {
-                        mainRootRotationAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = rootRotationObj;
-                        mainRootPositionAnimObj.GetComponent<MultiPositionConstraint>().data.constrainedObject = rootRotationObj;
+                       // mainRootRotationAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = rootRotationObj;
+                      //  mainRootPositionAnimObj.GetComponent<MultiPositionConstraint>().data.constrainedObject = rootRotationObj;
 
                         Transform hadeObj = rootRotationObj.GetChild(2).GetChild(0).GetChild(0).GetChild(1).GetChild(0).transform;
                         //hadeObj.rotation = Quaternion.Euler(Vector3.zero);
                         //hadeObj.transform.parent.rotation = Quaternion.Euler(Vector3.zero);
-                        headAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = hadeObj;
+                      // headAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = hadeObj;
 
-                        chestAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = rootRotationObj.GetChild(2).GetChild(0).transform;
+                      // chestAnimObj.GetComponent<MultiRotationConstraint>().data.constrainedObject = rootRotationObj.GetChild(2).GetChild(0).transform;
                     }
 
-                    rigBuilder.enabled = true;
+                    //rigBuilder.enabled = true;
                     if(SceneManager.GetActiveScene().name == "ARModuleRealityScene")
                     {
                         animator.SetBool("Idle", true);
@@ -109,9 +109,9 @@ public class AvatarScript : MonoBehaviour
 
     IEnumerator WaitToResetRigBuilder()
     {
-        rigBuilder.enabled = false;
+      //  rigBuilder.enabled = false;
         yield return new WaitForSeconds(0.1f);
-        rigBuilder.enabled = true;
+     //   rigBuilder.enabled = true;
         animator.SetBool("Idle", false);
     }
 
