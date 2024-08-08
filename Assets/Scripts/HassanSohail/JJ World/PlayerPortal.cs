@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static GlobalConstants;
+//using static GlobalConstants;
 
 public class PlayerPortal : MonoBehaviour
 {
@@ -69,20 +69,20 @@ public class PlayerPortal : MonoBehaviour
                 }
 
                 // For EnterPortal
-                if (currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
-                {
-                    if (transform.parent.name.Contains("Astroboy"))
-                        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Atom + "_" + name;
-                    else
-                        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Rental + "_" + name;
-                }
-                else if (currentPortal == PortalType.Enter)
-                {
-                    if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
-                        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Atom + "_" + ref_JJMuseumInfoManager.name;
-                    else
-                        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
-                }
+                //if (currentPortal == PortalType.None || currentPortal == PortalType.Teleport)
+                //{
+                //    if (transform.parent.name.Contains("Astroboy"))
+                //        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Atom + "_" + name;
+                //    else
+                //        customFirebaseEvent = FirebaseTrigger.WP_Infoboard_Rental + "_" + name;
+                //}
+                //else if (currentPortal == PortalType.Enter)
+                //{
+                //    if (ref_JJMuseumInfoManager.transform.parent.name.Contains("Astroboy"))
+                //        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Atom + "_" + ref_JJMuseumInfoManager.name;
+                //    else
+                //        customFirebaseEvent = FirebaseTrigger.WP_EachRoom_Rental + "_" + ref_JJMuseumInfoManager.name;
+                //}
 
                 triggerObject = other.gameObject;
 
@@ -98,7 +98,7 @@ public class PlayerPortal : MonoBehaviour
     {
         if (triggerObject.GetComponent<PhotonView>().IsMine)
         {
-            SendFirebaseEvent(customFirebaseEvent);
+           // SendFirebaseEvent(customFirebaseEvent);
             //CallAnalyticsEvent();
             this.StartCoroutine(Teleport());
         }

@@ -50,7 +50,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
 
     private const string InLevelProperty = "InLevel";
-    private bool IsLevelPropertyUpdatedOnlevelLoad = false;
+    public bool IsLevelPropertyUpdatedOnlevelLoad = false;
     public bool isCounterTimerRunning = false;
     public float counterTimerDuration = 60f;
     private double counterStartTime = -1;
