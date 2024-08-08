@@ -1734,12 +1734,13 @@ public class AvatarController : MonoBehaviour
             // Also Remove Pant Mask
             tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
+        else if (type == "Legs" && SceneManager.GetActiveScene().name != "Home" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // User Has wear Full Costume 
-            // Change Full costume to Default shirt 
+            if (SceneManager.GetActiveScene().name != "Home")
+                // User Has wear Full Costume 
+                // Change Full costume to Default shirt 
 
-            WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
+                WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
 
             // Apply Mask For Default Shirt
             tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
