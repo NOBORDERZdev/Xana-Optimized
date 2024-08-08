@@ -530,8 +530,6 @@ public class YoutubeAPIHandler : MonoBehaviour
                 //SoundSettings.soundManagerSettings.setNewSliderValues();
 
                 VideoPlayerRef.videoPlayer.url = _response.data.link;
-                //VideoPlayerRef.videoPlayer.time = 0;
-                //VideoPlayerRef.videoPlayer.Play();
                 VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
                 VideoPlayerRef.videoPlayer.Prepare();
 
