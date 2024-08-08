@@ -93,7 +93,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                 }
                 else if (GameManager.currentLanguage == "ja")
                 {
-                    NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("今すぐミーティングに参加してください!");
+                    NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
                 }
             }
         }

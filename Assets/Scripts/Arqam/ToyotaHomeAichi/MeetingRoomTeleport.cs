@@ -145,7 +145,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("面接官を待っています");
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("担当者待機中");
             }
         }
         else if (NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus.Equals(ThaMeetingStatusUpdate.MeetingStatus.Inprogress))
@@ -157,7 +157,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("会議が進行中です");
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("会議室使用中");
             }
         }
     }
@@ -184,7 +184,7 @@ public class MeetingRoomTeleport : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("今すぐミーティングに参加してください!");
+                triggerObject.GetComponent<ArrowManager>().UpdateMeetingTxt("会議室利用可");
             }
         }
         NFT_Holder_Manager.instance.meetingTxtUpdate.MeetingRoomText.text = "";
