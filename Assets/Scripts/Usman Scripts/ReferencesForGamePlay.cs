@@ -23,6 +23,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public GameObject m_34player;
     public PlayerController playerControllerNew;
+    public GameObject spawnedSkateBoard;
     public GameObject minimap;
     public GameObject MinimapSummit;
     public GameObject FullscreenMapSummit;
