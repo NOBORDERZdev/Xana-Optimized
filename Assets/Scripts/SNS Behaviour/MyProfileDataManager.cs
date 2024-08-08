@@ -261,6 +261,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (!isEditProfileNameAlreadyExists)
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
             }
             isEditProfileNameAlreadyExists = false;
             //Debug.Log("Profile Update Success and delete file");
@@ -663,6 +664,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         editProfileScreen.SetActive(true);
+        feedUIController.footerCan.SetActive(false);
         SetupEditProfileScreen();
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.EditProfile);
     }
@@ -829,7 +831,6 @@ public class MyProfileDataManager : MonoBehaviour
     public void OnClickEditProfileBackButton()
     {
         ProfilePostPartShow();
-
         if (File.Exists(setImageAvatarTempPath))
         {
             File.Delete(setImageAvatarTempPath);
@@ -957,6 +958,7 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
                 EditProfileDoneButtonSetUp(true);
             }
         }
