@@ -13,7 +13,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
     public string SummitAreaName;
     public int DomeId;
     public int DomeWorldId;
-    public bool isBuilderWorld = false;
+    public bool IsBuilderWorld = false;
     public enum SummitAreaTrigger
     {
         Central_Area,
@@ -58,7 +58,7 @@ public class StayTimeTrackerForSummit : MonoBehaviour
             worldName = "_XS_" + SummitAreaName;
         else
         {
-            if(isBuilderWorld)
+            if(IsBuilderWorld)
                 worldName = "_Dome_" + DomeId + "_BW_" + DomeWorldId;
             else
                 worldName = "_Dome_" + DomeId + "_XW_" + DomeWorldId;
