@@ -101,8 +101,11 @@ public class ProfileUIHandler : MonoBehaviour
         // Set game objects
         menuLightingObj.SetActive(true);
         lightingObj.SetActive(false);
-        maleAvatarRef?.SetActive(false);
-        femaleAvatarRef?.SetActive(false);
+       
+        if (maleAvatarRef)
+            maleAvatarRef.SetActive(false);
+        if (femaleAvatarRef)
+            femaleAvatarRef.SetActive(false);
     }
 
     private void Start()
