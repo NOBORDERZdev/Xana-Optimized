@@ -13,28 +13,28 @@ public class SplineDone : MonoBehaviour {
 
     public event EventHandler OnDirty;
 
-    [SerializeField] private Transform dots = null;
-    [SerializeField] private Vector3 normal = new Vector3(0, 0, -1);
-    [SerializeField] private bool closedLoop;
-    [SerializeField] private List<Anchor> anchorList;
+    [SerializeField] private Transform _dots = null;
+    [SerializeField] private Vector3 _normal = new Vector3(0, 0, -1);
+    [SerializeField] private bool _closedLoop;
+    [SerializeField] private List<Anchor> _anchorList;
 
-    private float moveDistance;
-    private float pointAmountInCurve;
-    private float pointAmountPerUnitInCurve = 2f;
+    private float _moveDistance;
+    private float _pointAmountInCurve;
+    private float _pointAmountPerUnitInCurve = 2f;
 
-    private static readonly Vector3 normal2D = new Vector3(0, 0, -1f);
-    private List<Point> pointList;
-    private float splineLength;
-    float previoust = 0;
-    Dictionary<float, Vector3> positiounit = new Dictionary<float, Vector3>();
-    Dictionary<float, Vector3> postionatT = new Dictionary<float, Vector3>();
-    Dictionary<Vector3, float> DistanceatTpos = new Dictionary<Vector3, float>();
-    Dictionary<float, float> totaldistance = new Dictionary<float, float>();
+    private static readonly Vector3 _normal2D = new Vector3(0, 0, -1f);
+    private List<Point> _pointList;
+    private float _splineLength;
+    float _previoust = 0;
+    Dictionary<float, Vector3> _positioUnit = new Dictionary<float, Vector3>();
+    Dictionary<float, Vector3> _postionAtT = new Dictionary<float, Vector3>();
+    Dictionary<Vector3, float> _distanceatTpos = new Dictionary<Vector3, float>();
+    Dictionary<float, float> _totalDistance = new Dictionary<float, float>();
 
 
     private void Awake() {
         Instance = this;
-        splineLength = GetSplineLength(0.001f);
+        _splineLength = GetSplineLength(0.001f);
         SetupPointList();
     }
 
@@ -60,33 +60,33 @@ public class SplineDone : MonoBehaviour {
         if (t == 1) {
             // Full position, special case
             Anchor anchorA, anchorB;
-            if (closedLoop) {
-                anchorA = anchorList[anchorList.Count - 1];
-                anchorB = anchorList[0];
+            if (_closedLoop) {
+                anchorA = _anchorList[_anchorList.Count - 1];
+                anchorB = _anchorList[0];
             } else {
-                anchorA = anchorList[anchorList.Count - 2];
-                anchorB = anchorList[anchorList.Count - 1];
+                anchorA = _anchorList[_anchorList.Count - 2];
+                anchorB = _anchorList[_anchorList.Count - 1];
             }
             return transform.position + CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, t);
         } else {
-            int addClosedLoop = (closedLoop ? 1 : 0);
-            float tFull = t * (anchorList.Count - 1 + addClosedLoop);
+            int addClosedLoop = (_closedLoop ? 1 : 0);
+            float tFull = t * (_anchorList.Count - 1 + addClosedLoop);
             int anchorIndex = Mathf.FloorToInt(tFull);
             float tAnchor = tFull - anchorIndex;
 
             Anchor anchorA, anchorB;
 
-            if (anchorIndex < anchorList.Count - 1) {
-                anchorA = anchorList[anchorIndex + 0];
-                anchorB = anchorList[anchorIndex + 1];
+            if (anchorIndex < _anchorList.Count - 1) {
+                anchorA = _anchorList[anchorIndex + 0];
+                anchorB = _anchorList[anchorIndex + 1];
             } else {
                 // anchorIndex is final one, either don't link to "next" one or loop back
-                if (closedLoop) {
-                    anchorA = anchorList[anchorList.Count - 1];
-                    anchorB = anchorList[0];
+                if (_closedLoop) {
+                    anchorA = _anchorList[_anchorList.Count - 1];
+                    anchorB = _anchorList[0];
                 } else {
-                    anchorA = anchorList[anchorIndex - 1];
-                    anchorB = anchorList[anchorIndex + 0];
+                    anchorA = _anchorList[anchorIndex - 1];
+                    anchorB = _anchorList[anchorIndex + 0];
                     tAnchor = 1f;
                 }
             }
@@ -100,28 +100,28 @@ public class SplineDone : MonoBehaviour {
 
         int pointBIndex;
 
-        pointBIndex = (pointList.IndexOf(pointA) + 1) % pointList.Count;
-        Point pointB = pointList[pointBIndex];
+        pointBIndex = (_pointList.IndexOf(pointA) + 1) % _pointList.Count;
+        Point pointB = _pointList[pointBIndex];
 
         return Vector3.Lerp(pointA.forward, pointB.forward, (t - pointA.t) / Mathf.Abs(pointA.t - pointB.t));
     }
 
     public Point GetPreviousPoint(float t) {
         int previousIndex = 0;
-        for (int i=1; i<pointList.Count; i++) {
-            Point point = pointList[i];
+        for (int i=1; i<_pointList.Count; i++) {
+            Point point = _pointList[i];
             if (t < point.t) {
-                return pointList[previousIndex];
+                return _pointList[previousIndex];
             } else {
                 previousIndex++;
             }
         }
-        return pointList[previousIndex];
+        return _pointList[previousIndex];
     }
 
     public Point GetClosestPoint(float t) {
-        Point closestPoint = pointList[0];
-        foreach (Point point in pointList) {
+        Point closestPoint = _pointList[0];
+        foreach (Point point in _pointList) {
             if (Mathf.Abs(t - point.t) < Mathf.Abs(t - closestPoint.t)) {
                 closestPoint = point;
             }
@@ -135,41 +135,41 @@ public class SplineDone : MonoBehaviour {
         float splineUnitDistance = 0f;
         
         Vector3 lastPosition = GetPositionAt(0f);
-        if (previoust >= 0) { previoust = 0; }
+        if (_previoust >= 0) { _previoust = 0; }
         float incrementAmount = stepSize;
-        var t = CAR.carT;
-        while (CAR.carT<1) {
+        var t = CAR._carT;
+        while (CAR._carT<1) {
         
-            if(!postionatT.TryGetValue(t, out var tpos)) return Vector3.zero;
+            if(!_postionAtT.TryGetValue(t, out var tpos)) return Vector3.zero;
 
-            totaldistance.TryGetValue(t, out splineUnitDistance);
+            _totalDistance.TryGetValue(t, out splineUnitDistance);
 
             lastPosition = tpos;
 
             if (splineUnitDistance >= unitDistance) {
                 /*
-                float remainingDistance = splineUnitDistance - unitDistance;
-                Debug.Log(remainingDistance + " " + unitDistance + " " + splineUnitDistance + " " + t);
-                Debug.Log(t - (remainingDistance / splineLength));
-                return GetPositionAt(t - (remainingDistance / splineLength));
+                float remainingDistance = _splineUnitDistance - unitDistance;
+                Debug.Log(remainingDistance + " " + unitDistance + " " + _splineUnitDistance + " " + t);
+                Debug.Log(t - (remainingDistance / _splineLength));
+                return GetPositionAt(t - (remainingDistance / _splineLength));
                 */
                 
-                CAR.splineUnitDistance = splineUnitDistance;
-                CAR.lastPosition = lastPosition;
+                CAR._splineUnitDistance = splineUnitDistance;
+                CAR._lastPosition = lastPosition;
                 Vector3 direction = (tpos - GetPositionAt(t - incrementAmount)).normalized;
-                previoust = t;
+                _previoust = t;
                 Vector3 pos = tpos + direction * (unitDistance - splineUnitDistance);
-                positiounit.TryAdd(unitDistance, pos);
+                _positioUnit.TryAdd(unitDistance, pos);
                 return pos;
             }
-            CAR.carT = t;
+            CAR._carT = t;
             t += incrementAmount;
         }
         Debug.Log("HERE..........");
         // Default
-        Anchor anchorA = anchorList[0];
-        Anchor anchorB = anchorList[1];
-        return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / splineLength);
+        Anchor anchorA = _anchorList[0];
+        Anchor anchorB = _anchorList[1];
+        return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / _splineLength);
     }
 
     public Vector3 GetForwardAtUnits(float unitDistance,SplineFollower CAR ,float stepSize = .0005f) {
@@ -179,15 +179,15 @@ public class SplineDone : MonoBehaviour {
 
         float incrementAmount = stepSize;
         float lastDistance = 0f;
-        var t = CAR.carTFSS;
-        while (CAR.carT < 1)
+        var t = CAR._carTF;
+        while (CAR._carT < 1)
         {
 
-            if (!postionatT.TryGetValue(t, out var tpos)) return Vector3.zero;
+            if (!_postionAtT.TryGetValue(t, out var tpos)) return Vector3.zero;
 
-            totaldistance.TryGetValue(t, out splineUnitDistance); 
+            _totalDistance.TryGetValue(t, out splineUnitDistance); 
             lastDistance = Vector3.Distance(lastPosition, tpos);
-         //   splineUnitDistance += lastDistance;
+         //   _splineUnitDistance += lastDistance;
 
             lastPosition = tpos;
 
@@ -195,28 +195,28 @@ public class SplineDone : MonoBehaviour {
                 float remainingDistance = splineUnitDistance - unitDistance;
                 return GetForwardAt(t - ((remainingDistance / lastDistance) * incrementAmount));
             }
-            CAR.carTFSS = t;
+            CAR._carTF = t;
             t += incrementAmount;
         }
 
         // Default
-        Anchor anchorA = anchorList[0];
-        Anchor anchorB = anchorList[1];
-        return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / splineLength);
+        Anchor anchorA = _anchorList[0];
+        Anchor anchorB = _anchorList[1];
+        return CubicLerp(anchorA.position, anchorA.handleBPosition, anchorB.handleAPosition, anchorB.position, unitDistance / _splineLength);
     }
 
     private void SetupPointList() {
-        pointList = new List<Point>();
-        pointAmountInCurve = pointAmountPerUnitInCurve * splineLength;
-        for (float t = 0; t < 1f; t += 1f / pointAmountInCurve) {
-            pointList.Add(new Point {
+        _pointList = new List<Point>();
+        _pointAmountInCurve = _pointAmountPerUnitInCurve * _splineLength;
+        for (float t = 0; t < 1f; t += 1f / _pointAmountInCurve) {
+            _pointList.Add(new Point {
                 t = t,
                 position = GetPositionAt(t),
-                normal = normal,
+                normal = _normal,
             });
         }
 
-        pointList.Add(new Point {
+        _pointList.Add(new Point {
             t = 1f,
             position = GetPositionAt(1f),
         });
@@ -225,9 +225,9 @@ public class SplineDone : MonoBehaviour {
     }
 
     private void UpdatePointList() {
-        if (pointList == null) return;
+        if (_pointList == null) return;
 
-        foreach (Point point in pointList) {
+        foreach (Point point in _pointList) {
             point.position = GetPositionAt(point.t);
         }
         
@@ -236,20 +236,20 @@ public class SplineDone : MonoBehaviour {
 
     private void UpdateForwardVectors() {
         // Set forward vectors
-        for (int i = 0; i < pointList.Count - 1; i++) {
-            pointList[i].forward = (pointList[i + 1].position - pointList[i].position).normalized;
+        for (int i = 0; i < _pointList.Count - 1; i++) {
+            _pointList[i].forward = (_pointList[i + 1].position - _pointList[i].position).normalized;
         }
         // Set final forward vector
-        if (closedLoop) {
-            pointList[pointList.Count - 1].forward = pointList[0].forward;
+        if (_closedLoop) {
+            _pointList[_pointList.Count - 1].forward = _pointList[0].forward;
         } else {
-            pointList[pointList.Count - 1].forward = pointList[pointList.Count - 2].forward;
+            _pointList[_pointList.Count - 1].forward = _pointList[_pointList.Count - 2].forward;
         }
     }
 
     private void PrintPath() {
-        foreach (Point point in pointList) {
-            Transform dotTransform = Instantiate(dots, point.position, Quaternion.identity);
+        foreach (Point point in _pointList) {
+            Transform dotTransform = Instantiate(_dots, point.position, Quaternion.identity);
             FunctionUpdater.Create(() => {
                 dotTransform.position = point.position;
             });
@@ -267,7 +267,7 @@ public class SplineDone : MonoBehaviour {
 
             Vector3 tpos = Vector3.zero;
 
-            if (!postionatT.TryGetValue(t, out tpos))
+            if (!_postionAtT.TryGetValue(t, out tpos))
             {
                 tpos = GetPositionAt(t);
             }
@@ -275,9 +275,9 @@ public class SplineDone : MonoBehaviour {
             splineLength += distance;
 
             lastPosition =tpos;
-            postionatT.TryAdd(t, tpos);
-            DistanceatTpos.TryAdd(tpos, distance);
-            totaldistance.TryAdd(t, splineLength);
+            _postionAtT.TryAdd(t, tpos);
+            _distanceatTpos.TryAdd(tpos, distance);
+            _totalDistance.TryAdd(t, splineLength);
 
         }
 
@@ -287,14 +287,14 @@ public class SplineDone : MonoBehaviour {
     }
 
     public List<Anchor> GetAnchorList() {
-        return anchorList;
+        return _anchorList;
     }
 
     public void AddAnchor() {
-        if (anchorList == null) anchorList = new List<Anchor>();
-        if (anchorList.Count == 0)
+        if (_anchorList == null) _anchorList = new List<Anchor>();
+        if (_anchorList.Count == 0)
         {
-            anchorList.Add(new Anchor
+            _anchorList.Add(new Anchor
             {
                 position =  new Vector3(0, 1, 0),
                 handleAPosition =  new Vector3(1, 1, 0),
@@ -302,8 +302,8 @@ public class SplineDone : MonoBehaviour {
             });
             return;
         }
-        Anchor lastAnchor = anchorList[anchorList.Count - 1];
-        anchorList.Add(new Anchor {
+        Anchor lastAnchor = _anchorList[_anchorList.Count - 1];
+        _anchorList.Add(new Anchor {
             position = lastAnchor.position + new Vector3(1, 1, 0),
             handleAPosition = lastAnchor.handleAPosition + new Vector3(1, 1, 0),
             handleBPosition = lastAnchor.handleBPosition + new Vector3(1, 1, 0),
@@ -311,22 +311,22 @@ public class SplineDone : MonoBehaviour {
     }
 
     public void RemoveLastAnchor() {
-        if (anchorList == null) anchorList = new List<Anchor>();
+        if (_anchorList == null) _anchorList = new List<Anchor>();
 
-        anchorList.RemoveAt(anchorList.Count - 1);
+        _anchorList.RemoveAt(_anchorList.Count - 1);
     }
 
 
     public List<Point> GetPointList() {
-        return pointList;
+        return _pointList;
     }
 
     public bool GetClosedLoop() {
-        return closedLoop;
+        return _closedLoop;
     }
 
     public void SetAllZZero() {
-        foreach (Anchor anchor in anchorList) {
+        foreach (Anchor anchor in _anchorList) {
             anchor.position = new Vector3(anchor.position.x, anchor.position.y, 0f);
             anchor.handleAPosition = new Vector3(anchor.handleAPosition.x, anchor.handleAPosition.y, 0f);
             anchor.handleBPosition = new Vector3(anchor.handleBPosition.x, anchor.handleBPosition.y, 0f);
@@ -334,7 +334,7 @@ public class SplineDone : MonoBehaviour {
     }
 
     public void SetAllYZero() {
-        foreach (Anchor anchor in anchorList) {
+        foreach (Anchor anchor in _anchorList) {
             anchor.position = new Vector3(anchor.position.x, 0f, anchor.position.z);
             anchor.handleAPosition = new Vector3(anchor.handleAPosition.x, 0f, anchor.handleAPosition.z);
             anchor.handleBPosition = new Vector3(anchor.handleBPosition.x, 0f, anchor.handleBPosition.z);
@@ -342,7 +342,7 @@ public class SplineDone : MonoBehaviour {
     }
     public void SetAllYOne()
     {
-        foreach (Anchor anchor in anchorList)
+        foreach (Anchor anchor in _anchorList)
         {
             anchor.position = new Vector3(anchor.position.x, 1f, anchor.position.z);
             anchor.handleAPosition = new Vector3(anchor.handleAPosition.x, 1f, anchor.handleAPosition.z);
@@ -350,7 +350,7 @@ public class SplineDone : MonoBehaviour {
         }
     }
     public void SetDirty() {
-        splineLength = GetSplineLength(0.001f);
+        _splineLength = GetSplineLength(0.001f);
 
         UpdatePointList();
 

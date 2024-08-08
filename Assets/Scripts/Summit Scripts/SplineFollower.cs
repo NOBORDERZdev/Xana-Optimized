@@ -19,11 +19,10 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     }
 
     [SerializeField] 
-    public SplineDone spline;
+    public SplineDone Spline;
     [SerializeField] 
-    public float speed = 1f;
-    [SerializeField] 
-    private MovementType movementType;
+    public float Speed = 1f;
+    
     [HideInInspector]
     public byte PrivateRoomName;
     [HideInInspector]
@@ -32,31 +31,34 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     public Vector3 PacengerPosr = new Vector3(0.292f, 0.25f, -0.478f);
     public Dictionary<Player, int> PlayerListinCar = new Dictionary<Player, int>();
     public GameObject DriverPosition, PacengerPosition, DriverExitPosition, PassengerExitPosition, Love;
-    public bool driverseatempty = true;
-    public bool pasengerseatemty = true;
-    public bool isDriverMale = true;
-    public bool isPassengerMale = true;
+    public bool DriverSeatEmpty = true;
+    public bool PasengerSeatEmty = true;
+    public bool _isDriverMale = true;
+    public bool _isPassengerMale = true;
     public float StepSize =0.001f;
     
-    public float moveAmount;
-    private float maxMoveAmount;
-    public PhotonView view;
+    public float MoveAmount;
+    private float MaxMoveAmount;
+    public PhotonView View;
    
-    public bool stopcar = false;
-    public Rigidbody rigidbody;
-    private bool checkforrigidbody = true;
+    public bool StopCar = false;
+    public Rigidbody Rigidbody;
+    private bool CheckForRigidbody = true;
     bool NeedToAddReference = true;
 
-    public float carT;
-    public float carTFSS;
-    public float splineUnitDistance = 0f;
-    public Vector3 lastPosition;
+    public float _carT;
+    public float _carTF;
+    public float _splineUnitDistance = 0f;
+    public Vector3 _lastPosition;
+    
     [SerializeField]
-    Transform onewheel, twowheel, threewheel, fourwheel;
-    Vector3 newRot;
-    float counter = 1;
-    float time = .5f;
-    Vector3 currentRot;
+    Transform _oneWheel, _twoWheel, _threeWheel, _fourWheel;
+    [SerializeField]
+    private MovementType _movementType;
+    Vector3 _newRot;
+    float _counter = 1;
+    float _time = .5f;
+    Vector3 _currentRot;
   
     private void Awake()
     {
@@ -66,15 +68,15 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
 
     private void Start()
     {
-        newRot = onewheel.localEulerAngles + new Vector3(90, 0, 0);
-        currentRot = onewheel.localEulerAngles;
+        _newRot = _oneWheel.localEulerAngles + new Vector3(90, 0, 0);
+        _currentRot = _oneWheel.localEulerAngles;
         if (PhotonNetwork.IsMasterClient)
         {
-            rigidbody.freezeRotation = false;
+            Rigidbody.freezeRotation = false;
         }
         else
         {
-            rigidbody.freezeRotation = true;
+            Rigidbody.freezeRotation = true;
         }
     }
 
@@ -82,20 +84,20 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
 
     public void Setup(byte Name)
     {
-        spline = SplineDone.Instance;
-        switch (movementType)
+        Spline = SplineDone.Instance;
+        switch (_movementType)
         {
             default:
             case MovementType.Normalized:
-                maxMoveAmount = 1f;
+                MaxMoveAmount = 1f;
                 break;
             case MovementType.Units:
-                maxMoveAmount = spline.GetSplineLength(StepSize);
-                Debug.Log("Spline Length " + spline.GetSplineLength(StepSize));
+                MaxMoveAmount = Spline.GetSplineLength(StepSize);
+                Debug.Log("Spline Length " + Spline.GetSplineLength(StepSize));
                 break;
         }
-        // syncdata(moveAmount);
-        view.RPC("syncdata", RpcTarget.AllBufferedViaServer, moveAmount, Name);
+        // syncdata(MoveAmount);
+        View.RPC("syncdata", RpcTarget.AllBufferedViaServer, MoveAmount, Name);
     }
 
 
@@ -103,7 +105,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     public void syncdata(float moveAmount, byte Room)
     {
         Debug.Log("Buffered RPC");
-        this.moveAmount = moveAmount;
+        this.MoveAmount = moveAmount;
 
         PrivateRoomName = Room;
 
@@ -113,27 +115,27 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     private void Update()
     {
 
-        if (counter < 1)
+        if (_counter < 1)
         {
 
-            if (stopcar)
+            if (StopCar)
             {
                 return;
             }
-            counter += Time.deltaTime;
-            counter = counter / time;
+            _counter += Time.deltaTime;
+            _counter = _counter / _time;
 
 
-            onewheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
-            twowheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
-            threewheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
-            fourwheel.localEulerAngles = Vector3.Slerp(currentRot, newRot, counter);
+            _oneWheel.localEulerAngles = Vector3.Slerp(_currentRot, _newRot, _counter);
+            _twoWheel.localEulerAngles = Vector3.Slerp(_currentRot, _newRot, _counter);
+            _threeWheel.localEulerAngles = Vector3.Slerp(_currentRot, _newRot, _counter);
+            _fourWheel.localEulerAngles = Vector3.Slerp(_currentRot, _newRot, _counter);
         }
         else
         {
-            counter = 0;
-            newRot = onewheel.localEulerAngles + new Vector3(90, 0, 0);
-            currentRot = onewheel.localEulerAngles;
+            _counter = 0;
+            _newRot = _oneWheel.localEulerAngles + new Vector3(90, 0, 0);
+            _currentRot = _oneWheel.localEulerAngles;
         }
 
     }
@@ -144,35 +146,35 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
 
         if (NeedToAddReference && CarNavigationManager.CarNavigationInstance)
         {
-            if (!CarNavigationManager.CarNavigationInstance.Cars.ContainsKey(view.ViewID))
-                CarNavigationManager.CarNavigationInstance.Cars.Add(view.ViewID, view);
-            spline = SplineDone.Instance;
-            maxMoveAmount = spline.GetSplineLength(StepSize);
+            if (!CarNavigationManager.CarNavigationInstance.Cars.ContainsKey(View.ViewID))
+                CarNavigationManager.CarNavigationInstance.Cars.Add(View.ViewID, View);
+            Spline = SplineDone.Instance;
+            MaxMoveAmount = Spline.GetSplineLength(StepSize);
             NeedToAddReference = false;
         }
-        if (spline == null || !PhotonNetwork.IsMasterClient) { return; }
+        if (Spline == null || !PhotonNetwork.IsMasterClient) { return; }
 
 
-        /*   if (checkforrigidbody)
+        /*   if (CheckForRigidbody)
            {
-               if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } checkforrigidbody = false;
+               if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } CheckForRigidbody = false;
            }*/
-        if ((moveAmount + (Time.deltaTime * speed)) >= maxMoveAmount) carT = 0;
-        moveAmount = (moveAmount + (Time.deltaTime * speed)) % maxMoveAmount;
+        if ((MoveAmount + (Time.deltaTime * Speed)) >= MaxMoveAmount) _carT = 0;
+        MoveAmount = (MoveAmount + (Time.deltaTime * Speed)) % MaxMoveAmount;
 
-        switch (movementType)
+        switch (_movementType)
         {
             default:
             case MovementType.Normalized:
-                var pos = spline.GetPositionAt(moveAmount);
+                var pos = Spline.GetPositionAt(MoveAmount);
                 transform.position = new Vector3(pos.x, transform.position.y, pos.z);
-                var forw = spline.GetForwardAt(moveAmount);
+                var forw = Spline.GetForwardAt(MoveAmount);
                 transform.forward = new Vector3(forw.x, transform.position.y, forw.z);
                 break;
             case MovementType.Units:
-                var pose = spline.GetPositionAtUnits(moveAmount,this,StepSize);
+                var pose = Spline.GetPositionAtUnits(MoveAmount,this,StepSize);
                 transform.position = new Vector3(pose.x, transform.position.y, pose.z);
-                var forwa = spline.GetForwardAtUnits(moveAmount, this, StepSize);
+                var forwa = Spline.GetForwardAtUnits(MoveAmount, this, StepSize);
                 transform.forward = forwa; //new Vector3(forwa.x, transform.position.y, forwa.z);
                 break;
         }
@@ -189,11 +191,11 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     {
         if (stream.IsWriting)
         {
-            stream.SendNext(moveAmount);
+            stream.SendNext(MoveAmount);
         }
         else
         {
-            moveAmount = (float)stream.ReceiveNext();
+            MoveAmount = (float)stream.ReceiveNext();
         }
     }
     public void showLove()
@@ -218,7 +220,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
         if (pos != -1)
         {
             PlayerListinCar.Remove(otherPlayer);
-            if (pos == 0) { driverseatempty = true; } else { driverseatempty = false; }
+            if (pos == 0) { DriverSeatEmpty = true; } else { DriverSeatEmpty = false; }
         }
     }
 
@@ -236,7 +238,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            rigidbody.freezeRotation = false;
+            Rigidbody.freezeRotation = false;
         }
     }
 }
