@@ -112,7 +112,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             transform.position = pos;
             transform.SetParent(gangsterCharacter.transform);
             transform.localPosition = Vector3.up * (GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0);
-            //transform.localEulerAngles = Vector3.zero;
+            transform.localEulerAngles = Vector3.zero;
             if (avatarIndex == 2)
             {
                 var item = GamificationComponentData.instance.xanaItems.FirstOrDefault(x => x.itemData.RuntimeItemID == RuntimeItemID);
