@@ -9,7 +9,7 @@ using UnityEngine;
 public class SplineDone : MonoBehaviour {
 
     public static SplineDone Instance;
-    private static readonly Vector3 normal2D = new Vector3(0, 0, -1f);
+  
 
     public event EventHandler OnDirty;
 
@@ -22,9 +22,15 @@ public class SplineDone : MonoBehaviour {
     private float pointAmountInCurve;
     private float pointAmountPerUnitInCurve = 2f;
 
-
+    private static readonly Vector3 normal2D = new Vector3(0, 0, -1f);
     private List<Point> pointList;
     private float splineLength;
+    float previoust = 0;
+    Dictionary<float, Vector3> positiounit = new Dictionary<float, Vector3>();
+    Dictionary<float, Vector3> postionatT = new Dictionary<float, Vector3>();
+    Dictionary<Vector3, float> DistanceatTpos = new Dictionary<Vector3, float>();
+    Dictionary<float, float> totaldistance = new Dictionary<float, float>();
+
 
     private void Awake() {
         Instance = this;
@@ -122,8 +128,7 @@ public class SplineDone : MonoBehaviour {
         }
         return closestPoint;
     }
-    float previoust = 0;
-    Dictionary<float,Vector3>positiounit = new Dictionary<float,Vector3>();
+ 
     public Vector3 GetPositionAtUnits(float unitDistance,SplineFollower CAR, float stepSize = .0005f) {
        
         
@@ -251,9 +256,7 @@ public class SplineDone : MonoBehaviour {
         }
     }
 
-    Dictionary<float, Vector3> postionatT = new Dictionary<float, Vector3>();
-    Dictionary<Vector3, float> DistanceatTpos = new Dictionary<Vector3, float>();
-    Dictionary<float, float> totaldistance = new Dictionary<float, float>();
+  
     public float GetSplineLength(float stepSize = .0005f) 
     {
         float splineLength = 0f;

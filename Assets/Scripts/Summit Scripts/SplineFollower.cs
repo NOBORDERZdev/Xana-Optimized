@@ -18,18 +18,19 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
         Units
     }
 
-    [SerializeField] public SplineDone spline;
-    [SerializeField] public float speed = 1f;
-    [SerializeField] private MovementType movementType;
-
-
-
+    [SerializeField] 
+    public SplineDone spline;
+    [SerializeField] 
+    public float speed = 1f;
+    [SerializeField] 
+    private MovementType movementType;
+    [HideInInspector]
+    public byte PrivateRoomName;
     [HideInInspector]
     public Vector3 DriverPos = new Vector3(-0.308f, 0.25f, -.507f);
     [HideInInspector]
     public Vector3 PacengerPosr = new Vector3(0.292f, 0.25f, -0.478f);
     public Dictionary<Player, int> PlayerListinCar = new Dictionary<Player, int>();
-
     public GameObject DriverPosition, PacengerPosition, DriverExitPosition, PassengerExitPosition, Love;
     public bool driverseatempty = true;
     public bool pasengerseatemty = true;
@@ -40,8 +41,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
     public float moveAmount;
     private float maxMoveAmount;
     public PhotonView view;
-    [HideInInspector]
-    public byte PrivateRoomName;
+   
     public bool stopcar = false;
     public Rigidbody rigidbody;
     private bool checkforrigidbody = true;
@@ -49,15 +49,15 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
 
     public float carT;
     public float carTFSS;
-   public float splineUnitDistance = 0f;
-   public Vector3 lastPosition;
-
+    public float splineUnitDistance = 0f;
+    public Vector3 lastPosition;
+    [SerializeField]
+    Transform onewheel, twowheel, threewheel, fourwheel;
     Vector3 newRot;
     float counter = 1;
     float time = .5f;
     Vector3 currentRot;
-    [SerializeField]
-    Transform onewheel, twowheel, threewheel, fourwheel;
+  
     private void Awake()
     {
 
