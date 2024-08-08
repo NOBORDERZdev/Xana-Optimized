@@ -1695,6 +1695,7 @@ public class AvatarController : MonoBehaviour
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
+                wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 break;
 
             case "Feet":
@@ -1802,6 +1803,7 @@ public class AvatarController : MonoBehaviour
         }
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
 
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
@@ -1845,6 +1847,7 @@ public class AvatarController : MonoBehaviour
         item.layer = 22;
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
     }
 
     /// <summary>
