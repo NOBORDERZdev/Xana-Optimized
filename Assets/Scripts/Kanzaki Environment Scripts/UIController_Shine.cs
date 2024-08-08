@@ -344,6 +344,7 @@ public class UIController_Shine : MonoBehaviour
                     break;
                 case PointerUIChild.Emikage1:
                     gamespaceIdx = (int)GameSpaceUIChild.Emikage;
+                    GamePlayUIHandler.inst.gamePlayUIParent.SetActive(false);
                     PlayerController.PlayerIsWalking?.Invoke();
                     ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().m_IsMovementActive = false;
                     break;
