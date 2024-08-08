@@ -12,6 +12,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
     public GameObject EventEndedPanel;
     private string mainScene = "Home";
+    private string lobbyScene = "RooftopParty";
+
     bool exitOnce = true;
     GameManager gameManager;
     private void Awake()
@@ -65,7 +67,11 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (exitOnce)
         {
             exitOnce = false;
-            if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+            if(SceneManager.GetActiveScene().name == lobbyScene)
+            {
+                Application.Quit();
+            }
+            else if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
