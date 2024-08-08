@@ -54,7 +54,7 @@ public class InRoomSoundHandler : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("面接官を待っています");
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("担当者待機中");
             }
             //Debug.LogError("Join Meeting Now!");
         }
@@ -66,7 +66,7 @@ public class InRoomSoundHandler : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("今すぐミーティングに参加してください!");
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
             }
             //Debug.LogError("Meeting Ended");
         }
@@ -78,7 +78,7 @@ public class InRoomSoundHandler : MonoBehaviour
             }
             else if (GameManager.currentLanguage == "ja")
             {
-                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議が進行中です");
+                NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室使用中");
             }
             //Debug.LogError("House Full");
         }
