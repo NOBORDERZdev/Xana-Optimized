@@ -150,6 +150,9 @@ public class RaffleTicketHandler : MonoBehaviour
     }
     private void TransferDatatoMainDomeList()
     {
+        if (_summitDomesVisitedByUser.domeVisits == null || _summitDomesVisitedByUser.domeVisits.Count == 0)
+            return;
+
         foreach (var item in _summitDomesVisitedByUser.domeVisits)
         {
             _allVisitedDomeIds.Add(item.domeId);
