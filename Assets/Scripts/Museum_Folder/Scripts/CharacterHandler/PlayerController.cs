@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
     }
     private void OnDisable()
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
     }
@@ -169,6 +171,12 @@ public class PlayerController : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
+        RemoveLayerFromCameraCollider();
+
+    }
+
+    private void RemoveLayerFromCameraCollider()
+    {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
@@ -183,9 +191,7 @@ public class PlayerController : MonoBehaviour
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
         }
-
     }
-
 
     public void OnDestroy()
     {
