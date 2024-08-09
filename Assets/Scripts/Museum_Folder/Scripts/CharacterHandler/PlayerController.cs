@@ -1745,8 +1745,8 @@ public class PlayerController : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             isMovementAllowed = true;
         }
     }
@@ -1785,6 +1785,7 @@ public class PlayerController : MonoBehaviour
         if (swordModel == null && time > 0)
         {
             swordModel = PhotonNetwork.Instantiate("Katana", Vector3.zero, new Quaternion(0, 0, 0, 0));
+            time = 300f;
         }
 
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
@@ -1797,8 +1798,8 @@ public class PlayerController : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);
