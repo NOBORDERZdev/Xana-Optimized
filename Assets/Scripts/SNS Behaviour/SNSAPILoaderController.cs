@@ -8,7 +8,7 @@ public class SNSAPILoaderController : MonoBehaviour
 {
     public GameObject mainLoaderObj;
     public GameObject loaderObj;
-    public GameObject addRemoveFriendLoader;
+    public GameObject AddRemoveFriendLoader;
 
     public GameObject uploadObj;
     public Image fillImage;
@@ -21,7 +21,7 @@ public class SNSAPILoaderController : MonoBehaviour
     }
     public void ShowFriendApiLoader(bool isOn)
     {
-        addRemoveFriendLoader.SetActive(isOn);
+        AddRemoveFriendLoader.SetActive(isOn);
     }
 
     //this method is used to Reset to default....... 
