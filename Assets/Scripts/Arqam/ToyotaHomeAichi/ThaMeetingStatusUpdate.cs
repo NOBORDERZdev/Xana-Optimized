@@ -101,6 +101,8 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     private void UpdateStatusOnLeft()
     {
         Debug.LogError("Left Room Call::");
+        if (GetComponent<PhotonView>().IsMine)
+        {
             int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
             NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
             Debug.LogError("Left Room::" + temp);
@@ -116,6 +118,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                     NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
                 }
             }
+        }
     }
 
     private void NewPlayerSpawned()
