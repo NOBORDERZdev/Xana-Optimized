@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using static InventoryManager;
 using System;
 using static StoreUndoRedo;
+using System.Globalization;
 
 public class ItemDetail : MonoBehaviour
 {
@@ -344,7 +345,7 @@ public class ItemDetail : MonoBehaviour
                 price = "0";
             }
 
-            decimal PriceInDecimal = decimal.Parse(price);
+            decimal PriceInDecimal = decimal.Parse(price,CultureInfo.InvariantCulture);
             int priceint = (int)PriceInDecimal;
             PriceTxt.text = priceint.ToString();
             switch (CategoriesEnumVar)

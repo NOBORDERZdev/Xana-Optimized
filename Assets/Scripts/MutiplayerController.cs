@@ -19,6 +19,7 @@ using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Photon.Voice.PUN;
+using Unity.VisualScripting;
 
 namespace Photon.Pun.Demo.PunBasics
 {
@@ -478,7 +479,8 @@ namespace Photon.Pun.Demo.PunBasics
                 Destroy(summitplayer.Transformview);
                 Destroy(summitplayer.view);
             }
-           
+
+            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             PhotonNetwork.LeaveRoom();
 
         }

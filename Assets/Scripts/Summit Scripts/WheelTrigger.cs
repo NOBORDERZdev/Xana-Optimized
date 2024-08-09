@@ -52,8 +52,8 @@ public class WheelTrigger : MonoBehaviour
         {
             await new WaitForSeconds(1f);
         }
-
-        XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+        Debug.Log("Wheel--OnTriggerEnter");
+        //XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
         MutiplayerController.instance.Ontriggered("Wheel", true);
         MutiplayerController.instance.disableSector = true;
     }

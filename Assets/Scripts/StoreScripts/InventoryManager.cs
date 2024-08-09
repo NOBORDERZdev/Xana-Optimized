@@ -970,12 +970,26 @@ public class InventoryManager : MonoBehaviour
         if (loadingItems)
             return;
 
-        //Debug.LogError("End of Scroll");
+        Debug.LogError("End of Scroll");
 
         if (myScroller.verticalNormalizedPosition <= 0.1f)
         {
             loadingItems = true;
             int pageIndex = UpdateActivePanelPageIndex();
+            int _downloadedAssetCount = UpdateActivePanelPageIndex(false,true);
+
+            if (_downloadedAssetCount % 40 == 0)
+            {
+                Debug.LogError("Items Are Downloading");
+                return;
+            }
+
+            if (_downloadedAssetCount == -1)
+            {
+                loadingItems = false;
+                return;
+            }
+
             if (pageIndex < 0)
                 return;
             SubmitAllItemswithSpecificSubCategory(SubCategoriesList[pageIndex].id, false);
@@ -1015,20 +1029,20 @@ public class InventoryManager : MonoBehaviour
             return _HairApiPagaCount;
         }
     }
-    private int UpdateActivePanelPageIndex(bool addValue = true)
+    private int UpdateActivePanelPageIndex(bool addValue = true, bool downloadCount = false)
     {
         int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
 
 
         //Debug.LogError("Selected Panel Index: " + _selectedPanel);
 
-        if (addValue)
+        if (downloadCount)
         {
             if (Clothdatabool)
             {
-                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _selectedPanel; } // Outer
-                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _selectedPanel; } // Bottom
-                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _selectedPanel; }// Shoes
+                if (_selectedPanel == 3) { return GetDownloadedNumber(EnumClass.CategoryEnum.Outer); } // Outer
+                if (_selectedPanel == 5) { return GetDownloadedNumber(EnumClass.CategoryEnum.Bottom); } // Bottom
+                if (_selectedPanel == 7) { return GetDownloadedNumber(EnumClass.CategoryEnum.Shoes); }// Shoes
 
                 return -1; ;
             }
@@ -1040,6 +1054,25 @@ public class InventoryManager : MonoBehaviour
             else
             {
                 return -1;
+            }
+        }
+       else  if (addValue)
+        {
+            if (Clothdatabool)
+            {
+                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _selectedPanel; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _selectedPanel; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _selectedPanel; }// Shoes
+
+                return -1; ;
+            }
+            else if (_selectedPanel == 0)
+            {
+                return GetDownloadedNumber(EnumClass.CategoryEnum.HairAvatar);
+            }
+            else
+            {
+                return 0;
             }
         }
         else
@@ -1062,8 +1095,6 @@ public class InventoryManager : MonoBehaviour
                 return -1;
             }
         }
-
-
     }
 
     private void ResetPageIndex()
@@ -3409,12 +3440,14 @@ public class InventoryManager : MonoBehaviour
                         TempSubcategoryParent = AllCategoriesData[myIndexInList].parentObj.transform;
                         TempEnumVar = EnumClass.CategoryEnum.HairAvatarColor;
 
-                        int loopStart = GetDownloadedNumber(TempEnumVar);
-                        for (int i = loopStart; i < characterBodyParts.hairColor.Count; i++)
-                        {
-                            yield return new WaitForEndOfFrame();
-                            InstantiateStoreItems(TempSubcategoryParent.transform, i, characterBodyParts.hairColor[i].ToString(), TempitemDetail);
-                        }
+                        ActivateGenerateItemsCoroutine(TempSubcategoryParent.transform, TempitemDetail);
+
+                        //int loopStart = GetDownloadedNumber(TempEnumVar);
+                        //for (int i = loopStart; i < characterBodyParts.hairColor.Count; i++)
+                        //{
+                        //    yield return new WaitForEndOfFrame();
+                        //    InstantiateStoreItems(TempSubcategoryParent.transform, i, characterBodyParts.hairColor[i].ToString(), TempitemDetail);
+                        //}
                     }
                     break;
                 }
@@ -3574,6 +3607,9 @@ public class InventoryManager : MonoBehaviour
         for (int i = _LoopStart; i < _MaxItems; i++)
         {
             int _DataIndex = i - _StartFromIndex;
+            
+            if (_DataIndex < 0)
+                break;
 
             // Wait until the end of the frame to instantiate the item
             yield return new WaitForEndOfFrame();
@@ -3593,6 +3629,7 @@ public class InventoryManager : MonoBehaviour
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
+        Debug.Log("Total: " + dataListOfItems + "  -- " + objId);
         if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink) && parentObj != TempSubcategoryParent && _ResettingAssetList == false)
         {
             Debug.Log("Icon Link is Empty or Parent Object is not same");
