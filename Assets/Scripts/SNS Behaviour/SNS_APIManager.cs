@@ -878,6 +878,7 @@ public class SNS_APIManager : MonoBehaviour
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn)
     {
+        feedUIController?.ShowFriendLoader(true);
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Post(uri, "POST"))
         {
@@ -885,10 +886,10 @@ public class SNS_APIManager : MonoBehaviour
             www.SendWebRequest();
             while(!www.isDone) 
             {
-                yield return null;
+               yield return null;
             }
 
-            feedUIController?.ShowLoader(false);
+           
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError    )
             {
@@ -914,6 +915,7 @@ public class SNS_APIManager : MonoBehaviour
                     }
                 }
             }
+             feedUIController?.ShowFriendLoader(false);
         }
     }
 
@@ -924,6 +926,7 @@ public class SNS_APIManager : MonoBehaviour
     }
     IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn)
     {
+        feedUIController?.ShowFriendLoader(true);
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Delete(uri))
         {
@@ -955,6 +958,7 @@ public class SNS_APIManager : MonoBehaviour
                     findFriendController.UpdateBfBtn(false);
                 }
             }
+            feedUIController?.ShowFriendLoader(false);
         }
     }
 

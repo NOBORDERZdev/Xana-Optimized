@@ -86,8 +86,8 @@ public class XANASummitSceneLoading : MonoBehaviour
             return;
 
         SummitMiniMapStatusOnSceneChange(false);
-        StartCoroutine(LoadingHandler.Instance.FadeIn());
-
+        //StartCoroutine(LoadingHandler.Instance.FadeIn());
+        LoadingHandler.Instance.ShowVideoLoading();
         Vector3[] currentPlayerPos = GetPlayerPosition(playerPos);
 
         ConstantsHolder.domeId = domeId;
@@ -153,6 +153,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
             else
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+            _stayTimeTrackerForSummit.IsBuilderWorld = domeGeneralData.worldType;
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
         string eventName;
@@ -168,7 +169,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         if (string.IsNullOrEmpty(worldId))
             return;
 
-        StartCoroutine(LoadingHandler.Instance.FadeIn());
+        //StartCoroutine(LoadingHandler.Instance.FadeIn());
+        LoadingHandler.Instance.ShowVideoLoading();
         SummitMiniMapStatusOnSceneChange(false);
         Vector3[] currentPlayerPos = GetPlayerPosition(playerPos);
 
@@ -261,7 +263,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         }
         setPlayerPositionDelegate = SetPlayerOnback;
 
-        StartCoroutine(LoadingHandler.Instance.FadeIn());
+        //StartCoroutine(LoadingHandler.Instance.FadeIn());
+        LoadingHandler.Instance.ShowVideoLoading();
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo = XANASummitDataContainer.LoadedScenesInfo.Pop();
 
@@ -352,7 +355,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         setPlayerPositionDelegate?.Invoke();
 
 
-        StartCoroutine(LoadingHandler.Instance.FadeOut());
+        //StartCoroutine(LoadingHandler.Instance.FadeOut());
+        LoadingHandler.Instance.DisableVideoLoading();
     }
 
     void SetPlayerOnback()

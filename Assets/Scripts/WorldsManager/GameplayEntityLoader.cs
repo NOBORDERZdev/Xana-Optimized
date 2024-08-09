@@ -47,7 +47,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private float fallOffset = 10f;
     public bool setLightOnce = false;
 
-    private GameObject player;
+    [HideInInspector]
+    public GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
 

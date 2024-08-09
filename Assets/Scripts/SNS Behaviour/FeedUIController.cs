@@ -168,7 +168,10 @@ public class FeedUIController : MonoBehaviour
     {
         apiLoaderController.ShowApiLoader(isActive);
     }
-
+    public void ShowFriendLoader(bool isOnHere)
+    {
+        apiLoaderController.ShowFriendApiLoader(isOnHere);
+    }
 
     public void OnFeedButtonTabBtnClick()
     {
