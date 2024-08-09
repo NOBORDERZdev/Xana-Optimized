@@ -18,22 +18,21 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        //BuilderEventManager.AfterPlayerInstantiated += GetPlayerCount;
         _pv = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
         {
-            CheckAndUpdateMeetingStatus();
             ConstantsHolder.xanaConstants.meetingStatus = ConstantsHolder.MeetingStatus.End;
         }
     }
+
+    private void OnEnable()
+    {
+        PhotonNetwork.AddCallbackTarget(this);
+    }
     private void OnDisable()
     {
+        PhotonNetwork.RemoveCallbackTarget(this);
         //BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
-    }
-
-    private void CheckAndUpdateMeetingStatus()
-    {
-
     }
 
     public void UpdateMeetingParams(int status)
@@ -79,11 +78,18 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if(otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum 
-            || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum)
+        if ((otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum
+            || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum))
         {
+            UpdateStatusOnLeft();
+        }
+    }
+
+    private void UpdateStatusOnLeft()
+    {
             int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
             NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
+
             if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
             {
                 NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)MeetingStatus.End);
@@ -96,7 +102,6 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                     NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
                 }
             }
-        }
     }
 
     private void NewPlayerSpawned()
