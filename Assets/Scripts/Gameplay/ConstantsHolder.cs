@@ -139,7 +139,7 @@ public class ConstantsHolder : MonoBehaviour
     [SerializeField]
     public MeetingStatus meetingStatus;
     public bool IsShowChatToAll = true;
-
+    public bool IsChatUseByOther = false;
 
     //XANA Summit 
     public static bool isFromXANASummit=false;
