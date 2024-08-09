@@ -101,10 +101,10 @@ public class SceneChanger : EditorWindow
             DeletePersistentPath();
         }
 
-        if (GUILayout.Button("Clean Addressable Cache"))
-        {
-            CleanAddressableCache();
-        }
+        //if (GUILayout.Button("Clean Addressable Cache"))
+        //{
+        //    CleanAddressableCache();
+        //}
 
     }
 
@@ -121,7 +121,7 @@ public class SceneChanger : EditorWindow
         Application.OpenURL(Application.persistentDataPath);
     }
 
-    void CleanAddressableCache() {
-        Addressables.CleanBundleCache();
-    }
+    //void CleanAddressableCache() {
+    //    //Addressables.CleanBundleCache();
+    //}
 }

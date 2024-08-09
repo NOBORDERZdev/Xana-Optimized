@@ -32,8 +32,8 @@ public class DataCleanupScript : MonoBehaviour
     public void ClearAddressableData()
     {
         // Unload all addressable assets and release their references
-        Addressables.CleanBundleCache();
-        Caching.ClearCache();
-        
+        //Addressables.CleanBundleCache();
+        //Caching.ClearCache();
+
     }
 }

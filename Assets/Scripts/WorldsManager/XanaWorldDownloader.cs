@@ -129,7 +129,7 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartDownloadingAssets();
-        if (totalAssetCount != downloadedTillNow)
+        if (totalAssetCount != downloadedTillNow && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
             EnableDownloadingText();
     }
 
