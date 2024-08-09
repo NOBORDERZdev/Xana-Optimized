@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
-using static GlobalConstants;
+//using static GlobalConstants;
 using Toyota;
 
 /// <summary>
@@ -83,75 +83,75 @@ public class TMProUGUIHyperlinks : MonoBehaviour, IPointerDownHandler, IPointerU
 
             // For Analatics URL Clicked = true;
             UserAnalyticsHandler.onUpdateWorldRelatedStats?.Invoke(false, false, true, false);
-            CallFirebaseEventForLinkClicked();
+            //CallFirebaseEventForLinkClicked();
             Application.OpenURL(linkInfo.GetLinkID());
         }
         pressedLinkIndex = -1;
     }
 
-    void CallFirebaseEventForLinkClicked()
-    {
-        //int maxLength = 10;
-        //string originalString = JjInfoManager.Instance.nftTitle;
-        //originalString = Regex.Replace(originalString, @"\s", "");
-        //string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
+    //void CallFirebaseEventForLinkClicked()
+    //{
+    //    //int maxLength = 10;
+    //    //string originalString = JjInfoManager.Instance.nftTitle;
+    //    //originalString = Regex.Replace(originalString, @"\s", "");
+    //    //string trimmedString = originalString.Substring(0, Mathf.Min(originalString.Length, maxLength));
 
-        //if (uniqueClick)
-        //{
-        //    uniqueClick = false;
-        //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
-        //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
-        //}
+    //    //if (uniqueClick)
+    //    //{
+    //    //    uniqueClick = false;
+    //    //    Firebase.Analytics.FirebaseAnalytics.LogEvent("Unique_URL_" + trimmedString + "_Clicked");
+    //    //    Debug.Log("<color=red> Unique_URL_" + trimmedString + "_Clicked </color>");
+    //    //}
 
-        string eventName = ConstantsHolder.xanaConstants.EnviornmentName;
-        if (linkType.Equals(LinkType.JJ_Link))
-        {
-            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
-            {
-                // we don't have this museum yet
-                ////worldName = "1F_Mainloby_NFTclick";
-            }
-            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
-            {
-                //// we don't have this museum yet
-                //worldName = "1F_ZoneX_NFTclick";
-                eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-            }
-            else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
-            {
-                //// worldName = "1F_FiveElement_NFTclick";
-                // we don't have this museum yet
+    //    string eventName = ConstantsHolder.xanaConstants.EnviornmentName;
+    //    if (linkType.Equals(LinkType.JJ_Link))
+    //    {
+    //        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE-X"))
+    //        {
+    //            // we don't have this museum yet
+    //            ////worldName = "1F_Mainloby_NFTclick";
+    //        }
+    //        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("ZONE X Musuem"))
+    //        {
+    //            //// we don't have this museum yet
+    //            //worldName = "1F_ZoneX_NFTclick";
+    //            eventName = FirebaseTrigger.URL_ZoneX.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+    //        }
+    //        else if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("FIVE ELEMENTS"))
+    //        {
+    //            //// worldName = "1F_FiveElement_NFTclick";
+    //            // we don't have this museum yet
 
-                eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-            }
-            else
-            {
-                    if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.AtomMuseum.ToString()))
-                        eventName = FirebaseTrigger.URL_AtomRoom.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
-                    else if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.RentalSpace.ToString()))
-                        eventName = FirebaseTrigger.URL_AtomRental.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);  
-            }
-            if (JjInfoManager.Instance.clRoomId != 0)
-                SendFirebaseEvent(eventName);
-        }
-        else if (linkType.Equals(LinkType.Other_Link))
-        {
-            nftManager = NFT_Holder_Manager.instance.currentRoom;
+    //            eventName = FirebaseTrigger.URL_FiveElements.ToString() + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+    //        }
+    //        else
+    //        {
+    //                if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.AtomMuseum.ToString()))
+    //                    eventName = FirebaseTrigger.URL_AtomRoom.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);
+    //                else if (JjInfoManager.Instance.roomName.Equals(JJVideoAndImage.MuseumType.RentalSpace.ToString()))
+    //                    eventName = FirebaseTrigger.URL_AtomRental.ToString() + JjInfoManager.Instance.clRoomId + "_" + (JjInfoManager.Instance.clickedNftInd + 1);  
+    //        }
+    //        if (JjInfoManager.Instance.clRoomId != 0)
+    //            SendFirebaseEvent(eventName);
+    //    }
+    //    else if (linkType.Equals(LinkType.Other_Link))
+    //    {
+    //        nftManager = NFT_Holder_Manager.instance.currentRoom;
 
-            if (nftManager.roomName == "Stage")
-                eventName = FirebaseTrigger.URL_Stage.ToString() + "_" + (nftManager.clickedNftInd + 1);
-            else if (nftManager.roomName == "FactoryTour")
-                eventName = FirebaseTrigger.URL_Factory.ToString() + "_" + (nftManager.clickedNftInd + 1);
-            else if (nftManager.roomName == "HomeConsulting")
-                eventName = FirebaseTrigger.URL_Consult.ToString() + "_" + (nftManager.clickedNftInd + 1);
-            else if (nftManager.roomName == "LandInfo")
-                eventName = FirebaseTrigger.URL_LandInfo.ToString() + "_" + (nftManager.clickedNftInd + 1);
-            else if (nftManager.roomName == "Architectural")
-                eventName = FirebaseTrigger.URL_Architec.ToString() + "_" + (nftManager.clickedNftInd + 1);
+    //        if (nftManager.roomName == "Stage")
+    //            eventName = FirebaseTrigger.URL_Stage.ToString() + "_" + (nftManager.clickedNftInd + 1);
+    //        else if (nftManager.roomName == "FactoryTour")
+    //            eventName = FirebaseTrigger.URL_Factory.ToString() + "_" + (nftManager.clickedNftInd + 1);
+    //        else if (nftManager.roomName == "HomeConsulting")
+    //            eventName = FirebaseTrigger.URL_Consult.ToString() + "_" + (nftManager.clickedNftInd + 1);
+    //        else if (nftManager.roomName == "LandInfo")
+    //            eventName = FirebaseTrigger.URL_LandInfo.ToString() + "_" + (nftManager.clickedNftInd + 1);
+    //        else if (nftManager.roomName == "Architectural")
+    //            eventName = FirebaseTrigger.URL_Architec.ToString() + "_" + (nftManager.clickedNftInd + 1);
             
-            SendFirebaseEvent(eventName);
-        }
-    }
+    //        SendFirebaseEvent(eventName);
+    //    }
+    //}
 
     private int GetLinkIndex()
     {

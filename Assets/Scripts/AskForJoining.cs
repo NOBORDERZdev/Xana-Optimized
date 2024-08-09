@@ -106,11 +106,28 @@ public class AskForJoining : MonoBehaviour
             AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
             TurnCameras(true);
-            Destroy(this.gameObject);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
+                && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+            {
+                StartCoroutine(MovePlayerToNextGameOnReconnection());
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
 
         }
     }
 
+    IEnumerator MovePlayerToNextGameOnReconnection()
+    {
+        while (GameplayEntityLoader.instance == null || GameplayEntityLoader.instance.PenguinPlayer == null)
+        {
+            yield return new WaitForSeconds(0.2f);
+        }
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("MovePlayerToNextGameOnReconnect", RpcTarget.AllBuffered);
+        Destroy(this.gameObject);
+    }
 
     private void TurnCameras(bool active)
     {

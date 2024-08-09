@@ -710,6 +710,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         {
             ReferencesForGamePlay.instance.XANAPartyWaitingText.SetActive(false);
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance!= null && !GamificationComponentData.instance.isRaceStarted  &&  ReferencesForGamePlay.instance != null)
+        {
+            ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+            ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+        }  
     }
 
     void UpdateCanvasGroup(CanvasGroup canvasGroup , bool state){
@@ -1260,13 +1265,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         if (BuilderAssetDownloader.isPostLoading)
         {
             //Debug.LogError("here resetting player .... ");
-            if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
+            if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1 )
             {
-                BuilderSpawnPoint = true;
-                StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
-                StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
-                BuilderData.StartPointID = startFinishPoint.ItemID;
-                spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                if (!IsPlayerOnStartPoint())
+                {
+                    BuilderSpawnPoint = true;
+                    StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+                    StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+                    BuilderData.StartPointID = startFinishPoint.ItemID;
+                    spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                }
+               
             }
             else
             {
@@ -1291,7 +1300,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
             if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
                 mainController.transform.localPosition = AvoidAvatarMergeInBuilderScene();
-            else if (XanaPartyCamera.characterManager != null)
+            else if (XanaPartyCamera.characterManager != null && !IsPlayerOnStartPoint())
                 XanaPartyCamera.characterManager.transform.localPosition = AvoidAvatarMergeInBuilderScene();
         }
     }
@@ -1299,7 +1308,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     Vector3 AvoidAvatarMergeInBuilderScene()
     {
         Vector3 spawnPoint = this.spawnPoint;
-        spawnPoint.y += BuilderSpawnPoint ? 2 : 1000;
+        spawnPoint.y += BuilderSpawnPoint ? 1 : 1000;
 
         RaycastHit hit;
     CheckAgain:
@@ -1311,15 +1320,20 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                 PhotonView pv = hit.collider.GetComponent<PhotonView>();
                 if (pv == null || !pv.IsMine)
                 {
-                    if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1)
+                    if (BuilderData.StartFinishPoints.Count > 1 && BuilderData.mapData.data.worldType == 1 )
                     {
-                        StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
-                        StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
-                        BuilderData.StartPointID = startFinishPoint.ItemID;
-                        spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                        if (!IsPlayerOnStartPoint())
+                        {
+                            StartFinishPointData startFinishPoint = BuilderData.StartFinishPoints.Find(x => x.IsStartPoint);
+                            StartPoint sp = startFinishPoint.SpawnObject.GetComponent<StartPoint>();
+                            BuilderData.StartPointID = startFinishPoint.ItemID;
+                            spawnPoint = sp.SpawnPoints[UnityEngine.Random.Range(0, sp.SpawnPoints.Count)].transform.position;
+                        }
+                       
                     }
                     else
                     {
+
                         spawnPoint = new Vector3(spawnPoint.x + UnityEngine.Random.Range(-1f, 1f), spawnPoint.y, spawnPoint.z + UnityEngine.Random.Range(-1f, 1f));
                     }
                     goto CheckAgain;
@@ -1335,6 +1349,37 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             this.spawnPoint = spawnPoint;
         }
         return spawnPoint;
+    }
+
+    bool IsPlayerOnStartPoint()
+    {
+        Transform playerTransform = PenguinPlayer.transform;
+        float raycastDistance = 2f; // Adjust as needed
+
+        // Cast a ray from the player's position downward
+        if (Physics.Raycast(playerTransform.position, -playerTransform.up, out RaycastHit hit, raycastDistance))
+        {
+            // Draw a debug ray to visualize the hit point
+            Debug.DrawRay(playerTransform.position, -playerTransform.up * raycastDistance, Color.green);
+
+            // Check if the hit object has the StartPoint script
+            StartPoint startPoint = hit.collider.GetComponentInParent<StartPoint>();
+            if (startPoint != null)
+            {
+                Debug.Log("Player is on a StartPoint object.");
+                return true;
+            }
+            else
+            {
+                Debug.Log("Player is not on a StartPoint object.");
+                return false;
+            }
+        }
+        else
+        {
+            Debug.Log("Player is not on a StartPoint object.");
+            return false;
+        }
     }
 
     public void SetAddressableSceneActive()

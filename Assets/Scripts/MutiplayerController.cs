@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "aa5";
+        string gameVersion = "6";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -331,16 +331,34 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
             {
-                ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
-                GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
+                    GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+
+                    if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
+                    {
+                        ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+                        ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                    }
+                }
+                if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
+                        if (ref_PartyTimerManager.startTime <= -1)
+                        {
+                            ref_PartyTimerManager.startTime = PhotonNetwork.Time;
+                        }
+                        ref_PartyTimerManager.GetComponent<PhotonView>().RPC(nameof(ref_PartyTimerManager.StartTimer), RpcTarget.AllBuffered, ref_PartyTimerManager.startTime);
+                    }
+                }
+
+                
             }
-               
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance!= null && !GamificationComponentData.instance.isRaceStarted  &&  ReferencesForGamePlay.instance != null)
-            {
-                ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
-            }  
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -358,6 +376,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ReferencesForGamePlay.instance != null)
                 {
+                    ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
                     ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
                 }
             }
