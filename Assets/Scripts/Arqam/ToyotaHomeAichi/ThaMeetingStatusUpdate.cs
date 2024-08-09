@@ -22,18 +22,13 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         _pv = GetComponent<PhotonView>();
         if (PhotonNetwork.IsMasterClient)
         {
-            CheckAndUpdateMeetingStatus();
             ConstantsHolder.xanaConstants.meetingStatus = ConstantsHolder.MeetingStatus.End;
         }
     }
+
     private void OnDisable()
     {
         //BuilderEventManager.AfterPlayerInstantiated -= GetPlayerCount;
-    }
-
-    private void CheckAndUpdateMeetingStatus()
-    {
-
     }
 
     public void UpdateMeetingParams(int status)
@@ -79,11 +74,36 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        if(otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum 
-            || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum)
+        if (PhotonNetwork.IsMasterClient)
         {
+            if (_pv != null)
+            {
+                _pv.RPC(nameof(UpdateStatusOnLeft), RpcTarget.All);
+            }
+            else
+            {
+                if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
+                {
+                    Debug.LogError("Joined Room::" + FB_Notification_Initilizer.Instance.userInMeeting);
+                    NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(UpdateStatusOnLeft), RpcTarget.All);
+                }
+            }
+        }
+
+        //if ((otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.userActorNum
+        //    || otherPlayer.ActorNumber == FB_Notification_Initilizer.Instance.toyotaUserActorNum))
+        //{
+        //    UpdateStatusOnLeft();
+        //}
+    }
+
+    [PunRPC]
+    private void UpdateStatusOnLeft()
+    {
+        Debug.LogError("Left Room Call::");
             int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
             NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
+            Debug.LogError("Left Room::" + temp);
             if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
             {
                 NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)MeetingStatus.End);
@@ -96,7 +116,6 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
                     NFT_Holder_Manager.instance.meetingTxtUpdate.UpdateMeetingTxt("会議室利用可");
                 }
             }
-        }
     }
 
     private void NewPlayerSpawned()
@@ -105,6 +124,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         {
             if (_pv != null)
             {
+                Debug.LogError("Joined Room::" + FB_Notification_Initilizer.Instance.userInMeeting);
                 _pv.RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
                 _pv.RPC(nameof(SetMeetingCounter), RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
             }
@@ -112,6 +132,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             {
                 if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
                 {
+                    Debug.LogError("Joined Room::" + FB_Notification_Initilizer.Instance.userInMeeting);
                     NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
                     NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter),
                         RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
