@@ -338,6 +338,12 @@ public class ItemDetail : MonoBehaviour
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
             }
+
+            if (string.IsNullOrEmpty(price))
+            {
+                price = "0";
+            }
+
             decimal PriceInDecimal = decimal.Parse(price);
             int priceint = (int)PriceInDecimal;
             PriceTxt.text = priceint.ToString();
