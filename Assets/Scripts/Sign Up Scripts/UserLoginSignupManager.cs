@@ -1660,8 +1660,9 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
-        Debug.Log("Login Guest ");
-        if (!ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        ConstantsHolder.userId = PlayerPrefs.GetString("UserId");
+        Debug.Log("Login Guest : " + ConstantsHolder.userId);
+        if (ConstantsHolder.userId.IsNullOrEmpty())
         {
             using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
             {
@@ -1698,7 +1699,9 @@ public class UserLoginSignupManager : MonoBehaviour
                                     UserPassManager.Instance.GetGroupDetails("guest");
                                 }
                             }
+
                             ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                            PlayerPrefs.SetString("UserId", ConstantsHolder.userId);
                             UserPassManager.Instance.GetGroupDetailsForComingSoon();
                             PlayerPrefs.SetInt("FirstTime", 1);
                             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
