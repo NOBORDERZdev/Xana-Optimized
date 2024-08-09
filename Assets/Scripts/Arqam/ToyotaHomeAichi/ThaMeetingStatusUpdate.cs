@@ -89,7 +89,7 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
     {
             int temp = FB_Notification_Initilizer.Instance.userInMeeting - 1;
             NFT_Holder_Manager.instance.meetingStatus.UpdateUserCounter(temp);
-            Debug.LogError("3Left Room::" + temp);
+
             if (FB_Notification_Initilizer.Instance.userInMeeting <= 0)
             {
                 NFT_Holder_Manager.instance.meetingStatus.UpdateMeetingParams((int)MeetingStatus.End);
@@ -110,7 +110,6 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
         {
             if (_pv != null)
             {
-                Debug.LogError("Joined Room::" + FB_Notification_Initilizer.Instance.userInMeeting);
                 _pv.RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
                 _pv.RPC(nameof(SetMeetingCounter), RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
             }
@@ -118,7 +117,6 @@ public class ThaMeetingStatusUpdate : MonoBehaviourPunCallbacks
             {
                 if (NFT_Holder_Manager.instance && NFT_Holder_Manager.instance.meetingStatus)
                 {
-                    Debug.LogError("Joined Room::" + FB_Notification_Initilizer.Instance.userInMeeting);
                     NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(StartMeeting), RpcTarget.All, (int)NFT_Holder_Manager.instance.meetingStatus.ThaMeetingStatus);
                     NFT_Holder_Manager.instance.meetingStatus.GetComponent<PhotonView>().RPC(nameof(SetMeetingCounter),
                         RpcTarget.All, FB_Notification_Initilizer.Instance.userInMeeting);
