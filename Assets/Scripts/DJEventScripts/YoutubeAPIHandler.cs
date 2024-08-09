@@ -20,7 +20,9 @@ public class YoutubeAPIHandler : MonoBehaviour
     public string OldAWSURL = "xyz";
     public int summitAreaID;
     public int SummitVideoIndex;
-    public StreamYoutubeVideo VideoPlayerRef;
+    public AdvancedYoutubePlayer VideoPlayerRef;
+
+    public bool ProxyIsYoutubeURL = true;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -31,7 +33,7 @@ public class YoutubeAPIHandler : MonoBehaviour
     {
         if (!VideoPlayerRef)
         {
-            VideoPlayerRef = GetComponent<StreamYoutubeVideo>();
+            VideoPlayerRef = GetComponent<AdvancedYoutubePlayer>();
         }
     }
     private void Start()
@@ -324,7 +326,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                if (_response.data.isLive)
+                                if (ProxyIsYoutubeURL)
                                 {
                                     Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
                                     _urlDataInitialized = true;
@@ -458,21 +460,21 @@ public class YoutubeAPIHandler : MonoBehaviour
                                     }
                                     if (VideoPlayerRef)
                                     {
-                                        VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
-                                        VideoPlayerRef.mediaPlayer.enabled = false;
-                                        VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
-                                        VideoPlayerRef.videoPlayer.enabled = true;
+                                        VideoPlayerRef.AVProVideoPlayer.gameObject.SetActive(false);
+                                        VideoPlayerRef.AVProVideoPlayer.enabled = false;
+                                        VideoPlayerRef.VideoPlayer.gameObject.SetActive(true);
+                                        VideoPlayerRef.VideoPlayer.enabled = true;
 
                                         //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                                         //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                                         //SoundSettings.soundManagerSettings.setNewSliderValues();
 
-                                        VideoPlayerRef.videoPlayer.url = _apiResponse.videoData.url;
-                                        VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
-                                        VideoPlayerRef.videoPlayer.Prepare();
+                                        VideoPlayerRef.VideoPlayer.url = _response.data.link;
+                                        VideoPlayerRef.VideoPlayer.prepareCompleted -= OnPrepareCompleted;
+                                        VideoPlayerRef.VideoPlayer.Prepare();
 
                                         // Assign the individual function to the prepareCompleted event
-                                        VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
+                                        VideoPlayerRef.VideoPlayer.prepareCompleted += OnPrepareCompleted;
                                     }
                                     else
                                     {
@@ -520,21 +522,21 @@ public class YoutubeAPIHandler : MonoBehaviour
         {
             if (VideoPlayerRef)
             {
-                VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
-                VideoPlayerRef.mediaPlayer.enabled = false;
-                VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
-                VideoPlayerRef.videoPlayer.enabled = true;
+                VideoPlayerRef.AVProVideoPlayer.gameObject.SetActive(false);
+                VideoPlayerRef.AVProVideoPlayer.enabled = false;
+                VideoPlayerRef.VideoPlayer.gameObject.SetActive(true);
+                VideoPlayerRef.VideoPlayer.enabled = true;
 
                 //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                 //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
                 //SoundSettings.soundManagerSettings.setNewSliderValues();
 
-                VideoPlayerRef.videoPlayer.url = _response.data.link;
-                VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
-                VideoPlayerRef.videoPlayer.Prepare();
+                VideoPlayerRef.VideoPlayer.url = _response.data.link;
+                VideoPlayerRef.VideoPlayer.prepareCompleted -= OnPrepareCompleted;
+                VideoPlayerRef.VideoPlayer.Prepare();
 
                 // Assign the individual function to the prepareCompleted event
-                VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
+                VideoPlayerRef.VideoPlayer.prepareCompleted += OnPrepareCompleted;
             }
             else
             {

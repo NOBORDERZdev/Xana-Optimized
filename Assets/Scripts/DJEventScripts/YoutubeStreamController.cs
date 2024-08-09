@@ -6,6 +6,7 @@ using WebSocketSharp;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using LightShaft.Scripts;
+using System.Security.Policy;
 
 public class YoutubeStreamController : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class YoutubeStreamController : MonoBehaviour
     private string PrevURL;
     private bool IsOldURL = true;
     public static Action playPrercordedVideo;
-    public StreamYoutubeVideo streamYoutubeVideo;
+    public AdvancedYoutubePlayer streamYoutubeVideo;
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -76,10 +77,10 @@ public class YoutubeStreamController : MonoBehaviour
 
     private void Start()
     {
-        if (this.GetComponent<StreamYoutubeVideo>() != null)
-        {
-            streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
-        }
+        //if (this.GetComponent<StreamYoutubeVideo>() != null)
+        //{
+        //    streamYoutubeVideo = this.GetComponent<StreamYoutubeVideo>();
+        //}
         //if (videoPlayerAudioSource)
         //    videoPlayerAudioSource.gameObject.GetComponent<VideoPlayer>().targetMaterialRenderer.material.color = new Color32(57, 57, 57, 255);
         //if (NormalPlayer.GetComponent<YoutubeSimplified>().videoPlayer != null)
@@ -183,7 +184,7 @@ public class YoutubeStreamController : MonoBehaviour
             {
                 GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
             }
-            streamYoutubeVideo.mediaPlayer.enabled = true;
+            streamYoutubeVideo.AVProVideoPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
             if (GetComponent<AvProDirectionalSound>())
@@ -197,7 +198,10 @@ public class YoutubeStreamController : MonoBehaviour
             //{
             //    player.GetLivestreamUrl(APIHandler.Data.URL);
             //}
-            streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+            //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+            streamYoutubeVideo.VideoId = APIHandler.Data.URL;
+            streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
+            streamYoutubeVideo.PlayVideo();
             if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.gameObject.SetActive(false);
@@ -210,15 +214,20 @@ public class YoutubeStreamController : MonoBehaviour
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
 
             LiveStreamPlayer.SetActive(false);
+            streamYoutubeVideo.AVProVideoPlayer.enabled = false;
+            streamYoutubeVideo.VideoPlayer.enabled = true;
             NormalPlayer.gameObject.SetActive(true);
 
             //YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
 
             if (NormalPlayer && APIHandler.Data.isPlaying)
             {
+                streamYoutubeVideo.VideoId = ExtractVideoIdFromUrl(APIHandler.Data.URL);
+                streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
+                streamYoutubeVideo.PlayVideo();
                 //NormalPlayer.url = APIHandler.Data.URL;
                 //NormalPlayer.Play();
-                streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
+                //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
             }
             else if (APIHandler.Data.isPlaying == false)
             {
@@ -227,6 +236,28 @@ public class YoutubeStreamController : MonoBehaviour
             }
 
         }
+    }
+
+    public string ExtractVideoIdFromUrl(string url)
+    {
+        // Find the position of the "v=" parameter
+        int startIndex = url.IndexOf("v=");
+
+        if (startIndex != -1)
+        {
+            // Extract the substring after "v="
+            startIndex += 2; // Move past "v="
+            int endIndex = url.IndexOf('&', startIndex);
+            if (endIndex == -1)
+                endIndex = url.Length;
+
+            // Get the video ID
+            string videoId = url.Substring(startIndex, endIndex - startIndex);
+            return videoId;
+        }
+
+        // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)
+        return null;
     }
 
 
