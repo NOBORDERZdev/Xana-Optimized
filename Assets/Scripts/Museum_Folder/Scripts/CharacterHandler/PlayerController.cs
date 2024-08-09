@@ -1785,7 +1785,6 @@ public class PlayerController : MonoBehaviour
         if (swordModel == null && time > 0)
         {
             swordModel = PhotonNetwork.Instantiate("Katana", Vector3.zero, new Quaternion(0, 0, 0, 0));
-            time = 300f;
         }
 
         BuilderEventManager.OnNinjaMotionComponentCollisionEnter?.Invoke(time);
