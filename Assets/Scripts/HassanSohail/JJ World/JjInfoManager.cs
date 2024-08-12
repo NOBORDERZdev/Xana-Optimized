@@ -14,7 +14,7 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using System.Text.RegularExpressions;
 using RenderHeads.Media.AVProVideo;
-using static GlobalConstants;
+//using static GlobalConstants;
 
 public class JjInfoManager : MonoBehaviour
 {
@@ -600,61 +600,61 @@ public class JjInfoManager : MonoBehaviour
     }
     public void SendCallAnalytics(DataType type, string title, int id = -1, JJVideoAndImage.MuseumType museumType = JJVideoAndImage.MuseumType.AtomMuseum, int roomNum = 1)
     {
-        string worldName = ConstantsHolder.xanaConstants.EnviornmentName;
-        //if (!string.IsNullOrEmpty(firebaseEventName))
+        //string worldName = ConstantsHolder.xanaConstants.EnviornmentName;
+        ////if (!string.IsNullOrEmpty(firebaseEventName))
+        ////{
+        ////    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
+        ////    //Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
+        ////    return;
+        ////}
+        //if (worldName.Contains("ZONE-X"))
         //{
-        //    Firebase.Analytics.FirebaseAnalytics.LogEvent(firebaseEventName +"NFT_" + id);
-        //    //Debug.Log("<color=red>" + firebaseEventName + "NFT_" + id + " </color>");
-        //    return;
+        //    //1F_Mainloby_A_ZoneX
+        //    string eventName = "";
+        //    switch (id)
+        //    {
+        //        case 0:
+        //            eventName = FirebaseTrigger.WP_MainLobby_A_ZoneX.ToString();
+        //            break;
+
+        //        case 1:
+        //            eventName = FirebaseTrigger.WP_MainLobby_B_FiveElement.ToString();
+        //            break;
+
+        //        case 2:
+        //            eventName = FirebaseTrigger.WP_MainLobby_C_AtomMuseum.ToString();
+        //            break;
+
+        //        case 3:
+        //            eventName = FirebaseTrigger.WP_MainLobby_D_RentalSpace.ToString();
+        //            break;
+        //    }
+        //    SendFirebaseEvent(eventName);
         //}
-        if (worldName.Contains("ZONE-X"))
-        {
-            //1F_Mainloby_A_ZoneX
-            string eventName = "";
-            switch (id)
-            {
-                case 0:
-                    eventName = FirebaseTrigger.WP_MainLobby_A_ZoneX.ToString();
-                    break;
+        //else if (worldName.Contains("ZONE X Musuem"))
+        //{
+        //    // we don't have this museum yet
+        //    string eventName = "";
+        //    eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
+        //    SendFirebaseEvent(eventName);
+        //}
+        //else if (worldName.Contains("FIVE ELEMENTS"))
+        //{
+        //    // we don't have this museum yet
+        //    string eventName = "";
+        //    eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
+        //    SendFirebaseEvent(eventName);
+        //}
+        //else
+        //{
+        //    string eventName = "";
+        //    if (museumType.Equals(JJVideoAndImage.MuseumType.AtomMuseum))
+        //        eventName = FirebaseTrigger.CL_NFT_AtomRoom.ToString() + roomNum + "_" + (id + 1);
+        //    else if (museumType.Equals(JJVideoAndImage.MuseumType.RentalSpace))
+        //        eventName = FirebaseTrigger.CL_NFT_AtomRental.ToString() + roomNum + "_" + (id + 1);
 
-                case 1:
-                    eventName = FirebaseTrigger.WP_MainLobby_B_FiveElement.ToString();
-                    break;
-
-                case 2:
-                    eventName = FirebaseTrigger.WP_MainLobby_C_AtomMuseum.ToString();
-                    break;
-
-                case 3:
-                    eventName = FirebaseTrigger.WP_MainLobby_D_RentalSpace.ToString();
-                    break;
-            }
-            SendFirebaseEvent(eventName);
-        }
-        else if (worldName.Contains("ZONE X Musuem"))
-        {
-            // we don't have this museum yet
-            string eventName = "";
-            eventName = FirebaseTrigger.CL_IMG_ZoneX.ToString() + "_" + (id + 1);
-            SendFirebaseEvent(eventName);
-        }
-        else if (worldName.Contains("FIVE ELEMENTS"))
-        {
-            // we don't have this museum yet
-            string eventName = "";
-            eventName = FirebaseTrigger.CL_IMG_FiveElements.ToString() + "_" + (id + 1);
-            SendFirebaseEvent(eventName);
-        }
-        else
-        {
-            string eventName = "";
-            if (museumType.Equals(JJVideoAndImage.MuseumType.AtomMuseum))
-                eventName = FirebaseTrigger.CL_NFT_AtomRoom.ToString() + roomNum + "_" + (id + 1);
-            else if (museumType.Equals(JJVideoAndImage.MuseumType.RentalSpace))
-                eventName = FirebaseTrigger.CL_NFT_AtomRental.ToString() + roomNum + "_" + (id + 1);
-
-            SendFirebaseEvent(eventName);
-        }
+        //    SendFirebaseEvent(eventName);
+        //}
     }
 
     public void CloseInfoPop()

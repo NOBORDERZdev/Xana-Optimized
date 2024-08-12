@@ -35,7 +35,7 @@ public class XANAPartyManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
+  
     private void Start()
     {
         
@@ -158,7 +158,10 @@ public class XANAPartyManager : MonoBehaviour
 
         if (isJoiningLobby)
         {
-            XANAPartyManager.Instance.GameIndex = 0;
+            GameIndex = 0;
+            GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
+            GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
+
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)
             {
