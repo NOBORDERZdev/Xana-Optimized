@@ -4293,6 +4293,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: BoardOn
+  - Type: 9
+    SynchronizeType: 0
+    Name: Pray
   m_SynchronizeLayers:
   - SynchronizeType: 1
     LayerIndex: 0
@@ -4328,7 +4331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126494ae2a10a34499272ed97a6c9f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logLevel: 3
+  logLevel: 0
   ignoreGlobalLogLevel: 0
   recorderInUse: {fileID: 0}
   speakerInUse: {fileID: 8321987126736790954}
@@ -9736,7 +9739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7832445029712272382}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9774,8 +9777,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.17362022
-      value: 1.0007133
+      time: 0.24609947
+      value: 0.99347687
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9783,17 +9786,17 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.17589104
-      value: 0.81191355
-      inSlope: -0.022613814
-      outSlope: -0.022613814
+      time: 0.24837029
+      value: 0.80467707
+      inSlope: -0.024586283
+      outSlope: -0.024586283
       tangentMode: 0
       weightedMode: 0
       inWeight: 1
-      outWeight: 0.33333334
+      outWeight: 0.966978
     - serializedVersion: 3
-      time: 0.31033647
-      value: 0.8105702
+      time: 0.38281572
+      value: 0.8033337
       inSlope: -0.031921677
       outSlope: -0.031921677
       tangentMode: 0
@@ -9801,8 +9804,8 @@ AudioSource:
       inWeight: 0.3160555
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.315489
-      value: 0.6356374
+      time: 0.38796824
+      value: 0.6284009
       inSlope: 0.02003433
       outSlope: 0.02003433
       tangentMode: 0
@@ -9810,8 +9813,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.2855934
     - serializedVersion: 3
-      time: 0.4454651
-      value: 0.63941956
+      time: 0.51794434
+      value: 0.6321831
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9819,8 +9822,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.44977498
-      value: 0.43990654
+      time: 0.5222542
+      value: 0.43267006
       inSlope: -0.028519781
       outSlope: -0.028519781
       tangentMode: 0
@@ -9828,8 +9831,8 @@ AudioSource:
       inWeight: 0.2995476
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.59270793
-      value: 0.43990654
+      time: 0.6651872
+      value: 0.43267006
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9837,8 +9840,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.59877604
-      value: 0.22082084
+      time: 0.6712553
+      value: 0.21358436
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9846,8 +9849,8 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7385959
-      value: 0.22082084
+      time: 0.81107515
+      value: 0.21358436
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -9855,7 +9858,7 @@ AudioSource:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.7416637
+      time: 0.81414294
       value: 0
       inSlope: 0
       outSlope: 0

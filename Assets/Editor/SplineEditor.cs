@@ -15,7 +15,7 @@ public class SplineEditor : Editor {
 
     private void OnEnable()
     {
-        myCustomClassList = serializedObject.FindProperty("anchorList");
+        myCustomClassList = serializedObject.FindProperty("_anchorList");
 
         reorderableList = new ReorderableList(serializedObject, myCustomClassList, true, true, true, true)
         {
@@ -69,10 +69,10 @@ public class SplineEditor : Editor {
             serializedObject.Update();
         }
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("dots"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("normal"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("closedLoop"));
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("anchorList"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_dots"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_normal"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_closedLoop"));
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("_anchorList"));
 
 
 
