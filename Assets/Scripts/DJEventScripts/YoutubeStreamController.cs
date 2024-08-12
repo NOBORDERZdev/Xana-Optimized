@@ -180,10 +180,7 @@ public class YoutubeStreamController : MonoBehaviour
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
             Debug.Log("Hardik changes check");
-            if (GetComponent<AvProLiveVideoSoundEnabler>())
-            {
-                GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(true);
-            }
+            streamYoutubeVideo.EnableVideoScreen(true);
             streamYoutubeVideo.AVProVideoPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
@@ -212,7 +209,7 @@ public class YoutubeStreamController : MonoBehaviour
         {
 
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
-
+            streamYoutubeVideo.EnableVideoScreen(false);
             LiveStreamPlayer.SetActive(false);
             streamYoutubeVideo.AVProVideoPlayer.enabled = false;
             streamYoutubeVideo.VideoPlayer.enabled = true;

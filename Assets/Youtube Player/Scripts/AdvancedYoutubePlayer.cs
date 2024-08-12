@@ -46,6 +46,10 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     [Tooltip("Use AVPRO")]
     public MediaPlayer AVProVideoPlayer;
 
+    public GameObject PreRecVideoScreen;
+    public MeshFilter LiveVideoPlayerScreen;
+    public Mesh AndroidLiveVideoMesh;
+    public Mesh IOSLiveVideoMesh;
 
     string m_StartedPlayingVideoId;
     string m_PlayingVideoId;
@@ -251,6 +255,27 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         else
         {
             return new FormatInfo() { Itag = itag, Url = videoInfo.hlsUrl };
+        }
+    }
+
+    public void EnableVideoScreen(bool _isLiveVideo)
+    {
+        if (_isLiveVideo)
+        {
+
+#if UNITY_ANDROID
+            LiveVideoPlayerScreen.mesh = AndroidLiveVideoMesh;
+#elif UNITY_IOS
+            LiveVideoPlayerScreen.mesh = IOSLiveVideoMesh;
+#endif
+            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+            PreRecVideoScreen.SetActive(!_isLiveVideo);
+        }
+        else
+        {
+            VideoPlayer.playOnAwake= false;
+            PreRecVideoScreen.SetActive(!_isLiveVideo);
+            LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
         }
     }
 
