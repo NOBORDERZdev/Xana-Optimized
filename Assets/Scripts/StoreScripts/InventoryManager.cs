@@ -977,10 +977,12 @@ public class InventoryManager : MonoBehaviour
             loadingItems = true;
             int pageIndex = UpdateActivePanelPageIndex();
             int _downloadedAssetCount = UpdateActivePanelPageIndex(false,true);
+            int _ActivePanelIndex = GetActivePanelIndex();
 
-            if (_downloadedAssetCount % 40 == 0)
+
+            if (_downloadedAssetCount % 40 != 0)
             {
-                Debug.LogError("Items Are Downloading");
+                Debug.Log("<color=red>Items Are Downloading</color>");
                 return;
             }
 
@@ -992,7 +994,8 @@ public class InventoryManager : MonoBehaviour
 
             if (pageIndex < 0)
                 return;
-            SubmitAllItemswithSpecificSubCategory(SubCategoriesList[pageIndex].id, false);
+
+            SubmitAllItemswithSpecificSubCategory(SubCategoriesList[_ActivePanelIndex].id, false);
         }
     }
 
@@ -1012,6 +1015,24 @@ public class InventoryManager : MonoBehaviour
         }
 
         return GetComponent<ScrollRect>();
+    }
+
+    private int GetActivePanelIndex()
+    {
+        int _selectedPanel = ConstantsHolder.xanaConstants.currentButtonIndex;
+        if (Clothdatabool)
+        {
+            if (_selectedPanel == 3) return 3;  // Outer
+            if (_selectedPanel == 5) return 5; // Bottom
+            if (_selectedPanel == 7) return 7; // Shoes
+            else
+                return -1;
+        }
+        else
+        {
+            return 8; // Hair
+        }
+
     }
     private int GetActivePanelPageIndex()
     {
@@ -1048,27 +1069,27 @@ public class InventoryManager : MonoBehaviour
             }
             else if (_selectedPanel == 0)
             {
-                _HairApiPagaCount += 1;
-                return 8;
+                return GetDownloadedNumber(EnumClass.CategoryEnum.HairAvatar);
             }
             else
             {
                 return -1;
             }
         }
-       else  if (addValue)
+        else  if (addValue)
         {
             if (Clothdatabool)
             {
-                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _selectedPanel; } // Outer
-                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _selectedPanel; } // Bottom
-                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _selectedPanel; }// Shoes
+                if (_selectedPanel == 3) { _OuterApiPagaCount += 1; return _OuterApiPagaCount; } // Outer
+                if (_selectedPanel == 5) { _BottomApiPagaCount += 1; return _BottomApiPagaCount; } // Bottom
+                if (_selectedPanel == 7) { _ShoesApiPagaCount += 1; return _ShoesApiPagaCount; }// Shoes
 
-                return -1; ;
+                return -1;
             }
             else if (_selectedPanel == 0)
             {
-                return GetDownloadedNumber(EnumClass.CategoryEnum.HairAvatar);
+                _HairApiPagaCount += 1; 
+                return _HairApiPagaCount; ;
             }
             else
             {
@@ -1096,7 +1117,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-
     private void ResetPageIndex()
     {
         _BottomApiPagaCount = 1;
@@ -3629,7 +3649,6 @@ public class InventoryManager : MonoBehaviour
     void InstantiateStoreItems(Transform parentObj, int objId, string objName, List<ItemDetail> TempitemDetail, bool useDefaultValue = true)
     {
         localcount++;
-        Debug.Log("Total: " + dataListOfItems + "  -- " + objId);
         if (string.IsNullOrEmpty(dataListOfItems[objId].iconLink) && parentObj != TempSubcategoryParent && _ResettingAssetList == false)
         {
             Debug.Log("Icon Link is Empty or Parent Object is not same");
