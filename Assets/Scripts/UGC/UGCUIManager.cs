@@ -356,6 +356,7 @@ public class UGCUIManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Home");
+            LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
         }
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.Hometab);
     }

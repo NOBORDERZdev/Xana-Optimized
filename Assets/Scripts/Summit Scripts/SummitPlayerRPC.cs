@@ -50,12 +50,10 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
         if (view.IsMine)
         {
-            if (loader != null && loader.mainController != null)
-            {
-                parentCharacterController = loader.mainController.GetComponent<CharacterController>();
-                parentPlayerController = loader.mainController.GetComponent<PlayerController>();
-                camera = parentPlayerController?.firstPersonCameraObj?.GetComponent<Camera>();
-            }
+            loader = GameplayEntityLoader.instance;
+            parentCharacterController = loader.mainController.GetComponent<CharacterController>();
+            parentPlayerController = loader.mainController.GetComponent<PlayerController>();
+            camera = parentPlayerController.firstPersonCameraObj.GetComponent<Camera>();
         }
     }
 
@@ -85,7 +83,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             if (isdriver)
             {
 
-                car.driverseatempty = false;
+                car.DriverSeatEmpty = false;
                 if (view.IsMine)
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
@@ -139,13 +137,13 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                 //transform.position = car.DriverPos;
                 if (gameObject.name.Contains("XanaAvatar2.0_Female"))
                 {
-                    car.isDriverMale = false;
+                    car._isDriverMale = false;
                 }
-                if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                if (!car._isPassengerMale && car._isDriverMale && !car.PasengerSeatEmty && !car.DriverSeatEmpty)
                 {
                     car.showLove();
                 }
-                else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && car.driverseatempty)
+                else if (car._isPassengerMale && !car._isDriverMale && !car.PasengerSeatEmty && car.DriverSeatEmpty)
                 {
                     car.showLove();
                 }
@@ -154,7 +152,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
             }
             else
             {
-                car.pasengerseatemty = false;
+                car.PasengerSeatEmty = false;
                 if (view.IsMine)
                 {
                     ConstantsHolder.TempDiasableMultiPartPhoton = true;
@@ -199,13 +197,13 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
                animator.SetTrigger("EnterCar");
                 if (gameObject.name.Contains("XanaAvatar2.0_Female"))
                 {
-                    car.isPassengerMale = false;
+                    car._isPassengerMale = false;
                 }
-                if (!car.isPassengerMale && car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                if (!car._isPassengerMale && car._isDriverMale && !car.PasengerSeatEmty && !car.DriverSeatEmpty)
                 {
                     car.showLove();
                 }
-                else if (car.isPassengerMale && !car.isDriverMale && !car.pasengerseatemty && !car.driverseatempty)
+                else if (car._isPassengerMale && !car._isDriverMale && !car.PasengerSeatEmty && !car.DriverSeatEmpty)
                 {
                     car.showLove();
                 }
@@ -234,7 +232,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         if (isdriver)
         {
 
-            car.driverseatempty = true;
+            car.DriverSeatEmpty = true;
             if (view.IsMine)
             {
 
@@ -271,7 +269,7 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
         }
         else
         {
-            car.pasengerseatemty = true;
+            car.PasengerSeatEmty = true;
             if (view.IsMine)
             {
 

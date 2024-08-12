@@ -23,6 +23,7 @@ public class ReferencesForGamePlay : MonoBehaviour
 
     public GameObject m_34player;
     public PlayerController playerControllerNew;
+    public GameObject spawnedSkateBoard;
     public GameObject minimap;
     public GameObject MinimapSummit;
     public GameObject FullscreenMapSummit;
@@ -103,6 +104,11 @@ public class ReferencesForGamePlay : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
+
+        if(m_34player==null)
+        {
+            m_34player=GameplayEntityLoader.instance.player;
+        }
         if (WorldItemView.m_EnvName.Contains("Xana Festival")) // for Xana Festival
         {
             //RoomMaxPlayerCount = (ConstantsHolder.xanaConstants.userLimit - 1);

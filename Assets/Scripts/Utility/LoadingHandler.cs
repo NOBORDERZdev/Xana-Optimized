@@ -6,6 +6,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using UnityEngine.Video;
 
 public class LoadingHandler : MonoBehaviour
 {
@@ -67,6 +68,11 @@ public class LoadingHandler : MonoBehaviour
 
     [Header("Store Loading")]
     public GameObject storeLoadingScreen;
+
+    [Header("Dome Loading")]
+    public GameObject VideoLoading;
+    public RenderTexture Texture16x9;
+    public RenderTexture Texture9x16;
 
     public ManualRoomController manualRoomController;
     public StreamingLoadingText streamingLoading;
@@ -519,7 +525,7 @@ public class LoadingHandler : MonoBehaviour
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
             if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                teleportFeader.gameObject.activeInHierarchy)
+                teleportFeader.gameObject.activeInHierarchy || ConstantsHolder.xanaConstants.isFromTottoriWorld)
             {
                 JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                 JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -553,7 +559,7 @@ public class LoadingHandler : MonoBehaviour
             {
                 currentValue = sliderCompleteValue;
                 if ((ConstantsHolder.xanaConstants.isFromXanaLobby || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
-                    teleportFeader.gameObject.activeInHierarchy)
+                    teleportFeader.gameObject.activeInHierarchy || ConstantsHolder.xanaConstants.isFromTottoriWorld)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
@@ -570,6 +576,7 @@ public class LoadingHandler : MonoBehaviour
             }
             yield return null;
         }
+        ConstantsHolder.xanaConstants.isFromTottoriWorld = false;
     }
 
     public IEnumerator TeleportFader(FadeAction action)
@@ -613,7 +620,24 @@ public class LoadingHandler : MonoBehaviour
         yield return null;
     }
 
+    public void ShowVideoLoading()
+    {
+        if(ScreenOrientationManager._instance != null)
+        {
+            if (ScreenOrientationManager._instance.isPotrait)
+                VideoLoading.GetComponent<VideoPlayer>().targetTexture = Texture9x16;
+            else
+                VideoLoading.GetComponent<VideoPlayer>().targetTexture = Texture16x9;
 
+            VideoLoading.GetComponent<RawImage>().texture = VideoLoading.GetComponent<VideoPlayer>().targetTexture;
+        }
+        VideoLoading.SetActive(true);
+    }
+
+    public void DisableVideoLoading()
+    {
+        VideoLoading.SetActive(false);
+    }
 
 }
 

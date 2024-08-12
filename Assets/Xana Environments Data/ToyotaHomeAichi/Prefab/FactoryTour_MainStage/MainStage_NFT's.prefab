@@ -1655,7 +1655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0}
+  m_AnchoredPosition: {x: -0.1, y: -0}
   m_SizeDelta: {x: 2.8, y: 1.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4237530104361696748
@@ -5736,7 +5736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.08, y: 0.42}
+  m_AnchoredPosition: {x: -0.1, y: 0.42}
   m_SizeDelta: {x: 3.7, y: 3.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &663295820760170788
@@ -9888,8 +9888,10 @@ MonoBehaviour:
   maxDistance: 20
   minDistance: 1
   updateInterval: 0.5
+  playerCam: {fileID: 0}
   activePlayer: {fileID: 2507505394166159395}
   audioSource: {fileID: 5026257661121069021}
+  PlayerTriggerCheck: {fileID: 0}
 --- !u!1 &5026257660917194773
 GameObject:
   m_ObjectHideFlags: 0
@@ -10396,6 +10398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
   mediaPlayer: {fileID: 2507505394166159395}
   videoPlayer: {fileID: 5026257661121068993}
   liveVideoPlay:
@@ -11545,7 +11550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.049, y: 0.556}
+  m_AnchoredPosition: {x: -0.1, y: 0.556}
   m_SizeDelta: {x: 3.07, y: 3.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209768391546401677
