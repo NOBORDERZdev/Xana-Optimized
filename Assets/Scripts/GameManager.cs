@@ -68,7 +68,6 @@ public class GameManager : MonoBehaviour
            additiveScenesManager = FindObjectOfType<AdditiveScenesLoader>();
         }
     }
-    
     public void HomeCameraInputHandler(bool flag)
     {
         HomeCamera.GetComponent<HomeCameraController>().InputFlag = flag;
@@ -147,7 +146,10 @@ public class GameManager : MonoBehaviour
        // Application.targetFrameRate = 60;
         OnceGuestBool = false;
         OnceLoginBool = false;
+        LocalizationManager._instance?.SetLanguage();
     }
+   
+        
     IEnumerator WaitForInstancefromWorld()
     {
         yield return new WaitForSeconds(.05f);

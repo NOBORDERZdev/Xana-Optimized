@@ -125,7 +125,7 @@ public class WorldManager : MonoBehaviour
                 yield return null;
             }
         }
-        else if(XANAPartyManager.Instance.EnableXANAPartyGuest)
+        else/* if(XANAPartyManager.Instance.EnableXANAPartyGuest)*/
         {
             Screen.orientation = ScreenOrientation.LandscapeLeft;
             //LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));

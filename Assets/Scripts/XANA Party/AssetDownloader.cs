@@ -75,6 +75,8 @@ public class AssetDownloader : MonoBehaviour
                 Splash.SetActive(true);
                 LoadingPopup.SetActive(false);
                 MoveToScene();
+                PlayerPrefs.GetString("DownloadPermission", "true") ;
+                PlayerPrefs.Save();
             }
         }
         else

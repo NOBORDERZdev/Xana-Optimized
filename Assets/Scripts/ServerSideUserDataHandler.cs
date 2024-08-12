@@ -304,7 +304,7 @@ public class ServerSideUserDataHandler : MonoBehaviour
 
     public void loadprevious()
     {
-        if (GameManager.Instance)
+        if (GameManager.Instance && !ConstantsHolder.xanaConstants.isXanaPartyWorld )
         {
             //GameManager.Instance.mainCharacter.GetComponent<Equipment>().Start();
             ////Debug.Log("~~~ load pervoius call");

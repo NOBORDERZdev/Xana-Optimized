@@ -25,7 +25,7 @@ public class GamePlayFeatureHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && XanaEventDetails.eventDetails.DataIsInitialized)    
         {
             selfieBtn.SetActive(XanaEventDetails.eventDetails.selfie);
             EmojiesBtn.SetActive(XanaEventDetails.eventDetails.emotes);

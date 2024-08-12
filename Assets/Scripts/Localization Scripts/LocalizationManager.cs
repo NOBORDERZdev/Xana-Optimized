@@ -43,7 +43,11 @@ public class LocalizationManager : MonoBehaviour
 
         prevCoroutine = StartCoroutine(GetLocalizationDataFromSheet());  
           
-        GameManager.currentLanguage = GetLanguage();   
+       
+    }
+
+    public void SetLanguage(){ 
+         GameManager.currentLanguage = GetLanguage();   
     }
 
     IEnumerator CheckIfSheetUpdated()

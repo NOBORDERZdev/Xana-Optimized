@@ -101,7 +101,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
     private void Start()
     {
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && XanaEventDetails.eventDetails.DataIsInitialized)
         {
             StartEventTimer();
         }
@@ -595,7 +595,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         // Join Room Activate Chat
         ////Debug.Log("<color=blue> XanaChat -- Joined </color>");
-        if (XanaEventDetails.eventDetails.DataIsInitialized)
+        if ( !ConstantsHolder.xanaConstants.isXanaPartyWorld && XanaEventDetails.eventDetails.DataIsInitialized)
         {
             string worldId = 0.ToString();
             if (XanaEventDetails.eventDetails.environmentId != 0)
@@ -1149,7 +1149,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         BuilderAssetDownloader.initialPlayerPos = tempSpawnPoint.localPosition;
         if (tempSpawnPoint)
         {
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if ( !ConstantsHolder.xanaConstants.isXanaPartyWorld && XanaEventDetails.eventDetails.DataIsInitialized)
             {
                 StartCoroutine(SpawnPlayer());
             }

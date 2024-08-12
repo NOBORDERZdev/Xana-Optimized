@@ -96,7 +96,7 @@ public class UserLoginSignupManager : MonoBehaviour
             StartCoroutine(LoginGuest(ConstantsGod.API_BASEURL + ConstantsGod.guestAPI, true));
         }
        
-        if (!File.Exists(GameManager.Instance.GetStringFolderPath()))
+        if (!File.Exists(GameManager.Instance.GetStringFolderPath()) && !ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             SaveCharacterProperties.instance.CreateFileFortheFirstTime();
         }
@@ -149,7 +149,6 @@ public class UserLoginSignupManager : MonoBehaviour
                     if (myObject1.success)
                     {
                         ConstantsGod.AUTH_TOKEN = myObject1.data.token;
-                        WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
                         print("guest token is "+ ConstantsGod.AUTH_TOKEN );
                         if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
@@ -171,6 +170,7 @@ public class UserLoginSignupManager : MonoBehaviour
                         PlayerPrefs.Save();
 
                         ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                        WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
                     }
                 }
             }
@@ -199,6 +199,10 @@ public class UserLoginSignupManager : MonoBehaviour
             LoginObj = LoginObj.CreateFromJSON(PlayerPrefs.GetString("UserNameAndPassword"));
             StartCoroutine(LoginUser(ConstantsGod.API_BASEURL + ConstantsGod.LoginAPIURL, PlayerPrefs.GetString("UserNameAndPassword"), (isSucess) =>
             {
+                if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+                {
+                    WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+                }
                 //write if you want something on sucessfull login
             }));
         }
@@ -213,10 +217,7 @@ public class UserLoginSignupManager : MonoBehaviour
             }
            
             WalletAutoLogin();
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-            {
-                WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
-            }
+          
         }
         else
         {
@@ -397,6 +398,10 @@ public class UserLoginSignupManager : MonoBehaviour
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
             GameManager.Instance.bottomTabManagerInstance.CheckLoginOrNotForFooterButton();
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+        }
     }
     IEnumerator WaitForDeepLink()
     {
@@ -555,12 +560,12 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("FirstTime", 1);
         PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
-        if (PlayerPrefs.GetString("PlayerName") == "")
-        {
-            UserLoginSignupManager.instance.OpenUserNamePanel();
-        }
+        //if (PlayerPrefs.GetString("PlayerName") ==  )
+        //{
+        //    UserLoginSignupManager.instance.OpenUserNamePanel();
+        //}
+       
         LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
-        PlayerPrefs.Save();
         
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
@@ -572,11 +577,12 @@ public class UserLoginSignupManager : MonoBehaviour
         if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         {
             StartCoroutine(GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().IERequestGetUserDetails());
+            if (CharacterHandler.instance)
+            {
+                CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
+            }
         }
-        if (CharacterHandler.instance)
-        {
-            CharacterHandler.instance.playerPostCanvas.GetComponent<LookAtCamera>().GetLatestPost();
-        }
+       
         if (GameManager.Instance.UiManager != null)//rik
         {
             GameManager.Instance.bottomTabManagerInstance.HomeSceneFooterSNSButtonIntrectableTrueFalse();
@@ -586,6 +592,12 @@ public class UserLoginSignupManager : MonoBehaviour
         {
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
         }
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            PlayerPrefs.SetInt("IsProcessComplete",1);
+            WorldManager.instance.StartCoroutine(WorldManager.instance.xanaParty());
+        }
+        PlayerPrefs.Save();
     }
 
     public void CheckForValidationAndSignUp(bool resendOtp = false)
@@ -939,25 +951,25 @@ public class UserLoginSignupManager : MonoBehaviour
             UserDisplayNameErrors(ErrorType.UserName_Has_Space.ToString());
             return;
         }
-        else if (userUsername.All(char.IsDigit))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
-        }
+        //else if (userUsername.All(char.IsDigit))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must include letters.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
+        //}
         else if (userUsername.Length < 5 || userUsername.Length > 15)
         {
             keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
             UserDisplayNameErrors(keytoLocalize);
             return;
         }
-        else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
-        {
-            keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
-            UserDisplayNameErrors(keytoLocalize);
-            return;
+        //else if (!userUsername.Any(c => char.IsDigit(c) || c == '_'))
+        //{
+        //    keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+        //    UserDisplayNameErrors(keytoLocalize);
+        //    return;
 
-        }
+        //}
         else if (displayrname.EndsWith(" "))
         {
             displayrname = displayrname.TrimEnd(' ');
@@ -1035,7 +1047,10 @@ public class UserLoginSignupManager : MonoBehaviour
     {
         PlayerPrefs.SetString("DownloadPermission", "true");
         LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
-        XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+        if (XANAPartyManager.Instance.EnableXANAPartyGuest)
+        {
+            XANAPartyManager.Instance.GetComponent<XANAPartyManager>().EnablingXANAParty();
+        }
     }
     public void CancelDownloadPermission()
     {

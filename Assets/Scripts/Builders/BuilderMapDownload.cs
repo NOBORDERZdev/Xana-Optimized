@@ -173,7 +173,7 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
         XANAPartyLoading.SetActive(false);
-        AssetLoadingBar.SetActive(true);
+        //AssetLoadingBar.SetActive(true);
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)

@@ -145,7 +145,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 PhotonNetwork.NickName = "Guest";
             }
-            if (XanaEventDetails.eventDetails.DataIsInitialized)
+            if (!ConstantsHolder.xanaConstants.isXanaPartyWorld && XanaEventDetails.eventDetails.DataIsInitialized)
             {
                 string deepLinkLobbyName = $"{XanaEventDetails.eventDetails.eventType}{XanaEventDetails.eventDetails.id}";
                 CurrLobbyName = deepLinkLobbyName;

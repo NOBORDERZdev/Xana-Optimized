@@ -266,6 +266,7 @@ public class AvatarController : MonoBehaviour
             nftAttributes = nftAttributes.CreateFromJSON(File.ReadAllText(_Path));
             CreateOrUpdateBoxerFile(nftAttributes);
         }
+        if(!ConstantsHolder.xanaConstants.isXanaPartyWorld)
         Custom_InitializeAvatar(_tempdata);
     }
    

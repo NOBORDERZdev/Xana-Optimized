@@ -1168,6 +1168,7 @@ public class ConnectWallet : MonoBehaviour
                     print("Success in name  field ");
                     PlayerPrefs.SetInt("IsLoggedIn", 1);
                     PlayerPrefs.SetInt("FristPresetSet", 1);
+                    if(!ConstantsHolder.xanaConstants.isXanaPartyWorld)
                     ServerSideUserDataHandler.Instance.GetDataFromServer();
                     PlayerPrefs.SetString("PlayerName", localUsername);
                     if (GameManager.Instance.UiManager != null)//rik  

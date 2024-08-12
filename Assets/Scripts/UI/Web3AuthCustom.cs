@@ -245,6 +245,7 @@ public class Web3AuthCustom : MonoBehaviour
             }
             PlayerPrefs.SetString("publicID", publicAdress);
             WebViewManager.Instance.CloseWebView();
+
             switch (type)
             {
 
