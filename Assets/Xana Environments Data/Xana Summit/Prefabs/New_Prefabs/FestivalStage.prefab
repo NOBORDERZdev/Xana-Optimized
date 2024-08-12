@@ -53,7 +53,6 @@ GameObject:
   - component: {fileID: 4757649885221676612}
   - component: {fileID: 2896647010372685675}
   - component: {fileID: 6314999664660965517}
-  - component: {fileID: 75667185894768567}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -156,20 +155,6 @@ MonoBehaviour:
   blendDistance: 5.13
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 0028007d9b6a201488d599d5d2747a8c, type: 2}
---- !u!114 &75667185894768567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567181615472981158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c739f20588486cf43bb1f0c3ce897d80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgmMinVolume: 0
-  bgmMaxVolume: 0.5
 --- !u!1 &2186972116789248596
 GameObject:
   m_ObjectHideFlags: 0
@@ -15658,6 +15643,38 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
   m_PrefabInstance: {fileID: 7867731214817470732}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8513801041380265339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 7867731214817470732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!135 &2465402350872419664
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8513801041380265339}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 23.34
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8359246740469129461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8513801041380265339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c739f20588486cf43bb1f0c3ce897d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmMinVolume: 0
+  bgmMaxVolume: 0.5
 --- !u!1001 &7906032420700042891
 PrefabInstance:
   m_ObjectHideFlags: 0
