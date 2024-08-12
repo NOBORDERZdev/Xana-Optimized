@@ -72,7 +72,14 @@ public class SplineEditor : Editor {
         EditorGUILayout.PropertyField(serializedObject.FindProperty("dots"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("normal"));
         EditorGUILayout.PropertyField(serializedObject.FindProperty("closedLoop"));
-        
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("anchorList"));
+
+
+
+
+
+
+
         serializedObject.ApplyModifiedProperties();
 
         if (GUILayout.Button("Set All Z = 0")) {

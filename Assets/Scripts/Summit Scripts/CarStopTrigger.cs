@@ -29,7 +29,7 @@ public class CarStopTrigger : MonoBehaviour
             XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
         }
 
-        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().driverseatempty|| other.GetComponent<SplineFollower>().pasengerseatemty) )
+        if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().DriverSeatEmpty|| other.GetComponent<SplineFollower>().PasengerSeatEmty) )
         {
             
             CarNavigationManager.CarNavigationInstance.StopCar(other.gameObject);

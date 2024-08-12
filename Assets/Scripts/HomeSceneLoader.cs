@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Pun;
-using Metaverse;
 using System.Collections;
 using System;
 using UnityEngine.Scripting;
@@ -58,7 +57,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     }
     public void LoadMain(bool changeOritentationChange)
     {
-
+        LoadingHandler.Instance.DisableVideoLoading();
         GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
         disableSoundXanalobby();
         ConstantsHolder.xanaConstants.isBackFromWorld = true;

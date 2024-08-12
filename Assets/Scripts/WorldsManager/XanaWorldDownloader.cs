@@ -123,12 +123,15 @@ public class XanaWorldDownloader : MonoBehaviour
             await Task.Yield();
         }
         StartCoroutine(DownloadObjects(preLoadObjects, Priority.High));
+
         while (!isSpawnDownloaded)
         {
             await Task.Yield();
         }
         if (totalAssetCount != downloadedTillNow)
+        {
             EnableDownloadingText();
+        }
         StartDownloadingAssets();
     }
 
@@ -228,10 +231,10 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    async void StartDownloadingAssets()
+    async Task StartDownloadingAssets()
     {
         SortingQueueData(initialPlayerPos);
-        while (!dataSorted)
+         while (!dataSorted)
         {
             await Task.Yield();
         }
@@ -250,9 +253,6 @@ public class XanaWorldDownloader : MonoBehaviour
         {
             await Task.Yield();
         }
-        //StartCoroutine(CheckLongIntervalSorting());
-        //StartCoroutine(CheckShortIntervalSorting());
-
     }
 
     IEnumerator DownloadAssetsFromSortedList()

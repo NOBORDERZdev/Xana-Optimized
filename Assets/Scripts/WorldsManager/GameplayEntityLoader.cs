@@ -16,7 +16,6 @@ using System.IO;
 using UnityEngine.Rendering.Universal;
 using Photon.Pun.Demo.PunBasics;
 using Photon.Voice.PUN;
-using Metaverse;
 using PhysicsCharacterController;
 
 public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallback
@@ -39,14 +38,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     public Camera firstPersonCamera;
     [HideInInspector]
     private Transform updatedSpawnpoint;
-    private Vector3 spawnPoint;
+    private Transform _spawnTransform;
+    [HideInInspector]
+    public Vector3 spawnPoint;
     public GameObject currentEnvironment;
     public bool isEnvLoaded = false;
 
     private float fallOffset = 10f;
     public bool setLightOnce = false;
 
-    private GameObject player;
+    [HideInInspector]
+    public GameObject player;
 
     System.DateTime eventUnivStartDateTime, eventLocalStartDateTime, eventlocalEndDateTime;
 
@@ -129,6 +131,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             // Zoom Out map Camera
             MiniMapCamera.orthographicSize = 30;
         }
+        ConstantsHolder.xanaConstants.isGoingForHomeScene = false;
+
     }
 
     void OnEnable()
@@ -446,6 +450,15 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.Out));
             }
         }
+
+        if (WorldItemView.m_EnvName.Contains("XANA_DUNE"))
+        {
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<XanaDuneControllerHandler>().AddComponentOn34();
+        }
+        if (ConstantsHolder.xanaConstants.JjWorldSceneChange)
+        {
+            ConstantsHolder.xanaConstants.hasWorldTransitionedInternally = true;
+        }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
         updatedSpawnpoint.transform.localPosition = spawnPoint;
@@ -572,10 +585,16 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             StartCoroutine(setPlayerCamAngle(0f, 00.5f));
         }
-        if(WorldItemView.m_EnvName.Contains("JJTest"))
+        if (WorldItemView.m_EnvName.Contains("XANA_DUNE"))
         {
-            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-            StartCoroutine(setPlayerCamAngle(0f, 00.5f));
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+            StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+        }
+
+        if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI"))
+        {
+            mainPlayer.transform.rotation = _spawnTransform.rotation;
+            StartCoroutine(setPlayerCamAngle(0f, 0.5f));
         }
     }
 
@@ -1014,12 +1033,52 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         Resources.UnloadUnusedAssets();
         CheckAgain:
         Transform temp = null;
-        if (GameObject.FindGameObjectWithTag("SpawnPoint"))
-            temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune || ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen))
+        {
+            JjWorldChanger[] portals = FindObjectsOfType<JjWorldChanger>();
+            if (portals.Length > 0)
+            {
+                if (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen)
+                {
+                    foreach (JjWorldChanger portal in portals)
+                    {
+                        if (portal.WorldName.Contains("Daisen"))
+                        {
+                            temp = portal.transform;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (JjWorldChanger portal in portals)
+                    {
+                        if (portal.WorldName.Contains("DUNE"))
+                        {
+                            temp = portal.transform;
+                            break;
+                        }
+                    }
+                }
+
+            }
+        }
         else
-            temp = new GameObject("SpawnPoint").transform;
+        {
+            Debug.Log("not coming from else");
+            if (GameObject.FindGameObjectWithTag("SpawnPoint"))
+            {
+                Debug.Log("not coming from else2");
+
+                temp = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+            }
+            else
+                temp = new GameObject("SpawnPoint").transform;
+        }
+
         if (temp)
         {
+            _spawnTransform = temp;
             spawnPoint = temp.position;
         }
         else
@@ -1031,7 +1090,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         yield return null;
     }
 
-
     void RespawnPlayer()
     {
         AssetBundle.UnloadAllAssetBundles(false);
@@ -1039,7 +1097,6 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("GamePlayScene"));
         StartCoroutine(spwanPlayerWithWait());
     }
-
 
     void ResetPlayerAfterInstantiation()
     {

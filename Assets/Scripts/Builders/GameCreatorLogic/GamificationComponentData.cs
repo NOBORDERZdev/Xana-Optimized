@@ -156,6 +156,17 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         return (oldValue - oldMin) * (newMax - newMin) / (oldMax - oldMin) + newMin;
     }
 
+    public TextureFormat GetTextureFormat()
+    {
+#if UNITY_ANDROID || UNITY_IOS
+        return TextureFormat.ASTC_8x8;
+#elif UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX
+        return TextureFormat.ETC2_RGBA8Crunched;
+#elif UNITY_WEBGL
+        return TextureFormat.ETC2_RGBA8Crunched;
+#endif
+    }
+
     #region OrientationChange
     void OrientationChange(bool orientation)
     {

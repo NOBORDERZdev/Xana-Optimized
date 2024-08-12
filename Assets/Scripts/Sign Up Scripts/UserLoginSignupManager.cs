@@ -88,7 +88,7 @@ public class UserLoginSignupManager : MonoBehaviour
     EyesBlinking ref_EyesBlinking;
     [Header("Bools Fields")]
     private bool _isUserClothDataFetched = false;
-    public bool LoggedInAsGuest = false;
+    //public bool LoggedInAsGuest = false;
 
     private void OnEnable()
     {
@@ -290,7 +290,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void OnClickLoginSelection()
     {
-        if (LoggedInAsGuest)
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
             LoginRegisterScreen.SetActive(false);
             emailOrWalletLoginPanel.SetActive(true);
@@ -309,7 +309,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public void BackFromLoginSelection()
     {
-        if (LoggedInAsGuest)
+        if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
             emailOrWalletLoginPanel.SetActive(false);
             
@@ -983,7 +983,6 @@ public class UserLoginSignupManager : MonoBehaviour
             Debug.LogError("Set Name for Guest User");
             //DynamicEventManager.deepLink?.Invoke("come from Guest Registration");
             PlayerPrefs.SetString(ConstantsGod.GUSTEUSERNAME, displayrname);
-            ConstantsHolder.userName= displayrname;
             NameScreenNextButton.interactable = true;
             NameScreenLoader.SetActive(false);
             enterNamePanel.SetActive(false);
@@ -999,7 +998,7 @@ public class UserLoginSignupManager : MonoBehaviour
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
             return;
         }
-
+        ConstantsHolder.uniqueUserName = userUsername;
         PlayerPrefs.SetInt("IsProcessComplete", 1);
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(displayrname));
@@ -1528,7 +1527,7 @@ public class UserLoginSignupManager : MonoBehaviour
             case 19:
                 {
                     PlayerPrefs.SetInt("iSignup", 0);// going for guest user registration
-                    LoggedInAsGuest = true;
+                    ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
                     ConstantsHolder.xanaConstants.LoginasGustprofile = true;
                     break;
                 }
@@ -1661,53 +1660,56 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
+        Debug.Log("Login Guest ");
+        if (!ConstantsHolder.xanaConstants.LoggedInAsGuest)
         {
-            LoggedInAsGuest = true;
-            ConstantsHolder.xanaConstants.LoginasGustprofile = true;
-            var operation = www.SendWebRequest();
-            while (!operation.isDone)
+            using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
             {
-                yield return null;
-            }
-            ClassWithToken myObject1 = new ClassWithToken();
-            myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
-            if (!www.isHttpError && !www.isNetworkError)
-            {
-                if (www.error == null)
+                ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
+                ConstantsHolder.xanaConstants.LoginasGustprofile = true;
+                var operation = www.SendWebRequest();
+                while (!operation.isDone)
                 {
-                    if (myObject1.success)
+                    yield return null;
+                }
+                ClassWithToken myObject1 = new ClassWithToken();
+                myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
+                if (!www.isHttpError && !www.isNetworkError)
+                {
+                    if (www.error == null)
                     {
+                        if (myObject1.success)
+                        {
 
-                        ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+                            ConstantsGod.AUTH_TOKEN = myObject1.data.token;
 
-                        if (PlayerPrefs.GetInt("shownWelcome") == 1)
-                        {
-                            //DynamicEventManager.deepLink?.Invoke("Guest login");
-                        }
-                        if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
-                        {
-                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
-                        }
-                        else
-                        {
-                            if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                            if (PlayerPrefs.GetInt("shownWelcome") == 1)
                             {
-                                UserPassManager.Instance.GetGroupDetails("guest");
+                                //DynamicEventManager.deepLink?.Invoke("Guest login");
                             }
+                            if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                            {
+                                UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                            }
+                            else
+                            {
+                                if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                                {
+                                    UserPassManager.Instance.GetGroupDetails("guest");
+                                }
+                            }
+                            ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                            UserPassManager.Instance.GetGroupDetailsForComingSoon();
+                            PlayerPrefs.SetInt("FirstTime", 1);
+                            ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
+                            PlayerPrefs.Save();
+                            LoadSummit();
                         }
-                        ConstantsHolder.userId = myObject1.data.user.id.ToString();
-                        UserPassManager.Instance.GetGroupDetailsForComingSoon();
-                        PlayerPrefs.SetInt("FirstTime", 1);
-                        ConstantsHolder.userName= PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-                        PlayerPrefs.Save();
-                        LoadSummit();
-
-
                     }
                 }
             }
         }
+        
     }
 
 
@@ -1716,8 +1718,8 @@ public class UserLoginSignupManager : MonoBehaviour
         if (ConstantsHolder.xanaConstants.openLandingSceneDirectly && PlayerPrefs.GetInt("IsProcessComplete") == 1)
         {
             
-            print("Initialize ---=======  LoggedInAsGuest " + UserLoginSignupManager.instance.LoggedInAsGuest);
-            if (LoggedInAsGuest)
+            print("Initialize ---=======  LoggedInAsGuest " + ConstantsHolder.xanaConstants.LoggedInAsGuest);
+            if (ConstantsHolder.xanaConstants.LoggedInAsGuest)
             {
                 Debug.Log("Initialize Avatar with Guest");
                 MainSceneEventHandler.OpenLandingScene?.Invoke();
@@ -1767,7 +1769,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.isAdmin = false;
         ConstantsHolder.loggedIn = false;
         ConstantsHolder.xanaConstants.LoginasGustprofile = false;
-        LoggedInAsGuest = false;
+        ConstantsHolder.xanaConstants.LoggedInAsGuest = false;
         PlayerPrefs.SetString("SaveuserRole", "");
         if (CryptouserData.instance != null)
         {

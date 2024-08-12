@@ -94,7 +94,14 @@ public class HomeFooterHandler : MonoBehaviour
         {
             gameManager.UiManager._footerCan.transform.GetChild(0).GetComponent<HomeFooterHandler>().OnSelectedClick(0);
         }
-    }
+
+        if (PlayerPrefs.GetInt("IsLoggedIn") == 0)
+        {
+            Image buttonImage = allButtonIcon[2].transform.GetComponent<Image>();
+            buttonImage.color = new Color(0.8f, 0.8f, 0.8f, 1f);
+            allButtonIcon[3].transform.GetComponent<Image>().color = buttonImage.color;
+        }
+     }
 
 
     private void OnEnable()
@@ -333,8 +340,11 @@ public class HomeFooterHandler : MonoBehaviour
 
             }
             ConstantsHolder.xanaConstants.IsProfileVisit = false;
-            if (notLoadedAgain == false)
+            if (notLoadedAgain == false || ConstantsHolder.xanaConstants.hasWorldTransitionedInternally)
+            {
                 WorldManager.LoadHomeScreenWorlds?.Invoke();
+                ConstantsHolder.xanaConstants.hasWorldTransitionedInternally = false;
+            }
             //FlexibleRect.OnAdjustSize?.Invoke(false);
             DisableSubScreen();
             //WorldManager.instance.ChangeWorld(APIURL.Hot);

@@ -273,6 +273,7 @@ GameObject:
   - component: {fileID: 3481088123278110372}
   - component: {fileID: 3805648036091765640}
   - component: {fileID: 3558926172653405874}
+  - component: {fileID: 8963322305397735957}
   m_Layer: 0
   m_Name: VideoPlayer
   m_TagString: Untagged
@@ -428,6 +429,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &8963322305397735957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478224703463058098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb5bfbd905d77149918667804957cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RendererComponents:
+  - {fileID: 3476779859716909669}
+  - {fileID: 6279657280979935492}
 --- !u!1 &3478352084440109524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,6 +1135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 901787316052580137}
+  - component: {fileID: 3914021783495889202}
   m_Layer: 0
   m_Name: MediaPlayerParent
   m_TagString: Untagged
@@ -1142,6 +1159,20 @@ Transform:
   m_Father: {fileID: 3481050133062655214}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!114 &3914021783495889202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4141797626641364426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdb5bfbd905d77149918667804957cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RendererComponents:
+  - {fileID: 2084032978753461554}
 --- !u!1 &4735079671212607723
 GameObject:
   m_ObjectHideFlags: 0

@@ -539,7 +539,7 @@ public class ItemDetail : MonoBehaviour
 
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
-
+        GameManager.Instance.ResetSelectedItems();
 
         switch (CurrentString)
         {
@@ -1226,6 +1226,4 @@ public class ItemDetail : MonoBehaviour
         InventoryManager.instance.GreyRibbonImage.SetActive(false);
         InventoryManager.instance.WhiteRibbonImage.SetActive(true);
     }
-
-
 }
