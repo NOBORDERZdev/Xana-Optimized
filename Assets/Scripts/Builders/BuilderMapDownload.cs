@@ -710,9 +710,9 @@ public class BuilderMapDownload : MonoBehaviour
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up * 0.498f;
-        mainPlayerCharacterController.height = 1f;
-        mainPlayerCharacterController.radius = 0.15f;
+        mainPlayerCharacterController.center = Vector3.up *0.9f;
+        mainPlayerCharacterController.height = 1.65f;
+        mainPlayerCharacterController.radius = 0.2f;
         mainPlayerCharacterController.stepOffset = 1f;
         CapsuleCollider mainPlayerCollider = GamificationComponentData.instance.playerControllerNew.GetComponent<CapsuleCollider>();
         mainPlayerCollider.center = Vector3.up * 0.5f;
