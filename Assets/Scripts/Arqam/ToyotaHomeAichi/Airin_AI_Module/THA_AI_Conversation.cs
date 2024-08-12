@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
-using static System.Net.WebRequestMethods;
-
-
 public class THA_AI_Conversation : MonoBehaviour
 {
     //https://avatarchat-ai.xana.net/tha_chat?input_string=Who%20are%20you%3F%20What%20is%20your%20oppupation&usr_id=1&owner_id=2121
