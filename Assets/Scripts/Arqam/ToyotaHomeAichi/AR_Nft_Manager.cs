@@ -102,7 +102,7 @@ namespace Toyota
             StringBuilder apiUrl = new StringBuilder();
             if (ConstantsHolder.xanaConstants.MuseumID == "2871")
             {
-                apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.jjtestApi + PMY_RoomId);
+                apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JjTestWorldAssets + PMY_RoomId);
             }
             else
             {
