@@ -82,7 +82,7 @@ public class SpaceXHandler : MonoBehaviour
             sceneId = PlanetWorldId_Mainnet[x];
         else
             sceneId = PlanetWorldId_Testnet[x];
-        SummitSceneLoading.LoadingSceneByIDOrName(sceneId, _ReturnPlayerPos);
+        SummitSceneLoading.LoadingSceneByIDOrName(sceneId,null, _ReturnPlayerPos);
         Destroy(VideoPlayer.clip);
         DisableVideoPlayer();
         DisablePlanetOptionScreen();

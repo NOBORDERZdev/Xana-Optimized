@@ -8,6 +8,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public int DomeId;
     [Tooltip("This only require when dome id is set to -1")]
     public string WorldId;
+    public string worldName;
     public TMPro.TextMeshPro DomeIndexText;
 
 
@@ -41,7 +42,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
 
     void TriggerSceneLoading(string worldId)
     {
-        BuilderEventManager.LoadSceneByName?.Invoke(worldId, transform.GetChild(0).transform.position);
+        BuilderEventManager.LoadSceneByName?.Invoke(worldId,worldName, transform.GetChild(0).transform.position);
     }
 
     async void DisableCollider()

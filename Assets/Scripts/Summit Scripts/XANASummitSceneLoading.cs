@@ -164,7 +164,7 @@ public class XANASummitSceneLoading : MonoBehaviour
         GlobalConstants.SendFirebaseEventForSummit(eventName);
     }
 
-    public async void LoadingSceneByIDOrName(string worldId, Vector3 playerPos)
+    public async void LoadingSceneByIDOrName(string worldId, string worldName, Vector3 playerPos)
     {
         if (string.IsNullOrEmpty(worldId))
             return;
@@ -176,7 +176,7 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         string sceneToBeUnload = WorldItemView.m_EnvName;
 
-        SingleWorldInfo worldInfo = await GetSingleWorldData(worldId);
+        SingleWorldInfo worldInfo = await GetSingleWorldData(worldId, worldName);
 
         XANASummitDataContainer.StackInfoWorld subWorldInfo = new XANASummitDataContainer.StackInfoWorld();
         subWorldInfo.id = ConstantsHolder.xanaConstants.MuseumID;
@@ -373,9 +373,15 @@ public class XANASummitSceneLoading : MonoBehaviour
 
 
 
-    async Task<SingleWorldInfo> GetSingleWorldData(string worldID)
+    async Task<SingleWorldInfo> GetSingleWorldData(string WorldID, string worldName)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + worldID))
+        string url;
+        if (!string.IsNullOrEmpty(WorldID))
+            url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldID;
+        else
+            url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFOBYNAME + worldName;
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             await www.SendWebRequest();
