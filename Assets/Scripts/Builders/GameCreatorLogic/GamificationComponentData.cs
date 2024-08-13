@@ -530,7 +530,6 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(10f);
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
         xanaPartyMulitplayer.ResetValuesOnCompleteRace();
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
         xanaPartyMulitplayer.StartCoroutine(xanaPartyMulitplayer.MovePlayersToRandomGame());
     }
 

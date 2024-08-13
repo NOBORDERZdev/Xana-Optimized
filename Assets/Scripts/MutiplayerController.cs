@@ -336,7 +336,17 @@ namespace Photon.Pun.Demo.PunBasics
                 if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
                 {
                     ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
-                    GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                    if (XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+                    {
+                        if (PhotonNetwork.IsMasterClient && (XANAPartyManager.Instance.GameIndex < XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count))
+                        {
+                            StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+                        }
+                    }
+                    else
+                    {
+                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                    }
 
                     if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
                     {
