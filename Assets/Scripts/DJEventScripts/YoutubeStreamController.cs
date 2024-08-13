@@ -6,7 +6,6 @@ using WebSocketSharp;
 using UnityEngine.Video;
 using RenderHeads.Media.AVProVideo;
 using LightShaft.Scripts;
-using System.Security.Policy;
 
 public class YoutubeStreamController : MonoBehaviour
 {
