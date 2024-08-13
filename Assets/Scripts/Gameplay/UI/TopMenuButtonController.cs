@@ -26,7 +26,7 @@ public class TopMenuButtonController : MonoBehaviour
         Instance = this;
         leaveRoomBtn.onClick.AddListener(() =>
         {
-            if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
+            if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
             {
                 ConstantsHolder.xanaConstants.comingFrom = ConstantsHolder.ComingFrom.None;
             }

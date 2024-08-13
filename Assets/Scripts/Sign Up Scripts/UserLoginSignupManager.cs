@@ -1660,56 +1660,60 @@ public class UserLoginSignupManager : MonoBehaviour
 
     public IEnumerator LoginGuest(string url, bool ComesFromLogOut = false)
     {
-        Debug.Log("Login Guest ");
-        if (!ConstantsHolder.xanaConstants.LoggedInAsGuest)
+        ConstantsHolder.userId = PlayerPrefs.GetString("UserId");
+        Debug.Log("Login Guest userId: " + ConstantsHolder.userId);
+        using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
         {
-            using (UnityWebRequest www = UnityWebRequest.Post(url, "POST"))
+            ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
+            ConstantsHolder.xanaConstants.LoginasGustprofile = true;
+            var operation = www.SendWebRequest();
+            while (!operation.isDone)
             {
-                ConstantsHolder.xanaConstants.LoggedInAsGuest = true;
-                ConstantsHolder.xanaConstants.LoginasGustprofile = true;
-                var operation = www.SendWebRequest();
-                while (!operation.isDone)
+                yield return null;
+            }
+            ClassWithToken myObject1 = new ClassWithToken();
+            myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
+            if (!www.isHttpError && !www.isNetworkError)
+            {
+                if (www.error == null)
                 {
-                    yield return null;
-                }
-                ClassWithToken myObject1 = new ClassWithToken();
-                myObject1 = ClassWithToken.CreateFromJSON(www.downloadHandler.text);
-                if (!www.isHttpError && !www.isNetworkError)
-                {
-                    if (www.error == null)
+                    if (myObject1.success)
                     {
-                        if (myObject1.success)
+
+                        ConstantsGod.AUTH_TOKEN = myObject1.data.token;
+
+                        if (PlayerPrefs.GetInt("shownWelcome") == 1)
                         {
+                            //DynamicEventManager.deepLink?.Invoke("Guest login");
+                        }
+                        if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
+                        {
+                            UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
+                        }
+                        else
+                        {
+                            if (PlayerPrefs.GetInt("WalletLogin") != 1)
+                            {
+                                UserPassManager.Instance.GetGroupDetails("guest");
+                            }
+                        }
 
-                            ConstantsGod.AUTH_TOKEN = myObject1.data.token;
-
-                            if (PlayerPrefs.GetInt("shownWelcome") == 1)
-                            {
-                                //DynamicEventManager.deepLink?.Invoke("Guest login");
-                            }
-                            if (PlayerPrefs.GetString("PremiumUserType") == "Access Pass" || PlayerPrefs.GetString("PremiumUserType") == "Extra NFT" || PlayerPrefs.GetString("PremiumUserType") == "djevent" || PlayerPrefs.GetString("PremiumUserType") == "astroboy")
-                            {
-                                UserPassManager.Instance.GetGroupDetails(PlayerPrefs.GetString("PremiumUserType"));
-                            }
-                            else
-                            {
-                                if (PlayerPrefs.GetInt("WalletLogin") != 1)
-                                {
-                                    UserPassManager.Instance.GetGroupDetails("guest");
-                                }
-                            }
+                        if (ConstantsHolder.userId.IsNullOrEmpty())
+                        {
                             ConstantsHolder.userId = myObject1.data.user.id.ToString();
+                            PlayerPrefs.SetString("UserId", ConstantsHolder.userId);
                             UserPassManager.Instance.GetGroupDetailsForComingSoon();
                             PlayerPrefs.SetInt("FirstTime", 1);
                             ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-                            PlayerPrefs.Save();
-                            LoadSummit();
                         }
+
+                        PlayerPrefs.Save();
+                        LoadSummit();
                     }
                 }
             }
         }
-        
+
     }
 
 
