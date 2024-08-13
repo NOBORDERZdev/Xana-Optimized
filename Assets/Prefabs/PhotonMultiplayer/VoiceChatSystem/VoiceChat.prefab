@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4245204776719318628}
   - component: {fileID: 4245204776719318627}
   - component: {fileID: 1947161062}
+  - component: {fileID: 761529100361735272}
   m_Layer: 0
   m_Name: VoiceChat
   m_TagString: Untagged
@@ -47,21 +48,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logLevel: 3
   ignoreGlobalLogLevel: 0
-  voiceDetection: 1
-  voiceDetectionThreshold: 0.05
+  voiceDetection: 0
+  voiceDetectionThreshold: 0.08
   voiceDetectionDelayMs: 500
   unityMicrophoneDevice: 
-  photonMicrophoneDeviceId: -1
+  photonMicrophoneDeviceId: 0
   interestGroup: 0
-  debugEchoMode: 1
-  reliableMode: 0
+  debugEchoMode: 0
+  reliableMode: 1
   encrypt: 0
   transmitEnabled: 0
-  samplingRate: 24000
-  frameDuration: 20000
+  samplingRate: 16000
+  frameDuration: 10000
   bitrate: 30000
   sourceType: 0
-  microphoneType: 1
+  microphoneType: 0
   audioClip: {fileID: 0}
   loopAudioClip: 1
   reactOnSystemChanges: 0
@@ -74,14 +75,14 @@ MonoBehaviour:
   audioSessionPresetIndex: 0
   nativeAndroidMicrophoneSettings:
     AcousticEchoCancellation: 1
-    AutomaticGainControl: 0
+    AutomaticGainControl: 1
     NoiseSuppression: 1
   recordOnlyWhenEnabled: 0
   skipDeviceChangeChecks: 0
   stopRecordingWhenPaused: 0
   useOnAudioFilterRead: 0
   trySamplingRateMatch: 0
-  useMicrophoneTypeFallback: 0
+  useMicrophoneTypeFallback: 1
   recordOnlyWhenJoined: 1
 --- !u!114 &1947161062
 MonoBehaviour:
@@ -98,15 +99,15 @@ MonoBehaviour:
   DisconnectAfterKeepAlive: 0
   KeepAliveInBackground: 180000
   ApplyDontDestroyOnLoad: 0
-  logLevel: 3
+  logLevel: 0
   enableSupportLogger: 0
   updateInterval: 50
   runInBackground: 1
   statsResetInterval: 1000
   speakerPrefab: {fileID: 0}
   primaryRecorder: {fileID: 4245204776719318627}
-  globalRecordersLogLevel: 3
-  globalSpeakersLogLevel: 3
+  globalRecordersLogLevel: 0
+  globalSpeakersLogLevel: 0
   globalPlaybackDelay: -1
   globalPlaybackDelaySettings:
     MinDelaySoft: 200
@@ -136,3 +137,28 @@ MonoBehaviour:
   WorkInOfflineMode: 1
   usePunAppSettings: 1
   usePunAuthValues: 1
+--- !u!114 &761529100361735272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4245204776719318624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ddec46cf6a4c4addbf21b6be8442124, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logLevel: 3
+  ignoreGlobalLogLevel: 0
+  aec: 1
+  aecHighPass: 1
+  agc: 0
+  agcCompressionGain: 9
+  vad: 1
+  highPass: 0
+  bypass: 0
+  noiseSuppression: 1
+  reverseStreamDelayMs: 120
+  forceNormalAecInMobile: 0
+  AECMobileComfortNoise: 0

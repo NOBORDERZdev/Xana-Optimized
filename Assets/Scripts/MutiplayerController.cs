@@ -478,7 +478,8 @@ namespace Photon.Pun.Demo.PunBasics
                 Destroy(summitplayer.Transformview);
                 Destroy(summitplayer.view);
             }
-           
+
+            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             PhotonNetwork.LeaveRoom();
 
         }
