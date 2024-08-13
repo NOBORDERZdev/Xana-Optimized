@@ -703,6 +703,12 @@ public class XanaWorldDownloader : MonoBehaviour
 
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
+
+        AssetBundle.UnloadAllAssetBundles(true);
+        Caching.ClearCache();
+        Addressables.CleanBundleCache();
+        Resources.UnloadUnusedAssets();
+
     }
 
 }
