@@ -661,6 +661,11 @@ public class InventoryManager : MonoBehaviour
             AllCategoriesData[i].subItems.Clear();
         }
 
+
+        AssetBundle.UnloadAllAssetBundles(false);
+        Resources.UnloadUnusedAssets();
+        GC.Collect();
+
         ResetDownloadCount();
         ResetPageIndex();
 
