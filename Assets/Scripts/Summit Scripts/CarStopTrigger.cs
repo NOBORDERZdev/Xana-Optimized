@@ -13,7 +13,6 @@ public class CarStopTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
         if(other.gameObject.tag == "PhotonLocalPlayer")
         {
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
@@ -26,7 +25,7 @@ public class CarStopTrigger : MonoBehaviour
 
            Players.Add(other.gameObject);
             StopCar = true;
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+          
         }
 
         if(other.gameObject.tag == "CAR"&& StopCar &&(other.GetComponent<SplineFollower>().DriverSeatEmpty|| other.GetComponent<SplineFollower>().PasengerSeatEmty) )
@@ -34,7 +33,8 @@ public class CarStopTrigger : MonoBehaviour
             
             CarNavigationManager.CarNavigationInstance.StopCar(other.gameObject);
             if (PhotonNetwork.IsMasterClient)
-            {foreach (var player in Players)
+            {
+                foreach (var player in Players)
                 {
                     if (player != null)
                     {
