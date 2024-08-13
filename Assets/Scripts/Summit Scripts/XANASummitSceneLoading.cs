@@ -153,6 +153,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.builderWorldId;
             else
                 _stayTimeTrackerForSummit.DomeWorldId = domeGeneralData.worldId;
+            _stayTimeTrackerForSummit.IsBuilderWorld = domeGeneralData.worldType;
             _stayTimeTrackerForSummit.StartTrackingTime();
         }
         string eventName;

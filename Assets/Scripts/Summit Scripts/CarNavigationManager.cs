@@ -48,15 +48,16 @@ public class CarNavigationManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
-        if (car.driverseatempty)
+        XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
+        if (car.DriverSeatEmpty)
         {
-            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, true);
+            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, true);
             triger.Pop();
             yield break;
         }
-        if (car.pasengerseatemty)
+        if (car.PasengerSeatEmty)
         {
-            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.view.ViewID, false);
+            Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, false);
             triger.Pop();
             yield break;
         }
@@ -67,11 +68,11 @@ public class CarNavigationManager : MonoBehaviour
     IEnumerator WaitAtCarStop(GameObject car)
     {
         yield return new WaitForSeconds(1f);
-        car.GetComponent<SplineFollower>().speed = 0;
-        car.GetComponent<SplineFollower>().stopcar = true;
+        car.GetComponent<SplineFollower>().Speed = 0;
+        car.GetComponent<SplineFollower>().StopCar = true;
         yield return new WaitForSeconds(2f);
-        car.GetComponent<SplineFollower>().speed = 5;
-        car.GetComponent<SplineFollower>().stopcar = false;
+        car.GetComponent<SplineFollower>().Speed = 5;
+        car.GetComponent<SplineFollower>().StopCar = false;
     }
 
     public void EnableExitCanvas()

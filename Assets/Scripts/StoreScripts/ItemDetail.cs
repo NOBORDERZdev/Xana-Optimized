@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using static InventoryManager;
 using System;
 using static StoreUndoRedo;
+using System.Globalization;
 
 public class ItemDetail : MonoBehaviour
 {
@@ -338,7 +339,13 @@ public class ItemDetail : MonoBehaviour
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ItemBtnClicked);
                 this.gameObject.GetComponent<Button>().onClick.AddListener(ResetButtonState);
             }
-            decimal PriceInDecimal = decimal.Parse(price);
+
+            if (string.IsNullOrEmpty(price))
+            {
+                price = "0";
+            }
+
+            decimal PriceInDecimal = decimal.Parse(price,CultureInfo.InvariantCulture);
             int priceint = (int)PriceInDecimal;
             PriceTxt.text = priceint.ToString();
             switch (CategoriesEnumVar)
@@ -539,7 +546,7 @@ public class ItemDetail : MonoBehaviour
 
         string CurrentString = "";
         CurrentString = CategoriesEnumVar.ToString();
-        ResetSelectedItems();
+        GameManager.Instance.ResetSelectedItems();
 
         switch (CurrentString)
         {
@@ -1225,38 +1232,5 @@ public class ItemDetail : MonoBehaviour
         InventoryManager.instance.SaveStoreBtn.GetComponent<Image>().color = new Color(0f, 0.5f, 1f, 0.8f);
         InventoryManager.instance.GreyRibbonImage.SetActive(false);
         InventoryManager.instance.WhiteRibbonImage.SetActive(true);
-    }
-
-    void ResetSelectedItems()
-    {
-        // Get Reference of all Clicked Items
-        int count = StoreUndoRedo.obj.data.Count;
-        for (int i = 0; i < count; i++)
-        {
-            var data = StoreUndoRedo.obj.data[i];
-            if (data.actionObject)
-            {
-                var avatarBtn = data.actionObject.GetComponent<AvatarBtn>();
-                var presetBtn = data.actionObject.GetComponent<PresetData_Jsons>();
-                var image = data.actionObject.GetComponent<Image>();
-
-                if (presetBtn != null)
-                {
-                    presetBtn.transform.GetChild(0).gameObject.SetActive(false);
-                    PresetData_Jsons.clickname = "";
-                }
-                else if (avatarBtn != null && image != null)
-                {
-                    image.color = new Color(1, 1, 1, 0);
-                }
-                else if (!data.methodName.Equals("BtnClicked") && image != null)
-                {
-                    image.enabled = false;
-                }
-            }
-
-        }
-
-        
     }
 }

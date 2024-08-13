@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class AskForJoining : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _panel;
     //  public GameObject ss;
     // Start is called before the first frame update
     // Start is called before the first frame update
@@ -91,11 +93,11 @@ public class AskForJoining : MonoBehaviour
             if (ReferencesForGamePlay.instance != null)
                 ReferencesForGamePlay.instance.workingCanvas.SetActive(false);
 
+            LoadingHandler.Instance.ShowLoading();
             float _rand = UnityEngine.Random.Range(6f, 10f);
             LoadingHandler.Instance.randCurrentValue = _rand;
             StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(_rand, true));
 
-            LoadingHandler.Instance.ShowLoading();
             if (ScreenOrientationManager._instance != null && ScreenOrientationManager._instance.isPotrait)
             {
                 ScreenOrientationManager._instance.MyOrientationChangeCode(DeviceOrientation.LandscapeLeft);
@@ -106,7 +108,8 @@ public class AskForJoining : MonoBehaviour
             //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
             BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none, false);
             TurnCameras(true);
-            Destroy(this.gameObject);
+            _panel.SetActive(false);
+            Destroy(this.gameObject,5f);
 
         }
     }

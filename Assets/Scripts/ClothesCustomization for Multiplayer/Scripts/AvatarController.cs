@@ -1695,6 +1695,7 @@ public class AvatarController : MonoBehaviour
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
+                wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 break;
 
             case "Feet":
@@ -1733,12 +1734,13 @@ public class AvatarController : MonoBehaviour
             // Also Remove Pant Mask
             tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
+        else if (type == "Legs" && SceneManager.GetActiveScene().name != "Home" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // User Has wear Full Costume 
-            // Change Full costume to Default shirt 
+            if (SceneManager.GetActiveScene().name != "Home")
+                // User Has wear Full Costume 
+                // Change Full costume to Default shirt 
 
-            WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
+                WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
 
             // Apply Mask For Default Shirt
             tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
@@ -1802,6 +1804,7 @@ public class AvatarController : MonoBehaviour
         }
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
 
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
@@ -1845,6 +1848,7 @@ public class AvatarController : MonoBehaviour
         item.layer = 22;
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
     }
 
     /// <summary>
@@ -2078,7 +2082,7 @@ public class AvatarController : MonoBehaviour
                             if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
                                 !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                if (type.Contains("Hair") && (_CharacterData.hairItemData != null && _CharacterData.hairItemData.Contains("No hair")))
                                 {
                                     if (wornHair)
                                         UnStichItem("Hair");
