@@ -22,8 +22,6 @@ public class YoutubeAPIHandler : MonoBehaviour
     public int SummitVideoIndex;
     public AdvancedYoutubePlayer VideoPlayerRef;
 
-    public bool ProxyIsYoutubeURL = true;
-
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
 
