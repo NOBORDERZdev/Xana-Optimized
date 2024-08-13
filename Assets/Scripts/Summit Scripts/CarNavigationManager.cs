@@ -48,6 +48,7 @@ public class CarNavigationManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
         var car = Car.GetComponent<SplineFollower>();
+        XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
         if (car.DriverSeatEmpty)
         {
             Players.GetComponent<SummitPlayerRPC>().EnterCar(car.View.ViewID, true);
