@@ -280,6 +280,8 @@ public class XanaChatSystem : MonoBehaviour
 
             if (PlayerPrefs.GetInt("minimap") == 1)
             {
+                if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
+                    return;
                 ReferencesForGamePlay.instance.minimap.SetActive(true);
                 ReferencesForGamePlay.instance.SumitMapStatus(true);
             }
