@@ -179,6 +179,7 @@ public class YoutubeStreamController : MonoBehaviour
     {
         if (APIHandler.Data.IsLive && APIHandler.Data.isPlaying)
         {
+            SetVideoQuality(APIHandler.Data.quality);
             Debug.Log("Hardik changes check");
             streamYoutubeVideo.EnableVideoScreen(true);
             streamYoutubeVideo.AVProVideoPlayer.enabled = true;
@@ -207,7 +208,7 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else
         {
-
+            SetVideoQuality(APIHandler.Data.quality);
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
             streamYoutubeVideo.EnableVideoScreen(false);
             LiveStreamPlayer.SetActive(false);
@@ -257,5 +258,26 @@ public class YoutubeStreamController : MonoBehaviour
         return null;
     }
 
+    public void SetVideoQuality(string _prefQuality)
+    {
+        switch (_prefQuality)
+        {
+            case "HIGH":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.HIGH;
+                break;
+            case "HD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.HD;
+                break;
+            case "FULLHD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.FULLHD;
+                break;
+            case "UHD":
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.UHD;
+                break;
+            default:
+                streamYoutubeVideo.PreferedQuality = AdvancedYoutubePlayer.Quality.Standard;
+                break;
+        }
+    }
 
 }

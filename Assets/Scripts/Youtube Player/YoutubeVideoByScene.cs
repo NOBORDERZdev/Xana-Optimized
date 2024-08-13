@@ -49,7 +49,7 @@ public class YoutubeVideoByScene : MonoBehaviour
                     {
                         if (_response.data.isYoutubeURL)
                         {
-                            Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL);
+                            Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
                         }
                     }
                     else
