@@ -8,7 +8,6 @@ using UnityEngine.UI;
 using static InventoryManager;
 using System;
 using static StoreUndoRedo;
-using System.Globalization;
 
 public class ItemDetail : MonoBehaviour
 {

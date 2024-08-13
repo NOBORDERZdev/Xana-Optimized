@@ -970,8 +970,6 @@ public class InventoryManager : MonoBehaviour
         if (loadingItems)
             return;
 
-        Debug.LogError("End of Scroll");
-
         if (myScroller.verticalNormalizedPosition <= 0.1f)
         {
             loadingItems = true;
@@ -979,8 +977,9 @@ public class InventoryManager : MonoBehaviour
             int _downloadedAssetCount = UpdateActivePanelPageIndex(false,true);
             int _ActivePanelIndex = GetActivePanelIndex();
 
-
-            if (_downloadedAssetCount % 40 != 0)
+            // From API we get 40 Assets per page
+            // This check is write to avoid multiple call to API while loading previous once
+            if (_downloadedAssetCount % 40 != 0) 
             {
                 Debug.Log("<color=red>Items Are Downloading</color>");
                 return;

@@ -13,8 +13,6 @@ public class CarStopTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Car--OnTriggerEnter");
-
         if(other.gameObject.tag == "PhotonLocalPlayer")
         {
             var summitrpc = other.gameObject.GetComponent<SummitPlayerRPC>();
