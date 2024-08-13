@@ -1768,7 +1768,7 @@ public class InventoryManager : MonoBehaviour
         }
         AvatarPanel[m_GetIndex].SetActive(true);
         //CheckColorProperty(m_GetIndex);    // Temperarlily Disble Color Panel
-        if (m_GetIndex == 10 /*|| m_GetIndex == 8 EyeBrowPoints*/|| m_GetIndex == 9) //its a preset do nothing
+        if (m_GetIndex != 0) //Dont need to call API for otherthan Hair
         {
             // When Preset click than update the panel index
             PreviousSelectionCount = IndexofPanel;
