@@ -2082,7 +2082,7 @@ public class AvatarController : MonoBehaviour
                             if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
                                 !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                if (type.Contains("Hair") && (_CharacterData.hairItemData != null && _CharacterData.hairItemData.Contains("No hair")))
                                 {
                                     if (wornHair)
                                         UnStichItem("Hair");
