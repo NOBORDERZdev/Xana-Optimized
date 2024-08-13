@@ -664,7 +664,7 @@ public class InventoryManager : MonoBehaviour
 
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
-        GC.Collect();
+        GC.Collect(2, GCCollectionMode.Optimized);
 
         ResetDownloadCount();
         ResetPageIndex();
