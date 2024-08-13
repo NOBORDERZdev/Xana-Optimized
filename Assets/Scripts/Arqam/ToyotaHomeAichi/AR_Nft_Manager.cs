@@ -100,7 +100,14 @@ namespace Toyota
         public async void Int_PMY_Nft_Manager()
         {
             StringBuilder apiUrl = new StringBuilder();
-            apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaApi + PMY_RoomId);
+            if (ConstantsHolder.xanaConstants.MuseumID == "2871")
+            {
+                apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.JjTestWorldAssets + PMY_RoomId);
+            }
+            else
+            {
+                apiUrl.Append(ConstantsGod.API_BASEURL + ConstantsGod.toyotaApi + PMY_RoomId);
+            }
             Debug.Log("<color=red>PMY_AdminApi: " + apiUrl + "</color>");
             using (UnityWebRequest request = UnityWebRequest.Get(apiUrl.ToString()))
             {
