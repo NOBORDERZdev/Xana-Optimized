@@ -44,9 +44,14 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 		[Toggle(_CFXR_DISSOLVE)] _UseDissolve ("Enable Dissolve", Float) = 0
 	//# IF_KEYWORD _CFXR_DISSOLVE
-		[NoScaleOffset] _DissolveTex ("Dissolve Texture", 2D) = "gray" {}
+		_DissolveTex ("Dissolve Texture", 2D) = "gray" {}
 		_DissolveSmooth ("Dissolve Smoothing", Range(0.0001,0.5)) = 0.1
 		[ToggleNoKeyword] _InvertDissolveTex ("Invert Dissolve Texture", Float) = 0
+		[ToggleNoKeyword] _DoubleDissolve ("Double Dissolve", Float) = 0
+		[Toggle(_CFXR_DISSOLVE_ALONG_UV_X)] _UseDissolveOffsetUV ("Dissolve offset along X", Float) = 0
+	//# IF_KEYWORD _CFXR_DISSOLVE_ALONG_UV_X
+		_DissolveScroll ("UV Scrolling", Vector) = (0,0,0,0)
+	//# END_IF
 	//# END_IF
 
 	//# --------------------------------------------------------
@@ -227,6 +232,8 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 			half _BacklightTransmittance;
 
 			half _InvertDissolveTex;
+			half _DoubleDissolve;
+			half2 _DissolveScroll;
 			half _DissolveSmooth;
 
 			half4 _DistortScrolling;
@@ -244,6 +251,8 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 			half _SoftParticlesFadeDistanceNear;
 			half _SoftParticlesFadeDistanceFar;
 			half _EdgeFadePow;
+
+			half4 _DissolveTex_ST;
 
 		#if !defined(SHADER_API_GLES)
 			float _ShadowStrength;
@@ -380,9 +389,11 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 			#endif
 		#endif
 
-				o.color = v.color;
-				o.uv_random = v.texcoord;
+				o.color = GetParticleColor(v.color);
 				o.custom1 = v.texcoord1;
+				GetParticleTexcoords(o.uv_random.xy, o.uv_random.zw, o.custom1.y, v.texcoord, v.texcoord1.y);
+				//o.uv_random = v.texcoord;
+
 		#if _CFXR_SECONDCOLOR_LERP || _CFXR_FONT_COLORS || (defined(LIGHTING) && _EMISSION)
 				o.secondColor = v.texcoord2;
 		#endif
@@ -679,21 +690,29 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				// Dissolve
 
 			#if _CFXR_DISSOLVE
-				half dissolveTex = tex2D(_DissolveTex, i.uv_random.xy).r;
+				#if _CFXR_DISSOLVE_ALONG_UV_X
+					half dissolveOffset = tex2D(_DissolveTex, i.uv_random.xy * _DissolveTex_ST.xy + _DissolveTex_ST.zw + frac(_Time.yy * _DissolveScroll.xy)).r * 2.0 - 1.0;
+					half dissolveTex = i.uv_random.x + dissolveOffset * i.custom1.z;
+				#else
+					half dissolveTex = tex2D(_DissolveTex, i.uv_random.xy).r;
+				#endif
 				dissolveTex = _InvertDissolveTex <= 0 ? 1 - dissolveTex : dissolveTex;
 				half dissolveTime = i.custom1.x;
+				half doubleDissolveWidth = 0;
+				if (_DoubleDissolve > 0) doubleDissolveWidth = i.custom1.y;
 			#else
 				half dissolveTex = 0;
 				half dissolveTime = 0;
+				half doubleDissolveWidth = 0;
 			#endif
 
 				// ================================================================
 				//
 
 			#if PASS_SHADOW_CASTER
-				return frag(i, vpos, particleColor, particleAlpha, dissolveTex, dissolveTime);
+				return frag(i, vpos, particleColor, particleAlpha, dissolveTex, dissolveTime, doubleDissolveWidth);
 			#else
-				return frag(i, particleColor, particleAlpha, dissolveTex, dissolveTime);
+				return frag(i, particleColor, particleAlpha, dissolveTex, dissolveTime, doubleDissolveWidth);
 			#endif
 			}
 
@@ -716,7 +735,9 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				
 				#pragma target 2.0
 				
-				#pragma multi_compile_instancing
+				// #pragma multi_compile_instancing
+				// #pragma instancing_options procedural:ParticleInstancingSetup
+
 				#pragma multi_compile_fog
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
@@ -725,6 +746,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
@@ -763,7 +785,9 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				
 				#pragma target 2.0
 				
-				#pragma multi_compile_instancing
+				// #pragma multi_compile_instancing
+				// #pragma instancing_options procedural:ParticleInstancingSetup
+
 				#pragma multi_compile_fog
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
@@ -773,6 +797,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
@@ -812,6 +837,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 				CGPROGRAM
 
+				#pragma multi_compile CFXR_URP
 				#pragma multi_compile PASS_SHADOW_CASTER
 
 				#pragma vertex vertex_program
@@ -819,6 +845,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
@@ -854,17 +881,21 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
-				
-				#pragma target 2.0
-				
+
+				//vertInstancingSetup writes to global, not allowed with DXC
+				// #pragma never_use_dxc
+				// #pragma target 2.5
+				// #pragma multi_compile_instancing
+				// #pragma instancing_options procedural:vertInstancingSetup
+
 				#pragma multi_compile_particles
-				#pragma multi_compile_instancing
 				#pragma multi_compile_fog
 				//#pragma multi_compile_fwdbase
 				//#pragma multi_compile SHADOWS_SCREEN
 				
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
@@ -886,6 +917,7 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				#pragma shader_feature_local _ _ALPHATEST_ON
 				#pragma shader_feature_local _ _ALPHABLEND_ON _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON _CFXR_ADDITIVE
 
+				#include "UnityStandardParticleInstancing.cginc"
 
 				ENDCG
 			}
@@ -909,8 +941,15 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 				#pragma vertex vertex_program
 				#pragma fragment fragment_program
 
+				//vertInstancingSetup writes to global, not allowed with DXC
+				// #pragma never_use_dxc
+				// #pragma target 2.5
+				// #pragma multi_compile_instancing
+				// #pragma instancing_options procedural:vertInstancingSetup
+
 				#pragma shader_feature_local _ _CFXR_SINGLE_CHANNEL
 				#pragma shader_feature_local _ _CFXR_DISSOLVE
+				#pragma shader_feature_local _ _CFXR_DISSOLVE_ALONG_UV_X
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV2_DISTORTION
 				#pragma shader_feature_local _ _CFXR_UV_DISTORTION_ADD
@@ -927,6 +966,8 @@ Shader "Cartoon FX/Remaster/Particle Ubershader"
 			#if (_CFXR_DITHERED_SHADOWS_ON || _CFXR_DITHERED_SHADOWS_CUSTOMTEXTURE) && !defined(SHADER_API_GLES)
 				#pragma target 3.0		//needed for VPOS
 			#endif
+
+				#include "UnityStandardParticleInstancing.cginc"
 
 				ENDCG
 			}
