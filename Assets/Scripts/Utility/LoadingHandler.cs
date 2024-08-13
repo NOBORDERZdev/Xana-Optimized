@@ -92,7 +92,7 @@ public class LoadingHandler : MonoBehaviour
 
         loadingText.text = "";
         manualRoomController = gameObject.GetComponent<ManualRoomController>();
-      //  Debug.unityLogger.logEnabled = true;
+        //  Debug.unityLogger.logEnabled = true;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
@@ -189,23 +189,23 @@ public class LoadingHandler : MonoBehaviour
         //bool isFedderActive = false;
         //if (!XanaConstants.xanaConstants.isFromXanaLobby)
         //{
-            //isFedderActive = true;
-            if (XanaConstants.xanaConstants.isBackFromWorld)
-            {
-                if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
-                {
-                    ActivateFadder_AtLoadingStart();
-                }
-                else
-                {
-                    CustomLoading();
-                }
-            }
-            else
+        //isFedderActive = true;
+        if (XanaConstants.xanaConstants.isBackFromWorld)
+        {
+            if (ChangeOrientation_waqas._instance != null && ChangeOrientation_waqas._instance.isPotrait)
             {
                 ActivateFadder_AtLoadingStart();
             }
-           
+            else
+            {
+                CustomLoading();
+            }
+        }
+        else
+        {
+            ActivateFadder_AtLoadingStart();
+        }
+
         //}
 
         //StartCoroutine(CustomLoading());
@@ -225,7 +225,7 @@ public class LoadingHandler : MonoBehaviour
             //Debug.LogError(" ~~~~~~~  Oriantation Change Called ~~~~~~~ " );
         });
     }
-   
+
     void CustomLoading()
     {
         //if (needWait)
@@ -242,7 +242,7 @@ public class LoadingHandler : MonoBehaviour
         loadingPanel.SetActive(true);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
-      
+
 
         if (gameplayLoadingUIRefreshCo != null)//rik for refresh screen on every 5-7 second.......
         {
@@ -256,7 +256,7 @@ public class LoadingHandler : MonoBehaviour
         else
             XanaConstants.xanaConstants.needToClearMemory = true;
     }
-   
+
     public void ResetLoadingValues()
     {
         //if (LoadFromFile.instance)
@@ -279,10 +279,10 @@ public class LoadingHandler : MonoBehaviour
         if (isFirstTime || teleportFeader.gameObject.activeInHierarchy) //XanaConstants.xanaConstants.JjWorldSceneChange
         {
             isFirstTime = false;
-            XanaConstants.xanaConstants.isBackFromWorld = false;    
+            XanaConstants.xanaConstants.isBackFromWorld = false;
             return;
         }
-        
+
         if (!loadingPanel.activeInHierarchy)
             return;
 
@@ -331,11 +331,7 @@ public class LoadingHandler : MonoBehaviour
         //    Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         //    blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
         //}
-
-        loadingPanel.SetActive(false);
-        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
-        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
-
+        StartCoroutine(ApplyDelay());
 
         if (ReferrencesForDynamicMuseum.instance != null)
             ReferrencesForDynamicMuseum.instance.workingCanvas.SetActive(true);
@@ -345,6 +341,26 @@ public class LoadingHandler : MonoBehaviour
         {
             StopCoroutine(gameplayLoadingUIRefreshCo);
         }
+    }
+    private IEnumerator ApplyDelay()
+    {
+        if (XanaConstants.xanaConstants.isBackFromWorld)
+        {
+            HideLoadingManually();
+        }
+        else
+        {
+            yield return new WaitForSeconds(2f);
+            LoadFromFile.instance.SetPlayerPos();
+            HideLoadingManually();
+        }
+    }
+    private void HideLoadingManually()
+    {
+        UpdateLoadingStatusText("");
+        loadingPanel.SetActive(false);
+        Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
+        blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
     }
 
 
@@ -465,7 +481,7 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator ShowLoadingForCharacterUpdation(float delay)
     {
-        if(canvasGroup.alpha == 0)
+        if (canvasGroup.alpha == 0)
             canvasGroup.alpha = 1;
         characterLoading.SetActive(true);
         yield return new WaitForSeconds(delay);
@@ -523,7 +539,7 @@ public class LoadingHandler : MonoBehaviour
         {
             timer += Time.deltaTime;
             currentValue = Mathf.Lerp(0, sliderFinalValue, timer / speed);
-            if ((XanaConstants.xanaConstants.isBackFromPMY || XanaConstants.xanaConstants.isFromXanaLobby 
+            if ((XanaConstants.xanaConstants.isBackFromPMY || XanaConstants.xanaConstants.isFromXanaLobby
                 || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                 teleportFeader.gameObject.activeInHierarchy)
             {
@@ -548,7 +564,7 @@ public class LoadingHandler : MonoBehaviour
                     isLoadingComplete = true;
                 }
             }
-            else if(loadMainScene)
+            else if (loadMainScene)
             {
                 if (currentValue > 35f)
                 {
@@ -558,13 +574,13 @@ public class LoadingHandler : MonoBehaviour
             if (isLoadingComplete)
             {
                 currentValue = sliderCompleteValue;
-                if ((XanaConstants.xanaConstants.isFromPMYLobby || XanaConstants.xanaConstants.isFromXanaLobby 
+                if ((XanaConstants.xanaConstants.isFromPMYLobby || XanaConstants.xanaConstants.isFromXanaLobby
                     || (JjInfoManager.Instance != null && JjInfoManager.Instance.IsJjWorld)) &&
                     teleportFeader.gameObject.activeInHierarchy)
                 {
                     JJLoadingSlider.DOFillAmount((currentValue / 100), 0.15f);
                     JJLoadingPercentageText.text = ((int)(currentValue)).ToString() + "%";
-                   // yield return new WaitForSeconds(1f);
+                    // yield return new WaitForSeconds(1f);
                     //HideLoading(ScreenOrientation.Portrait);
                 }
                 else
@@ -581,8 +597,13 @@ public class LoadingHandler : MonoBehaviour
 
     public IEnumerator TeleportFader(FadeAction action)
     {
-        loadingPanel.SetActive(false);
-        // teleportFeader.gameObject.SetActive(true);
+        if (action.Equals(FadeAction.Out) && XanaConstants.xanaConstants.isFromPMYLobby)
+        {
+            yield return new WaitForSeconds(2f);
+            LoadFromFile.instance.SetPlayerPos();
+            JJLoadingSlider.fillAmount = 1f;
+            JJLoadingPercentageText.text = "100%".ToString();
+        }
         switch (action)
         {
             case FadeAction.Out:
@@ -618,7 +639,6 @@ public class LoadingHandler : MonoBehaviour
             default:
                 break;
         }
-        yield return null;
     }
 
 

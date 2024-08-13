@@ -47,7 +47,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
             return File.ReadAllText(Application.persistentDataPath + "/loginAsGuestClass.json");
         }
     }
-    private void Start()
+    private void Awake()
     {
         if (this.GetComponent<PhotonView>().IsMine)
         {
@@ -114,6 +114,7 @@ public class RPCCallforBufferPlayers : MonoBehaviour, IPunInstantiateMagicCallba
                 {
                         if (!otherPlayer.GetComponent<PhotonView>().IsMine)
                         {
+                            otherPlayer.GetComponent<AvatarController>().SetAvatarClothDefault(otherPlayer.gameObject);
                             //Update Body fate
                             if (_CharacterData.myItemObj[i].ItemName != "")
                             {
