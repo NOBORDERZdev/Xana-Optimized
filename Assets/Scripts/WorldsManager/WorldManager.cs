@@ -767,6 +767,8 @@ public class WorldManager : MonoBehaviour
     {
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
+        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
+        await Task.Delay(1000);
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
@@ -839,9 +841,9 @@ public class WorldManager : MonoBehaviour
         //        return;
         //    }
         //}
-        AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
-        GC.Collect();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
+        //GC.Collect();
         ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
         //LoadingHandler.Instance.ShowFadderWhileOriantationChanged(ScreenOrientation.LandscapeLeft);
         LoadingHandler.Instance.ShowLoading();
@@ -859,7 +861,9 @@ public class WorldManager : MonoBehaviour
     {
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
+        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
 
+        await Task.Delay(1000);
         //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         //{
         //    if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 

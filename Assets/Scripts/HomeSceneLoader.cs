@@ -17,7 +17,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
     {
         gameManager = GameManager.Instance;
     }
-    private void OnEnable()
+    override public void OnEnable()
     {
         if (GameplayEntityLoader.instance)
         {
@@ -26,7 +26,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         MainSceneEventHandler.MemoryRelaseAfterLoading += ReleaseUnsedMemory;
     }
 
-    private void OnDisable()
+    override public void OnDisable()
     {
         MainSceneEventHandler.MemoryRelaseAfterLoading -= ReleaseUnsedMemory;
     }
@@ -152,9 +152,12 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
 
     IEnumerator ReleaseUnsedMemoryDelay()
     {
-        yield return new WaitForSeconds(3f);
+        print("memory released here.. Start");
         GC.Collect();
+        Caching.ClearCache();
+        AssetBundle.UnloadAllAssetBundles(true);
+        yield return new WaitForSeconds(.2f);
         Resources.UnloadUnusedAssets();
-        Debug.LogError("memory released here..");
+        
     }
 }
