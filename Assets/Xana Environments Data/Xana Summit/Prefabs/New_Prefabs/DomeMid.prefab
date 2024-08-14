@@ -146,8 +146,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DomeId: 0
+  WorldIdTestnet: 
+  WorldIdMainnet: 
   WorldId: 
-  DomeIndexText: {fileID: 0}
 --- !u!65 &3542299177947064211
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -171,6 +172,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4755420735316244707}
   - component: {fileID: 4892235015536707343}
+  - component: {fileID: 765026591870180711}
   m_Layer: 0
   m_Name: DomeMid
   m_TagString: Untagged
@@ -214,6 +216,20 @@ LODGroup:
     renderers:
     - renderer: {fileID: 5011209162993741873}
   m_Enabled: 1
+--- !u!114 &765026591870180711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4755420735316244717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856e61693774f894698cb02100967b91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ImageUrl: 
+  DomeMeshRenderer: {fileID: 5011209162993741873}
 --- !u!1 &4755420736250088390
 GameObject:
   m_ObjectHideFlags: 0

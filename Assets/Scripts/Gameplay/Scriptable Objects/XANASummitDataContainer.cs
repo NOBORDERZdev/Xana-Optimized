@@ -91,6 +91,19 @@ public class XANASummitDataContainer : ScriptableObject
         return string.Empty;
     }
 
+    public string GetDomeImage(int DomeId)
+    {
+        for (int i = 0; i < summitData.domes.Count; i++)
+        {
+            if (DomeId == summitData.domes[i].id)
+            {
+                return summitData.domes[i].world360Image;
+            }
+        }
+
+        return string.Empty;
+    }
+
     #region DomeInfo
 
     [System.Serializable]
@@ -117,6 +130,7 @@ public class XANASummitDataContainer : ScriptableObject
         public bool Ishumanoid;
         public int AvatarIndex;
         public string Avatarjson;
+        public string world360Image;
         public int maxPlayer;
         public List<SubWorldInfo> SubWorlds;
         public bool isSubWorld;

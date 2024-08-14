@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 1752347583}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -286,11 +286,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1972714902939461980}
   - {fileID: 1507636619965374989}
   - {fileID: 4368992442789904076}
-  - {fileID: 9127481701726022421}
   - {fileID: 1805226655}
+  - {fileID: 823932825}
   - {fileID: 1466799622}
+  - {fileID: 1294375875}
   m_Father: {fileID: 1946358371}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -355,11 +357,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3707219102504225535, guid: c47313a396c936a4cb12ed5ea309c9d0, type: 3}
   m_PrefabInstance: {fileID: 111798018}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &156360269 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8135103341416034210, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &158581364
 GameObject:
@@ -633,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -687,6 +684,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -6250076149019478384, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4823781564106081184, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -711,6 +712,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[5]
       value: 
       objectReference: {fileID: 2714718303309609200, guid: 09577b7dab53c884dbbc130d22c6ae14, type: 3}
+    - target: {fileID: -4507900262165122138, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -3356800171933271864, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -731,6 +736,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[4]
       value: 
       objectReference: {fileID: 2100000, guid: b4a1531d657110d40bda45feda04c645, type: 2}
+    - target: {fileID: -1554193974251969968, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 870662426605338754, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -751,9 +760,17 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
-    - target: {fileID: 6514490180060556466, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+    - target: {fileID: 5988881256312858879, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159819195323411483, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6514490180060556466, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6514490180060556466, guid: c20b51e5063545242828130e83dff5b6, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -783,167 +800,12 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8144394004440419581, guid: c20b51e5063545242828130e83dff5b6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!1 &336895601 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 870662426605338754, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &336895602 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -9007996257490536912, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &336895603 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6514490180060556466, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &336895604 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -4823781564106081184, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &336895605 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -8763104348246206606, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &336895606 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -7361631136016992745, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &336895607 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -6962852560589773503, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &336895608 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7030998805181248275, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &336895609 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3356800171933271864, guid: c20b51e5063545242828130e83dff5b6, type: 3}
-  m_PrefabInstance: {fileID: 336895600}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &336895610
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156360269}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4205829974185856910, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!64 &336895612
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895603}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8556227027506364191, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!64 &336895613
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895605}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4766125671307050232, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!64 &336895614
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895607}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8855424465492398110, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!205 &336895615
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895607}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 270.16364
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.34590104
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 336895608}
-  m_Enabled: 1
---- !u!205 &336895616
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895603}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 265.46603
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.3335348
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 336895604}
-  m_Enabled: 1
---- !u!205 &336895617
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895605}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: -130.9467, y: 9.478051, z: -351.2685}
-  m_Size: 265.4659
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.29547104
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 336895609}
-    - renderer: {fileID: 336895606}
-  m_Enabled: 1
 --- !u!1 &395144983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,7 +1370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd617247844f1b447a0320228ca36a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldJson: '{"SceneObjects":[{"addressableKey":"BASE-SPACEX","name":"BASE-SPACEX","position":{"x":336.20001220703127,"y":52.29999923706055,"z":-450.8999938964844},"rotation":{"x":0.0,"y":-0.9203006029129028,"z":0.0,"w":-0.39121201634407046},"scale":{"x":0.9000000953674316,"y":0.9000003933906555,"z":0.9000004529953003},"objectBound":{"m_Center":{"x":367.9717712402344,"y":60.722679138183597,"z":-429.8296203613281},"m_Extent":{"x":45.831573486328128,"y":69.76234436035156,"z":47.557037353515628}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs1","position":{"x":80.46405792236328,"y":-9.183099746704102,"z":-154.81597900390626},"rotation":{"x":0.0,"y":-0.7071078419685364,"z":0.0,"w":-0.7071057558059692},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":223.2016143798828,"y":15.411296844482422,"z":-7.6435089111328129},"m_Extent":{"x":142.73756408691407,"y":35.63560104370117,"z":147.17247009277345}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs2","position":{"x":72.8744125366211,"y":-9.18278694152832,"z":-152.6096954345703},"rotation":{"x":0.0,"y":-0.000001966953050214215,"z":0.0,"w":-1.0},"scale":{"x":100.00001525878906,"y":100.0,"z":100.00001525878906},"objectBound":{"m_Center":{"x":-74.29795837402344,"y":15.411609649658204,"z":-9.87200927734375},"m_Extent":{"x":147.17237854003907,"y":35.63560104370117,"z":142.73768615722657}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs3","position":{"x":73.5006103515625,"y":-9.182787895202637,"z":-139.7003936767578},"rotation":{"x":0.0,"y":0.7071053385734558,"z":0.0,"w":-0.7071082592010498},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":-69.23707580566406,"y":15.411649703979493,"z":-286.82275390625},"m_Extent":{"x":142.7376708984375,"y":35.635643005371097,"z":147.22235107421876}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs4","position":{"x":72.3207015991211,"y":-9.162016868591309,"z":-148.38121032714845},"rotation":{"x":0.0,"y":-1.0,"z":0.0,"w":0.0000018477439880371094},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":219.0716094970703,"y":20.93221092224121,"z":-291.0188293457031},"m_Extent":{"x":146.75091552734376,"y":30.11499786376953,"z":142.83767700195313}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02","position":{"x":33.520713806152347,"y":0.41999998688697817,"z":-203.72650146484376},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":14.541000366210938,"y":14.541000366210938,"z":14.541000366210938},"objectBound":{"m_Center":{"x":32.87944793701172,"y":-1.6517229080200196,"z":-203.36634826660157},"m_Extent":{"x":9.349299430847168,"y":6.793576240539551,"z":6.5632781982421879}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02
+  worldJson: '{"SceneObjects":[{"addressableKey":"BASE-SPACEX","name":"BASE-SPACEX","position":{"x":336.20001220703127,"y":52.29999923706055,"z":-450.8999938964844},"rotation":{"x":0.0,"y":-0.9203006029129028,"z":0.0,"w":-0.39121201634407046},"scale":{"x":0.9000000953674316,"y":0.9000003933906555,"z":0.9000004529953003},"objectBound":{"m_Center":{"x":367.9717712402344,"y":60.722679138183597,"z":-429.8296203613281},"m_Extent":{"x":45.831573486328128,"y":69.76234436035156,"z":47.557037353515628}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs1","position":{"x":80.46405792236328,"y":-9.183099746704102,"z":-154.81597900390626},"rotation":{"x":0.0,"y":-0.7071078419685364,"z":0.0,"w":-0.7071057558059692},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":223.2016143798828,"y":15.411296844482422,"z":-7.6435089111328129},"m_Extent":{"x":142.73756408691407,"y":35.63560104370117,"z":147.17247009277345}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs2","position":{"x":72.8744125366211,"y":-9.18278694152832,"z":-152.6096954345703},"rotation":{"x":0.0,"y":-0.000001966953050214215,"z":0.0,"w":-1.0},"scale":{"x":100.00001525878906,"y":100.0,"z":100.00001525878906},"objectBound":{"m_Center":{"x":-74.29795837402344,"y":15.411609649658204,"z":-9.87200927734375},"m_Extent":{"x":147.17237854003907,"y":35.63560104370117,"z":142.73768615722657}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs3","position":{"x":73.5006103515625,"y":-9.182787895202637,"z":-139.7003936767578},"rotation":{"x":0.0,"y":0.7071053385734558,"z":0.0,"w":-0.7071082592010498},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":-69.23707580566406,"y":15.411649703979493,"z":-286.82275390625},"m_Extent":{"x":142.7376708984375,"y":35.635643005371097,"z":147.22235107421876}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"BoundaryLODs1","name":"BoundaryLODs4","position":{"x":72.3207015991211,"y":-9.162016868591309,"z":-148.38121032714845},"rotation":{"x":0.0,"y":-1.0,"z":0.0,"w":0.0000018477439880371094},"scale":{"x":100.0,"y":100.0,"z":100.0},"objectBound":{"m_Center":{"x":219.0716094970703,"y":20.93221092224121,"z":-291.0188293457031},"m_Extent":{"x":146.75091552734376,"y":30.11499786376953,"z":142.83767700195313}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02","position":{"x":33.520713806152347,"y":0.41999998688697817,"z":-203.72650146484376},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":14.541000366210938,"y":14.541000366210938,"z":14.541000366210938},"objectBound":{"m_Center":{"x":32.87944793701172,"y":-1.6517229080200196,"z":-203.36634826660157},"m_Extent":{"x":9.349299430847168,"y":6.793576240539551,"z":6.5632781982421879}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02
     (1)","position":{"x":6.989999771118164,"y":-0.3199999928474426,"z":-198.07000732421876},"rotation":{"x":0.374610960483551,"y":0.75827956199646,"z":-0.49185314774513247,"w":0.2067832201719284},"scale":{"x":10.200499534606934,"y":10.200499534606934,"z":10.200502395629883},"objectBound":{"m_Center":{"x":6.147052764892578,"y":-1.051745891571045,"z":-197.01849365234376},"m_Extent":{"x":8.079498291015625,"y":7.659698009490967,"z":9.267425537109375}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02
     (2)","position":{"x":-7.272979736328125,"y":-0.31999969482421877,"z":-214.1986083984375},"rotation":{"x":0.5034756660461426,"y":0.6630175113677979,"z":-0.3588380515575409,"w":0.4220845401287079},"scale":{"x":10.200498580932618,"y":10.200507164001465,"z":10.200508117675782},"objectBound":{"m_Center":{"x":-8.562955856323243,"y":-1.0517473220825196,"z":-213.8084716796875},"m_Extent":{"x":6.426359176635742,"y":7.659707069396973,"z":8.06024169921875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02
     (3)","position":{"x":71.23999786376953,"y":0.4200000762939453,"z":-196.05999755859376},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":5.0,"y":5.0,"z":5.0},"objectBound":{"m_Center":{"x":71.01949310302735,"y":-0.2923729419708252,"z":-195.9361572265625},"m_Extent":{"x":3.2148056030273439,"y":2.3360071182250978,"z":2.2568130493164064}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_Rock_02","name":"SM_Rock_02
@@ -1529,13 +1391,13 @@ MonoBehaviour:
     (11)","position":{"x":24.27657127380371,"y":-2.940000534057617,"z":-207.92828369140626},"rotation":{"x":0.0,"y":-0.40184372663497927,"z":0.0,"w":0.9157083034515381},"scale":{"x":3.6336252689361574,"y":3.6336255073547365,"z":3.6336252689361574},"objectBound":{"m_Center":{"x":24.51436424255371,"y":-0.38991403579711916,"z":-208.04190063476563},"m_Extent":{"x":7.086950302124023,"y":3.785796642303467,"z":7.099815368652344}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_rock_03","name":"SM_rock_03
     (12)","position":{"x":4.630000114440918,"y":-2.940000534057617,"z":-225.1300048828125},"rotation":{"x":0.0,"y":-0.40184372663497927,"z":0.0,"w":0.9157083034515381},"scale":{"x":3.6336252689361574,"y":3.6336255073547365,"z":3.6336252689361574},"objectBound":{"m_Center":{"x":4.867793083190918,"y":-0.38991403579711916,"z":-225.24362182617188},"m_Extent":{"x":7.086949348449707,"y":3.785796642303467,"z":7.099815368652344}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_rock_03","name":"SM_rock_03
     (13)","position":{"x":8.579999923706055,"y":0.630000114440918,"z":-223.36000061035157},"rotation":{"x":0.3100351095199585,"y":-0.2556494176387787,"z":-0.7064977288246155,"w":0.5825656056404114},"scale":{"x":2.5095276832580568,"y":2.5095276832580568,"z":2.509528160095215},"objectBound":{"m_Center":{"x":9.871718406677246,"y":0.24199509620666505,"z":-222.212890625},"m_Extent":{"x":4.690831184387207,"y":3.9757838249206545,"z":4.6819915771484379}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"SM_rock_03_b","name":"SM_rock_03_b","position":{"x":18.510000228881837,"y":-3.799499988555908,"z":-189.25999450683595},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":3.377700090408325,"y":3.377700090408325,"z":3.377700090408325},"objectBound":{"m_Center":{"x":16.139522552490236,"y":-0.6876444816589356,"z":-189.49386596679688},"m_Extent":{"x":3.519153594970703,"y":4.768068790435791,"z":4.5653533935546879}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Prefab
-    Paticle petal 1 pink","name":"Prefab Paticle petal 1 pink","position":{"x":53.310001373291019,"y":9.75,"z":-193.9925537109375},"rotation":{"x":0.0,"y":-0.7071068286895752,"z":0.7071068286895752,"w":0.0},"scale":{"x":3.0,"y":3.0,"z":0.4518498480319977},"objectBound":{"m_Center":{"x":0.0,"y":-4.90500020980835,"z":0.5},"m_Extent":{"x":3.00927996635437,"y":7.914280414581299,"z":1.5097734928131104}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Prefab
-    Paticle petal 1 pink","name":"Prefab Paticle petal 1 pink (1)","position":{"x":12.399999618530274,"y":9.40999984741211,"z":-207.39999389648438},"rotation":{"x":-0.2705976068973541,"y":-0.6532816886901856,"z":0.6532816886901856,"w":-0.2705976068973541},"scale":{"x":3.0,"y":3.0,"z":0.45184996724128725},"objectBound":{"m_Center":{"x":0.0,"y":-4.90500020980835,"z":0.49999988079071047},"m_Extent":{"x":8.509773254394532,"y":8.414773941040039,"z":4.009773254394531}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
+    Paticle petal 1 pink","name":"Prefab Paticle petal 1 pink","position":{"x":53.310001373291019,"y":9.75,"z":-193.9925537109375},"rotation":{"x":0.0,"y":-0.7071068286895752,"z":0.7071068286895752,"w":0.0},"scale":{"x":3.0,"y":3.0,"z":0.4518498480319977},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Prefab
+    Paticle petal 1 pink","name":"Prefab Paticle petal 1 pink (1)","position":{"x":12.399999618530274,"y":9.40999984741211,"z":-207.39999389648438},"rotation":{"x":-0.2705976068973541,"y":-0.6532816886901856,"z":0.6532816886901856,"w":-0.2705976068973541},"scale":{"x":3.0,"y":3.0,"z":0.45184996724128725},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
     1","name":"Oak 1","position":{"x":31.139999389648439,"y":-0.6599998474121094,"z":-194.5399932861328},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.5,"y":0.5,"z":0.5},"objectBound":{"m_Center":{"x":31.88869857788086,"y":21.771638870239259,"z":-194.81491088867188},"m_Extent":{"x":26.15622329711914,"y":25.818571090698243,"z":25.722763061523439}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
     1","name":"Oak 1 (1)","position":{"x":14.410356521606446,"y":-0.6607589721679688,"z":-195.06640625},"rotation":{"x":0.0008128939662128687,"y":0.00003702365211211145,"z":0.00023041786334943026,"w":0.9999996423721314},"scale":{"x":0.5,"y":0.5,"z":0.5},"objectBound":{"m_Center":{"x":15.148698806762696,"y":21.771642684936525,"z":-195.30490112304688},"m_Extent":{"x":26.169475555419923,"y":25.790603637695314,"z":25.683685302734376}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
     1","name":"Oak 1 (3)","position":{"x":11.539999961853028,"y":-0.6599998474121094,"z":-213.97999572753907},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.5,"y":0.5,"z":0.5},"objectBound":{"m_Center":{"x":12.28869915008545,"y":21.771638870239259,"z":-214.25491333007813},"m_Extent":{"x":26.156221389770509,"y":25.818571090698243,"z":25.722763061523439}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
     1","name":"Oak 1 (2)","position":{"x":-4.690000534057617,"y":-0.6599998474121094,"z":-214.07000732421876},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.5,"y":0.5,"z":0.5},"objectBound":{"m_Center":{"x":-3.9413013458251955,"y":21.771638870239259,"z":-214.3449249267578},"m_Extent":{"x":26.156221389770509,"y":25.818571090698243,"z":25.722763061523439}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Oak
-    1","name":"Oak 1 (4)","position":{"x":52.99000549316406,"y":0.8000001907348633,"z":-194.1699981689453},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.30000001192092898,"y":0.30000001192092898,"z":0.30000001192092898},"objectBound":{"m_Center":{"x":53.43922424316406,"y":14.258984565734864,"z":-194.33494567871095},"m_Extent":{"x":15.693733215332032,"y":15.491143226623536,"z":15.43365478515625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Green-F","name":"Green-F","position":{"x":81.19999694824219,"y":-14.279999732971192,"z":-149.5},"rotation":{"x":0.0,"y":0.047955472022295,"z":0.0,"w":0.9988495111465454},"scale":{"x":90.0,"y":90.0,"z":90.0},"objectBound":{"m_Center":{"x":123.632568359375,"y":-6.186134338378906,"z":-198.34677124023438},"m_Extent":{"x":50.484161376953128,"y":8.093865394592286,"z":48.846771240234378}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.6920983195304871,"y":0.6920983195304871,"z":-0.00034604917163960636,"w":-0.00034604917163960636}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.8954707384109497,"y":0.8954707384109497,"z":0.12770375609397889,"w":-0.00007998484215931967}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"GiantWheel","name":"GiantWheel","position":{"x":185.80003356933595,"y":-5.800000190734863,"z":-148.31971740722657},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":178.1151123046875,"y":43.46413803100586,"z":-148.3048858642578},"m_Extent":{"x":21.3350830078125,"y":59.17194747924805,"z":59.17195129394531}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"DomeBig4","name":"DomeBig4","position":{"x":240.8192596435547,"y":20.349090576171876,"z":-309.886474609375},"rotation":{"x":-0.37487179040908816,"y":-1.4551233107340523e-7,"z":-0.9270766973495483,"w":5.883923037686145e-8},"scale":{"x":-39.3701171875,"y":-39.3701171875,"z":-39.37010192871094},"objectBound":{"m_Center":{"x":238.3154296875,"y":18.370149612426759,"z":-307.4657897949219},"m_Extent":{"x":62.02491760253906,"y":16.027606964111329,"z":60.85881042480469}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":32}},{"addressableKey":"DomeBig4","name":"WA-64","position":{"x":-88.00469207763672,"y":20.328304290771486,"z":-308.19891357421877},"rotation":{"x":0.9206166863441467,"y":6.128710339226018e-8,"z":0.3904676139354706,"w":-1.4449837237862085e-7},"scale":{"x":-39.37010192871094,"y":-39.37010192871094,"z":-39.37009811401367},"objectBound":{"m_Center":{"x":-85.5840072631836,"y":18.349365234375,"z":-305.6950988769531},"m_Extent":{"x":60.85880661010742,"y":16.02760124206543,"z":62.024879455566409}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":64}},{"addressableKey":"DomeBig4","name":"GA-92","position":{"x":-95.62419128417969,"y":20.328304290771486,"z":8.8956298828125},"rotation":{"x":0.9270766377449036,"y":-5.8839244587716169e-8,"z":-0.37487196922302248,"w":-1.455123026516958e-7},"scale":{"x":-39.3701057434082,"y":-39.370094299316409,"z":-39.37010192871094},"objectBound":{"m_Center":{"x":-93.12036895751953,"y":18.349365234375,"z":6.474945068359375},"m_Extent":{"x":62.02488708496094,"y":16.02760124206543,"z":60.85881423950195}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":92}},{"addressableKey":"DomeBig4","name":"EA-124","position":{"x":241.96920776367188,"y":20.327991485595704,"z":13.682769775390625},"rotation":{"x":0.39046815037727358,"y":-1.444983297460567e-7,"z":-0.9206164479255676,"w":-6.128718865738847e-8},"scale":{"x":-39.37010192871094,"y":-39.37010192871094,"z":-39.37010192871094},"objectBound":{"m_Center":{"x":239.54852294921876,"y":18.34905242919922,"z":11.178942680358887},"m_Extent":{"x":60.858768463134769,"y":16.02760124206543,"z":62.02491760253906}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":124}},{"addressableKey":"DomeSmall","name":"DomeSmall","position":{"x":178.32452392578126,"y":1.1699867248535157,"z":-0.7162628173828125},"rotation":{"x":0.0,"y":0.2492745816707611,"z":0.0,"w":0.9684329032897949},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":180.00634765625,"y":2.329986572265625,"z":2.278078556060791},"m_Extent":{"x":7.14434814453125,"y":5.215000152587891,"z":7.136672019958496}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":105}},{"addressableKey":"DomeSmall","name":"DomeSmall
+    1","name":"Oak 1 (4)","position":{"x":52.99000549316406,"y":0.8000001907348633,"z":-194.1699981689453},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.30000001192092898,"y":0.30000001192092898,"z":0.30000001192092898},"objectBound":{"m_Center":{"x":53.43922424316406,"y":14.258984565734864,"z":-194.33494567871095},"m_Extent":{"x":15.693733215332032,"y":15.491143226623536,"z":15.43365478515625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Green-F","name":"Green-F","position":{"x":81.19999694824219,"y":-14.279999732971192,"z":-149.5},"rotation":{"x":0.0,"y":0.047955472022295,"z":0.0,"w":0.9988495111465454},"scale":{"x":90.0,"y":90.0,"z":90.0},"objectBound":{"m_Center":{"x":123.632568359375,"y":-6.186134338378906,"z":-198.34677124023438},"m_Extent":{"x":50.484161376953128,"y":8.093865394592286,"z":48.846771240234378}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.6920983195304871,"y":0.6920983195304871,"z":-0.00034604917163960636,"w":-0.00034604917163960636}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.8954707384109497,"y":0.8954707384109497,"z":0.12770375609397889,"w":-0.00007998484215931967}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"GiantWheel","name":"GiantWheel","position":{"x":185.80003356933595,"y":-5.800000190734863,"z":-148.31971740722657},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":178.1151123046875,"y":43.46413803100586,"z":-148.3048858642578},"m_Extent":{"x":21.3350830078125,"y":59.17194747924805,"z":59.17195129394531}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"DomeBig4","name":"WA-64","position":{"x":-88.00469207763672,"y":20.328304290771486,"z":-308.19891357421877},"rotation":{"x":0.9206166863441467,"y":6.128710339226018e-8,"z":0.3904676139354706,"w":-1.4449837237862085e-7},"scale":{"x":-39.37010192871094,"y":-39.37010192871094,"z":-39.37009811401367},"objectBound":{"m_Center":{"x":-85.5840072631836,"y":18.349365234375,"z":-305.6950988769531},"m_Extent":{"x":60.85880661010742,"y":16.02760124206543,"z":62.024879455566409}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":64}},{"addressableKey":"DomeBig4","name":"GA-92","position":{"x":-95.62419128417969,"y":20.328304290771486,"z":8.8956298828125},"rotation":{"x":0.9270766377449036,"y":-5.8839244587716169e-8,"z":-0.37487196922302248,"w":-1.455123026516958e-7},"scale":{"x":-39.3701057434082,"y":-39.370094299316409,"z":-39.37010192871094},"objectBound":{"m_Center":{"x":-93.12036895751953,"y":18.349365234375,"z":6.474945068359375},"m_Extent":{"x":62.02488708496094,"y":16.02760124206543,"z":60.85881423950195}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":92}},{"addressableKey":"DomeBig4","name":"EA-124","position":{"x":241.96920776367188,"y":20.327991485595704,"z":13.682769775390625},"rotation":{"x":0.39046815037727358,"y":-1.444983297460567e-7,"z":-0.9206164479255676,"w":-6.128718865738847e-8},"scale":{"x":-39.37010192871094,"y":-39.37010192871094,"z":-39.37010192871094},"objectBound":{"m_Center":{"x":239.54852294921876,"y":18.34905242919922,"z":11.178942680358887},"m_Extent":{"x":60.858768463134769,"y":16.02760124206543,"z":62.02491760253906}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":124}},{"addressableKey":"DomeSmall","name":"DomeSmall","position":{"x":178.32452392578126,"y":1.1699867248535157,"z":-0.7162628173828125},"rotation":{"x":0.0,"y":0.2492745816707611,"z":0.0,"w":0.9684329032897949},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":180.00634765625,"y":2.329986572265625,"z":2.278078556060791},"m_Extent":{"x":7.14434814453125,"y":5.215000152587891,"z":7.136672019958496}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":105}},{"addressableKey":"DomeSmall","name":"DomeSmall
     (1)","position":{"x":191.84451293945313,"y":1.1699867248535157,"z":-0.65631103515625},"rotation":{"x":0.0,"y":-0.9563892483711243,"z":0.0,"w":0.2920951843261719},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":189.9076385498047,"y":2.329986572265625,"z":-3.4972758293151857},"m_Extent":{"x":7.2984161376953129,"y":5.215000152587891,"z":7.29311990737915}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":104}},{"addressableKey":"DomeSmall","name":"DomeSmall","position":{"x":149.95867919921876,"y":-0.23000001907348634,"z":-59.677452087402347},"rotation":{"x":0.0,"y":-0.06926446408033371,"z":0.0,"w":0.9975983500480652},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":149.4580078125,"y":3.434614896774292,"z":-56.693641662597659},"m_Extent":{"x":5.95855712890625,"y":3.753385543823242,"z":6.3055877685546879}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":103}},{"addressableKey":"DomeSmall","name":"DomeSmall
     (1)","position":{"x":138.27999877929688,"y":-0.23000001907348634,"z":-65.63999938964844},"rotation":{"x":0.0,"y":-0.20654214918613435,"z":0.0,"w":0.9784377217292786},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":136.815673828125,"y":3.434614896774292,"z":-62.32611846923828},"m_Extent":{"x":6.889739990234375,"y":3.753385543823242,"z":6.735557556152344}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":102}},{"addressableKey":"DomeSmall","name":"DomeSmall
     (2)","position":{"x":125.58000183105469,"y":-0.23000001907348634,"z":-71.75},"rotation":{"x":0.0,"y":-0.1305251568555832,"z":0.0,"w":0.9914450645446777},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":124.64230346679688,"y":3.434614896774292,"z":-68.5088882446289},"m_Extent":{"x":6.4332733154296879,"y":3.753385543823242,"z":6.478141784667969}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":101}},{"addressableKey":"DomeSmall","name":"DomeSmall
@@ -1654,12 +1516,14 @@ MonoBehaviour:
     (2)","position":{"x":147.31991577148438,"y":0.0,"z":-49.255760192871097},"rotation":{"x":0.0,"y":0.6833118200302124,"z":0.0,"w":0.7301267385482788},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":147.41305541992188,"y":6.918631076812744,"z":-49.255760192871097},"m_Extent":{"x":6.014442443847656,"y":7.467447757720947,"z":5.921295166015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Palm_Mobile_3","name":"Palm_Mobile_3
     (3)","position":{"x":179.69593811035157,"y":0.0,"z":-82.05107879638672},"rotation":{"x":0.0,"y":0.6833118200302124,"z":0.0,"w":0.7301267385482788},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":179.78907775878907,"y":6.918631076812744,"z":-82.05107879638672},"m_Extent":{"x":6.0144500732421879,"y":7.467447757720947,"z":5.921287536621094}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Palm_Mobile_3","name":"Palm_Mobile_3
     (4)","position":{"x":168.79547119140626,"y":0.0,"z":-102.77017211914063},"rotation":{"x":0.0,"y":0.6833118200302124,"z":0.0,"w":0.7301267385482788},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":168.88861083984376,"y":6.918631076812744,"z":-102.77017211914063},"m_Extent":{"x":6.014442443847656,"y":7.467447757720947,"z":5.921295166015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Palm_Mobile_3","name":"Palm_Mobile_3
-    (5)","position":{"x":159.12229919433595,"y":0.0,"z":-115.79598999023438},"rotation":{"x":0.0,"y":0.6833118200302124,"z":0.0,"w":0.7301267385482788},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":159.21543884277345,"y":6.918631076812744,"z":-115.79598999023438},"m_Extent":{"x":6.0144500732421879,"y":7.467447757720947,"z":5.921295166015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Palm_Mobile_3","name":"Palm_Mobile_3","position":{"x":136.41615295410157,"y":-0.48999977111816409,"z":-209.15777587890626},"rotation":{"x":-0.17019134759902955,"y":1.1175870895385743e-8,"z":-2.8870999813079835e-8,"w":0.9854111075401306},"scale":{"x":3.0,"y":3.0,"z":3.0},"objectBound":{"m_Center":{"x":136.4161376953125,"y":9.759329795837403,"z":-211.05520629882813},"m_Extent":{"x":8.881927490234375,"y":12.522507667541504,"z":10.77935791015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Chimney_Town_Trigger","name":"Chimney_Town_Trigger","position":{"x":0.0,"y":0.0,"z":-493.20001220703127},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-130.8756866455078,"y":20.437397003173829,"z":-438.6044616699219},"m_Extent":{"x":130.8756866455078,"y":20.437397003173829,"z":54.595550537109378}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":8,"lightmapScaleOffset":{"x":1.0049350261688233,"y":1.0049350261688233,"z":-0.0004453444271348417,"w":-0.0004453444271348417}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFM_Trigger","name":"RFM_Trigger","position":{"x":356.225341796875,"y":-4.770000457763672,"z":84.66996002197266},"rotation":{"x":0.0,"y":0.9167895913124085,"z":0.0,"w":0.3993704319000244},"scale":{"x":0.8700000047683716,"y":0.8700000047683716,"z":0.8700000047683716},"objectBound":{"m_Center":{"x":365.73773193359377,"y":1.4271984100341797,"z":137.3992462158203},"m_Extent":{"x":52.04986572265625,"y":11.513725280761719,"z":52.72929382324219}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"FestivalStage","name":"FestivalStage","position":{"x":47.650001525878909,"y":-0.2199999988079071,"z":-144.1699981689453},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-24.44896697998047,"y":13.945953369140625,"z":-114.07777404785156},"m_Extent":{"x":126.21674346923828,"y":59.26713562011719,"z":114.07777404785156}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.024255506694316865,"y":0.024255506694316865,"z":0.2402043342590332,"w":0.8994077444076538}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.32712316513061526,"y":0.32712316513061526,"z":0.9792542457580566,"w":-0.16356170177459718}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.12890625,"y":0.12890625,"z":0.859375,"w":0.7620363831520081}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.03276996687054634,"y":0.03276996687054634,"z":0.8982714414596558,"w":0.03069482557475567}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02734375,"y":0.02734375,"z":0.9608615636825562,"w":0.9742698073387146}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.983891487121582,"w":-0.002343749860301614}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7814127802848816,"w":0.193359375}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.989750862121582,"w":-0.002343749860301614}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7814127802848816,"w":0.0}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.983891487121582,"w":0.0015625001396983863}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7833659052848816,"w":0.741975724697113}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.995610237121582,"w":-0.002343749860301614}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.5900065302848816,"w":0.741975724697113}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":-0.0006863191374577582}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.7613500356674194}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.8005085587501526}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.8005085587501526}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.8750432133674622}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.6868153810501099}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.38603243231773379}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":0.11300688982009888}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.8005085587501526}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":0.226700097322464}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.49972566962242129}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.4540865123271942}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.6868153810501099}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.8750432133674622}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":-0.0006863191374577582}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.6134188771247864}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.8005085587501526}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.5677797198295593}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.8005085587501526}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.11300688982009888}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.3403933048248291}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.226700097322464}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Mall","name":"Mall","position":{"x":0.0,"y":-7.590000152587891,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-227.17286682128907,"y":35.57109451293945,"z":139.74200439453126},"m_Extent":{"x":40.70576477050781,"y":34.73106384277344,"z":40.47431564331055}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":1.0006630420684815,"y":1.0006630420684815,"z":-0.0005085744778625667,"w":-0.0005085744778625667}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Japan-Bridge","name":"Japan-Bridge","position":{"x":10.427894592285157,"y":-0.05225799232721329,"z":-207.2086181640625},"rotation":{"x":0.0,"y":-0.38611093163490298,"z":0.0,"w":0.9224523901939392},"scale":{"x":1.5,"y":1.5,"z":1.5},"objectBound":{"m_Center":{"x":11.00118637084961,"y":4.2824249267578129,"z":-206.3394775390625},"m_Extent":{"x":75.0,"y":51.0,"z":51.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":10,"lightmapScaleOffset":{"x":1.004138469696045,"y":1.004138469696045,"z":-0.0020801143255084755,"w":-0.0020801143255084755}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.05781727284193039}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.10759217292070389,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":-0.00032418291084468365}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.10759217292070389,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.3485245704650879}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":-0.0001363546762149781,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.23224163055419923}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":-0.0001363546762149781,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.7555148601531982}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.05372790992259979,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.6973733901977539}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.026795776560902597,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.5229489803314209}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.026795776560902597,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.29038310050964358}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.08066003769636154,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.8717978000640869}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.05372790992259979,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.46480751037597659}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9602979421615601,"w":0.9301233887672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.8136563301086426}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.08066003769636154,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.17410017549991609}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.13452430069446565,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.6392319202423096}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.13452430069446565,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.11595872789621353}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9333658218383789,"w":0.9301233887672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.4066660404205322}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9602979421615601,"w":0.9574671387672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.5810904502868652}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9333658218383789,"w":0.9574671387672424}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.35734227299690249,"y":0.35734227299690249,"z":0.45812395215034487,"w":-0.0027917365077883007}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.15151146054267884,"y":0.15151146054267884,"z":0.6614948511123657,"w":0.8987932205200195}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.15151146054267884,"y":0.15151146054267884,"z":0.5071979761123657,"w":0.8987932205200195}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.12789927423000337,"y":0.12789927423000337,"z":0.8158875107765198,"w":0.8988890051841736}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.12789927423000337,"y":0.12789927423000337,"z":0.8588562607765198,"w":0.8943301439285278}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.2813784182071686,"y":0.2813784182071686,"z":0.28987443447113039,"w":0.7408345341682434}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.7650222778320313,"y":0.7650222778320313,"z":-0.0016589160077273846,"w":-0.0016589160077273846}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Beach","name":"Beach","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":77.66654205322266,"y":19.225078582763673,"z":-89.49278259277344},"m_Extent":{"x":126.98225402832031,"y":54.20801544189453,"z":89.49278259277344}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":5,"lightmapScaleOffset":{"x":1.0027334690093995,"y":1.0027334690093995,"z":-0.0018594027496874333,"w":-0.0018594027496874333}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Photo_Booth","name":"Photo_Booth","position":{"x":83.37999725341797,"y":0.7889999747276306,"z":-145.1300048828125},"rotation":{"x":0.0,"y":-0.9998680353164673,"z":0.0,"w":-0.016251355409622194},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":82.58220672607422,"y":9.208869934082032,"z":-146.76983642578126},"m_Extent":{"x":5.652534484863281,"y":8.424129486083985,"z":7.086029052734375}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.3519555330276489,"y":0.3519555330276489,"z":-0.042879801243543628,"w":0.6990959048271179}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Stage","name":"YGB_Stage","position":{"x":111.5,"y":0.8999996185302734,"z":-140.05999755859376},"rotation":{"x":-1.54542423302928e-8,"y":-0.7071099281311035,"z":1.5454379109769435e-8,"w":-0.7071037292480469},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":99.57231140136719,"y":5.315363883972168,"z":-144.03988647460938},"m_Extent":{"x":8.26101016998291,"y":4.445363998413086,"z":10.223109245300293}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.45704686641693118,"y":0.45704686641693118,"z":-0.000022026106307748705,"w":-0.000022026106307748705}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Number10","name":"YGB_Number10","position":{"x":110.79996490478516,"y":0.7599996328353882,"z":-143.84999084472657},"rotation":{"x":0.0,"y":-0.7071099281311035,"z":0.0,"w":-0.7071037292480469},"scale":{"x":1.2826842069625855,"y":1.4873600006103516,"z":1.487359881401062},"objectBound":{"m_Center":{"x":110.79996490478516,"y":8.270431518554688,"z":-143.84999084472657},"m_Extent":{"x":2.1082167625427248,"y":7.766438007354736,"z":10.98849105834961}},"priority":1,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_AirBaloons","name":"YGB_AirBaloons","position":{"x":111.5,"y":0.8999996185302734,"z":-140.05999755859376},"rotation":{"x":-1.54542423302928e-8,"y":-0.7071099281311035,"z":1.5454379109769435e-8,"w":-0.7071037292480469},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":100.7088851928711,"y":21.429344177246095,"z":-144.44189453125},"m_Extent":{"x":11.60494327545166,"y":6.329346179962158,"z":17.749412536621095}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag","name":"YGB_BeanBag","position":{"x":111.5,"y":0.8999996185302734,"z":-140.05999755859376},"rotation":{"x":-1.54542423302928e-8,"y":-0.7071099281311035,"z":1.5454379109769435e-8,"w":-0.7071037292480469},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":101.27027893066406,"y":1.984679937362671,"z":-144.01913452148438},"m_Extent":{"x":5.948155879974365,"y":1.0267794132232667,"z":9.797159194946289}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag01","name":"YGB_BeanBag01","position":{"x":95.5,"y":1.559999942779541,"z":-137.3000030517578},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":95.5,"y":1.5599998235702515,"z":-137.3000030517578},"m_Extent":{"x":1.6321275234222413,"y":0.4950799345970154,"z":1.6321269273757935}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag02","name":"YGB_BeanBag02","position":{"x":98.8499984741211,"y":1.559999942779541,"z":-140.10000610351563},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":98.8499984741211,"y":1.5599995851516724,"z":-140.10000610351563},"m_Extent":{"x":1.6321275234222413,"y":0.5234411358833313,"z":1.632128119468689}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag03","name":"YGB_BeanBag03","position":{"x":95.5,"y":1.559999942779541,"z":-150.83999633789063},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":95.5,"y":1.5599995851516724,"z":-150.83999633789063},"m_Extent":{"x":1.6321277618408204,"y":0.5301898121833801,"z":1.632128119468689}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag04","name":"YGB_BeanBag04","position":{"x":98.7699966430664,"y":1.559999942779541,"z":-148.13999938964845},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":98.7699966430664,"y":1.5599998235702515,"z":-148.13999938964845},"m_Extent":{"x":1.6321277618408204,"y":0.4950799345970154,"z":1.6321269273757935}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_StageBeanBag","name":"YGB_StageBeanBag","position":{"x":111.5,"y":0.8999996185302734,"z":-140.05999755859376},"rotation":{"x":-1.54542423302928e-8,"y":-0.7071099281311035,"z":1.5454379109769435e-8,"w":-0.7071037292480469},"scale":{"x":0.009999998845160008,"y":0.009999999776482582,"z":0.009999998845160008},"objectBound":{"m_Center":{"x":104.62477111816406,"y":1.6702589988708497,"z":-144.20851135253907},"m_Extent":{"x":2.2023558616638185,"y":0.7745167016983032,"z":3.4028162956237795}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01","position":{"x":93.35000610351563,"y":0.8999996185302734,"z":-138.98983764648438},"rotation":{"x":-0.033781636506319049,"y":-0.95766282081604,"z":-0.2566044330596924,"w":-0.12607477605342866},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
-    (1)","position":{"x":93.34991455078125,"y":0.8999996185302734,"z":-149.4998321533203},"rotation":{"x":0.2499995231628418,"y":-0.000006556510925292969,"z":-0.06698683649301529,"w":-0.9659260511398315},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti02","name":"YGB_Confetti02","position":{"x":105.19992065429688,"y":13.129999160766602,"z":-148.94993591308595},"rotation":{"x":0.0,"y":-0.7071099281311035,"z":0.0,"w":-0.7071037292480469},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti02","name":"YGB_Confetti02
-    (1)","position":{"x":105.20000457763672,"y":13.129999160766602,"z":-139.1399383544922},"rotation":{"x":0.0,"y":-0.7071099281311035,"z":0.0,"w":-0.7071037292480469},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti03","name":"YGB_Confetti03","position":{"x":101.52002716064453,"y":7.179999828338623,"z":-136.7399139404297},"rotation":{"x":0.0,"y":-0.9771572351455689,"z":0.0,"w":-0.21251767873764039},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti03","name":"YGB_Confetti03
-    (1)","position":{"x":101.51990509033203,"y":7.179999828338623,"z":-150.9799041748047},"rotation":{"x":0.0,"y":-0.4262557625770569,"z":0.0,"w":-0.9046027064323425},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
-    (2)","position":{"x":100.55001068115235,"y":0.8999996185302734,"z":-138.98989868164063},"rotation":{"x":-0.033781636506319049,"y":-0.95766282081604,"z":-0.2566044330596924,"w":-0.12607477605342866},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
-    (3)","position":{"x":100.54991912841797,"y":0.8999996185302734,"z":-149.49989318847657},"rotation":{"x":0.2499995231628418,"y":-0.000006556510925292969,"z":-0.06698683649301529,"w":-0.9659260511398315},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.000009999999747378752,"y":0.000009999999747378752,"z":0.000009999999747378752}},"priority":1,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
+    (5)","position":{"x":159.12229919433595,"y":0.0,"z":-115.79598999023438},"rotation":{"x":0.0,"y":0.6833118200302124,"z":0.0,"w":0.7301267385482788},"scale":{"x":2.0,"y":2.0,"z":2.0},"objectBound":{"m_Center":{"x":159.21543884277345,"y":6.918631076812744,"z":-115.79598999023438},"m_Extent":{"x":6.0144500732421879,"y":7.467447757720947,"z":5.921295166015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Palm_Mobile_3","name":"Palm_Mobile_3","position":{"x":136.41615295410157,"y":-0.48999977111816409,"z":-209.15777587890626},"rotation":{"x":-0.17019134759902955,"y":1.1175870895385743e-8,"z":-2.8870999813079835e-8,"w":0.9854111075401306},"scale":{"x":3.0,"y":3.0,"z":3.0},"objectBound":{"m_Center":{"x":136.4161376953125,"y":9.759329795837403,"z":-211.05520629882813},"m_Extent":{"x":8.881927490234375,"y":12.522507667541504,"z":10.77935791015625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Chimney_Town_Trigger","name":"Chimney_Town_Trigger","position":{"x":0.0,"y":0.0,"z":-493.20001220703127},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-130.8756866455078,"y":20.437397003173829,"z":-438.6044616699219},"m_Extent":{"x":130.8756866455078,"y":20.437397003173829,"z":54.595550537109378}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":8,"lightmapScaleOffset":{"x":1.0049350261688233,"y":1.0049350261688233,"z":-0.0004453444271348417,"w":-0.0004453444271348417}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"RFM_Trigger","name":"RFM_Trigger","position":{"x":356.225341796875,"y":-4.770000457763672,"z":84.66996002197266},"rotation":{"x":0.0,"y":0.9167895913124085,"z":0.0,"w":0.3993704319000244},"scale":{"x":0.8700000047683716,"y":0.8700000047683716,"z":0.8700000047683716},"objectBound":{"m_Center":{"x":365.73773193359377,"y":1.4271984100341797,"z":137.3992462158203},"m_Extent":{"x":52.04986572265625,"y":11.513725280761719,"z":52.72929382324219}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"FestivalStage","name":"FestivalStage","position":{"x":64.80000305175781,"y":-0.2199999988079071,"z":-144.1699981689453},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-7.2989654541015629,"y":13.945953369140625,"z":-114.07777404785156},"m_Extent":{"x":126.21675109863281,"y":59.26713562011719,"z":114.07777404785156}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.024255506694316865,"y":0.024255506694316865,"z":0.2402043342590332,"w":0.8994077444076538}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.32712316513061526,"y":0.32712316513061526,"z":0.9792542457580566,"w":-0.16356170177459718}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.12890625,"y":0.12890625,"z":0.859375,"w":0.7620363831520081}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.03276996687054634,"y":0.03276996687054634,"z":0.8982714414596558,"w":0.03069482557475567}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02734375,"y":0.02734375,"z":0.9608615636825562,"w":0.9742698073387146}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.983891487121582,"w":-0.002343749860301614}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7814127802848816,"w":0.193359375}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.989750862121582,"w":-0.002343749860301614}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7814127802848816,"w":0.0}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.983891487121582,"w":0.0015625001396983863}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.7833659052848816,"w":0.741975724697113}},{"lightmapIndex":7,"lightmapScaleOffset":{"x":0.002343749860301614,"y":0.002343749860301614,"z":0.995610237121582,"w":-0.002343749860301614}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.189453125,"y":0.189453125,"z":0.5900065302848816,"w":0.741975724697113}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":-0.0006863191374577582}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.7613500356674194}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.8005085587501526}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.8005085587501526}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.8750432133674622}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.6868153810501099}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.38603243231773379}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":0.11300688982009888}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.8005085587501526}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.8157199025154114,"w":0.226700097322464}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.49972566962242129}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.4540865123271942}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.6868153810501099}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.8750432133674622}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":-0.0006863191374577582,"w":0.7613500356674194}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":-0.0006863191374577582}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.7649386525154114,"w":0.6134188771247864}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6868136525154114,"w":0.8005085587501526}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.5677797198295593}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.34306368231773379,"w":0.8005085587501526}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.11300688982009888}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.3403933048248291}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.17118868231773377,"w":0.8750432133674622}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.5149386525154114,"w":0.6868153810501099}},{"lightmapIndex":12,"lightmapScaleOffset":{"x":0.16922058165073396,"y":0.16922058165073396,"z":0.6946261525154114,"w":0.226700097322464}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Mall","name":"Mall","position":{"x":0.0,"y":-7.590000152587891,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":-227.17286682128907,"y":35.57109451293945,"z":139.74200439453126},"m_Extent":{"x":40.70576477050781,"y":34.73106384277344,"z":40.47431564331055}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":2,"lightmapScaleOffset":{"x":1.0006630420684815,"y":1.0006630420684815,"z":-0.0005085744778625667,"w":-0.0005085744778625667}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Japan-Bridge","name":"Japan-Bridge","position":{"x":10.427894592285157,"y":-0.05225799232721329,"z":-207.2086181640625},"rotation":{"x":0.0,"y":-0.38611093163490298,"z":0.0,"w":0.9224523901939392},"scale":{"x":1.5,"y":1.5,"z":1.5},"objectBound":{"m_Center":{"x":12.054620742797852,"y":4.282424449920654,"z":-205.28607177734376},"m_Extent":{"x":23.49983024597168,"y":7.5,"z":24.02044677734375}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":10,"lightmapScaleOffset":{"x":1.004138469696045,"y":1.004138469696045,"z":-0.0020801143255084755,"w":-0.0020801143255084755}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.05781727284193039}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.10759217292070389,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":-0.00032418291084468365}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.10759217292070389,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.3485245704650879}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":-0.0001363546762149781,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.23224163055419923}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":-0.0001363546762149781,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.7555148601531982}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.05372790992259979,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.6973733901977539}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.026795776560902597,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.5229489803314209}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.026795776560902597,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.29038310050964358}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.08066003769636154,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.8717978000640869}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.05372790992259979,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.46480751037597659}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9602979421615601,"w":0.9301233887672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.8136563301086426}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.08066003769636154,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.17410017549991609}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.13452430069446565,"w":0.9547731876373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.6392319202423096}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.13452430069446565,"w":0.9274294376373291}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.11595872789621353}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9333658218383789,"w":0.9301233887672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.4066660404205322}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9602979421615601,"w":0.9574671387672424}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.05532721430063248,"y":0.05532721430063248,"z":0.9331866502761841,"w":0.5810904502868652}},{"lightmapIndex":8,"lightmapScaleOffset":{"x":0.02390940487384796,"y":0.02390940487384796,"z":0.9333658218383789,"w":0.9574671387672424}},{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.35734227299690249,"y":0.35734227299690249,"z":0.45812395215034487,"w":-0.0027917365077883007}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.15151146054267884,"y":0.15151146054267884,"z":0.6614948511123657,"w":0.8987932205200195}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.15151146054267884,"y":0.15151146054267884,"z":0.5071979761123657,"w":0.8987932205200195}},{"lightmapIndex":9,"lightmapScaleOffset":{"x":0.12789927423000337,"y":0.12789927423000337,"z":0.8158875107765198,"w":0.8988890051841736}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.12789927423000337,"y":0.12789927423000337,"z":0.8588562607765198,"w":0.8943301439285278}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.2813784182071686,"y":0.2813784182071686,"z":0.28987443447113039,"w":0.7408345341682434}},{"lightmapIndex":11,"lightmapScaleOffset":{"x":0.7650222778320313,"y":0.7650222778320313,"z":-0.0016589160077273846,"w":-0.0016589160077273846}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Beach","name":"Beach","position":{"x":0.0,"y":0.0,"z":0.0},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":77.66654205322266,"y":19.225078582763673,"z":-89.49278259277344},"m_Extent":{"x":126.98225402832031,"y":54.20801544189453,"z":89.49278259277344}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":5,"lightmapScaleOffset":{"x":1.0027334690093995,"y":1.0027334690093995,"z":-0.0018594027496874333,"w":-0.0018594027496874333}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Photo_Booth","name":"Photo_Booth","position":{"x":34.099998474121097,"y":0.7890000343322754,"z":-162.9499969482422},"rotation":{"x":0.0,"y":-0.8562574982643127,"z":0.0,"w":-0.516549289226532},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":35.1325798034668,"y":9.208869934082032,"z":-164.38096618652345},"m_Extent":{"x":8.701091766357422,"y":8.424129486083985,"z":6.3964691162109379}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":10,"lightmapScaleOffset":{"x":0.3519555330276489,"y":0.3519555330276489,"z":-0.042879801243543628,"w":0.6990959048271179}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Stage","name":"YGB_Stage","position":{"x":25.397197723388673,"y":0.8299999833106995,"z":-120.01513671875},"rotation":{"x":-2.1133478966817166e-8,"y":0.254946768283844,"z":-5.5720410507831279e-9,"w":-0.9669550657272339},"scale":{"x":0.010000000707805157,"y":0.009999999776482582,"z":0.010000000707805157},"objectBound":{"m_Center":{"x":34.74067306518555,"y":5.245364189147949,"z":-128.429931640625},"m_Extent":{"x":12.967082977294922,"y":4.445363998413086,"z":12.22744369506836}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":13,"lightmapScaleOffset":{"x":0.45704686641693118,"y":0.45704686641693118,"z":-0.000022026106307748705,"w":-0.000022026106307748705}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Number10","name":"YGB_Number10","position":{"x":29.039613723754884,"y":0.8100000023841858,"z":-118.75547790527344},"rotation":{"x":0.0,"y":0.254946768283844,"z":0.0,"w":-0.9669550657272339},"scale":{"x":1.1579687595367432,"y":1.342743992805481,"z":1.3427441120147706},"objectBound":{"m_Center":{"x":29.03961181640625,"y":7.590192794799805,"z":-118.75547790527344},"m_Extent":{"x":9.568831443786621,"y":7.011307239532471,"z":6.546773433685303}},"priority":0,"tagName":"Item","layerIndex":9,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_AirBaloons","name":"YGB_AirBaloons","position":{"x":25.397197723388673,"y":0.8999996185302734,"z":-120.01513671875},"rotation":{"x":-2.1133478966817166e-8,"y":0.254946768283844,"z":-5.5720410507831279e-9,"w":-0.9669550657272339},"scale":{"x":0.010000000707805157,"y":0.009999999776482582,"z":0.010000000707805157},"objectBound":{"m_Center":{"x":34.530033111572269,"y":21.429344177246095,"z":-127.2428970336914},"m_Extent":{"x":21.163646697998048,"y":6.329346179962158,"z":18.8474063873291}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag","name":"YGB_BeanBag","position":{"x":25.397197723388673,"y":0.8999996185302734,"z":-120.01513671875},"rotation":{"x":-2.1133478966817166e-8,"y":0.254946768283844,"z":-5.5720410507831279e-9,"w":-0.9669550657272339},"scale":{"x":0.010000000707805157,"y":0.009999999776482582,"z":0.010000000707805157},"objectBound":{"m_Center":{"x":33.88542556762695,"y":1.984679937362671,"z":-126.96293640136719},"m_Extent":{"x":11.456185340881348,"y":1.0267794132232667,"z":10.00525188446045}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag01","name":"YGB_BeanBag01","position":{"x":30.88483238220215,"y":1.5099999904632569,"z":-135.2958984375},"rotation":{"x":0.0,"y":-0.8640173673629761,"z":0.0,"w":0.503462016582489},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":30.88483238220215,"y":1.5099998712539673,"z":-135.2958984375},"m_Extent":{"x":2.2246739864349367,"y":0.4950799345970154,"z":2.2246742248535158}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag02","name":"YGB_BeanBag02","position":{"x":31.66910743713379,"y":1.5099999904632569,"z":-131.0008544921875},"rotation":{"x":0.0,"y":-0.8640173673629761,"z":0.0,"w":0.503462016582489},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":31.66910743713379,"y":1.5099996328353882,"z":-131.0008544921875},"m_Extent":{"x":2.224675178527832,"y":0.5234411358833313,"z":2.224674940109253}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag03","name":"YGB_BeanBag03","position":{"x":42.66462707519531,"y":1.5099999904632569,"z":-128.6199951171875},"rotation":{"x":0.0,"y":-0.8640173673629761,"z":0.0,"w":0.503462016582489},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":42.66462707519531,"y":1.5099996328353882,"z":-128.6199951171875},"m_Extent":{"x":2.224675178527832,"y":0.5301898121833801,"z":2.224675178527832}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_BeanBag04","name":"YGB_BeanBag04","position":{"x":38.703330993652347,"y":1.5099999904632569,"z":-127.10633850097656},"rotation":{"x":0.0,"y":-0.8640173673629761,"z":0.0,"w":0.503462016582489},"scale":{"x":0.009999999776482582,"y":0.009999999776482582,"z":0.009999999776482582},"objectBound":{"m_Center":{"x":38.703330993652347,"y":1.5099998712539673,"z":-127.10633850097656},"m_Extent":{"x":2.2246742248535158,"y":0.4950799345970154,"z":2.224674701690674}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_StageBeanBag","name":"YGB_StageBeanBag","position":{"x":25.397197723388673,"y":0.8999996185302734,"z":-120.01513671875},"rotation":{"x":-2.1133478966817166e-8,"y":0.254946768283844,"z":-5.5720410507831279e-9,"w":-0.9669550657272339},"scale":{"x":0.010000000707805157,"y":0.009999999776482582,"z":0.010000000707805157},"objectBound":{"m_Center":{"x":32.3962516784668,"y":1.6702589988708497,"z":-123.9511489868164},"m_Extent":{"x":4.046291828155518,"y":0.7745167016983032,"z":3.593761682510376}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01","position":{"x":33.415042877197269,"y":0.8999996185302734,"z":-136.33322143554688},"rotation":{"x":0.20470285415649415,"y":-0.37321609258651736,"z":-0.158378466963768,"w":-0.8909111618995667},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
+    (1)","position":{"x":42.558799743652347,"y":0.8999996185302734,"z":-131.15135192871095},"rotation":{"x":0.18374305963516236,"y":0.8345735669136047,"z":0.1822786033153534,"w":-0.48631274700164797},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti02","name":"YGB_Confetti02","position":{"x":36.237701416015628,"y":13.129999160766602,"z":-121.11296844482422},"rotation":{"x":0.0,"y":0.254946768283844,"z":0.0,"w":-0.9669550657272339},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti02","name":"YGB_Confetti02
+    (1)","position":{"x":27.702951431274415,"y":13.129999160766602,"z":-125.94973754882813},"rotation":{"x":0.0,"y":0.254946768283844,"z":0.0,"w":-0.9669550657272339},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti03","name":"YGB_Confetti03","position":{"x":27.429357528686525,"y":7.179999828338623,"z":-130.33465576171876},"rotation":{"x":0.0,"y":-0.3083426058292389,"z":0.0,"w":-0.9512754082679749},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti03","name":"YGB_Confetti03
+    (1)","position":{"x":39.818214416503909,"y":7.179999828338623,"z":-123.3136978149414},"rotation":{"x":0.0,"y":0.5669889450073242,"z":0.0,"w":-0.8237254619598389},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
+    (2)","position":{"x":29.865110397338868,"y":0.8999996185302734,"z":-130.06918334960938},"rotation":{"x":0.20470285415649415,"y":-0.37321609258651736,"z":-0.158378466963768,"w":-0.8909111618995667},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"YGB_Confetti01","name":"YGB_Confetti01
+    (3)","position":{"x":39.00882339477539,"y":0.8999996185302734,"z":-124.88729858398438},"rotation":{"x":0.18374305963516236,"y":0.8345735669136047,"z":0.1822786033153534,"w":-0.48631274700164797},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":0.0,"y":0.0,"z":0.0},"m_Extent":{"x":0.0,"y":0.0,"z":0.0}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Photo_Booth","name":"Photo_Booth
+    (1)","position":{"x":150.86000061035157,"y":-0.1899999976158142,"z":-132.97999572753907},"rotation":{"x":0.0,"y":-0.9846146702766419,"z":0.0,"w":-0.17473994195461274},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":150.6171875,"y":8.229870796203614,"z":-134.76063537597657},"m_Extent":{"x":7.497062683105469,"y":8.424129486083985,"z":7.7713165283203129}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Scene_teleport","name":"Scene_teleport","position":{"x":-170.1999969482422,"y":1.2100000381469727,"z":80.0999984741211},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":72.61994934082031,"y":0.8741504549980164,"z":-147.19003295898438},"m_Extent":{"x":243.92233276367188,"y":0.3891504406929016,"z":236.61239624023438}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Penpenz_Dome","name":"Penpenz_Dome","position":{"x":12.039999961853028,"y":0.7919999957084656,"z":-144.05999755859376},"rotation":{"x":0.0,"y":0.7071068286895752,"z":0.0,"w":0.7071068286895752},"scale":{"x":23.0,"y":22.182199478149415,"z":22.18219757080078},"objectBound":{"m_Center":{"x":10.742112159729004,"y":11.067508697509766,"z":-144.06903076171876},"m_Extent":{"x":10.411559104919434,"y":13.749927520751954,"z":16.87060546875}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Display_Tutorial","name":"Display_Tutorial","position":{"x":87.86299896240235,"y":0.8500000238418579,"z":-167.30299377441407},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"scale":{"x":1.0,"y":1.0,"z":1.0},"objectBound":{"m_Center":{"x":99.4624252319336,"y":1.6921300888061524,"z":-143.81143188476563},"m_Extent":{"x":16.556068420410158,"y":0.8700461387634277,"z":23.916168212890626}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"TokyoTowerEXT","name":"TokyoTowerEXT","position":{"x":-46.099998474121097,"y":-0.04000091552734375,"z":-144.5},"rotation":{"x":0.0,"y":-0.7071057558059692,"z":0.0,"w":0.7071079015731812},"scale":{"x":0.004469881299883127,"y":0.004469881299883127,"z":0.004469881299883127},"objectBound":{"m_Center":{"x":-46.099998474121097,"y":34.590248107910159,"z":-144.5},"m_Extent":{"x":11.196029663085938,"y":34.62617492675781,"z":11.196029663085938}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}},{"addressableKey":"Tokyo
+    dome","name":"Tokyo dome","position":{"x":261.5400085449219,"y":0.8001000285148621,"z":-329.8599853515625},"rotation":{"x":0.0,"y":0.42226555943489077,"z":0.0,"w":-0.9064722061157227},"scale":{"x":0.9822064638137817,"y":0.8829639554023743,"z":1.0374014377593995},"objectBound":{"m_Center":{"x":264.58203125,"y":9.069467544555664,"z":-332.4466552734375},"m_Extent":{"x":38.69004821777344,"y":8.467337608337403,"z":38.54205322265625}},"priority":0,"tagName":"Untagged","layerIndex":0,"isActive":true,"lightmapData":[{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}},{"lightmapIndex":-1,"lightmapScaleOffset":{"x":1.0,"y":1.0,"z":0.0,"w":0.0}}],"summitDomeInfo":{"domeIndex":0}}]}'
   assetsParent: {fileID: 735934549}
 --- !u!1001 &753273355
 PrefabInstance:
@@ -1779,6 +1643,111 @@ Transform:
   m_Father: {fileID: 1946358371}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &823932824
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 102892271}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4823781564106081184, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70b374b90c689644a87a0fab6bbdbc2d, type: 2}
+    - target: {fileID: -4823781564106081184, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: d3dfe46613227ee4fbfe490837d905da, type: 2}
+    - target: {fileID: -4823781564106081184, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 82ff8efcd43d54343b5d080159d72844, type: 2}
+    - target: {fileID: -4823781564106081184, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1aaf8b2f5ce80a54f8fcecf9adaf727b, type: 2}
+    - target: {fileID: -4823781564106081184, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 48571194878ac9e4c94673d98aa1198d, type: 2}
+    - target: {fileID: 919132149155446097, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_Name
+      value: Base03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+--- !u!4 &823932825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+  m_PrefabInstance: {fileID: 823932824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &823932826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6514490180060556466, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
+  m_PrefabInstance: {fileID: 823932824}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &823932827
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823932826}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8556227027506364191, guid: a58bab0520b1ff842b2b6ec5f357fc85, type: 3}
 --- !u!1001 &826248691
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1967,39 +1936,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1634946979681623829, guid: 89ab0584e6e1f2746988a601e66d5301, type: 3}
   m_PrefabInstance: {fileID: 941158570}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &999531008
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895601}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 826378126612191745, guid: c20b51e5063545242828130e83dff5b6, type: 3}
---- !u!205 &999531009
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336895601}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0, y: 0, z: 0}
-  m_Size: 265.4661
-  m_FadeMode: 1
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.34092763
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 336895602}
-  m_Enabled: 1
 --- !u!1 &1106689928
 GameObject:
   m_ObjectHideFlags: 0
@@ -2135,6 +2071,100 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4628804983147210, guid: 01cdb626b3d714e458dfb8c9c5e3ceef, type: 3}
   m_PrefabInstance: {fileID: 1144846227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1294375874
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 102892271}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 60.335068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.28278255
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -144.17819
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -6922058613389434426, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ad6de41de034cbc4697066fb544fdadb, type: 2}
+    - target: {fileID: -6922058613389434426, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 82ff8efcd43d54343b5d080159d72844, type: 2}
+    - target: {fileID: -6922058613389434426, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: dfd6ad159bc04644ba6dde1fc38ff039, type: 2}
+    - target: {fileID: -6922058613389434426, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 94d3057bba1fcbe44b161d71f018ced6, type: 2}
+    - target: {fileID: -6922058613389434426, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: b4a1531d657110d40bda45feda04c645, type: 2}
+    - target: {fileID: -4214428624850523874, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 82ff8efcd43d54343b5d080159d72844, type: 2}
+    - target: {fileID: -4214428624850523874, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: b4a1531d657110d40bda45feda04c645, type: 2}
+    - target: {fileID: 919132149155446097, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_Name
+      value: Egg_Shape_Base
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+--- !u!4 &1294375875 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b88b81d5b6b245e44a5072206874e49c, type: 3}
+  m_PrefabInstance: {fileID: 1294375874}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1355034226
 GameObject:
@@ -3567,6 +3597,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1165215608013534182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972714902939461980}
+  m_Layer: 0
+  m_Name: B_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!33 &1341750983381049330
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3668,7 +3714,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 102892271}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1507636619965375088
 GameObject:
@@ -3679,6 +3725,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1507636619965374989}
+  - component: {fileID: 1507636619965375090}
+  - component: {fileID: 1507636619965375091}
   - component: {fileID: 1507636619965375092}
   m_Layer: 0
   m_Name: WaterBlock_50m
@@ -3687,6 +3735,56 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!33 &1507636619965375090
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507636619965375088}
+  m_Mesh: {fileID: 4300000, guid: 3da23cdf512599b42881988944f3918c, type: 2}
+--- !u!23 &1507636619965375091
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507636619965375088}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 19ac4fcfcf42b4344a6c7d97a5cd61fc, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &1507636619965375092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3865,6 +3963,22 @@ Transform:
   m_Father: {fileID: 246029213}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1972714902939461980
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1165215608013534182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6610755045478297120}
+  m_Father: {fileID: 102892271}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2230807796062593440
 Transform:
   m_ObjectHideFlags: 0
@@ -4030,6 +4144,25 @@ Transform:
   m_Father: {fileID: 246029213}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2364131541428290002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6610755045478297120}
+  - component: {fileID: 4135531944604893248}
+  - component: {fileID: 6481851763010815491}
+  - component: {fileID: 6610755045478297121}
+  m_Layer: 0
+  m_Name: Bridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!65 &3123004983829282144
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4173,26 +4306,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &3263662463485153115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9127481701726022421}
-  - component: {fileID: 6683092022918595551}
-  - component: {fileID: 8718363931265732369}
-  - component: {fileID: 9127481701726022422}
-  - component: {fileID: 9127481701726022423}
-  m_Layer: 0
-  m_Name: BAse
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
 --- !u!23 &3342851462182154796
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4883,6 +4996,14 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7050645617844181186}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!33 &4135531944604893248
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364131541428290002}
+  m_Mesh: {fileID: 674340280032488212, guid: bab640d85ca27f34dbcc05cc61ec33e3, type: 3}
 --- !u!23 &4352827096461529183
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5358,7 +5479,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 102892271}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5395155222390148689
 GameObject:
@@ -5930,6 +6051,48 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!23 &6481851763010815491
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364131541428290002}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 48571194878ac9e4c94673d98aa1198d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &6532099685107282162
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6392,14 +6555,35 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &6683092022918595551
-MeshFilter:
+--- !u!4 &6610755045478297120
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263662463485153115}
-  m_Mesh: {fileID: 2092005473497286395, guid: bd4cc02f38c83b44198dc1a22dc9e42b, type: 3}
+  m_GameObject: {fileID: 2364131541428290002}
+  m_LocalRotation: {x: -0.47771466, y: 0.5213336, z: 0.5213336, w: 0.47771466}
+  m_LocalPosition: {x: -22.319, y: 0.8291, z: -145.17}
+  m_LocalScale: {x: 3611.4832, y: 3611.4832, z: 3611.4832}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1972714902939461980}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 95}
+--- !u!64 &6610755045478297121
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364131541428290002}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 674340280032488212, guid: bab640d85ca27f34dbcc05cc61ec33e3, type: 3}
 --- !u!65 &6760042968672675682
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6752,52 +6936,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!23 &8718363931265732369
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263662463485153115}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: ad6de41de034cbc4697066fb544fdadb, type: 2}
-  - {fileID: 2100000, guid: 82ff8efcd43d54343b5d080159d72844, type: 2}
-  - {fileID: 2100000, guid: dfd6ad159bc04644ba6dde1fc38ff039, type: 2}
-  - {fileID: 2100000, guid: 94d3057bba1fcbe44b161d71f018ced6, type: 2}
-  - {fileID: 2100000, guid: b4a1531d657110d40bda45feda04c645, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &8875329955237194198
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7051,54 +7189,6 @@ Transform:
   m_Father: {fileID: 246029213}
   m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &9127481701726022421
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263662463485153115}
-  m_LocalRotation: {x: 0.000000104679636, y: -0.7071068, z: 0.000000104679636, w: 0.7071068}
-  m_LocalPosition: {x: 60.3351, y: -0.28278252, z: -144.17819}
-  m_LocalScale: {x: 32.06033, y: 32.060314, z: 32.06033}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 102892271}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &9127481701726022422
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263662463485153115}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2092005473497286395, guid: bd4cc02f38c83b44198dc1a22dc9e42b, type: 3}
---- !u!205 &9127481701726022423
-LODGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3263662463485153115}
-  serializedVersion: 2
-  m_LocalReferencePoint: {x: 0.00000011920929, y: 0.029783227, z: -0.20859241}
-  m_Size: 4.914674
-  m_FadeMode: 0
-  m_AnimateCrossFading: 0
-  m_LastLODIsBillboard: 0
-  m_LODs:
-  - screenRelativeHeight: 0.48485625
-    fadeTransitionWidth: 0
-    renderers:
-    - renderer: {fileID: 8718363931265732369}
-  m_Enabled: 1
 --- !u!1 &9203917850247632552
 GameObject:
   m_ObjectHideFlags: 0

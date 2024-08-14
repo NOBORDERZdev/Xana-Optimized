@@ -45,7 +45,7 @@ public class XanaWorldDownloader : MonoBehaviour
     public static List<DownloadQueueData> downloadFailed = new List<DownloadQueueData>();
     public static Dictionary<string, ObjectsInfo> xanaWorldDataDictionary = new Dictionary<string, ObjectsInfo>();
     public static Dictionary<string, GameObject> prefabObjectPool = new Dictionary<string, GameObject>();
-
+    public static List<GameObject> AllDomes = new List<GameObject>();
 
     public static SceneData xanaSceneData = new SceneData();
 
@@ -234,7 +234,7 @@ public class XanaWorldDownloader : MonoBehaviour
     async Task StartDownloadingAssets()
     {
         SortingQueueData(initialPlayerPos);
-         while (!dataSorted)
+        while (!dataSorted)
         {
             await Task.Yield();
         }
@@ -505,7 +505,7 @@ public class XanaWorldDownloader : MonoBehaviour
         AddObjectInPool(downloadKey, newObj);
         AssignDomeId(newObj, _itemData);
 
-       
+
 
     }
 
@@ -538,8 +538,13 @@ public class XanaWorldDownloader : MonoBehaviour
     static void AssignDomeId(GameObject DomeObject, ObjectsInfo _itemData)
     {
         if (_itemData.summitDomeInfo.domeIndex != 0)
-        {
+        { 
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            if (DomeObject.GetComponent<SummitDomeShaderApply>())
+            {
+                AllDomes.Add(DomeObject);
+                DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            }
             //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
 
         }
