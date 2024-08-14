@@ -138,6 +138,7 @@ public class BuilderMapDownload : MonoBehaviour
 
             }
         }
+        client.Dispose();
         File.Delete(path);
         yield return null;
     }
@@ -160,7 +161,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
-        
+
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -168,16 +169,16 @@ public class BuilderMapDownload : MonoBehaviour
             if (!skyBoxExist)
             {
                 aiSkyboxItem = levelData.skyProperties.aISkyboxItem;
-                StartCoroutine(AISkyTextureDownload());
+                yield return StartCoroutine(AISkyTextureDownload());
             }
         }
 
         if (!string.IsNullOrEmpty(levelData.terrainProperties.meshDeformationPath))
             yield return StartCoroutine(LoadMeshDeformationFile(levelData.terrainProperties.meshDeformationPath, GetTerrainDeformation));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.texturePath))
-            SetTerrainTexture(levelData.terrainProperties.texturePath);
+            yield return StartCoroutine(SetTerrainTexture(levelData.terrainProperties.texturePath));
         if (!string.IsNullOrEmpty(levelData.terrainProperties.waterTexturePath))
-            SetWaterTexture(levelData.terrainProperties.waterTexturePath);
+            yield return StartCoroutine(SetWaterTexture(levelData.terrainProperties.waterTexturePath));
 
         SetPlaneScaleAndPosition(levelData.terrainProperties.planeScale, levelData.terrainProperties.planePos);
 
@@ -368,6 +369,8 @@ public class BuilderMapDownload : MonoBehaviour
             deformationData = results;
             callback?.Invoke(results);
         }
+
+        www.Dispose();
     }
 
     public void GetTerrainDeformation(byte[] meshDeformation)
@@ -391,14 +394,14 @@ public class BuilderMapDownload : MonoBehaviour
 
 
 
-    void SetTerrainTexture(string textureUrl)
+    IEnumerator SetTerrainTexture(string textureUrl)
     {
         MeshRenderer meshRenderer = terrainPlane.GetComponent<MeshRenderer>();
 
         if (meshRenderer != null)
         {
             //Debug.Log(textureUrl);
-            StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
+            yield return StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
             }));
@@ -406,7 +409,7 @@ public class BuilderMapDownload : MonoBehaviour
 
         if (levelData.terrainProperties.realisticMatIndex != -1)
         {
-            StartCoroutine(SetRealisticTerrain(meshRenderer));
+            yield return StartCoroutine(SetRealisticTerrain(meshRenderer));
         }
     }
 
@@ -453,13 +456,13 @@ public class BuilderMapDownload : MonoBehaviour
         }
     }
 
-    void SetWaterTexture(string textureUrl)
+    IEnumerator SetWaterTexture(string textureUrl)
     {
         MeshRenderer meshRenderer = waterPlane.GetComponent<MeshRenderer>();
 
         if (meshRenderer != null)
         {
-            StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
+            yield return StartCoroutine(GetTexture(textureUrl, (Texture tex) =>
             {
                 meshRenderer.material.SetTexture("_MainTex", tex);
             }));
@@ -710,7 +713,7 @@ public class BuilderMapDownload : MonoBehaviour
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up *0.9f;
+        mainPlayerCharacterController.center = Vector3.up * 0.9f;
         mainPlayerCharacterController.height = 1.65f;
         mainPlayerCharacterController.radius = 0.2f;
         mainPlayerCharacterController.stepOffset = 1f;
@@ -809,12 +812,15 @@ public class BuilderMapDownload : MonoBehaviour
         string textureURL = aiSkyboxItem.textureURL;
         if (textureURL.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
         {
-            textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults/");
-            textureURL += "?width=512&height=256";
+            textureURL = textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/" + (APIBasepointManager.instance.IsXanaLive ? "_xanaprod_" : "_apitestxana_") + "/xanaprod/Defaults/");
+            textureURL += "?width=4096&height=2048";
         }
-        var texture = new Texture2D(512, 256, GamificationComponentData.instance.GetTextureFormat(), false);
+        var texture = new Texture2D(256, 128, GamificationComponentData.instance.GetTextureFormat(), false);
         var imagineImageRequest = UnityWebRequest.Get(textureURL);
-        yield return imagineImageRequest.SendWebRequest();
+        imagineImageRequest.SendWebRequest();
+
+        while (!imagineImageRequest.isDone)
+            yield return null;
 
         if (imagineImageRequest.result != UnityWebRequest.Result.Success)
         {
@@ -824,6 +830,7 @@ public class BuilderMapDownload : MonoBehaviour
         {
             var image = imagineImageRequest.downloadHandler.data;
             texture.LoadImage(image);
+            texture.Compress(true);
             aiSkyboxItem.texture = texture;
             imagineImageRequest.Dispose();
         }
@@ -832,13 +839,17 @@ public class BuilderMapDownload : MonoBehaviour
     IEnumerator GetTexture(string url, Action<Texture> DownloadedTexture)
     {
         UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
-        yield return request.SendWebRequest();
+        request.SendWebRequest();
+        while (!request.isDone)
+            yield return null;
         if ((request.result == UnityWebRequest.Result.ConnectionError) || (request.result == UnityWebRequest.Result.ProtocolError))
             Debug.Log(request.error);
         else
         {
             DownloadedTexture(((DownloadHandlerTexture)request.downloadHandler).texture);
         }
+
+        request.Dispose();
     }
 
     void LoadAddressableSceneAfterDownload()

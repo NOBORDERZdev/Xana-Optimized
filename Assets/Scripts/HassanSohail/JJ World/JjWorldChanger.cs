@@ -85,7 +85,7 @@ public class JjWorldChanger : MonoBehaviour
         {
             ConstantsHolder.xanaConstants.isFromXanaLobby = true;
         }
-        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
+        if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
         {
             ConstantsHolder.xanaConstants.isFromTottoriWorld = true;
         }
