@@ -46,7 +46,7 @@ public class XanaWorldDownloader : MonoBehaviour
     public static Dictionary<string, ObjectsInfo> xanaWorldDataDictionary = new Dictionary<string, ObjectsInfo>();
     public static Dictionary<string, GameObject> prefabObjectPool = new Dictionary<string, GameObject>();
     public static List<GameObject> AllDomes = new List<GameObject>();
-
+    
     public static SceneData xanaSceneData = new SceneData();
 
     private string response;
@@ -277,6 +277,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
@@ -327,6 +328,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
@@ -366,6 +368,7 @@ public class XanaWorldDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, xanaWorldDataDictionary[dicKey], dicKey);
             }
             else
@@ -540,12 +543,13 @@ public class XanaWorldDownloader : MonoBehaviour
         if (_itemData.summitDomeInfo.domeIndex != 0)
         { 
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
-            if (DomeObject.GetComponent<SummitDomeShaderApply>())
-            {
-                AllDomes.Add(DomeObject);
-                DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
-            }
-            //DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.text = _itemData.summitDomeInfo.domeIndex.ToString();
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.AddComponent<TMPro.TextMeshPro>().text = _itemData.summitDomeInfo.domeIndex.ToString();
+            DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
+            //if (DomeObject.GetComponent<SummitDomeShaderApply>())
+            //{
+            //    AllDomes.Add(DomeObject);
+            //    DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            //}
 
         }
 
@@ -709,10 +713,10 @@ public class XanaWorldDownloader : MonoBehaviour
         xanaWorldDownloader.ResetDisplayDownloadText();
         xanaWorldDownloader.StopAllCoroutines();
 
-        AssetBundle.UnloadAllAssetBundles(true);
-        Caching.ClearCache();
-        Addressables.CleanBundleCache();
-        Resources.UnloadUnusedAssets();
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Caching.ClearCache();
+        //Addressables.CleanBundleCache();
+        //Resources.UnloadUnusedAssets();
 
     }
 

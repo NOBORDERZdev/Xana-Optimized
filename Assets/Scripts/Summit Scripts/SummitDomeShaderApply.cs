@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 using System;
 using UnityEngine.Networking;
-using VTabs.Libs;
 
 public class SummitDomeShaderApply : MonoBehaviour
 {

@@ -9,6 +9,7 @@ public class OnTriggerSceneSwitch : MonoBehaviour
     public int DomeId;
     public string WorldIdTestnet;
     public string WorldIdMainnet;
+    public GameObject textMeshPro;
     [HideInInspector]
     public string WorldId;
     private bool alreadyTriggered;

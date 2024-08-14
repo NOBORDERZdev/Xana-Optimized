@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3786250337657036320}
   - component: {fileID: 3786250337657036321}
-  - component: {fileID: 8619049486416532123}
   m_Layer: 0
   m_Name: DomeSmall
   m_TagString: Untagged
@@ -54,20 +53,6 @@ LODGroup:
     renderers:
     - renderer: {fileID: 8418892293869080004}
   m_Enabled: 1
---- !u!114 &8619049486416532123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4593854361052923034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 856e61693774f894698cb02100967b91, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ImageUrl: 
-  DomeMeshRenderer: {fileID: 8418892293869080004}
 --- !u!1 &5005054697580370172
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,6 +117,7 @@ MonoBehaviour:
   DomeId: 0
   WorldIdTestnet: 
   WorldIdMainnet: 
+  textMeshPro: {fileID: 7804898107131508429}
   WorldId: 
 --- !u!65 &5427041577354479969
 BoxCollider:

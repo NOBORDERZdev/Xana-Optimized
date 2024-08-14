@@ -134,6 +134,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         await UnloadScene(sceneTobeUnload);
 
+        await HomeSceneLoader.ReleaseUnsedMemory();
+
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
@@ -212,6 +214,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.playerobjects.Clear();
 
         await UnloadScene(sceneToBeUnload);
+
+        await HomeSceneLoader.ReleaseUnsedMemory();
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
@@ -297,6 +301,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.playerobjects.Clear();
 
         await UnloadScene(sceneToBeUnload);
+
+        await HomeSceneLoader.ReleaseUnsedMemory();
 
         if (subWorldInfo.isBuilderWorld)
             LoadBuilderSceneLoading(int.Parse(subWorldInfo.id));
