@@ -50,7 +50,7 @@ public class GamePlayFeatureHandler : MonoBehaviour
         }
 
         //disable minimap button
-        if (ConstantsHolder.xanaConstants.EnviornmentName.Contains("DUNE") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("KANZAKI") || ConstantsHolder.xanaConstants.EnviornmentName.Contains("Daisen"))
+        if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
         {
             miniMapSettingBtn.SetActive(false);
         }
