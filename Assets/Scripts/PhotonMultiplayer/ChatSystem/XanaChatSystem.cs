@@ -98,11 +98,17 @@ public class XanaChatSystem : MonoBehaviour
     private void OnEnable()
     {
         instance = this;
-        this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        }
     }
     private void OnDisable()
     {
-        this.InputFieldChat.onSubmit.RemoveAllListeners();
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.RemoveAllListeners();
+        }
     }
 
     public void Start()
@@ -249,7 +255,7 @@ public class XanaChatSystem : MonoBehaviour
             // Due to Overlapping of Minimap and Chat, Disable Minimap
             ReferencesForGamePlay.instance.minimap.SetActive(false);
             ReferencesForGamePlay.instance.SumitMapStatus(false);
-            
+
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
             //{
@@ -274,13 +280,15 @@ public class XanaChatSystem : MonoBehaviour
 
             if (PlayerPrefs.GetInt("minimap") == 1)
             {
+                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+                    return;
                 ReferencesForGamePlay.instance.minimap.SetActive(true);
                 ReferencesForGamePlay.instance.SumitMapStatus(true);
             }
         }
 
 
-        
+
     }
     public void OpenCloseChatDialog(bool _state)
     {
@@ -970,5 +978,5 @@ public class XanaChatSystem : MonoBehaviour
 
     #endregion
 
-   
+
 }

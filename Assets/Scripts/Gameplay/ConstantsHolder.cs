@@ -105,6 +105,20 @@ public class ConstantsHolder : MonoBehaviour
     }
     public ComingFrom comingFrom = ComingFrom.None;
 
+    public bool IsMetabuzzEnvironment{
+        get
+        {
+            if (EnviornmentName.Contains("DUNE") || EnviornmentName.Contains("KANZAKI") || EnviornmentName.Contains("Daisen"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
     //for world transition from JJworldChanger a world
     public bool hasWorldTransitionedInternally;
     // Is in Store
@@ -152,7 +166,7 @@ public class ConstantsHolder : MonoBehaviour
     [SerializeField]
     public MeetingStatus meetingStatus;
     public bool IsShowChatToAll = true;
-
+    public bool IsChatUseByOther = false;
 
     //XANA Summit 
     public static bool isFromXANASummit=false;

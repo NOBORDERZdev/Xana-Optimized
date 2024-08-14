@@ -596,6 +596,11 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             mainPlayer.transform.rotation = _spawnTransform.rotation;
             StartCoroutine(setPlayerCamAngle(0f, 0.5f));
         }
+        if (WorldItemView.m_EnvName.Contains("JJTest"))
+        {
+            mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            StartCoroutine(setPlayerCamAngle(0f, 0.5f));
+        }
     }
 
     public void SetPlayerPos()
@@ -991,7 +996,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
+                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             }
             while (!handle.IsDone)
                 yield return null;
