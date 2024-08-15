@@ -243,20 +243,20 @@ namespace PMY
                                     yield return new WaitForSeconds(1f);
                                     worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                     worldInfos[i].videoType = PMY_VideoTypeRes.islive;
-                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
+                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(worldData[j].thumbnail, worldData[j].youtubeUrl, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.islive);
                                 }
                                 else if (!worldData[j].youtubeUrlCheck && !string.IsNullOrEmpty(worldData[j].youtubeUrl))  // for Prerecorded video
                                 {
                                     yield return new WaitForSeconds(1f);
                                     worldInfos[i].VideoLink = worldData[j].youtubeUrl;
                                     worldInfos[i].videoType = PMY_VideoTypeRes.prerecorded;
-                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(null, worldData[j].youtubeUrl, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.prerecorded);
+                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(worldData[j].thumbnail, worldData[j].youtubeUrl, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.prerecorded);
                                 }
                                 else if (!string.IsNullOrEmpty(worldData[j].asset_link))
                                 {
                                     worldInfos[i].VideoLink = worldData[j].asset_link;
                                     worldInfos[i].videoType = PMY_VideoTypeRes.aws;
-                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(null, worldData[j].asset_link + compersionPrfex, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.aws);
+                                    NftPlaceholderList[i].GetComponent<PMY_VideoAndImage_Extension>().InitData(worldData[j].thumbnail, worldData[j].asset_link + compersionPrfex, worldInfos[i].pmyRatio, PMY_DataType.Video, PMY_VideoTypeRes.aws);
                                 }
                                 isWithDes = true;
                                 worldInfos[i].Title = worldData[j].title;

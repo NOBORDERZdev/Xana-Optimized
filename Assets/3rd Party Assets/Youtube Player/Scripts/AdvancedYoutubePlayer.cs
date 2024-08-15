@@ -82,8 +82,6 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     {
         if (isLive)
         {
-            IsLive = isLive;
-            VideoId = Url;
             AVProVideoPlayer.gameObject.SetActive(true);
             VideoPlayer.gameObject.SetActive(false);
             AVProVideoPlayer.AutoStart = true;
@@ -95,6 +93,10 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             VideoPlayer.gameObject.SetActive(true);
             VideoId = ExtractVideoIdFromUrl(Url);
         }
+
+        IsLive = isLive;
+        VideoId = Url;
+        PlayVideoAsync();
     }
 
     private string ExtractVideoIdFromUrl(string url)
