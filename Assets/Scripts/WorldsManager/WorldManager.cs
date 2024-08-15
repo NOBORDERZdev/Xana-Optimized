@@ -767,8 +767,8 @@ public class WorldManager : MonoBehaviour
     {
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
-        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
-        await Task.Delay(1000);
+        //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
+        await Task.Delay(500);
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
@@ -861,9 +861,9 @@ public class WorldManager : MonoBehaviour
     {
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
-        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
+        //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
 
-        await Task.Delay(1000);
+        await Task.Delay(500);
         //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         //{
         //    if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 

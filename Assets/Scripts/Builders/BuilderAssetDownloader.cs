@@ -218,6 +218,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -265,6 +266,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -304,6 +306,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }

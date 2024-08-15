@@ -134,6 +134,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         await UnloadScene(sceneTobeUnload);
 
+        await HomeSceneLoader.ReleaseUnsedMemory();
+
         if (domeGeneralData.worldType)
             LoadBuilderSceneLoading(domeGeneralData.builderWorldId);
         else
@@ -212,6 +214,8 @@ public class XANASummitSceneLoading : MonoBehaviour
         multiplayerController.playerobjects.Clear();
 
         await UnloadScene(sceneToBeUnload);
+
+        await HomeSceneLoader.ReleaseUnsedMemory();
 
         if (ConstantsHolder.xanaConstants.isBuilderScene)
             LoadBuilderSceneLoading(int.Parse(worldInfo.data.id));
@@ -298,6 +302,8 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         await UnloadScene(sceneToBeUnload);
 
+        await HomeSceneLoader.ReleaseUnsedMemory();
+
         if (subWorldInfo.isBuilderWorld)
             LoadBuilderSceneLoading(int.Parse(subWorldInfo.id));
         else
@@ -328,6 +334,7 @@ public class XANASummitSceneLoading : MonoBehaviour
                 domeGeneralData.AvatarIndex = dataContainer.summitData.domes[i].AvatarIndex;
                 domeGeneralData.name = dataContainer.summitData.domes[i].name;
                 domeGeneralData.isSubWorld = dataContainer.summitData.domes[i].isSubWorld;
+                domeGeneralData.world360Image = dataContainer.summitData.domes[i].world360Image;
                 //if (dataContainer.summitData1.domes[i].worldType)
                 //    return new Tuple<string[],string>(new[] { dataContainer.summitData1.domes[i].world, "1", dataContainer.summitData1.domes[i].builderWorldId }, dataContainer.summitData1.domes[i].experienceType);
                 //else
@@ -373,9 +380,12 @@ public class XANASummitSceneLoading : MonoBehaviour
 
 
 
-    async Task<SingleWorldInfo> GetSingleWorldData(string worldID)
+    async Task<SingleWorldInfo> GetSingleWorldData(string WorldID)
     {
-        using (UnityWebRequest www = UnityWebRequest.Get(ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + worldID))
+        string url;
+        url = ConstantsGod.API_BASEURL + ConstantsGod.SINGLEWORLDINFO + WorldID;
+
+        using (UnityWebRequest www = UnityWebRequest.Get(url))
         {
             www.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
             await www.SendWebRequest();
@@ -394,7 +404,6 @@ public class XANASummitSceneLoading : MonoBehaviour
 
         }
     }
-
 
     [System.Serializable]
     public class SingleWorldInfo
