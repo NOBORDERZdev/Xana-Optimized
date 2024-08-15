@@ -6,6 +6,9 @@ using Photon.Pun;
 using System.Collections;
 using System;
 using UnityEngine.Scripting;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
@@ -23,12 +26,12 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         {
             GameplayEntityLoader.instance._uiReferences = this;
         }
-        MainSceneEventHandler.MemoryRelaseAfterLoading += ReleaseUnsedMemory;
+        //MainSceneEventHandler.MemoryRelaseAfterLoading += ReleaseUnsedMemory;
     }
 
     override public void OnDisable()
     {
-        MainSceneEventHandler.MemoryRelaseAfterLoading -= ReleaseUnsedMemory;
+        //MainSceneEventHandler.MemoryRelaseAfterLoading -= ReleaseUnsedMemory;
     }
 
     public void OpenARScene()
@@ -55,7 +58,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
             }
         }
     }
-    public void LoadMain(bool changeOritentationChange)
+    public async void LoadMain(bool changeOritentationChange)
     {
         LoadingHandler.Instance.DisableVideoLoading();
         GamePlayButtonEvents.OnExitButtonXANASummit?.Invoke();
@@ -86,6 +89,8 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                 }
                 LoadingHandler.Instance.ShowLoading();
                 StartCoroutine(LoadingHandler.Instance.IncrementSliderValue(1f,true));
+
+                await HomeSceneLoader.ReleaseUnsedMemory();
 
                 if (ConstantsHolder.xanaConstants.needToClearMemory)
                     AddressableDownloader.Instance.MemoryManager.RemoveAllAddressables();
@@ -145,19 +150,17 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         SceneManager.LoadSceneAsync(mainScene);
     }
 
-    public void ReleaseUnsedMemory()
-    {
-        StartCoroutine(ReleaseUnsedMemoryDelay());
-    }
-
-    IEnumerator ReleaseUnsedMemoryDelay()
+    public static async Task ReleaseUnsedMemory()
     {
         print("memory released here.. Start");
         GC.Collect();
+        foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
+            Addressables.Release(async);
+        AddressableDownloader.bundleAsyncOperationHandle.Clear();
         Caching.ClearCache();
         AssetBundle.UnloadAllAssetBundles(true);
-        yield return new WaitForSeconds(.2f);
-        Resources.UnloadUnusedAssets();
-        
+        await Resources.UnloadUnusedAssets();
+
+
     }
 }
