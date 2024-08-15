@@ -996,7 +996,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(environmentLabel, LoadSceneMode.Additive, false);
             if (!ConstantsHolder.xanaConstants.isFromXanaLobby)
             {
-                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World...");
+                LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
             }
             while (!handle.IsDone)
                 yield return null;
