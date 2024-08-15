@@ -53,7 +53,6 @@ GameObject:
   - component: {fileID: 4757649885221676612}
   - component: {fileID: 2896647010372685675}
   - component: {fileID: 6314999664660965517}
-  - component: {fileID: 75667185894768567}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -156,20 +155,6 @@ MonoBehaviour:
   blendDistance: 5.13
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 0028007d9b6a201488d599d5d2747a8c, type: 2}
---- !u!114 &75667185894768567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 567181615472981158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c739f20588486cf43bb1f0c3ce897d80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bgmMinVolume: 0
-  bgmMaxVolume: 0.5
 --- !u!1 &2186972116789248596
 GameObject:
   m_ObjectHideFlags: 0
@@ -15448,54 +15433,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8545756439249366222}
     m_Modifications:
-    - target: {fileID: 1689215386332057433, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1689215386332057433, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: _audioVolume
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_Name
       value: SummitVideoPlayerHandler
       objectReference: {fileID: 0}
     - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2099397830385648845, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_TargetMaterialRenderer
       value: 
       objectReference: {fileID: 3446687248146534270}
-    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -14.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -9.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133796236221689671, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 29.22
-      objectReference: {fileID: 0}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: NormalPlayer
+      value: 
+      objectReference: {fileID: 2713735446156315041}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: LiveStreamPlayer
+      value: 
+      objectReference: {fileID: 2713735447425943773}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: mediaPlayerAudioSource
+      value: 
+      objectReference: {fileID: 2713735447425943775}
+    - target: {fileID: 2286232385020354246, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: videoPlayerAudioSource
+      value: 
+      objectReference: {fileID: 2713735446156315047}
     - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 2713735446156315047}
     - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: maxDistance
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: minDistance
-      value: 7
-      objectReference: {fileID: 0}
+      propertyPath: activePlayer
+      value: 
+      objectReference: {fileID: 2713735447425943769}
     - target: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: PlayerTriggerCheck
       value: 
@@ -15504,6 +15473,22 @@ PrefabInstance:
       propertyPath: _renderer
       value: 
       objectReference: {fileID: 3612438506652031764}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: IOSLiveVideoMesh
+      value: 
+      objectReference: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: PreRecVideoScreen
+      value: 
+      objectReference: {fileID: 3807208245232873131}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: AndroidLiveVideoMesh
+      value: 
+      objectReference: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
+    - target: {fileID: 3141503287995704522, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: LiveVideoPlayerScreen
+      value: 
+      objectReference: {fileID: 6473915143395362864}
     - target: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -15548,67 +15533,111 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5394966947064848480, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+    - target: {fileID: 5214285815916464222, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5520048143730820557, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
-      value: 1
+    - target: {fileID: 5226123731516465620, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: _renderer
+      value: 
+      objectReference: {fileID: 3612438506652031764}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: Priority
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8117263461359333614, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: MaxDistance
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 8117263461359333614, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: MinDistance
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: Data.URL
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: rolloffMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_Looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: m_TargetMaterialRenderer
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: Data.IsLive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: summitAreaID
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: Data.isPlaying
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: SummitVideoIndex
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485164774061021887, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
-      propertyPath: Data.IsYoutubeURL
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8846511716583873032, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      objectReference: {fileID: 3446687248146534270}
+    - target: {fileID: 5794338245972623171, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9086633365135249571, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+    - target: {fileID: 5819901891346889974, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: PreRecVideoScreen
+      value: 
+      objectReference: {fileID: 3807208245232873131}
+    - target: {fileID: 5819901891346889974, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: PlayerTriggerChecker
+      value: 
+      objectReference: {fileID: 9182067351820796744}
+    - target: {fileID: 5819901891346889974, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+      propertyPath: LiveVideoPlayerScreen
+      value: 
+      objectReference: {fileID: 6473915143395362864}
+    - target: {fileID: 7430662137214033731, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
---- !u!114 &5267373346194548142 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2609470930501225634, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+--- !u!328 &2713735446156315041 stripped
+VideoPlayer:
+  m_CorrespondingSourceObject: {fileID: 5226123732534829229, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
   m_PrefabInstance: {fileID: 7867731214817470732}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8513801041380265339}
+--- !u!82 &2713735446156315047 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5226123732534829227, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 7867731214817470732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2713735447425943769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465621, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 7867731214817470732}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2713735447425943773}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11a695eefa4c7984abf4719a5bb1c9b4, type: 3}
+  m_Script: {fileID: 11500000, guid: 638c870cac4da414fba921606d504407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2713735447425943773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465617, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 7867731214817470732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &2713735447425943775 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5226123731516465619, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
+  m_PrefabInstance: {fileID: 7867731214817470732}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6747142185417169000 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3498560010271945060, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
@@ -15619,7 +15648,20 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1948039019143160951, guid: 5425a01bc6c48c740bff7299e9535539, type: 3}
   m_PrefabInstance: {fileID: 7867731214817470732}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5819901891346889974
+--- !u!135 &2465402350872419664
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8513801041380265339}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 23.34
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8359246740469129461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15628,15 +15670,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8513801041380265339}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8810f4d3d6ad3a47b9f607d5f658a51, type: 3}
+  m_Script: {fileID: 11500000, guid: c739f20588486cf43bb1f0c3ce897d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerTriggerChecker: {fileID: 9182067351820796744}
-  DirectionalSoundController: {fileID: 5267373346194548142}
-  PreRecVideoScreen: {fileID: 3807208245232873131}
-  LiveVideoPlayerScreen: {fileID: 6473915143395362864}
-  AndroidLiveVideoMesh: {fileID: 3941715523697911101, guid: 21e9cb7cf15aec04183b2a8f91112f81, type: 3}
-  IOSLiveVideoMesh: {fileID: 3941715523697911101, guid: 7441226fcccaae04ab6f6eeff07a7a08, type: 3}
+  bgmMinVolume: 0
+  bgmMaxVolume: 0.5
 --- !u!1001 &7906032420700042891
 PrefabInstance:
   m_ObjectHideFlags: 0

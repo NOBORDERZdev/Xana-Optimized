@@ -20,7 +20,7 @@ public class YoutubeAPIHandler : MonoBehaviour
     public string OldAWSURL = "xyz";
     public int summitAreaID;
     public int SummitVideoIndex;
-    public StreamYoutubeVideo VideoPlayerRef;
+    public AdvancedYoutubePlayer VideoPlayerRef;
 
     //string OrdinaryUTCdateOfSystem = "2023-08-10T14:45:00.000Z";
     //DateTime OrdinarySystemDateTime, localENDDateTime, univStartDateTime, univENDDateTime;
@@ -31,7 +31,7 @@ public class YoutubeAPIHandler : MonoBehaviour
     {
         if (!VideoPlayerRef)
         {
-            VideoPlayerRef = GetComponent<StreamYoutubeVideo>();
+            VideoPlayerRef = GetComponent<AdvancedYoutubePlayer>();
         }
     }
     private void Start()
@@ -74,7 +74,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true, "Standard");
                         _urlDataInitialized = true;
                     }
                     else
@@ -112,8 +112,16 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
-                                _urlDataInitialized = true;
+                                if (_response.data.isYoutubeURL)
+                                {
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
+                                    _urlDataInitialized = true;
+                                    OldAWSURL = "xyz";
+                                }
+                                else//For AWS Video playing
+                                {
+                                    PlayAWSVideoSetup();
+                                }
                             }
                             else
                             {
@@ -145,7 +153,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
                             //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true, "Standard");
                             _urlDataInitialized = true;
                         }
                         else
@@ -183,9 +191,16 @@ public class YoutubeAPIHandler : MonoBehaviour
                                 string incominglink = _response.data.link;
                                 if (!string.IsNullOrEmpty(incominglink))
                                 {
-                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
-                                    _urlDataInitialized = true;
-                                    // print("Stage 3 video link:" + Data);
+                                    if (_response.data.isYoutubeURL)
+                                    {
+                                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
+                                        _urlDataInitialized = true;
+                                        OldAWSURL = "xyz";
+                                    }
+                                    else//For AWS Video playing
+                                    {
+                                        PlayAWSVideoSetup();
+                                    }
                                 }
                                 else
                                 {
@@ -215,7 +230,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                         if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                         {
                             //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                            Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true, "Standard");
                             _urlDataInitialized = true;
                         }
                         else
@@ -253,9 +268,16 @@ public class YoutubeAPIHandler : MonoBehaviour
                                 string incominglink = _response.data.link;
                                 if (!string.IsNullOrEmpty(incominglink))
                                 {
-                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
-                                    _urlDataInitialized = true;
-                                    // print("Stage 3 video link:" + Data);
+                                    if (_response.data.isYoutubeURL)
+                                    {
+                                        Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
+                                        _urlDataInitialized = true;
+                                        OldAWSURL = "xyz";
+                                    }
+                                    else//For AWS Video playing
+                                    {
+                                        PlayAWSVideoSetup();
+                                    }
                                 }
                                 else
                                 {
@@ -286,7 +308,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true, "Standard");
                         _urlDataInitialized = true;
                     }
                     else
@@ -324,11 +346,11 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                if (_response.data.isLive)
+                                if (_response.data.isYoutubeURL)
                                 {
-                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
                                     _urlDataInitialized = true;
-                                    OldAWSURL = "";
+                                    OldAWSURL = "xyz";
                                     // print("Stage 3 video link:" + Data);
                                 }
                                 else//For AWS Video playing
@@ -364,7 +386,7 @@ public class YoutubeAPIHandler : MonoBehaviour
                     if (!XanaEventDetails.eventDetails.youtubeUrl.Equals(null))
                     {
                         //print("============Setting Youtube Link Data" + XanaEventDetails.eventDetails.youtubeUrl);
-                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true);
+                        Data = new StreamData(XanaEventDetails.eventDetails.youtubeUrl, XanaEventDetails.eventDetails.youtubeUrl_isActive, true, true, "Standard");
                         _urlDataInitialized = true;
                     }
                     else
@@ -402,9 +424,16 @@ public class YoutubeAPIHandler : MonoBehaviour
                             string incominglink = _response.data.link;
                             if (!string.IsNullOrEmpty(incominglink))
                             {
-                                Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying);
-                                _urlDataInitialized = true;
-                                // print("Stage 3 video link:" + Data);
+                                if (_response.data.isYoutubeURL)
+                                {
+                                    Data = new StreamData(incominglink, _response.data.isLive, _response.data.isPlaying, _response.data.isYoutubeURL, _response.data.quality);
+                                    _urlDataInitialized = true;
+                                    OldAWSURL = "xyz";
+                                }
+                                else//For AWS Video playing
+                                {
+                                    PlayAWSVideoSetup();
+                                }
                             }
                             else
                             {
@@ -445,42 +474,21 @@ public class YoutubeAPIHandler : MonoBehaviour
                             if (_apiResponse.videoData.isYoutube)
                             {
                                 bool _isLiveVideo = _apiResponse.videoData.type.Contains("Live") ? true : false;
-                                Data = new StreamData(incominglink, _isLiveVideo, true);
-                                OldAWSURL = "";
+                                Data = new StreamData(incominglink, _isLiveVideo, _apiResponse.videoData.isPlaying, _apiResponse.videoData.isYoutube, "HD");
+                                OldAWSURL = "xyz";
                             }
                             else//For AWS Video playing
                             {
-                                if (OldAWSURL != _apiResponse.videoData.url)
+                                if (_response == null)
                                 {
-                                    if (GetComponent<AvProLiveVideoSoundEnabler>())
-                                    {
-                                        GetComponent<AvProLiveVideoSoundEnabler>().EnableVideoScreen(false);
-                                    }
-                                    if (VideoPlayerRef)
-                                    {
-                                        VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
-                                        VideoPlayerRef.mediaPlayer.enabled = false;
-                                        VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
-                                        VideoPlayerRef.videoPlayer.enabled = true;
-
-                                        //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                        //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                                        //SoundSettings.soundManagerSettings.setNewSliderValues();
-
-                                        VideoPlayerRef.videoPlayer.url = _apiResponse.videoData.url;
-                                        VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
-                                        VideoPlayerRef.videoPlayer.Prepare();
-
-                                        // Assign the individual function to the prepareCompleted event
-                                        VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
-                                    }
-                                    else
-                                    {
-                                        Debug.LogError("No video players holder ref assigned");
-                                    }
-                                    OldAWSURL = _apiResponse.videoData.url;
+                                    _response = new StreamResponse();
+                                    _response.data = new IncomingData();
+                                    _response.data.link = _apiResponse.videoData.url;
+                                    _response.data.isLive = false;
+                                    _response.data.isPlaying = _apiResponse.videoData.isPlaying;
+                                    _response.data.isYoutubeURL = _apiResponse.videoData.isYoutube;
                                 }
-                                Data = null;
+                                PlayAWSVideoSetup();
                             }
                         }
                         else
@@ -518,34 +526,36 @@ public class YoutubeAPIHandler : MonoBehaviour
     {
         if (OldAWSURL != _response.data.link)
         {
-            if (VideoPlayerRef)
-            {
-                VideoPlayerRef.mediaPlayer.gameObject.SetActive(false);
-                VideoPlayerRef.mediaPlayer.enabled = false;
-                VideoPlayerRef.videoPlayer.gameObject.SetActive(true);
-                VideoPlayerRef.videoPlayer.enabled = true;
-
-                //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
-                //SoundSettings.soundManagerSettings.setNewSliderValues();
-
-                VideoPlayerRef.videoPlayer.url = _response.data.link;
-                VideoPlayerRef.videoPlayer.prepareCompleted -= OnPrepareCompleted;
-                VideoPlayerRef.videoPlayer.Prepare();
-
-                // Assign the individual function to the prepareCompleted event
-                VideoPlayerRef.videoPlayer.prepareCompleted += OnPrepareCompleted;
-            }
-            else
-            {
-                Debug.LogError("No video players holder ref assigned");
-            }
-
-            //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.time = 0;
-            //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
-            OldAWSURL = _response.data.link;
+            VideoPlayerRef.VideoPlayer.gameObject.SetActive(false);
+            VideoPlayerRef.VideoPlayer.enabled = false;
+            Invoke(nameof(SetupAWSScreen), 0.2f);
         }
         Data = null;
+    }
+
+    void SetupAWSScreen()
+    {
+        VideoPlayerRef.EnableVideoScreen(false);
+        VideoPlayerRef.VideoPlayer.playOnAwake = true;
+        VideoPlayerRef.AVProVideoPlayer.gameObject.SetActive(false);
+        VideoPlayerRef.AVProVideoPlayer.enabled = false;
+        VideoPlayerRef.VideoPlayer.gameObject.SetActive(true);
+        VideoPlayerRef.VideoPlayer.enabled = true;
+
+        //SoundController.Instance.videoPlayerSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+        //SoundSettings.soundManagerSettings.videoSource = gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.GetComponent<AudioSource>();
+        //SoundSettings.soundManagerSettings.setNewSliderValues();
+
+        VideoPlayerRef.VideoPlayer.url = _response.data.link;
+        VideoPlayerRef.VideoPlayer.prepareCompleted -= OnPrepareCompleted;
+        VideoPlayerRef.VideoPlayer.Prepare();
+
+        // Assign the individual function to the prepareCompleted event
+        VideoPlayerRef.VideoPlayer.prepareCompleted += OnPrepareCompleted;
+
+        //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.time = 0;
+        //gameObject.GetComponent<StreamYoutubeVideo>().videoPlayer.Play();
+        OldAWSURL = _response.data.link;
     }
 
     // Define the function to be called when prepareCompleted is triggered
@@ -562,12 +572,16 @@ public class StreamData
     public string URL;
     public bool IsLive;
     public bool isPlaying;
+    public bool isYoutubeURL;
+    public string quality;
 
-    public StreamData(string URL, bool isLive, bool isPlaying)
+    public StreamData(string URL, bool isLive, bool isPlaying, bool isYoutubeURL, string quality)
     {
         this.URL = URL;
         this.IsLive = isLive;
         this.isPlaying = isPlaying;
+        this.isYoutubeURL = isYoutubeURL;
+        this.quality = quality;
     }
 
 }
@@ -588,6 +602,8 @@ public partial class IncomingData
     public long id;
     public string link;
     public bool isLive;
+    public bool isYoutubeURL;
+    public string quality;
     public object createdAt;
     public object updatedAt;
     public bool isPlaying;
@@ -609,4 +625,5 @@ public class SummitVideoDetails
     public string url;
     public string type;
     public bool isYoutube;
+    public bool isPlaying;
 }

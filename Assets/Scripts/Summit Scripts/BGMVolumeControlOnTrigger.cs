@@ -6,12 +6,10 @@ using UnityEngine;
 
 public class BGMVolumeControlOnTrigger : MonoBehaviour
 {
-    public float bgmMinVolume;
-    public float bgmMaxVolume;
 
     private void Start()
     {
-        SetBGMAudioOnTrigger(bgmMaxVolume);
+        SetBGMAudioOnTrigger(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
     }
 
     void OnTriggerEnter(Collider other)
@@ -20,7 +18,7 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMinVolume);
+                SetBGMAudioOnTrigger(0f);
             }
         }
     }
@@ -31,7 +29,7 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
         {
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
-                SetBGMAudioOnTrigger(bgmMaxVolume);
+                SetBGMAudioOnTrigger(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
             }
             
         }
