@@ -24,7 +24,7 @@ public class TopMenuButtonController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        leaveRoomBtn.onClick.AddListener(() =>
+        leaveRoomBtn?.onClick.AddListener(() =>
         {
             if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
             {
