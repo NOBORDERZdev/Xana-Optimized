@@ -161,7 +161,7 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
-        
+
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -713,7 +713,7 @@ public class BuilderMapDownload : MonoBehaviour
         capsuleCollider_34.enabled = true;
         capsuleCollider_34.isTrigger = false;
         CharacterController mainPlayerCharacterController = GamificationComponentData.instance.playerControllerNew.GetComponent<CharacterController>();
-        mainPlayerCharacterController.center = Vector3.up *0.9f;
+        mainPlayerCharacterController.center = Vector3.up * 0.9f;
         mainPlayerCharacterController.height = 1.65f;
         mainPlayerCharacterController.radius = 0.2f;
         mainPlayerCharacterController.stepOffset = 1f;
@@ -812,8 +812,8 @@ public class BuilderMapDownload : MonoBehaviour
         string textureURL = aiSkyboxItem.textureURL;
         if (textureURL.Contains("https://cdn.xana.net/xanaprod/Defaults/"))
         {
-            textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/_xanaprod_/xanaprod/Defaults/");
-            textureURL += "?width=256&height=128";
+            textureURL = textureURL.Replace("https://cdn.xana.net/xanaprod/Defaults/", "https://aydvewoyxq.cloudimg.io/" + (APIBasepointManager.instance.IsXanaLive ? "_xanaprod_" : "_apitestxana_") + "/xanaprod/Defaults/");
+            textureURL += "?width=4096&height=2048";
         }
         var texture = new Texture2D(256, 128, GamificationComponentData.instance.GetTextureFormat(), false);
         var imagineImageRequest = UnityWebRequest.Get(textureURL);

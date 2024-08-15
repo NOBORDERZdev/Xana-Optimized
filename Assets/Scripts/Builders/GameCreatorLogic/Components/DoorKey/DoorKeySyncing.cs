@@ -8,10 +8,11 @@ using Photon.Pun.Demo.PunBasics;
 
 public class DoorKeySyncing : MonoBehaviourPun
 {
-    [SerializeField] GameObject keyImage;
-    [SerializeField] GameObject wrongKey;
-    public TMP_Text keyCounter;
-    GameObject playerObj;
+    [SerializeField] GameObject _keyCounterObj;
+    [SerializeField] GameObject _keyImage;
+    [SerializeField] GameObject _wrongKey;
+    TMP_Text _keyCounter;
+    GameObject _playerObj;
 
     private void OnEnable()
     {
@@ -31,14 +32,14 @@ public class DoorKeySyncing : MonoBehaviourPun
     private IEnumerator SyncingCoroutin()
     {
         yield return new WaitForSeconds(0.5f);
-        playerObj = FindPlayerusingPhotonView(photonView);
-        if (playerObj != null)
+        _playerObj = FindPlayerusingPhotonView(photonView);
+        if (_playerObj != null)
         {
             yield return new WaitForSeconds(0.5f);
-            transform.SetParent(playerObj.GetComponent<ArrowManager>().nameCanvas.transform);
+            transform.SetParent(_playerObj.GetComponent<ArrowManager>().nameCanvas.transform);
             transform.localPosition = Vector3.up * 18.5f;
             transform.localEulerAngles = new Vector3(180, 0, -45);
-            keyImage.SetActive(true);
+            _keyImage.SetActive(true);
             StartCoroutine(KeyCounterCO());
         }
     }
@@ -65,8 +66,8 @@ public class DoorKeySyncing : MonoBehaviourPun
         {
             KeyCounter();
             yield return new WaitForSeconds(1f);
-            if (playerObj != null)
-                transform.localRotation = playerObj.GetComponent<ArrowManager>().PhotonUserName.transform.localRotation;
+            if (_playerObj != null)
+                transform.localRotation = _playerObj.GetComponent<ArrowManager>().PhotonUserName.transform.localRotation;
         }
     }
 
@@ -76,6 +77,13 @@ public class DoorKeySyncing : MonoBehaviourPun
         keyCountStringBuilder.Clear();
         keyCountStringBuilder.Append("x");
         keyCountStringBuilder.Append(photonView.Owner.CustomProperties["doorKeyCount"]);
-        keyCounter.text = keyCountStringBuilder.ToString();
+        if (_keyCounter == null)
+        {
+            _keyCounter = _keyCounterObj.AddComponent<TextMeshProUGUI>();
+            _keyCounter.fontSize = 120;
+            _keyCounter.fontStyle = FontStyles.Bold;
+            _keyCounter.verticalAlignment = VerticalAlignmentOptions.Middle;
+        }
+        _keyCounter.text = keyCountStringBuilder.ToString();
     }
 }
