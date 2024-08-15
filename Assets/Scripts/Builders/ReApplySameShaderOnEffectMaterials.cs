@@ -57,6 +57,7 @@ public class ReApplySameShaderOnEffectMaterials : MonoBehaviour
 
                     if (newShader != null)
                     {
+                        shaderName = newShader.name;
                         _shaderCache[shaderName] = newShader;
                         material.shader = newShader;
                     }
