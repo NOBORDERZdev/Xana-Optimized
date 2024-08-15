@@ -78,7 +78,12 @@ public class DoorKeySyncing : MonoBehaviourPun
         keyCountStringBuilder.Append("x");
         keyCountStringBuilder.Append(photonView.Owner.CustomProperties["doorKeyCount"]);
         if (_keyCounter == null)
+        {
             _keyCounter = _keyCounterObj.AddComponent<TextMeshProUGUI>();
+            _keyCounter.fontSize = 120;
+            _keyCounter.fontStyle = FontStyles.Bold;
+            _keyCounter.verticalAlignment = VerticalAlignmentOptions.Middle;
+        }
         _keyCounter.text = keyCountStringBuilder.ToString();
     }
 }
