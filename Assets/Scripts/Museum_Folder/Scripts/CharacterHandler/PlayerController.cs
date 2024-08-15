@@ -117,6 +117,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated += RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate += SpecialItemPlayerPropertiesUpdate;
     }
     private void OnDisable()
@@ -129,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
         //Update jump height according to builder
         BuilderEventManager.ApplyPlayerProperties -= PlayerJumpUpdate;
+        BuilderEventManager.AfterPlayerInstantiated -= RemoveLayerFromCameraCollider;
         BuilderEventManager.SpecialItemPlayerPropertiesUpdate -= SpecialItemPlayerPropertiesUpdate;
 
     }
@@ -169,6 +171,12 @@ public class PlayerController : MonoBehaviour
         ////Update jump height according to builder
         //BuilderEventManager.ApplyPlayerProperties += PlayerJumpUpdate;
 
+        RemoveLayerFromCameraCollider();
+
+    }
+
+    private void RemoveLayerFromCameraCollider()
+    {
         if (ConstantsHolder.xanaConstants.isBuilderScene)
         {
             CinemachineCollider cinemachineCollider = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineCollider>();
@@ -183,9 +191,7 @@ public class PlayerController : MonoBehaviour
             cinemachineFreeLook = GameplayEntityLoader.instance.PlayerCamera.GetComponent<CinemachineFreeLook>();
             topRigDefaultRadius = cinemachineFreeLook.m_Orbits[0].m_Radius;
         }
-
     }
-
 
     public void OnDestroy()
     {
@@ -1739,8 +1745,8 @@ public class PlayerController : MonoBehaviour
             animator.CrossFade("Withdrawing", 0.2f);
             yield return new WaitForSecondsRealtime(1.3f);
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             isMovementAllowed = true;
         }
     }
@@ -1791,8 +1797,8 @@ public class PlayerController : MonoBehaviour
         if (swordModel && time != 0)
         {
             swordModel.transform.SetParent(swordHook, false);
-            swordModel.transform.localPosition = new Vector3(-0.149000004f, 0.0500000007f, 0.023f);
-            swordModel.transform.localRotation = new Quaternion(-0.149309605f, -0.19390057f, 0.966789007f, 0.0736774057f);
+            swordModel.transform.localPosition = new Vector3(-0.17f, 0.06f, 0.03f);
+            swordModel.transform.localRotation = new Quaternion(0.89543f, -0.21528f, 0.28035f, -0.27066f);
             //swordModel.SetActive(true);
         }
         yield return new WaitForSeconds(time);

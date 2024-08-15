@@ -1459,6 +1459,8 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableBlindComponentUI();
         if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
             DisableAvatarChangerComponentUI();
+        if (componentType != Constants.ItemComponentType.BlindfoldedDisplayComponent)
+            DisableAvatarInvisibilityUI();
     }
 
     void DisableNonTimerComponents(Constants.ItemComponentType componentType)
@@ -1473,8 +1475,6 @@ public class GamificationComponentUIManager : MonoBehaviour
             DisableRandomNumberUI();
         if (componentType != Constants.ItemComponentType.QuizComponent)
             DisableQuizComponentUI();
-        if (componentType != Constants.ItemComponentType.BlindfoldedDisplayComponent)
-            DisableAvatarInvisibilityUI();
         if (componentType != Constants.ItemComponentType.ThrowThingsComponent)
             DisableThrowThingUI();
         // if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)

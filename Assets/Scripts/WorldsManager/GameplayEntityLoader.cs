@@ -779,8 +779,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
         }
         ConstantsHolder.xanaConstants.JjWorldSceneChange = false;
 
-        while (!GamificationComponentData.instance.isSkyLoaded)
-            yield return new WaitForSeconds(0.5f);
+        //while (!GamificationComponentData.instance.isSkyLoaded)
+        //    yield return new WaitForSeconds(0.5f);
         BuilderEventManager.AfterPlayerInstantiated?.Invoke();
 
 
