@@ -20,10 +20,13 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
 
     void EnableLiveVideoSound(bool _soundEnable)
     {
+        DirectionalSoundController.playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (_soundEnable)
         {
+
             DirectionalSoundController.enabled = true;
             DirectionalSoundController.ActiveDirectionalSound();
+            DirectionalSoundController.activePlayer.AudioMuted=false;
         }
         else
         {
@@ -32,6 +35,7 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
                 StopCoroutine(DirectionalSoundController.volumeCoroutine);
             }
             DirectionalSoundController.enabled = false;
+            DirectionalSoundController.activePlayer.AudioMuted = true;
         }
     }
 }
