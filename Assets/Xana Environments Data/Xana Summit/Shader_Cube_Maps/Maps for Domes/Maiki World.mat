@@ -24,6 +24,14 @@ Material:
         m_Texture: {fileID: 8900000, guid: 0e73357642ad61e42a0f0ccb59ef61d6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FakeInterior:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,7 +46,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Edge_Power: 2.73
+    - _Edge_Power: 0.12
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smothness: 0.5
