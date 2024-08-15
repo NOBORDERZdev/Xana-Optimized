@@ -102,6 +102,7 @@ public class AvProDirectionalSound : MonoBehaviour
 
     public void ActiveDirectionalSound()
     {
+        playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (activePlayer.gameObject.activeSelf)
         {
             if (volumeCoroutine == null)
