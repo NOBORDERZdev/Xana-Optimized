@@ -273,6 +273,7 @@ public class ConstantsGod
     public static string MOSTVISITEDTAG = "/world/get-most-visited-tags/";  //pageNumber/pageSize
     public static string FOLLOWWORLD = "/world/mark-favourite-space/";  //:worldId    //same work for both follow world and unfollow world.
     public static string SINGLEWORLDINFO = "/item/get-one-world-data?worldId=";   //:id/:type
+    public static string SINGLEWORLDINFOBYNAME = "/item/get-one-world-data?worldName=";   //:id/:type
 
     #endregion
 
