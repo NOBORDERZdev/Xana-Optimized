@@ -53,6 +53,10 @@ public class PMY_BGM : MonoBehaviour
             //if (Application.platform == RuntimePlatform.IPhonePlayer)
             //    MusicSource.volume = 1;
         }
+        else
+        {
+            LoadFromFile.instance.PlayerCamera.m_Lens.NearClipPlane = 0.1f;  //0.01
+        }
     }
 
     private void Start()
