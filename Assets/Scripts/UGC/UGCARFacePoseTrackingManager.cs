@@ -17,6 +17,10 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     public GameObject moveTargetObj;
     public GameObject playerHead;
     public GameObject playerBody;
+    public GameObject maleHeadTarget;
+    public GameObject femaleHeadTarget;
+    public GameObject maleBodyTarget;
+    public GameObject femaleBodyTarget;
     public GameObject cameraTransform;
     public GameObject mirrorARFace;
     public GameObject mirrorARFace2;
@@ -43,10 +47,22 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
         //defaultRotation = RootAnimTargetObj.transform.rotation;
         defaultRotation = new Quaternion(0, 0, 0, 1f);
 
-        playerHead= CharacterHandler.instance.GetActiveAvatarData().avatar_face.gameObject;
-        playerBody = CharacterHandler.instance.GetActiveAvatarData().avatar_body.gameObject;
+        Invoke(nameof(SetReference),1f);
     }
 
+    public void SetReference()
+    {
+        if (CharacterHandler.instance.activePlayerGender==AvatarGender.Male)
+        {
+            playerHead = maleHeadTarget;
+            playerBody = maleBodyTarget;
+        }
+        else
+        {
+            playerHead = femaleHeadTarget;
+            playerBody = femaleBodyTarget;
+        }
+    }
     private void Update()
     {
         SetARPoseOnAvatar();
