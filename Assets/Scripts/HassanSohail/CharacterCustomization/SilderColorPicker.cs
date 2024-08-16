@@ -11,6 +11,8 @@ public class SilderColorPicker : MonoBehaviour
     [SerializeField] Slider slider;
     [SerializeField] Image output;
     [SerializeField] TMP_Text outputTxt;
+    [SerializeField] Image SliderBackground;
+   
     CharacterBodyParts bodyParts;
     Button saveBtn;
     bool itemAlreadySaved = false;
@@ -20,9 +22,22 @@ public class SilderColorPicker : MonoBehaviour
     private float hue;
     private float saturation;
     private float brightness;
+    private Texture2D _cachedTexture;
+    private float _silderBackgroundWidth;
+    private int _silderBackgroundHeight;
+
 
     public SliderType sliderCategory;
 
+    void Start()
+    {
+        if (SliderBackground != null)
+        {
+            _cachedTexture = SliderBackground.sprite.texture;
+            _silderBackgroundWidth = (_cachedTexture.width - 1);
+            _silderBackgroundHeight = (_cachedTexture.height / 2);
+        }
+    }
 
     public void Awake()
     {
@@ -97,7 +112,7 @@ public class SilderColorPicker : MonoBehaviour
 
             Color tempColor;
             Color.RGBToHSV(currColor, out hue, out saturation, out brightness);
-            tempColor = Color.HSVToRGB(slider.value, saturation, brightness);
+            tempColor =OnColorSliderChange(slider.value); //Color.HSVToRGB(slider.value, saturation, brightness);
             output.color = Color.HSVToRGB(slider.value, saturation + .2f, brightness);
 
             //CharcterBodyParts.instance.ChangeSkinColor(tempColor);
@@ -124,6 +139,17 @@ public class SilderColorPicker : MonoBehaviour
         //Debug.Log("Change slider: " + sliderCategory);
     }
 
+
+    Color OnColorSliderChange(float value)
+    {
+        if (_cachedTexture != null)
+        {
+            int x = Mathf.RoundToInt(value * _silderBackgroundWidth);
+            Color pickedColor = _cachedTexture.GetPixel(x, _silderBackgroundHeight );
+            return pickedColor;
+        }
+        return Color.white;
+    }
 
     string ConvertColorToHex(Color color)
     {
