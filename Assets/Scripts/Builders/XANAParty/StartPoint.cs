@@ -67,6 +67,8 @@ public class StartPoint : MonoBehaviour
         //yield return new WaitForSeconds(2);
         //BuilderEventManager.OnTimerCountDownTriggerEnter?.Invoke(3, true);
         //yield return new WaitForSeconds(4);
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
         yield return new WaitForSeconds(1);
         ReferencesForGamePlay.instance.XANAPartyCounterPanel.SetActive(true);
 

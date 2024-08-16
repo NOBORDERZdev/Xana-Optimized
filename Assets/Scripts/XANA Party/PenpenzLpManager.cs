@@ -344,8 +344,6 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     {
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
-        WinnerPlayerIds.Clear();
-        RaceFinishTime.Clear();
         roundDataResponse = null;
     }
     #endregion

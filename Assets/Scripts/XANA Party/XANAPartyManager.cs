@@ -40,6 +40,7 @@ public class XANAPartyManager : MonoBehaviour
     {
         
     }
+
     public void EnablingXANAParty()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -93,6 +94,7 @@ public class XANAPartyManager : MonoBehaviour
     {
         if (GameIndex >= GamesToVisitInCurrentRound.Count) // If all games in the current round are visited
         {
+            GameIndex = 0;
             RandomizeAndUpdateGameData();
         }
 
@@ -112,6 +114,7 @@ public class XANAPartyManager : MonoBehaviour
         {
             if (GameIndex >= GamesToVisitInCurrentRound.Count)
             {
+                GameIndex = 0;
                 RandomizeAndUpdateGameData();
             }
             StartCoroutine(LoadXanaPartyGame(true));
