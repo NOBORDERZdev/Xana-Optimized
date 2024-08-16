@@ -86,6 +86,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             VideoPlayer.gameObject.SetActive(false);
             AVProVideoPlayer.AutoStart = true;
             HLSurlLoaded += OnHlsLoaded;
+            VideoId = Url;
         }
         else
         {
@@ -95,7 +96,6 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         }
 
         IsLive = isLive;
-        VideoId = Url;
         PlayVideoAsync();
     }
 
