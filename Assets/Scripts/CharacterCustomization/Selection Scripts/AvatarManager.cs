@@ -118,12 +118,12 @@ namespace Metaverse
             //InternetLost = null;
             if (InternetLost == null)
             {
-                XanaConstants.xanaConstants.needToClearMemory = false;    
+                XanaConstants.xanaConstants.needToClearMemory = false;
                 if (LoadingHandler.Instance)
                     LoadingHandler.Instance.HideLoading();
-            GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
-            InternetLost = go;
-             }
+                GameObject go = Instantiate(JoinCurrentRoomPanel) as GameObject;
+                InternetLost = go;
+            }
 
             if (LoadingHandler.Instance != null && !LoadingHandler.Instance.gameObject.transform.GetChild(0).gameObject.activeInHierarchy)
             {
@@ -132,7 +132,7 @@ namespace Metaverse
                 TurnCameras(false);
                 //Instantiate(JoinCurrentRoomPanel);
             }
-            
+
         }
         public void InstantiatePlayerAgain()
         {
@@ -150,7 +150,7 @@ namespace Metaverse
             }
 
             //WaqasAhmad
-           // LoadingHandler.Instance.UpdateLoadingSlider((LoadingHandler.Instance.loadingSlider.fillAmount + 0.1f), true);
+            // LoadingHandler.Instance.UpdateLoadingSlider((LoadingHandler.Instance.loadingSlider.fillAmount + 0.1f), true);
 
 
             //AssignAvatarModel();
@@ -259,7 +259,7 @@ namespace Metaverse
 
         IEnumerator WaitForAssignModel()
         {
-           // LoadingHandler.Instance.UpdateLoadingSlider(0.85f, true);
+            // LoadingHandler.Instance.UpdateLoadingSlider(0.85f, true);
             LoadingHandler.Instance.UpdateLoadingStatusText("Spawning Character");
 
             yield return new WaitForSeconds(1.0f);
@@ -379,9 +379,10 @@ namespace Metaverse
                         Destroy(currentDummyPlayer);
                     }
 
-                    currentDummyPlayer = PhotonNetwork.Instantiate(AvatarList[avatarID].prefab.name, spawnPoint.transform.position, rot, 0);
-
-
+                    if (AvatarList[avatarID] != null && AvatarList[avatarID].prefab != null)
+                        currentDummyPlayer = PhotonNetwork.Instantiate(AvatarList[avatarID].prefab.name, spawnPoint.transform.position, rot, 0);
+                    else
+                        return;
 
 
                     currentDummyPlayer.tag = "PhotonLocalPlayer";
@@ -418,8 +419,8 @@ namespace Metaverse
                     }
                     StartCoroutine(WaitAndDeactiveSelfie());
                     StartCoroutine(OverLapTime());
-                //}
-            }
+                    //}
+                }
 
             }
             else
