@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.Video;
-using RenderHeads.Media.AVProVideo;
 using YoutubeLight;
 
 
@@ -451,7 +450,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                 else if (videoType == VideoTypeRes.prerecorded)
                 {
                     ratioReferences[ratioId].l_videoPlayer.GetComponent<RawImage>().enabled = true;
-                    ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(true);
+                    ratioReferences[ratioId].l_PrerecordedPlayer.SetActive(false);
                     ratioReferences[ratioId].l_LivePlayer.SetActive(false);
                     ratioReferences[ratioId].l_LivePlayer.GetComponent<MediaPlayer>().enabled = false;
                     //ratioReferences[ratioId].l_PrerecordedPlayer.GetComponent<YoutubeSimplified>().url = videoLink;
@@ -510,6 +509,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     ratioReferences[ratioId].p_PrerecordedPlayer.SetActive(false);
                     ratioReferences[ratioId].p_LivePlayer.GetComponent<MediaPlayer>().enabled = true;
                     ratioReferences[ratioId].p_LivePlayer.SetActive(true);
+                    ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().AVProVideoPlayer.Events.AddListener(TurnLiveVideoImageOn);
                     StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].p_videoPlayer, ratioId, _VideoLink, _videoType, false));
                     ratioReferences[ratioId].p_Loader.SetActive(false);
                     ratioReferences[ratioId].l_Loader.SetActive(false);
@@ -626,10 +626,13 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
 
     public void TurnLiveVideoImageOn(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
     {
-        ratioReferences[ratioId].p_Loader.SetActive(false);
-        ratioReferences[ratioId].l_Loader.SetActive(false);
-        ratioReferences[ratioId].l_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(true);
-        ratioReferences[ratioId].p_videoPlayer.GetComponent<StreamYoutubeVideo>().LiveVideoUIRef.SetActive(true);
+        if (eventType == MediaPlayerEvent.EventType.Started)
+        {
+            ratioReferences[ratioId].p_Loader.SetActive(false);
+            ratioReferences[ratioId].l_Loader.SetActive(false);
+            ratioReferences[ratioId].l_obj.GetComponent<AdvancedYoutubePlayer>().AVProVideoPlayer.transform.GetChild(0).gameObject.SetActive(true);
+            ratioReferences[ratioId].p_obj.GetComponent<AdvancedYoutubePlayer>().AVProVideoPlayer.transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     public void CloseInfoPop()
