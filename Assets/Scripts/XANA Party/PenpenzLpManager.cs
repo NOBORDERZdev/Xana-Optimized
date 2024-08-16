@@ -14,6 +14,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     public int RaceID;
     public List<int> PlayerIDs = new List<int>();
     public List<int> WinnerPlayerIds = new List<int>();
+    public List<long> RaceFinishTime = new List<long>();
+
 
     public GetRankPointsData[] RankPointsData;
     private RoundDataResponse roundDataResponse;
@@ -194,54 +196,50 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Update Round Data
 
     [Serializable]
+    public class PlayerData
+    {
+        public string uid;
+        public int points;
+        public long finish_time;
+    }
+
+    [Serializable]
     public class PointsData
     {
-        public Dictionary<int, int> points = new Dictionary<int, int>();
+        public List<PlayerData> points = new List<PlayerData>();
     }
 
     public IEnumerator UpdateRoundData()
     {
         PointsData pointsData = new PointsData();
-
-        if (WinnerPlayerIds.Count > 0)
+        
+        for(int i = 0; i < WinnerPlayerIds.Count; i++)
         {
-            pointsData.points.Add(WinnerPlayerIds[0], RankPointsData[0].points);
-        }
-
-        if (WinnerPlayerIds.Count > 1)
-        {
-            pointsData.points.Add(WinnerPlayerIds[1], RankPointsData[1].points);
-        }
-
-        if (WinnerPlayerIds.Count > 2)
-        {
-            pointsData.points.Add(WinnerPlayerIds[2], RankPointsData[2].points);
-        }
-
-        foreach (var player in PlayerIDs)
-        {
-            if (!pointsData.points.ContainsKey(player))
+            pointsData.points.Add(new PlayerData
             {
-                pointsData.points.Add(player, 0);
+                uid = WinnerPlayerIds[i].ToString(),
+                points = (i>2) ? 0 : RankPointsData[i].points,
+                finish_time = RaceFinishTime[i]
+            });
+        }
+        
+        
+        for(int i=0; i<PlayerIDs.Count; i++)
+        {
+            if (!pointsData.points.Exists(p => p.uid == PlayerIDs[i].ToString()))
+            {
+                pointsData.points.Add(new PlayerData
+                {
+                    uid = PlayerIDs[i].ToString(),
+                    points = 0,
+                    finish_time = DateTimeOffset.MaxValue.ToUnixTimeMilliseconds()
+                });
             }
         }
 
         string url = string.Format(ConstantsGod.API_BASEURL_Penpenz + "api/races/" + RaceID + "/rounds/" + XANAPartyManager.Instance.GameIndex);
 
-        // Manually create JSON string
-        StringBuilder jsonBuilder = new StringBuilder();
-        jsonBuilder.Append("{ \"points\": {");
-        foreach (var point in pointsData.points)
-        {
-            jsonBuilder.AppendFormat("\"{0}\": {1},", point.Key, point.Value);
-        }
-        if (jsonBuilder[jsonBuilder.Length - 1] == ',')
-        {
-            jsonBuilder.Length--; // Remove the trailing comma
-        }
-        jsonBuilder.Append("} }");
-
-        string jsonData = jsonBuilder.ToString();
+        string jsonData = JsonUtility.ToJson(pointsData);
 
         UnityWebRequest request = new UnityWebRequest(url, "PUT")
         {
@@ -347,6 +345,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
         WinnerPlayerIds.Clear();
+        RaceFinishTime.Clear();
         roundDataResponse = null;
     }
     #endregion

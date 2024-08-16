@@ -40,7 +40,6 @@ public class XANAPartyManager : MonoBehaviour
     {
         
     }
-
     public void EnablingXANAParty()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
@@ -111,7 +110,10 @@ public class XANAPartyManager : MonoBehaviour
     {
         if (TotalGamesToVisit.Count != 0)
         {
-            RandomizeAndUpdateGameData();
+            if (GameIndex >= GamesToVisitInCurrentRound.Count)
+            {
+                RandomizeAndUpdateGameData();
+            }
             StartCoroutine(LoadXanaPartyGame(true));
         }
         else
@@ -161,6 +163,7 @@ public class XANAPartyManager : MonoBehaviour
             GameIndex = 0;
             GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
             GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
+            GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
 
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)

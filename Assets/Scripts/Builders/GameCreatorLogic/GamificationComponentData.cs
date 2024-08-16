@@ -505,6 +505,11 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
         xanaPartyMulitplayer.RaceFinishCount++;
         int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Add(DateTimeOffset.Now.ToUnixTimeMilliseconds());
+        
+
+
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
         if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
         {
