@@ -768,7 +768,7 @@ public class WorldManager : MonoBehaviour
         MainSceneEventHandler.MakeScreenSpaceAdditive?.Invoke();
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
-        await Task.Delay(500);
+        
         /// <summary>
         /// As creator name is different from actual scene name
         /// </summary>
@@ -849,6 +849,7 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.ShowLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0);
         LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+        await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
         Photon.Pun.PhotonHandler.levelName = "GamePlayScene";
         LoadingHandler.Instance.LoadSceneByIndex("GamePlayScene");
@@ -863,7 +864,7 @@ public class WorldManager : MonoBehaviour
 
         //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
 
-        await Task.Delay(500);
+        
         //if (!ConstantsHolder.loggedIn && PlayerPrefs.GetInt("IsLoggedIn") == 0)
         //{
         //    if (WorldItemView.m_EnvName != "DEEMO THE MOVIE Metaverse Museum")    /////// Added By Abdullah Rashid 
@@ -914,6 +915,7 @@ public class WorldManager : MonoBehaviour
         LoadingHandler.Instance.ShowLoading();
         LoadingHandler.Instance.UpdateLoadingSlider(0);
         LoadingHandler.Instance.UpdateLoadingStatusText("Loading World");
+        await Task.Delay(500);
         //this is added to fix 20% loading stuck issue internally photon reload scenes to sync 
         Photon.Pun.PhotonHandler.levelName = "Builder";
         LoadingHandler.Instance.LoadSceneByIndex("Builder");
