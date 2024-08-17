@@ -8,7 +8,7 @@ public static class BuilderData
     public static List<DownloadQueueData> preLoadspawnPoint = new List<DownloadQueueData>();
     public static ServerData mapData;
 
-    public static List<GameObject> SceneTeleportingObjects=new List<GameObject>();
+    
 }
 
 [System.Serializable]
