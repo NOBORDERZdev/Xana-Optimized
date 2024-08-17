@@ -44,13 +44,6 @@ public class StreamYoutubeVideo : MonoBehaviour
         {
             PlayPrerecordedVideo();
         }
-        //else
-        //{
-        //    if (SumitDomeNftCntrlrRef)
-        //    {
-        //        SumitDomeNftCntrlrRef.TurnOfLdrOnPlayLiveVideo();
-        //    }
-        //}
     }
 
     public IEnumerator GetStreamableUrl(string Url, bool isLive)

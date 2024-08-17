@@ -344,77 +344,11 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         ratioId = ((int)ratio);
 
         //renderTexture.Release();
-        // Setting Landscape Data
         ratioReferences[ratioId].l_image.gameObject.SetActive(true);
         ratioReferences[ratioId].p_image.gameObject.SetActive(true);
         ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(true);
         ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(true);
-        //ratioReferences[ratioId].l_Title.text = title;
-        //ratioReferences[ratioId].l_Aurthur.text = aurthur;
-        //ratioReferences[ratioId].l_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
-        //if (type == DataType.Image)
-        //{
-            //ratioReferences[ratioId].l_image.texture = image;
-            //ratioReferences[ratioId].l_videoPlayer.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-            //ratioReferences[ratioId].l_image.gameObject.SetActive(false);
-            //ratioReferences[ratioId].l_videoPlayer.GetComponent<StreamYoutubeVideo>().StreamYtVideo(_VideoLink, true);
-            //if (_videoType == VideoTypeRes.islive)
-            //{
-                //StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].l_videoPlayer, ratioId, _VideoLink, true));
-            //}
-            //else
-            //{
-                //if (_videoType.Equals(VideoTypeRes.aws))
-                //{
-                //    PlayAWSVideo(ratioReferences[ratioId].l_videoPlayer, _VideoLink);
-                //}
-                //else
-                //{
-                //    _VideoLink = ExtractVideoIdFromUrl(_VideoLink);
-                //    StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].l_videoPlayer, ratioId, _VideoLink, false));
-                //}
-            //}
-            //ratioReferences[ratioId].l_videoPlayer.enabled = true;
-            //ratioReferences[ratioId].l_videoPlayer.url = videoLink;
-        //}
 
-        // Setting Potraite Data
-        //ratioReferences[ratioId].p_Title.text = title;
-        //ratioReferences[ratioId].p_Aurthur.text = aurthur;
-        //ratioReferences[ratioId].p_Description.text = des + "\n" + "<link=" + url + "><u>" + url + "</u></link>";
-        //ratioReferences[ratioId].p_image.texture = image;
-        //if (type == DataType.Image)
-        //{
-            //ratioReferences[ratioId].p_image.texture = image;
-            //ratioReferences[ratioId].p_videoPlayer.gameObject.SetActive(false);
-        //}
-        //else
-        //{
-            //ratioReferences[ratioId].p_image.gameObject.SetActive(false);
-            //if (_videoType == VideoTypeRes.islive)
-            //{
-                //StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].p_videoPlayer, ratioId, _VideoLink, true));
-                //ratioReferences[ratioId].p_Loader.SetActive(false);
-                //ratioReferences[ratioId].l_Loader.SetActive(false);
-            //}
-            //else
-            //{
-            //    if (_videoType.Equals(VideoTypeRes.aws))
-            //    {
-                    //PlayAWSVideo(ratioReferences[ratioId].p_videoPlayer, _VideoLink);
-                //}
-                //else
-                //{
-                    //_VideoLink = ExtractVideoIdFromUrl(_VideoLink);
-                    //StartCoroutine(PlayVideoAfterDelay(ratioReferences[ratioId].p_videoPlayer, ratioId, _VideoLink, false));
-                //}
-            //}
-            //ratioReferences[ratioId].p_videoPlayer.enabled = true;
-            //ratioReferences[ratioId].p_videoPlayer.url = videoLink;
-        //}
         if (!ScreenOrientationManager._instance.isPotrait) // for Landscape
         {
             //ratioReferences[ratioId].l_image.gameObject.SetActive(true);
