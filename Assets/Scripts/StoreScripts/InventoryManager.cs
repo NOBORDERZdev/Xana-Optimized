@@ -3381,6 +3381,8 @@ public class InventoryManager : MonoBehaviour
         _ResettingAssetList = false;
         if (itemLoading != null)
             StopCoroutine(itemLoading);
+        TempSubcategoryParent= null;
+        StopCoroutine(PutDataInOurAPPNewAPICoroutine());
         itemLoading = StartCoroutine(PutDataInOurAPPNewAPICoroutine());
 
     }
@@ -3390,6 +3392,7 @@ public class InventoryManager : MonoBehaviour
     Transform TempSubcategoryParent = null;
     public IEnumerator PutDataInOurAPPNewAPICoroutine()
     {
+        print("~~ Coroutine call");
         if (_avatarController == null)
         {
             _avatarController = GameManager.Instance.mainCharacter.GetComponent<AvatarController>();
