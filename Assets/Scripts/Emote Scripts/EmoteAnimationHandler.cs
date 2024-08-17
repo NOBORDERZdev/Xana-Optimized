@@ -822,19 +822,26 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
         //photonplayerObjects = FindObjectsOfType<PhotonView>();
         photonplayerObjects = Photon.Pun.Demo.PunBasics.MutiplayerController.instance.playerobjects.ToArray();
 
-        for (int i = 0; i < photonplayerObjects.Length; i++)
+        try
         {
-            if (photonplayerObjects[i] != null)
+            for (int i = 0; i < photonplayerObjects.Length; i++)
             {
-                if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                if (photonplayerObjects[i] != null)
                 {
-                    animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
-                    animatorremote.runtimeAnimatorController = controller;
-                    animatorremote.SetBool("IsEmote", false);
+                    if (photonplayerObjects[i].GetComponent<PhotonView>().ViewID == viewId)
+                    {
+                        animatorremote = photonplayerObjects[i].gameObject.GetComponent<Animator>();
+                        animatorremote.runtimeAnimatorController = controller;
+                        animatorremote.SetBool("IsEmote", false);
 
-                    ////Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + remotePlayerId);
+                        ////Debug.Log("photon objects====" + photonplayerObjects[i].ViewID + remotePlayerId);
+                    }
                 }
             }
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("need to check this error on priority ...");
         }
     }
 
