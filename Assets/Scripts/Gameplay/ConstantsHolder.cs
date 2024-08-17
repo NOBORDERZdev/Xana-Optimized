@@ -223,7 +223,7 @@ public class ConstantsHolder : MonoBehaviour
             }
             else
             {
-                PlayerPrefs.SetInt("micSound", 1);
+                //PlayerPrefs.SetInt("micSound", 1); By default mic will be off
                 mic = PlayerPrefs.GetInt("micSound");
             }
             if (PlayerPrefs.HasKey("minimap"))
