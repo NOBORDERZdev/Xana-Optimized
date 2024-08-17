@@ -155,6 +155,7 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         print("memory released here.. Start");
         GC.Collect();
         foreach(AsyncOperationHandle async in AddressableDownloader.bundleAsyncOperationHandle)
+            if(async.IsValid())
             Addressables.Release(async);
         AddressableDownloader.bundleAsyncOperationHandle.Clear();
         Caching.ClearCache();
