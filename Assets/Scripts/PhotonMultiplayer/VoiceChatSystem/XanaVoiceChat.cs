@@ -227,8 +227,8 @@ public class XanaVoiceChat : MonoBehaviour
         recorder.DebugEchoMode = false;
         if (ConstantsHolder.xanaConstants.mic == 1 && !ConstantsHolder.xanaConstants.pushToTalk)
         {
-            //TurnOnMic();
-            TurnOffMic();  //by defult we will keep mic off in all env
+            TurnOnMic();
+            //TurnOffMic();  //by defult we will keep mic off in all env
         }
         else
         {

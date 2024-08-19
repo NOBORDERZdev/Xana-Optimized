@@ -31,8 +31,8 @@ public class CarNavigationManager : MonoBehaviour
         if (SummitCarUIHandler.SummitCarUIHandlerInstance)
         {
             CarCanvas = SummitCarUIHandler.SummitCarUIHandlerInstance.CarCanvas;
-            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.RemoveAllListeners();
-            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.AddListener(ExitCar);
+            //SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.RemoveAllListeners();
+            //SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.AddListener(ExitCar);
         }
     }
 
@@ -79,13 +79,20 @@ public class CarNavigationManager : MonoBehaviour
     {
 
         CarCanvas.SetActive(true);
-
+        if (SummitCarUIHandler.SummitCarUIHandlerInstance)
+        {
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.gameObject.SetActive(true);
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.RemoveAllListeners();
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.onClick.AddListener(ExitCar);
+        }
     }
     public void DisableExitCanvas()
     {
-
         CarCanvas.SetActive(false);
-
+        if (SummitCarUIHandler.SummitCarUIHandlerInstance)
+        {
+            SummitCarUIHandler.SummitCarUIHandlerInstance.ExitButton.gameObject.SetActive(false);
+        }
     }
 
     public void ExitCar()
