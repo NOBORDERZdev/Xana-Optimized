@@ -199,6 +199,7 @@ public class YoutubeStreamController : MonoBehaviour
             streamYoutubeVideo.VideoId = APIHandler.Data.URL;
             streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
             streamYoutubeVideo.PlayVideo();
+            SetBGMAudioSound();
             if (!WorldItemView.m_EnvName.Contains("Xana Festival") || !WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
             {
                 NormalPlayer.gameObject.SetActive(false);
@@ -222,6 +223,7 @@ public class YoutubeStreamController : MonoBehaviour
                 streamYoutubeVideo.VideoId = ExtractVideoIdFromUrl(APIHandler.Data.URL);
                 streamYoutubeVideo.IsLive = APIHandler.Data.IsLive;
                 streamYoutubeVideo.PlayVideo();
+                SetBGMAudioSound();
                 //NormalPlayer.url = APIHandler.Data.URL;
                 //NormalPlayer.Play();
                 //streamYoutubeVideo.StreamYtVideo(APIHandler.Data.URL, APIHandler.Data.IsLive);
@@ -232,6 +234,17 @@ public class YoutubeStreamController : MonoBehaviour
                 NormalPlayer.Stop();
             }
 
+        }
+    }
+
+    public void SetBGMAudioSound()
+    {
+        if (gameObject.GetComponent<BGMVolumeControlOnTrigger>())
+        {
+            if (gameObject.GetComponent<BGMVolumeControlOnTrigger>().IsPlayerCollided)
+            {
+                gameObject.GetComponent<BGMVolumeControlOnTrigger>().SetBGMAudioOnTrigger(true);
+            }
         }
     }
 
