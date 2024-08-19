@@ -138,7 +138,7 @@ public class FeedData : MonoBehaviour
             ProfileUIHandler.instance.followProfileBtn.GetComponentInChildren<TextMeshProUGUI>().text = "Follow";
         }
         ProfileUIHandler.instance.followProfileBtn.SetActive(true);
-        ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
+        //ProfileUIHandler.instance.SetUserAvatarDefaultClothing();
 
         AllUserWithFeedRow feedRawData = new AllUserWithFeedRow();
         feedRawData.id = _feedUserData.id;
