@@ -106,10 +106,10 @@ public class XanaVoiceChat : MonoBehaviour
             // one used for Landscape & one for Portrait
             // Already Called For Landscape no need to call again.
 
-            if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
-            {
-                Permission.RequestUserPermission(Permission.Microphone);
-            }
+            //if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+            //{
+            //    Permission.RequestUserPermission(Permission.Microphone);
+            //}
         }
         //Debug.Log("Environment name: " + FeedEventPrefab.m_EnvName + "   " + FeedEventPrefab.m_EnvName.Contains("Xana Festival") + "   " + FeedEventPrefab.m_EnvName.Equals("Xana Festival"));
         if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament") || WorldItemView.m_EnvName.Contains("BreakingDown Arena")|| ConstantsHolder.xanaConstants.isXanaPartyWorld)
