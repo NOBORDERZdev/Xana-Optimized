@@ -30,6 +30,8 @@ public class AvProDirectionalSound : MonoBehaviour
         AvatarSpawnerOnDisconnect.OninternetConnected += VolumeCoroutineAssigning;
         InRoomSoundHandler.soundAction += Mute_UnMute_Sound;
         ScreenOrientationManager.switchOrientation += ChangeOrientation;
+        if (volumeCoroutine == null)
+            volumeCoroutine = StartCoroutine(AdjustScreenVolume());
     }
     private void OnDisable()
     {
@@ -39,6 +41,7 @@ public class AvProDirectionalSound : MonoBehaviour
         ScreenOrientationManager.switchOrientation -= ChangeOrientation;
         if (volumeCoroutine != null)
             StopCoroutine(volumeCoroutine);
+            volumeCoroutine = null;
     }
 
     private void Start()

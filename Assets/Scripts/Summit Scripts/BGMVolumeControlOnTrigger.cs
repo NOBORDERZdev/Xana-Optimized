@@ -24,14 +24,7 @@ public class BGMVolumeControlOnTrigger : MonoBehaviour
             if (other.gameObject.GetComponent<PhotonView>().IsMine)
             {
                 IsPlayerCollided = true;
-                if (VideoPlayerController.VideoPlayer.isPlaying)
-                {
-                    SetBGMAudioOnTrigger(true);
-                }
-                else if (VideoPlayerController.AVProVideoPlayer.Control != null && VideoPlayerController.AVProVideoPlayer.Control.IsPlaying())
-                {
-                    SetBGMAudioOnTrigger(true);
-                }
+                SetBGMAudioOnTrigger(true);
             }
         }
     }

@@ -138,8 +138,13 @@ public class YoutubeStreamController : MonoBehaviour
         }
         else if (!APIHandler.Data.isPlaying)
         {
+            streamYoutubeVideo.AVProVideoPlayer.enabled = false;
             LiveStreamPlayer.SetActive(false);
             NormalPlayer.gameObject.SetActive(true);
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>())
+            {
+                gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(false);
+            }
             //YoutubeSimplified player = NormalPlayer.GetComponent<YoutubeSimplified>();
 
             //LiveStreamPlayer.GetComponent<ApplyToMesh>().MeshRenderer.sharedMaterial.color = new Color32(57, 57, 57, 255);
@@ -184,11 +189,15 @@ public class YoutubeStreamController : MonoBehaviour
             streamYoutubeVideo.AVProVideoPlayer.enabled = true;
             LiveStreamPlayer.SetActive(true);
             NormalPlayer.gameObject.SetActive(false);
-            if (GetComponent<AvProDirectionalSound>())
+            //if (gameObject.GetComponent<AvProDirectionalSound>())
+            //{
+            //    gameObject.GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
+            //}
+            if (gameObject.GetComponent<AvProLiveVideoSoundEnabler>() && 
+                gameObject.GetComponent<AvProDirectionalSound>().PlayerTriggerCheck.IsPlayerTriggered)
             {
-                GetComponent<AvProDirectionalSound>().ActivateDirectionalSoundIfNotYet();
+                gameObject.GetComponent<AvProLiveVideoSoundEnabler>().EnableLiveVideoSound(true);
             }
-
 
             //YoutubePlayerLivestream player = LiveStreamPlayer.GetComponent<YoutubePlayerLivestream>();
             //if (player)
