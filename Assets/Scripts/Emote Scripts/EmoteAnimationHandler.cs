@@ -627,6 +627,10 @@ public class EmoteAnimationHandler : MonoBehaviour, IInRoomCallbacks, IOnEventCa
                         //PlayerAvatar.GetComponent<Animator>().Play("Animation");
 
                         var overrideController = new AnimatorOverrideController();
+                        if (controller == null)
+                        {
+                            controller = ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().animator.runtimeAnimatorController;
+                        }
                         overrideController.runtimeAnimatorController = controller;
 
                         List<KeyValuePair<AnimationClip, AnimationClip>> keyValuePairs = new List<KeyValuePair<AnimationClip, AnimationClip>>();

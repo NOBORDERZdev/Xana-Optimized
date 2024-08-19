@@ -42,7 +42,8 @@ public class AddressableDownloader : MonoBehaviour
             isDownloading = true;
 #if UNITY_EDITOR
             string catalogFilePath = UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.profileSettings.GetValueByName(UnityEditor.AddressableAssets.AddressableAssetSettingsDefaultObject.Settings.activeProfileId, "Remote.LoadPath");
-            Debug.LogError(catalogFilePath);
+            //Debug.LogError(catalogFilePath);
+            Debug.Log("<color=red>" + catalogFilePath + "</color=red>");
             catalogFilePath = catalogFilePath.Replace("[BuildTarget]", UnityEditor.EditorUserBuildSettings.activeBuildTarget.ToString());
             catalogFilePath = catalogFilePath + "/XanaAddressableCatalog.json";
             AsyncOperationHandle DownloadingCatalog = Addressables.LoadContentCatalogAsync(catalogFilePath, true);
@@ -81,7 +82,8 @@ public class AddressableDownloader : MonoBehaviour
         int _counter = 0;
         while (!ConstantsHolder.isAddressableCatalogDownload)
         {
-            Debug.LogError("Waiting for Addressable Catalog to download");
+            Debug.Log("<color=red> Waiting for Addressable Catalog to download </color=red>");
+
             yield return new WaitForSeconds(1f);
         }
 
