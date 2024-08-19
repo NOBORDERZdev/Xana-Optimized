@@ -532,10 +532,18 @@ public class BuilderAssetDownloader : MonoBehaviour
     public void ResetAll()
     {
         stopDownloading = true;
-        foreach (Transform t in assetParent)
+        try
         {
-            Destroy(t.gameObject);
+            foreach (Transform t in assetParent)
+            {
+                Destroy(t.gameObject);
+            }
         }
+        catch(Exception e)
+        {
+            Debug.LogError("Object has destroyed but still trying to access it...");
+        }
+        
 
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();
