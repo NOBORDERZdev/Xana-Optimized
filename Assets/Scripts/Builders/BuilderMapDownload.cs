@@ -162,6 +162,18 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
 
+        if (BuilderAssetDownloader.isPostLoading)
+        {
+            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
+        }
+        else
+        {
+            StartCoroutine(DownloadAssetsData(() =>
+            {
+                LoadAddressableSceneAfterDownload();
+            }));
+        }
+
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
         {
@@ -195,17 +207,7 @@ public class BuilderMapDownload : MonoBehaviour
         }
 
         //Debug.LogError("Map is downloaed");
-        if (BuilderAssetDownloader.isPostLoading)
-        {
-            BuilderEventManager.AfterMapDataDownloaded?.Invoke();
-        }
-        else
-        {
-            StartCoroutine(DownloadAssetsData(() =>
-            {
-                LoadAddressableSceneAfterDownload();
-            }));
-        }
+        
     }
 
     public IEnumerator GemificationObjectLoadWait(float waitTime)
@@ -500,9 +502,9 @@ public class BuilderMapDownload : MonoBehaviour
 
                 SkyBoxItem skyBoxItem = skyBoxData.skyBoxes.Find(x => x.skyId == skyProperties.skyId);
                 string skyboxMatKey = skyBoxItem.skyName.Replace(" ", "");
-                bool flag = false;
-                loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
-                if (!flag)
+                //bool flag = false;
+                //loadSkyBox = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(skyboxMatKey, ref flag);
+                //if (!flag)
                     loadSkyBox = Addressables.LoadAssetAsync<Material>(skyboxMatKey);
                 while (!loadSkyBox.IsDone)
                 {
@@ -519,7 +521,8 @@ public class BuilderMapDownload : MonoBehaviour
                 else if (loadSkyBox.Status == AsyncOperationStatus.Succeeded)
                 {
                     // //Debug.LogError(" ---------- Success ------------ SKY BOXX");
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadSkyBox, skyboxMatKey);
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadSkyBox);
                     Material _mat = loadSkyBox.Result as Material;
                     _mat.shader = Shader.Find(skyBoxItem.shaderName);
                     if (_mat.GetTexture("_Tex") == null && skyProperties.skyId == 32)
