@@ -42,6 +42,11 @@ public class SummitCarUIHandler : MonoBehaviour
             inviteBtnPortait.anchoredPosition = new Vector2(50f, -63.30005f);
             peopleRect.anchoredPosition = new Vector2(-78.3f, -3.399902f);
         }
+        else
+        {
+            inviteBtnPortait.anchoredPosition = new Vector2(-31.5f, -63.30005f);
+            peopleRect.anchoredPosition = new Vector2(2.699951f, -3.399902f);
+        }
     }
 
 }
