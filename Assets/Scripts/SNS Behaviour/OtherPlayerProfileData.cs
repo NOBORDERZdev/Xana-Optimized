@@ -198,7 +198,10 @@ public class OtherPlayerProfileData : MonoBehaviour
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.username))
                 {
                     string _userName = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.username);
-                    userNameText.text = "@" + _userName;
+                    if (!_userName.StartsWith("@"))
+                    {
+                        userNameText.text = "@" + _userName;
+                    }
                     userNameText.gameObject.SetActive(true);
                 }
                 else

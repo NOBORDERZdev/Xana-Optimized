@@ -325,7 +325,10 @@ public class MyProfileDataManager : MonoBehaviour
         if (!string.IsNullOrEmpty(myProfileData.userProfile.username))
         {
             string _userName = SNS_APIManager.DecodedString(myProfileData.userProfile.username);
-            displayName.text = "@" + _userName;
+            if (!_userName.StartsWith("@"))
+            {
+                displayName.text = "@" + _userName;
+            }
             displayName.gameObject.SetActive(true);
         }
         else
