@@ -64,7 +64,7 @@ public class OtherPlayerProfileData : MonoBehaviour
     [SerializeField] TextMeshProUGUI textPlayerTottleFollower;
     [SerializeField] TextMeshProUGUI textPlayerTottleFollowing;
     public TextMeshProUGUI textPlayerTottlePost;
-    [SerializeField] TextMeshProUGUI jobText;
+    [SerializeField] TextMeshProUGUI userNameText;
     [SerializeField] TextMeshProUGUI textUserBio;
     public GameObject seeMoreBioButton;
     public GameObject seeMoreButtonTextObj;
@@ -160,8 +160,8 @@ public class OtherPlayerProfileData : MonoBehaviour
     public void ClearDummyData()
     {
         textPlayerName.text = "";
-        jobText.text = "";
-        jobText.gameObject.SetActive(false);
+        userNameText.text = "";
+        userNameText.gameObject.SetActive(false);
         textUserBio.text = "";
     }
 
@@ -198,12 +198,12 @@ public class OtherPlayerProfileData : MonoBehaviour
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.username))
                 {
                     string _userName = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.username);
-                    jobText.text = "@" + _userName;
-                    jobText.gameObject.SetActive(true);
+                    userNameText.text = "@" + _userName;
+                    userNameText.gameObject.SetActive(true);
                 }
                 else
                 {
-                    jobText.gameObject.SetActive(false);
+                    userNameText.gameObject.SetActive(false);
                 }
 
                 if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.bio))
