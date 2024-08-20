@@ -322,7 +322,20 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
-        displayName.text = "@"+myProfileData.userProfile.username;
+        if (!string.IsNullOrEmpty(myProfileData.userProfile.username))
+        {
+            string _userName = SNS_APIManager.DecodedString(myProfileData.userProfile.username);
+            if (!_userName.StartsWith("@"))
+            {
+                displayName.text = "@" + _userName;
+            }
+            displayName.gameObject.SetActive(true);
+        }
+        else
+        {
+            displayName.gameObject.SetActive(false);
+        }
+        //displayName.text = "@"+myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
