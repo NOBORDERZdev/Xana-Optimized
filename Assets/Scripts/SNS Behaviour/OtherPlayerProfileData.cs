@@ -195,9 +195,10 @@ public class OtherPlayerProfileData : MonoBehaviour
             //Debug.Log("user" + FeedRawData.UserProfile);
             if (singleUserProfileData.userProfile != null)
             {
-                if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.job))
+                if (!string.IsNullOrEmpty(singleUserProfileData.userProfile.username))
                 {
-                    jobText.text = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.job);
+                    string _userName = SNS_APIManager.DecodedString(singleUserProfileData.userProfile.username);
+                    jobText.text = "@" + _userName;
                     jobText.gameObject.SetActive(true);
                 }
                 else
