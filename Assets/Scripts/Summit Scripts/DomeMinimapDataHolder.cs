@@ -60,7 +60,7 @@ public class DomeMinimapDataHolder : MonoBehaviour
         Debug.Log("VisitedWorld: Result: " + result);
         if (string.IsNullOrEmpty(result))
         {
-            Debug.LogError("Error fetching dome data.");
+            Debug.Log("<color=red>Error fetching dome data. Might be the user is Guest</color>");
             return;
         }
         var jsonNode = JSON.Parse(result);

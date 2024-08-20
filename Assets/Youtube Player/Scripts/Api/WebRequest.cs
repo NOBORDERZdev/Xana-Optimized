@@ -18,8 +18,7 @@ namespace ZeelKheni.YoutubePlayer
             try
             {
                 await request.SendWebRequestAsync(cancellationToken);
-                Debug.LogError("Responmse ....  " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    ");
-
+                Debug.Log("<color=red>Response .... " + request.result.ToString() + "  \n " + request.downloadHandler.text + "    \n    </color>");
                 var text = request.downloadHandler.text;
                 if (string.IsNullOrEmpty(text)) { throw new NullReferenceException(); }
                 GameObject.FindObjectOfType<YoutubeInstance>().VideoJson = text;

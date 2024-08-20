@@ -234,22 +234,24 @@ public class BuilderMapDownload : MonoBehaviour
         {
             foreach (string key in GamificationComponentData.instance.multiplayerComponentsName)
             {
-                bool flag = false;
-                AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
-                if (!flag)
-                {
+                AsyncOperationHandle loadOp;
+                //bool flag = false;
+                //AsyncOperationHandle loadOp = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key, ref flag);
+                //if (!flag)
+                //{
                     if (key != "Hiragino-Sans")
                         loadOp = Addressables.LoadAssetAsync<GameObject>(key);
                     else
                         loadOp = Addressables.LoadAssetAsync<TMPro.TMP_FontAsset>(key);
-                }
+                //}
                 while (!loadOp.IsDone)
-                    yield return loadOp;
+                    yield return null;
                 if (loadOp.Status == AsyncOperationStatus.Failed)
                 {
                 }
                 else if (loadOp.Status == AsyncOperationStatus.Succeeded)
                 {
+                    AddressableDownloader.bundleAsyncOperationHandle.Add(loadOp);
                     //Debug.Log("Gamification Loaded" + loadOp.Result);
                     if (key != "Hiragino-Sans")
                     {
@@ -262,7 +264,7 @@ public class BuilderMapDownload : MonoBehaviour
                     else
                         GamificationComponentData.instance.hiraginoFont = loadOp.Result as TMPro.TMP_FontAsset;
 
-                    AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
+                    //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(loadOp, key);
                 }
             }
         }

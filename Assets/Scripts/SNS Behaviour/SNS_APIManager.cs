@@ -1372,6 +1372,7 @@ public class SingleUserProfile
 {
     public int id;
     public int userId;
+    public string username;
     public string gender;
     public string job;
     public string country;
