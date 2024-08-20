@@ -55,13 +55,10 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     string m_PlayingVideoId;
     Action<string> HLSurlLoaded;
 
-    void Awake()
+    private void OnEnable()
     {
-
-    }
-
-    private async void OnEnable()
-    {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -79,6 +76,11 @@ public class AdvancedYoutubePlayer : MonoBehaviour
         //{
         //    await PlayVideoAsync();
         //}
+    }
+    private void OnDisable()
+    {
+        AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
     }
 
     public async void PlayVideo()
@@ -276,6 +278,32 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             VideoPlayer.playOnAwake= false;
             PreRecVideoScreen.SetActive(!_isLiveVideo);
             LiveVideoPlayerScreen.gameObject.SetActive(_isLiveVideo);
+        }
+    }
+
+    public void OnInternetDisconnect()
+    {
+        //print("Internet Disconnected");
+        if (VideoPlayer != null)
+        {
+            VideoPlayer.Stop();
+        }
+        if (AVProVideoPlayer != null)
+        {
+            AVProVideoPlayer.Stop();
+        }
+    }
+
+    public void OnInternetConnect()
+    {
+        //print("Internet connected again");
+        if (VideoPlayer != null)
+        {
+            VideoPlayer.Play();
+        }
+        if (AVProVideoPlayer != null)
+        {
+            AVProVideoPlayer.Play();
         }
     }
 

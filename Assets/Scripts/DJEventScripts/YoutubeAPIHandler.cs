@@ -563,7 +563,20 @@ public class YoutubeAPIHandler : MonoBehaviour
     {
         vp.time = 0;
         vp.Play();
+        SetBGMAudioSound();
     }
+
+    public void SetBGMAudioSound()
+    {
+        if (gameObject.GetComponent<BGMVolumeControlOnTrigger>())
+        {
+            if (gameObject.GetComponent<BGMVolumeControlOnTrigger>().IsPlayerCollided)
+            {
+                gameObject.GetComponent<BGMVolumeControlOnTrigger>().SetBGMAudioOnTrigger(true);
+            }
+        }
+    }
+
 }
 
 [System.Serializable]
