@@ -49,7 +49,7 @@ public class SectorManager : MonoBehaviour
             StopCoroutine(routine);
         }
         
-       routine= StartCoroutine(WaitBeforeHandover(Name));
+       routine = StartCoroutine(WaitBeforeHandover(Name));
 
 
     }
@@ -57,7 +57,7 @@ public class SectorManager : MonoBehaviour
     public IEnumerator WaitBeforeHandover(string Name)
     {
         if(ConstantsHolder.DiasableMultiPartPhoton) {   yield break;    }
-        while (ConstantsHolder.TempDiasableMultiPartPhoton==true)
+        while (ConstantsHolder.TempDiasableMultiPartPhoton==true || MutiplayerController.instance.isShifting)
         {
             yield return new WaitForSeconds(2);
         }
