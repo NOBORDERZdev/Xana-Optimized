@@ -992,10 +992,10 @@ public class UserLoginSignupManager : MonoBehaviour
             {
                 InventoryManager.instance.OnSaveBtnClicked();
             }
-            GameManager.Instance.mainCharacter.GetComponent<CharacterOnScreenNameHandler>().SetNameOfPlayerAgain();
+            ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
             PlayerPrefs.SetInt("IsProcessComplete", 1);// user is registered as guest/register.
             if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-                MainSceneEventHandler.OpenLandingScene?.Invoke();
+                LoadSummit();
             return;
         }
         ConstantsHolder.uniqueUserName = userUsername;
@@ -1704,9 +1704,8 @@ public class UserLoginSignupManager : MonoBehaviour
                             PlayerPrefs.SetString("UserId", ConstantsHolder.userId);
                             UserPassManager.Instance.GetGroupDetailsForComingSoon();
                             PlayerPrefs.SetInt("FirstTime", 1);
-                            ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         }
-
+                        ConstantsHolder.userName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
                         PlayerPrefs.Save();
                         LoadSummit();
                     }
