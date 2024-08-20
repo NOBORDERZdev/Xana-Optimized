@@ -29,6 +29,12 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     private void Start()
     {
         StartCoroutine(GetPointsFromRank());
+        PlayerIDs.Clear();
+        WinnerPlayerIds.Clear();
+        RaceFinishTime.Clear();
+        isLeaderboardShown = false;
+        IsRoundDataUpdated = false;
+        IsRoundDataFetched = false;
     }
 
     #region Get Rank Points
@@ -222,9 +228,9 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 finish_time = RaceFinishTime[i]
             });
         }
-        
-        
-        for(int i=0; i<PlayerIDs.Count; i++)
+
+
+        for (int i = 0; i < PlayerIDs.Count; i++)
         {
             if (!pointsData.points.Exists(p => p.uid == PlayerIDs[i].ToString()))
             {
@@ -232,7 +238,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
                 {
                     uid = PlayerIDs[i].ToString(),
                     points = 0,
-                    finish_time = DateTimeOffset.MaxValue.ToUnixTimeMilliseconds()
+                    finish_time = 0    //DateTimeOffset.MaxValue.ToUnixTimeMilliseconds()
                 });
             }
         }

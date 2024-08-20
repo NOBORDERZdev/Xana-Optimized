@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "6";
+        string gameVersion = "7";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -249,6 +249,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
         }
 
+       
         private void JoinRoomCustom()
         {
             bool joinedRoom = false;
@@ -272,7 +273,7 @@ namespace Photon.Pun.Demo.PunBasics
                     roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
                 }
                 while (roomNames.Contains(roomName));
-
+                PlayerPrefs.SetString("roomname", roomName);
                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
         }

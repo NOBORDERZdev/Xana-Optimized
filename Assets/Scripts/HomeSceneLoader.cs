@@ -7,6 +7,7 @@ using Metaverse;
 using System.Collections;
 using System;
 using UnityEngine.Scripting;
+using Photon.Realtime;
 
 public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
@@ -116,7 +117,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
 
                     MutiplayerController.instance.working = ScenesList.AddressableScene;
-                    PhotonNetwork.LeaveRoom();
+                    if (PhotonNetwork.Server == ServerConnection.GameServer)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
                     PhotonNetwork.LeaveLobby();
                     PhotonNetwork.DestroyAll(true);
                     StartSceneLoading();
