@@ -153,16 +153,18 @@ public class Reaction_EmotePanel : MonoBehaviour
         else
         {
             Debug.Log("Close hua=== Call");
-            if (SoundController.Instance.name.Contains("potrait"))
+            if (SoundController.Instance != null)
             {
-               // ReferencesForGamePlay.instance.RotateBtn.interactable = false;
-                JyosticksObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
-                JumpObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
-                BottomObject.SetActive(false);
-                XanaChatObject.SetActive(false);
-              //  ReferencesForGamePlay.instance.RotateBtn.interactable = true;
+                if (SoundController.Instance.name.Contains("potrait"))
+                {
+                    // ReferencesForGamePlay.instance.RotateBtn.interactable = false;
+                    JyosticksObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
+                    JumpObject.gameObject.transform.DOLocalMoveY(29.1f, 0.1f);
+                    BottomObject.SetActive(false);
+                    XanaChatObject.SetActive(false);
+                    //  ReferencesForGamePlay.instance.RotateBtn.interactable = true;
+                }
             }
-
             m_EmotePanel.SetActive(true);
             m_EmotePanelHighlighter.SetActive(true);
             

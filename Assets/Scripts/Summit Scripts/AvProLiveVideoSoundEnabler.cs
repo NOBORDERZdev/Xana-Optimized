@@ -18,7 +18,7 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
         PlayerTriggerChecker.LiveVideoSoundEnabler -= EnableLiveVideoSound;
     }
 
-    void EnableLiveVideoSound(bool _soundEnable)
+    public void EnableLiveVideoSound(bool _soundEnable)
     {
         DirectionalSoundController.playerCam = ReferencesForGamePlay.instance.m_34player.transform;
         if (_soundEnable)
@@ -32,6 +32,7 @@ public class AvProLiveVideoSoundEnabler : MonoBehaviour
             if (DirectionalSoundController.volumeCoroutine != null)
             {
                 StopCoroutine(DirectionalSoundController.volumeCoroutine);
+                DirectionalSoundController.volumeCoroutine = null;
             }
             DirectionalSoundController.enabled = false;
             DirectionalSoundController.activePlayer.AudioMuted = true;
