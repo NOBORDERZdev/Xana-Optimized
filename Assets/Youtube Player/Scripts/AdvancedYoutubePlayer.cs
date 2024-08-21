@@ -58,6 +58,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     private void OnEnable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect += OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetConnected += OnInternetConnect;
         //if (IsLive)
         //{
         //    AVProVideoPlayer.gameObject.SetActive(true);
@@ -79,6 +80,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
     private void OnDisable()
     {
         AvatarSpawnerOnDisconnect.OninternetDisconnect -= OnInternetDisconnect;
+        AvatarSpawnerOnDisconnect.OninternetConnected -= OnInternetConnect;
     }
 
     public async void PlayVideo()
@@ -281,6 +283,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     public void OnInternetDisconnect()
     {
+        //print("Internet Disconnected");
         if (VideoPlayer != null)
         {
             VideoPlayer.Stop();
@@ -293,6 +296,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     public void OnInternetConnect()
     {
+        //print("Internet connected again");
         if (VideoPlayer != null)
         {
             VideoPlayer.Play();

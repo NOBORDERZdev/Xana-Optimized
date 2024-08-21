@@ -159,7 +159,7 @@ public class SplineFollower : MonoBehaviour, IPunObservable, IInRoomCallbacks
            {
                if (GetComponent<Rigidbody>() == null) { var rigid = gameObject.AddComponent<Rigidbody>(); rigid.useGravity = true; rigid.mass = 50; } CheckForRigidbody = false;
            }*/
-        if ((MoveAmount + (Time.deltaTime * Speed)) >= MaxMoveAmount) _carT = 0;
+        if ((MoveAmount + (Time.deltaTime * Speed)) >= MaxMoveAmount) { _carT = 0;_carTF = 0; }
         MoveAmount = (MoveAmount + (Time.deltaTime * Speed)) % MaxMoveAmount;
 
         switch (_movementType)

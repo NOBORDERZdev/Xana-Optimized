@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
@@ -34,7 +35,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
       
     }
 
-    public void InstantiateCAR()
+    public async Task InstantiateCAR()
     {
         if(!PhotonNetwork.IsMasterClient) { return; }
             CarSpline = SplineDone.Instance;
@@ -52,7 +53,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
             firstSpawn = (firstSpawn + distancebetweencar) % length;
             splineFollow.Setup((byte)(80 +i));
             splineFollow.Spline = CarSpline;
-
+            await Task.Delay(100);
         }
         
     }

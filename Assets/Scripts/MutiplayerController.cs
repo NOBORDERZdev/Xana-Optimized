@@ -374,7 +374,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 LFF.LoadFile();
             }
-            else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; DestroyPlayerDelay(); }
+            else { GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -445,6 +445,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 DestroyImmediate(item);
             }
+            await new WaitForEndOfFrame();
+            isShifting = false;
         }
 
 
