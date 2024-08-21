@@ -263,7 +263,6 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     }
                     break;
                 }
-                else
                 {
                     if (j == worldData.Count - 1)
                     {
@@ -299,7 +298,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
         _jjAssetObj.description = new string[] { _domeNFTDataObj.description };
         _jjAssetObj.descriptionHyperlink = "";
         _jjAssetObj.title = new string[] { _domeNFTDataObj.name };
-        _jjAssetObj.ratio = "16:9";
+        _jjAssetObj.ratio = _domeNFTDataObj.proportionType;
         _jjAssetObj.asset_link = _domeNFTDataObj.thumbnail;
         _jjAssetObj.PrercrdOrLiveURL = _domeNFTDataObj.videoType;
         _jjAssetObj.youtubeUrlCheck = _domeNFTDataObj.isYoutubeUrl;
