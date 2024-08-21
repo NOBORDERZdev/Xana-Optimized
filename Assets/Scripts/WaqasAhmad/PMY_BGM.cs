@@ -22,12 +22,15 @@ public class PMY_BGM : MonoBehaviour
     private void OnDisable()
     {
         //SceneManage.onExitAction -= OnSceneExit;
-        PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
-        PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
         BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= HookEvent;
         BuilderEventManager.AfterPlayerInstantiated -= SetBgm;
-
         PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, MusicSource.volume);
+
+        if (PMY_Nft_Manager.Instance)
+        {
+            PMY_Nft_Manager.Instance.exitClickedAction -= UpdateMusicStatus;
+            PMY_Nft_Manager.Instance.OnVideoEnlargeAction -= OnVideoEnlargeAction;
+        }
     }
 
     private void SetBgm()

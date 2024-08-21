@@ -37,7 +37,7 @@ public class VersionChecker : MonoBehaviour
             ClearAddressablesCache();
             PlayerPrefs.SetString(VersionKey, currentVersion);
             PlayerPrefs.SetInt(VersionCodeKey, currentVersionCode);
-            Handheld.Vibrate();
+            //Handheld.Vibrate();
         }
         else
         {
