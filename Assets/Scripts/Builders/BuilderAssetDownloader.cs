@@ -100,6 +100,8 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static void ArrangeData()
     {
         builderDataDictionary.Clear();
+        downloadDataQueue.Clear();
+
         for (int i = 0; i < BuilderData.mapData.data.json.otherItems.Count; i++)
         {
             DownloadQueueData temp = new DownloadQueueData();
@@ -308,7 +310,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             {
                 AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
@@ -395,7 +397,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         {
             if(_itemData.ItemID.Contains("TLP"))
             {
-                BuilderData.SceneTeleportingObjects.Add(newObj);
+                XANASummitDataContainer.SceneTeleportingObjects.Add(newObj);
             }
         }
 
@@ -548,7 +550,7 @@ public class BuilderAssetDownloader : MonoBehaviour
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
-        BuilderData.SceneTeleportingObjects.Clear();
+        XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;
