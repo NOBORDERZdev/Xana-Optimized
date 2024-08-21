@@ -164,14 +164,14 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
                             isMuseumScene = true;
                         }
                         if (name == "Xana Festival")
-                            ConstantsHolder.xanaConstants.userLimit = (Convert.ToInt32(10) /*- 1*/).ToString();
+                            ConstantsHolder.userLimit = 10;
                         else
-                            ConstantsHolder.xanaConstants.userLimit = "10";
+                            ConstantsHolder.userLimit = 10;
 
                         ConstantsHolder.xanaConstants.builderMapID = int.Parse(envId);
                         ConstantsHolder.xanaConstants.IsMuseum = isMuseumScene;
                         ConstantsHolder.xanaConstants.isBuilderScene = isBuilderScene;
-                        WorldItemView.m_EnvName = MutiplayerController.sceneName = environmentDetails.data.name;
+                        WorldItemView.m_EnvName = environmentDetails.data.name;
 
                         if (isBuilderScene)
                             WorldManager.instance.JoinBuilderWorld();

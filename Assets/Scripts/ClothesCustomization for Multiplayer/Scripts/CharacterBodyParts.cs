@@ -5,6 +5,7 @@ using TMPro;
 using Photon.Pun;
 using System;
 using System.IO;
+using System.Linq;
 
 public class CharacterBodyParts : MonoBehaviour
 {
@@ -793,10 +794,14 @@ public class CharacterBodyParts : MonoBehaviour
         Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
         if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            if (_materials[0].name.Contains("Band") || _materials[0].name.Contains("Cap") || _materials[0].name.Contains("Hat") || _materials[0].name.Contains("Pins"))
-                _materials[1].SetColor(Hair_ColorName, color);
-            else
-                _materials[0].SetColor(Hair_ColorName, color);
+            foreach (var material in _materials)
+            {
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads" }
+                    .Any(item => material.name.IndexOf(item, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    material.SetColor(Hair_ColorName, color);
+                }
+            }
         }
         else
             _materials[0].SetColor(Hair_ColorName, color);
@@ -808,10 +813,14 @@ public class CharacterBodyParts : MonoBehaviour
         Material[] _materials = avatarController.wornHair.GetComponent<SkinnedMeshRenderer>().materials;
         if (_materials.Length > 1) // In case Of Hat, Pins, bags there are 2 materials
         {
-            if (_materials[0].name.Contains("Band") || _materials[0].name.Contains("Cap") || _materials[0].name.Contains("Hat") || _materials[0].name.Contains("Pins"))
-                _materials[1].SetColor(Hair_ColorName, hairColor[colorId]);
-            else
-                _materials[0].SetColor(Hair_ColorName, hairColor[colorId]);
+            foreach (var material in _materials)
+            {
+                if (!new[] { "Band", "Cap", "Hat", "Pin", "Clip", "Scarf", "Pony", "Accessories", "Ribbon", "Beads" }
+                     .Any(item => material.name.IndexOf(item, StringComparison.OrdinalIgnoreCase) >= 0))
+                {
+                    material.SetColor(Hair_ColorName, hairColor[colorId]);
+                }
+            }
         }
         else
             _materials[0].SetColor(Hair_ColorName, hairColor[colorId]);

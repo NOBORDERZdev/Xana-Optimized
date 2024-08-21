@@ -1,4 +1,3 @@
-using Metaverse;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -10,6 +9,18 @@ public class SpeakerRefrence : MonoBehaviour
 {
    
     public AudioSource RangeVolSpeaker;
+
+    private void OnEnable()
+    {
+        if(ConstantsHolder.xanaConstants.EnviornmentName=="RooftopParty")
+        {
+            RangeVolSpeaker.maxDistance = 3;
+        }
+
+        if(!GetComponent<PhotonView>().IsMine)
+            Destroy(GetComponent<AudioListener>());
+
+    }
 
     //public void MyspeakerSync2D()                  //Added by Ali Hamza
     //{

@@ -6,11 +6,13 @@ using System;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace NPC {
+namespace NPC
+{
     public class NpcEmotes : MonoBehaviour
     {
         public RuntimeAnimatorController npcController;
         [SerializeField] NpcBehaviourSelector npcBehaviour;
+        [SerializeField] SPAAIBehvrController spaAIBhvrController;
         [SerializeField] NpcMovementController npcMC;
         [SerializeField] Animator animationController;
 
@@ -96,24 +98,45 @@ namespace NPC {
                                 }
                                 catch (Exception)
                                 {
-                                    npcBehaviour.isPerformingAction = false;
-                                    if (npcBehaviour.ActionCoroutine != null)
-                                        StopCoroutine(npcBehaviour.ActionCoroutine);
-                                    npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
-                                    throw;
+                                    if (npcBehaviour)
+                                    {
+                                        npcBehaviour.isPerformingAction = false;
+                                        if (npcBehaviour.ActionCoroutine != null)
+                                            StopCoroutine(npcBehaviour.ActionCoroutine);
+                                        npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                                        throw;
+                                    }
+                                    else
+                                    {
+                                        spaAIBhvrController.isPerformingAction = false;
+                                        if (spaAIBhvrController.ActionCoroutine != null)
+                                            StopCoroutine(spaAIBhvrController.ActionCoroutine);
+                                        spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+                                        throw;
+                                    }
                                 }
                             }
-                            
+
                             www.Dispose();
                         }
                     }
                 }
                 else
                 {
-                    npcBehaviour.isPerformingAction = false;
-                    if (npcBehaviour.ActionCoroutine != null)
-                        StopCoroutine(npcBehaviour.ActionCoroutine);
-                    npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                    if (npcBehaviour)
+                    {
+                        npcBehaviour.isPerformingAction = false;
+                        if (npcBehaviour.ActionCoroutine != null)
+                            StopCoroutine(npcBehaviour.ActionCoroutine);
+                        npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                    }
+                    else
+                    {
+                        spaAIBhvrController.isPerformingAction = false;
+                        if (spaAIBhvrController.ActionCoroutine != null)
+                            StopCoroutine(spaAIBhvrController.ActionCoroutine);
+                        spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+                    }
                 }
             }
         }
@@ -153,11 +176,22 @@ namespace NPC {
             if (assetBundle == null)
             {
                 Debug.Log("Failed to load AssetBundle!");
-                npcBehaviour.isPerformingAction = false;
-                if (npcBehaviour.ActionCoroutine != null)
-                    StopCoroutine(npcBehaviour.ActionCoroutine);
-                npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
-                yield break;
+                if (npcBehaviour)
+                {
+                    npcBehaviour.isPerformingAction = false;
+                    if (npcBehaviour.ActionCoroutine != null)
+                        StopCoroutine(npcBehaviour.ActionCoroutine);
+                    npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                    yield break;
+                }
+                else
+                {
+                    spaAIBhvrController.isPerformingAction = false;
+                    if (spaAIBhvrController.ActionCoroutine != null)
+                        StopCoroutine(spaAIBhvrController.ActionCoroutine);
+                    spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+                    yield break;
+                }
             }
             else
             {
@@ -228,12 +262,24 @@ namespace NPC {
             animationController.SetBool("IsEmote", false);
             //AssetBundle.UnloadAllAssetBundles(false);
             //Resources.UnloadUnusedAssets();
-            npcBehaviour.isPerformingAction = false;
+            if (npcBehaviour)
+            {
+                npcBehaviour.isPerformingAction = false;
 
-            if (npcBehaviour.ActionCoroutine != null)
-                StopCoroutine(npcBehaviour.ActionCoroutine);
+                if (npcBehaviour.ActionCoroutine != null)
+                    StopCoroutine(npcBehaviour.ActionCoroutine);
 
-            npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+                npcBehaviour.ActionCoroutine = StartCoroutine(npcBehaviour.PerformAction());
+            }
+            else
+            {
+                spaAIBhvrController.isPerformingAction = false;
+
+                if (spaAIBhvrController.ActionCoroutine != null)
+                    StopCoroutine(spaAIBhvrController.ActionCoroutine);
+
+                spaAIBhvrController.ActionCoroutine = StartCoroutine(spaAIBhvrController.PerformAction());
+            }
         }
 
         public void ForceFullyStopEmote()

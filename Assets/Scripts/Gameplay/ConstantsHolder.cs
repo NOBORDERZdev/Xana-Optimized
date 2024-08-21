@@ -10,6 +10,10 @@ public class ConstantsHolder : MonoBehaviour
 {
     public static ConstantsHolder xanaConstants;
 
+    public bool pushToTalk;
+    public bool openLandingSceneDirectly;
+    public bool OpenSpaceScreen_fromSummit = false;
+
     //Login Info
     public static bool isAdmin;
     public static bool isGuestLogin;
@@ -19,12 +23,14 @@ public class ConstantsHolder : MonoBehaviour
     public static string xanaToken;
     public static string userId;
     public static string userName;
+    public static string uniqueUserName;
 
     public static bool isAddressableCatalogDownload;
     public bool registerFirstTime = false;
     public bool isHoldCharacterNFT;
     public bool isNFTEquiped;
     public bool LoginasGustprofile = false; // for gust profile
+    public bool LoggedInAsGuest = false; // to check is user logged in as guest
     public bool isFirstPanel = false; // User has Not data Open First Panel
     public string NFTUrl;
     public string clothJson;
@@ -37,7 +43,7 @@ public class ConstantsHolder : MonoBehaviour
     public string userProfileLink;
     public string CurrentSceneName;
     public string EnviornmentName;
-    public string userLimit;
+    public static int userLimit;
     // public string museumDownloadLink;// = "https://angeluim-metaverse.s3.ap-southeast-1.amazonaws.com/unitydata/environments/Museums/Aurora_Art_Museum/auroramuseum.android";
     public GameObject buttonClicked;
     public GameObject _lastClickedBtn;
@@ -91,6 +97,30 @@ public class ConstantsHolder : MonoBehaviour
     public bool isBackFromWorld = false;
     public String MuseumID;
 
+    //For Metabuzz Environments
+    public enum ComingFrom{
+        None,
+        Dune,
+        Daisen
+    }
+    public ComingFrom comingFrom = ComingFrom.None;
+
+    public bool IsMetabuzzEnvironment{
+        get
+        {
+            if (EnviornmentName.Contains("DUNE") || EnviornmentName.Contains("KANZAKI") || EnviornmentName.Contains("Daisen"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    //for world transition from JJworldChanger a world
+    public bool hasWorldTransitionedInternally;
     // Is in Store
     public bool isStoreActive = false;
 
@@ -123,6 +153,7 @@ public class ConstantsHolder : MonoBehaviour
     public bool JjWorldSceneChange = false;
     public bool isFromXanaLobby = false;
     public bool isFromHomeTab = false;
+    public bool isFromTottoriWorld = false;
 
     [HideInInspector]
     public bool needToClearMemory = true;
@@ -135,6 +166,23 @@ public class ConstantsHolder : MonoBehaviour
     [SerializeField]
     public MeetingStatus meetingStatus;
     public bool IsShowChatToAll = true;
+    public bool IsChatUseByOther = false;
+
+    //XANA Summit 
+    public static bool isFromXANASummit=false;
+    public static bool MultiSectionPhoton = false;
+    public static bool TempDiasableMultiPartPhoton = false;
+    public static bool DiasableMultiPartPhoton = false;
+    public static bool DisableFppRotation = false;
+    public static int domeId;
+    public static bool isPenguin;
+    public static bool isFixedHumanoid;
+    public static bool HaveSubWorlds;
+
+    //Daily reward
+    public bool isGoingForHomeScene = false;
+    public bool hasToShowDailyPopup = false;
+
     public string r_EmoteStoragePersistentPath
     {
         get
@@ -175,7 +223,7 @@ public class ConstantsHolder : MonoBehaviour
             }
             else
             {
-                PlayerPrefs.SetInt("micSound", 1);
+                //PlayerPrefs.SetInt("micSound", 1); By default mic will be off
                 mic = PlayerPrefs.GetInt("micSound");
             }
             if (PlayerPrefs.HasKey("minimap"))
@@ -203,6 +251,7 @@ public class ConstantsHolder : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
+        userNameVisibilty = 1;
         avatarStoreSelection = new GameObject[11];
         wearableStoreSelection = new GameObject[8];
         colorSelection = new GameObject[6];

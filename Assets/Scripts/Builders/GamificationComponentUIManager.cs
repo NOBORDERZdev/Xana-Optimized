@@ -176,30 +176,30 @@ public class GamificationComponentUIManager : MonoBehaviour
         narrationUIParent.SetActive(true);
         narrationUIClosebtn.gameObject.SetActive(closeNarration);
 
-        //if (!isStory)
-        //{
-        //    if (StoryNarrationCoroutine != null)
-        //        StopCoroutine(StoryNarrationCoroutine);
-        //    isAgainCollided = true;
-        //    //StartCoroutine(WaitDelayStatement());
-        //    narrationTextUI.text = narrationText;
-        //    narrationScroll.enabled = false;
-        //    sliderNarrationUI.SetActive(false);
-        //    isStoryWritten = false;
-        //    Invoke(nameof(NarrationUILinesCount), 0.1f);
-        //}
-        //else
-        //{
-        storyCharCount = 0;
-        narrationTextUI.text = "";
-        if (StoryNarrationCoroutine == null)
-            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+        if (!isStory)
+        {
+            if (StoryNarrationCoroutine != null)
+                StopCoroutine(StoryNarrationCoroutine);
+            isAgainCollided = true;
+            //StartCoroutine(WaitDelayStatement());
+            narrationTextUI.text = narrationText;
+            narrationScroll.enabled = false;
+            sliderNarrationUI.SetActive(false);
+            isStoryWritten = false;
+            Invoke(nameof(NarrationUILinesCount), 0.1f);
+        }
         else
         {
-            StopCoroutine(StoryNarrationCoroutine);
-            StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            storyCharCount = 0;
+            narrationTextUI.text = "";
+            if (StoryNarrationCoroutine == null)
+                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            else
+            {
+                StopCoroutine(StoryNarrationCoroutine);
+                StoryNarrationCoroutine = StartCoroutine(StoryNarration(narrationText));
+            }
         }
-        //}
 
     }
 
@@ -282,7 +282,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     Coroutine TimeCoroutine;
     public void EnableTimeLimitUI(string purpose, float time)
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.TimeLimitComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.TimeLimitComponent, true);
         TimeLimitUIParent.SetActive(true);
         if (TimeCoroutine == null)
         {
@@ -329,7 +329,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     public Coroutine TimerCountdownCoroutine;
     public void EnableTimerCountDownUI(int time, bool isRunning)
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.TimerCountdownComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.TimerCountdownComponent, true);
         if (isRunning)
         {
             if (TimerCountdownCoroutine == null)
@@ -374,7 +374,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         //Debug.LogError("EnableElapseTimeCounDownUI ==> " + time + "  " + isRunning);
         if (isRunning)
         {
-            DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent);
+            DisableAllComponentUIObject(Constants.ItemComponentType.ElapsedTimeComponent, true);
             ElapseTimeUIParent.SetActive(true);
             if (ElapsedTimerCoroutine == null)
             {
@@ -509,7 +509,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            DisableAllComponentUIObject(Constants.ItemComponentType.SituationChangerComponent);
+            DisableAllComponentUIObject(Constants.ItemComponentType.SituationChangerComponent, true);
             //if (SituationChangerCoroutine == null)
             //{
             //    SituationChangerCoroutine = StartCoroutine(IESituationChanger(timer));
@@ -669,7 +669,7 @@ public class GamificationComponentUIManager : MonoBehaviour
         }
 
         questionIndex += 1;
-        next = TextLocalization.GetLocaliseTextByKey("Next");
+        next = TextLocalization.GetLocaliseTextByKey("BuilderNext");
         result = TextLocalization.GetLocaliseTextByKey("Result");
         //Debug.Log("TextLocalization==>" + next + " " + result);
 
@@ -952,7 +952,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableSpecialItemUI(float time)
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.SpecialItemComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.SpecialItemComponent, true);
         SpecialItemUIParent.SetActive(true);
 
         if (SpecialItemCoroutine == null)
@@ -994,7 +994,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableAvatarInvisibilityUI(float time)
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.BlindfoldedDisplayComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.BlindfoldedDisplayComponent, true);
         AvatarInvisibilityUIParent.SetActive(true);
 
         if (AvatarInvisibilityCoroutine == null)
@@ -1039,7 +1039,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableNinjaMotionUI(float time)
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.NinjaComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.NinjaComponent, true);
         DisableThrowThingUI();
         NinjaMotionUIParent.SetActive(true);
 
@@ -1095,7 +1095,7 @@ public class GamificationComponentUIManager : MonoBehaviour
 
     public void EnableThrowThingsUI()
     {
-        DisableAllComponentUIObject(Constants.ItemComponentType.ThrowThingsComponent);
+        DisableAllComponentUIObject(Constants.ItemComponentType.ThrowThingsComponent, true);
         ThrowThingsUIParent.SetActive(true);
     }
 
@@ -1179,23 +1179,23 @@ public class GamificationComponentUIManager : MonoBehaviour
             hyperLinkPopupTitleText.font = defaultFont;
             hyperlinkBrowseURLbtn.GetComponentInChildren<TextMeshProUGUI>().font = defaultFont;
         }
-        hyperLinkPopupText.text = "";
         hyperlinkPanelResizer.target = obj;
         url = hyperLinkPopupURL;
         string msg = hyperLinkPopupTexts.Length == 0 ? "Define Rules here !" : hyperLinkPopupTexts + "\n";
 
-        isHyperlinkWritten = true;
+        hyperLinkPopupText.text = msg;
+        isHyperlinkWritten = false;
         Invoke(nameof(HyperLinkUILinesCount), 0.1f);
 
-        hyperLinkCharCount = 0;
-        hyperLinkPopupText.text = "";
-        if (HyperLinkCoroutine == null)
-            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
-        else
-        {
-            StopCoroutine(HyperLinkCoroutine);
-            HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
-        }
+        //hyperLinkCharCount = 0;
+        //hyperLinkPopupText.text = "";
+        //if (HyperLinkCoroutine == null)
+        //    HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
+        //else
+        //{
+        //    StopCoroutine(HyperLinkCoroutine);
+        //    HyperLinkCoroutine = StartCoroutine(HyperLinkPopupCO(msg));
+        //}
     }
 
     IEnumerator HyperLinkPopupCO(string msg)
@@ -1270,7 +1270,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            DisableAllComponentUIObject(Constants.ItemComponentType.BlindComponent);
+            DisableAllComponentUIObject(Constants.ItemComponentType.BlindComponent, true);
             //if (BlindComponentCoroutine == null)
             //{
             //    BlindComponentCoroutine = StartCoroutine(IEBlindComponent(timer));
@@ -1323,7 +1323,7 @@ public class GamificationComponentUIManager : MonoBehaviour
     {
         if (timer > 0)
         {
-            DisableAllComponentUIObject(Constants.ItemComponentType.AvatarChangerComponent);
+            DisableAllComponentUIObject(Constants.ItemComponentType.AvatarChangerComponent, true);
             if (AvatarChangerComponentCoroutine == null)
             {
                 AvatarChangerComponentCoroutine = StartCoroutine(IEAvatarChangerComponent(timer));
@@ -1418,40 +1418,67 @@ public class GamificationComponentUIManager : MonoBehaviour
             return time.ToString("00");
     }
 
-    void DisableAllComponentUIObject(Constants.ItemComponentType componentType)
+    void DisableAllComponentUIObject(Constants.ItemComponentType componentType, bool isTimer = false)
+    {
+        if (ShouldDisableTimerComponents(componentType, isTimer))
+        {
+            DisableTimerComponents(componentType);
+        }
+
+        if (ShouldDisableNonTimerComponents(componentType, isTimer))
+        {
+            DisableNonTimerComponents(componentType);
+        }
+    }
+
+    bool ShouldDisableTimerComponents(Constants.ItemComponentType componentType, bool isTimer)
+    {
+        return isTimer || componentType == Constants.ItemComponentType.none;
+    }
+
+    bool ShouldDisableNonTimerComponents(Constants.ItemComponentType componentType, bool isTimer)
+    {
+        return !isTimer || componentType == Constants.ItemComponentType.none;
+    }
+
+    void DisableTimerComponents(Constants.ItemComponentType componentType)
     {
         if (componentType != Constants.ItemComponentType.SituationChangerComponent)
             DisableSituationChangerUI();
-        if (componentType != Constants.ItemComponentType.DisplayMessagesComponent)
-            DisableDisplayMessageUI();
         if (componentType != Constants.ItemComponentType.ElapsedTimeComponent)
             DisableElapseTimeCounDownUI();
+        if (componentType != Constants.ItemComponentType.TimeLimitComponent)
+            DisableTimeLimitUI();
+        if (componentType != Constants.ItemComponentType.TimerCountdownComponent)
+            DisableTimerCounDownUI();
+        if (componentType != Constants.ItemComponentType.NinjaComponent)
+            DisableNinjaMotionUI();
+        if (componentType != Constants.ItemComponentType.SpecialItemComponent)
+            DisableSpecialItemUI();
+        if (componentType != Constants.ItemComponentType.BlindComponent)
+            DisableBlindComponentUI();
+        if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
+            DisableAvatarChangerComponentUI();
+        if (componentType != Constants.ItemComponentType.BlindfoldedDisplayComponent)
+            DisableAvatarInvisibilityUI();
+    }
+
+    void DisableNonTimerComponents(Constants.ItemComponentType componentType)
+    {
+        if (componentType != Constants.ItemComponentType.DisplayMessagesComponent)
+            DisableDisplayMessageUI();
         if (componentType != Constants.ItemComponentType.HelpButtonComponent)
             DisableHelpButtonUI();
         if (componentType != Constants.ItemComponentType.NarrationComponent)
             DisableNarrationUI();
         if (componentType != Constants.ItemComponentType.RandomNumberComponent)
             DisableRandomNumberUI();
-        if (componentType != Constants.ItemComponentType.TimeLimitComponent)
-            DisableTimeLimitUI();
-        if (componentType != Constants.ItemComponentType.TimerCountdownComponent)
-            DisableTimerCounDownUI();
         if (componentType != Constants.ItemComponentType.QuizComponent)
             DisableQuizComponentUI();
-        if (componentType != Constants.ItemComponentType.SpecialItemComponent)
-            DisableSpecialItemUI();
-        if (componentType != Constants.ItemComponentType.NinjaComponent)
-            DisableNinjaMotionUI();
-        if (componentType != Constants.ItemComponentType.BlindfoldedDisplayComponent)
-            DisableAvatarInvisibilityUI();
         if (componentType != Constants.ItemComponentType.ThrowThingsComponent)
             DisableThrowThingUI();
-        //if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
-        //    DisableHyperLinkPopupUI();
-        if (componentType != Constants.ItemComponentType.BlindComponent)
-            DisableBlindComponentUI();
-        if (componentType != Constants.ItemComponentType.AvatarChangerComponent)
-            DisableAvatarChangerComponentUI();
+        // if (componentType != Constants.ItemComponentType.HyperLinkPopComponent)
+        //     DisableHyperLinkPopupUI();
         if (componentType != Constants.ItemComponentType.DoorKeyComponent)
             DisableDoorKeyUI();
     }

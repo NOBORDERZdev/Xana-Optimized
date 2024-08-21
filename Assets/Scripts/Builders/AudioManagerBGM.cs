@@ -69,6 +69,8 @@ public class AudioManagerBGM : MonoBehaviour
                 audioSource.volume = audioPropertiesBGM.dataAudioBGM.audioVolume;
                 isDownloaded = true;
             }
+
+            www.Dispose();
         }
     }
 
@@ -97,6 +99,9 @@ public class AudioManagerBGM : MonoBehaviour
 
         if (currentClip != null)
         {
+            SoundSettings.soundManagerSettings.totalVolumeSlider.Set(audioPropertiesBGM.dataAudioBGM.audioVolume);
+            SoundSettings.soundManagerSettings.totalVolumeSliderPotrait.Set(audioPropertiesBGM.dataAudioBGM.audioVolume);
+            SoundSettings.soundManagerSettings.SetBgmVolume(audioPropertiesBGM.dataAudioBGM.audioVolume);
             audioSource.clip = currentClip;
             audioSource.Play();
         }

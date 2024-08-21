@@ -105,7 +105,7 @@ public class AvatarChangerSyncing : MonoBehaviourPun
             gangsterCharacter = new GameObject("AvatarChange");
             gangsterCharacter.transform.SetParent(playerObj.transform);
             gangsterCharacter.transform.localPosition = Vector3.zero;
-            gangsterCharacter.transform.localEulerAngles = Vector3.zero;
+            gangsterCharacter.transform.localEulerAngles = avatarIndex == 2 ? Vector3.up * -180 : Vector3.zero;
             //gangsterCharacter.SetActive(false);
             Vector3 pos = gangsterCharacter.transform.position;
             pos.y = GamificationComponentData.instance.AvatarChangerModelNames[avatarIndex] == "Bear05" ? 0.1f : 0;

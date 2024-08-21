@@ -49,6 +49,7 @@ public class GlobalConstants
         URL_Consult,
         URL_LandInfo,
         URL_Architec,
+        SE_UU_Mobile_App_THA,
 
         // Added Xana Items
         App_Started,
@@ -72,6 +73,21 @@ public class GlobalConstants
         if (APIBasepointManager.instance.IsXanaLive)
         {
             prefix = "L_"; environmentType = EnvironmentType.Live; 
+        }
+        eventName = prefix + eventName;
+        Debug.Log("<color=red>FB Event: " + eventName + "</color>");
+
+        Firebase.Analytics.FirebaseAnalytics.LogEvent(eventName);
+    }
+    public static void SendFirebaseEventForSummit(string eventName)
+    {
+        if (eventName.IsNullOrEmpty() || eventName.Substring(0) == "_") return;
+
+        string prefix = "TA_";
+
+        if (APIBasepointManager.instance.IsXanaLive)
+        {
+            prefix = "LA_"; environmentType = EnvironmentType.Live;
         }
         eventName = prefix + eventName;
         Debug.Log("<color=red>FB Event: " + eventName + "</color>");

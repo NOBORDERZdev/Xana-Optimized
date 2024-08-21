@@ -526,6 +526,7 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                     {
                         if (!string.IsNullOrEmpty(currentlink))   // if link is empty thn dont call it
                         {
+                            GameManager.Instance.mainCharacter.GetComponent<AvatarController>().WearDefaultItem(_CharacterData.myItemObj[i].ItemType, GameManager.Instance.mainCharacter.gameObject, _CharacterData.gender);
                             //  Debug.Log("Downloading --- " + _CharacterData.myItemObj[i].ItemLink + " Link " + _CharacterData.myItemObj[i].ItemType);
                             string _temptype = _CharacterData.myItemObj[i].Slug;
 
@@ -535,7 +536,8 @@ currentlink = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkIos = _CharacterData.myItemObj[i].ItemLinkIOS;
                             itemobj.assetLinkAndroid = _CharacterData.myItemObj[i].ItemLinkAndroid;
 
-                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!_CharacterData.myItemObj[i].ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
+                                !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 StartCoroutine(AddressableDownloader.Instance.DownloadAddressableObj(_CharacterData.myItemObj[i].ItemID, _CharacterData.myItemObj[i].ItemName, _CharacterData.myItemObj[i].ItemType, _CharacterData.gender != null ? _CharacterData.gender : "Male", GameManager.Instance.mainCharacter.GetComponent<AvatarController>(), Color.clear));
                             }

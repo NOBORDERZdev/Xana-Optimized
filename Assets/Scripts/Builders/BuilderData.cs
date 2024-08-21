@@ -7,6 +7,8 @@ public static class BuilderData
     public static List<SpawnPointData> spawnPoint=new List<SpawnPointData>();
     public static List<DownloadQueueData> preLoadspawnPoint = new List<DownloadQueueData>();
     public static ServerData mapData;
+
+    
 }
 
 [System.Serializable]

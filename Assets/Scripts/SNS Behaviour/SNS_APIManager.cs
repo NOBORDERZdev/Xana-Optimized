@@ -16,6 +16,7 @@ public class SNS_APIManager : MonoBehaviour
 {
     public static SNS_APIManager Instance;
 
+    private bool isCoroutineRunning=false;
     [Header("Loagin Token Reference")]
     public string userAuthorizeToken;
     public int userId;
@@ -43,7 +44,7 @@ public class SNS_APIManager : MonoBehaviour
             Instance = this;
         }
         userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-        userId = int.Parse(PlayerPrefs.GetString("UserName"));
+        userId = int.Parse(PlayerPrefs.GetString("UserId"));
         gameManager = GameManager.Instance;
         if (apiController == null)
         {
@@ -80,8 +81,8 @@ public class SNS_APIManager : MonoBehaviour
             }
 
             userAuthorizeToken = ConstantsGod.AUTH_TOKEN;
-            userId = int.Parse(PlayerPrefs.GetString("UserName"));
-            userName = PlayerPrefs.GetString("PlayerName");
+            userId = int.Parse(PlayerPrefs.GetString("UserId"));
+            userName = PlayerPrefs.GetString("UserName");
         }
         else
         {
@@ -278,14 +279,15 @@ public class SNS_APIManager : MonoBehaviour
         }
     }
 
-
     //this api is used to follow user.......
     public void RequestFollowAUser(string user_Id, string callingFrom)
     {
-        StartCoroutine(IERequestFollowAUser(user_Id, callingFrom));
+        if(!isCoroutineRunning)
+            StartCoroutine(IERequestFollowAUser(user_Id, callingFrom));
     }
     public IEnumerator IERequestFollowAUser(string user_Id, string callingFrom)
     {
+        isCoroutineRunning = true;
         WWWForm form = new WWWForm();
         form.AddField("userId", user_Id);
 
@@ -314,9 +316,10 @@ public class SNS_APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        feedUIController.ShowLoader(false);
+                        //feedUIController.ShowLoader(false);
                         otherPlayerProfileData.OnFollowerIncreaseOrDecrease(true);//Inscrease follower count.......
                         feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), false);
+                        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = true;
                         break;
                     case "Feed":
                         if (feedUIController != null)
@@ -332,6 +335,7 @@ public class SNS_APIManager : MonoBehaviour
                         break;
                 }
             }
+            isCoroutineRunning = false;
         }
     }
 
@@ -372,10 +376,12 @@ public class SNS_APIManager : MonoBehaviour
                 switch (callingFrom)
                 {
                     case "OtherUserProfile":
-                        feedUIController.ShowLoader(false);
+                        //feedUIController.ShowLoader(false);
                         otherPlayerProfileData.OnFollowerIncreaseOrDecrease(false);//Descrease follower count.......
-
                         feedUIController.FollowingAddAndRemoveUnFollowedUser(int.Parse(user_Id), true);
+                        //ProfileUIHandler.instance.followProfileBtn.GetComponent<Button>().interactable = true;
+                        if (feedUIController.ConfirmUnfollowPanel.activeInHierarchy)
+                            feedUIController.ConfirmUnfollowPanel.SetActive(false);
                         break;
                     case "Feed":
                         if (feedUIController != null)
@@ -872,6 +878,7 @@ public class SNS_APIManager : MonoBehaviour
     }
     IEnumerator IEAddBestFriend(int userId, GameObject FrndBtn)
     {
+        feedUIController?.ShowFriendLoader(true);
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_AdBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Post(uri, "POST"))
         {
@@ -879,10 +886,10 @@ public class SNS_APIManager : MonoBehaviour
             www.SendWebRequest();
             while(!www.isDone) 
             {
-                yield return null;
+               yield return null;
             }
 
-            feedUIController?.ShowLoader(false);
+           
 
             if (www.result == UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError    )
             {
@@ -908,6 +915,7 @@ public class SNS_APIManager : MonoBehaviour
                     }
                 }
             }
+             feedUIController?.ShowFriendLoader(false);
         }
     }
 
@@ -918,6 +926,7 @@ public class SNS_APIManager : MonoBehaviour
     }
     IEnumerator IERemoveBestFriend(int userId, GameObject FrndBtn)
     {
+        feedUIController?.ShowFriendLoader(true);
         string uri = ConstantsGod.API_BASEURL + ConstantsGod.r_url_RemoveBestFrnd + userId.ToString();
         using (UnityWebRequest www = UnityWebRequest.Delete(uri))
         {
@@ -949,6 +958,7 @@ public class SNS_APIManager : MonoBehaviour
                     findFriendController.UpdateBfBtn(false);
                 }
             }
+            feedUIController?.ShowFriendLoader(false);
         }
     }
 
@@ -1066,6 +1076,7 @@ public class SNS_APIManager : MonoBehaviour
                 }
 
                 PlayerPrefs.SetString("PlayerName", myProfileDataRoot.data.name);
+                PlayerPrefs.SetString("UserName", myProfileDataRoot.data.name);
 
                 if (string.IsNullOrEmpty(myProfileDataRoot.data.avatar))
                 {
@@ -1361,6 +1372,7 @@ public class SingleUserProfile
 {
     public int id;
     public int userId;
+    public string username;
     public string gender;
     public string job;
     public string country;

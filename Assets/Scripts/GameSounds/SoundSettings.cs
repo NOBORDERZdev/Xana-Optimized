@@ -52,7 +52,7 @@ public class SoundSettings : MonoBehaviour
 
             bgmSource = SoundController.Instance.MusicSource;
             effectsSource = SoundController.Instance.EffectsSource;
-            videoSource = SoundController.Instance.videoPlayerSource;
+            //videoSource = SoundController.Instance.videoPlayerSource;
             StartCoroutine(LiveVideoInstancs(5f));
         }
         //To Clamp AudioSource Volume Slider Range from 0 to 0.7 Rather Than 0 to 1 Range
@@ -79,11 +79,12 @@ public class SoundSettings : MonoBehaviour
             PlayerPrefs.SetFloat(ConstantsGod.MIC, 0.5f); // Mic Value By Default 0.5f
             PlayerPrefs.SetInt("DefaultSensivity", 1);
         }
+        cameraSensitivitySliderPotrait.maxValue = 1f;
     }
     IEnumerator LiveVideoInstancs(float value)
     {
         yield return new WaitForSeconds(value);
-        liveVideoSource = SoundController.Instance.livePlayerSource;
+        //liveVideoSource = SoundController.Instance.livePlayerSource;
     }
     private void OnEnable()
     {
@@ -92,7 +93,7 @@ public class SoundSettings : MonoBehaviour
         ScreenOrientationManager.switchOrientation += OnOrientationChanged;
         //  Invoke("ObjectsDeley", 1f);
     }
-    void OnOrientationChanged()
+    void OnOrientationChanged(bool IsPortrait)
     {
         //Debug.Log("orientation is changed ......"+ PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
         totalVolumeSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME));
@@ -115,26 +116,26 @@ public class SoundSettings : MonoBehaviour
 
     void AddingDeley()
     {
-        if (videoSource == null)
-            videoSource = SoundController.Instance.videoPlayerSource;
-        YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
-        YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
-        if (Videoplayer != null)
-        {
-            videoSource = Videoplayer.videoPlayerAudioSource;
-            liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
-            //Debug.Log("VideoSource Set ");
-        }
-        else if (Videoplayer2 != null)
-        {
-            //videoSource = Videoplayer.videoPlayerAudioSource;
-            liveVideoSource = Videoplayer2.mPlayer;
-            //Debug.Log("VideoSource Set ");
-        }
-        else
-        {
-            //Debug.Log("VideoSource not Set ");
-        }
+        //if (videoSource == null)
+        //    videoSource = SoundController.Instance.videoPlayerSource;
+        //YoutubeStreamController Videoplayer = GameObject.FindObjectOfType<YoutubeStreamController>();
+        //YoutubePlayerLivestream Videoplayer2 = GameObject.FindObjectOfType<YoutubePlayerLivestream>();
+        //if (Videoplayer != null)
+        //{
+        //    videoSource = Videoplayer.videoPlayerAudioSource;
+        //    liveVideoSource = Videoplayer.LiveStreamPlayer.GetComponent<MediaPlayer>();
+        //    //Debug.Log("VideoSource Set ");
+        //}
+        //else if (Videoplayer2 != null)
+        //{
+        //    //videoSource = Videoplayer.videoPlayerAudioSource;
+        //    liveVideoSource = Videoplayer2.mPlayer;
+        //    //Debug.Log("VideoSource Set ");
+        //}
+        //else
+        //{
+        //    //Debug.Log("VideoSource not Set ");
+        //}
     }
 
 
@@ -272,10 +273,10 @@ public class SoundSettings : MonoBehaviour
     }
     public void SetBgmVolume(float Vol)
     {
-        if (!liveVideoSource)
-        {
-            liveVideoSource = SoundController.Instance.livePlayerSource;
-        }
+        //if (!liveVideoSource)
+        //{
+        //    liveVideoSource = SoundController.Instance.livePlayerSource;
+        //}
         PlayerPrefs.SetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, Vol);
        // PlayerPrefs.SetFloat(ConstantsGod.BGM_VOLUME, Vol);
         if (bgmSource)

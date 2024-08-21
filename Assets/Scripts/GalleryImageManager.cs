@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class GalleryImageManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GalleryImageManager : MonoBehaviour
     [Header("Overlay Museum Panels")]
     public GameObject[] overlayPanels;
     public GameObject[] picturePanel;
+    public List<GameObject> NFTSpawnPoints;
+    public List<GameObject> StaticNFTSpawnPoints;
 
     public MuseumRaycaster museumRaycaster;
 
@@ -97,6 +100,7 @@ public class GalleryImageManager : MonoBehaviour
     [Header("Video Panel")]
     public GameObject m_VideoPanel;
     public VideoPlayer m_VideoPlayer;
+    public GameObject XanaSummitNFTHandler;
     public RenderTexture m_RenderTexture;
     public bool m_IsVideo;
     public bool scenec_cheker = false;
@@ -109,6 +113,7 @@ public class GalleryImageManager : MonoBehaviour
     private bool m_IsSpecialPainting;
     private bool m_IsPortrait;
     public bool changeAlphaValue_descPanel = false;
+    public bool IsStaticMuseum = false;
 
     void Awake()
     {
@@ -126,7 +131,15 @@ public class GalleryImageManager : MonoBehaviour
         {
             //Debug.Log(e.ToString());
         }
-
+        if (ConstantsHolder.isFromXANASummit)
+        {
+            if (IsStaticMuseum)
+            {
+                SetStaticNFTState();
+                GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
+                _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataHandlerScrptRef = this;
+            }
+        }
     }
 
     void Start()
@@ -181,6 +194,14 @@ public class GalleryImageManager : MonoBehaviour
     {
         m_VideoPlayer.errorReceived -= M_VideoPlayerOnerrorReceived;
         m_VideoPlayer.prepareCompleted -= M_VideoPlayerOnprepareCompleted;
+    }
+
+    public void SetStaticNFTState()
+    {
+        foreach (GameObject obj in StaticNFTSpawnPoints)
+        {
+            obj.SetActive(false);
+        }
     }
 
     private void M_VideoPlayerOnprepareCompleted(VideoPlayer source)
@@ -257,7 +278,15 @@ public class GalleryImageManager : MonoBehaviour
     {
 
     }
+    private void OnApplicationFocus(bool hasFocus)
+    {
+        if (!hasFocus)
+        {
+            Debug.Log("---GOZ Nft Close due to Application minimized");
+            OnDisablePictureDescriptionPanel();
+        }
 
+    }
     public void OnDisablePictureDescriptionPanel()
     {
         if (m_IsVideo)

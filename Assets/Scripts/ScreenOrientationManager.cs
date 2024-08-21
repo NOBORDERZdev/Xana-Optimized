@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DG.Tweening;
-using Metaverse;
+using UnityEngine.UI;
 
 public class ScreenOrientationManager : MonoBehaviour
 {
@@ -12,7 +12,7 @@ public class ScreenOrientationManager : MonoBehaviour
 
     public bool isPotrait = false;
     public static ScreenOrientationManager _instance;
-    public static Action switchOrientation;
+    public static Action<bool> switchOrientation;
 
     [HideInInspector]
     public float joystickInitPosY = 0;
@@ -109,10 +109,10 @@ public class ScreenOrientationManager : MonoBehaviour
             Screen.orientation = ScreenOrientation.LandscapeLeft;
         }
 
-        if (ArrowManager.Instance)
+        if (ArrowManager.Instance && !ConstantsHolder.isPenguin)
         {
             AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer = ArrowManager.Instance.gameObject;
-            AvatarSpawnerOnDisconnect.Instance.Defaultanimator = AvatarSpawnerOnDisconnect.Instance.currentDummyPlayer.transform.GetComponent<Animator>().runtimeAnimatorController;
+            ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
         }
 
         for (int i = 0; i < landscapeObj.Count; i++)
@@ -121,15 +121,49 @@ public class ScreenOrientationManager : MonoBehaviour
             potraitObj[i].SetActive(isPotrait);
         }
 
-       ReferencesForGamePlay.instance.MainPlayerParent.GetComponent<PlayerController>().restJoyStick();
+       
     }
 
     public void ChangeOrientation_editor()
     {
         isPotrait = !isPotrait;
+        ChangeGameplayBtnStates();
         StartCoroutine(ChangeOrientation(isPotrait));
         if (switchOrientation != null)
-            switchOrientation.Invoke();
+            switchOrientation.Invoke(isPotrait);
+    }
+
+    public void ChangeGameplayBtnStates()
+    {
+        if (isPotrait)
+        {
+            //Set Camera view switching button state
+            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>(), 
+                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>());
+
+            //Set Chat button and panel state
+            StateHandlingOfGPBtns(potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
+                landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
+                ReferencesForGamePlay.instance.ChatSystemRef.OpenCloseChatDialog(
+                    landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
+        }
+        else
+        {
+            //Set Camera view switching button state
+            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>(),
+                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[5].GetComponent<Image>());
+
+            //Set Chat button and panel state
+            StateHandlingOfGPBtns(landscapeObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>(),
+            potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>());
+            ReferencesForGamePlay.instance.ChatSystemRef.OpenCloseChatDialog(
+                                potraitObj[4].GetComponent<Enable_DisableObjects>().ButtontoUninteractable[10].GetComponent<Image>().isActiveAndEnabled);
+        }
+    }
+
+    void StateHandlingOfGPBtns(Image _objectStateToApply, Image _objStateToCheck)
+    {
+        _objectStateToApply.enabled = _objStateToCheck.isActiveAndEnabled;
     }
 
 }

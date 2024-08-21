@@ -1,5 +1,4 @@
-﻿using Metaverse;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,6 +37,7 @@ public class LoadButtonClick : MonoBehaviour
                 stringwithDigit += c;
 
         }
+        ////Debug.LogError(stringwithDigit+"----"+stringWithoutDigit);
         stringWithoutDigit = TextLocalization.GetLocaliseTextByKey(stringWithoutDigit);
         AnimationText.text = stringWithoutDigit +stringwithDigit;
         for (int i = 0; i < 10; i++)
@@ -77,11 +77,17 @@ public class LoadButtonClick : MonoBehaviour
                     StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
                 }
             }
-            else                                              
+            else                                                     // AH Working
                 StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.NormalAnimationSprite;
         }
+
+        //EmoteAnimationHandler.AnimationStopped += AnimationStopped;
     }
 
+    //private void OnDisable()
+    //{
+    //    EmoteAnimationHandler.AnimationStopped -= AnimationStopped;
+    //}
     public bool danceAnim;
     public void OnButtonClick() //add by kamran
     {
@@ -93,12 +99,18 @@ public class LoadButtonClick : MonoBehaviour
 
         if (EmoteAnimationHandler.Instance.currentAnimationTab == "Sit & lying")
         {
-
+            //Debug.Log("this is sit and laying animation tab");
+            //if (EmoteAnimationHandler.Instance.animatorremote != null && EmoteAnimationHandler.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationHandler.Instance.lastAnimClickButton)
             if (EmoteAnimationHandler.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationHandler.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown"))
                 return;
             else if (EmoteAnimationHandler.Instance.lastAnimClickButton != null)
                 EmoteAnimationHandler.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
-
+            //Debug.Log("OnClick button is :: ");
+            //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
+            //foreach (Transform obj in ContentPanel.transform)
+            //{
+            //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+            //}
             highlighter.SetActive(true);
             EmoteAnimationHandler.Instance.lastAnimClickButton = this.gameObject;
             if (GamePlayButtonEvents.inst != null && GamePlayButtonEvents.inst.selectionPanelOpen)
@@ -109,9 +121,21 @@ public class LoadButtonClick : MonoBehaviour
 
             if (EmoteAnimationHandler.Instance.alreadyRuning)
             {
+                //GameplayEntityLoader.animClick = true;
                 EmoteAnimationHandler.remoteUrlAnimation = objectUrl;
                 EmoteAnimationHandler.remoteUrlAnimationName = animationName;
+                //  PlayerPrefs.Save();
+                //prefabObj.transform.GetChild(3).gameObject.SetActive(true);
                 EmoteAnimationHandler.Instance.Load(objectUrl, prefabObj);
+
+                //foreach (Transform obj in ContentPanel.transform)
+                //{
+
+                //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //    // }
+
+                //}
+                //highlighter.SetActive(true);
             }
             try
             {
@@ -125,13 +149,22 @@ public class LoadButtonClick : MonoBehaviour
         }
         else
         {
+            //Debug.Log("this is dance animation tab");
+
             if (danceAnim)
             {
-                if (EmoteAnimationHandler.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationHandler.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown") && !this.gameObject.name.Contains("Dance") && !this.gameObject.name.Contains("dance"))
+                //Debug.Log("this is sit and laying animation tab");
+                //if (EmoteAnimationHandler.Instance.animatorremote != null && EmoteAnimationHandler.Instance.lastAnimClickButton!=null && this.gameObject != EmoteAnimationHandler.Instance.lastAnimClickButton)
+                if (EmoteAnimationHandler.Instance.lastAnimClickButton != null && this.gameObject == EmoteAnimationHandler.Instance.lastAnimClickButton && !this.gameObject.name.Contains("Sit") && !this.gameObject.name.Contains("Laydown") && !this.gameObject.name.Contains("Dance") && !this.gameObject.name.Contains("dance") && !this.gameObject.name.Contains("Walk"))
                     return;
                 else if (EmoteAnimationHandler.Instance.lastAnimClickButton != null)
                     EmoteAnimationHandler.Instance.lastAnimClickButton.GetComponent<LoadButtonClick>().highlighter.SetActive(false);
-
+                //Debug.Log("OnClick button is :: ");
+                //  GamePlayButtonEvents ui = GamePlayButtonEvents.inst;
+                //foreach (Transform obj in ContentPanel.transform)
+                //{
+                //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                //}
                 highlighter.SetActive(true);
                 EmoteAnimationHandler.Instance.lastAnimClickButton = this.gameObject;
                 if (GamePlayButtonEvents.inst != null && GamePlayButtonEvents.inst.selectionPanelOpen)
@@ -142,9 +175,21 @@ public class LoadButtonClick : MonoBehaviour
 
                 if (EmoteAnimationHandler.Instance.alreadyRuning)
                 {
+                    //GameplayEntityLoader.animClick = true;
                     EmoteAnimationHandler.remoteUrlAnimation = objectUrl;
                     EmoteAnimationHandler.remoteUrlAnimationName = animationName;
+                    //  PlayerPrefs.Save();
+                    //prefabObj.transform.GetChild(3).gameObject.SetActive(true);
                     EmoteAnimationHandler.Instance.Load(objectUrl, prefabObj);
+
+                    //foreach (Transform obj in ContentPanel.transform)
+                    //{
+
+                    //    obj.gameObject.transform.GetChild(2).gameObject.SetActive(false);
+                    //    // }
+
+                    //}
+                    //highlighter.SetActive(true);
                 }
                 try
                 {
@@ -171,6 +216,7 @@ public class LoadButtonClick : MonoBehaviour
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
         AnimationData animData = new AnimationData();
+        //StarImg.sprite = AvatarSpawnerOnDisconnect.Instance.FavouriteAnimationSprite;
         animData.animationName = animationName;
         animData.animationURL = objectUrl;
         animData.thumbURL = thumbUrl;
@@ -179,6 +225,8 @@ public class LoadButtonClick : MonoBehaviour
     }
     private void AnimationStopped()
     {
+        //AssetBundle.UnloadAllAssetBundles(false);
+        //Resources.UnloadUnusedAssets();
         highlighter.SetActive(false);
     }
 

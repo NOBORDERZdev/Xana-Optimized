@@ -69,7 +69,6 @@ public class WalletLogin: MonoBehaviour
             int expirationTime = timestamp + 60;
             // set message
             string message = expirationTime.ToString();
-            print("message is "+ message);
              string signature;
             string account;
             // sign message

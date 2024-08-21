@@ -92,8 +92,23 @@ public class XanaChatSystem : MonoBehaviour
     {
         if (instance != null && instance != this)
             this.isPanelConfirmationRequire = instance.isPanelConfirmationRequire;
+        //instance = this;
+    }
 
+    private void OnEnable()
+    {
         instance = this;
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.AddListener(OnEnterSend);
+        }
+    }
+    private void OnDisable()
+    {
+        if (!ConstantsHolder.xanaConstants.IsChatUseByOther)
+        {
+            this.InputFieldChat.onSubmit.RemoveAllListeners();
+        }
     }
 
     public void Start()
@@ -111,19 +126,17 @@ public class XanaChatSystem : MonoBehaviour
         }
 
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            this.UserName = PlayerPrefs.GetString("PlayerName");
+            this.UserName = PlayerPrefs.GetString("UserName");
         else if (string.IsNullOrEmpty(PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME)))
         {
             if (string.IsNullOrEmpty(this.UserName))
             {
                 this.UserName = "user" + Environment.TickCount % 99; //made-up username
-                Debug.Log("username chat===" + this.UserName);
             }
         }
         else
         {
             this.UserName = PlayerPrefs.GetString(ConstantsGod.GUSTEUSERNAME);
-            Debug.Log("username chat1===" + this.UserName);
         }
 
         Connect();
@@ -214,7 +227,7 @@ public class XanaChatSystem : MonoBehaviour
     public void Connect()
     {
         if (PlayerPrefs.GetInt("IsLoggedIn") == 1)
-            this.UserName = PlayerPrefs.GetString("PlayerName");
+            this.UserName = PlayerPrefs.GetString("UserName");
 
         PlayerPrefs.SetString(UsernamePrefs, this.UserName);
         PlayerPrefs.SetString(ConstantsGod.PLAYERNAME, this.UserName);
@@ -224,7 +237,6 @@ public class XanaChatSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(.3f);
         ChatScrollRect.verticalNormalizedPosition = 1f;
-        //Debug.Log("================"+ ChatScrollRect.verticalNormalizedPosition);
     }
 
     protected bool isChatOpen;
@@ -238,6 +250,11 @@ public class XanaChatSystem : MonoBehaviour
             chatDialogBox.SetActive(true);
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = true;
+
+
+            // Due to Overlapping of Minimap and Chat, Disable Minimap
+            ReferencesForGamePlay.instance.minimap.SetActive(false);
+            ReferencesForGamePlay.instance.SumitMapStatus(false);
 
             // Confirmation Panel Not Require
             //if (!isPanelConfirmationRequire)
@@ -260,14 +277,44 @@ public class XanaChatSystem : MonoBehaviour
             chatDialogBox.SetActive(false);
             chatNotificationIcon.SetActive(false);
             chatButton.GetComponent<Image>().enabled = false;
+
+            if (PlayerPrefs.GetInt("minimap") == 1)
+            {
+                if (ConstantsHolder.xanaConstants.IsMetabuzzEnvironment)
+                    return;
+                ReferencesForGamePlay.instance.minimap.SetActive(true);
+                ReferencesForGamePlay.instance.SumitMapStatus(true);
+            }
+        }
+
+
+
+    }
+    public void OpenCloseChatDialog(bool _state)
+    {
+        isChatOpen = _state;
+
+        if (isChatOpen)
+        {
+            chatDialogBox.SetActive(true);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = true;
+        }
+        else
+        {
+            chatDialogBox.SetActive(false);
+            chatNotificationIcon.SetActive(false);
+            chatButton.GetComponent<Image>().enabled = false;
         }
     }
     public void OnEnterSend()
     {
-       string removeBadWords = string.IsNullOrEmpty(InputFieldChat.text) ? "<color=red>No text to test!</color>" : BWFManager.Instance.ReplaceAll(InputFieldChat.text);
-
-        print("Bad word !!" + removeBadWords);
-
+        string removeBadWords = "";
+        if (!string.IsNullOrEmpty(InputFieldChat.text))
+        {
+            removeBadWords = BWFManager.Instance.ReplaceAll(InputFieldChat.text);
+        }
+        Debug.LogError("removeBadWords_" + removeBadWords);
         if (!UserPassManager.Instance.CheckSpecificItem("Message Option/Chat option"))
         {
             //UserPassManager.Instance.PremiumUserUI.SetActive(true);
@@ -282,15 +329,18 @@ public class XanaChatSystem : MonoBehaviour
         }
 
         PlayerPrefs.SetString(ConstantsGod.SENDMESSAGETEXT, removeBadWords);
-        Debug.Log("text msg====" + PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
         ChatSocketManager.onSendMsg?.Invoke(ConstantsHolder.xanaConstants.MuseumID, removeBadWords, CallBy.User, "");
         ArrowManager.OnInvokeCommentButtonClickEvent(PlayerPrefs.GetString(ConstantsGod.SENDMESSAGETEXT));
 
-      //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
+        //  npcAlert?.Invoke(removeBadWords);  // call npc's to start chat //
 
         this.InputFieldChat.text = "";
-        removeBadWords = "";
+    }
+
+    public void OnEnterSend(string s)
+    {
+        OnEnterSend();
     }
 
     public void OnClickSend()
@@ -927,4 +977,6 @@ public class XanaChatSystem : MonoBehaviour
     //}
 
     #endregion
+
+
 }

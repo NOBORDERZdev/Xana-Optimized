@@ -94,15 +94,17 @@ public class ProfileUIHandler : MonoBehaviour
             _renderTexCamera.GetComponent<Camera>().targetTexture = null;
             _renderTexCamera.gameObject.SetActive(false);
         }
-        
+
+        // Properly destroy the newRenderTexture
         Object.Destroy(newRenderTexture);
 
-        //newRenderTexture.Release();
+        // Set game objects
         menuLightingObj.SetActive(true);
         lightingObj.SetActive(false);
+       
         if (maleAvatarRef)
             maleAvatarRef.SetActive(false);
-        if(femaleAvatarRef)
+        if (femaleAvatarRef)
             femaleAvatarRef.SetActive(false);
     }
 
@@ -208,7 +210,14 @@ public class ProfileUIHandler : MonoBehaviour
             _tempAvatarData = _userAvatarData;
             
             avatarRef.GetComponent<AvatarController>().InitializeFrndAvatar(_userAvatarData,avatarRef);
+            Invoke(nameof(AddAvatarLayertoRenderCam), 0.4f);
         }
+    }
+
+    void AddAvatarLayertoRenderCam()
+    {
+        int bodyLayer = LayerMask.NameToLayer("Body");
+        ProfileUIHandler.instance._renderTexCamera.GetComponent<Camera>().cullingMask |= (1 << bodyLayer);
     }
 
     public void SetUserAvatarDefaultClothing()
@@ -216,6 +225,7 @@ public class ProfileUIHandler : MonoBehaviour
         ActivateProfileAvatarByGender(Random.Range(0f, 2f) <= 1f ? "Male" : "Female");
         int _rand = Random.Range(0, avatarRef.GetComponent<CharacterBodyParts>().randomPresetData.Length);   
         avatarRef.GetComponent<AvatarController>().DownloadRandomFrndPresets(_rand);
+        Invoke(nameof(AddAvatarLayertoRenderCam), 0.4f);
     }
     public void SetUserAvatarRandomClothingForProfile(int randPreset, string gender)
     {

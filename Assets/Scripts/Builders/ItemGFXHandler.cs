@@ -12,8 +12,8 @@ public class ItemGFXHandler : ItemComponent
 
     private void OnEnable()
     {
-        if (gameObject.name.Contains("pfEFT02"))
-            UpdateMaterialShaders();
+        //if (gameObject.name.Contains("pfEFT02"))
+        //    UpdateMaterialShaders();
     }
 
     public void SetMaterialColorFromItemData(Color color)

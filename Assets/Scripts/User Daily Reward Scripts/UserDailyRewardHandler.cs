@@ -18,8 +18,6 @@ public class UserDailyRewardHandler : MonoBehaviour
     private TextMeshProUGUI _rewardedAmountText;
 
     private SocketManager _socketManager;
-    private int _myUserId = 0;
-    private bool _hasToShowDailyPopup = false;
 
     private string SocketUrl
     {
@@ -37,7 +35,6 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void Awake()
     {
-
         if (_instance == null)
         {
             _instance = this;
@@ -53,6 +50,10 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private IEnumerator Start()
     {
+        while (ConstantsHolder.userId == null)
+        {
+            yield return new WaitForSeconds(1f);
+        }
 
         if (SocketUrl != null)
         {
@@ -61,12 +62,7 @@ public class UserDailyRewardHandler : MonoBehaviour
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Error, OnSocketError);
             _socketManager.Socket.On<CustomError>(SocketIOEventTypes.Disconnect, OnSocketDisconnect);
         }
-
-        while (ConstantsHolder.userId == null)
-            yield return new WaitForSeconds(0.5f);
-
-        _myUserId = int.Parse(ConstantsHolder.userId);
-        //Debug.LogError("Daily Reward User Id : " + _myUserId);
+        CheckToShowDailyReward();
     }
 
     private void OnDisable()
@@ -95,33 +91,36 @@ public class UserDailyRewardHandler : MonoBehaviour
     }
     private void DailyRewardResponse(string resp)
     {
-        //Debug.LogError("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("Daily Reward Daily Reward Response : " + resp);
+        //Debug.Log("<color=green>Daily Reward ConstantsHolder.userId received : " + ConstantsHolder.userId + "</color>");
+
         UserDailyRewardData data = JsonConvert.DeserializeObject<UserDailyRewardData>(resp);
 
-        if (data.userId == _myUserId)
+        if (data.userId == int.Parse(ConstantsHolder.userId))
         {
+            Debug.Log("Daily Reward Daily Reward Response Id matched : " + resp);
             _rewardedAmountText.text = data.coin.ToString();
-            if (SceneManager.GetActiveScene().name == "Home")
-            {
-                ShowDailyRewardPopup();
-            }
-            else
-            {
-                _hasToShowDailyPopup = true;
-            }
+            ConstantsHolder.xanaConstants.hasToShowDailyPopup = true;
+            //if (SceneManager.GetActiveScene().name == "Home")
+            //{
+            //    ShowDailyRewardPopup();
+            //}
+            //else
+            //{
+            //    _hasToShowDailyPopup = true;
+            //}
         }
     }
     private void ShowDailyRewardPopup()
     {
         _dailyRewardPopup.SetActive(true);
-        _hasToShowDailyPopup = false;
         InventoryManager.instance.UpdateUserXeny();
     }
 
-    //Executes when Home Scene is loaded
+    //Executes when Scene is loaded
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        if (arg0.name == "Home" && _hasToShowDailyPopup)
+        if (arg0.name == "Home" && ConstantsHolder.xanaConstants.hasToShowDailyPopup && ConstantsHolder.xanaConstants.isGoingForHomeScene)
         {
             //Debug.LogError("Home Scene Loaded");
             StartCoroutine(ShowDailyRewardRoutine());
@@ -139,6 +138,19 @@ public class UserDailyRewardHandler : MonoBehaviour
         StopCoroutine(ShowDailyRewardRoutine());
     }
 
+    private void CheckToShowDailyReward()
+    {
+        if (ConstantsHolder.xanaConstants.hasToShowDailyPopup)
+        {
+            ShowDailyRewardPopup();
+        }
+    }
+
+    public void DailyRewardPopupOkBtn()
+    {
+        _dailyRewardPopup.SetActive(false);
+        ConstantsHolder.xanaConstants.hasToShowDailyPopup = false;
+    }
 }
 
 [Serializable]

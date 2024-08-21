@@ -56,6 +56,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated += StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded += PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation += OnOrientationChange;
+            BuilderEventManager.ResetSummit += ResetAll;
         }
     }
 
@@ -66,6 +67,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderEventManager.AfterPlayerInstantiated -= StartDownloadingAssets;
             BuilderEventManager.AfterMapDataDownloaded -= PostLoadingBuilderAssets;
             ScreenOrientationManager.switchOrientation -= OnOrientationChange;
+            BuilderEventManager.ResetSummit -= ResetAll;
         }
         ResetAll();
     }
@@ -87,11 +89,19 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
+        if (SceneManager.sceneCount > 1 || ConstantsHolder.isFromXANASummit)
+        {
+            Photon.Pun.Demo.PunBasics.MutiplayerController.instance.Connect(ConstantsHolder.xanaConstants.EnviornmentName);
+            return;
+        }
         SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
     }
 
     public static void ArrangeData()
     {
+        builderDataDictionary.Clear();
+        downloadDataQueue.Clear();
+
         for (int i = 0; i < BuilderData.mapData.data.json.otherItems.Count; i++)
         {
             DownloadQueueData temp = new DownloadQueueData();
@@ -169,6 +179,8 @@ public class BuilderAssetDownloader : MonoBehaviour
 
     async void StartDownloadingAssets()
     {
+        if (ConstantsHolder.xanaConstants.isBuilderScene)
+            BuilderEventManager.ApplySkyoxSettings?.Invoke();
         SortingQueueData(initialPlayerPos);
         while (!dataSorted)
         {
@@ -188,8 +200,6 @@ public class BuilderAssetDownloader : MonoBehaviour
             assetDownloadingText.transform.parent.gameObject.SetActive(false);
             assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
         }
-
-        BuilderEventManager.UploadPropertiesInit?.Invoke();
     }
 
     IEnumerator DownloadAssetsFromSortedList()
@@ -210,6 +220,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -257,6 +268,7 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
                 //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
@@ -296,8 +308,9 @@ public class BuilderAssetDownloader : MonoBehaviour
             }
             if (_async.Status == AsyncOperationStatus.Succeeded)
             {
+                AddressableDownloader.bundleAsyncOperationHandle.Add(_async);
                 InstantiateAsset(_async.Result, builderDataDictionary[dicKey]);
-                AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
+                //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(_async, downloadKey);
             }
             else
             {
@@ -368,11 +381,6 @@ public class BuilderAssetDownloader : MonoBehaviour
     private static void InstantiateAsset(GameObject objectTobeInstantiate, ItemData _itemData)
     {
         GameObject newObj = Instantiate(objectTobeInstantiate, _itemData.Position, _itemData.Rotation, assetParentStatic);
-        //Rigidbody rb = null;
-        //newObj.TryGetComponent(out rb);
-        //if (rb == null)
-        //    rb = newObj.AddComponent<Rigidbody>();
-        //rb.isKinematic = true;
         newObj.SetActive(true);
         XanaItem xanaItem = newObj.GetComponent<XanaItem>();
         xanaItem.itemData = _itemData;
@@ -385,23 +393,15 @@ public class BuilderAssetDownloader : MonoBehaviour
             BuilderData.spawnPoint.Add(spawnPointData);
         }
 
-        if (IsMultiplayerComponent(_itemData) && GamificationComponentData.instance.withMultiplayer)
+        if(ConstantsHolder.HaveSubWorlds)
         {
-            newObj.SetActive(false);
-            if (PhotonNetwork.IsMasterClient)
+            if(_itemData.ItemID.Contains("TLP"))
             {
-                var multiplayerObject = PhotonNetwork.InstantiateRoomObject("MultiplayerComponent", _itemData.Position, _itemData.Rotation);
-                MultiplayerComponentData multiplayerComponentData = new();
-                multiplayerComponentData.RuntimeItemID = _itemData.RuntimeItemID;
-                multiplayerComponentData.viewID = multiplayerObject.GetPhotonView().ViewID;
-                GamificationComponentData.instance.SetMultiplayerComponentData(multiplayerComponentData);
+                XANASummitDataContainer.SceneTeleportingObjects.Add(newObj);
             }
-            return;
         }
 
-        //if (!newObj.name.Contains("pfBLD1210015_XANA"))
-        //    meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
-
+        //meshCombinerRef.HandleRendererEvent(xanaItem.itemGFXHandler._renderers, _itemData);
         //foreach (Transform childTransform in newObj.GetComponentsInChildren<Transform>())
         //{
         //    childTransform.tag = "Item";
@@ -504,11 +504,11 @@ public class BuilderAssetDownloader : MonoBehaviour
     }
 
 
-    void OnOrientationChange()
+    void OnOrientationChange(bool IsPortrait)
     {
         if (totalAssetCount != downloadedTillNow)
         {
-            if (ScreenOrientationManager._instance.isPotrait)
+            if (IsPortrait)
             {
                 assetDownloadingText.transform.parent.gameObject.SetActive(false);
                 assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(true);
@@ -521,19 +521,36 @@ public class BuilderAssetDownloader : MonoBehaviour
         }
     }
 
+    void ResetDisplayDownloadText()
+    {
+        assetDownloadingText.text = string.Empty;
+        assetDownloadingTextPotrait.text = string.Empty;
+        assetDownloadingText.transform.parent.gameObject.SetActive(false);
+        assetDownloadingTextPotrait.transform.parent.gameObject.SetActive(false);
+    }
+
     public void ResetAll()
     {
         stopDownloading = true;
-        //foreach(Transform t in assetParent)
-        //{
-        //    Destroy(t.gameObject);
-        //}
+        try
+        {
+            foreach (Transform t in assetParent)
+            {
+                Destroy(t.gameObject);
+            }
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("Object has destroyed but still trying to access it...");
+        }
+        
 
         downloadDataQueue.Clear();
         builderDataDictionary.Clear();
         BuilderData.mapData = null;
         BuilderData.spawnPoint.Clear();
         BuilderData.preLoadspawnPoint.Clear();
+        XANASummitDataContainer.SceneTeleportingObjects.Clear();
         downloadedTillNow = 0;
         totalAssetCount = 0;
         dataArranged = false;
@@ -541,7 +558,10 @@ public class BuilderAssetDownloader : MonoBehaviour
 
         // BuilderEventManager.OnBuilderDataFetch?.Invoke(ConstantsHolder.xanaConstants.builderMapID, SetConstant.isLogin);
         stopDownloading = false;
+
+        ResetDisplayDownloadText();
+        StopAllCoroutines();
     }
 
-
+   
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Video;
@@ -30,10 +31,11 @@ public class NFTFromServer : MonoBehaviour
     private string dynamicEventFeedApi = "/userCustomEvent/get-events-all-assets-of-user/";
     public string eventid;
     string MussuemLink;
+    public GameObject XanaSummitNFTHandler;
     //public List<Datum> TestList;
     void Start()
     {
-        if(dynamicManager == null)
+        if (dynamicManager == null)
         {
             dynamicManager = FindObjectOfType<DynamicMuseumManager>();
         }   
@@ -62,8 +64,21 @@ public class NFTFromServer : MonoBehaviour
             i++;
         }
         RoomCount = 4;
-       
-        Invoke(nameof(GetNFTDataDetails), 1f);
+        if (!ConstantsHolder.isFromXANASummit)
+        {
+            Invoke(nameof(GetNFTDataDetails), 1f);
+            //MussuemLink = _singleDomeMusuemApi + ConstantsHolder.xanaConstants.DomeID;
+        }
+        else
+        {
+            GameObject _summitNFTHandlerRef = Instantiate(XanaSummitNFTHandler, Vector3.zero, Quaternion.identity);
+            _summitNFTHandlerRef.GetComponentInChildren<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //if (!this.GetComponent<SummitDomeNFTDataController>())
+            //{
+            //    this.AddComponent<SummitDomeNFTDataController>();
+            //    this.GetComponent<SummitDomeNFTDataController>().NFTDataFetchScrptRef = this;
+            //}
+        }
 
        // Invoke(nameof(UpdateFrames), 2f);
     }

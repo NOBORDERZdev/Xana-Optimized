@@ -21,6 +21,15 @@ public class AdditiveScenesLoader : MonoBehaviour
 
     private void Start()
     {
+        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly && !ConstantsHolder.xanaConstants.isBackFromWorld)
+        {
+            sceneDelay = .5f;
+            StartCoroutine(AddDelayStore(sceneDelay / 3));
+            StartCoroutine(AddDelay(sceneDelay));
+            GameManager.Instance.isAllSceneLoaded = true;
+            return;
+        }
+
         if(!ConstantsHolder.xanaConstants.JjWorldSceneChange)
         {
             sceneDelay = .5f;
@@ -67,7 +76,8 @@ public class AdditiveScenesLoader : MonoBehaviour
             isAppOpen = true;
             GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.App_Started.ToString());
         }
-        MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
+        GameManager.Instance.isAllSceneLoaded = true;
+        //MainSceneEventHandler.MemoryRelaseAfterLoading?.Invoke();
     }
     //IEnumerator AddDelaySNSMessageModule(float delay)
     //{

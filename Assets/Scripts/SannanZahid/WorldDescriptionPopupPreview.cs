@@ -35,6 +35,7 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
     public GameObject m_WorldPlayPanel;
     public ScrollActivity scrollActivity;
     public Transform AvatarIcon;
+    public Transform XanaAvatarIcon;
     public Sprite NoAvatarIcon;
     public TextMeshProUGUI CreatorDescriptionTxt;
     public GameObject creatorPanel, sepLineSmallView, sepLineLargeView;
@@ -182,23 +183,23 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
         CreatorNameTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Name);
         CreatorDescriptionTxt.GetComponent<TextLocalization>().LocalizeTextText(creator_Description);
         AvatarIcon.GetChild(0).GetComponent<Image>().sprite = NoAvatarIcon;
-        if (string.IsNullOrEmpty(userAvatarURL))
-        {
+        //if (string.IsNullOrEmpty(userAvatarURL))
+        //{
             //NoAvatarIcon.gameObject.SetActive(true);
             //XanaAvatarIcon.gameObject.SetActive(false);
             //AvatarIcon.gameObject.SetActive(true);
-        }
-        //else if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
-        //{
-        //    NoAvatarIcon.gameObject.SetActive(false);
-        //    XanaAvatarIcon.gameObject.SetActive(true);
-        //    AvatarIcon.gameObject.SetActive(false);
         //}
-        else
+        if (!string.IsNullOrEmpty(creatorName) && creatorName.ToLower().Contains("xana"))
         {
             //NoAvatarIcon.gameObject.SetActive(false);
-            //XanaAvatarIcon.gameObject.SetActive(false);
-            //AvatarIcon.gameObject.SetActive(true);
+            XanaAvatarIcon.gameObject.SetActive(true);
+            AvatarIcon.gameObject.SetActive(false);
+        }
+        else if (!string.IsNullOrEmpty(userAvatarURL))
+        {
+            //NoAvatarIcon.gameObject.SetActive(false);
+            XanaAvatarIcon.gameObject.SetActive(false);
+            AvatarIcon.gameObject.SetActive(true);
             StartCoroutine(DownloadAndSetImage(userAvatarURL, UserProfileImg));
         }
         creatorPanel.SetActive(true);
@@ -324,11 +325,11 @@ public class WorldDescriptionPopupPreview : MonoBehaviour
                 temp.GetComponent<TagPrefabInfo>().tagName.text = temp.GetComponent<TagPrefabInfo>().tagName.text.ToUpper();
                 //temp.GetComponent<TagPrefabInfo>().tagNameHighlighter.text = m_WorldTags[i];
                 temp.GetComponent<TagPrefabInfo>().descriptionPanel = worldDetailPage;
-                if (i == 0)
-                {
-                    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
-                    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
-                }
+                //if (i == 0)
+                //{
+                //    temp.GetComponent<Image>().color = new Color(0.1607843f, 0.1607843f, 0.1882353f);
+                //    temp.GetComponent<TagPrefabInfo>().tagName.color = Color.white;
+                //}
             }
         }
         tagsInstantiated = true;

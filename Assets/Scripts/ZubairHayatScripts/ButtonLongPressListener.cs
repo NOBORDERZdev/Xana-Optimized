@@ -14,6 +14,8 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
+    [SerializeField]
+    private GameObject copiedTextPanel;
     public PersonalData Data;
     public enum PersonalData
     {
@@ -28,11 +30,9 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
     private bool isPointerDown = false;
     private bool isLongPressed = false;
     private DateTime pressTime;
-
-
     private Button button;
-
     private WaitForSeconds delay;
+
 
 
     private void Awake()
@@ -47,13 +47,40 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
         pressTime = DateTime.Now;
         StartCoroutine(Timer());
     }
-
-
     public void OnPointerUp(PointerEventData eventData)
     {
         isPointerDown = false;
         isLongPressed = false;
     }
+    public void DisplayMsg()
+    {
+        //string msg = "";
+        TextEditor textEditor = new TextEditor();
+        switch (Data)
+        {
+            case PersonalData.Email:
+                //msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
+                break;
+            case PersonalData.phoneNumber:
+                //msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
+                break;
+            case PersonalData.WalletAddress:
+                //msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
+                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
+                break;
+        }
+        textEditor.SelectAll();
+        textEditor.Copy();
+
+#if UNITY_IOS || UNITY_EDITOR
+        copiedTextPanel.SetActive(true);
+        Invoke("DisableToast",1f);
+#endif
+        //SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
+    }
+
 
     private IEnumerator Timer()
     {
@@ -73,29 +100,8 @@ public class ButtonLongPressListener : MonoBehaviour, IPointerDownHandler, IPoin
             yield return delay;
         }
     }
-
-    public void DisplayMsg()
+    private void DisableToast()
     {
-        string msg = "";
-        TextEditor textEditor = new TextEditor();
-        switch (Data)
-        {
-            case PersonalData.Email:
-                msg = "Your Xana email [" + FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoEmailText.text;
-                break;
-            case PersonalData.phoneNumber:
-                msg = "Your Xana Phone number [" + FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPhoneNumberText.text;
-                break;
-            case PersonalData.WalletAddress:
-                msg = "Your Xana wallet address [" + FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text + "] has been copied";
-                textEditor.text = FeedUIController.Instance.SNSSettingController.personalInfoPublicaddressText.text;
-                break;
-        }
-        textEditor.SelectAll();
-        textEditor.Copy();
-        SNSNotificationHandler.Instance.ShowNotificationMsg(msg);
+        copiedTextPanel.SetActive(false);
     }
-
 }

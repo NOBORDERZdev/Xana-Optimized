@@ -20,6 +20,7 @@ public class UploadPropertyBehaviour : MonoBehaviour
     //[HideInInspector] public int index;
     public MediaTypeBuilder mediaType;
     public StreamYoutubeVideo streamYoutubeVideo;
+    public AdvancedYoutubePlayer YoutubePlayer;
     AudioSource videoAudioSource;
 
     private void OnEnable()
@@ -28,6 +29,8 @@ public class UploadPropertyBehaviour : MonoBehaviour
         BuilderEventManager.BGMVolume += BGMVolume;
         feedMediaPlayer.Events.AddListener(HandleEvent);
         videoAudioSource = videoPlayer.GetComponent<AudioSource>();
+        mediaPlayer.AudioVolume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
+        videoAudioSource.volume = SoundSettings.soundManagerSettings.totalVolumeSlider.value;
     }
 
     private void OnDisable()
@@ -68,16 +71,24 @@ public class UploadPropertyBehaviour : MonoBehaviour
 
     void PlayYTvideo()
     {
-        videoPlayer.gameObject.SetActive(!liveStream);
-        mediaPlayer.gameObject.SetActive(liveStream);
-        videoPlayer.isLooping = isRepeat;
-        if (streamYoutubeVideo != null)
-        {
-            streamYoutubeVideo.id = id;
-            streamYoutubeVideo.StreamYtVideo(url, liveStream);
-        }
+        //videoPlayer.gameObject.SetActive(!liveStream);
+        //mediaPlayer.gameObject.SetActive(liveStream);
+        //videoPlayer.isLooping = isRepeat;
+        //if (streamYoutubeVideo != null)
+        //{
+        //    streamYoutubeVideo.id = id;
+        //    streamYoutubeVideo.StreamYtVideo(url, liveStream);
+        //}
+        string youtubeVideoID = ExtractVideoIdFromUrl(url);
+        if (string.IsNullOrEmpty(youtubeVideoID))
+            return;
+        YoutubePlayer.IsLive = liveStream;
+        YoutubePlayer.VideoId = !liveStream ? youtubeVideoID : url;
+        YoutubePlayer.PreferedQuality = !liveStream ? AdvancedYoutubePlayer.Quality.Standard : AdvancedYoutubePlayer.Quality.HIGH;
+        YoutubePlayer.UploadFeatureVideoID = id;
+        YoutubePlayer.VideoPlayer.isLooping = YoutubePlayer.VideoPlayer1.isLooping = isRepeat;
+        YoutubePlayer.PlayVideo();
     }
-
     //public void PlayYoutubeVideo()
     //{
     //    ResetPlayer();
@@ -101,7 +112,11 @@ public class UploadPropertyBehaviour : MonoBehaviour
     void HandleEvent(MediaPlayer mp, MediaPlayerEvent.EventType eventType, ErrorCode code)
     {
         Debug.Log("MediaPlayer " + mp.Info + " generated event: " + eventType.ToString());
-        if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
+        if (eventType == MediaPlayerEvent.EventType.Error)
+        {
+            loadingScreen.SetActive(true);
+        }
+        else if (eventType == MediaPlayerEvent.EventType.FirstFrameReady)
         {
             if (loadingScreen) loadingScreen.SetActive(false);
             feedMediaPlayer.VideoPrepared?.Invoke(feedMediaPlayer);
@@ -221,5 +236,27 @@ public class UploadPropertyBehaviour : MonoBehaviour
 
         // Start playing the video
         //feedMediaPlayer.Play();
+    }
+
+    public string ExtractVideoIdFromUrl(string url)
+    {
+        // Find the position of the "v=" parameter
+        int startIndex = url.IndexOf("v=");
+
+        if (startIndex != -1)
+        {
+            // Extract the substring after "v="
+            startIndex += 2; // Move past "v="
+            int endIndex = url.IndexOf('&', startIndex);
+            if (endIndex == -1)
+                endIndex = url.Length;
+
+            // Get the video ID
+            string videoId = url.Substring(startIndex, endIndex - startIndex);
+            return videoId;
+        }
+
+        // If "v=" parameter is not found, handle accordingly (e.g., return null or an error message)
+        return null;
     }
 }

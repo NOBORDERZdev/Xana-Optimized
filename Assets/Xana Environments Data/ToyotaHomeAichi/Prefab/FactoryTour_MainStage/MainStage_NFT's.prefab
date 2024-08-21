@@ -562,6 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 7
   imgVideo16x9: {fileID: 2504403680393450957}
@@ -1654,7 +1655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: -270, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.06, y: -0}
+  m_AnchoredPosition: {x: -0.1, y: -0}
   m_SizeDelta: {x: 2.8, y: 1.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4237530104361696748
@@ -5735,7 +5736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.08, y: 0.42}
+  m_AnchoredPosition: {x: -0.1, y: 0.42}
   m_SizeDelta: {x: 3.7, y: 3.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &663295820760170788
@@ -6006,6 +6007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 4
   imgVideo16x9: {fileID: 1230665100628666062}
@@ -6832,6 +6834,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 163
@@ -8587,6 +8590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 3
   imgVideo16x9: {fileID: 7855809191213857397}
@@ -9391,7 +9395,6 @@ MonoBehaviour:
   firebaseEventName: 
   clickedNftInd: 0
   NFTLoadedSprites: []
-  NFTLoadedVideos: []
   videoRenderObject: {fileID: 0}
   videoPlayerSource: {fileID: 0}
   livePlayerSource: {fileID: 0}
@@ -9885,8 +9888,10 @@ MonoBehaviour:
   maxDistance: 20
   minDistance: 1
   updateInterval: 0.5
+  playerCam: {fileID: 0}
   activePlayer: {fileID: 2507505394166159395}
   audioSource: {fileID: 5026257661121069021}
+  PlayerTriggerCheck: {fileID: 0}
 --- !u!1 &5026257660917194773
 GameObject:
   m_ObjectHideFlags: 0
@@ -10155,7 +10160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -10346,6 +10351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 1
   isAddBtnCompOnScreen: 0
   id: 1
   imgVideo16x9: {fileID: 5026257661121068995}
@@ -10392,6 +10398,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   streamAbleUrl: 
+  oldUrl: 
+  LiveVideoUIRef: {fileID: 0}
+  SumitDomeNftCntrlrRef: {fileID: 0}
   mediaPlayer: {fileID: 2507505394166159395}
   videoPlayer: {fileID: 5026257661121068993}
   liveVideoPlay:
@@ -11283,6 +11292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 5
   imgVideo16x9: {fileID: 2744202428173100980}
@@ -11540,7 +11550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.049, y: 0.556}
+  m_AnchoredPosition: {x: -0.1, y: 0.556}
   m_SizeDelta: {x: 3.07, y: 3.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6209768391546401677
@@ -11868,6 +11878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 2
   imgVideo16x9: {fileID: 6444771116353898451}
@@ -12917,6 +12928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 0
   imgVideo16x9: {fileID: 5769877842880492678}
@@ -13911,6 +13923,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b95eacaf7a29e4a9cb86ea701ab4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NFT: 0
   isAddBtnCompOnScreen: 1
   id: 6
   imgVideo16x9: {fileID: 7897563328296300845}

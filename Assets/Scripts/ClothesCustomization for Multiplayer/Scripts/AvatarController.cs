@@ -426,13 +426,25 @@ public class AvatarController : MonoBehaviour
         if (File.Exists(folderPath) && File.ReadAllText(folderPath) != "") //Check if data exist
         {
             SavingCharacterDataClass _CharacterData = new SavingCharacterDataClass();
-            if (_data != null)
+            
+
+            if (ConstantsHolder.isPenguin)
+                return;
+            else if(ConstantsHolder.isFixedHumanoid)
+            {
+                _CharacterData = _CharacterData.CreateFromJSON(XANASummitDataContainer.FixedAvatarJson);
+                clothJson = XANASummitDataContainer.FixedAvatarJson;
+            }
+            else if (_data != null)
                 _CharacterData = _data;
             else
+            {
                 _CharacterData = _CharacterData.CreateFromJSON(File.ReadAllText(folderPath));
+                clothJson = File.ReadAllText(folderPath);
+            }
 
             _PCharacterData = _CharacterData;
-            clothJson = File.ReadAllText(folderPath);
+            
             var gender = _CharacterData.gender ?? "Male";
             var avatarController = this.gameObject.GetComponent<AvatarController>();
             sceneName = SceneManager.GetActiveScene().name; // updating scene name if scene changed.
@@ -454,7 +466,8 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = _CharacterData.myItemObj[i].ItemType;
-                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!string.IsNullOrEmpty(_CharacterData.myItemObj[i].ItemName) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
@@ -468,7 +481,7 @@ public class AvatarController : MonoBehaviour
                                             if (!string.IsNullOrEmpty(_CharacterData.hairItemData) && _CharacterData.hairItemData.Contains("No hair") && wornHair)
                                                 UnStichItem("Hair");
                                             else
-                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController,_CharacterData.HairColor));
+                                                StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, _CharacterData.HairColor));
                                         }
                                         else
                                             StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, avatarController, Color.clear));
@@ -572,7 +585,7 @@ public class AvatarController : MonoBehaviour
                         ApplyAIData(_CharacterData,this.gameObject);
                     }
                     characterBodyParts.LoadBlendShapes(_CharacterData, this.gameObject);
-                }
+                } 
 
                 #region Xana Avatar 1.0  //--> remove for xana avatar2.0
                 //if (_CharacterData.eyeTextureName != "" && _CharacterData.eyeTextureName != null)
@@ -682,7 +695,8 @@ public class AvatarController : MonoBehaviour
                         {
                             var item = _CharacterData.myItemObj[i];
                             string type = item.ItemType;
-                            if (!string.IsNullOrEmpty(item.ItemName) && !_CharacterData.myItemObj[i].ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!string.IsNullOrEmpty(item.ItemName) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                                 if (itemTypes.Any(item => type.Contains(item)))
@@ -873,7 +887,7 @@ public class AvatarController : MonoBehaviour
         }
         isClothLoaded = true;
     }
-
+  
     /// <summary>
     /// Setting Character from localJson neither than server
     /// </summary>
@@ -895,6 +909,7 @@ public class AvatarController : MonoBehaviour
             }
             else
             {
+                SetAvatarClothDefault(this.gameObject, _CharacterData.gender);
                 for (int i = 0; i < _CharacterData.myItemObj.Count; i++)
                 {
                      var item= _CharacterData.myItemObj[i];
@@ -904,7 +919,8 @@ public class AvatarController : MonoBehaviour
                         HashSet<string> itemTypes = new HashSet<string> { "Legs", "Chest", "Feet", "Hair", "EyeWearable", "Glove", "Chain" };
                         if (itemTypes.Any(item => type.Contains(item)))
                         {
-                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) && 
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
                                 StartCoroutine(addressableDownloader.DownloadAddressableObj(item.ItemID, item.ItemName, type, gender, this.GetComponent<AvatarController>(), Color.clear));
                             }
@@ -1374,6 +1390,17 @@ public class AvatarController : MonoBehaviour
     {
         CharacterBodyParts bodyParts = characterBodyParts;
 
+        //Debug.Log("Item: " + type + " --- Gender: " + gender);
+
+        if (gender.IsNullOrEmpty())
+        {
+            if (applyOn.name.Contains("Female", System.StringComparison.CurrentCultureIgnoreCase))
+                gender = "Female";
+            else
+                gender = "Male";
+        }
+
+
         if (itemDatabase== null)
         {
             itemDatabase = DefaultClothDatabase.instance;
@@ -1426,26 +1453,27 @@ public class AvatarController : MonoBehaviour
                     break;
             }
         }
-        else
-        {
-            switch (type)
-            {
-                case "Legs":
-                    StichItem(-1, itemDatabase.DefaultPent, type, applyOn);
-                    break;
-                case "Chest":
-                    StichItem(-1, itemDatabase.DefaultShirt, type, applyOn);
-                    break;
-                case "Feet":
-                    StichItem(-1, itemDatabase.DefaultShoes, type, applyOn);
-                    break;
-                case "Hair":
-                    StichItem(-1, itemDatabase.DefaultHair, type, applyOn);
-                    break;
-                default:
-                    break;
-            }
-        }
+       
+        //else
+        //{
+        //    switch (type)
+        //    {
+        //        case "Legs":
+        //            StichItem(-1, itemDatabase.DefaultPent, type, applyOn);
+        //            break;
+        //        case "Chest":
+        //            StichItem(-1, itemDatabase.DefaultShirt, type, applyOn);
+        //            break;
+        //        case "Feet":
+        //            StichItem(-1, itemDatabase.DefaultShoes, type, applyOn);
+        //            break;
+        //        case "Hair":
+        //            StichItem(-1, itemDatabase.DefaultHair, type, applyOn);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 
     /// <summary>
@@ -1667,6 +1695,7 @@ public class AvatarController : MonoBehaviour
             case "Hair":
                 wornHair = item;
                 wornHairId = itemId;
+                wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
                 break;
 
             case "Feet":
@@ -1705,12 +1734,13 @@ public class AvatarController : MonoBehaviour
             // Also Remove Pant Mask
             tempBodyParts.ApplyMaskTexture("Legs", null, this.gameObject);
         }
-        else if (type == "Legs" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
+        else if (type == "Legs" && SceneManager.GetActiveScene().name != "Home" && (wornShirt && wornShirt.name.Contains("Full_Costume", System.StringComparison.CurrentCultureIgnoreCase)))
         {
-            // User Has wear Full Costume 
-            // Change Full costume to Default shirt 
+            if (SceneManager.GetActiveScene().name != "Home")
+                // User Has wear Full Costume 
+                // Change Full costume to Default shirt 
 
-            WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
+                WearDefaultItem("Chest", applyOn.gameObject, CharacterHandler.instance.activePlayerGender.ToString());
 
             // Apply Mask For Default Shirt
             tempBodyParts.DefaultTextureForNewCharacter_Single("Shirt");
@@ -1774,6 +1804,7 @@ public class AvatarController : MonoBehaviour
         }
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
 
         if (PlayerPrefs.GetInt("presetPanel") != 1)
         {
@@ -1817,6 +1848,7 @@ public class AvatarController : MonoBehaviour
         item.layer = 22;
         wornHair = item;
         wornHairId = itemId;
+        wornHair.GetComponent<SkinnedMeshRenderer>().updateWhenOffscreen = true;
     }
 
     /// <summary>
@@ -2047,9 +2079,10 @@ public class AvatarController : MonoBehaviour
                         if (itemTypes.Any(item => type.Contains(item)))
                         {
                             //getHairColorFormFile = true;
-                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase))
+                            if (!item.ItemName.Contains("md", System.StringComparison.CurrentCultureIgnoreCase) &&
+                                !item.ItemName.Contains("default", System.StringComparison.CurrentCultureIgnoreCase))
                             {
-                                if (type.Contains("Hair") && _CharacterData.hairItemData.Contains("No hair"))
+                                if (type.Contains("Hair") && (_CharacterData.hairItemData != null && _CharacterData.hairItemData.Contains("No hair")))
                                 {
                                     if (wornHair)
                                         UnStichItem("Hair");

@@ -11,7 +11,7 @@ public class UIHandler : MonoBehaviour
      public CanvasGroup Loadinghandler_CanvasRef;
     public GameObject _SplashScreen;
 
-    public Transform _postScreen,_postCamera;
+    public Transform _postScreen,_postCamera, _postScreenBG;
     public bool IsSplashActive = true;
     /*public Transform SecondSliderScrollView;*/
 
@@ -55,6 +55,9 @@ public class UIHandler : MonoBehaviour
 
     public void AvatarSelectionBtnClicked()
     {
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
         if (!isAvatarSelectionBtnClicked)
             isAvatarSelectionBtnClicked = true;
         GameManager.Instance.HomeCameraInputHandler(false);
@@ -63,16 +66,21 @@ public class UIHandler : MonoBehaviour
 
     public void SwitchToPostScreen(bool flag)
     {
-       
+
+        if (!GameManager.Instance.isAllSceneLoaded)
+            return;
+
         if ( (PlayerPrefs.GetInt("IsLoggedIn") == 0))
         {
            // SNSNotificationHandler.Instance.ShowNotificationMsg("Need To Login");
         }
         else
         {
+            CharacterHandler.instance.playerNameCanvas.SetActive(!flag);
             GameManager.Instance.HomeCameraInputHandler(!flag);
 
             _postScreen.gameObject.SetActive(flag);
+            _postScreenBG.gameObject.SetActive(flag);
             HomePage.gameObject.SetActive(!flag);
             _postCamera.gameObject.SetActive(flag);
             ShowFooter(!flag);

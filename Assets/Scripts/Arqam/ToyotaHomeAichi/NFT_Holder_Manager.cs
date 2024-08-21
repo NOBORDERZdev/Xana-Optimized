@@ -47,7 +47,7 @@ public class NFT_Holder_Manager : MonoBehaviour
         else
             Destroy(this.gameObject);
     }
-
+   
     private void Start()
     {
         if (PhotonNetwork.IsMasterClient)
@@ -60,19 +60,36 @@ public class NFT_Holder_Manager : MonoBehaviour
         else if (meetingStatus == null)
             meetingStatus = FindObjectOfType<ThaMeetingStatusUpdate>();
 
+        SetChatRefrence();
+
+        // send Space_Entry_UniqueUsers_Mobile_App
+        GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.SE_UU_Mobile_App_THA.ToString());
+    }
+    //private void OnApplicationFocus(bool hasFocus)
+    //{
+    //    if (!hasFocus)
+    //    {
+    //        Debug.Log("---Infinity Labo Nft Close due to Application minimized");
+    //        CloseBtnClicked();
+    //    }
+
+    //}
+    public void SetChatRefrence()
+    {
         _chatSystem = XanaChatSystem.instance;
-        if (_chatSystem != null)
+        if (Extended_XCS == null)
         {
             Extended_XCS = gameObject.AddComponent<ExtendedXanaChatSystem>();
-            Extended_XCS.PotriatCurrentChannelText = _chatSystem.PotriatCurrentChannelText;
-            Extended_XCS.CurrentChannelText = _chatSystem.CurrentChannelText;
-            Extended_XCS.UserName = _chatSystem.UserName;
-            Extended_XCS.chatDialogBox = _chatSystem.chatDialogBox;
-            Extended_XCS.chatNotificationIcon = _chatSystem.chatNotificationIcon;
-            Extended_XCS.chatButton = _chatSystem.chatButton;
-            Extended_XCS.ChatScrollRect = _chatSystem.ChatScrollRect;
-            Extended_XCS.InputFieldChat = _chatSystem.InputFieldChat;
         }
+
+        Extended_XCS.PotriatCurrentChannelText = _chatSystem.PotriatCurrentChannelText;
+        Extended_XCS.CurrentChannelText = _chatSystem.CurrentChannelText;
+        Extended_XCS.UserName = _chatSystem.UserName;
+        Extended_XCS.chatDialogBox = _chatSystem.chatDialogBox;
+        Extended_XCS.chatNotificationIcon = _chatSystem.chatNotificationIcon;
+        Extended_XCS.chatButton = _chatSystem.chatButton;
+        Extended_XCS.ChatScrollRect = _chatSystem.ChatScrollRect;
+        Extended_XCS.InputFieldChat = _chatSystem.InputFieldChat;
     }
 
     public void GetMeetingObjRef(ThaMeetingStatusUpdate meetingRef)
@@ -82,18 +99,18 @@ public class NFT_Holder_Manager : MonoBehaviour
 
     public void CloseBtnClicked()
     {
-        currentRoom.CloseInfoPop();
+        currentRoom?.CloseInfoPop();
         if (currentRoom != null) currentRoom = null;
-
-        renderTexture_16x9.Release();
-        renderTexture_9x16.Release();
-        renderTexture_1x1.Release();
-        renderTexture_4x3.Release();
+        renderTexture_16x9?.Release();
+        renderTexture_9x16?.Release();
+        renderTexture_1x1?.Release();
+        renderTexture_4x3?.Release();
     }
+
 
     public void PdfClosed()
     {
-        currentRoom.EnableControlls();
+        currentRoom?.EnableControlls();
         if (currentRoom != null) currentRoom = null;
     }
 

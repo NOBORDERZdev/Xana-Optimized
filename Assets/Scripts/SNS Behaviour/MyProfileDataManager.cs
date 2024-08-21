@@ -261,6 +261,7 @@ public class MyProfileDataManager : MonoBehaviour
             if (!isEditProfileNameAlreadyExists)
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
             }
             isEditProfileNameAlreadyExists = false;
             //Debug.Log("Profile Update Success and delete file");
@@ -321,7 +322,20 @@ public class MyProfileDataManager : MonoBehaviour
             profileUIHandler.followingBtn.interactable = true;
         }
         playerNameText.text = myProfileData.name;
-        displayName.text = myProfileData.userProfile.username;
+        if (!string.IsNullOrEmpty(myProfileData.userProfile.username))
+        {
+            string _userName = SNS_APIManager.DecodedString(myProfileData.userProfile.username);
+            if (!_userName.StartsWith("@"))
+            {
+                displayName.text = "@" + _userName;
+            }
+            displayName.gameObject.SetActive(true);
+        }
+        else
+        {
+            displayName.gameObject.SetActive(false);
+        }
+        //displayName.text = "@"+myProfileData.userProfile.username;
         lastTopUserText = myProfileData.name;
 
         totalFollowerText.text = myProfileData.followerCount.ToString();
@@ -663,6 +677,7 @@ public class MyProfileDataManager : MonoBehaviour
     {
         EditProfileDoneButtonSetUp(true);//setup edit profile done button.......
         editProfileScreen.SetActive(true);
+        feedUIController.footerCan.SetActive(false);
         SetupEditProfileScreen();
         OnScreenTabStateChange?.Invoke(BackButtonHandler.screenTabs.EditProfile);
     }
@@ -829,7 +844,6 @@ public class MyProfileDataManager : MonoBehaviour
     public void OnClickEditProfileBackButton()
     {
         ProfilePostPartShow();
-
         if (File.Exists(setImageAvatarTempPath))
         {
             File.Delete(setImageAvatarTempPath);
@@ -875,6 +889,7 @@ public class MyProfileDataManager : MonoBehaviour
     void EditProfileInfoCheckAndAPICalling()
     {
         string tempStr;
+        string keytoLocalize;
         if (!string.IsNullOrEmpty(editProfileNameAdvanceInputfield.Text) && editProfileNameAdvanceInputfield.Text != playerNameText.text)
         {
             tempStr = editProfileNameAdvanceInputfield.Text.Trim();
@@ -891,10 +906,25 @@ public class MyProfileDataManager : MonoBehaviour
         if (!string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text) && editProfileUniqueNameAdvanceInputfield.Text != uniqueUsername
             && (uniqueUsername != "null" || uniqueUsername != "Null"))
         {
+             if (editProfileUniqueNameAdvanceInputfield.Text.Length < 5 || editProfileUniqueNameAdvanceInputfield.Text.Length > 15)
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must be between 5 and 15 characters.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+            }
+            else if (!editProfileUniqueNameAdvanceInputfield.Text.Any(c => char.IsDigit(c) || c == '_'))
+            {
+                keytoLocalize = TextLocalization.GetLocaliseTextByKey("The username must not include Space. Alphabet, Numbers, or Underscore allowed.");
+                ShowEditProfileUniqueNameErrorMessage(keytoLocalize);
+                return;
+
+            }
+            
             tempStr = editProfileUniqueNameAdvanceInputfield.Text.Trim();
-            tempStr = "@" + tempStr;
-            uniqueUsername = tempStr;// adding @ as pr in UI mockUp v1.4 
+            tempStr = tempStr.Replace("@", "");
+            uniqueUsername = tempStr;
             checkEditInfoUpdated = 1;
+            ConstantsHolder.uniqueUserName = uniqueUsername;
         }
         else if (string.IsNullOrEmpty(editProfileUniqueNameAdvanceInputfield.Text))
         {
@@ -941,6 +971,7 @@ public class MyProfileDataManager : MonoBehaviour
             else
             {
                 editProfileScreen.SetActive(false);
+                feedUIController.footerCan.SetActive(true);
                 EditProfileDoneButtonSetUp(true);
             }
         }

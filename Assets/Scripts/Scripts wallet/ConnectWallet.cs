@@ -812,24 +812,24 @@ public class ConnectWallet : MonoBehaviour
         if (request.result != UnityWebRequest.Result.ConnectionError && request.result == UnityWebRequest.Result.Success)
         {
             if (VerifySignatureReadObj.success)
-            { 
+            {
                 PlayerPrefs.SetInt("WalletConnect", 1);
                 PlayerPrefs.SetString("LoginToken", VerifySignatureReadObj.data.token);
+                PlayerPrefs.SetString("UserId", VerifySignatureReadObj.data.user.id.ToString());
                 ConstantsGod.AUTH_TOKEN = VerifySignatureReadObj.data.token;
                 ConstantsHolder.xanaToken = VerifySignatureReadObj.data.token;
                 ConstantsHolder.userId = VerifySignatureReadObj.data.user.id.ToString();
                 //ConstantsHolder.loggedIn = true; // Updating Value in LoginWithWallet();
-                PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.id.ToString());
-
-                UserLoginSignupManager.instance.LoginWithWallet();
+                PlayerPrefs.SetString("UserName", VerifySignatureReadObj.data.user.name.ToString());
+                ConstantsHolder.userName = VerifySignatureReadObj.data.user.name.ToString();
                 PlayerPrefs.Save();
                 SetNameInServer();
                 GetNFTList();
-
+                UserLoginSignupManager.instance.LoginWithWallet();
+                MainSceneEventHandler.OnSucessFullLogin?.Invoke();
                 WalletConnectDataClasses.VerifySignedMsgClass VerifySignatureObj = new WalletConnectDataClasses.VerifySignedMsgClass();
                 VerifySignatureObj = VerifySignatureObj.VerifySignedClassFtn(VerifySignatureObj.nonce, sign);
                 var jsonObj2 = JsonUtility.ToJson(VerifySignatureObj);
-                //Debug.LogError(sign + "--" + ServerNounceXanalia);
                 StartCoroutine(HitChainSafeVerifySignatureXanaliaAPI(ConstantsGod.API_BASEURL_XANALIA + ConstantsGod.VerifySignedXanaliaURL, sign, ServerNounceXanalia));
             }
         }
@@ -1138,7 +1138,6 @@ public class ConnectWallet : MonoBehaviour
     {
         MyClassOfPostingName myObject = new MyClassOfPostingName();
         string bodyJsonOfName = JsonUtility.ToJson(myObject.GetNamedata(PlayerPrefs.GetString("Useridxanalia")));
-        print("Useridxanalia " + PlayerPrefs.GetString("Useridxanalia"));
         StartCoroutine(HitNameAPIWithNewTechnique(ConstantsGod.API_BASEURL + ConstantsGod.NameAPIURL, bodyJsonOfName, PlayerPrefs.GetString("Useridxanalia")));
         ConstantsHolder.xanaConstants.LoginasGustprofile = true;
     }

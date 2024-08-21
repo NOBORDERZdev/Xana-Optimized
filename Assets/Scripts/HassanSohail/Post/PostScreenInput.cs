@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UIElements;
 using System.Linq;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
@@ -53,6 +52,7 @@ public class PostScreenInput : MonoBehaviour
         ActiveInputFeild();
         StartCoroutine(SetBubblePos());
         bubbleHeightCheck = false;
+        bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
     }
 
     private void Start(){ 
@@ -78,6 +78,7 @@ public class PostScreenInput : MonoBehaviour
             ShowText.color = normalColor;
 
             // Check if the text contains an Emoji
+
             if (ContainsEmoji(ShowText.text))
             {
                 ShowText.lineSpacing = 1.0f;
@@ -137,6 +138,11 @@ public class PostScreenInput : MonoBehaviour
         {
             bubbleParent.anchorMin = new Vector2(0.1080481f, 0.6324353f);
             bubbleParent.anchorMax = new Vector2(0.8262953f, 0.8127741f);
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.81f;
+        }
+        if (ShowText.text.Count() > 35)
+        {
+            bubbleImage.GetComponent<Image>().pixelsPerUnitMultiplier = 0.6f;
         }
         if (ShowText.text.Count() >= 70)
         {

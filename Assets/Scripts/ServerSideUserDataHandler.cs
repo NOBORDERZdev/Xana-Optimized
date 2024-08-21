@@ -51,7 +51,8 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     string jbody = GameManager.Instance.selectedPresetData != "" ? GameManager.Instance.selectedPresetData : JsonUtility.ToJson(SubCatString);
                     File.WriteAllText(GameManager.Instance.GetStringFolderPath(), jbody);
                     //if user does not have data then open preset panel
-                    ConstantsHolder.xanaConstants.isFirstPanel = true; 
+                    ConstantsHolder.xanaConstants.isFirstPanel = true;
+                    LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
                     MainSceneEventHandler.OpenPresetPanel?.Invoke();
                 }
                 else
@@ -63,6 +64,12 @@ public class ServerSideUserDataHandler : MonoBehaviour
                     ConstantsHolder.userId = getdata.data.rows[0].createdBy.ToString();
                     File.WriteAllText(GetStringFolderPath(), jsonbody);
                     yield return new WaitForSeconds(0.1f);
+
+                    if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+                    {
+                        MainSceneEventHandler.OpenLandingScene?.Invoke();
+                        yield break;
+                    }
 
                     loadprevious();
 
