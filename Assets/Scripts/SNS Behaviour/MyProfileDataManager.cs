@@ -1165,7 +1165,6 @@ public class MyProfileDataManager : MonoBehaviour
 
         NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
         {
-         Debug.Log("Path of Image" + path);
             if (path != null)
             {
                 if (pickImageOptionScreen.activeSelf)//false meadia option screen.
@@ -1549,7 +1548,7 @@ public class MyProfileDataManager : MonoBehaviour
             //Caching.ClearCache();
             //GC.Collect();
         Destroy(screenshot);
-        Invoke(nameof(this.ProfilePostPartShow), 0.5f);
+        Invoke(nameof(ProfilePostPartShow), 0.5f);
         Resources.UnloadUnusedAssets();
         },
         settings: new ImageCropper.Settings()
