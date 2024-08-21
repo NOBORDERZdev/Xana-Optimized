@@ -31,6 +31,7 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     private GameObject mainControllerRefHolder;
     private GameObject YoutubeStreamPlayer;
     public GameObject PenguinPlayer;
+    public ActionManager ActionEmoteSystem;
 
     public CinemachineFreeLook PlayerCamera;
     public CinemachineFreeLook playerCameraCharacterRender;
