@@ -100,6 +100,8 @@ public class BuilderAssetDownloader : MonoBehaviour
     public static void ArrangeData()
     {
         builderDataDictionary.Clear();
+        downloadDataQueue.Clear();
+
         for (int i = 0; i < BuilderData.mapData.data.json.otherItems.Count; i++)
         {
             DownloadQueueData temp = new DownloadQueueData();

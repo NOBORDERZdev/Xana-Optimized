@@ -29,6 +29,8 @@ public class AdvancedYoutubePlayer : MonoBehaviour
 
     public bool IsLive;
     public bool PlayOnAwake;
+    [HideInInspector]
+    public string UploadFeatureVideoID;
 
     public YoutubeInstance YoutubeInstance;
 
@@ -159,6 +161,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
                     Debug.Log($"Setting video url to {url}");
                     VideoPlayer.url = url;
                     VideoPlayer.Prepare();
+                    BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
                     VideoPlayer.Play();
                 }
             }
@@ -201,6 +204,7 @@ public class AdvancedYoutubePlayer : MonoBehaviour
             }
         }*/
 
+        BuilderEventManager.YoutubeVideoLoadedCallback?.Invoke(UploadFeatureVideoID);
         // Play both video and audio
         VideoPlayer.Play();
         VideoPlayer1.Play();
