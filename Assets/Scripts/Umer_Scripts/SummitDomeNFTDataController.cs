@@ -263,6 +263,7 @@ NFTDataHandlerScrptRef.NFTSpawnPoints[j].transform.position.z);
                     }
                     break;
                 }
+                else
                 {
                     if (j == worldData.Count - 1)
                     {
