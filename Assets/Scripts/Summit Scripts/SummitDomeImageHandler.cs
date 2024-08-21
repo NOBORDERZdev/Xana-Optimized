@@ -25,12 +25,12 @@ public class SummitDomeImageHandler : MonoBehaviour
             SummitDomeShaderApply SummitDomeShaderApplyRef = XanaWorldDownloader.AllDomes[i].GetComponent<SummitDomeShaderApply>();
             string [] DomeData= XANASummitDataContainer.GetDomeImage(SummitDomeShaderApplyRef.DomeId);
             SummitDomeShaderApplyRef.ImageUrl = DomeData[0];
-            SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
-            SummitDomeShaderApplyRef.DomeText.GetComponent<TMPro.TextMeshPro>().font=DometextFont;
-            SummitDomeShaderApplyRef.DomeText.GetComponent<MeshRenderer>().material = DomeTextMaterial;
-            SummitDomeShaderApplyRef.DomeText.GetComponent<TMPro.TextMeshPro>().fontSize=4.5f;
-            SummitDomeShaderApplyRef.DomeText.GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
-            SummitDomeShaderApplyRef.DomeText.GetComponent<TMPro.TextMeshPro>().text = DomeData[1];
+            TMPro.TextMeshPro DomeText1=SummitDomeShaderApplyRef.DomeText.AddComponent<TMPro.TextMeshPro>();
+            DomeText1.font=DometextFont;
+            DomeText1.fontMaterial = DomeTextMaterial;
+            DomeText1.fontSize=4.5f;
+            DomeText1.alignment = TMPro.TextAlignmentOptions.Center;
+            DomeText1.text = DomeData[1];
             SummitDomeShaderApplyRef.Init();
         }
     }
