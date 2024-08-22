@@ -321,6 +321,7 @@ namespace Photon.Pun.Demo.PunBasics
         }
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
+            bool raceFinishStatus = false;
             if (otherPlayer.NickName == "XANA_XANA")
             {
                 ConstantsHolder.xanaConstants.isCameraManInRoom = false;
@@ -329,6 +330,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (otherPlayer.ActorNumber == playerobjects[x].GetComponent<PhotonView>().OwnerActorNr)
                 {
+                    raceFinishStatus = playerobjects[x].GetComponent<XANAPartyMulitplayer>().isRaceFinished;
                     playerobjects.RemoveAt(x);
                 }
             }
@@ -346,7 +348,7 @@ namespace Photon.Pun.Demo.PunBasics
                     }
                     else
                     {
-                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(raceFinishStatus);
                     }
 
                     if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
