@@ -10,18 +10,18 @@ using UnityEngine.InputSystem;
 public class AddressableMemoryReleaser : MonoBehaviour
 {
     [SerializeField]
-    List<MemoryObject> memoryObjects = new List<MemoryObject>();
+    private List<MemoryObject> _memoryObjects = new List<MemoryObject>();
     public void AddToReferenceList(AsyncOperationHandle Obj,string refKey)
     {
-        foreach(MemoryObject _mObj in memoryObjects)
+        foreach(MemoryObject item in _memoryObjects)
         {
-            if (_mObj.Key.Equals(refKey))
+            if (item.Key.Equals(refKey))
             {
                 return;
             }
         }
-        MemoryObject item = new(refKey, Obj);
-        memoryObjects.Add(item);
+        MemoryObject refItem = new(refKey, Obj);
+        _memoryObjects.Add(refItem);
         /*if (memoryObjects.Count > 0)
         {
             if (memoryObjects.First(x => x.Key.Equals(refKey)) == null)
@@ -38,12 +38,12 @@ public class AddressableMemoryReleaser : MonoBehaviour
     }
     public AsyncOperationHandle GetReferenceIfExist(string refKey,ref bool flag)
     {
-        foreach (MemoryObject _mObj in memoryObjects)
+        foreach (MemoryObject item in _memoryObjects)
         {
-            if (_mObj.Key.Equals(refKey))
+            if (item.Key.Equals(refKey))
             {
                 flag = true;
-                return _mObj.HandlerObj;
+                return item.HandlerObj;
             }
         }
         /*
@@ -62,29 +62,29 @@ public class AddressableMemoryReleaser : MonoBehaviour
     }
     public void RemoveAllAddressables()
     {
-        foreach (MemoryObject objj in memoryObjects)
+        foreach (MemoryObject item in _memoryObjects)
         {
-            if(objj.HandlerObj.IsValid())
+            if(item.HandlerObj.IsValid())
             {
-                Addressables.ReleaseInstance(objj.HandlerObj);
+                Addressables.ReleaseInstance(item.HandlerObj);
             }
         }
-        memoryObjects.Clear();
+        _memoryObjects.Clear();
         GC.Collect();
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
     }
     public void RemoveAddressable(string key)         // Added by Ali Hamza to release specific object based on key
     {
-        for (int i = memoryObjects.Count-1; i >=0 ; i--)
+        for (int i = _memoryObjects.Count-1; i >=0 ; i--)
         {
-            if (memoryObjects[i].Key.Equals(key))
+            if (_memoryObjects[i].Key.Equals(key))
             {
-                if (memoryObjects[i].HandlerObj.IsValid())
+                if (_memoryObjects[i].HandlerObj.IsValid())
                 {
-                    Addressables.ReleaseInstance(memoryObjects[i].HandlerObj);
+                    Addressables.ReleaseInstance(_memoryObjects[i].HandlerObj);
                 }
-                memoryObjects.Remove(memoryObjects[i]);
+                _memoryObjects.Remove(_memoryObjects[i]);
                 break;
             }
         }

@@ -13,7 +13,6 @@ public class LoadEmoteAnimations : MonoBehaviour
     public static bool animClick = false;
 
     public static LoadEmoteAnimations instance;
-    // Start is called before the first frame update
     void Awake()
     {
         instance = this;
@@ -36,12 +35,9 @@ public class LoadEmoteAnimations : MonoBehaviour
         if (GamePlayButtonEvents.inst != null) GamePlayButtonEvents.inst.OpenAllAnimsPanel -= AnimClick;
     }
 
-
-
     public void AnimClick()
     {
         animClick = true;
-
         AssetBundle.UnloadAllAssetBundles(false);
         Resources.UnloadUnusedAssets();
 #if UNITY_EDITOR
@@ -66,9 +62,6 @@ public class LoadEmoteAnimations : MonoBehaviour
         {
             animationSelectionPanel.SetActive(true);
         }
-       
-       
-        //Reaction_EmotePanel.instance.ReactionOff();
     }
     
     
@@ -82,7 +75,6 @@ public class LoadEmoteAnimations : MonoBehaviour
         {
             animationSelectionPanel.SetActive(false);
         }
-        //Reaction_EmotePanel.instance.ReactionOff();
     }
 
 }

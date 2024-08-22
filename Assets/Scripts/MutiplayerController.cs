@@ -67,7 +67,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "17";
+        string gameVersion = "Summit20";
         #endregion
 
         #region Multtisection Fields
@@ -374,7 +374,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 LFF.LoadFile();
             }
-            else { GameplayEntityLoader.instance.SetPlayer(); isShifting = false; DestroyPlayerDelay(); }
+            else { GameplayEntityLoader.instance.SetPlayer(); DestroyPlayerDelay(); }
         }
         public override void OnPlayerEnteredRoom(Player newPlayer)
         {
@@ -445,6 +445,8 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 DestroyImmediate(item);
             }
+            await new WaitForEndOfFrame();
+            isShifting = false;
         }
 
 

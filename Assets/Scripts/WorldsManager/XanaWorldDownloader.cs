@@ -46,7 +46,7 @@ public class XanaWorldDownloader : MonoBehaviour
     public static Dictionary<string, ObjectsInfo> xanaWorldDataDictionary = new Dictionary<string, ObjectsInfo>();
     public static Dictionary<string, GameObject> prefabObjectPool = new Dictionary<string, GameObject>();
     public static List<GameObject> AllDomes = new List<GameObject>();
-    
+
     public static SceneData xanaSceneData = new SceneData();
 
     private string response;
@@ -505,9 +505,17 @@ public class XanaWorldDownloader : MonoBehaviour
         newObj.name = _itemData.name;
         newObj.SetActive(_itemData.isActive);
         ApplyLightmapData(_itemData.lightmapData, newObj);
-        AddObjectInPool(downloadKey, newObj);
+        //AddObjectInPool(downloadKey, newObj);
         AssignDomeId(newObj, _itemData);
 
+        if (ConstantsHolder.HaveSubWorlds)
+        {
+            if (downloadKey.Contains("TLP"))
+            {
+                Debug.LogError("Teleport object");
+                XANASummitDataContainer.SceneTeleportingObjects.Add(objectTobeInstantiate);
+            }
+        }
 
 
     }
@@ -545,11 +553,11 @@ public class XanaWorldDownloader : MonoBehaviour
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().DomeId = _itemData.summitDomeInfo.domeIndex;
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.AddComponent<TMPro.TextMeshPro>().text = _itemData.summitDomeInfo.domeIndex.ToString();
             DomeObject.GetComponentInChildren<OnTriggerSceneSwitch>().textMeshPro.GetComponent<TMPro.TextMeshPro>().alignment = TMPro.TextAlignmentOptions.Center;
-            //if (DomeObject.GetComponent<SummitDomeShaderApply>())
-            //{
-            //    AllDomes.Add(DomeObject);
-            //    DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
-            //}
+            if (DomeObject.GetComponent<SummitDomeShaderApply>())
+            {
+                AllDomes.Add(DomeObject);
+                DomeObject.GetComponent<SummitDomeShaderApply>().DomeId = _itemData.summitDomeInfo.domeIndex;
+            }
 
         }
 

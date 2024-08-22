@@ -258,22 +258,26 @@ public class IKMuseum : MonoBehaviour
 
     private void BowTwiceFin()
     {
-        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
     }
 
     private void ClapFin()
     {
-        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
     }
 
     private void PrayFin()
     {
-        uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
+        if(uIController_Shine)
+            uIController_Shine.GetWorshipGameUI().gameObject.SetActive(true);
     }
 
     private void BowOnceFin()
     {
-        uIController_Shine.GetOmikuziUI().gameObject.SetActive(true);
+        if(uIController_Shine)
+            uIController_Shine.GetOmikuziUI().gameObject.SetActive(true);
     }
 
     #endregion

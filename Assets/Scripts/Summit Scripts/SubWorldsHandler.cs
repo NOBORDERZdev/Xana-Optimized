@@ -9,11 +9,13 @@ public class SubWorldsHandler : MonoBehaviour
     void OnEnable()
     {
         BuilderEventManager.AfterWorldInstantiated += AddSubWorld;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += AddSubWorld;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterWorldInstantiated -= AddSubWorld;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= AddSubWorld;
     }
 
     void AddSubWorld()
@@ -26,14 +28,14 @@ public class SubWorldsHandler : MonoBehaviour
                 {
                     for (int j = 0; j < XANASummitDataContainer.summitData.domes[i].SubWorlds.Count; j++)
                     {
-                        if (j < BuilderData.SceneTeleportingObjects.Count)
+                        if (j < XANASummitDataContainer.SceneTeleportingObjects.Count)
                         {
-                            BuilderData.SceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>();
-                            BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().DomeId = -1;
+                            XANASummitDataContainer.SceneTeleportingObjects[j].gameObject.AddComponent<OnTriggerSceneSwitch>();
+                            XANASummitDataContainer.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().DomeId = -1;
                             if (XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderWorld)
-                                BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
+                                XANASummitDataContainer.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].builderSubWorldId;
                             else
-                                BuilderData.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
+                                XANASummitDataContainer.SceneTeleportingObjects[j].gameObject.GetComponent<OnTriggerSceneSwitch>().WorldId = XANASummitDataContainer.summitData.domes[i].SubWorlds[j].selectWorld.id.ToString();
                         }
                     }
                     return;
