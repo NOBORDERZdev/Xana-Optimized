@@ -12,6 +12,7 @@ using UnityEngine.Networking;
 public class PenpenzLpManager : MonoBehaviourPunCallbacks
 {
     public int RaceID;
+    public int RaceStartWithPlayers;
     public List<int> PlayerIDs = new List<int>();
     public List<int> WinnerPlayerIds = new List<int>();
     public List<long> RaceFinishTime = new List<long>();
@@ -99,6 +100,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Start Race
     public IEnumerator SendingUsersIdsAtStartOfRace()
     {
+        RaceStartWithPlayers = PlayerIDs.Count;
         // Create a JSON object and add the user IDs
         JObject json = new JObject();
         json["user_ids"] = JArray.FromObject(PlayerIDs);
@@ -153,7 +155,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             }
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f); // wait for "You Won the race" message to disappear
 
         StartCoroutine(GetRoundData());
         //var playerRanks = GetPlayerRanks();
@@ -351,6 +353,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
         roundDataResponse = null;
+        RaceStartWithPlayers = 0;
     }
     #endregion
 }

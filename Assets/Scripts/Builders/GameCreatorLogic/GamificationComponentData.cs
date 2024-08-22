@@ -504,25 +504,26 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     void UpdateRaceStatus(){
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
         xanaPartyMulitplayer.RaceFinishCount++;
-        int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-
-        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceFinishTime.Add(DateTimeOffset.Now.ToUnixTimeMilliseconds());
+        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        PenpenzLpManager ref_PenpenzLpManager = XANAPartyManager.Instance.GetComponent<PenpenzLpManager>();
+        ref_PenpenzLpManager.RaceFinishTime.Add(DateTimeOffset.Now.ToUnixTimeMilliseconds());
         
 
 
        // print("RaceFinishCount : "+ GamificationComponentData.instance.RaceFinishCount + " ::: "+ currentPlayers);
-        if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
+        if (xanaPartyMulitplayer.RaceFinishCount >= ref_PenpenzLpManager.RaceStartWithPlayers)//currentPlayers)
         {
             XANAPartyManager.Instance.GameIndex++; 
-            StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());
+            StartCoroutine(ref_PenpenzLpManager.PrintLeaderboard());
         }
     }
 
     public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting()
     {
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-        int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (xanaPartyMulitplayer.RaceFinishCount >= currentPlayers)
+        xanaPartyMulitplayer.RaceFinishCount++;
+        //int currentPlayers = PhotonNetwork.CurrentRoom.PlayerCount;
+        if (xanaPartyMulitplayer.RaceFinishCount >= XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers)
         {
             XANAPartyManager.Instance.GameIndex++;
             StartCoroutine(XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PrintLeaderboard());

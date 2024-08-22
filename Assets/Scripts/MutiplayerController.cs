@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "7";
+        string gameVersion = "7A";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -360,11 +360,14 @@ namespace Photon.Pun.Demo.PunBasics
                     if (PhotonNetwork.IsMasterClient)
                     {
                         PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
-                        if (ref_PartyTimerManager.startTime <= -1)
+                        if (!ref_PartyTimerManager.isTimerRunning)
                         {
-                            ref_PartyTimerManager.startTime = PhotonNetwork.Time;
+                            if (ref_PartyTimerManager.startTime <= -1)
+                            {
+                                ref_PartyTimerManager.startTime = PhotonNetwork.Time;
+                            }
+                            ref_PartyTimerManager.GetComponent<PhotonView>().RPC(nameof(ref_PartyTimerManager.StartTimer), RpcTarget.AllBuffered, ref_PartyTimerManager.startTime);
                         }
-                        ref_PartyTimerManager.GetComponent<PhotonView>().RPC(nameof(ref_PartyTimerManager.StartTimer), RpcTarget.AllBuffered, ref_PartyTimerManager.startTime);
                     }
                 }
 

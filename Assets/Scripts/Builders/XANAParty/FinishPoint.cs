@@ -44,6 +44,7 @@ public class FinishPoint : MonoBehaviour
         if (GameplayEntityLoader.instance)
         {
             GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("RPC_AddWinnerId", RpcTarget.AllBuffered, int.Parse(ConstantsHolder.userId));
+            GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("UpdateStatusOnRaceFinish", RpcTarget.AllBuffered, PhotonNetwork.LocalPlayer.ActorNumber, true);
         }
         GameplayEntityLoader.instance.PositionResetButton.SetActive(false);
         GameplayEntityLoader.instance.PenguinPlayer.GetComponentInChildren<AnimatedController>().enabled = false;
