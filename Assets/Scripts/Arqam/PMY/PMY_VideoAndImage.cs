@@ -287,17 +287,20 @@ namespace PMY
 
         public void TurnOffAllImageAndVideo()
         {
-            imgVideo16x9.SetActive(false);
-            imgVideo9x16.SetActive(false);
-            imgVideo1x1.SetActive(false);
-            imgVideo4x3.SetActive(false);
-            //liveVideoPlayer.SetActive(false);
+            if (imgVideo16x9)
+                imgVideo16x9.SetActive(false);
+            if (imgVideo9x16)
+                imgVideo9x16.SetActive(false);
+            if (imgVideo1x1)
+                imgVideo1x1.SetActive(false);
+            if (imgVideo4x3)
+                imgVideo4x3.SetActive(false);
 
-            //imgVideo16x9.SetActive(false);
-            //imgVideo9x16.SetActive(false);
-            //imgVideo1x1.SetActive(false);
-            //imgVideo4x3.SetActive(false);
-            //liveVideoPlayer.SetActive(false);
+            if (imgVideo16x9.GetComponent<VideoPlayer>().targetTexture != null)
+            {
+                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture.Release();
+                imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = null;
+            }
         }
 
         IEnumerator GetSprite(string path, System.Action<Texture> callback)
@@ -389,7 +392,14 @@ namespace PMY
                 }
                 else if (_videoType == PMY_VideoTypeRes.aws)
                 {
-                    SetThumbail(imageLink);
+                    videoParent.SetActive(false);
+                    imgVideo16x9.SetActive(true);
+                    RenderTexture renderTexture = new RenderTexture(PMY_Nft_Manager.Instance.renderTexture_16x9);
+                    imgVideo16x9.GetComponent<RawImage>().texture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().targetTexture = renderTexture;
+                    imgVideo16x9.GetComponent<VideoPlayer>().url = videoLink;
+                    imgVideo16x9.GetComponent<VideoPlayer>().isLooping = true;
+                    imgVideo16x9.GetComponent<VideoPlayer>().Play();
                 }
             }
             else if (NFT.Equals(NFT_Type.TwoD_View))
