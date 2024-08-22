@@ -27,8 +27,14 @@ public class SummitNPCAssetLoader : MonoBehaviour
         Hair_ColorName = "_Color";
         Eye_ColorName = "_Mask_Color";
 
+        
+    }
+
+    public void Init()
+    {
         Custom_InitializeAvatar(json);
     }
+
 
     void Custom_InitializeAvatar(string aiAvatarJson)
     {
@@ -53,9 +59,9 @@ public class SummitNPCAssetLoader : MonoBehaviour
             try
             {
                 AsyncOperationHandle loadObj;//= Addressables.LoadAssetAsync<GameObject>(key.ToLower());
-                bool flag = false;
-                loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
-                if (!flag)
+                //bool flag = false;
+                //loadObj = AddressableDownloader.Instance.MemoryManager.GetReferenceIfExist(key.ToLower(), ref flag);
+                //if (!flag)
                     loadObj = Addressables.LoadAssetAsync<GameObject>(key.ToLower());
                 loadObj.Completed += operationHandle =>
                 {
@@ -75,6 +81,7 @@ public class SummitNPCAssetLoader : MonoBehaviour
 
         if (handle.Status == AsyncOperationStatus.Succeeded)
         {
+            AddressableDownloader.bundleAsyncOperationHandle.Add(handle);
             GameObject loadedObject = handle.Result as GameObject;
             if (loadedObject != null)
             {
@@ -86,7 +93,7 @@ public class SummitNPCAssetLoader : MonoBehaviour
                 Debug.LogError("Loaded GameObject is null. Handle the error appropriately.");
             }
 
-            AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
+            //AddressableDownloader.Instance.MemoryManager.AddToReferenceList(handle, key);
         }
         else if (handle.Status == AsyncOperationStatus.Failed)
         {

@@ -478,21 +478,23 @@ public class PlayerController : MonoBehaviour
         {
             if (isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
-                    EmoteAnimationHandler.Instance.StopAnimation();
-                    EmoteAnimationHandler.Instance.StopAllCoroutines();
+                    ActionManager.StopActionAnimation?.Invoke();
+                    // EmoteAnimationHandler.Instance.StopAnimation();
+                    //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                 }
                 FirstPersonCameraMove(); // FOR FIRST PERSON MOVEMENT XX
             }
             if (!isFirstPerson && !m_FreeFloatCam)
             {
-                if (EmoteAnimationHandler.Instance.isAnimRunning && isJoystickDragging)
+                if (ActionManager.IsAnimRunning && isJoystickDragging)
                 {
                     if (ReferencesForGamePlay.instance.moveWhileDanceCheck == 0)
                     {
-                        EmoteAnimationHandler.Instance.StopAnimation();
-                        EmoteAnimationHandler.Instance.StopAllCoroutines();
+                        ActionManager.StopActionAnimation?.Invoke();
+                        //  EmoteAnimationHandler.Instance.StopAnimation();
+                        //  EmoteAnimationHandler.Instance.StopAllCoroutines();
                     }
                 }
                 Move();
@@ -1276,10 +1278,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            //  EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
 
     }
@@ -1382,10 +1386,12 @@ public class PlayerController : MonoBehaviour
         }
         Invoke(nameof(UpdateVelocity), .1f);
 
-        if (EmoteAnimationHandler.Instance.isAnimRunning)
+        if (ActionManager.IsAnimRunning)
         {
-            EmoteAnimationHandler.Instance.StopAnimation();
-            EmoteAnimationHandler.Instance.StopAllCoroutines();
+            ActionManager.StopActionAnimation?.Invoke();
+
+            //  EmoteAnimationHandler.Instance.StopAnimation();
+            // EmoteAnimationHandler.Instance.StopAllCoroutines();
         }
     }
 
