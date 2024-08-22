@@ -42,8 +42,9 @@ GameObject:
   m_Component:
   - component: {fileID: 795959639962224920}
   - component: {fileID: 18016321879888803}
-  - component: {fileID: 8866517115638388901}
-  - component: {fileID: 7733827037519678257}
+  - component: {fileID: 8474176020870743834}
+  - component: {fileID: 8575514515650381271}
+  - component: {fileID: 996404349794181565}
   m_Layer: 0
   m_Name: Penpenz_Dome
   m_TagString: Untagged
@@ -87,22 +88,7 @@ LODGroup:
     renderers:
     - renderer: {fileID: 3739005558323074589}
   m_Enabled: 1
---- !u!111 &8866517115638388901
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18016321879888802}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: fbc8da255e6c0e343870b0dc20d9f1f0, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!95 &7733827037519678257
+--- !u!95 &8474176020870743834
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -123,6 +109,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &8575514515650381271
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18016321879888802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.49401906, y: 0.2714481, z: 0.45278326}
+  m_Center: {x: 0.0018225961, y: 0.1326681, z: -0.0497568}
+--- !u!136 &996404349794181565
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18016321879888802}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4
+  m_Height: 1.0845349
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.4922678, z: -0.13}
 --- !u!1 &766946048712758854
 GameObject:
   m_ObjectHideFlags: 0
@@ -514,7 +527,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2532123179010026193}
   - component: {fileID: 3739005558323074589}
-  - component: {fileID: 6339496321142624914}
   m_Layer: 0
   m_Name: PenBody_Geo
   m_TagString: Untagged
@@ -612,20 +624,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.2135244, y: -0.05249177, z: -0.0003937781}
     m_Extent: {x: 0.5741095, y: 0.40042573, z: 0.7335006}
   m_DirtyAABB: 0
---- !u!64 &6339496321142624914
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4879762715158649413}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8404669923322098964, guid: 44fe82da5d9d6144ea073e3d499b557c, type: 3}
 --- !u!1 &5132618380852743344
 GameObject:
   m_ObjectHideFlags: 0
