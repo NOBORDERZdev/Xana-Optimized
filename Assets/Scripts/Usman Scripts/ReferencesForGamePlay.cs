@@ -461,6 +461,7 @@ public class ReferencesForGamePlay : MonoBehaviour
     {
         if (GameplayEntityLoader.instance.PenguinPlayer != null && GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().IsMine && !IsLevelPropertyUpdatedOnlevelLoad)
         {
+            XANAPartyManager.Instance.ActivePlayerInCurrentLevel = 0;
             foreach (Player player in PhotonNetwork.PlayerList)
             {
                 if (player.CustomProperties.TryGetValue(InLevelProperty, out object isInLevel))
