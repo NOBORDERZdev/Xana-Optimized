@@ -1194,7 +1194,10 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "XanaChat", fileName); ;
+                string directoryPath = Path.Combine(Application.persistentDataPath, "XanaChat");
+                Directory.CreateDirectory(directoryPath);
+
+                setImageAvatarTempPath = Path.Combine(directoryPath, fileName);
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1240,7 +1243,7 @@ public class MyProfileDataManager : MonoBehaviour
                 string str = DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second + ".";
                 fileName = fileNameArray[0] + str + fileNameArray[1];
 
-                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName); ;
+                setImageAvatarTempPath = Path.Combine(Application.persistentDataPath, "UserProfilePic", fileName);
                 setImageAvatarTempFilename = fileName;
 
                 Crop(texture, setImageAvatarTempPath);
@@ -1542,11 +1545,11 @@ public class MyProfileDataManager : MonoBehaviour
                 //croppedImageSize.enabled = false;
             }
             // Destroy the screenshot as we no longer need it in this case
-            Destroy(screenshot);
-            Resources.UnloadUnusedAssets();
             //Caching.ClearCache();
             //GC.Collect();
-            Invoke("ProfilePostPartShow", 0.5f);
+        Destroy(screenshot);
+        Invoke(nameof(ProfilePostPartShow), 0.5f);
+        Resources.UnloadUnusedAssets();
         },
         settings: new ImageCropper.Settings()
         {
