@@ -405,8 +405,11 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
 
             if (WorldItemView.m_EnvName.Contains("PMY ACADEMY"))
             {
-                if (XanaConstants.xanaConstants.isFromPMYLobby)  // Set spawn pos when ReEnter into PMY lobby
+                if (XanaConstants.xanaConstants.isFromPMYLobby)
+                {   // Set spawn pos when ReEnter into PMY lobby
                     spawnPoint = new Vector3(spawnPoint.x, spawnPoint.y, spawnPoint.z - 25.05f);
+                    //Debug.LogError("Update spawnpoint for lobby::");
+                }
                 mainPlayer.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 //StartCoroutine(setPlayerCamAngle(0f, 0.5572f));
                 //StartCoroutine(setPlayerCamAngle(1f, 0.32f));
@@ -608,7 +611,10 @@ public class LoadFromFile : MonoBehaviourPunCallbacks, IPunInstantiateMagicCallb
     public void SetPlayerPos()
     {
         if (mainController != null)
+        {
+            //Debug.LogError("SetPlayerPos" + spawnPoint);
             mainController.transform.position = spawnPoint + new Vector3(0, 0.1f, 0);
+        }
     }
 
     void ActivateNpcChat()

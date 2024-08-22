@@ -178,9 +178,11 @@ public class LoadingHandler : MonoBehaviour
 
     public void ShowLoading()
     {
+        //Debug.LogError("Show Loading Method");
         //Debug.LogError("TeleportFeader: " + teleportFeader.gameObject.activeInHierarchy + " ~~~~~~~  Activated Loading ~~~~~~~ ");
         if (teleportFeader.gameObject.activeInHierarchy) // XanaConstants.xanaConstants.JjWorldSceneChange
         {
+            //Debug.LogError("Off Loading");
             loadingPanel.SetActive(false);
             return;
         }
@@ -237,9 +239,12 @@ public class LoadingHandler : MonoBehaviour
         //if (!loadingPanel.activeInHierarchy)
         //{
         //    loadingPanel.SetActive(true);
-        //}
-
-        loadingPanel.SetActive(true);
+        //} 
+        if (!XanaConstants.xanaConstants.JjWorldSceneChange)
+        {
+            //Debug.LogError("On Loading");
+            loadingPanel.SetActive(true);
+        }
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.2f).SetDelay(0f);
 
@@ -352,12 +357,14 @@ public class LoadingHandler : MonoBehaviour
         {
             yield return new WaitForSeconds(2f);
             LoadFromFile.instance.SetPlayerPos();
+            yield return new WaitForSeconds(0.1f);
             HideLoadingManually();
         }
     }
     private void HideLoadingManually()
     {
         UpdateLoadingStatusText("");
+        //Debug.LogError("Off Loading");
         loadingPanel.SetActive(false);
         Image blackScreen = Loading_WhiteScreen.GetComponent<Image>();
         blackScreen.DOFade(0, 0.5f).SetDelay(0.5f);
@@ -632,9 +639,12 @@ public class LoadingHandler : MonoBehaviour
                     JJLoadingSlider.fillAmount = 0f;
                     JJLoadingPercentageText.text = "0%".ToString();
                 }
-
+                //Debug.LogError("On Teleport Fader");
                 teleportFeader.gameObject.SetActive(true);
                 teleportFeader.DOFade(1, 0.5f);
+                yield return new WaitForSeconds(0.1f);
+                //Debug.LogError("loading false");
+                loadingPanel.SetActive(false);
                 break;
             default:
                 break;
