@@ -76790,7 +76790,6 @@ GameObject:
   - component: {fileID: 539283689168450378}
   - component: {fileID: 2912427142594107970}
   - component: {fileID: 7463120139997859042}
-  - component: {fileID: 2844626682878500418}
   m_Layer: 23
   m_Name: AnimationBtn
   m_TagString: SelfieButton
@@ -76913,24 +76912,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 0
---- !u!114 &2844626682878500418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7932382619667974719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05b5ffd31acfd45b0aeb9b48178c6a49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightButton: {fileID: 8736812840440108004}
-  m_EmotePanel: {fileID: 5377329308328758078}
-  JyosticksObject: {fileID: 5834709911616443781}
-  JumpObject: {fileID: 8457936016690739709}
-  BottomObject: {fileID: 2853043538344501590}
-  isClose: 0
 --- !u!1 &7934931235339476918
 GameObject:
   m_ObjectHideFlags: 0
@@ -90107,9 +90088,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3148077339100411106, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
+      propertyPath: ActionBtnHeighlight
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148077339100411106, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
+      propertyPath: ReactionBtnHeighlight
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3148077339100411108, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
       propertyPath: m_Name
-      value: NewUI Canvaspotrait
+      value: EmoteSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148077339847739749, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3148077340532595539, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3148077339100411109, guid: a1f937df2182ff74b90d58951ee72af3, type: 3}
