@@ -26,8 +26,10 @@ public class CarNavigationManager : MonoBehaviour
 
     private void Start()
     {
-
-        SummitEntityManager.instance.InstantiateCAR();
+        if (ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
+        {
+            SummitEntityManager.instance.InstantiateCAR();
+        }
         if (SummitCarUIHandler.SummitCarUIHandlerInstance)
         {
             CarCanvas = SummitCarUIHandler.SummitCarUIHandlerInstance.CarCanvas;

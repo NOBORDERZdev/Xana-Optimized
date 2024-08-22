@@ -75,7 +75,7 @@ public class SummitEntityManager : MonoBehaviour, IMatchmakingCallbacks
 
     public void OnJoinedRoom()
     {
-       if(PhotonNetwork.IsMasterClient)
+       if(PhotonNetwork.IsMasterClient && ConstantsHolder.xanaConstants.EnviornmentName == "XANA Summit")
         {
 
             InstantiateCAR();
