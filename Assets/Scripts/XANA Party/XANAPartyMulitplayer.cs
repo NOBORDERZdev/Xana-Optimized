@@ -12,7 +12,9 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     private ConstantsHolder _XanaConstants = ConstantsHolder.xanaConstants;
 
+    public int UserId;
     public int RaceFinishCount = 0;
+    public bool isRaceFinished = false;
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -103,6 +105,16 @@ public class XANAPartyMulitplayer : MonoBehaviour
         GameplayEntityLoader.instance._uiReferences.LoadMain(false);
     }
 
+    
+
+    [PunRPC]
+    public void MovePlayerToNextGameOnReconnect()
+    {
+        if (PhotonNetwork.IsMasterClient && (XANAPartyManager.Instance.GameIndex < XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count))
+        {
+            StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+        }
+    }
     public void ResetValuesOnCompleteRace()
     {
         _XanaConstants.isJoinigXanaPartyGame = false;
@@ -114,16 +126,31 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
 
     [PunRPC]
-    public void RequestRankUpdate()
+    public void RPC_AddPlayerID(int playerID)
     {
-        // Only the MasterClient should handle the rank update
-        if (PhotonNetwork.IsMasterClient)
+        if (!XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Contains(playerID))
         {
-            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().UpdateLastRank();
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().PlayerIDs.Add(playerID);
         }
     }
 
+    [PunRPC]
+    public void RPC_AddWinnerId(int winnerID)
+    {
+        if (!XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Contains(winnerID))
+        {
+            XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().WinnerPlayerIds.Add(winnerID);
+        }
+    }
 
+    [PunRPC]
+    public void UpdateStatusOnRaceFinish(int actorNumber, bool status)
+    {
+        if(photonView.Owner.ActorNumber == actorNumber)
+        {
+            isRaceFinished = status;
+        }
+    }
     //public void JumpRPCTrigger(){
     //    print("Trigger JUMP RPC");
     //    PhotonView tempPenguin = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>();

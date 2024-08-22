@@ -25,21 +25,30 @@ public static class Utilss
 #endif
 
 
-    public static void LaunchUrl(string url, string redirectUri = null, string objectName = null)
+   public static void LaunchUrl(string url, string redirectUri = null, string objectName = null)
     {
 #if UNITY_EDITOR || UNITY_STANDALONE
         Application.OpenURL(url);
 #elif UNITY_ANDROID
-        using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
-        using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
-        using (var browserView = new AndroidJavaObject("com.web3auth.unity.android.BrowserView"))
+        if (WebViewManager.Instance.useWebview)
         {
-            browserView.CallStatic("launchUrl", activity, url);
+            WebViewManager.Instance.useWebview = false;
+            WebViewManager.Instance.StartwebView(url);
+        }
+        else
+        {
+            using (var unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+            using (var activity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
+            using (var browserView = new AndroidJavaObject("com.web3auth.unity.android.BrowserView"))
+            {
+                browserView.CallStatic("launchUrl", activity, url);
+            }
         }
 
 #elif UNITY_IOS
     var uri = new Uri(redirectUri);
     web3auth_launch(url, uri.Scheme, objectName);
+    //WebViewManager.Instance.StartwebView(url);
 #elif UNITY_WEBGL
     OpenURL(url);
 #endif

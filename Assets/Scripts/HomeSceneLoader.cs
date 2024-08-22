@@ -7,11 +7,13 @@ using Metaverse;
 using System.Collections;
 using System;
 using UnityEngine.Scripting;
+using Photon.Realtime;
 
 public class HomeSceneLoader : MonoBehaviourPunCallbacks
 {
     public GameObject EventEndedPanel;
     private string mainScene = "Home";
+    private string lobbyScene = "RooftopParty";
     bool exitOnce = true;
     GameManager gameManager;
     private void Awake()
@@ -65,7 +67,13 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
         if (exitOnce)
         {
             exitOnce = false;
-            if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
+
+            if (SceneManager.GetActiveScene().name == lobbyScene)
+            {
+                Application.Quit();
+            }
+
+            else if (ConstantsHolder.xanaConstants.isFromXanaLobby && !ConstantsHolder.xanaConstants.EnviornmentName.Contains("XANA Lobby"))
             {
                 StartCoroutine(LobbySceneSwitch()); // to Lobby if player enter in world from Xana lobby
             }
@@ -109,7 +117,10 @@ public class HomeSceneLoader : MonoBehaviourPunCallbacks
                     LoadingHandler.Instance.StartCoroutine(LoadingHandler.Instance.TeleportFader(FadeAction.In));
 
                     MutiplayerController.instance.working = ScenesList.AddressableScene;
-                    PhotonNetwork.LeaveRoom();
+                    if (PhotonNetwork.Server == ServerConnection.GameServer)
+                    {
+                        PhotonNetwork.LeaveRoom();
+                    }
                     PhotonNetwork.LeaveLobby();
                     PhotonNetwork.DestroyAll(true);
                     StartSceneLoading();

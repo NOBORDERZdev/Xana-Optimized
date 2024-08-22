@@ -14,8 +14,8 @@ public class Web3AuthCustom : MonoBehaviour
 {
   
     [Header("Web3Auth Project settings")]
-    public string redirectURIAndroid = "web3auth://com.nbi.xana/auth";
-    public string redirectURIiOS = "web3auth://com.nbmetaverse.xana/auth";
+    public string redirectURIAndroid = "web3auth://com.wujie.penpenz/auth";
+    public string redirectURIiOS = "web3auth://com.wujie.penpenz/auth";
     private string clientIdEmail,clientIdGoole,clientIdApple,clientIdLine,ClientId ;
     private string loginVerifier;
     private string loginSubVerifierEmail, loginSubVerifierGoole, loginSubVerifierApple, loginSubVerifierLine;
@@ -139,6 +139,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void PasswordLessEmailLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = true;
         var selectedProvider = Provider.JWT;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -167,6 +168,7 @@ public class Web3AuthCustom : MonoBehaviour
     
     public void GoogleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = false;
         var selectedProvider = Provider.GOOGLE;
         isNewReg = isnewreg;
 
@@ -188,6 +190,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void AppleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = false;
         var selectedProvider = Provider.APPLE;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -244,7 +247,7 @@ public class Web3AuthCustom : MonoBehaviour
 
             }
             PlayerPrefs.SetString("publicID", publicAdress);
-
+            WebViewManager.Instance.CloseWebView();
             switch (type)
             {
 
@@ -261,12 +264,12 @@ public class Web3AuthCustom : MonoBehaviour
                     UserLoginSignupManager.instance.signUpPanel.SetActive(false);
                     LoadingHandler.Instance.nftLoadingScreen.SetActive(true);
                     ConnectWallet.instance.StartCoroutine(ConnectWallet.instance.SaveChainSafeNonce(mysignature1, publicAdress, msg1));
-
                     break;
 
                 default:
                     break;
             }
+
             PlayerPrefs.Save();
         }
         catch (Exception ex)

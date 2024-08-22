@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using SuperStar.Helpers;
 using UnityEngine.Networking;
 using Photon.Pun.Demo.PunBasics;
-using static GlobalConstants;
+//using static GlobalConstants;
 public class FeedEventPrefab : MonoBehaviour
 {
     public static string m_EnvName;
@@ -573,8 +573,8 @@ public class FeedEventPrefab : MonoBehaviour
         UserAnalyticsHandler.onGetWorldId?.Invoke(int.Parse(idOfObject), entityType);
         //UserAnalyticsHandler.onGetSingleWorldStats?.Invoke(int.Parse(idOfObject), entityType, visitCount); // Due to Flow change this API in not in use
 
-        if (m_EnvironmentName == "ZONE-X")
-            SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());
+        //if (m_EnvironmentName == "ZONE-X")
+        //    SendFirebaseEvent(FirebaseTrigger.Home_Thumbnail.ToString());
     }
 
 

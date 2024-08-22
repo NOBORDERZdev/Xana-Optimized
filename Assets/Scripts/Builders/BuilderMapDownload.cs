@@ -16,6 +16,7 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+using System.Globalization;
 
 public class BuilderMapDownload : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class BuilderMapDownload : MonoBehaviour
     private byte[] deformationData;
 
     public GameObject XANAPartyLoading;
-
+    public GameObject AssetLoadingBar;
     [Space]
     [Header("Dynamic Object Prefab")]
     public GameObject MultiplayerComponent;
@@ -172,6 +173,7 @@ public class BuilderMapDownload : MonoBehaviour
             }));
         }
         XANAPartyLoading.SetActive(false);
+       // AssetLoadingBar.SetActive(true);
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
         if (levelData.skyProperties.skyId != -1)
@@ -399,14 +401,31 @@ public class BuilderMapDownload : MonoBehaviour
     }
     public static Vector3[] DeserializeVector3Array(string vertexData)
     {
-        string[] vectors = vertexData.Split('|');
-        Vector3[] result = new Vector3[vectors.Length];
-        for (int i = 0; i < vectors.Length; i++)
+        try
         {
-            string[] values = vectors[i].Split(' ');
-            result[i] = new Vector3(float.Parse(values[0]), float.Parse(values[1]), float.Parse(values[2]));
+            string[] vectors = vertexData.Split('|');
+            Vector3[] result = new Vector3[vectors.Length];
+            for (int i = 0; i < vectors.Length; i++)
+            {
+                string[] values = vectors[i].Split(' ');
+                if (values.Length != 3)
+                {
+                    Debug.LogError($"Unexpected vertex data format: {vectors[i]}");
+                    continue;
+                }
+                result[i] = new Vector3(
+                    float.Parse(values[0], CultureInfo.InvariantCulture),
+                    float.Parse(values[1], CultureInfo.InvariantCulture),
+                    float.Parse(values[2], CultureInfo.InvariantCulture)
+                );
+            }
+            return result;
         }
-        return result;
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error parsing vertex data: {ex.Message}");
+            return new Vector3[0];
+        }
     }
 
 

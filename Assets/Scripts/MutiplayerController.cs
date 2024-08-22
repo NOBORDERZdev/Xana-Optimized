@@ -63,7 +63,7 @@ namespace Photon.Pun.Demo.PunBasics
         /// <summary>
         /// This client's version number. Users are separated from each other by gameVersion (which allows you to make breaking changes).
         /// </summary>
-        string gameVersion = "aa5";
+        string gameVersion = "7A";
         #endregion
 
         #region MonoBehaviour CallBacks
@@ -249,6 +249,7 @@ namespace Photon.Pun.Demo.PunBasics
             }
         }
 
+       
         private void JoinRoomCustom()
         {
             bool joinedRoom = false;
@@ -272,7 +273,7 @@ namespace Photon.Pun.Demo.PunBasics
                     roomName = PhotonNetwork.CurrentLobby.Name + UnityEngine.Random.Range(0, 9999).ToString();
                 }
                 while (roomNames.Contains(roomName));
-
+                PlayerPrefs.SetString("roomname", roomName);
                 PhotonNetwork.JoinOrCreateRoom(roomName, RoomOptionsRequest(), new TypedLobby(CurrLobbyName, LobbyType.Default));
             }
         }
@@ -331,16 +332,47 @@ namespace Photon.Pun.Demo.PunBasics
                     playerobjects.RemoveAt(x);
                 }
             }
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
             {
-                ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
-                GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                if (ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    ReferencesForGamePlay.instance.ReduceActivePlayerCountInCurrentLevel();
+                    if (XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+                    {
+                        if (PhotonNetwork.IsMasterClient && (XANAPartyManager.Instance.GameIndex < XANAPartyManager.Instance.GamesToVisitInCurrentRound.Count))
+                        {
+                            StartCoroutine(GamificationComponentData.instance.MovePlayersToNextGame());
+                        }
+                    }
+                    else
+                    {
+                        GamificationComponentData.instance.UpdateRaceStatusIfPlayerLeaveWithoutCompletiting();
+                    }
+
+                    if (GamificationComponentData.instance != null && !GamificationComponentData.instance.isRaceStarted && ReferencesForGamePlay.instance != null)
+                    {
+                        ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
+                        ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
+                    }
+                }
+                if (!ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+                {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        PartyTimerManager ref_PartyTimerManager = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PartyTimerManager>();
+                        if (!ref_PartyTimerManager.isTimerRunning)
+                        {
+                            if (ref_PartyTimerManager.startTime <= -1)
+                            {
+                                ref_PartyTimerManager.startTime = PhotonNetwork.Time;
+                            }
+                            ref_PartyTimerManager.GetComponent<PhotonView>().RPC(nameof(ref_PartyTimerManager.StartTimer), RpcTarget.AllBuffered, ref_PartyTimerManager.startTime);
+                        }
+                    }
+                }
+
+                
             }
-               
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && GamificationComponentData.instance!= null && !GamificationComponentData.instance.isRaceStarted  &&  ReferencesForGamePlay.instance != null)
-            {
-                ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
-            }  
         }
 
         public override void OnJoinRoomFailed(short returnCode, string message)
@@ -358,6 +390,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame && ReferencesForGamePlay.instance != null)
                 {
+                    ReferencesForGamePlay.instance.IsLevelPropertyUpdatedOnlevelLoad = false;
                     ReferencesForGamePlay.instance.CheckActivePlayerInCurrentLevel();
                 }
             }
