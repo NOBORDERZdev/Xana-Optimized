@@ -9,11 +9,13 @@ public class SubWorldsHandler : MonoBehaviour
     void OnEnable()
     {
         BuilderEventManager.AfterWorldInstantiated += AddSubWorld;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated += AddSubWorld;
     }
 
     private void OnDisable()
     {
         BuilderEventManager.AfterWorldInstantiated -= AddSubWorld;
+        BuilderEventManager.AfterWorldOffcialWorldsInatantiated -= AddSubWorld;
     }
 
     void AddSubWorld()
