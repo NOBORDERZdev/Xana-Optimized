@@ -15,6 +15,7 @@ namespace ZeelKheni.YoutubePlayer
         public static async Task<T> GetAsync<T>(string requestUrl, CancellationToken cancellationToken = default, List<Models.YoutubeVideoInfo> urlslist = null, string videoid = null)
         {
             var request = UnityWebRequest.Get(requestUrl);
+            request.timeout = 10;
             try
             {
                 await request.SendWebRequestAsync(cancellationToken);
