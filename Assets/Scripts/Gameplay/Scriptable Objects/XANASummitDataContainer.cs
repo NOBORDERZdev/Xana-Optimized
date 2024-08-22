@@ -91,17 +91,17 @@ public class XANASummitDataContainer : ScriptableObject
         return string.Empty;
     }
 
-    public string GetDomeImage(int DomeId)
+    public string[] GetDomeImage(int DomeId)
     {
         for (int i = 0; i < summitData.domes.Count; i++)
         {
             if (DomeId == summitData.domes[i].id)
             {
-                return summitData.domes[i].world360Image;
+                return new[] { summitData.domes[i].world360Image, summitData.domes[i].name };
             }
         }
 
-        return string.Empty;
+        return new[] { string.Empty, string.Empty };
     }
 
     #region DomeInfo

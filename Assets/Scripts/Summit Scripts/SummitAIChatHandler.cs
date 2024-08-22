@@ -83,6 +83,7 @@ public class SummitAIChatHandler : MonoBehaviour
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().npcName.text = XANASummitDataContainer.aiData.npcData[i].name;
             int avatarPresetId= XANASummitDataContainer.aiData.npcData[i].avatarId;
             AINPCAvatar.GetComponent<SummitNPCAssetLoader>().json = XANASummitDataContainer.avatarJson[avatarPresetId-1];
+            AINPCAvatar.GetComponent<SummitNPCAssetLoader>().Init();
             AINPCAvatar.GetComponent<AINPCTrigger>().npcID = XANASummitDataContainer.aiData.npcData[i].id;
         }
     }
