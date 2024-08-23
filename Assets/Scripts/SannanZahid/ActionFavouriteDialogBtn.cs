@@ -55,21 +55,28 @@ public class ActionFavouriteDialogBtn : MonoBehaviour
 
     public void SetupActionSelected(ActionData dataObj)
     {
+        GetComponent<Image>().color = Color.white;
         AnimationName = dataObj.AnimationName;
         TypeOfAction = dataObj.TypeOfAction;
         ThumbnailURL = dataObj.ThumbnailURL;
+  
         LoadImageFromURL();
     }
 
     public void CancelSelectedAction()
     {
+        Color myColor;
+        if (ColorUtility.TryParseHtmlString("#FFFFFFB4", out myColor))
+        {
+            GetComponent<Image>().color = myColor;
+        }
+
         _actionImg.sprite = default;
         AnimationName = default;
         ThumbnailURL = default;
         _actionImg.gameObject.SetActive(false);
         _crossBtnObj.gameObject.SetActive(false);
     }
-
     public void SaveActionSelected()
     {
         if (AnimationName != "")
@@ -108,6 +115,15 @@ public class ActionFavouriteDialogBtn : MonoBehaviour
                     AssetCache.Instance.LoadSpriteIntoImage(_actionImg, ThumbnailURL, changeAspectRatio: true);
                     _actionImg.gameObject.SetActive(true);
                     _crossBtnObj.gameObject.SetActive(true);
+                    GetComponent<Image>().color = Color.white;
+                    if (TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
+                    {
+                        _actionImg.transform.localScale = Vector3.one;
+                    }
+                    else
+                    {
+                        _actionImg.transform.localScale = new Vector3(0.6f,0.6f,1f);
+                    }
                 }
                 else
                 {
