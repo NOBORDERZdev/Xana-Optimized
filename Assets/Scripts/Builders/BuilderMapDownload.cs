@@ -908,7 +908,7 @@ public class BuilderMapDownload : MonoBehaviour
 
     void LoadAddressableSceneAfterDownload()
     {
-        SceneManager.LoadSceneAsync("GamePlayScene", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
         //if (ConstantsHolder.xanaConstants.isFromXanaLobby)
         //{
         //    LoadingHandler.Instance.UpdateLoadingSliderForJJ(UnityEngine.Random.Range(.8f, .9f), 0.1f);
