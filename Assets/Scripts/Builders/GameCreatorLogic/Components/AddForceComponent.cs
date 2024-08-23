@@ -29,6 +29,7 @@ public class AddForceComponent : ItemComponent
         _rigidBody = GetComponent<Rigidbody>();
         _rigidBody.isKinematic = true;
         _rigidBody.useGravity = true;
+        _rigidBody.collisionDetectionMode = CollisionDetectionMode.Continuous;
         this._addForceComponentData = addForceComponentData;
         _isActivated = addForceComponentData.isActive;
 
