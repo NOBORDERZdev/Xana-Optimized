@@ -10,6 +10,16 @@ public class StepsManager : MonoBehaviour
 
     float distance = 3;
 
+    private void OnEnable()
+    {
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableStepsSound;
+    }
+
+    private void OnDisable()
+    {
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableStepsSound;
+    }
+
     void Awake()
     {
         if (StepAudio != null)
@@ -85,5 +95,10 @@ public class StepsManager : MonoBehaviour
             return 2;
 
         return 0;
+    }
+
+    public void DisableStepsSound(bool _mute)
+    {
+        StepAudio.mute = _mute;
     }
 }
