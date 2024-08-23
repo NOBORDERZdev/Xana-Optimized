@@ -11,9 +11,9 @@ Material:
   m_Shader: {fileID: 4800000, guid: 3dda44a7d9cec71439b5b8e20fcbccfb, type: 3}
   m_ValidKeywords:
   - _CFXR_DISSOLVE
-  - _CFXR_DITHERED_SHADOWS_ON
   - _CFXR_WORLD_SPACE_RING
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _CFXR_DITHERED_SHADOWS_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -37,14 +37,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _CFXR_DITHERED_SHADOWS: 1
+    - _CFXR_DITHERED_SHADOWS: 0
     - _DissolveSmooth: 0.03
     - _DstBlend: 10
     - _HdrBoost: 0
     - _HdrMultiply: 4
     - _InvertDissolveTex: 0
     - _RingTopOffset: 0.07
-    - _ShadowStrength: 0
+    - _ShadowStrength: 1
     - _SingleChannel: 0
     - _SoftParticlesFadeDistanceFar: 1
     - _SoftParticlesFadeDistanceNear: 0
