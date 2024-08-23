@@ -1014,16 +1014,17 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             else // error occur 
             {
                 AssetBundle.UnloadAllAssetBundles(false);
-                Resources.UnloadUnusedAssets();
-
+               yield return Resources.UnloadUnusedAssets();
+                GC.Collect();
+                Caching.ClearCache();
                 HomeBtn.onClick.Invoke();
             }
         }
         else
         {
             AssetBundle.UnloadAllAssetBundles(false);
-            Resources.UnloadUnusedAssets();
-
+              yield return  Resources.UnloadUnusedAssets();
+              Caching.ClearCache();
             RespawnPlayer();
         }
     }
@@ -1036,7 +1037,8 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
     IEnumerator spwanPlayerWithWait()
     {
         AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        yield return Resources.UnloadUnusedAssets();
+        Caching.ClearCache();
         CheckAgain:
         Transform temp = null;
         if (WorldItemView.m_EnvName.Contains("XANA_KANZAKI") && (ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Dune || ConstantsHolder.xanaConstants.comingFrom == ConstantsHolder.ComingFrom.Daisen))

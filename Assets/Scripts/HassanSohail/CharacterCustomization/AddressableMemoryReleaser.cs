@@ -60,7 +60,7 @@ public class AddressableMemoryReleaser : MonoBehaviour
         }*/
         return default;
     }
-    public void RemoveAllAddressables()
+    public async void RemoveAllAddressables()
     {
         foreach (MemoryObject item in _memoryObjects)
         {
@@ -70,9 +70,11 @@ public class AddressableMemoryReleaser : MonoBehaviour
             }
         }
         _memoryObjects.Clear();
-        GC.Collect();
+     
         AssetBundle.UnloadAllAssetBundles(false);
-        Resources.UnloadUnusedAssets();
+        await Resources.UnloadUnusedAssets();
+        GC.Collect();
+        Caching.ClearCache();
     }
     public void RemoveAddressable(string key)         // Added by Ali Hamza to release specific object based on key
     {
