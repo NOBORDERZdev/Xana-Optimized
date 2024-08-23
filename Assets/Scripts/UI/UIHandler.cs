@@ -220,6 +220,7 @@ public class UIHandler : MonoBehaviour
                     //AvatarWindowHolder.gameObject.SetActive(false);
                     /*LobbyTabHolder.gameObject.SetActive(false);*/
                     //worldHolder.SetActive(false);
+                    WorldManager.instance.worldSearchManager.searchWorldInput.Clear();
                     searchWorldHolder.SetActive(true);
                   //  HomeWorldTabsHolder.gameObject.SetActive(false);
                     //WorldWorldTabsHolder.gameObject.SetActive(false);
