@@ -100,7 +100,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
     #region Start Race
     public IEnumerator SendingUsersIdsAtStartOfRace()
     {
-        RaceStartWithPlayers = PlayerIDs.Count;
+        GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>().RPC("PlayerCountAtStartOfRace", RpcTarget.AllBuffered, PlayerIDs.Count);
         // Create a JSON object and add the user IDs
         JObject json = new JObject();
         json["user_ids"] = JArray.FromObject(PlayerIDs);
@@ -133,6 +133,8 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
             }
         }
     }
+
+    
     #endregion
 
     #region Print Leaderboard

@@ -10,6 +10,7 @@ public class StartPoint : MonoBehaviour
     public GameObject triggerCollider;
     public bool isStartPoint;
     public Animator OpenGateAnimator;
+    public bool IsRaceStarted = false;
 
     private void OnEnable()
     {
@@ -60,6 +61,9 @@ public class StartPoint : MonoBehaviour
 
    IEnumerator StartGame()
     {
+        if(IsRaceStarted)
+            yield break;
+        IsRaceStarted = true;
         if(LocalizationManager.forceJapanese || GameManager.currentLanguage == "ja")
             BuilderEventManager.OnDisplayMessageCollisionEnter?.Invoke("レディー！", 1, true);
         else

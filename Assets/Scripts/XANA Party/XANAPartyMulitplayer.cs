@@ -156,6 +156,12 @@ public class XANAPartyMulitplayer : MonoBehaviour, IPunInstantiateMagicCallback
             isRaceFinished = status;
         }
     }
+
+    [PunRPC]
+    public void PlayerCountAtStartOfRace(int playerCount)
+    {
+        XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().RaceStartWithPlayers = playerCount;
+    }
     //public void JumpRPCTrigger(){
     //    print("Trigger JUMP RPC");
     //    PhotonView tempPenguin = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>();

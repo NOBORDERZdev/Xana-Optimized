@@ -123,12 +123,16 @@ public class AskForJoining : MonoBehaviour
         if (!string.IsNullOrEmpty(lastRoomName))
         {
             PhotonNetwork.RejoinRoom(lastRoomName);
+            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && !ConstantsHolder.xanaConstants.isJoinigXanaPartyGame)
+            {
+                MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
+                AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+            }
         }
         else
         {
             MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
         }
-        //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
         BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
         TurnCameras(true);
         if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
