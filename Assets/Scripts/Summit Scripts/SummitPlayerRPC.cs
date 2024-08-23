@@ -865,48 +865,48 @@ public class SummitPlayerRPC : MonoBehaviour,IInRoomCallbacks
 
 
         if (view.IsMine)
-            {
-          
+        {
+
             foreach (var item in LOD)
             {
                 item.enabled = true;
             }
             ConstantsHolder.DisableFppRotation = false;
             MutiplayerController.instance.disableSector = false;
-             CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
-                loader.mainController.transform.parent =  Parent;
-                 loader.mainController.transform.position = GiantWheelManager.Instance.Exit.position;
+            CarNavigationManager.CarNavigationInstance.DisableExitCanvas();
+            loader.mainController.transform.parent = Parent;
+            loader.mainController.transform.position = GiantWheelManager.Instance.Exit.position;
             SummitCarUIHandler.SummitCarUIHandlerInstance.UpdateUIelement(true);
-             parentCharacterController.enabled = true;
-                 parentPlayerController.enabled = true;
-               charcontroller.enabled = true;
-               arrowManager.enabled = true;
-                Transformview.enabled = true;
-               animator.SetTrigger("ExitCar");
-           
-                GiantWheelManager.Instance.WheelCar.SetActive(true);
-                GamePlayButtonEvents.inst.OnSwitchCameraClick();
-                 StartCoroutine(ExitSectorAfterDelay(1));
-                    
-            }
-            else
-            {
-                transform.parent = loader.mainPlayer.transform.transform.parent;
-                transform.position = GiantWheelManager.Instance.Exit.position;
-                transform.localScale = Vector3.one * 1.14f;
-               charcontroller.enabled = true;
-               arrowManager.enabled = true;
-                Transformview.enabled = true;
-               animator.SetTrigger("ExitCar");
-                
-            }
-       
+            parentCharacterController.enabled = true;
+            parentPlayerController.enabled = true;
+            charcontroller.enabled = true;
+            arrowManager.enabled = true;
+            Transformview.enabled = true;
+            animator.SetTrigger("ExitCar");
+
+            GiantWheelManager.Instance.WheelCar.SetActive(true);
+            GamePlayButtonEvents.inst.OnSwitchCameraClick();
+            StartCoroutine(ExitSectorAfterDelay(1));
+
+        }
+        else
+        {
+            transform.parent = loader.mainPlayer.transform.transform.parent;
+            transform.position = GiantWheelManager.Instance.Exit.position;
+            transform.localScale = Vector3.one * 1.14f;
+            charcontroller.enabled = true;
+            arrowManager.enabled = true;
+            Transformview.enabled = true;
+            animator.SetTrigger("ExitCar");
+
+
+        }
         
     }
     IEnumerator ExitSectorAfterDelay(int time)
     {
         yield return new WaitForSeconds(time);
-        MutiplayerController.instance.Ontriggered("Grassland");
+        MutiplayerController.instance.Ontriggered("Default");
         GiantWheelManager.Instance.CarAdded = false;
     }
 
