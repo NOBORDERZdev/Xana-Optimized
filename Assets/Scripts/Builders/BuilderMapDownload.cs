@@ -172,6 +172,11 @@ public class BuilderMapDownload : MonoBehaviour
                 //Debug.Log("Failed to load json....");
             }));
         }
+
+        if (!ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        {
+            XANAPartyLoading.SetActive(false);
+        }
         // AssetLoadingBar.SetActive(true);
 
         GamificationComponentData.instance.previousSkyID = levelData.skyProperties.skyId;
