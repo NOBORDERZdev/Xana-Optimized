@@ -134,6 +134,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
 
     IEnumerator HitGetEnvironmentJson(string url, string envId)
     {
+        //Debug.LogError(url + " ----- Environment Jump ---- " + envId);
+
         using (UnityWebRequest request = UnityWebRequest.Get(url))
         {
             request.SetRequestHeader("Authorization", ConstantsGod.AUTH_TOKEN);
@@ -181,6 +183,8 @@ public class DynamicEventManager : Singleton<DynamicEventManager>
             }
             else
             {
+       // Debug.LogError(" ----- Environment Jump ---- " + request.error);
+
                 if (request.Equals(UnityWebRequest.Result.ConnectionError))
                 {
                     yield return StartCoroutine(HitGetEnvironmentJson(url, envId));
@@ -216,6 +220,7 @@ public class EditorTestDeeplinking : Editor
         {
             if (EnvironmentID > 0)
             {
+                Debug.LogError(" ----- Environment Jump ---- " + EnvironmentID);
                 DynamicEventManager.Instance.InvokeDeepLinkEnvironment("" + EnvironmentID);
             }
         }
