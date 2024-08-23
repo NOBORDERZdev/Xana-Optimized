@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
     public Color SelectedColorTab;
     public Color UnSelectedColorTab;
     public Transform CommingSoonTxt;
+    public Transform ActionBtnHeighlight, ReactionBtnHeighlight;
 
     protected EmoteReactionItemBtnHandler.ItemType SelectedAction;
 
@@ -84,6 +86,9 @@ public class EmoteReactionUIHandler : MonoBehaviour
     }
     public void SetSeeAllTabSelectAction(EmoteReactionItemBtnHandler.ItemType actionType, string actionName, int TabIndex)
     {
+        if (!this.gameObject.activeInHierarchy)
+            return;
+
         if (actionType == EmoteReactionItemBtnHandler.ItemType.Emote)
         {
             EmoteTabs[_selectedTabEmote].GetComponent<ActionHeaderTabHandler>().SetTabDetails(TabIndex, actionName);
@@ -103,7 +108,23 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
         SelectedAction = _selectedAction;
         SetTabOfItem();
-        DisplayDialogScrollView.gameObject.SetActive(true);
+        if(ActionBtnHeighlight != null)
+        {
+            ActionBtnHeighlight.gameObject.SetActive(!ActionBtnHeighlight.gameObject.activeInHierarchy);
+            if (ReactionBtnHeighlight.gameObject.activeInHierarchy)
+            {
+                ReactionBtnHeighlight.gameObject.SetActive(false);
+            }
+            else
+            {
+                DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
+            }
+        }
+        else
+        {
+            DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
+        }
+
         DisableAllItemsInView();
         int itemscount = 0;
 
@@ -135,6 +156,11 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
     public void PopulateViewItemsReaction(List<ReactionAnimationList> items, EmoteReactionItemBtnHandler.ItemType _selectedAction)
     {
+        if (!this.gameObject.activeInHierarchy)
+        {
+            return;
+        }
+
         if (items.Count.Equals(0))
         {
             CommingSoonTxt.gameObject.SetActive(true);
@@ -147,7 +173,23 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
         SelectedAction = _selectedAction;
         SetTabOfItem();
-        DisplayDialogScrollView.gameObject.SetActive(true);
+        if(ReactionBtnHeighlight != null)
+        {
+            ReactionBtnHeighlight.gameObject.SetActive(!ReactionBtnHeighlight.gameObject.activeInHierarchy);
+            if (ActionBtnHeighlight.gameObject.activeInHierarchy)
+            {
+                ActionBtnHeighlight.gameObject.SetActive(false);
+            }
+            else
+            {
+                DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
+            }
+        }
+        else
+        {
+            DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
+        }
+
         DisableAllItemsInView();
         int itemscount = 0;
 

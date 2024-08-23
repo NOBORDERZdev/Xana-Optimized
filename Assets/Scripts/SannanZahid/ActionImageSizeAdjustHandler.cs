@@ -6,7 +6,12 @@ public class ActionImageSizeAdjustHandler : MonoBehaviour
 {
     private void OnEnable()
     {
-        if(GetComponent<EmoteReactionItemBtnHandler>().TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
+        StartCoroutine(ResizeElement());
+    }
+    IEnumerator ResizeElement()
+    {
+        yield return new WaitForSeconds(0.15f);
+        if (GetComponent<EmoteReactionItemBtnHandler>().TypeOfAction == EmoteReactionItemBtnHandler.ItemType.Emote)
         {
             transform.GetComponent<EmoteReactionItemBtnHandler>().BtnImg.GetComponent<RectTransform>().sizeDelta = new Vector2(140, 140);
         }

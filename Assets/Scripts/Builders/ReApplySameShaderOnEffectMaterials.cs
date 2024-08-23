@@ -46,6 +46,9 @@ public class ReApplySameShaderOnEffectMaterials : MonoBehaviour
                                 break;
                             case "mtEFT0210018_PlaceMode":
                             case "mtEFT0210021_PlaceMode":
+                            case "mtTLP0110001_PlaceMode":
+                            case "mtTLP0110001_PlaceMode02":
+                            case "mtTLP0110001_PlaceMode03":
                                 newShader = Shader.Find("Legacy Shaders/Particles/Additive");
                                 break;
                             case "mtEFT0210019_PlaceMode_02":
