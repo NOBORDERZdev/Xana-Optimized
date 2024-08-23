@@ -48,7 +48,7 @@ public class SoundSettings : MonoBehaviour
     public BgmAudioEvent OnBGMAudioMuted;
 
     [DllImport("__Internal")]
-    private static extern bool IsDeviceSilent();
+    private static extern bool _IsSilentModeActive();
 
     void Awake()
     {
@@ -432,7 +432,7 @@ public class SoundSettings : MonoBehaviour
 
     public void CheckIfDeviceisInSilentMode()
     {
-        bool isSilent = IsDeviceSilent();
+        bool isSilent = _IsSilentModeActive();
         Debug.Log($"Is device silent: {isSilent}");
     }
 

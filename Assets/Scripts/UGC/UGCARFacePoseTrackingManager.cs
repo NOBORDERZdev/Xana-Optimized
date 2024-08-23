@@ -49,12 +49,12 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
         //defaultRotation = RootAnimTargetObj.transform.rotation;
         defaultRotation = new Quaternion(0, 0, 0, 1f);
 
-        Invoke(nameof(SetReference),1f);
+        Invoke(nameof(SetReference), 1f);
     }
 
     public void SetReference()
     {
-        if (CharacterHandler.instance.activePlayerGender==AvatarGender.Male)
+        if (CharacterHandler.instance.activePlayerGender == AvatarGender.Male)
         {
             PlayerHead = MaleHeadTarget;
             PlayerBody = MaleBodyTarget;
@@ -135,29 +135,29 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
                 //headRotation = new Vector3(-face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
                 headRotation = new Vector3(face.transform.rotation.eulerAngles.x, face.transform.rotation.eulerAngles.y, face.transform.rotation.eulerAngles.z);
 
-                mirrorARFace.transform.rotation = Quaternion.Euler(headRotation);
+                MirrorARFace.transform.rotation = Quaternion.Euler(headRotation);
 
-                Vector3 faceAngle = mirrorARFace.transform.rotation.eulerAngles;
+                Vector3 faceAngle = MirrorARFace.transform.rotation.eulerAngles;
 
                 // For y-component, use angle difference between camera and face.
-                Quaternion differenceRotation = mirrorARFace.transform.rotation * Quaternion.Inverse(cameraTransform.transform.rotation);
+                Quaternion differenceRotation = MirrorARFace.transform.rotation * Quaternion.Inverse(CameraTransform.transform.rotation);
                 Vector3 differenceAngles = differenceRotation.eulerAngles;
 
                 faceAngle.y = differenceAngles.y;
-                mirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
+                MirrorARFace2.transform.rotation = Quaternion.Euler(faceAngle);
 
-                float yRot = faceAngle.y / bodyRotRatio;
+                float yRot = faceAngle.y / _bodyRotRatio;
 
-                if (yRot>100)
+                if (yRot > 100)
                 {
                     yRot = 120 - yRot;
-                    float tempy=360 - yRot;
+                    float tempy = 360 - yRot;
                     yRot = tempy;
                 }
 
                 Vector3 bodyRot = new Vector3(0, yRot, 0);
-                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
-                playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(mirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
+                PlayerBody.transform.localRotation = Quaternion.Euler(bodyRot);
+                PlayerHead.transform.localRotation = Quaternion.Lerp(PlayerHead.transform.localRotation, Quaternion.Euler(MirrorARFace2.transform.rotation.eulerAngles), 10 * Time.deltaTime);
 #else
                 headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
                 
