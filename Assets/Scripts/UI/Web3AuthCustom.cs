@@ -139,6 +139,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void PasswordLessEmailLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = true;
         var selectedProvider = Provider.JWT;
         isNewReg = isnewreg;
         var options = new LoginParams()
@@ -167,6 +168,7 @@ public class Web3AuthCustom : MonoBehaviour
     
     public void GoogleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = false;
         var selectedProvider = Provider.GOOGLE;
         isNewReg = isnewreg;
 
@@ -188,6 +190,7 @@ public class Web3AuthCustom : MonoBehaviour
 
     public void AppleLogin(bool isnewreg)
     {
+        WebViewManager.Instance.useWebview = false;
         var selectedProvider = Provider.APPLE;
         isNewReg = isnewreg;
         var options = new LoginParams()

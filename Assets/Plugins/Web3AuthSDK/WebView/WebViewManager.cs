@@ -39,6 +39,7 @@ public class WebViewManager : MonoBehaviour
 
     public Button LoginOptionWalletBtn;
 
+    public bool useWebview;
     private void Awake()
     {
         if (Instance != null && Instance != this)

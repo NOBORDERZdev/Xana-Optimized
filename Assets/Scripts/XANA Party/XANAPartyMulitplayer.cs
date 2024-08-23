@@ -14,6 +14,7 @@ public class XANAPartyMulitplayer : MonoBehaviour
 
     public int UserId;
     public int RaceFinishCount = 0;
+    public bool isRaceFinished = false;
     private void Start()
     {
         photonView = GetComponent<PhotonView>();
@@ -142,6 +143,14 @@ public class XANAPartyMulitplayer : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    public void UpdateStatusOnRaceFinish(int actorNumber, bool status)
+    {
+        if(photonView.Owner.ActorNumber == actorNumber)
+        {
+            isRaceFinished = status;
+        }
+    }
     //public void JumpRPCTrigger(){
     //    print("Trigger JUMP RPC");
     //    PhotonView tempPenguin = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<PhotonView>();

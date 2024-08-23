@@ -944,12 +944,12 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
 
         Debug.Log("Player Spawn Completed --  Join World");
         GlobalConstants.SendFirebaseEvent(GlobalConstants.FirebaseTrigger.Join_World.ToString());
-        yield return new WaitForSeconds(5f);
-        if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
-        {
-            XanaPartyCamera.thirdPersonCamera.m_XAxis.Value = 0;
-            XanaPartyCamera.thirdPersonCamera.m_YAxis.Value = 0.66f;
-        }
+        //yield return new WaitForSeconds(5f);
+        //if (ConstantsHolder.xanaConstants.isXanaPartyWorld)
+        //{
+        //    XanaPartyCamera.thirdPersonCamera.m_XAxis.Value = 0;
+        //    XanaPartyCamera.thirdPersonCamera.m_YAxis.Value = 0.66f;
+        //}
         //ActivateNpcChat();
     }
 

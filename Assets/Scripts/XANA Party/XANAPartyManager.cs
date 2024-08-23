@@ -94,6 +94,7 @@ public class XANAPartyManager : MonoBehaviour
     {
         if (GameIndex >= GamesToVisitInCurrentRound.Count) // If all games in the current round are visited
         {
+            GameIndex = 0;
             RandomizeAndUpdateGameData();
         }
 
@@ -111,7 +112,11 @@ public class XANAPartyManager : MonoBehaviour
     {
         if (TotalGamesToVisit.Count != 0)
         {
-            RandomizeAndUpdateGameData();
+            if (GameIndex >= GamesToVisitInCurrentRound.Count)
+            {
+                GameIndex = 0;
+                RandomizeAndUpdateGameData();
+            }
             StartCoroutine(LoadXanaPartyGame(true));
         }
         else
@@ -161,6 +166,7 @@ public class XANAPartyManager : MonoBehaviour
             GameIndex = 0;
             GetComponent<PenpenzLpManager>().PlayerIDs.Clear();
             GetComponent<PenpenzLpManager>().WinnerPlayerIds.Clear();
+            GetComponent<PenpenzLpManager>().RaceFinishTime.Clear();
 
             ConstantsHolder.xanaConstants.XanaPartyGameName = "RoofTopParty"; // Setting world name to join XANA PARTY LOBBY
             if (APIBasepointManager.instance.IsXanaLive)

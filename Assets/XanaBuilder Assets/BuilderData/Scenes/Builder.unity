@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1956891594}
-  m_IndirectSpecularColor: {r: 0.44402188, g: 0.4931649, b: 0.57223135, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -993,6 +993,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1864747888935569920}
     m_Modifications:
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a730012149ee4fa489058ea29bd26d64, type: 2}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_fontStyle
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_isRichText
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_enableKerning
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -3745800522496746644, guid: a730012149ee4fa489058ea29bd26d64, type: 2}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_characterSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: checkPaddingRequired
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_enableExtraPadding
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_useMaxVisibleDescender
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 112501786732212771, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
+      propertyPath: m_IsTextObjectScaleStatic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 185616918068099106, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1039,7 +1083,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8119715227558268963, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 1.3999939
       objectReference: {fileID: 0}
     - target: {fileID: 8119715227558268963, guid: ddc75265aac614b97b39c0b0b549d83f, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1169,8 +1213,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU WON THE RACE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 509b9b30d7392b74990efd018dba9ffd, type: 2}
-  m_sharedMaterial: {fileID: -81013792121824873, guid: 509b9b30d7392b74990efd018dba9ffd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: a160109514c176c42b67a99ebe8d9cfb, type: 2}
+  m_sharedMaterial: {fileID: 1896292619911093276, guid: a160109514c176c42b67a99ebe8d9cfb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1194,8 +1238,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27
-  m_fontSizeBase: 27
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1204,7 +1248,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: 7.76
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

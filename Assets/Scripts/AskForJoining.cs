@@ -7,6 +7,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using Metaverse;
 using UnityEngine.SceneManagement;
+using Photon.Realtime;
 
 public class AskForJoining : MonoBehaviour
 {
@@ -79,6 +80,7 @@ public class AskForJoining : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private string lastRoomName;
     public void joinCurrentRoom()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -102,20 +104,41 @@ public class AskForJoining : MonoBehaviour
             }
 
             //LoadingHandler.Instance.UpdateLoadingSlider(0.5f);
-            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
-            AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
-            BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
-            TurnCameras(true);
-            if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
-                && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
-            {
-                StartCoroutine(MovePlayerToNextGameOnReconnection());
-            }
-            else
-            {
-                Destroy(this.gameObject);
-            }
+            lastRoomName = PlayerPrefs.GetString("roomname"); // Store the current room name
+            // Connect to the Master Server if not connected
+            
+            StartCoroutine(AttemptRejoin());
 
+        }
+    }
+
+    private IEnumerator AttemptRejoin()
+    {
+
+        while (!PhotonNetwork.IsConnected || PhotonNetwork.NetworkClientState != ClientState.ConnectedToMasterServer)
+        {
+            PhotonNetwork.ConnectUsingSettings(); // Automatically connect to the Master Server
+            yield return new WaitForSeconds(0.2f);
+        }
+        if (!string.IsNullOrEmpty(lastRoomName))
+        {
+            PhotonNetwork.RejoinRoom(lastRoomName);
+        }
+        else
+        {
+            MutiplayerController.instance.Connect(MutiplayerController.CurrLobbyName);
+        }
+        //AvatarSpawnerOnDisconnect.Instance.InstantiatePlayerAgain();
+        BuilderEventManager.ResetComponentUI?.Invoke(Constants.ItemComponentType.none);
+        TurnCameras(true);
+        if (ConstantsHolder.xanaConstants.isXanaPartyWorld && ConstantsHolder.xanaConstants.isJoinigXanaPartyGame
+            && XANAPartyManager.Instance.GetComponent<PenpenzLpManager>().isLeaderboardShown)
+        {
+            StartCoroutine(MovePlayerToNextGameOnReconnection());
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 
