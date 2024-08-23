@@ -10,6 +10,19 @@ public class StepsManager : MonoBehaviour
 
     float distance = 3;
 
+    private void OnEnable()
+    {
+        if (SoundSettings.soundManagerSettings)
+        {
+            SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableStepsSound;
+        }
+    }
+
+    private void OnDisable()
+    {
+        SoundSettings.soundManagerSettings.OnBGMAudioMuted -= DisableStepsSound;
+    }
+
     void Awake()
     {
         if (StepAudio != null)
@@ -22,6 +35,10 @@ public class StepsManager : MonoBehaviour
 
     public void EnterStep(float targetWalkSpeed) //it is calling from the animation event on Walk, Run, and Sprint animations.
     {
+        if (SoundSettings.soundManagerSettings)
+        {
+            SoundSettings.soundManagerSettings.OnBGMAudioMuted += DisableStepsSound;
+        }
         if (isplayer)
         {
             Ray ray = new Ray(gameObject.transform.position, Vector3.down);
@@ -85,5 +102,10 @@ public class StepsManager : MonoBehaviour
             return 2;
 
         return 0;
+    }
+
+    public void DisableStepsSound(bool _mute)
+    {
+        StepAudio.mute = _mute;
     }
 }
