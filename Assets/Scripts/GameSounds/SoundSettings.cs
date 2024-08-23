@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 using RenderHeads.Media.AVProVideo;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 public class SoundSettings : MonoBehaviour
 {
@@ -45,6 +46,9 @@ public class SoundSettings : MonoBehaviour
 
     public delegate void BgmAudioEvent(bool _isMuted);
     public BgmAudioEvent OnBGMAudioMuted;
+
+    [DllImport("__Internal")]
+    private static extern bool IsDeviceSilent();
 
     void Awake()
     {
@@ -411,6 +415,25 @@ public class SoundSettings : MonoBehaviour
     public void setNewSliderValues()
     {
         SetAllVolumes(PlayerPrefs.GetFloat(ConstantsGod.TOTAL_AUDIO_VOLUME, 0.5f));
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Debug.Log("=================APPLICATION GAINED FOCUS================");
+            CheckIfDeviceisInSilentMode();
+        }
+        else
+        {
+            Debug.Log("=================APPLICATION LOSE FOCUS================");
+        }
+    }
+
+    public void CheckIfDeviceisInSilentMode()
+    {
+        bool isSilent = IsDeviceSilent();
+        Debug.Log($"Is device silent: {isSilent}");
     }
 
     private void OnDisable()
