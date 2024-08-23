@@ -661,8 +661,13 @@ public class GameplayEntityLoader : MonoBehaviourPunCallbacks, IPunInstantiateMa
             PenguinPlayer = player;
             if (player != null)
             {
+                if (SceneManager.GetActiveScene().name == "Builder")
+                {
+                    SituationChangerSkyboxScript.instance.builderMapDownload.XANAPartyLoading.SetActive(false);
+                }
                 StartCoroutine(SetXanaPartyControllers(player));
             }
+             
         }
     }
 
