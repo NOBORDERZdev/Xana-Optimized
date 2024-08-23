@@ -147,12 +147,12 @@ public class SNS_APIManager : MonoBehaviour
                 AllTextPostByUserIdRoot jsonData = JsonConvert.DeserializeObject<AllTextPostByUserIdRoot>(data, settings);
                 if (callingFrom == "MyProfile")
                 {
-                    myProfileDataManager.totalPostText.text = jsonData.data.Count.ToString();
+                    myProfileDataManager.totalPostText.text = CheckforEmptyTextPosts(jsonData).ToString();
                     allTextPostWithUserIdRoot.data.rows.Clear();
                 }
                 else
                 {
-                    otherPlayerProfileData.textPlayerTottlePost.text = jsonData.data.Count.ToString();
+                    otherPlayerProfileData.textPlayerTottlePost.text = CheckforEmptyTextPosts(jsonData).ToString();
                 }
                 if (allTextPostWithUserIdRoot.data.rows.Count >= jsonData.data.rows.Count)
                 {
@@ -196,6 +196,22 @@ public class SNS_APIManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public int CheckforEmptyTextPosts(AllTextPostByUserIdRoot _userTextPostData)
+    {
+        int emptyPostCount = 0;
+
+        // Use foreach loop for better readability and performance
+        foreach (var row in _userTextPostData.data.rows)
+        {
+            if (row.text_post == "null" || string.IsNullOrEmpty(row.text_post))
+            {
+                emptyPostCount++;
+            }
+        }
+        int nullPostCount = _userTextPostData.data.Count - emptyPostCount;
+        return nullPostCount;
     }
     #endregion
 

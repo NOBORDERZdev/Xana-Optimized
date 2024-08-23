@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     private float gravityValue = -9.81f;
 
     public float JumpVelocity = 3;
-
+    
     public float YourDownhillThreshold = 30f; // Adjust slope Threshold 
     public float CurrentSlope = 0f;
     private readonly float _rayOffsett = 0.5f;
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     //public Transform cameraCharacterTransform = null;
     //public GameObject cmVcam;
 
-    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping;
+    public bool sprint, _IsGrounded, jumpNow, sprint_Button, IsJumping,DebugColloision;
 
     private CharacterController characterController = null;
 
@@ -173,6 +173,13 @@ public class PlayerController : MonoBehaviour
 
         RemoveLayerFromCameraCollider();
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (DebugColloision)
+        {
+            Debug.LogError("Colloided    " + collision.gameObject.name);
+        }
     }
 
     private void RemoveLayerFromCameraCollider()
