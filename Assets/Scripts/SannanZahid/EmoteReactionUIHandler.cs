@@ -24,7 +24,6 @@ public class EmoteReactionUIHandler : MonoBehaviour
     public Color SelectedColorTab;
     public Color UnSelectedColorTab;
     public Transform CommingSoonTxt;
-    public Transform ActionBtnHeighlight, ReactionBtnHeighlight;
 
     protected EmoteReactionItemBtnHandler.ItemType SelectedAction;
 
@@ -108,22 +107,8 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
         SelectedAction = _selectedAction;
         SetTabOfItem();
-        if(ActionBtnHeighlight != null)
-        {
-            ActionBtnHeighlight.gameObject.SetActive(!ActionBtnHeighlight.gameObject.activeInHierarchy);
-            if (ReactionBtnHeighlight.gameObject.activeInHierarchy)
-            {
-                ReactionBtnHeighlight.gameObject.SetActive(false);
-            }
-            else
-            {
-                DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
-            }
-        }
-        else
-        {
-            DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
-        }
+
+        DisplayDialogScrollView.gameObject.SetActive(true);
 
         DisableAllItemsInView();
         int itemscount = 0;
@@ -173,22 +158,7 @@ public class EmoteReactionUIHandler : MonoBehaviour
 
         SelectedAction = _selectedAction;
         SetTabOfItem();
-        if(ReactionBtnHeighlight != null)
-        {
-            ReactionBtnHeighlight.gameObject.SetActive(!ReactionBtnHeighlight.gameObject.activeInHierarchy);
-            if (ActionBtnHeighlight.gameObject.activeInHierarchy)
-            {
-                ActionBtnHeighlight.gameObject.SetActive(false);
-            }
-            else
-            {
-                DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
-            }
-        }
-        else
-        {
-            DisplayDialogScrollView.gameObject.SetActive(!DisplayDialogScrollView.gameObject.activeInHierarchy);
-        }
+        DisplayDialogScrollView.gameObject.SetActive(true);
 
         DisableAllItemsInView();
         int itemscount = 0;
