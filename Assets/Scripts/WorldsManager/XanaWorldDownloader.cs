@@ -114,7 +114,6 @@ public class XanaWorldDownloader : MonoBehaviour
     {
         BuilderEventManager.XanaMapDataDownloaded -= PostLoadingBuilderAssets;
         ScreenOrientationManager.switchOrientation -= OnOrientationChange;
-        ResetAll();
     }
 
     async void PostLoadingBuilderAssets(string worldData)
@@ -722,7 +721,7 @@ public class XanaWorldDownloader : MonoBehaviour
         }
     }
 
-    public static void ResetAll()
+    public async static void ResetAll()
     {
         stopDownloading = true;
 
