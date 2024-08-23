@@ -132,10 +132,10 @@ public class AddForceComponent : ItemComponent
     #region BehaviourControl
     private void StartComponent()
     {
-        if (collideWithComponent)
-            return;
-        collideWithComponent = true;
-        Invoke(nameof(CollideWithComponet), 0.5f);
+        //if (collideWithComponent)
+        //    return;
+        //collideWithComponent = true;
+        //Invoke(nameof(CollideWithComponet), 0.5f);
         ApplyAddForce();
     }
 
