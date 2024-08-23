@@ -11,24 +11,26 @@ using UnityEngine.XR.ARSubsystems;
 public class UGCARFacePoseTrackingManager : MonoBehaviour
 {
     public static UGCARFacePoseTrackingManager Instance;
-    public bool isTracking = false;
-    bool lastState;
-    public ARPoseDriver _aRPoseDriver;
-    public GameObject moveTargetObj;
-    public GameObject playerHead;
-    public GameObject playerBody;
-    public GameObject maleHeadTarget;
-    public GameObject femaleHeadTarget;
-    public GameObject maleBodyTarget;
-    public GameObject femaleBodyTarget;
-    public GameObject cameraTransform;
-    public GameObject mirrorARFace;
-    public GameObject mirrorARFace2;
-    public Vector3 headRotation;
-    public float bodyRotRatio;
-    public SkinnedMeshRenderer maleDFaceskinRenderer;
-    public SkinnedMeshRenderer feMaleDFaceskinRenderer;
-    public ARFaceManager m_ARFaceManager;
+
+    public ARPoseDriver AR_PoseDriver;
+    public ARFaceManager AR_FaceManager;
+    public GameObject MoveTargetObj;
+    public GameObject PlayerHead;
+    public GameObject PlayerBody;
+    public GameObject MaleHeadTarget;
+    public GameObject FemaleHeadTarget;
+    public GameObject MaleBodyTarget;
+    public GameObject FemaleBodyTarget;
+    public GameObject CameraTransform;
+    public GameObject MirrorARFace;
+    public GameObject MirrorARFace2;
+    public SkinnedMeshRenderer MaleDFaceskinRenderer;
+    public SkinnedMeshRenderer FemaleDFaceskinRenderer;
+
+    [SerializeField] private Vector3 _headRotation;
+    [SerializeField] private bool _isTracking = false;
+    [SerializeField] private float _bodyRotRatio;
+    private bool _lastState;
 
     void Awake()
     {
@@ -40,9 +42,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     private void Start()
     {
-        if (moveTargetObj != null)
+        if (MoveTargetObj != null)
         {
-            defaultTargetPos = moveTargetObj.transform.position;
+            defaultTargetPos = MoveTargetObj.transform.position;
         }
         //defaultRotation = RootAnimTargetObj.transform.rotation;
         defaultRotation = new Quaternion(0, 0, 0, 1f);
@@ -54,13 +56,13 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     {
         if (CharacterHandler.instance.activePlayerGender==AvatarGender.Male)
         {
-            playerHead = maleHeadTarget;
-            playerBody = maleBodyTarget;
+            PlayerHead = MaleHeadTarget;
+            PlayerBody = MaleBodyTarget;
         }
         else
         {
-            playerHead = femaleHeadTarget;
-            playerBody = femaleBodyTarget;
+            PlayerHead = FemaleHeadTarget;
+            PlayerBody = FemaleBodyTarget;
         }
     }
     private void Update()
@@ -76,19 +78,19 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     {
         float x = Input.GetAxis("Vertical") * rotationSpeed;
         float y = Input.GetAxis("Horizontal") * rotationSpeed;
-        headRotation.x += x;
-        headRotation.y += y;
+        _headRotation.x += x;
+        _headRotation.y += y;
         if (Input.GetKey(KeyCode.Z))
         {
-            headRotation.z += Time.deltaTime * 50;
+            _headRotation.z += Time.deltaTime * 50;
         }
         if (Input.GetKey(KeyCode.X))
         {
-            headRotation.z -= Time.deltaTime * 50;
+            _headRotation.z -= Time.deltaTime * 50;
         }
         /*Vector3 bodyRot= new Vector3(0, headRotation.y/ bodyRotRatio, 0);
         playerBody.transform.rotation = Quaternion.Euler(bodyRot);*/
-        playerHead.transform.rotation = Quaternion.Euler(headRotation);
+        PlayerHead.transform.rotation = Quaternion.Euler(_headRotation);
     }
     private void OnDisable()
     {
@@ -97,12 +99,12 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     public void ToggleFaceDetection()
     {
-        if (m_ARFaceManager == null)
+        if (AR_FaceManager == null)
             return;
 
-        m_ARFaceManager.enabled = !m_ARFaceManager.enabled;
+        AR_FaceManager.enabled = !AR_FaceManager.enabled;
 
-        if (m_ARFaceManager.enabled)
+        if (AR_FaceManager.enabled)
         {
             SetAllPlanesActive(true);
         }
@@ -114,7 +116,7 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     void SetAllPlanesActive(bool value)
     {
-        foreach (var face in m_ARFaceManager.trackables)
+        foreach (var face in AR_FaceManager.trackables)
         {
             face.gameObject.SetActive(value);
         }
@@ -122,11 +124,11 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     void SetARPoseOnAvatar()
     {
-        foreach (var face in m_ARFaceManager.trackables)
+        foreach (var face in AR_FaceManager.trackables)
         {
             if (face.trackingState == TrackingState.Tracking)
             {
-                isTracking = true;
+                _isTracking = true;
 
                 Vector3 headRotation;
 #if UNITY_IOS
@@ -159,7 +161,7 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 #else
                 headRotation = new Vector3(face.transform.rotation.eulerAngles.x, -face.transform.rotation.eulerAngles.y, -face.transform.rotation.eulerAngles.z);
                 
-                float yRot=face.transform.rotation.eulerAngles.y/bodyRotRatio;
+                float yRot=face.transform.rotation.eulerAngles.y/_bodyRotRatio;
                 if (yRot>100)
                 {
                     yRot = 120 - yRot;
@@ -171,8 +173,8 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
                 }
 
                 Vector3 bodyRot = new Vector3(0,yRot,0);
-                playerBody.transform.localRotation=Quaternion.Euler(bodyRot);
-                playerHead.transform.localRotation = Quaternion.Lerp(playerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
+                PlayerBody.transform.localRotation=Quaternion.Euler(bodyRot);
+                PlayerHead.transform.localRotation = Quaternion.Lerp(PlayerHead.transform.localRotation, Quaternion.Euler(headRotation), 10 * Time.deltaTime);
 #endif
 
                 float finalXRotValue = 0;
@@ -186,32 +188,32 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
                     //finalXRotValue = (face.transform.position.z - 0.6f);
                 }
 
-                if (moveTargetObj != null)
+                if (MoveTargetObj != null)
                 {
-                    Vector3 movePos = new Vector3(moveTargetObj.transform.localPosition.x, moveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.15f, 0.1f));
-                    moveTargetObj.transform.localPosition = Vector3.Lerp(moveTargetObj.transform.localPosition, movePos, 10 * Time.deltaTime);
+                    Vector3 movePos = new Vector3(MoveTargetObj.transform.localPosition.x, MoveTargetObj.transform.localPosition.y, Mathf.Clamp(finalXRotValue, -0.15f, 0.1f));
+                    MoveTargetObj.transform.localPosition = Vector3.Lerp(MoveTargetObj.transform.localPosition, movePos, 10 * Time.deltaTime);
 
                     //Debug.LogError("face:" + face.transform.position.z + " :finalXRotValue:" + finalXRotValue + " :face postion:" + face.transform.localPosition.z + ":LocalPos:" + moveTargetObj.transform.localPosition);
                 }
             }
             else
             {
-                isTracking = false;
+                _isTracking = false;
             }
             //playerHead.transform.localRotation = Quaternion.Euler(headRotation);
             //RootAnimTargetObj.transform.localRotation = Quaternion.Euler(headRotation);
         }
 
         //Debug.LogError("Count:" + m_ARFaceManager.trackables.count + "  :isTracking:" + isTracking);
-        if (m_ARFaceManager.trackables.count <= 0)
+        if (AR_FaceManager.trackables.count <= 0)
         {
-            isTracking = false;
+            _isTracking = false;
         }
 
-        if (lastState != isTracking)
+        if (_lastState != _isTracking)
         {
-            lastState = isTracking;
-            if (!isTracking && !isMoveToDefault)
+            _lastState = _isTracking;
+            if (!_isTracking && !isMoveToDefault)
             {
                 ResetToDefaultAvatar();
             }
@@ -220,9 +222,9 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
 
     public void SetDefaultMoveTargetObjPos()
     {
-        if (moveTargetObj != null)
+        if (MoveTargetObj != null)
         {
-            moveTargetObj.transform.localPosition = Vector3.zero;
+            MoveTargetObj.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -231,21 +233,21 @@ public class UGCARFacePoseTrackingManager : MonoBehaviour
     Quaternion defaultRotation;
     public void ResetToDefaultAvatar()
     {
-        Debug.LogError("ResetToDefaultAvatar:" + playerHead.transform.localRotation + "   :defaultRotation:" + defaultRotation);
-        if (playerHead.transform.localRotation != defaultRotation)
+        Debug.LogError("ResetToDefaultAvatar:" + PlayerHead.transform.localRotation + "   :defaultRotation:" + defaultRotation);
+        if (PlayerHead.transform.localRotation != defaultRotation)
         {
             isMoveToDefault = true;
 
-            if (playerHead != null)
+            if (PlayerHead != null)
             {
-                playerHead.transform.DOLocalRotateQuaternion(defaultRotation, 0.5f).OnComplete(() =>
+                PlayerHead.transform.DOLocalRotateQuaternion(defaultRotation, 0.5f).OnComplete(() =>
                 isMoveToDefault = false
                 );
             }
 
-            if (moveTargetObj != null)
+            if (MoveTargetObj != null)
             {
-                moveTargetObj.transform.DOMove(defaultTargetPos, 0.5f);
+                MoveTargetObj.transform.DOMove(defaultTargetPos, 0.5f);
             }
         }
     }
