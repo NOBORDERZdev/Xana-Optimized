@@ -13,21 +13,21 @@ public class MicControllerButtons : MonoBehaviour
     public GameObject micOffButtonGameplay;
 
 
-    private void Start()
-    {
-        if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
-        {
-            if (OnStateUI)
-                OnStateUI.SetActive(false);
+    //private void Start()
+    //{
+    //    if (WorldItemView.m_EnvName.Contains("Xana Festival") || WorldItemView.m_EnvName.Contains("NFTDuel Tournament"))
+    //    {
+    //        if (OnStateUI)
+    //            OnStateUI.SetActive(false);
 
-            if (OffStateUI)
-            {
-                OffStateUI.SetActive(true);
-                OffStateUI.GetComponent<Button>().interactable = false;
-            }
-        }
+    //        if (OffStateUI)
+    //        {
+    //            OffStateUI.SetActive(true);
+    //            OffStateUI.GetComponent<Button>().interactable = false;
+    //        }
+    //    }
 
-    }
+    //}
     private void OnEnable()
     {
 

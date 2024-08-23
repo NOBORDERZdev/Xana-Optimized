@@ -137,6 +137,7 @@ public class WorldManager : MonoBehaviour
             ConstantsHolder.xanaConstants.MuseumID = singleWorldInfo.data.id;
             WorldItemView.m_EnvName = singleWorldInfo.data.name;
             ConstantsHolder.xanaConstants.EnviornmentName = WorldItemView.m_EnvName;
+            ConstantsHolder.xanaConstants.UserMicEnable = singleWorldInfo.data.userMicEnable;
             LoadingHandler.Instance.GetComponent<CanvasGroup>().alpha = 1;
             LoadingHandler.Instance.nftLoadingScreen.SetActive(false);
             LoadingHandler.Instance.ShowLoading();
@@ -1100,6 +1101,7 @@ public class RowList
     public string[] tags;
     public string totalVisits;
     public string xanaAppVisitCount;
+    public bool userMicEnable;
 
     public bool isFavourite;
     public UserInfo user;
@@ -1151,6 +1153,7 @@ public class WorldItemDetail
     public string CreatorAvatarURL;
     public string CreatorDescription;
     public string WorldVisitCount;
+    public bool UserMicEnabled;
     public bool isFavourite;
 }
 
