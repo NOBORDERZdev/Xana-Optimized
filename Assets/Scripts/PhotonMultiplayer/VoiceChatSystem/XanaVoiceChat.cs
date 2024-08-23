@@ -38,7 +38,8 @@ public class XanaVoiceChat : MonoBehaviour
     public Transform placetoload;
     public string MicroPhoneDevice;
     public int index;
-
+    [Space(5)]
+    public GameObject PermissionAlertPopup;
 
     public void Awake()
     {
@@ -64,12 +65,41 @@ public class XanaVoiceChat : MonoBehaviour
             //}
 
             instance = this;
-            instance.Start();
+            //instance.Start();
+        }
+        BuilderEventManager.AfterPlayerInstantiated += CheckMicPermission;
+    }
+    private void OnDisable()
+    {
+        BuilderEventManager.AfterPlayerInstantiated -= CheckMicPermission;
+    }
+
+    private void CheckMicPermission()
+    {
+        if (!ScreenOrientationManager._instance.isPotrait)
+        {
+            // There is two instance of this script
+            // one used for Landscape & one for Portrait
+            // Already Called For Landscape no need to call again.
+            if (Application.isEditor)
+            {
+                PermissionAlertPopup.SetActive(true);
+            }
+            else
+            {
+                if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
+                {
+                    PermissionAlertPopup.SetActive(true);
+                }
+                else
+                {
+                    SetMic();
+                }
+            }
         }
     }
 
-
-    private void Start()
+    public void SetMic()      //Start()
     {
         Debug.Log("Xana VoiceChat Start");
         recorder = GameObject.FindObjectOfType<Recorder>();

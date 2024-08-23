@@ -50,15 +50,21 @@ public class UGCManager : MonoBehaviour
 
     public void CheckPermissionStatus()
     {
-        NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
-        if (permission == NativeCamera.Permission.Denied ||
-            permission == NativeCamera.Permission.ShouldAsk)
+        if (Application.isEditor)
         {
             permissionPopup.SetActive(true);
         }
         else
         {
-            OnClickSelfieButton();
+            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+            if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnClickSelfieButton();
+            }
         }
     }
 
