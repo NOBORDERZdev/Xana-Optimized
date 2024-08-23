@@ -70,7 +70,7 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
-        string worldId = ConstantsHolder.xanaConstants.MuseumID;
+        string worldId = "41424_srz5bKcbnk"; // ConstantsHolder.xanaConstants.MuseumID;
         string ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
 
         //if (!APIBasepointManager.instance.IsXanaLive)
@@ -78,7 +78,7 @@ public class THA_AI_Conversation : MonoBehaviour
         //else if (APIBasepointManager.instance.IsXanaLive)
         //    ip = "http://15.152.55.82:8054/";
 
-        string url = ip + _msg + "&usr_id=" + id + "&owner_id =" + worldId;
+        string url = ip + _msg + "&usr_id=" + id + "&owner_id=" + worldId;
         //Debug.Log("<color=red> Communication URL(Airin): " + url + "</color>");
 
         UnityWebRequest request = UnityWebRequest.Get(url);
