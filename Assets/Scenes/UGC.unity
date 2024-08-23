@@ -374,23 +374,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 767a821848c79644b8cf8875e963dda2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTracking: 0
-  _aRPoseDriver: {fileID: 771864184}
-  moveTargetObj: {fileID: 8445548262824394703}
-  playerHead: {fileID: 1518533673}
-  playerBody: {fileID: 1815731678}
-  maleHeadTarget: {fileID: 1518533673}
-  femaleHeadTarget: {fileID: 643354476}
-  maleBodyTarget: {fileID: 1815731678}
-  femaleBodyTarget: {fileID: 195638581}
-  cameraTransform: {fileID: 771864180}
-  mirrorARFace: {fileID: 1541594209}
-  mirrorARFace2: {fileID: 606153089}
-  headRotation: {x: 0, y: 0, z: 0}
-  bodyRotRatio: 3
-  maleDFaceskinRenderer: {fileID: 1348400443653016443}
-  feMaleDFaceskinRenderer: {fileID: 2334730365463866130}
-  m_ARFaceManager: {fileID: 142880211}
+  AR_PoseDriver: {fileID: 771864184}
+  MoveTargetObj: {fileID: 8445548262824394703}
+  PlayerHead: {fileID: 1518533673}
+  PlayerBody: {fileID: 1815731678}
+  MaleHeadTarget: {fileID: 1518533673}
+  FemaleHeadTarget: {fileID: 643354476}
+  MaleBodyTarget: {fileID: 1815731678}
+  FemaleBodyTarget: {fileID: 195638581}
+  CameraTransform: {fileID: 771864180}
+  MirrorARFace: {fileID: 1541594209}
+  MirrorARFace2: {fileID: 606153089}
+  MaleDFaceskinRenderer: {fileID: 1348400443653016443}
+  FemaleDFaceskinRenderer: {fileID: 2334730365463866130}
+  AR_FaceManager: {fileID: 142880211}
+  _headRotation: {x: 0, y: 0, z: 0}
+  _isTracking: 0
+  _bodyRotRatio: 3
   rotationSpeed: 1
 --- !u!4 &359173530
 Transform:
