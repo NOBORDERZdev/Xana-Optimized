@@ -15,6 +15,7 @@ public class UGCManager : MonoBehaviour
     private UGCItemsClass ugcItems;
     public TMP_Text warningText;
     public GameObject warningPanel;
+    public GameObject permissionPopup;
     public static bool isSelfieTaken = false;
 
     public void OnClickSaveSelfieButton()
@@ -46,6 +47,27 @@ public class UGCManager : MonoBehaviour
         InventoryManager.instance.itemData.CharactertypeAi = false;
         GameManager.Instance.HomeCamera.GetComponent<HomeCameraController>().CenterAlignCam();
     }
+
+    public void CheckPermissionStatus()
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeCamera.Permission permission = NativeCamera.CheckPermission(true);
+            if (permission == NativeCamera.Permission.ShouldAsk) //||permission == NativeCamera.Permission.Denied
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnClickSelfieButton();
+            }
+        }
+    }
+
     public void OnClickSelfieButton()
     {
 #if UNITY_IOS

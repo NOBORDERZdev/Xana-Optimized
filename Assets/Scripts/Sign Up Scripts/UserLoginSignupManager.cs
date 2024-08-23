@@ -11,7 +11,6 @@ using UnityEngine.Networking;
 using System.Text;
 using UnityEngine.UI;
 using System.IO;
-using Photon.Pun.Demo.PunBasics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -64,6 +63,8 @@ public class UserLoginSignupManager : MonoBehaviour
     public string SetProfileAvatarTempFilename = "";
     public string PermissionCheck = "";
     public GameObject PickImageOptionScreen;
+    [Space(5)]
+    public GameObject permissionPopup;
 
     [Header("Validation Popup Panel")]
     public ErrorHandler errorHandler;
@@ -75,7 +76,6 @@ public class UserLoginSignupManager : MonoBehaviour
     public AdvancedInputField passwordFieldLogin;
     public GameObject loginLoader;
     public Button loginButton;
-
 
     //Scripts References 
     [Header("Scripts References")]
@@ -351,7 +351,7 @@ public class UserLoginSignupManager : MonoBehaviour
         ConstantsHolder.loggedIn = true;
         ConstantsHolder.isWalletLogin = true;
 
-        if(ConstantsHolder.xanaConstants.openLandingSceneDirectly)
+        if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
         {
             GetUserClothData();
             return;
@@ -529,7 +529,7 @@ public class UserLoginSignupManager : MonoBehaviour
         PlayerPrefs.SetInt("IsLoggedIn", 1);
         PlayerPrefs.SetInt("FristPresetSet", 1);
         PlayerPrefs.SetInt("FirstTime", 1);
-       // PlayerPrefs.SetInt("WalletLogin", 1);
+        // PlayerPrefs.SetInt("WalletLogin", 1);
         PlayerPrefs.SetInt("shownWelcome", 1);
         PlayerPrefs.Save();
         ConstantsHolder.loggedIn = true;
@@ -1264,7 +1264,7 @@ public class UserLoginSignupManager : MonoBehaviour
 
         request.Dispose();
     }
-   
+
     void CheckCameraMan(string email)
     {
         if (email.Contains("xanacameraman@yopmail.com"))
@@ -1941,6 +1941,25 @@ public class UserLoginSignupManager : MonoBehaviour
         PickImageOptionScreen.SetActive(true);
     }
 
+    public void CheckPermissionStatus(int maxSize)
+    {
+        if (Application.isEditor)
+        {
+            permissionPopup.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+            if (permission == NativeGallery.Permission.ShouldAsk) //||permission == NativeCamera.Permission.ShouldAsk
+            {
+                permissionPopup.SetActive(true);
+            }
+            else
+            {
+                OnPickImageFromGellery(maxSize);
+            }
+        }
+    }
 
     public void OnPickImageFromGellery(int maxSize)
     {
@@ -2157,7 +2176,7 @@ public class UserLoginSignupManager : MonoBehaviour
         StartCoroutine(EditProfilePic());
         Debug.Log("<color=red>LoadTHAWorld Directly</color>");
         //if (ConstantsHolder.xanaConstants.openLandingSceneDirectly)
-            MainSceneEventHandler.OpenLandingScene?.Invoke();
+        MainSceneEventHandler.OpenLandingScene?.Invoke();
     }
 
     public void RequestUpdateUserProfilePic(string user_avatar, string callingFrom)

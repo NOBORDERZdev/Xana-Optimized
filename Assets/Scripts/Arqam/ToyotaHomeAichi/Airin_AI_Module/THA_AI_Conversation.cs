@@ -70,7 +70,7 @@ public class THA_AI_Conversation : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         string id = ConstantsHolder.userId;
-        string worldId = "41424_srz5bKcbnk"; // ConstantsHolder.xanaConstants.MuseumID;
+        string worldId = "41424_srz5bKcbnk"; //ConstantsHolder.xanaConstants.MuseumID;
         string ip = "https://avatarchat-ai.xana.net/tha_chat?input_string=";
 
         //if (!APIBasepointManager.instance.IsXanaLive)

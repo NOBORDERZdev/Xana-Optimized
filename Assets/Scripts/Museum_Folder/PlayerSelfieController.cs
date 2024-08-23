@@ -51,6 +51,9 @@ public class PlayerSelfieController : MonoBehaviour
     public GameObject Exit;
     [HideInInspector]
     public bool isReconnecting;
+    [Space(5)]
+    public GameObject permissionPopupLandscape;
+    public GameObject permissionPopupPotrait;
 
     public static event Action OnSelfieButtonPressed;
 
@@ -674,6 +677,32 @@ public class PlayerSelfieController : MonoBehaviour
     }
 
     public int picCount;
+
+    public void CheckPermissionStatus()
+    {
+        if (Application.isEditor)
+        {
+            if (!ScreenOrientationManager._instance.isPotrait)
+                permissionPopupLandscape.SetActive(true);
+            else
+                permissionPopupPotrait.SetActive(true);
+        }
+        else
+        {
+            NativeGallery.Permission permission = NativeGallery.CheckPermission(NativeGallery.PermissionType.Read, NativeGallery.MediaType.Image);
+            if (permission == NativeGallery.Permission.ShouldAsk)
+            {
+                if (!ScreenOrientationManager._instance.isPotrait)
+                    permissionPopupLandscape.SetActive(true);
+                else
+                    permissionPopupPotrait.SetActive(true);
+            }
+            else
+            {
+                SaveImageLocally();
+            }
+        }
+    }
 
     public void SaveImageLocally()
     {
