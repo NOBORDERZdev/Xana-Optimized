@@ -480,8 +480,8 @@ namespace Photon.Pun.Demo.PunBasics
                 Destroy(summitplayer.Transformview);
                 Destroy(summitplayer.view);
             }
+            XANASummitSceneLoading.OnJoinSubItem?.Invoke(ConstantsHolder.xanaConstants.minimap == 1);
 
-            XANASummitSceneLoading.OnJoinSubItem?.Invoke(false);
             PhotonNetwork.LeaveRoom();
 
         }
