@@ -523,10 +523,10 @@ public class GamificationComponentData : MonoBehaviourPunCallbacks
     public void UpdateRaceStatusIfPlayerLeaveWithoutCompletiting(bool raceFinishStatus)
     {
         var xanaPartyMulitplayer = GameplayEntityLoader.instance.PenguinPlayer.GetComponent<XANAPartyMulitplayer>();
-        if (!raceFinishStatus)
-        {
-            xanaPartyMulitplayer.RaceFinishCount++;
-        }
+        //if (!raceFinishStatus)
+        //{
+        //    xanaPartyMulitplayer.RaceFinishCount++;
+        //}
 
         for (int i = 0; i < MutiplayerController.instance.playerobjects.Count; i++)
         {
