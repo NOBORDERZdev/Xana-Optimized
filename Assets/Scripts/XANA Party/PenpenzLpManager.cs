@@ -33,6 +33,7 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         PlayerIDs.Clear();
         WinnerPlayerIds.Clear();
         RaceFinishTime.Clear();
+        RaceStartWithPlayers = 0;
         isLeaderboardShown = false;
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
@@ -355,7 +356,6 @@ public class PenpenzLpManager : MonoBehaviourPunCallbacks
         IsRoundDataUpdated = false;
         IsRoundDataFetched = false;
         roundDataResponse = null;
-        RaceStartWithPlayers = 0;
     }
     #endregion
 }
